@@ -1,0 +1,20 @@
+-
+ In order to test argentine VAT we create a new Partner
+-
+  !record {model: res.partner, id: partner_ar_0}:
+    name: UNIVERSIDAD DE BUENOS AIRES
+    vat: ar30546666561
+
+-
+ Now I try to update the VAT to a wrong one
+-
+  !python {model: res.partner}: |
+    rollback = cr.rollback
+    cr.rollback = lambda *x: None
+    try:
+        self.write(cr, uid, [ref('partner_ar_0')], {'vat': 'ar30546666562'})
+    except:
+        cr.rollback = rollback
+    else:
+        raise Exception('Test should fail')
+

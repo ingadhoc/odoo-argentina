@@ -1,0 +1,62 @@
+#
+#       Create an invoice from Resp Inscr to Resp Inscr.
+#       For two products with vat
+#
+- Create a simple invoice type B
+- !record {model: account.invoice, id: inv_ri2rm_2prod}:
+    company_id: com_ivari
+    account_id: !ref {model: account.account, search: "[('code','=','113010'), ('company_id.name','=','Coop. Trab. Moldeo Interactive Ltda.')]"}
+    partner_id: par_rm
+
+- !record {model: account.invoice, id: inv_ri2rm_2prod}:
+    partner_id: par_rm
+    journal_id: !ref {model: account.journal, search: "[('code','=','FVB0001'), ('company_id.name','=','Coop. Trab. Moldeo Interactive Ltda.')]"}
+    period_id:  !ref {model: account.period, search: "[('company_id.name','=','Coop. Trab. Moldeo Interactive Ltda.')]"}
+    account_id: !ref {model: account.account, search: "[('code','=','113010'), ('company_id.name','=','Coop. Trab. Moldeo Interactive Ltda.')]"}
+    invoice_line:
+      - account_id: !ref {model: account.account, search: "[('code','=','411000'), ('company_id.name','=','Coop. Trab. Moldeo Interactive Ltda.')]"}
+        name: '[PC3] Medium PC'
+        price_unit: 900.0
+        quantity: 10.0
+        product_id: prod_iva21
+        uos_id: product.product_uom_unit
+        invoice_line_tax_id: !ref {model: account.tax, search: "[('name','=','01003005:V'),('company_id.name','=','Coop. Trab. Moldeo Interactive Ltda.')]"}
+      - account_id: !ref {model: account.account, search: "[('code','=','411000'), ('company_id.name','=','Coop. Trab. Moldeo Interactive Ltda.')]"}
+        name: '[PC4] Big PC'
+        price_unit: 1900.0
+        quantity: 3.0
+        product_id: prod_iva21
+        uos_id: product.product_uom_unit
+        invoice_line_tax_id: !ref {model: account.tax, search: "[('name','=','01003005:V'),('company_id.name','=','Coop. Trab. Moldeo Interactive Ltda.')]"}
+
+- Check Journal
+- !assert {model: account.journal, search: "[('code','=','FVB0001'), ('company_id.name','=','Coop. Trab. Moldeo Interactive Ltda.')]", string: Check Journal}:
+    - code == 'FVB0001'
+    - company_id.name == 'Coop. Trab. Moldeo Interactive Ltda.'
+
+- Check Journal in invoice
+- !assert {model: account.invoice, id: inv_ri2rm_2prod, string: Check Journal}:
+    - company_id.name == 'Coop. Trab. Moldeo Interactive Ltda.'
+    - journal_id.code == 'FVB0001'
+    - journal_id.company_id.name == 'Coop. Trab. Moldeo Interactive Ltda.'
+
+- Compute amount
+- !python {model: account.invoice}: |
+    inv_id = [ref('inv_ri2rm_2prod')]
+    self.view_init(cr, uid, inv_id, {})
+    self.button_compute(cr, uid, inv_id)
+
+- Validate invoice
+- !workflow {model: account.invoice, action: invoice_open, ref: inv_ri2rm_2prod}
+
+- Check CAE invoice number
+- !assert {model: account.invoice, id: inv_ri2rm_2prod, string: CAE has been assigned}:
+    - afip_cae != ''
+    - afip_cae_due != ''
+
+- Print invoice
+- !python {model: account.invoice}: |
+    import netsvc, tools, os
+    (data, format) = netsvc.LocalService('report.account.invoice_fe').create(cr, uid, [ref('inv_ri2rm_2prod')], {}, {})
+    if tools.config['test_report_directory']:
+        file(os.path.join(tools.config['test_report_directory'], 'wsafip_fe_b_iva.'+format), 'wb+').write(data)

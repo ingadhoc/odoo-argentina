@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.module.category" id="module_category_l10n_ar_wsafip">
+            <field name="name">AFIP Web Services</field>
+            <field name="description">Argentine Web Service Localization</field>
+            <field name="sequence">1</field>
+            <field name="parent_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <record id="group_wsafip_admin" model="res.groups">
+            <field name="name">AFIP WebService Manager</field>
+            <field name="category_id" ref="module_category_l10n_ar_wsafip"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_wsafip_user" model="res.groups" context="{'noadmin':True}">
+            <field name="name">AFIP WebService User</field>
+            <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+    </data>
+</openerp>
+
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
+     -->

@@ -1,0 +1,1945 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (C), 2012, OpenERP - Team de Localización Argentina.
+ https://launchpad.net/~openerp-l10n-ar-localization
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<openerp>
+    <data>
+
+#
+# Chart of Accounts
+#
+        <record model="account.account.template" id="ri_a_root">
+            <field name="type">view</field>
+            <field name="code">0</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">Plan de Cuentas</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record model="account.account.template" id="ri_activo">
+            <field name="type">view</field>
+            <field name="code">1</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">ACTIVO</field>
+            <field name="parent_id" ref="ri_a_root"/>
+        </record>
+
+        <record model="account.account.template" id="ri_activo_corriente">
+            <field name="type">view</field>
+            <field name="code">11</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">ACTIVO CORRIENTE</field>
+            <field name="parent_id" ref="ri_activo"/>
+        </record>
+
+        <record model="account.account.template" id="ri_disponibilidades">
+            <field name="type">view</field>
+            <field name="code">111</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">DISPONIBILIDADES</field>
+            <field name="parent_id" ref="ri_activo_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_caja">
+            <field name="type">view</field>
+            <field name="code">1111</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">CAJAS</field>
+            <field name="parent_id" ref="ri_disponibilidades"/>
+        </record>        
+
+        <record model="account.account.template" id="ri_caja_pesos">
+            <field name="type">liquidity</field>
+            <field name="code">1111010</field>
+            <field name="user_type" ref="account.data_account_type_cash"/>
+            <field name="name">Caja pesos</field>
+            <field name="parent_id" ref="ri_caja"/>
+        </record>
+
+        <record model="account.account.template" id="ri_caja_monex">
+            <field name="type">liquidity</field>
+            <field name="code">1111020</field>
+            <field name="user_type" ref="account.data_account_type_cash"/>
+            <field name="name">Caja Monex</field>
+            <field name="parent_id" ref="ri_caja"/>
+        </record>
+
+        <record model="account.account.template" id="ri_fondo_fijo">
+            <field name="type">liquidity</field>
+            <field name="code">1111030</field>
+            <field name="user_type" ref="account.data_account_type_cash"/>
+            <field name="name">Fondo fijo</field>
+            <field name="parent_id" ref="ri_caja"/>
+        </record>
+
+        <record model="account.account.template" id="ri_valores">
+            <field name="type">liquidity</field>
+            <field name="code">1111040</field>
+            <field name="user_type" ref="data_account_type_check"/>
+            <field name="name">Valores en cartera</field>
+            <field name="parent_id" ref="ri_caja"/>
+        </record>
+
+        <record model="account.account.template" id="ri_bancos">
+            <field name="type">view</field>
+            <field name="code">1112</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">BANCOS</field>
+            <field name="parent_id" ref="ri_disponibilidades"/>
+        </record>        
+
+        <record model="account.account.template" id="ri_banco_1">
+            <field name="type">liquidity</field>
+            <field name="code">1112010</field>
+            <field name="user_type" ref="account.data_account_type_bank"/>
+            <field name="name">Banco x cuenta corriente xxxxx</field>
+            <field name="parent_id" ref="ri_bancos"/>
+        </record>  
+
+        <record model="account.account.template" id="ri_creditos_comerciales">
+            <field name="type">view</field>
+            <field name="code">112</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">CRÉDITOS COMERCIALES</field>
+            <field name="parent_id" ref="ri_activo_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_deudores_por_ventas">
+            <field name="type">receivable</field>
+            <field name="code">1120010</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Deudores por ventas</field>
+            <field name="parent_id" ref="ri_creditos_comerciales"/>
+            <field name="reconcile" eval="True"/>
+        </record>
+
+        <record model="account.account.template" id="ri_deudores_morosos">
+            <field name="type">receivable</field>
+            <field name="code">1120020</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Deudores morosos</field>
+            <field name="parent_id" ref="ri_creditos_comerciales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_otros_creditos">
+            <field name="type">view</field>
+            <field name="code">113</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">OTROS CRÉDITOS</field>
+            <field name="parent_id" ref="ri_activo_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_deudores_morosos">
+            <field name="type">receivable</field>
+            <field name="code">1130010</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Deudores varios</field>
+            <field name="parent_id" ref="ri_otros_creditos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_creditos_impuestos">
+            <field name="type">view</field>
+            <field name="code">114</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">CRÉDITOS POR IMPUESTOS</field>
+            <field name="parent_id" ref="ri_activo_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_creditos_impuestos_ganancias">
+            <field name="type">view</field>
+            <field name="code">1141</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">GANANCIAS</field>
+            <field name="parent_id" ref="ri_creditos_impuestos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_retencion_impuestos_ganancias">
+            <field name="type">other</field>
+            <field name="code">1141010</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Retención impuestos a las ganancias</field>
+            <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
+        </record>
+
+        <record model="account.account.template" id="ri_anticipo_impuestos_ganancias">
+            <field name="type">other</field>
+            <field name="code">1141020</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Anticipo impuestos a las ganancias</field>
+            <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
+        </record>
+
+        <record model="account.account.template" id="ri_creditos_impuestos_iva">
+            <field name="type">view</field>
+            <field name="code">1142</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">IVA</field>
+            <field name="parent_id" ref="ri_creditos_impuestos"/>
+        </record>        
+
+        <record model="account.account.template" id="ri_iva_credito_fiscal">
+            <field name="type">other</field>
+            <field name="code">1142010</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">IVA crédito fiscal</field>
+            <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
+        </record>
+
+        <record model="account.account.template" id="ri_iva_percepcion">
+            <field name="type">other</field>
+            <field name="code">1142020</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Percepciones IVA</field>
+            <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
+        </record>
+
+        <record model="account.account.template" id="ri_iva_retencion">
+            <field name="type">other</field>
+            <field name="code">1142030</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Retención IVA</field>
+            <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
+        </record>
+
+        <record model="account.account.template" id="ri_creditos_iibb">
+            <field name="type">view</field>
+            <field name="code">1143</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">INGRESOS BRUTOS</field>
+            <field name="parent_id" ref="ri_creditos_impuestos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_creditos_iibb_cf">
+            <field name="type">view</field>
+            <field name="code">114310</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">INGRESOS BRUTOS CAPITAL FEDERAL</field>
+            <field name="parent_id" ref="ri_creditos_iibb"/>
+        </record>
+
+        <record model="account.account.template" id="ri_percepcion_iibb_cf">
+            <field name="type">other</field>
+            <field name="code">1143101</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Percepciones ingresos brutos capital federal</field>
+            <field name="parent_id" ref="ri_creditos_iibb_cf"/>
+        </record>
+
+        <record model="account.account.template" id="ri_retencion_iibb_cf">
+            <field name="type">other</field>
+            <field name="code">1143102</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Retención ingresos brutos capital federal</field>
+            <field name="parent_id" ref="ri_creditos_iibb_cf"/>
+        </record>
+
+        <record model="account.account.template" id="ri_creditos_iibb_ba">
+            <field name="type">view</field>
+            <field name="code">114320</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">INGRESOS BRUTOS PROV. BUENOS AIRES</field>
+            <field name="parent_id" ref="ri_creditos_iibb"/>
+        </record>
+
+        <record model="account.account.template" id="ri_percepcion_iibb_ba">
+            <field name="type">other</field>
+            <field name="code">1143201</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Percepciones ingresos brutos p. buenos aires</field>
+            <field name="parent_id" ref="ri_creditos_iibb_ba"/>
+        </record>
+
+        <record model="account.account.template" id="ri_retencion_iibb_ba">
+            <field name="type">other</field>
+            <field name="code">1143202</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Retención ingresos brutos p. buenos aires</field>
+            <field name="parent_id" ref="ri_creditos_iibb_ba"/>
+        </record>
+
+        <record model="account.account.template" id="ri_creditos_iibb_co">
+            <field name="type">view</field>
+            <field name="code">114330</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">INGRESOS BRUTOS PROV. CORDOBA</field>
+            <field name="parent_id" ref="ri_creditos_iibb"/>
+        </record>
+
+        <record model="account.account.template" id="ri_percepcion_iibb_co">
+            <field name="type">other</field>
+            <field name="code">1143301</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Percepciones ingresos brutos p. córdoba</field>
+            <field name="parent_id" ref="ri_creditos_iibb_co"/>
+        </record>
+
+        <record model="account.account.template" id="ri_retencion_iibb_co">
+            <field name="type">other</field>
+            <field name="code">1143302</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Retención ingresos brutos p. córdoba</field>
+            <field name="parent_id" ref="ri_creditos_iibb_co"/>
+        </record>
+
+        <record model="account.account.template" id="ri_creditos_iibb_sf">
+            <field name="type">other</field>
+            <field name="code">114340</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">INGRESOS BRUTOS PROV. SANTA FÉ</field>
+            <field name="parent_id" ref="ri_creditos_iibb"/>
+        </record>
+
+        <record model="account.account.template" id="ri_percepcion_iibb_sf">
+            <field name="type">other</field>
+            <field name="code">1143401</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Percepciones ingresos brutos p. santa fé</field>
+            <field name="parent_id" ref="ri_creditos_iibb_sf"/>
+        </record>
+
+        <record model="account.account.template" id="ri_retencion_iibb_sf">
+            <field name="type">other</field>
+            <field name="code">1143402</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Retención ingresos brutos p. santa fé</field>
+            <field name="parent_id" ref="ri_creditos_iibb_sf"/>
+        </record>
+
+        <record model="account.account.template" id="ri_bienes_de_cambio">
+            <field name="type">view</field>
+            <field name="code">115</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">BIENES DE CAMBIO</field>
+            <field name="parent_id" ref="ri_activo_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_mercaderia">
+            <field name="type">other</field>
+            <field name="code">1150010</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+            <field name="name">Mercaderia</field>
+            <field name="parent_id" ref="ri_bienes_de_cambio"/>
+        </record>
+
+        <record model="account.account.template" id="ri_activo_no_corriente">
+            <field name="type">view</field>
+            <field name="code">12</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">ACTIVO NO CORRIENTE</field>
+            <field name="parent_id" ref="ri_activo"/>
+        </record>
+
+        <record model="account.account.template" id="ri_bienes_de_uso">
+            <field name="type">view</field>
+            <field name="code">121</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">BIENES DE USO</field>
+            <field name="parent_id" ref="ri_activo_no_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_bienes_de_uso_2">
+            <field name="type">view</field>
+            <field name="code">1211</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">BIENES DE USO</field>
+            <field name="parent_id" ref="ri_bienes_de_uso"/>
+        </record>        
+
+        <record model="account.account.template" id="ri_maq_y_equipos">
+            <field name="type">other</field>
+            <field name="code">1211010</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">Maquinarias y equipos</field>
+            <field name="parent_id" ref="ri_bienes_de_uso_2"/>
+        </record>
+
+        <record model="account.account.template" id="ri_instalaciones">
+            <field name="type">other</field>
+            <field name="code">1211020</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+            <field name="name">Instalaciones</field>
+            <field name="parent_id" ref="ri_bienes_de_uso_2"/>
+        </record>
+
+        <record model="account.account.template" id="ri_muebles_y_utiles">
+            <field name="type">other</field>
+            <field name="code">1211030</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+            <field name="name">Muebles y útiles</field>
+            <field name="parent_id" ref="ri_bienes_de_uso_2"/>
+        </record>
+
+        <record model="account.account.template" id="ri_rodados">
+            <field name="type">other</field>
+            <field name="code">1211040</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+            <field name="name">Rodados</field>
+            <field name="parent_id" ref="ri_bienes_de_uso_2"/>
+        </record>
+
+        <record model="account.account.template" id="ri_amortizacion_acumulada_bs_uso">
+            <field name="type">view</field>
+            <field name="code">1212</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">AMORTIZACIONES ACUMULADAS BIENES DE USO</field>
+            <field name="parent_id" ref="ri_bienes_de_uso"/>
+        </record>
+
+        <record model="account.account.template" id="ri_amortizacion_acumulada_maq_y_equipos">
+            <field name="type">other</field>
+            <field name="code">1212010</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+            <field name="name">Amortización acumulada maquinarias y equipos</field>
+            <field name="parent_id" ref="ri_amortizacion_acumulada_bs_uso"/>
+        </record>
+
+        <record model="account.account.template" id="ri_amortizacion_acumulada_instalaciones">
+            <field name="type">other</field>
+            <field name="code">1212020</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+            <field name="name">Amortización acumulada instalaciones</field>
+            <field name="parent_id" ref="ri_amortizacion_acumulada_bs_uso"/>
+        </record>
+
+        <record model="account.account.template" id="ri_amortizacion_acumulada_muebles_utiles">
+            <field name="type">other</field>
+            <field name="code">1212030</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+            <field name="name">Amortización acumulada muebles y útiles</field>
+            <field name="parent_id" ref="ri_amortizacion_acumulada_bs_uso"/>
+        </record>
+
+        <record model="account.account.template" id="ri_amortizacion_acumulada_rodados">
+            <field name="type">other</field>
+            <field name="code">1212040</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+            <field name="name">Amortización rodados</field>
+            <field name="parent_id" ref="ri_amortizacion_acumulada_bs_uso"/>
+        </record>
+
+        <record model="account.account.template" id="ri_intangibles">
+            <field name="type">view</field>
+            <field name="code">122</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">INTANGIBLES</field>
+            <field name="parent_id" ref="ri_activo_no_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_software">
+            <field name="type">other</field>
+            <field name="code">1221010</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+            <field name="name">Software</field>
+            <field name="parent_id" ref="ri_intangibles"/>
+        </record>
+
+        <record model="account.account.template" id="ri_gastos_de_construccion">
+            <field name="type">other</field>
+            <field name="code">1221020</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+            <field name="name">Gastos de construccion</field>
+            <field name="parent_id" ref="ri_intangibles"/>
+        </record> 
+        
+        <record model="account.account.template" id="ri_pasivo">
+            <field name="type">view</field>
+            <field name="code">2</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">PASIVO</field>
+            <field name="parent_id" ref="ri_a_root"/>
+        </record>
+
+        <record model="account.account.template" id="ri_pasivo_corriente">
+            <field name="type">view</field>
+            <field name="code">21</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">PASIVO CORRIENTE</field>
+            <field name="parent_id" ref="ri_pasivo"/>
+        </record>
+
+        <record model="account.account.template" id="ri_deudas_sociales">
+            <field name="type">view</field>
+            <field name="code">211</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">DEUDAS SOCIALES</field>
+            <field name="parent_id" ref="ri_pasivo_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_sueldos_a_pagar">
+            <field name="type">payable</field>
+            <field name="code">2110010</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Sueldos a pagar</field>
+            <field name="parent_id" ref="ri_deudas_sociales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_cargas_sociales_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2110020</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Cargas sociales a pagar</field>
+            <field name="parent_id" ref="ri_deudas_sociales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_provision_sac_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2110030</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Prevision SAC a pagar</field>
+            <field name="parent_id" ref="ri_deudas_sociales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_provision_sac_cargas_sociales">
+            <field name="type">other</field>
+            <field name="code">2110040</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Prevision cargas sociales a pagar</field>
+            <field name="parent_id" ref="ri_deudas_sociales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_comisiones_a_pagar">
+            <field name="type">payable</field>
+            <field name="code">2110050</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Comisiones a pagar</field>
+            <field name="parent_id" ref="ri_deudas_sociales"/>
+        </record>        
+
+        <record model="account.account.template" id="ri_beneficios_al_personal">
+            <field name="type">other</field>
+            <field name="code">2110060</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Beneficios al personal</field>
+            <field name="parent_id" ref="ri_deudas_sociales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_prevision_despidos">
+            <field name="type">other</field>
+            <field name="code">2110070</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Previsión Despidos</field>
+            <field name="parent_id" ref="ri_deudas_sociales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_deudas_fiscales">
+            <field name="type">view</field>
+            <field name="code">212</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">DEUDAS FISCALES</field>
+            <field name="parent_id" ref="ri_pasivo_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_iibb_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2120010</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Ingresos brutos a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_iva_debito_fiscal">
+            <field name="type">other</field>
+            <field name="code">2120020</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">IVA débito fiscal</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_iva_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2120030</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">IVA saldo a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_impuesto_ganancias_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2120040</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Impuesto a las ganancias a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_retencion_ganancias_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2120050</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Retención ganancias a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_autonomos_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2120060</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Autonomos a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_retenciones_varias_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2120070</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Retenciones varias a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_drei_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2120080</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">DREI a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_deudas_comerciales">
+            <field name="type">view</field>
+            <field name="code">213</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">DEUDAS COMERCIALES</field>
+            <field name="parent_id" ref="ri_pasivo_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_comunes">
+            <field name="type">view</field>
+            <field name="code">2131</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">COMUNES</field>
+            <field name="parent_id" ref="ri_deudas_comerciales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_pago_proveedores">
+            <field name="type">payable</field>
+            <field name="code">2131010</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Proveedores</field>
+            <field name="parent_id" ref="ri_comunes"/>
+            <field name="reconcile" eval="True"/>
+        </record>
+
+        <record model="account.account.template" id="ri_alquileres_a_pagar">
+            <field name="type">payable</field>
+            <field name="code">2131020</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Alquileres a pagar</field>
+            <field name="parent_id" ref="ri_comunes"/>
+        </record>
+
+        <record model="account.account.template" id="ri_pago_proveedores">
+            <field name="type">payable</field>
+            <field name="code">2131010</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Acreedores varios</field>
+            <field name="parent_id" ref="ri_comunes"/>
+        </record>        
+
+        <record model="account.account.template" id="ri_documentadas">
+            <field name="type">view</field>
+            <field name="code">2132</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">DOCUMENTADAS</field>
+            <field name="parent_id" ref="ri_deudas_comerciales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_cheques_diferidos">
+            <field name="type">other</field>
+            <field name="code">2132010</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Cheques diferidos</field>
+            <field name="parent_id" ref="ri_documentadas"/>
+        </record>
+
+        <record model="account.account.template" id="ri_otras_deudas_documentadas">
+            <field name="type">other</field>
+            <field name="code">2132020</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Otras deudas documentadas</field>
+            <field name="parent_id" ref="ri_documentadas"/>
+        </record>
+
+        <record model="account.account.template" id="ri_bancarias">
+            <field name="type">view</field>
+            <field name="code">214</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">BANCARIAS</field>
+            <field name="parent_id" ref="ri_pasivo_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_tarjetas_de_credito">
+            <field name="type">other</field>
+            <field name="code">2140010</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Tarjetas de crédito</field>
+            <field name="parent_id" ref="ri_bancarias"/>
+        </record>
+
+        <record model="account.account.template" id="ri_prestamos">
+            <field name="type">other</field>
+            <field name="code">2140020</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Prestamos</field>
+            <field name="parent_id" ref="ri_bancarias"/>
+        </record>
+
+        <record model="account.account.template" id="ri_giro_en_descubierto">
+            <field name="type">other</field>
+            <field name="code">2140030</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Giro en descubierto</field>
+            <field name="parent_id" ref="ri_bancarias"/>
+        </record>
+
+        <record model="account.account.template" id="ri_provisiones_varias">
+            <field name="type">view</field>
+            <field name="code">215</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">PREVISIONES VARIAS</field>
+            <field name="parent_id" ref="ri_pasivo_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_provision_gastos">
+            <field name="type">other</field>
+            <field name="code">2150010</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Prevision gastos</field>
+            <field name="parent_id" ref="ri_provisiones_varias"/>
+        </record>
+
+        <record model="account.account.template" id="ri_cuentas_particulares">
+            <field name="type">view</field>
+            <field name="code">216</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">CUENTAS PARTICULARES</field>
+            <field name="parent_id" ref="ri_pasivo_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_cta_particular_socio_x">
+            <field name="type">other</field>
+            <field name="code">2160010</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Cta particular socio x</field>
+            <field name="parent_id" ref="ri_cuentas_particulares"/>
+        </record>
+
+        <record model="account.account.template" id="ri_pasivo_no_corriente">
+            <field name="type">view</field>
+            <field name="code">22</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">PASIVO NO CORRIENTE</field>
+            <field name="parent_id" ref="ri_pasivo"/>
+        </record>
+
+        <record model="account.account.template" id="ri_deudas_comerciales_largo_plazo">
+            <field name="type">view</field>
+            <field name="code">221</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">DEUDAS COMERCIALES A LARGO PLAZO</field>
+            <field name="parent_id" ref="ri_pasivo_no_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_proveedores_largo_plazo">
+            <field name="type">other</field>
+            <field name="code">2210010</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Deudas proveedores a largo plazo</field>
+            <field name="parent_id" ref="ri_deudas_comerciales_largo_plazo"/>
+        </record>
+
+        <record model="account.account.template" id="ri_otras_deudas">
+            <field name="type">view</field>
+            <field name="code">222</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">OTRAS DEUDAS</field>
+            <field name="parent_id" ref="ri_pasivo_no_corriente"/>
+        </record>
+
+        <record model="account.account.template" id="ri_seguros_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2220010</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Seguros a pagar</field>
+            <field name="parent_id" ref="ri_otras_deudas"/>
+        </record>
+
+        <record model="account.account.template" id="ri_gastos_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2220020</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Gastos a pagar</field>
+            <field name="parent_id" ref="ri_otras_deudas"/>
+        </record>
+
+        <record model="account.account.template" id="ri_deudas_misc">
+            <field name="type">other</field>
+            <field name="code">2220030</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Deudas misc</field>
+            <field name="parent_id" ref="ri_otras_deudas"/>
+        </record>
+
+        <record model="account.account.template" id="ri_patrimonio_neto">
+            <field name="type">view</field>
+            <field name="code">3</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">PATRIMONIO NETO</field>
+            <field name="parent_id" ref="ri_a_root"/>
+        </record>
+
+        <record model="account.account.template" id="ri_aportes_de_los_propietarios">
+            <field name="type">view</field>
+            <field name="code">31</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">APORTES DE LOS PROPIETARIOS</field>
+            <field name="parent_id" ref="ri_patrimonio_neto"/>
+        </record>
+
+        <record model="account.account.template" id="ri_capital_social">
+            <field name="type">view</field>
+            <field name="code">311</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">CAPITAL SOCIAL</field>
+            <field name="parent_id" ref="ri_aportes_de_los_propietarios"/>
+        </record>
+
+        <record model="account.account.template" id="ri_capital">
+            <field name="type">other</field>
+            <field name="code">3110010</field>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
+            <field name="name">Capital susctipto</field>
+            <field name="parent_id" ref="ri_capital_social"/>
+        </record>
+
+        <record model="account.account.template" id="ri_ajustes_de_capital">
+            <field name="type">view</field>
+            <field name="code">312</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">AJUSTES DE CAPITAL</field>
+            <field name="parent_id" ref="ri_aportes_de_los_propietarios"/>
+        </record>
+
+        <record model="account.account.template" id="ri_ajustes_de_capital_2">
+            <field name="type">other</field>
+            <field name="code">3120010</field>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
+            <field name="name">Capital susctipto</field>
+            <field name="parent_id" ref="ri_ajustes_de_capital"/>
+        </record>
+
+        <record model="account.account.template" id="ri_aportes_no_capitalizados">
+            <field name="type">view</field>
+            <field name="code">313</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">APORTES NO CAPITALIZADOS</field>
+            <field name="parent_id" ref="ri_aportes_de_los_propietarios"/>
+        </record>
+
+        <record model="account.account.template" id="ri_aportes_no_capitalizados_2">
+            <field name="type">other</field>
+            <field name="code">3130010</field>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
+            <field name="name">Aportes no capitalizados</field>
+            <field name="parent_id" ref="ri_aportes_no_capitalizados"/>
+        </record>
+
+        <record model="account.account.template" id="ri_ganancias_reservadas">
+            <field name="type">view</field>
+            <field name="code">32</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">GANANCIAS RESERVADAS</field>
+            <field name="parent_id" ref="ri_patrimonio_neto"/>
+        </record>   
+
+        <record model="account.account.template" id="ri_reserva_legal">
+            <field name="type">other</field>
+            <field name="code">3200010</field>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
+            <field name="name">Reserva legal</field>
+            <field name="parent_id" ref="ri_ganancias_reservadas"/>
+        </record>             
+
+        <record model="account.account.template" id="ri_reserva_legal">
+            <field name="type">other</field>
+            <field name="code">3200020</field>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
+            <field name="name">Reserva estatuitaria</field>
+            <field name="parent_id" ref="ri_ganancias_reservadas"/>
+        </record>             
+
+        <record model="account.account.template" id="ri_reserva_legal">
+            <field name="type">other</field>
+            <field name="code">3200030</field>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
+            <field name="name">Reserva futuras inversiones</field>
+            <field name="parent_id" ref="ri_ganancias_reservadas"/>
+        </record>             
+
+        <record model="account.account.template" id="ri_resultados">
+            <field name="type">view</field>
+            <field name="code">33</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">RESULTADOS</field>
+            <field name="parent_id" ref="ri_patrimonio_neto"/>
+        </record>   
+
+        <record model="account.account.template" id="ri_resultado_del_ejercicio">
+            <field name="type">other</field>
+            <field name="code">3300010</field>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
+            <field name="name">Resultado del ejercicio</field>
+            <field name="parent_id" ref="ri_resultados"/>
+        </record>
+
+        <record model="account.account.template" id="ri_resultado_del_ejercicio">
+            <field name="type">other</field>
+            <field name="code">3300020</field>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
+            <field name="name">Resultado acumlados</field>
+            <field name="parent_id" ref="ri_resultados"/>
+        </record>
+
+        <record model="account.account.template" id="ri_resultados_no_asignados">
+            <field name="type">other</field>
+            <field name="code">3300030</field>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
+            <field name="name">Ajuste resultados ejercicios anteriores</field>
+            <field name="parent_id" ref="ri_resultados"/>
+        </record>
+
+        <record model="account.account.template" id='ri_ingresos'>
+            <field name="type">view</field>
+            <field name="code">4</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">INGRESOS</field>
+            <field name="parent_id" ref="ri_a_root"/>
+        </record>
+
+        <record model="account.account.template" id="ri_ingresos_operativos">
+            <field name="type">view</field>
+            <field name="code">41</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">INGRESOS OPERATIVOS</field>
+            <field name="parent_id" ref="ri_ingresos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_ventas">
+            <field name="type">view</field>
+            <field name="code">411</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">INGRESOS POR VENTAS</field>
+            <field name="parent_id" ref="ri_ingresos_operativos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_venta_de_mercaderia">
+            <field name="type">other</field>
+            <field name="code">4110010</field>
+            <field name="user_type" ref="account.data_account_type_income"/>
+            <field name="name">Venta de mercaderia</field>
+            <field name="parent_id" ref="ri_ventas"/>
+        </record>
+
+        <record model="account.account.template" id="ri_venta_de_servicios_misc">
+            <field name="type">other</field>
+            <field name="code">4110020</field>
+            <field name="user_type" ref="account.data_account_type_income"/>
+            <field name="name">Venta servicios misc</field>
+            <field name="parent_id" ref="ri_ventas"/>
+        </record>
+
+        <record model="account.account.template" id="ri_otros_ingresos">
+            <field name="type">view</field>
+            <field name="code">42</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">OTROS INGRESOS</field>
+            <field name="parent_id" ref="ri_ingresos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_ingresos_financieros">
+            <field name="type">view</field>
+            <field name="code">421</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">INGRESOS FINANCIEROS</field>
+            <field name="parent_id" ref="ri_otros_ingresos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_resultado_invesiones_financieras">
+            <field name="type">other</field>
+            <field name="code">4210010</field>
+            <field name="user_type" ref="account.data_account_type_income"/>
+            <field name="name">Resultado de inversiones financieras</field>
+            <field name="parent_id" ref="ri_ingresos_financieros"/>
+        </record>
+
+        <record model="account.account.template" id="ri_resultado_invesiones_financieras">
+            <field name="type">other</field>
+            <field name="code">4210020</field>
+            <field name="user_type" ref="account.data_account_type_income"/>
+            <field name="name">Intereses ganados</field>
+            <field name="parent_id" ref="ri_ingresos_financieros"/>
+        </record>
+
+        <record model="account.account.template" id="ri_diferencias_de_cambio">
+            <field name="type">other</field>
+            <field name="code">4210030</field>
+            <field name="user_type" ref="account.data_account_type_income"/>
+            <field name="name">Diferencias de cambio</field>
+            <field name="parent_id" ref="ri_ingresos_financieros"/>
+        </record>
+
+        <record model="account.account.template" id="ri_otros_ingresos_2">
+            <field name="type">view</field>
+            <field name="code">422</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">OTROS INGRESOS</field>
+            <field name="parent_id" ref="ri_otros_ingresos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_resultado_venta_bienes_de_uso">
+            <field name="type">other</field>
+            <field name="code">4220010</field>
+            <field name="user_type" ref="account.data_account_type_income"/>
+            <field name="name">Resultado venta bienes de uso</field>
+            <field name="parent_id" ref="ri_otros_ingresos_2"/>
+        </record>
+
+        <record model="account.account.template" id="ri_ajuste_por_redondeo">
+            <field name="type">other</field>
+            <field name="code">4220020</field>
+            <field name="user_type" ref="account.data_account_type_income"/>
+            <field name="name">Ajuste por redondeo</field>
+            <field name="parent_id" ref="ri_otros_ingresos_2"/>
+        </record>
+
+        <record model="account.account.template" id="ri_descuentos_obtenidos">
+            <field name="type">other</field>
+            <field name="code">4220030</field>
+            <field name="user_type" ref="account.data_account_type_income"/>
+            <field name="name">Descuentos obtenidos</field>
+            <field name="parent_id" ref="ri_otros_ingresos_2"/>
+        </record>
+
+        <record model="account.account.template" id="ri_recupero_de_gastos">
+            <field name="type">other</field>
+            <field name="code">4220040</field>
+            <field name="user_type" ref="account.data_account_type_income"/>
+            <field name="name">Recupero de gastos</field>
+            <field name="parent_id" ref="ri_otros_ingresos_2"/>
+        </record>
+
+        <record model="account.account.template" id="ri_gastos">
+            <field name="type">view</field>
+            <field name="code">5</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">GASTOS</field>
+            <field name="parent_id" ref="ri_a_root"/>
+        </record>
+
+        <record model="account.account.template" id="ri_gastos_operativos">
+            <field name="type">view</field>
+            <field name="code">51</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">GASTOS OPERATIVOS</field>
+            <field name="parent_id" ref="ri_gastos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_gastos_de_produccion">
+            <field name="type">view</field>
+            <field name="code">511</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">GASTOS DE PRODUCCION</field>
+            <field name="parent_id" ref="ri_gastos_operativos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_haberes_produccion">
+            <field name="type">other</field>
+            <field name="code">5110010</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Sueldos y SAC operativos</field>
+            <field name="parent_id" ref="ri_gastos_de_produccion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_cargas_sociales_produccion">
+            <field name="type">other</field>
+            <field name="code">5110020</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Cargas Sociales</field>
+            <field name="parent_id" ref="ri_gastos_de_produccion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_costo_de_mercaderia_vendida">
+            <field name="type">other</field>
+            <field name="code">5110030</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Costo de mercadería vendida</field>
+            <field name="parent_id" ref="ri_gastos_de_produccion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_materiales">
+            <field name="type">other</field>
+            <field name="code">5110040</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Materiales</field>
+            <field name="parent_id" ref="ri_gastos_de_produccion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_gastos_operativos_generales">
+            <field name="type">other</field>
+            <field name="code">5110050</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Gastos varios produccion</field>
+            <field name="parent_id" ref="ri_gastos_de_produccion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_alquileres_produccion">
+            <field name="type">other</field>
+            <field name="code">5110060</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Alquileres produccion</field>
+            <field name="parent_id" ref="ri_gastos_de_produccion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_servicios_agua_luz_etc_produccion">
+            <field name="type">other</field>
+            <field name="code">5110070</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Servicios de luz, agua, etc. produccion</field>
+            <field name="parent_id" ref="ri_gastos_de_produccion"/>
+        </record>        
+
+        <record model="account.account.template" id="ri_gastos_comerciales">
+            <field name="type">view</field>
+            <field name="code">512</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">GASTOS COMERCIALES</field>
+            <field name="parent_id" ref="ri_gastos_operativos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_haberes_comerciales">
+            <field name="type">other</field>
+            <field name="code">5120010</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Sueldos y SAC comerciales</field>
+            <field name="parent_id" ref="ri_gastos_comerciales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_cargas_sociales_comerciales">
+            <field name="type">other</field>
+            <field name="code">5120020</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Cargas sociales comerciales</field>
+            <field name="parent_id" ref="ri_gastos_comerciales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_comisiones_comerciales">
+            <field name="type">other</field>
+            <field name="code">5120030</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Comisiones</field>
+            <field name="parent_id" ref="ri_gastos_comerciales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_publicidad">
+            <field name="type">other</field>
+            <field name="code">5120040</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Publicidad</field>
+            <field name="parent_id" ref="ri_gastos_comerciales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_movilidad_y_viaticos_comerciales">
+            <field name="type">other</field>
+            <field name="code">5120050</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Movilidad y viáticos comerciales</field>
+            <field name="parent_id" ref="ri_gastos_comerciales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_gastos_de_eventos_comerciales">
+            <field name="type">other</field>
+            <field name="code">5120060</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Gastos de eventos comerciales</field>
+            <field name="parent_id" ref="ri_gastos_comerciales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_gastos_varios_comerciales">
+            <field name="type">other</field>
+            <field name="code">5120070</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Gastos varios comerciales</field>
+            <field name="parent_id" ref="ri_gastos_comerciales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_alquileres_comerciales">
+            <field name="type">other</field>
+            <field name="code">5120080</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Alquileres comerciales</field>
+            <field name="parent_id" ref="ri_gastos_comerciales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_servicios_agua_luz_etc_comerciales">
+            <field name="type">other</field>
+            <field name="code">5120090</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Servicios de luz, agua, etc. comerciales</field>
+            <field name="parent_id" ref="ri_gastos_comerciales"/>
+        </record>        
+
+        <record model="account.account.template" id="ri_gastos_de_administracion">
+            <field name="type">view</field>
+            <field name="code">513</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">GASTOS DE ADMINISTRACION</field>
+            <field name="parent_id" ref="ri_gastos_operativos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_haberes_administrativos">
+            <field name="type">other</field>
+            <field name="code">5130010</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Sueldos y SAC administrativos</field>
+            <field name="parent_id" ref="ri_gastos_de_administracion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_cargas_sociales_administrativas">
+            <field name="type">other</field>
+            <field name="code">5130020</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Cargas sociales administrativas</field>
+            <field name="parent_id" ref="ri_gastos_de_administracion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_honorarios_administrativas">
+            <field name="type">other</field>
+            <field name="code">5130030</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Honorarios profesionales administracion</field>
+            <field name="parent_id" ref="ri_gastos_de_administracion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_gastos_varios_administrativas">
+            <field name="type">other</field>
+            <field name="code">5130040</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Gastos varios administracion</field>
+            <field name="parent_id" ref="ri_gastos_de_administracion"/>
+        </record>        
+
+        <record model="account.account.template" id="ri_alquileres_administrativas">
+            <field name="type">other</field>
+            <field name="code">5130050</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Alquileres administracion</field>
+            <field name="parent_id" ref="ri_gastos_de_administracion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_servicios_agua_luz_etc">
+            <field name="type">other</field>
+            <field name="code">5130060</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Servicios de luz, agua, etc. administracion</field>
+            <field name="parent_id" ref="ri_gastos_de_administracion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_mantenimiento_y_limpieza">
+            <field name="type">other</field>
+            <field name="code">5130070</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Mantenimiento y limpieza adminsitracion</field>
+            <field name="parent_id" ref="ri_gastos_de_administracion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_articulos_libreria">
+            <field name="type">other</field>
+            <field name="code">5130080</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Artículos librería administracion</field>
+            <field name="parent_id" ref="ri_gastos_de_administracion"/>            
+        </record>
+
+        <record model="account.account.template" id="ri_cadeteria_y_correo">
+            <field name="type">other</field>
+            <field name="code">5130090</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Cadetería y correo adminsitracion</field>
+            <field name="parent_id" ref="ri_gastos_de_administracion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_seguros">
+            <field name="type">other</field>
+            <field name="code">5130110</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Seguros adminsitracion</field>
+            <field name="parent_id" ref="ri_gastos_de_administracion"/>
+        </record>
+
+        <record model="account.account.template" id="ri_gastos_fiscales">
+            <field name="type">view</field>
+            <field name="code">514</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">GASTOS FISCALES</field>
+            <field name="parent_id" ref="ri_gastos_operativos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_cf">
+            <field name="type">other</field>
+            <field name="code">5140010</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos CABA</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_ba">
+            <field name="type">other</field>
+            <field name="code">5140020</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Bs. As.</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_co">
+            <field name="type">other</field>
+            <field name="code">5140030</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Córdoba</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_sf">
+            <field name="type">other</field>
+            <field name="code">5140040</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Santa Fé</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_a_las_ganancias">
+            <field name="type">other</field>
+            <field name="code">5140050</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos a las ganancias</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_transacciones_bancarias">
+            <field name="type">other</field>
+            <field name="code">5140060</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos a los créditos bancarios</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_transacciones_bancarias">
+            <field name="type">other</field>
+            <field name="code">5140070</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos a los débitos bancarios</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_otros_gastos">
+            <field name="type">view</field>
+            <field name="code">515</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">OTROS GASTOS </field>
+            <field name="parent_id" ref="ri_gastos_operativos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_intereses_y_recargos">
+            <field name="type">other</field>
+            <field name="code">5150010</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Intereses y recargos</field>
+            <field name="parent_id" ref="ri_otros_gastos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_gastos_no_operativos">
+            <field name="type">view</field>
+            <field name="code">52</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">GASTOS NO OPERATIVOS</field>
+            <field name="parent_id" ref="ri_gastos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_amortizaciones">
+            <field name="type">view</field>
+            <field name="code">521</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">AMORTIZACIONES</field>
+            <field name="parent_id" ref="ri_gastos_no_operativos"/>
+        </record>
+
+        <record model="account.account.template" id="ri_amortizaciones_equipos_computacion">
+            <field name="type">other</field>
+            <field name="code">5210010</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Amortizaciones maquinaria y equipos</field>
+            <field name="parent_id" ref="ri_amortizaciones"/>
+        </record>
+
+        <record model="account.account.template" id="ri_amortizaciones_instalaciones">
+            <field name="type">other</field>
+            <field name="code">5210020</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Amortizaciones instalaciones</field>
+            <field name="parent_id" ref="ri_amortizaciones"/>
+        </record>
+
+        <record model="account.account.template" id="ri_amortizacion_muebles_y_utiles">
+            <field name="type">other</field>
+            <field name="code">5210030</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Amortizacion muebles y útiles</field>
+            <field name="parent_id" ref="ri_amortizaciones"/>
+        </record>
+
+        <record model="account.account.template" id="ri_amortizacion_rodados">
+            <field name="type">other</field>
+            <field name="code">5210040</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Amortizacion rodados</field>
+            <field name="parent_id" ref="ri_amortizaciones"/>
+        </record>
+
+
+#
+# Tax Code Templates
+#
+# La generación de los códigos esta dada por los valores de las tablas del AFIP.
+#
+# Listado de impuestos:
+# http://www.afip.gob.ar/genericos/conceptosSubconceptosValidos/listadoImpuestosConSubcon.asp
+# 
+# Tablas generales:
+# http://www.afip.gob.ar/fe/documentos/TABLAS%20GENERALES%20V.0.1%20%2026012011.xls
+#
+# [código de tributo][código de impuesto]:[V: Ventas, C: Compra, P: Percepción, R: Retención, B: Valor bruto de la factura]
+#
+        <record id="ri_tax_code_chart_root" model="account.tax.code.template">
+            <field name="name">Plan de Impuestos de Argentina para Responsables Inscriptos</field>
+            <field name="info">Raíz de la estructura de impuestos de la Argentina. Incluye IVA e Ingresos Brutos para Capital Federal, Buenos Aires, Córdoba y Santa Fé</field>
+	    <field name="code">IVARI</field>
+            <field name="parent_id" eval="False"/>
+        </record>
+
+        <record model="account.tax.code.template" id="ri_impuestos_nacionales">
+            <field name="name">IMPUESTOS NACIONALES</field>
+            <field name="code">01</field>
+            <field name="sign">1</field>
+            <field name="parent_id" ref="ri_tax_code_chart_root"/>
+        </record>
+
+                <record model="account.tax.code.template" id="ri_tax_code_iva">
+                    <field name="name">IVA</field>
+                    <field name="code">010030</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_impuestos_nacionales"/>
+                </record>
+	
+						<record model="account.tax.code.template" id="ri_tax_code_iva_venta0">
+							<field name="code">01003000:V</field>
+							<field name="name">IVA Ventas 0%</field>
+							<field name="sign">1</field>
+							<field name="parent_id" ref="ri_tax_code_iva"/>
+						</record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iva_compras0">
+							<field name="code">01003000:C</field>
+							<field name="name">IVA Compra 0%</field>
+							<field name="sign">-1</field>
+							<field name="parent_id" ref="ri_tax_code_iva"/>
+						</record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iva_venta10">
+							<field name="code">01003004:V</field>
+							<field name="name">IVA Ventas 10.5%</field>
+							<field name="sign">1</field>
+							<field name="parent_id" ref="ri_tax_code_iva"/>
+						</record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iva_compras10">
+							<field name="code">01003004:C</field>
+							<field name="name">IVA Compras 10.5%</field>
+							<field name="sign">-1</field>
+							<field name="parent_id" ref="ri_tax_code_iva"/>
+						</record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iva_venta21">
+							<field name="code">01003005:V</field>
+							<field name="name">IVA Ventas 21%</field>
+							<field name="sign">1</field>
+							<field name="parent_id" ref="ri_tax_code_iva"/>
+						</record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iva_compras21">
+							<field name="code">01003005:C</field>
+							<field name="name">IVA Compras 21%</field>
+							<field name="sign">-1</field>
+							<field name="parent_id" ref="ri_tax_code_iva"/>
+						</record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iva_venta27">
+							<field name="code">01003006:V</field>
+							<field name="name">IVA Ventas 27%</field>
+							<field name="sign">1</field>
+							<field name="parent_id" ref="ri_tax_code_iva"/>
+						</record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iva_compras27">
+							<field name="code">01003006:C</field>
+							<field name="name">IVA Compras 27%</field>
+							<field name="sign">-1</field>
+							<field name="parent_id" ref="ri_tax_code_iva"/>
+						</record>
+
+        <record model="account.tax.code.template" id="ri_tax_code_impuestos_provinciales">
+            <field name="name">IMPUESTOS PROVINCIALES</field>
+            <field name="code">02</field>
+            <field name="sign">1</field>
+            <field name="parent_id" ref="ri_tax_code_chart_root"/>
+        </record>
+
+                <record model="account.tax.code.template" id="ri_tax_code_iibb_cf">
+                    <field name="code">029999</field>
+                    <field name="name">IIBB Capital Federal</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_cf_percepcion">
+                            <field name="code">029999:P</field>
+                            <field name="name">Percepción IIBB Capital Federal</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_cf"/>
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_cf_retencion">
+                            <field name="code">029999:R</field>
+                            <field name="name">Retención IIBB Capital Federal</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_cf"/>
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_cf_facturado">
+                            <field name="code">029999:F</field>
+                            <field name="name">Facturado IIBB Capital Federal</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_cf"/>
+                        </record>
+
+                <record model="account.tax.code.template" id="ri_tax_code_iibb_ba">
+                    <field name="code">022429</field>
+                    <field name="name">IIBB Prov. Buenos Aires</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                </record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iibb_ba_percepcion">
+							<field name="code">022429:P</field>
+							<field name="name">Percepción IIBB Prov. Buenos Aires</field>
+							<field name="sign">-1</field>
+							<field name="parent_id" ref="ri_tax_code_iibb_ba"/>
+						</record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iibb_ba_retencion">
+							<field name="code">022429:R</field>
+							<field name="name">Retención IIBB Prov. Buenos Aires</field>
+							<field name="sign">-1</field>
+							<field name="parent_id" ref="ri_tax_code_iibb_ba"/>
+						</record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iibb_ba_facturado">
+							<field name="code">022429:F</field>
+							<field name="name">Facturado IIBB Prov. Buenos Aires</field>
+							<field name="sign">0.02</field>
+							<field name="parent_id" ref="ri_tax_code_iibb_ba"/>
+						</record>
+
+                <record model="account.tax.code.template" id="ri_tax_code_iibb_co">
+                    <field name="code">022452</field>
+                    <field name="name">IIBB Prov. Córdoba</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                </record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iibb_co_percepcion">
+							<field name="code">022452:P</field>
+							<field name="name">Percepción IIBB Prov. Córdoba</field>
+							<field name="sign">-1</field>
+							<field name="parent_id" ref="ri_tax_code_iibb_co"/>
+						</record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iibb_co_retencion">
+							<field name="code">022452:R</field>
+							<field name="name">Retención IIBB Prov. Córdoba</field>
+							<field name="sign">-1</field>
+							<field name="parent_id" ref="ri_tax_code_iibb_co"/>
+						</record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iibb_co_facturado">
+							<field name="code">022452:F</field>
+							<field name="name">Facturado IIBB Prov. Córdoba</field>
+							<field name="sign">0.02</field>
+							<field name="parent_id" ref="ri_tax_code_iibb_co"/>
+						</record>
+
+                <record model="account.tax.code.template" id="ri_tax_code_iibb_sf">
+                    <field name="code">029998</field>
+                    <field name="name">IIBB Prov. Santa Fé</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                </record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iibb_sf_percepcion">
+							<field name="code">029998:P</field>
+							<field name="name">Percepción IIBB Prov. Santa Fé</field>
+							<field name="sign">-1</field>
+							<field name="parent_id" ref="ri_tax_code_iibb_sf"/>
+						</record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iibb_sf_retencion">
+							<field name="code">029998:R</field>
+							<field name="name">Retención IIBB Prov. Santa Fé</field>
+							<field name="sign">-1</field>
+							<field name="parent_id" ref="ri_tax_code_iibb_sf"/>
+						</record>
+
+						<record model="account.tax.code.template" id="ri_tax_code_iibb_sf_facturado">
+							<field name="code">029998:F</field>
+							<field name="name">Facturado IIBB Prov. Santa Fé</field>
+							<field name="sign">0.02</field>
+							<field name="parent_id" ref="ri_tax_code_iibb_sf"/>
+						</record>
+
+#
+# Chart Template
+#
+        <record id="ri_l10nAR_chart_template" model="account.chart.template">
+            <field name="name">Plan Contable Genérico de Argentina para Responsables Inscriptos</field>
+            <field name="account_root_id" ref="ri_a_root"/>
+            <field name="code_digits">7</field>
+            <field name="tax_code_root_id" ref="ri_tax_code_chart_root"/>
+            <field name="bank_account_view_id" ref="ri_bancos"/>
+            <field name="property_account_receivable" ref="ri_deudores_por_ventas"/>
+            <field name="property_account_payable" ref="ri_pago_proveedores"/>
+            <field name="property_account_expense_categ" ref="ri_mercaderia"/>
+            <field name="property_account_income_categ" ref="ri_venta_de_mercaderia"/>
+        </record>
+
+#
+# Tax Template
+#
+# IVA
+#
+        <record id="ri_tax_vat_0_ventas" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">01003000:V</field>
+            <field name="description">IVA Ventas 0%</field>
+	    <field name="sequence">2</field>
+            <field eval="0.0" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_venta0"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta0"/>
+            <field name="account_collected_id" ref="ri_iva_a_pagar"/>
+            <field name="account_paid_id" ref="ri_iva_a_pagar"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+        <record id="ri_tax_vat_0_compras" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">01003000:C</field>
+            <field name="description">IVA Compras 0%</field>
+	    <field name="sequence">2</field>
+            <field eval="0.0" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_compras0"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras0"/>
+            <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_vat_10_ventas" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">01003004:V</field>
+            <field name="description">IVA Ventas 10.5%</field>
+	    <field name="sequence">2</field>
+            <field eval="0.105" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_venta10"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta10"/>
+            <field name="account_collected_id" ref="ri_iva_a_pagar"/>
+            <field name="account_paid_id" ref="ri_iva_a_pagar"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+        <record id="ri_tax_vat_10_compras" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">01003004:C</field>
+            <field name="description">IVA Compras 10.5%</field>
+	    <field name="sequence">2</field>
+            <field eval="0.105" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_compras10"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras10"/>
+            <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_vat_21_ventas" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">IVA Ventas 21%</field>
+	    <field name="sequence">1</field>
+            <field name="name">01003005:V</field>
+            <field eval="0.21" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_venta21"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta21"/>
+            <field name="account_collected_id" ref="ri_iva_a_pagar"/>
+            <field name="account_paid_id" ref="ri_iva_a_pagar"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+        <record id="ri_tax_vat_21_compras" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">IVA Compras 21%</field>
+	    <field name="sequence">1</field>
+            <field name="name">01003005:C</field>
+            <field eval="0.21" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_compras21"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras21"/>
+            <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_vat_27_ventas" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">IVA Ventas 27%</field>
+	    <field name="sequence">3</field>
+            <field name="name">01003006:V</field>
+            <field eval="0.27" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_venta27"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta27"/>
+            <field name="account_collected_id" ref="ri_iva_a_pagar"/>
+            <field name="account_paid_id" ref="ri_iva_a_pagar"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+        <record id="ri_tax_vat_27_compras" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">IVA Compras 27%</field>
+	    <field name="sequence">3</field>
+            <field name="name">01003006:C</field>
+            <field eval="0.27" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_compras27"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras27"/>
+            <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+#
+# IIBB.
+#
+
+# CABA
+        <record id="ri_tax_iibb_cf_percepcion" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">Percepción de Ingresos Brutos CABA</field>
+	    <field name="sequence">100</field>
+            <field name="name">029999:P</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_cf_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_cf_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_cf"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_cf"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_iibb_cf_retencion" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">Retención de Ingresos Brutos CABA</field>
+	    <field name="sequence">100</field>
+            <field name="name">029999:R</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_cf_retencion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_cf_retencion"/>
+            <field name="account_collected_id" ref="ri_retencion_iibb_cf"/>
+            <field name="account_paid_id" ref="ri_retencion_iibb_cf"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_iibb_cf_facturado" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">Facturación de Ingresos Brutos CABA</field>
+	    <field name="sequence">100</field>
+            <field name="name">029999:F</field>
+            <field eval="0.00" name="amount"/>
+            <field name="type">fixed</field>
+            <field name="base_code_id" ref="ri_tax_code_iibb_cf_facturado"/>
+            <field name="ref_base_code_id" ref="ri_tax_code_iibb_cf_facturado"/>
+            <field name="account_collected_id" ref="ri_impuestos_iibb_cf"/>
+            <field name="account_paid_id" ref="ri_impuestos_iibb_cf"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+# Prov. BsAs.
+
+        <record id="ri_tax_iibb_ba_percepcion" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">Percepción de Ingresos Brutos Prov. Buenos Aires</field>
+	    <field name="sequence">100</field>
+            <field name="name">022429:P</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_ba_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_ba_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_ba"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_ba"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_iibb_ba_retencion" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">Retención de Ingresos Brutos Prov. Buenos Aires</field>
+	    <field name="sequence">100</field>
+            <field name="name">022429:R</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_ba_retencion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_ba_retencion"/>
+            <field name="account_collected_id" ref="ri_retencion_iibb_ba"/>
+            <field name="account_paid_id" ref="ri_retencion_iibb_ba"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_iibb_ba_facturado" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">Facturación Ingresos Brutos Prov. Buenos Aires</field>
+	    <field name="sequence">100</field>
+            <field name="name">022429:F</field>
+            <field eval="0" name="amount"/>
+            <field name="type">fixed</field>
+            <field name="base_code_id" ref="ri_tax_code_iibb_ba_facturado"/>
+            <field name="ref_base_code_id" ref="ri_tax_code_iibb_ba_facturado"/>
+            <field name="account_collected_id" ref="ri_impuestos_iibb_ba"/>
+            <field name="account_paid_id" ref="ri_impuestos_iibb_ba"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+# Prov. Córdoba.
+
+        <record id="ri_tax_iibb_co_percepcion" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">Percepción de Ingresos Brutos Prov. Córdoba</field>
+	    <field name="sequence">100</field>
+            <field name="name">022452:P</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_co_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_co_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_co"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_co"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_iibb_co_retencion" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">Retención de Ingresos Brutos Prov. Córdoba</field>
+	    <field name="sequence">100</field>
+            <field name="name">022452:R</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_co_retencion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_co_retencion"/>
+            <field name="account_collected_id" ref="ri_retencion_iibb_co"/>
+            <field name="account_paid_id" ref="ri_retencion_iibb_co"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_iibb_co_facturado" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">Facturación Ingresos Brutos Prov. Córdoba</field>
+	    <field name="sequence">100</field>
+            <field name="name">022452:F</field>
+            <field eval="0" name="amount"/>
+            <field name="type">fixed</field>
+            <field name="base_code_id" ref="ri_tax_code_iibb_co_facturado"/>
+            <field name="ref_base_code_id" ref="ri_tax_code_iibb_co_facturado"/>
+            <field name="account_collected_id" ref="ri_impuestos_iibb_co"/>
+            <field name="account_paid_id" ref="ri_impuestos_iibb_co"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+# Prov. Santa Fé
+
+        <record id="ri_tax_iibb_sf_percepcion" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">Percepción de Ingresos Brutos Prov. Santa Fé</field>
+	    <field name="sequence">100</field>
+            <field name="name">029998:P</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_sf_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_sf_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_sf"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_sf"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_iibb_sf_retencion" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">Retención de Ingresos Brutos Prov. Santa Fé</field>
+	    <field name="sequence">100</field>
+            <field name="name">029998:R</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_sf_retencion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_sf_retencion"/>
+            <field name="account_collected_id" ref="ri_retencion_iibb_sf"/>
+            <field name="account_paid_id" ref="ri_retencion_iibb_sf"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_iibb_sf_facturado" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">Facturación Ingresos Brutos Prov. Santa Fé</field>
+	    <field name="sequence">100</field>
+            <field name="name">029998:F</field>
+            <field eval="0" name="amount"/>
+            <field name="type">fixed</field>
+            <field name="base_code_id" ref="ri_tax_code_iibb_sf_facturado"/>
+            <field name="ref_base_code_id" ref="ri_tax_code_iibb_sf_facturado"/>
+            <field name="account_collected_id" ref="ri_impuestos_iibb_sf"/>
+            <field name="account_paid_id" ref="ri_impuestos_iibb_sf"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+#
+# Impuestos a las Ganancias
+# TODO. 
+
+    </data>
+</openerp>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (C), 2012, OpenERP - Team de Localización Argentina.
+ https://launchpad.net/~openerp-l10n-ar-localization
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<openerp>
+    <data>
+
+        <record id="view_invoice_ar_installer" model="ir.ui.view">
+            <field name="name">l10n_ar_invoice.config.form</field>
+            <field name="model">l10n_ar_invoice.config</field>
+            <field name="arch" type="xml">
+                <form string="Invoice Configuration for Argentina" version="7.0">
+	                <group>
+	                	<group>
+					    	<field name="company_id" widget="selection" on_change="update_company_id(company_id)"/>
+				    		<field name="responsability_id" widget="selection"/>
+				    		<field name="cuit"/>
+				    		<field name="start_date"/>
+				    		<field name="iibb"/>
+				    	</group>
+				    	<group>
+				    		<field name="debit_notes"/>
+				    		<field name="credit_notes"/>
+				    		<field name="remove_old_journals"/>
+				    		<field name="group_invoice_lines"/>
+				    		<field name="update_posted"/>
+				    		<field name="allow_date"/>
+				    		<field name="point_of_sale"/>
+			    		</group>
+			    	</group>
+			    	<notebook>
+			    		<page string="Other Journals">
+			    			<group col='1'>
+				    			<field name="other_sale_journal_ids"/>
+				    			<field name="other_purchase_journal_ids"/>
+				    		</group>
+			    		</page>
+			    		<page string="Journals to Remove" attrs="{'invisible':[('remove_old_journals','!=',True)]}">
+			    			<p>
+			    				Only Journal without moves and without invoices are displayed
+			    			</p>
+					    	<field name="journals_to_remove_ids"/>
+			    		</page>
+			    	</notebook>
+                    <footer>
+                        <button string="Confirm" name="confirm" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+		    	</form>
+            </field>
+        </record>
+
+	<record id="action_invoice_ar_installer" model="ir.actions.act_window">
+	  <field name="name">Invoice Configuration</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">l10n_ar_invoice.config</field>
+	  <field name="view_id" ref="view_invoice_ar_installer"/>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+	</record>
+
+	<record id="invoice_installer_todo" model="ir.actions.todo">
+        <field name="name">Argentina Invoices/Journals Configuration</field>
+		<field name="action_id" ref="action_invoice_ar_installer"/>
+		<field name="sequence">20</field>
+		<field name="type">automatic</field>
+	</record>
+
+    </data>
+</openerp>
+<!--
+     vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+-->

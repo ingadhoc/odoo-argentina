@@ -1,0 +1,12 @@
+-
+ In order to test bank update we execute action on_process.
+-
+  !python {model: l10nar.banks.wizard}: |
+    self.on_process(cr, uid, [], {})
+    banks_obj = self.pool.get('res.bank')
+    bid = banks_obj.search(cr, uid, [('name','=','Nuevo Banco De Entre Rios S.A.')])
+    bank = banks_obj.browse(cr, uid, bid)[0]
+    import datetime as dt
+    if (bank.update != dt.date.today().isoformat()):
+       raise RuntimeError('El banco no fue actualizado!')
+    

@@ -1,0 +1,152 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* l10n_ar_bank
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.4\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2012-09-19 22:32+0000\n"
+"PO-Revision-Date: 2012-09-19 22:32+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_ar_bank
+#: code:addons/l10n_ar_bank/wizard/wiz_l10n_ar_bank.py:136
+#: field:l10nar.banks.wizard.result,bancos_procesados:0
+#, python-format
+msgid "Banks total processed"
+msgstr "Total de Bancos procesados"
+
+#. module: l10n_ar_bank
+#: view:l10nar.banks.wizard:0
+msgid "Take data and Update"
+msgstr "Tomar datos y Actualizar"
+
+#. module: l10n_ar_bank
+#: code:addons/l10n_ar_bank/wizard/wiz_l10n_ar_bank.py:135
+#: field:l10nar.banks.wizard.result,bancos_desahabilitados:0
+#, python-format
+msgid "Desactivated Banks"
+msgstr "Bancos desactivados"
+
+#. module: l10n_ar_bank
+#: view:l10nar.banks.wizard.result:0
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: l10n_ar_bank
+#: model:ir.module.module,shortdesc:l10n_ar_bank.module_meta_information
+msgid "Banks of Argentina"
+msgstr "Bancos de Argentina"
+
+#. module: l10n_ar_bank
+#: model:ir.actions.act_window,name:l10n_ar_bank.action_l10n_ar_banks_wizard
+msgid "Update Banks from BCRA"
+msgstr "Actualizador de Bancos desde BCRA"
+
+#. module: l10n_ar_bank
+#: view:l10nar.banks.wizard:0
+#: view:l10nar.banks.wizard.result:0
+msgid "Updater Banks from Central Bank of Argentina"
+msgstr "Actualizador de Bancos desde el Banco Central de la Rep. Argentina"
+
+#. module: l10n_ar_bank
+#: view:l10nar.banks.wizard:0
+msgid "ATTENTION!"
+msgstr "ATENCION!"
+
+#. module: l10n_ar_bank
+#: code:addons/l10n_ar_bank/wizard/wiz_l10n_ar_bank.py:133
+#: field:l10nar.banks.wizard.result,bancos_actualizados:0
+#, python-format
+msgid "Banks Upgraded"
+msgstr "Bancos Actualizados"
+
+#. module: l10n_ar_bank
+#: code:addons/l10n_ar_bank/l10n_ar_bank.py:29
+#: field:res.bank,update:0
+#, python-format
+msgid "Update"
+msgstr "Actualizado"
+
+#. module: l10n_ar_bank
+#: view:l10nar.banks.wizard.result:0
+msgid "Results of Updates:"
+msgstr "Resultado de la Actualización:"
+
+#. module: l10n_ar_bank
+#: help:res.bank,vat:0
+msgid "Value Added Tax number."
+msgstr "CUIT de la entidad."
+
+#. module: l10n_ar_bank
+#: code:addons/l10n_ar_bank/l10n_ar_bank.py:30
+#: field:res.bank,vat:0
+#, python-format
+msgid "VAT"
+msgstr "CUIT"
+
+#. module: l10n_ar_bank
+#: code:addons/l10n_ar_bank/wizard/wiz_l10n_ar_bank.py:134
+#: field:l10nar.banks.wizard.result,bancos_nuevos:0
+#, python-format
+msgid "New Banks"
+msgstr "Nuevos Bancos"
+
+#. module: l10n_ar_bank
+#: view:l10nar.banks.wizard:0
+msgid "In this update the Banks of Argentina"
+msgstr "Está a punto de actualizar los datos de los bancos de Argentina"
+
+#. module: l10n_ar_bank
+#: view:l10nar.banks.wizard:0
+msgid "Cancel"
+msgstr "Cancel"
+
+#. module: l10n_ar_bank
+#: view:l10nar.banks.wizard:0
+msgid "with On-Line data taken from Central Bank of Argentina."
+msgstr "con los datos publicados On-Line en el Banco Central de la Rep. Argentina."
+
+#. module: l10n_ar_bank
+#: model:ir.model,name:l10n_ar_bank.model_l10nar_banks_wizard_result
+msgid "l10nar.banks.wizard.result"
+msgstr "l10nar.banks.wizard.result"
+
+#. module: l10n_ar_bank
+#: model:ir.module.module,description:l10n_ar_bank.module_meta_information
+msgid "\n"
+"Part of localization Model for Argentina - Banks of Argentina\n"
+"\n"
+"Includes: \n"
+"	  - Banks declared official at the Central Bank of Argentina (http://www.bcra.gov.ar/) at 08.18.2012 \n"
+"	  - Online updater wizard.\n"
+"\n"
+"Attention: To run the wizard you need to have installed two libraries in python: BeautifulSoup, geopy. Without these two libraries the wizard will fail and will not update the information.\n"
+msgstr "\n"
+"Parte del Model de localización para Argentina - Bancos de Argentina\n"
+"\n"
+"incluye:\n"
+"\n"
+"  - Bancos declarados oficialmente en el banco central de la Republica Argentina (http://www.bcra.gov.ar/) a la fecha 18/08/2012\n"
+"  - A wizard para actualizar los datos online desde el BCRA.\n"
+"\n"
+"Atención: Para ejecutar el wizard debe primero tener instalados dos librerias de python: BeautifulSoup, geopy. Sin estas librerías el wizard fallará y no actualizará los datos de los bancos.\n"
+"\n"
+""
+
+#. module: l10n_ar_bank
+#: model:ir.model,name:l10n_ar_bank.model_res_bank
+msgid "Bank"
+msgstr "Banco"
+
+#. module: l10n_ar_bank
+#: model:ir.model,name:l10n_ar_bank.model_l10nar_banks_wizard
+msgid "l10nar.banks.wizard"
+msgstr "l10nar.banks.wizard"
+

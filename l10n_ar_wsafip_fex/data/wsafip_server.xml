@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2010 Elepe Servicios (http://www.elepeservicios.com.ar)
+ All Rights Reserved
+
+ Author : Dario Kevin De Giacomo (Elepe Servicios)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<openerp>
+    <data noupdate="1">
+
+    <record model='wsafip.server' id='wsfex_prod'>
+        <field name='name'>Factura Electrónica de Exportación</field>
+        <field name='code'>wsfex</field>
+        <field name='class'>production</field>
+        <field name='url'>https://servicios1.afip.gov.ar/wsfexv1/service.asmx</field>
+    </record>
+
+    <record model='wsafip.server' id='wsfex_homo'>
+        <field name='name'>Factura Electrónica de Exportación</field>
+        <field name='code'>wsfex</field>
+        <field name='class'>homologation</field>
+        <field name='url'>https://wswhomo.afip.gov.ar/wsfexv1/service.asmx</field>
+    </record>
+    
+    
+    <!-- Update Incoterms Action -->
+    <record id="action_server_wsfex_update_incoterms" model="ir.actions.server">
+            <field name="name">Update Incoterms</field>
+            <field name="condition">obj.server_id.code == 'wsfex'</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="state">code</field>
+            <field name="code">obj.server_id.wsfex_update_incoterms(obj.id)</field>
+    </record>
+
+    <record model="ir.values" id="action_server_wsfex_update_incoterms">
+            <field name="name">action_module_wsfex_update_incoterms</field>
+            <field name="action_id" ref="action_server_wsfex_update_incoterms" />
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_server_wsfex_update_incoterms'))" />
+            <field name="key">action</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="model">wsafip.connection</field>
+            <field name="key2">client_action_multi</field>
+    </record>
+
+
+    <!-- Update Currency Rates Action -->
+    <record id="action_server_wsfex_update_currency_rates" model="ir.actions.server">
+            <field name="name">Update Currency Rates</field>
+            <field name="condition">obj.server_id.code == 'wsfex'</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="state">code</field>
+            <field name="code">obj.server_id.wsfex_update_currency_rates(obj.id)</field>
+    </record>
+
+    <record model="ir.values" id="action_wsfex_update_currency_rates">
+            <field name="name">action_module_wsfex_update_currency_rates</field>
+            <field name="action_id" ref="action_server_wsfex_update_currency_rates" />
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_server_wsfex_update_currency_rates'))" />
+            <field name="key">action</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="model">wsafip.connection</field>
+            <field name="key2">client_action_multi</field>
+    </record>
+
+
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
+     -->

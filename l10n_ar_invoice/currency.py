@@ -1,0 +1,35 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+# Copyright (C) 2012 OpenERP - Team de Localización Argentina.
+# https://launchpad.net/~openerp-l10n-ar-localization
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+from openerp.osv import fields, osv
+
+class res_currency(osv.osv):
+    _inherit = "res.currency"
+    _description = "Currency"
+
+    _columns = {
+        'afip_code': fields.char('AFIP Code', size=4, readonly=True),
+        'afip_desc': fields.char('AFIP Description', size=250, readonly=True),
+        'afip_dt_from': fields.date('AFIP Valid from', readonly=True),
+    }
+
+res_currency()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

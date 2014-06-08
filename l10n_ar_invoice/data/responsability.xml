@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="False">
+        <record model='afip.responsability' id='res_CF'>
+            <field name='code'>CF</field>
+            <field name='name'>Consumidor Final</field>
+	        <field name='active' eval="True"/>
+        </record>
+
+        <record model='afip.responsability' id='res_IVAE'>
+            <field name='code'>IVAE</field>
+            <field name='name'>IVA Exento</field>
+	        <field name='active' eval="True"/>
+        </record>
+        <record model='afip.responsability' id='res_IVARI'>
+            <field name='code'>IVARI</field>
+            <field name='name'>IVA Responsable Inscripto</field>
+	        <field name='active' eval="True"/>
+        </record>
+        <record model='afip.responsability' id='res_IVARNI'>
+            <field name='code'>IVARNI</field>
+            <field name='name'>IVA Responsable No Inscripto</field>
+	        <field name='active' eval="True"/>
+        </record>
+        <record model='afip.responsability' id='res_IVANR'>
+            <field name='code'>IVANR</field>
+            <field name='name'>IVA No Responsable</field>
+	        <field name='active' eval="True"/>
+        </record>
+        <record model='afip.responsability' id='res_RM'>
+            <field name='code'>RM</field>
+            <field name='name'>Responsable Monotributo</field>
+	        <field name='active' eval="True"/>
+        </record>
+        <record model='afip.responsability' id='res_EXT'>
+            <field name='code'>EXT</field>
+            <field name='name'>Extrangero</field>
+	        <field name='active' eval="True"/>
+        </record>
+    </data>
+</openerp>

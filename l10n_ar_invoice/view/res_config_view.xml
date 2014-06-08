@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<!-- Base Config Settings Form View -->
+		<record id="view_argentinian_base_configuration" model="ir.ui.view">
+			<field name="name">argentinian.base.settings</field>
+			<field name="model">argentinian.base.config.settings</field>
+			<field name="inherit_id" ref="l10n_ar_base.view_argentinian_base_configuration"/>
+			<field name="arch" type="xml">
+				<div name="invoicing">
+					<div attrs="{'invisible':[('module_l10n_ar_invoice','!=',True)]}">
+                        <button type="action" name="%(action_invoice_ar_installer)d" string="Configure company data, invoice journals and other documents journals." icon="gtk-execute" class="oe_link"/>
+						<div name='group_customer_debit_notes'>
+							<field name="group_customer_debit_notes"
+								class="oe_inline" />
+							<label for="group_customer_debit_notes" />
+						</div>									
+						<div name='group_supplier_debit_notes'>
+							<field name="group_supplier_debit_notes"
+								class="oe_inline" />
+							<label for="group_supplier_debit_notes" />
+						</div>			
+						<div name='group_customer_other_documents'>
+							<field name="group_customer_other_documents"
+								class="oe_inline" />
+							<label for="group_customer_other_documents" />
+						</div>							
+						<div name='group_supplier_other_documents'>
+							<field name="group_supplier_other_documents"
+								class="oe_inline" />
+							<label for="group_supplier_other_documents" />
+						</div>									
+					</div>				
+				</div>				
+			</field>
+		</record>
+	</data>
+</openerp>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Desabilitamos la vista que crear report_aeroo porque no es prolijo -->
+        <record model="ir.ui.view" id="report_aeroo.act_report_xml_view1">
+            <field name="priority">90</field>
+        </record>
+        <!-- Para la accion de reportes de aeroo, sacamos las vistas creadas por ahora y dejamos las por default  -->
+        <record model="ir.actions.act_window.view" id="report_aeroo.act_aeroo_report_xml_tree_view">
+            <field name="view_id" ref=""/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="report_aeroo.act_aeroo_report_xml_form_view">
+            <field name="view_id" ref=""/>
+        </record>
+
+        <record id="act_report_extended_xml_view" model="ir.ui.view">
+            <field name="name">ir.actions.report.extended.xml</field>
+            <field name="model">ir.actions.report.xml</field>
+            <field name="inherit_id" ref="base.act_report_xml_view"/>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="type" invisible="1"/>
+                </form>
+                <group>
+                    <group col="4" colspan="4">
+                        <field name="in_format" required="1" on_change="    change_input_format(in_format)"/>
+                        <field name="out_format" required="1" domain="[('compatible_types','=',in_format)]"/>
+                        <field name="report_wizard" attrs="{'invisible': [('report_name','in',['printscreen.list'])]}"/>
+                        <field name="copies" attrs="{'invisible': [('report_name','in',['printscreen.list'])]}"/>
+                    </group>
+                </group>
+
+                <notebook>
+                    <page string="Aeroo Configuration" attrs="{'invisible':[('report_type','!=','aeroo')]}">
+                        <separator string="Template" colspan="4"/>
+                        <group colspan="4" col="8">
+                            <field name="tml_source" colspan="2" required="1"/>
+                            <group colspan="6">
+                                <field name="report_sxw_content_data" string="Template Content" attrs="{'invisible': [('tml_source','&lt;&gt;','database')],'required': [('tml_source','=','database')]}"/>
+                            </group>
+                        </group>
+                        <separator string="Stylesheet" colspan="4"/>
+                        <group colspan="4" col="8">
+                            <field name="styles_mode" colspan="2"/>
+                            <group colspan="6">
+                                <field name="stylesheet_id" attrs="{'invisible': [('styles_mode','&lt;&gt;','specified')]}"/>
+                            </group>
+                        </group>
+                        <group attrs="{'invisible': [('in_format','&lt;&gt;','genshi-raw')]}" colspan="4" col="8">
+                            <field name="charset" colspan="2"/>
+                            <separator colspan="2"/>
+                        </group>
+                        <group colspan="2">
+		                    <field name="parser_state"/>
+                        </group>
+                        <group attrs="{'invisible': [('parser_state','&lt;&gt;','def')]}" colspan="4" expand="1">
+                            <separator string="Parser Definition" colspan="4"/>
+	                        <field name="parser_def" nolabel="1"/>
+                        </group>
+                        <field name="parser_loc" attrs="{'invisible': [('parser_state','&lt;&gt;','loc')],'required': [('parser_state','=','loc')]}"/>
+                    </page>
+                    <page string="Aeroo Advanced" attrs="{'invisible':[('report_type','!=','aeroo')]}">
+                        <group colspan="4" col="6">
+                            <field name="content_fname"/>
+                            <field name="replace_report_id" domain="[('model','=',model),('id','&lt;&gt;',active_id)]"/>
+                            <field name="preload_mode" attrs="{'invisible': ['|',('in_format','=','genshi-raw'),('tml_source','=','parser')]}"/>
+                            <field name="fallback_false" attrs="{'invisible': [('in_format','=','genshi-raw')]}"/>
+                            <field name="active"/>
+                            <field name="deferred"/>
+                            <field name="deferred_limit" attrs="{'invisible':['|',('deferred','=','off'),('deferred','=',False)]}"/>
+                            <newline/>
+                            <field name="xml_id" colspan="6"/>
+                        </group>
+                    </page>
+                </notebook>
+			</field>
+		</record>
+
+    </data>
+</openerp>

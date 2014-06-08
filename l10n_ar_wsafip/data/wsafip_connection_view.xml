@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+##############################################################################
+#
+# Copyright (C) 2012 OpenERP - Team de Localización Argentina.
+# https://launchpad.net/~openerp-l10n-ar-localization
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+-->
+<openerp>
+    <data>
+
+        <record id="view_wsafip_auth_form" model="ir.ui.view">
+            <field name="name">wsafip.auth.form</field>
+            <field name="model">wsafip.connection</field>
+            <field name="arch" type="xml">
+                <form string="AFIP Connector" version="7.0">
+		    <header>
+			    <button colspan="2" name="do_login" string="Login" type="object" states="disconnected,invalid"/>
+				<field name="state" widget="statusbar"
+				    statusbar_colors='{}'
+				    />
+		    </header>
+		    <sheet string="AFIP Servers">
+			    <group>
+				    <field name="name"/>
+				    <field name="partner_id"/>
+				    <field name="server_id"/>
+				    <field name="logging_id"/>
+				    <field name="certificate"/>
+				    <field name="batch_sequence_id"/>
+				    <field name="uniqueid"/>
+				    <field name="generationtime"/>
+				    <field name="expirationtime"/>
+			    </group>
+		    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_wsafip_auth_tree" model="ir.ui.view">
+            <field name="name">wsafip.auth.tree</field>
+            <field name="model">wsafip.connection</field>
+            <field name="arch" type="xml">
+                <tree string="AFIP Connector">
+                    <field name="name"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_wsafip_auth">
+            <field name="name">AFIP Connections</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wsafip.connection</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Sessions" action="act_wsafip_auth" id="menu_action_wsafip_auth" parent="menu_wsafip"/>
+
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
+     -->

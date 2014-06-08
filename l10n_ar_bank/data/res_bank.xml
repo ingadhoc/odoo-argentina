@@ -1,0 +1,1198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="True">
+
+        <record model='res.bank' id='00005'>
+            <field name='name'>Abn  Amro Bank N. V.</field>
+            <field name='code'>ABNAMRO</field>
+            <field name='active'>1</field>
+            <field name='street'>Victoria Ocampo 360</field>
+            <field name='street2'>piso pb</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4320-0600</field>
+            <field name='fax'>011-4322-0603</field>
+            <field name='email'>consultas.por.la.web@ar.abnamro.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00295'>
+            <field name='name'>American Express Bank Ltd. Sociedad Anon</field>
+            <field name='code'>AEXP</field>
+            <field name='active'>1</field>
+            <field name='street'>Arenales 707</field>
+            <field name='street2'></field>
+            <field name='zip'>C1061AAA</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4310-3000</field>
+            <field name='fax'>011-4315-9922</field>
+            <field name='email'>amex.bank.argentina@aexp.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00340'>
+            <field name='name'>Bacs Banco De Credito Y Securitizacion S</field>
+            <field name='code'>BACS</field>
+            <field name='active'>1</field>
+            <field name='street'>Bartolomé Mitre 430</field>
+            <field name='street2'>piso 8a</field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4347-1010</field>
+            <field name='fax'>011-4347-1020</field>
+            <field name='email'>bacs@bacs.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00147'>
+            <field name='name'>Banco B.I. Creditanstalt Sociedad Anonim</field>
+            <field name='code'>BICREDITANSTALT</field>
+            <field name='active'>1</field>
+            <field name='street'>Bouchard 547</field>
+            <field name='street2'></field>
+            <field name='zip'>C1106ABG</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4319-8400</field>
+            <field name='fax'>011-4319-8230</field>
+            <field name='email'>info@bicreditanstalt.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00336'>
+            <field name='name'>Banco Bradesco Argentina S.A.</field>
+            <field name='code'>ARNET</field>
+            <field name='active'>1</field>
+            <field name='street'>25 de Mayo 555</field>
+            <field name='street2'></field>
+            <field name='zip'>C1002ABK</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>01-4114-6111</field>
+            <field name='fax'>01-4114-6199</field>
+            <field name='email'>bradesco@arnet.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00331'>
+            <field name='name'>Banco Cetelem Argentina S.A.</field>
+            <field name='code'>CETELEM</field>
+            <field name='active'>1</field>
+            <field name='street'>Av Del Libertador Gral. San Martin 767</field>
+            <field name='street2'>piso 1</field>
+            <field name='zip'>1638</field>
+            <field name='city'>Vicente López</field>
+            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4796-8600</field>
+            <field name='fax'>011-4796-8641</field>
+            <field name='email'>comercial@cetelem.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00319'>
+            <field name='name'>Banco Cmf S.A.</field>
+            <field name='code'>CMFB</field>
+            <field name='active'>1</field>
+            <field name='street'>Macacha Güemes 150</field>
+            <field name='street2'></field>
+            <field name='zip'>C1106BKD</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4318-6800</field>
+            <field name='fax'>011-4318-6844</field>
+            <field name='email'>cmfb@cmfb.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00389'>
+            <field name='name'>Banco Columbia S.A.</field>
+            <field name='code'>COLUMBIA</field>
+            <field name='active'>1</field>
+            <field name='street'>Tte. Gral. Juan Domingo Perón 350</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-43490300</field>
+            <field name='email'>info@columbia.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00299'>
+            <field name='name'>Banco Comafi Sociedad Anonima</field>
+            <field name='code'>COMAFI</field>
+            <field name='active'>1</field>
+            <field name='street'>Av Pres. Roque Sáenz Pena 660</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4328-5555</field>
+            <field name='fax'>011-4328-9068</field>
+            <field name='email'>contactenos@comafi.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00191'>
+            <field name='name'>Banco Credicoop Cooperativo Limitado</field>
+            <field name='code'>BANCOCREDICOOP</field>
+            <field name='active'>1</field>
+            <field name='street'>Reconquista 452</field>
+            <field name='street2'></field>
+            <field name='zip'>C1003ABJ</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4320-5000</field>
+            <field name='fax'>011-4320-5257</field>
+            <field name='email'>credicoop@bancocredicoop.coop</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00094'>
+            <field name='name'>Banco De Corrientes S.A.</field>
+            <field name='code'>BCOCTES</field>
+            <field name='active'>1</field>
+            <field name='street'>9 de Julio 1099</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Corrientes</field>
+            <field name='state' ref='l10n_ar_states.W'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>03783-479300</field>
+            <field name='fax'>03783-479300</field>
+            <field name='email'>bcteservicios@bcoctes.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00315'>
+            <field name='name'>Banco De Formosa S.A.</field>
+            <field name='code'>FORMOSA</field>
+            <field name='active'>1</field>
+            <field name='street'>25 de Mayo 102</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Formosa</field>
+            <field name='state' ref='l10n_ar_states.P'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>03717-429200</field>
+            <field name='fax'>03717-429844</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00007'>
+            <field name='name'>Banco De Galicia Y Buenos Aires S.A.</field>
+            <field name='code'>BANCOGALICIA</field>
+            <field name='active'>1</field>
+            <field name='street'>Tte. Gral. Juan Domingo Perón 415</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-6329-0000</field>
+            <field name='fax'>011-4329-6100</field>
+            <field name='email'>asuntosinstitucionales@bancogalicia.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00300'>
+            <field name='name'>Banco De Inversion Y Comercio Exterior S</field>
+            <field name='code'>BICE</field>
+            <field name='active'>1</field>
+            <field name='street'>25 de Mayo 526</field>
+            <field name='street2'></field>
+            <field name='zip'>C1002ABL</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4313-9546</field>
+            <field name='fax'>011-4311-5596</field>
+            <field name='email'>comercial@bice.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00029'>
+            <field name='name'>Banco De La Ciudad De Buenos Aires</field>
+            <field name='code'>BANCOCIUDAD</field>
+            <field name='active'>1</field>
+            <field name='street'>Florida 302</field>
+            <field name='street2'></field>
+            <field name='zip'>C1005AAH</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4329-8600</field>
+            <field name='fax'>011-4329-8700</field>
+            <field name='email'>servicioalcliente@bancociudad.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00011'>
+            <field name='name'>Banco De La Nacion Argentina</field>
+            <field name='code'>BNA</field>
+            <field name='active'>1</field>
+            <field name='street'>Bartolomé Mitre 326</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4347-6000</field>
+            <field name='fax'>011-4342-2991</field>
+            <field name='email'>telemarketing@bna.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00093'>
+            <field name='name'>Banco De La Pampa Sociedad De Economмa M</field>
+            <field name='code'>BLP</field>
+            <field name='active'>1</field>
+            <field name='street'>Pellegrini 255</field>
+            <field name='street2'></field>
+            <field name='zip'>L6300DRE</field>
+            <field name='city'>Santa Rosa</field>
+            <field name='state' ref='l10n_ar_states.L'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>02954-451000</field>
+            <field name='email'>infoweb@blp.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00014'>
+            <field name='name'>Banco De La Provincia De Buenos Aires</field>
+            <field name='code'>BAPROPAGOS</field>
+            <field name='active'>1</field>
+            <field name='street'>av. 7 ing. luis monteverde 726</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>La Plata</field>
+            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4347-0000</field>
+            <field name='email'>atencionalclienteBPBA@bapropagos.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00020'>
+            <field name='name'>Banco De La Provincia De Cordoba S.A.</field>
+            <field name='code'>BANCOR</field>
+            <field name='active'>1</field>
+            <field name='street'>San Jerónimo 166</field>
+            <field name='street2'></field>
+            <field name='zip'>X5000AGD</field>
+            <field name='city'>Córdoba</field>
+            <field name='state' ref='l10n_ar_states.X'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0351-4207200</field>
+            <field name='fax'>0351-4207407</field>
+            <field name='email'>contgral@bancor.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00269'>
+            <field name='name'>Banco De La Republica Oriental Del Urugu</field>
+            <field name='code'>BROUBSAS</field>
+            <field name='active'>1</field>
+            <field name='street'>Esmeralda 111</field>
+            <field name='street2'></field>
+            <field name='zip'>C1035ABC</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4132-2000</field>
+            <field name='fax'>011-4132-2092</field>
+            <field name='email'>brou@broubsas.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00045'>
+            <field name='name'>Banco De San Juan S.A.</field>
+            <field name='code'>BANCOSANJUAN</field>
+            <field name='active'>1</field>
+            <field name='street'>Av José Ignacio de La Roza Oeste 85</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>San Juan</field>
+            <field name='state' ref='l10n_ar_states.J'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0264-4291000</field>
+            <field name='fax'>0264-4214126</field>
+            <field name='email'>sdirectorio@bancosanjuan.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00086'>
+            <field name='name'>Banco De Santa Cruz S.A.</field>
+            <field name='code'>BANCOSANTACRUZ</field>
+            <field name='active'>1</field>
+            <field name='street'>av. julio a. roca 812</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Río Gallegos</field>
+            <field name='state' ref='l10n_ar_states.Z'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>02966-441200</field>
+            <field name='fax'>02966-422395</field>
+            <field name='email'>sdirectorio@bancosantacruz.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00321'>
+            <field name='name'>Banco De Santiago Del Estero S.A.</field>
+            <field name='code'>ARNET</field>
+            <field name='active'>1</field>
+            <field name='street'>Av Belgrano Norte 529</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Santiago del Estero</field>
+            <field name='state' ref='l10n_ar_states.G'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0385-450-2300</field>
+            <field name='fax'>0385-450-2319</field>
+            <field name='email'>bsegerencia@arnet.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00332'>
+            <field name='name'>Banco De Servicios Financieros S.A.</field>
+            <field name='code'>CETELEM</field>
+            <field name='active'>1</field>
+            <field name='street'>Cuyo 3367</field>
+            <field name='street2'></field>
+            <field name='zip'>B1640GJA</field>
+            <field name='city'>Martínez</field>
+            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>-4003-7275</field>
+            <field name='fax'>-4003-6923</field>
+            <field name='email'>comercial@cetelem.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00338'>
+            <field name='name'>Banco De Servicios Y Transacciones S.A.</field>
+            <field name='code'>BANCOST</field>
+            <field name='active'>1</field>
+            <field name='street'>Corrientes Ave 1174</field>
+            <field name='street2'>piso 3</field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-5235-2300</field>
+            <field name='fax'>011-5235-2305</field>
+            <field name='email'>info@bancost.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00198'>
+            <field name='name'>Banco De Valores S.A.</field>
+            <field name='code'>BANVAL</field>
+            <field name='active'>1</field>
+            <field name='street'>Sarmiento 310</field>
+            <field name='street2'></field>
+            <field name='zip'>C1041AAH</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4323-6900</field>
+            <field name='fax'>011-4334-1731</field>
+            <field name='email'>info@banval.sba.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00083'>
+            <field name='name'>Banco Del Chubut S.A.</field>
+            <field name='code'>CHUBUTBANK</field>
+            <field name='active'>1</field>
+            <field name='street'>Rivadavia 615</field>
+            <field name='street2'></field>
+            <field name='zip'>U9103ANG</field>
+            <field name='city'>Rawson</field>
+            <field name='state' ref='l10n_ar_states.U'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>02965-482505</field>
+            <field name='fax'>02965-482513</field>
+            <field name='email'>contacto@chubutbank.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00310'>
+            <field name='name'>Banco Del Sol S.A.</field>
+            <field name='code'>BANCODELSOL</field>
+            <field name='active'>1</field>
+            <field name='street'>Av 51 607</field>
+            <field name='street2'></field>
+            <field name='zip'>B1900AVM</field>
+            <field name='city'>La Plata</field>
+            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0221-4232403</field>
+            <field name='fax'>0221-422-9111</field>
+            <field name='email'>buzon@bancodelsol.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00060'>
+            <field name='name'>Banco Del Tucuman S.A.</field>
+            <field name='code'>BANCODELTUCUMAN</field>
+            <field name='active'>1</field>
+            <field name='street'>San Martin 721</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>San Miguel de Tucumán</field>
+            <field name='state' ref='l10n_ar_states.T'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0381-4503300</field>
+            <field name='fax'>0381-4311957</field>
+            <field name='email'>bancodeltucuman@bancodeltucuman.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00046'>
+            <field name='name'>Banco Do Brasil S.A.</field>
+            <field name='code'>BB</field>
+            <field name='active'>1</field>
+            <field name='street'>San Martin 323</field>
+            <field name='street2'>piso 2</field>
+            <field name='zip'>C1004AAG</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>-4000-2700</field>
+            <field name='fax'>-4000-2770</field>
+            <field name='email'>buenosaires@bb.com.br</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00303'>
+            <field name='name'>Banco Finansur S.A.</field>
+            <field name='code'>BANCOFINANSUR</field>
+            <field name='active'>1</field>
+            <field name='street'>Sarmiento 700</field>
+            <field name='street2'></field>
+            <field name='zip'>C1041AAN</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-43243400</field>
+            <field name='fax'>011-43224687</field>
+            <field name='email'>marketing@bancofinansur.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00044'>
+            <field name='name'>Banco Hipotecario S.A.</field>
+            <field name='code'>HIPOTECARIO</field>
+            <field name='active'>1</field>
+            <field name='street'>Reconquista 101</field>
+            <field name='street2'></field>
+            <field name='zip'>C1003ABC</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4347-5000</field>
+            <field name='email'>info@hipotecario.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00322'>
+            <field name='name'>Banco Industrial S.A.</field>
+            <field name='code'>BANCOINDUSTRIAL</field>
+            <field name='active'>1</field>
+            <field name='street'>Sarmiento 530</field>
+            <field name='street2'></field>
+            <field name='zip'>C1041AAL</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-5238-0200</field>
+            <field name='email'>info@bancoindustrial.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00259'>
+            <field name='name'>Banco Itau Argentina S.A.</field>
+            <field name='code'>ITAU</field>
+            <field name='active'>1</field>
+            <field name='street'>Cerrito 740</field>
+            <field name='street2'>piso 19</field>
+            <field name='zip'>C1010AAP</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='email'>consultasysugerenciasclientes@itau.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00305'>
+            <field name='name'>Banco Julio Sociedad Anonima</field>
+            <field name='code'>BANCOJULIO</field>
+            <field name='active'>1</field>
+            <field name='street'>Ituzaingó 169</field>
+            <field name='street2'>piso pb</field>
+            <field name='zip'>X5000IJC</field>
+            <field name='city'>Córdoba</field>
+            <field name='state' ref='l10n_ar_states.X'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0351-4213007</field>
+            <field name='fax'>0351-4213007</field>
+            <field name='email'>gcia.administracion@bancojulio.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00285'>
+            <field name='name'>Banco Macro S.A.</field>
+            <field name='code'>MACRO</field>
+            <field name='active'>1</field>
+            <field name='street'>Sarmiento 447</field>
+            <field name='street2'>piso 7</field>
+            <field name='zip'>C1041AAI</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-5222-6500</field>
+            <field name='email'>serviciosalcliente@macro.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00254'>
+            <field name='name'>Banco Mariva S.A.</field>
+            <field name='code'>MARIVA</field>
+            <field name='active'>1</field>
+            <field name='street'>Sarmiento 500</field>
+            <field name='street2'></field>
+            <field name='zip'>C1041AAJ</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4321-2200</field>
+            <field name='fax'>011-4321-2222</field>
+            <field name='email'>tecnol@mariva.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00341'>
+            <field name='name'>Banco Masventas S.A.</field>
+            <field name='code'>BANCOMASVENTAS</field>
+            <field name='active'>1</field>
+            <field name='street'>España 610</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Salta</field>
+            <field name='state' ref='l10n_ar_states.A'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0387-4310298</field>
+            <field name='fax'>0387-4310914</field>
+            <field name='email'>masventas@bancomasventas.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00281'>
+            <field name='name'>Banco Meridian S.A.</field>
+            <field name='code'>BANCOMERIDIAN</field>
+            <field name='active'>1</field>
+            <field name='street'>Florida 200</field>
+            <field name='street2'></field>
+            <field name='zip'>C1005AAD</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4130-8500</field>
+            <field name='email'>info@bancomeridian.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00065'>
+            <field name='name'>Banco Municipal De Rosario</field>
+            <field name='code'>BMROS</field>
+            <field name='active'>1</field>
+            <field name='street'>Av San Martin 724</field>
+            <field name='street2'></field>
+            <field name='zip'>S2000CJJ</field>
+            <field name='city'>Rosario</field>
+            <field name='state' ref='l10n_ar_states.S'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0341-4256162</field>
+            <field name='fax'>0341-4256182</field>
+            <field name='email'>cliente@bmros.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00034'>
+            <field name='name'>Banco Patagonia S.A.</field>
+            <field name='code'>BANCOPATAGONIA</field>
+            <field name='active'>1</field>
+            <field name='street'>Tte. Gral. Juan Domingo Perón 500</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4132-6300</field>
+            <field name='fax'>011-4331-2793</field>
+            <field name='email'>bancopatagonia@bancopatagonia.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00301'>
+            <field name='name'>Banco Piano S.A.</field>
+            <field name='code'>PIANO</field>
+            <field name='active'>1</field>
+            <field name='street'>San Martin 345</field>
+            <field name='street2'></field>
+            <field name='zip'>C1004AAG</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4394-2463</field>
+            <field name='fax'>011-4325-4942</field>
+            <field name='email'>info@piano.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00306'>
+            <field name='name'>Banco Privado De Inversiones Sociedad An</field>
+            <field name='code'>BANCOPRIVADO</field>
+            <field name='active'>1</field>
+            <field name='street'>Leandro Alem Ave 1110</field>
+            <field name='street2'>piso pb</field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4318-7300</field>
+            <field name='fax'>011-4318-7301</field>
+            <field name='email'>info@bancoprivado.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00268'>
+            <field name='name'>Banco Provincia De Tierra Del Fuego</field>
+            <field name='code'>BANCOTDF</field>
+            <field name='active'>1</field>
+            <field name='street'>maipu esq. brig. juan m.de rosas </field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Ushuaia</field>
+            <field name='state' ref='l10n_ar_states.V'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>02901-441600</field>
+            <field name='fax'>02901-441671</field>
+            <field name='email'>info@bancotdf.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00097'>
+            <field name='name'>Banco Provincia Del Neuquén Sociedad Anс</field>
+            <field name='code'>BPN</field>
+            <field name='active'>1</field>
+            <field name='street'>Av Argentina 41</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Neuquén</field>
+            <field name='state' ref='l10n_ar_states.Q'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0299-4496600</field>
+            <field name='fax'>0299-4480439</field>
+            <field name='email'>institucional@bpn.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00079'>
+            <field name='name'>Banco Regional De Cuyo S.A.</field>
+            <field name='code'>BANCOREGIONAL</field>
+            <field name='active'>1</field>
+            <field name='street'>Av San Martin 841</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Mendoza</field>
+            <field name='state' ref='l10n_ar_states.M'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0261-4498800</field>
+            <field name='fax'>0261-4235999</field>
+            <field name='email'>brc@bancoregional.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00247'>
+            <field name='name'>Banco Roela S.A.</field>
+            <field name='code'>BANCOROELA</field>
+            <field name='active'>1</field>
+            <field name='street'>Rosario de Santa Fe 275</field>
+            <field name='street2'></field>
+            <field name='zip'>X5000ACE</field>
+            <field name='city'>Córdoba</field>
+            <field name='state' ref='l10n_ar_states.X'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0351-4241777</field>
+            <field name='fax'>0351-4230824</field>
+            <field name='email'>servicioalcliente@bancoroela.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00277'>
+            <field name='name'>Banco Saenz S.A.</field>
+            <field name='code'>SAENZSA</field>
+            <field name='active'>1</field>
+            <field name='street'>Esmeralda 83</field>
+            <field name='street2'></field>
+            <field name='zip'>C1035ABA</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4342-6969</field>
+            <field name='fax'>011-4331-2214</field>
+            <field name='email'>contaduria@saenzsa.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00072'>
+            <field name='name'>Banco Santander Rio S.A.</field>
+            <field name='code'>SANTANDERRIO</field>
+            <field name='active'>1</field>
+            <field name='street'>calle 8 esq. calle 50</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>La Plata</field>
+            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4341-1000</field>
+            <field name='fax'>011-4342-8962</field>
+            <field name='email'>info@santanderrio.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00027'>
+            <field name='name'>Banco Supervielle S.A.</field>
+            <field name='code'>SUPERVIELLE</field>
+            <field name='active'>1</field>
+            <field name='street'>Reconquista 330</field>
+            <field name='street2'></field>
+            <field name='zip'>C1003ABH</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4324-8000</field>
+            <field name='fax'>011-4324-8080</field>
+            <field name='email'>Eduardo.Hospital@supervielle.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00262'>
+            <field name='name'>Bank Of America, National Association</field>
+            <field name='code'>BANKOFAMERICA</field>
+            <field name='active'>1</field>
+            <field name='street'>Carlos M. Della Paolera 265</field>
+            <field name='street2'>piso 10</field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4317-3500</field>
+            <field name='email'>alberto.filippini@bankofamerica.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00017'>
+            <field name='name'>Bbva Banco Frances S.A.</field>
+            <field name='code'>BANCOFRANCES</field>
+            <field name='active'>1</field>
+            <field name='street'>Reconquista 199</field>
+            <field name='street2'></field>
+            <field name='zip'>C1003ABC</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4346-4000</field>
+            <field name='email'>mensajes@bancofrances.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00266'>
+            <field name='name'>Bnp Paribas</field>
+            <field name='code'>BNPPARIBAS</field>
+            <field name='active'>1</field>
+            <field name='street'>Bouchard 547</field>
+            <field name='street2'>piso 26</field>
+            <field name='zip'>C1106ABG</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4318-0318</field>
+            <field name='email'>info@bnpparibas.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='65203'>
+            <field name='name'>Caja De Credito "Cuenca" Cooperativa Lim</field>
+            <field name='code'>CCCUENCA</field>
+            <field name='active'>1</field>
+            <field name='street'>99 C. M. Cuenca 456</field>
+            <field name='street2'></field>
+            <field name='zip'>1672</field>
+            <field name='city'>Villa Lynch</field>
+            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4512-6000</field>
+            <field name='fax'>011-4754-9399</field>
+            <field name='email'>cuenca@cccuenca.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='64085'>
+            <field name='name'>Caja De Credito Cooperativa La Capital D</field>
+            <field name='code'>LACAPITALDELPLATA</field>
+            <field name='active'>1</field>
+            <field name='street'>25 de Mayo 522</field>
+            <field name='street2'></field>
+            <field name='zip'>C1002ABL</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-5252-0100</field>
+            <field name='email'>correo@lacapitaldelplata.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00016'>
+            <field name='name'>Citibank N.A.</field>
+            <field name='code'>CITIBANK</field>
+            <field name='active'>1</field>
+            <field name='street'>Bartolomé Mitre 502</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4329-1000</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='44077'>
+            <field name='name'>Compañía Financiera Argentina S.A.</field>
+            <field name='code'>CFA</field>
+            <field name='active'>1</field>
+            <field name='street'>Florida 238</field>
+            <field name='street2'></field>
+            <field name='zip'>C1005AAF</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4348-9999</field>
+            <field name='email'>sac@cfa.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00325'>
+            <field name='name'>Deutsche Bank S.A.</field>
+            <field name='code'>DB</field>
+            <field name='active'>1</field>
+            <field name='street'>Tucumán 1</field>
+            <field name='street2'></field>
+            <field name='zip'>C1049AAA</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4590-2800</field>
+            <field name='fax'>011-4590-2882</field>
+            <field name='email'>monica.mestre@db.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='44092'>
+            <field name='name'>Fiat Credito Compañía Financiera S.A.</field>
+            <field name='code'>FIATFINANCIERA</field>
+            <field name='active'>1</field>
+            <field name='street'>Balcarce 548</field>
+            <field name='street2'></field>
+            <field name='zip'>C1064AAL</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>01-4344-5700</field>
+            <field name='fax'>01-4344-5874</field>
+            <field name='email'>gabriela.bruno@fiatfinanciera.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='44059'>
+            <field name='name'>Ford Credit Compañía Financiera S.A.</field>
+            <field name='code'>FORDMAIL</field>
+            <field name='active'>1</field>
+            <field name='street'>Henry Ford 3295</field>
+            <field name='street2'></field>
+            <field name='zip'>B1610BKK</field>
+            <field name='city'>Ricardo Rojas</field>
+            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>-4510-8325</field>
+            <field name='fax'>-4510-8004</field>
+            <field name='email'>fordcredit@fordmail.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='44090'>
+            <field name='name'>Ge Compañía Financiera S.A.</field>
+            <field name='code'>GE</field>
+            <field name='active'>1</field>
+            <field name='street'>Ing. Enrique Butty 240</field>
+            <field name='street2'>piso 11</field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4104-9600</field>
+            <field name='email'>gemoney_ar@ge.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='44093'>
+            <field name='name'>Gmac Compañía Financiera S.A.</field>
+            <field name='code'>GM</field>
+            <field name='active'>1</field>
+            <field name='street'>Madero 942</field>
+            <field name='street2'></field>
+            <field name='zip'>C1408BRR</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>01-4317-1900</field>
+            <field name='fax'>01-4317-1931</field>
+            <field name='email'>contactenos@gm.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00150'>
+            <field name='name'>Hsbc Bank Argentina S.A.</field>
+            <field name='code'>HSBC</field>
+            <field name='active'>1</field>
+            <field name='street'>Florida 201</field>
+            <field name='street2'></field>
+            <field name='zip'>C1005AAE</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4320-2800</field>
+            <field name='fax'>011-4324-3988</field>
+            <field name='email'>contactenos@hsbc.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='44096'>
+            <field name='name'>John Deere Credit Compañía Financiera S.</field>
+            <field name='code'>JOHNDEERE</field>
+            <field name='active'>1</field>
+            <field name='street'>j. orsetti 481</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Granadero Baigorria</field>
+            <field name='state' ref='l10n_ar_states.S'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0341-410-5331</field>
+            <field name='fax'>0341-410-5310</field>
+            <field name='email'>jdca@johndeere.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00165'>
+            <field name='name'>Jpmorgan Chase Bank, National Associatio</field>
+            <field name='code'>JPMORGAN</field>
+            <field name='active'>1</field>
+            <field name='street'>Av Eduardo Madero 900</field>
+            <field name='street2'>piso 23</field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4325-8046</field>
+            <field name='fax'>011-4348-7254</field>
+            <field name='email'>gayoso_paola@jpmorgan.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00312'>
+            <field name='name'>Mba Lazard Banco De Inversiones S. A.</field>
+            <field name='code'>MERCHANT</field>
+            <field name='active'>1</field>
+            <field name='street'>Av Alicia Moreau de Justo 140</field>
+            <field name='street2'>piso 1</field>
+            <field name='zip'>C1107AAD</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4319-5800</field>
+            <field name='fax'>011-4312-6460</field>
+            <field name='email'>mba@merchant.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='44094'>
+            <field name='name'>Mercedes-Benz Compañía Financiera Argent</field>
+            <field name='code'>DAIMLERCHRYSLER</field>
+            <field name='active'>1</field>
+            <field name='street'>Azucena Villaflor 435</field>
+            <field name='street2'></field>
+            <field name='zip'>C1107CII</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>-4808-8900</field>
+            <field name='fax'>-4808-8977</field>
+            <field name='email'>maria_fernanda.pellegrino@daimlerchrysler.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='44068'>
+            <field name='name'>Metropolis Compañía Financiera S.A.</field>
+            <field name='code'>METROPOLISCF</field>
+            <field name='active'>1</field>
+            <field name='street'>Sarmiento 356</field>
+            <field name='street2'></field>
+            <field name='zip'>C1041AAH</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-5554-5800</field>
+            <field name='fax'>011-5554-5802</field>
+            <field name='email'>mensajes@metropoliscf.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='45056'>
+            <field name='name'>Montemar Compañía Financiera S.A.</field>
+            <field name='code'>MONTEMARCIAFIN</field>
+            <field name='active'>1</field>
+            <field name='street'>Av San Martin 1152</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Mendoza</field>
+            <field name='state' ref='l10n_ar_states.M'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0261-4494500</field>
+            <field name='fax'>0261-4494540</field>
+            <field name='email'>informes@montemarciafin.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='45072'>
+            <field name='name'>Multifinanzas Compañía Financiera S.A.</field>
+            <field name='code'>SINECTIS</field>
+            <field name='active'>1</field>
+            <field name='street'>Sarmiento 448</field>
+            <field name='street2'></field>
+            <field name='zip'>C1041AAJ</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4393-3953</field>
+            <field name='fax'>011-4394-1244</field>
+            <field name='email'>multifin@sinectis.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00386'>
+            <field name='name'>Nuevo Banco De Entre Rмos S.A.</field>
+            <field name='code'>NUEVOBERSA</field>
+            <field name='active'>1</field>
+            <field name='street'>Monte Caseros 128</field>
+            <field name='street2'></field>
+            <field name='zip'>E3100ACD</field>
+            <field name='city'>Paraná</field>
+            <field name='state' ref='l10n_ar_states.E'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0343-4201200</field>
+            <field name='fax'>0343-4313869</field>
+            <field name='email'>info@nuevobersa.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00309'>
+            <field name='name'>Nuevo Banco De La Rioja Sociedad Anonima</field>
+            <field name='code'>NBLR</field>
+            <field name='active'>1</field>
+            <field name='street'>Rivadavia 702</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>La Rioja</field>
+            <field name='state' ref='l10n_ar_states.F'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>03822-430575</field>
+            <field name='fax'>03822-430618</field>
+            <field name='email'>nblrsa@nblr.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00330'>
+            <field name='name'>Nuevo Banco De Santa Fe Sociedad Anonima</field>
+            <field name='code'>BANCOBSF</field>
+            <field name='active'>1</field>
+            <field name='street'>25 de Mayo 2499</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Santa Fe</field>
+            <field name='state' ref='l10n_ar_states.S'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>0341-4294200</field>
+            <field name='fax'>0341-440150</field>
+            <field name='email'>contactobc@bancobsf.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00311'>
+            <field name='name'>Nuevo Banco Del Chaco S. A.</field>
+            <field name='code'>NBCH</field>
+            <field name='active'>1</field>
+            <field name='street'>Güemes 102</field>
+            <field name='street2'></field>
+            <field name='zip'>H3500CBD</field>
+            <field name='city'>Resistencia</field>
+            <field name='state' ref='l10n_ar_states.H'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>03722-447400</field>
+            <field name='fax'>03722-447401</field>
+            <field name='email'>nbchdir@nbch.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='44098'>
+            <field name='name'>Psa Finance Argentina Compañía Financiera</field>
+            <field name='code'>PSA</field>
+            <field name='active'>1</field>
+            <field name='street'>Sarmiento 746</field>
+            <field name='street2'>piso 3</field>
+            <field name='zip'>C1041AAP</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4131-6313</field>
+            <field name='fax'>011-4131-6301</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00339'>
+            <field name='name'>Rci Banque</field>
+            <field name='code'>RCI</field>
+            <field name='active'>1</field>
+            <field name='street'>fray justo santa maria de oro 1744</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Esc. Primaria p/Adultos Nro 16 Fray Justo Santa María de Oro - Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4779-6068</field>
+            <field name='fax'>011-4778-2337</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='44095'>
+            <field name='name'>Rombo Compañía Financiera S.A.</field>
+            <field name='code'>ROMBO</field>
+            <field name='active'>1</field>
+            <field name='street'>fray justo santa maria de oro 1744</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Esc. Primaria p/Adultos Nro 16 Fray Justo Santa María de Oro - Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4779-6065</field>
+            <field name='fax'>011-4779-6072</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00015'>
+            <field name='name'>Standard Bank Argentina S.A.</field>
+            <field name='code'>STANDARDBANK</field>
+            <field name='active'>1</field>
+            <field name='street'>Cecilia Grierson 355</field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-48202000</field>
+            <field name='email'>lavozdelcliente@standardbank.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='00018'>
+            <field name='name'>The Bank Of Tokyo-Mitsubishi Ufj, Ltd.</field>
+            <field name='code'>MUFG</field>
+            <field name='active'>1</field>
+            <field name='street'>Corrientes Ave 420</field>
+            <field name='street2'>piso 2</field>
+            <field name='zip'></field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4348-2000</field>
+            <field name='fax'>011-4348-2051</field>
+            <field name='email'>btmu@ar.mufg.jp</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='44099'>
+            <field name='name'>Toyota Compañía Financiera De Argentina</field>
+            <field name='code'>TOYOTACFA</field>
+            <field name='active'>1</field>
+            <field name='street'>Moreno 877</field>
+            <field name='street2'></field>
+            <field name='zip'>C1091AAQ</field>
+            <field name='city'>Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4341-7900</field>
+            <field name='fax'>011-4341-7966</field>
+            <field name='email'>info@ToyotaCFA.com.ar</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+        <record model='res.bank' id='44088'>
+            <field name='name'>Volkswagen Credit Compañia Financiera S.</field>
+            <field name='code'>VWFS</field>
+            <field name='active'>1</field>
+            <field name='street'>delcasse esq. henry ford </field>
+            <field name='street2'></field>
+            <field name='zip'></field>
+            <field name='city'>General Pacheco</field>
+            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>011-4317-9000</field>
+            <field name='fax'>011-4317-9001</field>
+            <field name='email'>mariana.rodriguez@vwfs.com</field>
+	    <field name='update'>2012-08-18</field>
+        </record>
+    </data>
+</openerp>

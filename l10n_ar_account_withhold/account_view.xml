@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Partner Tax  -->
+        <record model="ir.ui.view" id="view_account_partner_tax_tree">
+            <field name="name">account_partner_tax_tree</field>
+            <field name="model">account.partner.tax</field>
+            <field name="arch" type="xml">
+                <tree string="Partner Tax" >
+                    <field name="account_tax_id"/>
+                    <field name="date"/>
+                    <field name="agent_number"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_account_partner_tax_form">
+            <field name="name">account_partner_tax_form</field>
+            <field name="model">account.partner.tax</field>
+            <field name="arch" type="xml">
+                <form string="Partner Tax" version="7.0">
+                    <group>
+                        <group>
+                            <field name="account_tax_id"/>
+                            <field name="date"/>
+                            <field name="agent_number"/>
+                        </group>
+                        <group>
+                            <field name="comment"/>
+                        </group>
+                    </group>
+                    <label for="exception_ids"/>
+                    <field name="exception_ids"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_account_partner_tax">
+            <field name="name">Partner Tax</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.partner.tax</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Partner Tax Exception-->
+        <record model="ir.ui.view" id="view_account_partner_tax_exception_tree">
+            <field name="name">view_account_partner_tax_exception_tree</field>
+            <field name="model">account.partner.tax.exception</field>
+            <field name="arch" type="xml">
+                <tree string="Partner Tax Exception" >
+                    <field name="name"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_account_partner_tax_exception_form">
+            <field name="name">account_partner_tax_form</field>
+            <field name="model">account.partner.tax.exception</field>
+            <field name="arch" type="xml">
+                <form string="Partner Tax Exception" version="7.0">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="comment"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_account_partner_tax_exception">
+            <field name="name">Partner Tax Exception</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.partner.tax.exception</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Withold Gain Tax Line-->
+        <record model="ir.ui.view" id="view_account_partner_tax_gain_line_tree">
+            <field name="name">view_account_partner_tax_gain_line_tree</field>
+            <field name="model">account.tax.withhold.gain.line</field>
+            <field name="arch" type="xml">
+                <tree string="Withold Gain Tax Line" editable="top">
+                    <field name="account_tax_id"/>
+                    <field name="code"/>
+                    <field name="anex"/>
+                    <field name="concept"/>
+                    <field name="registered_percentage"/>
+                    <field name="none_registered_percentage"/>
+                    <field name="none_withholding_amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_account_partner_tax_gain_line_form">
+            <field name="name">view_account_partner_tax_gain_line_form</field>
+            <field name="model">account.tax.withhold.gain.line</field>
+            <field name="arch" type="xml">
+                <form string="Withold Gain Tax Line" version="7.0">
+                    <group>
+                        <group>
+                            <field name="account_tax_id"/>
+                            <field name="code"/>
+                            <field name="anex"/>
+                            <field name="concept"/>
+                        </group>
+                        <group>
+                            <field name="registered_percentage"/>
+                            <field name="none_registered_percentage"/>
+                            <field name="none_withholding_amount"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_account_partner_tax_gain_line">
+            <field name="name">Withold Gain Tax Line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.tax.withhold.gain.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</openerp>

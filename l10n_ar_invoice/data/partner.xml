@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="True">
+        <record model='res.partner' id='par_cfa'>
+                <field name='name'>Consumidor Final Anónimo</field>
+                <field name='responsability_id' ref='res_CF'/>
+                <field name='document_type_id' ref='dt_Sigd'/>
+                <field name='document_number'>0</field>
+        </record> 
+    </data>
+</openerp>
+ 

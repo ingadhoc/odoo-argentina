@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (C), 2012, OpenERP - Team de Localización Argentina.
+ https://launchpad.net/~openerp-l10n-ar-localization
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<openerp>
+    <data>
+        <record id="partner_afip" model="res.partner">
+            <field name="name">AFIP</field>
+            <field name="is_company" eval="True"/>
+            <field name="customer" eval="True"/>
+            <field name="supplier" eval="True"/>
+            <!-- Esta configuracion hace que no quede una property predeterminada de manera correcta -->
+<!--             <field name="property_account_receivable" ref="ri_iva_retencion"/>
+            <field name="property_account_payable" ref="ri_iva_a_pagar"/> -->
+        </record>
+    </data>
+</openerp>
+
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
+     -->

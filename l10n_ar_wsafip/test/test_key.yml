@@ -1,0 +1,65 @@
+-
+ # Clave privada y Certificado asignado por AFIP.
+ 
+ # En este registro hay que cargar la clave de testing de Homologacion
+ # recibido desde la AFIP. Ver última sección de:
+ 
+ # http://www.afip.gob.ar/ws/WSAA/WSAA.ObtenerCertificado.pdf
+ 
+ # Nota: Para el caso del entorno de Testing, envíelo por e-mail a webservices@afip.gov.ar 
+ #      aclarando a qué WS "de negocio" (por ej.: "wsfe", "wsseg", etc.)
+ #      pretende acceder usando este certificado. El certificado le será devuelto por e-mail.
+ 
+ Private key
+-
+  !record {model: crypto.pairkey, id: pkey_ar_0}:
+    name: Clave de Homologacion (Testing)
+    state: confirmed
+    key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MIICWwIBAAKBgQCrJtlRocuiWqRpjpuWXmcmH+nvRDonQb0OvtdLOp01knuzBDK5
+        OT/F7rxyqibP+/ryD1uRDpP+SVCdfbimJuKiLuRwt8xoGvSrf9VEhvMu/iWLLbSh
+        6aj52kPqX4Bvlu84CZQcvGkrIn8M+tCxGGaWvaPTSrIf2ehRsdgFtnuf3QIDAQAB
+        AoGAXoTg5W0mCW5neAgSsrNF4c8kIUgbmYx7fUY1nc0r/ub7u3xpCtOr/YJ/vg9r
+        ydbN2ppSpkRXxMn2ZFOHAvNcmu9j9wwG8uGxL8KEyFhJMtGVnqpu1eFu0pi3Ac9a
+        4kNO6iaeIgWD5rgo6Hv35YNtTqi10U+D5Mfhg540h3anOp0CQQDXFUYFdUFKOmeo
+        dZee486Vxpr+GRSkaq3zvVUVK8Lf9Xa49lAB3UVN0rgW7hpa736Cm93uqtEc9Y4h
+        727nS5x3AkEAy7YVCBFKVRZ1+mkVbwFxEQyY8eInenFizLfsClzsucvq6JiW3mwY
+        VTlWkxBrcVvj+xYIsCt2sGX7kAVLYSi/SwJAOQGAb43mYiAcvT99kjVa2cOr7NEE
+        8Zb8x+9Uj6nrmqRadSeDiRr2dWv2Ms2k2plDdKaPKeTIS96hb0kgodkefQJARDzF
+        BMPN83ynnm8O5/VCq6Rdo0DPWpuardq6Lap8/avKD4n1l6H78KhZUMACTaGrV5NE
+        68ZTZrlysAal/nDIywJAHyl5r0gQOZu6lgkf/O4hTkNzUUXg2hnDGoTggxggzqlD
+        C0hJio5saIsiAa5EQnFns7vxe312lpnh6/Wpke1cMw==
+        -----END RSA PRIVATE KEY-----
+
+-
+ Certificate
+-
+  !record {model: crypto.certificate, id: cert_ar_0}:
+    name: Certificado de Homologacion (Testing)
+    state: confirmed
+    pairkey_id: pkey_ar_0
+    crt: |
+        -----BEGIN CERTIFICATE-----
+        MIIDuDCCAqCgAwIBAgIICZB6jxDNsZowDQYJKoZIhvcNAQEFBQAwQzElMCMGA1UE
+        AwwcQUZJUCBUZXN0aW5nIENvbXB1dGFkb3JlcyBDQTENMAsGA1UECgwEQUZJUDEL
+        MAkGA1UEBhMCQVIwHhcNMTIwMzAxMTM0MTExWhcNMTQxMTI2MTM0MTExWjBWMQ8w
+        DQYDVQQDDAZtb2xkZW8xGTAXBgNVBAUTEENVSVQgMzA3MTIwMDcyODgxGzAZBgNV
+        BAoMEk1vbGRlbyBJbnRlcmFjdGl2ZTELMAkGA1UEBhMCQVIwgZ8wDQYJKoZIhvcN
+        AQEBBQADgY0AMIGJAoGBAKsm2VGhy6JapGmOm5ZeZyYf6e9EOidBvQ6+10s6nTWS
+        e7MEMrk5P8XuvHKqJs/7+vIPW5EOk/5JUJ19uKYm4qIu5HC3zGga9Kt/1USG8y7+
+        JYsttKHpqPnaQ+pfgG+W7zgJlBy8aSsifwz60LEYZpa9o9NKsh/Z6FGx2AW2e5/d
+        AgMBAAGjggEfMIIBGzAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIF4DAdBgNV
+        HQ4EFgQU2XV8B8HtxbDobe/BNlkJ5kAPt1MwHwYDVR0jBBgwFoAURHTutJwm31bh
+        wQ3rVwuQGTY9lgEwgboGA1UdIASBsjCBrzCBrAYOKwYBBAGBu2MBAgECAQEwgZkw
+        gZYGCCsGAQUFBwICMIGJHoGGAEMAZQByAHQAaQBmAGkAYwBhAGQAbwAgAHAAYQBy
+        AGEAIABjAG8AbQBwAHUAdABhAGQAbwByAGUAcwAgAHMAbwBsAG8AIAB2AGEAbABp
+        AGQAbwAgAGUAbgAgAGUAbgB0AG8AcgBuAG8AcwAgAGQAZQAgAGQAZQBzAGEAcgBy
+        AG8AbABsAG8wDQYJKoZIhvcNAQEFBQADggEBAIDXCIVRQy65rts923TgwD/BX6hq
+        jpTc73CeMxD09vJlB135WWX7EhIVOpkl6c3Ag54YLPQnzfyt9CKhwnHfH8loi0EU
+        aq79T4hQOL+rWFpzY6MzeLhOAFuDLQ9z9LSrJIBxwwkFh2aUAC2Awv6sllI6DTya
+        mBYDom4pcCgRfiH++i+bKrcy+On116aAtG/9STTG7XhgeDZ2ceUsrh9h0anpRHMm
+        rrPvtK9VllyaAd6So1mKhhCobZD1EJ6ZqoGCgiKT3Cja1Q6FrEneeM93Uds0Wbvz
+        SxMgzy/J4dB2ypBayBIFKIG4AuoscCIAXgjagsbq5HyFYuDrj9iLOBhDJuI=
+        -----END CERTIFICATE-----
+

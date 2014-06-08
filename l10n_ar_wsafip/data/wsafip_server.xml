@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="True">
+
+        <record model='wsafip.server' id='wsaa_prod'>
+            <field name='name'>Autentificación y Autorización</field>
+            <field name='code'>wsaa</field>
+	    <field name='class'>production</field>
+	    <field name='url'>https://wsaa.afip.gov.ar/ws/services/LoginCms</field>
+	</record>
+
+        <record model='wsafip.server' id='wsaa_homo'>
+            <field name='name'>Autentificación y Autorización</field>
+            <field name='code'>wsaa</field>
+	    <field name='class'>homologation</field>
+	    <field name='url'>https://wsaahomo.afip.gov.ar/ws/services/LoginCms</field>
+	</record>
+
+    </data>
+</openerp>

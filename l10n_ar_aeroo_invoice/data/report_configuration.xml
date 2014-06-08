@@ -1,0 +1,41 @@
+<openerp>
+    <data noupdate="1">
+        <record model="ir.actions.report.xml" id="report_configuration_1">
+            <field name="name">Factura</field>
+            <field name="report_type">aeroo</field>
+            <field name="report_name">account.invoice_ar</field>
+            <field name="model">account.invoice</field>
+            <field name="print_logo">no_logo</field>
+            <field name="account_invoice_journal_ids" search="[('code','=','VENTA')]" />
+            <field name="account_invoice_state">approved_invoice</field>
+            <field name="account_invoice_tax_included" eval="False"/>
+            <field name="account_invoice_split_invoice" eval="True"/>
+            <field name="account_invoice_lines_to_split">20</field>
+            <field name="tml_source">file</field>
+            <field name="use_background_image" eval="False"/>
+            <field name="background_image" type="base64" file="l10n_ar_aeroo_invoice/report/invoice_back.png"/>
+            <field name="report_rml">l10n_ar_aeroo_invoice/report/factura.odt</field>
+            <field name="parser_loc">report_extended/report/general_parser.py</field>
+            <field name="parser_state">loc</field>
+        </record>
+
+        <record model="ir.actions.report.xml" id="report_configuration_2">
+            <field name="name">Nota de Credito</field>
+            <field name="report_type">aeroo</field>
+            <field name="report_name">account.invoice_nc_ar</field>
+            <field name="model">account.invoice</field>
+            <field name="print_logo">no_logo</field>
+            <field name="account_invoice_journal_ids" search="[('code','=','AVENT')]" />
+            <field name="account_invoice_state">approved_invoice</field>
+            <field name="account_invoice_tax_included" eval="False"/>
+            <field name="account_invoice_split_invoice" eval="False"/>
+            <field name="account_invoice_lines_to_split">0</field>
+            <field name="tml_source">file</field>
+            <field name="use_background_image" eval="False"/>
+            <field name="background_image" type="base64" file="l10n_ar_aeroo_invoice/report/invoice_back.png"/>
+            <field name="report_rml">l10n_ar_aeroo_invoice/report/factura.odt</field>
+            <field name="parser_loc">report_extended/report/general_parser.py</field>
+            <field name="parser_state">loc</field>
+        </record>
+    </data>
+</openerp>

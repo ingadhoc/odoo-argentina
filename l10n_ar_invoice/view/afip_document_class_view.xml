@@ -32,6 +32,8 @@
                     <field name='afip_code'/>
                     <field name='code_template'/>
                     <field name='document_letter_id'/>
+                    <field name='report_name'/>
+                    <field name='vat_discriminated'/>
                     <field name='journal_subtype'/>
                     <field name='active'/>
                 </form>
@@ -47,6 +49,8 @@
                     <field name="afip_code"/>
                     <field name="code_template"/>
                     <field name="document_letter_id"/>
+                    <field name='report_name'/>
+                    <field name='vat_discriminated'/>                    
                     <field name="journal_subtype"/>
                 </tree>
             </field>

@@ -1,0 +1,35 @@
+<openerp>
+    <data noupdate="1">
+
+        <record model="report.configuration.default" id="report_configuration_defaults_69">
+            <field name="name">title_payment</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="account_voucher_receipt.model_account_voucher_receipt"/>
+            <field name="override_values" eval="True"/>
+            <field name="value_type">text</field>
+            <field name="value_text">ORDEN DE PAGO</field>
+            <field name="value_boolean" eval="False"/>
+        </record>
+
+        <record model="report.configuration.default" id="report_configuration_defaults_70">
+            <field name="name">title_receipt</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="account_voucher_receipt.model_account_voucher_receipt"/>
+            <field name="override_values" eval="True"/>
+            <field name="value_type">text</field>
+            <field name="value_text">RECIBO</field>
+            <field name="value_boolean" eval="False"/>
+        </record>
+
+        <record model="report.configuration.default" id="report_configuration_defaults_71">
+            <field name="name">supplier</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="account_voucher_receipt.model_account_voucher_receipt"/>
+            <field name="override_values" eval="True"/>
+            <field name="value_type">text</field>
+            <field name="value_text">Proveedor</field>
+            <field name="value_boolean" eval="False"/>
+        </record>
+                
+    </data>
+</openerp>

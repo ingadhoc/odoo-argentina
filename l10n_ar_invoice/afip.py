@@ -28,6 +28,8 @@ class afip_document_class(osv.osv):
         'code_template': fields.char('Code Template for Journal'),
         'afip_code': fields.integer('AFIP Code',required=True),
         'document_letter_id': fields.many2one('afip.document_letter', 'Document Letter'),
+        'report_name': fields.char('Name on Reports', help='Name that will be printed in reports, for example "CREDIT NOTE"'),
+        'vat_discriminated' : fields.boolean('Vat Discriminated on Invoices?', help="If True, the vat will be discriminated on invoice report."),
         'journal_subtype': fields.selection([('invoice','Invoices'),('credit_note','Credit Notes'),('debit_note','Debit Notes'),('other_document','Other Documents')], string='Journal Subtype', help='It defines some behaviours on automatic journal selection and in menus where it is shown.'),        
         'active': fields.boolean('Active'),
     }

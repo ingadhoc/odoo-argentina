@@ -44,13 +44,21 @@ class argentinian_base_configuration(osv.osv_memory):
             help = """Installs the l10n_ar_states module. """), 
         'module_l10n_ar_vat_reports': fields.boolean('Argentinian Sale/Purchase Vat Reports',
             help = """Installs the l10n_ar_vat_reports module. """),                                                      
-        'module_l10n_ar_aeroo_reports': fields.boolean('Aeroo Reports for Sales, Purchases, Pickings, Invoices based on aeroo reports with typical Argentinean format.',
-            help = """Installs the l10n_ar_aeroo_reports module. """),
         'module_l10n_ar_hide_receipts': fields.boolean('Hide sale/purchase receipts menus.',
             help = """Installs the l10n_ar_hide_receipts module. """),        
         'module_account_accountant': fields.boolean('Manage Financial and Analytic Accounting.',
             help = """Installs the account_accountant module. """),                         
         # 'default_coding_method':fields.selection([('category','Based on the Category'), ('group','Based on Major / Sub Groups')], required=True, default_model='product.product'),
+        'module_l10n_ar_report_invoice': fields.boolean('Argentinian Like Invoice Report',
+            help = """Installs the l10n_ar_report_invoice module."""),
+        'module_l10n_ar_report_remit': fields.boolean('Argentinian Like Remit Report',
+            help = """Installs the l10n_ar_report_remit module."""),
+        'module_l10n_ar_report_purchase': fields.boolean('Argentinian Like Purchase Reports',
+            help = """Installs the l10n_ar_report_purchase module."""),
+        'module_l10n_ar_report_sale': fields.boolean('Argentinian Like Sale Reports',
+            help = """Installs the l10n_ar_report_sale module."""),
+        'module_l10n_ar_report_receipt': fields.boolean('Argentinian Like Receipt Report',
+            help = """Installs the l10n_ar_report_receipt module."""),        
     }        
     
     _defaults = {

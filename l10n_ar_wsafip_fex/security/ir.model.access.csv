@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_afip_incoterms_manager,afip_incoterms.manager,model_afip_incoterms,l10n_ar_wsafip_fe.group_wsafip_fe_admin,1,1,1,1
-access_afip_incoterms_user,afip_incoterms.user,model_afip_incoterms,l10n_ar_wsafip_fe.group_wsafip_fe_user,1,0,0,0
-access_afip_export_permissions_manager,afip_export_permissions.manager,model_afip_export_permissions,l10n_ar_wsafip_fe.group_wsafip_fe_admin,1,1,1,1
-access_afip_export_permissions_user,afip_export_permissions.user,model_afip_export_permissions,l10n_ar_wsafip_fe.group_wsafip_fe_user,1,0,0,0

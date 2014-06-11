@@ -62,4 +62,10 @@ class res_currency(osv.osv):
         'afip_code': fields.char('AFIP Code', size=4),
     }
 
+class account_tax_code(osv.osv):
+    _inherit = "account.tax.code"
+    _columns = {
+        'vat_tax': fields.boolean('VAT Tax?', help="If VAT tax then it will or not be printed on invoices acording partners responsabilities, also, it will or not be use on vat declaration"),
+    }
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

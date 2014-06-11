@@ -68,6 +68,7 @@
                       'view/afip_responsability_view.xml',
                       'view/afip_document_class_view.xml',
                       'view/journal_view.xml',
+                      'view/tax_code_view.xml',
                       'view/invoice_view.xml',
                       'view/res_config_view.xml',
                       'security/ir.model.access.csv'

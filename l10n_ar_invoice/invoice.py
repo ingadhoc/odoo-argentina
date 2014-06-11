@@ -21,75 +21,55 @@
 from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 import logging
+import openerp.addons.decimal_precision as dp
 
 _logger = logging.getLogger(__name__)
-
-_all_taxes = lambda x: True
-_all_except_vat = lambda x: x.tax_code_id.parent_id.name != 'IVA'
 
 class account_invoice_line(osv.osv):
     """
     En argentina como no se diferencian los impuestos en las facturas, excepto el IVA,
-    agrego funciones que ignoran el iva solamenta a la hora de imprimir los valores.
-
-    En esta nueva versión se cambia las tres variables a una única función 'price_calc'
-    que se reemplaza de la siguiente manera:
-
-        'price_unit_vat_included'         -> price_calc(use_vat=True, quantity=1, discount=True)[id]
-        'price_subtotal_vat_included'     -> price_calc(use_vat=True, discount=True)[id]
-        'price_unit_not_vat_included'     -> price_calc(use_vat=False, quantity=1, discount=True)[id]
-        'price_subtotal_not_vat_included' -> price_calc(use_vat=False, discount=True)[id]
-
-    Y ahora puede imprimir sin descuento:
-
-        price_calc(use_vat=True, quantity=1, discount=False)
+    agrego campos que ignoran el iva solamenta a la hora de imprimir los valores.
     """
 
     _inherit = "account.invoice.line"
 
-    def price_calc(self, cr, uid, ids, use_vat=True, tax_filter=None, quantity=None, discount=None, context=None):
+    def _printed_prices(self, cr, uid, ids, name, args, context=None):
         res = {}
-        tax_obj = self.pool.get('account.tax')
+        tax_obj = self.pool['account.tax']
         cur_obj = self.pool.get('res.currency')
-        _tax_filter = tax_filter or ( use_vat and _all_taxes ) or _all_except_vat
-        for line in self.browse(cr, uid, ids):
-            _quantity = quantity if quantity is not None else line.quantity
-            _discount = discount if discount is not None else line.discount
-            _price = line.price_unit * (1-(_discount or 0.0)/100.0)
-            _tax_ids = filter(_tax_filter, line.invoice_line_tax_id)
-            taxes = tax_obj.compute_all(cr, uid,
-                                        _tax_ids, _price, _quantity,
-                                        product=line.product_id,
-                                        partner=line.invoice_id.partner_id)
-            res[line.id] = taxes['total_included']
-            if line.invoice_id:
-                cur = line.invoice_id.currency_id
-                res[line.id] = cur_obj.round(cr, uid, cur, res[line.id])
+
+        for line in self.browse(cr, uid, ids, context=context):
+            _round = (lambda x: cur_obj.round(cr, uid, line.invoice_id.currency_id, x)) if line.invoice_id else (lambda x: x)
+            quantity = line.quantity
+            discount = line.discount
+            printed_price_unit = line.price_unit
+            printed_price_net = line.price_unit * (1-(discount or 0.0)/100.0)
+            printed_price_subtotal = printed_price_net * quantity
+
+            afip_document_class_id = line.invoice_id.journal_id.afip_document_class_id
+            if afip_document_class_id and not afip_document_class_id.vat_discriminated:
+                vat_taxes = [x for x in line.invoice_line_tax_id if x.tax_code_id.vat_tax]
+                print 'vat_taxes', vat_taxes
+                taxes = tax_obj.compute_all(cr, uid,
+                                            vat_taxes, printed_price_net, 1,
+                                            product=line.product_id,
+                                            partner=line.invoice_id.partner_id)
+                printed_price_unit = _round(taxes['total_included'] * (1+(discount or 0.0)/100.0))
+                printed_price_net = _round(taxes['total_included'])
+                printed_price_subtotal = _round(taxes['total_included'] * quantity)
+            
+            res[line.id] = {
+                'printed_price_unit': printed_price_unit,
+                'printed_price_net': printed_price_net,
+                'printed_price_subtotal': printed_price_subtotal, 
+            }
         return res
 
-    def compute_all(self, cr, uid, ids, tax_filter=None, context=None):
-        res = {}
-        tax_obj = self.pool.get('account.tax')
-        cur_obj = self.pool.get('res.currency')
-        _tax_filter = tax_filter
-        for line in self.browse(cr, uid, ids):
-            _quantity = line.quantity
-            _discount = line.discount
-            _price = line.price_unit * (1-(_discount or 0.0)/100.0)
-            _tax_ids = filter(_tax_filter, line.invoice_line_tax_id)
-            taxes = tax_obj.compute_all(cr, uid,
-                                        _tax_ids, _price, _quantity,
-                                        product=line.product_id,
-                                        partner=line.invoice_id.partner_id)
-
-            _round = (lambda x: cur_obj.round(cr, uid, line.invoice_id.currency_id, x)) if line.invoice_id else (lambda x: x)
-            res[line.id] = {
-                'amount_untaxed': _round(taxes['total']),
-                'amount_tax': _round(taxes['total_included'])-_round(taxes['total']),
-                'amount_total': _round(taxes['total_included']), 
-                'taxes': taxes['taxes'],
-            }
-        return res.get(len(ids)==1 and ids[0], res)
+    _columns = {
+        'printed_price_unit': fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Unit Price', multi='printed',),
+        'printed_price_net': fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Net Price', multi='printed'),
+        'printed_price_subtotal': fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Subtotal', multi='printed'),
+    }    
 
 class account_invoice(osv.osv):
     _inherit = "account.invoice"
@@ -104,31 +84,29 @@ class account_invoice(osv.osv):
             result[invoice.id] = journal_ids
         return result
 
+    def _printed_prices(self, cr, uid, ids, name, args, context=None):
+        res = {}
+
+        for invoice in self.browse(cr, uid, ids, context=context):
+            printed_amount_untaxed = invoice.amount_untaxed
+            printed_tax_ids = [x.id for x in invoice.tax_line]
+
+            afip_document_class_id = invoice.journal_id.afip_document_class_id
+            if afip_document_class_id and not afip_document_class_id.vat_discriminated:
+                printed_amount_untaxed = sum(line.printed_price_net for line in invoice.invoice_line)
+                printed_tax_ids = [x.id for x in invoice.tax_line if not x.tax_code_id.vat_tax]
+            
+            res[invoice.id] = {
+                'printed_amount_untaxed': printed_amount_untaxed,
+                'printed_tax_ids': printed_tax_ids,
+            }
+        return res
+
     _columns = {
+        'printed_amount_untaxed': fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Subtotal', multi='printed',),
+        'printed_tax_ids': fields.function(_printed_prices, type='one2many', relation='account.invoice.tax', string='Tax', multi='printed'),
         'available_journal_ids': fields.function(_get_available_journal_ids, relation='account.journal', type='many2many', string='Available Journals'),
     }
-
-    def compute_all(self, cr, uid, ids, line_filter=lambda line: True, tax_filter=lambda tax: True, context=None):
-        res = {}
-        for inv in self.browse(cr, uid, ids, context=context):
-            amounts = []
-            for line in inv.invoice_line:
-                if line_filter(line):
-                    amounts.append(line.compute_all(tax_filter=tax_filter, context=context))
-
-            s = {
-                 'amount_total': 0,
-                 'amount_tax': 0,
-                 'amount_untaxed': 0,
-                 'taxes': [],
-                }
-            for amount in amounts:
-                for key, value in amount.items():
-                    s[key] = s.get(key, 0) + value
-
-            res[inv.id] = s
-
-        return res.get(len(ids)==1 and ids[0], res)
 
     def get_journal_type(self, cr, uid, invoice_type, context=None):
         if invoice_type == 'in_invoice':

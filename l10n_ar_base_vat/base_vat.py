@@ -27,7 +27,7 @@ _re_ar_vat = re.compile('ar(\d\d)(\d*)(\d)')
 class res_partner(osv.osv):
     _inherit = 'res.partner'
 
-    def _get_printed_vat(self, cr, uid, ids, prop, unknown_non, unknow_dict):
+    def _get_formated_vat(self, cr, uid, ids, prop, unknown_non, unknow_dict):
         """
         Retorna el CUIT formateado en forma oficial (XX-XXXXXXXX-X).
         """
@@ -37,7 +37,7 @@ class res_partner(osv.osv):
         return res
 
     _columns = {
-        'printed_vat': fields.function(_get_printed_vat, method=True, string='Printeable VAT', type="string",
+        'formated_vat': fields.function(_get_formated_vat, method=True, string='Printeable VAT', type="string",
                                        store=False),
     }
 

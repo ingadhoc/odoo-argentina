@@ -81,6 +81,28 @@
 <template id="report_invoice_view_document">
     <!-- <t t-call="report.external_layout"> -->
         <t t-call="l10n_ar_report_invoice.argentian_header"/>
+        <style>
+        body
+        {
+        background-image:url('/l10n_ar_report_invoice/static/invoice_back.png');
+        <!-- background-color:#cccccc; -->
+        <!-- background-size:A4 portrait; -->
+        background-size: auto;
+        <!-- background-size:A4 landscape; -->
+        <!-- background-size:100% 100%; -->
+        <!-- background-size:80px 60px; -->
+        background-repeat:no-repeat; 
+        background-attachment:fixed;
+        background-position:center;                
+        }
+        </style>
+<!--         <style>
+        body
+        {
+        background-image:url(t-att-src="'data:image/png;base64,%s' % company.logo");
+        background-color:#cccccc;
+        }
+        </style> -->
         <div class="page">
             <table class="table table-condensed">
                 <thead>

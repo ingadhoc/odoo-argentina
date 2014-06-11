@@ -23,27 +23,63 @@
 <openerp>
     <data>
 
+        <record id="view_account_invoice_filter" model="ir.ui.view">
+            <field name="name">l10n_ar.invoice.search</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <field name="number" position="replace">
+                    <field name="number" string="Invoice" filter_domain="['|','|','|', '|', ('document_number','ilike',self), ('number','ilike',self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', self)]"/>
+                </field>
+                <field name="partner_id" position="after">
+                    <!-- TODO hacer la funcion search de esto y luego habilitar la busqueda -->
+                    <!-- <field name="journal_document_class_id"/> -->
+                </field>
+                <filter string="Journal" position="after">
+                    <filter string="Document Class" icon="terp-folder-orange" domain="[]" context="{'group_by':'journal_document_class_id'}"/>
+                </filter>
+            </field>
+        </record>
+
+        <record id="invoice_tree" model="ir.ui.view">
+            <field name="name">l10n_ar.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="number" position="replace">
+                    <field name="journal_document_class_id"/>
+                    <field name="document_number"/>
+                </field>
+            </field>
+        </record>
+            
         <record id="view_invoice_form" model="ir.ui.view">
             <field name="name">l10n_ar.invoice.form</field>
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
                 <!-- We add context con on_change functions so we can map journals according to the menu where we are -->
-                <field name="partner_id" position="attributes">
+<!--                 <field name="partner_id" position="attributes">
                     <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,context)</attribute>
-                </field>
+                </field> -->
                 <field name="company_id" position="attributes">
                     <attribute name="on_change">onchange_company_id(company_id,partner_id,type,invoice_line,currency_id,context)</attribute>
                 </field>
 
+                <field name="number" position="replace">
+                    <field name="document_number" readonly="1" class="oe_inline"/>
+                </field>
+                <field name="journal_id" position="after">
+                    <field name="journal_document_class_id" required="True" domain="[('journal_id','=',journal_id)]" widget="selection"/>
+                </field>                
                 <!-- We add this functional field so it can be used on journal domain -->
-                <form>
+<!--                 <form>
                     <field name="available_journal_ids" invisible="1"/>
                 </form>
 
                 <field name="journal_id" position="attributes">
                     <attribute name="domain">[('id','in',available_journal_ids[0][2])]</attribute>
-                </field>                    
+                </field>     -->                
             </field>
         </record>
 
@@ -53,21 +89,30 @@
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
                 <!-- We add context con on_change functions so we can map journals according to the menu where we are -->
-                <field name="partner_id" position="attributes">
+<!--                 <field name="partner_id" position="attributes">
                     <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,context)</attribute>
-                </field>
+                </field> -->
                 <field name="company_id" position="attributes">
                     <attribute name="on_change">onchange_company_id(company_id,partner_id,type,invoice_line,currency_id,context)</attribute>
                 </field>
-                
+
+                <field name="supplier_invoice_number" position="replace"/>
+
+                <field name="number" position="replace">
+                    <field name="document_number" class="oe_inline"/>
+                    <field name="supplier_invoice_number" attrs="{'invisible':[('document_number','!=',False)]}" required="True" class="oe_inline"/>
+                </field>
+                <field name="journal_id" position="after">
+                    <field name="journal_document_class_id" required="True" domain="[('journal_id','=',journal_id)]" widget="selection"/>
+                </field>
                 <!-- We add this functional field so it can be used on journal domain -->
-                <form>
+<!--                 <form>
                     <field name="available_journal_ids" invisible="1"/>
                 </form>
 
                 <field name="journal_id" position="attributes">
                     <attribute name="domain">[('id','in',available_journal_ids[0][2])]</attribute>
-                </field>      
+                </field>      --> 
             </field>
         </record>
 

@@ -21,41 +21,38 @@
 ##############################################################################
 -->
 <openerp>
-    <data>
+    <data noupdate="False">
 
-        <record id="view_wsfe_error_form" model="ir.ui.view">
-            <field name="name">wsfe_error.form</field>
-            <field name="model">afip.wsfe_error</field>
+<!--         <record id="view_journal_afip_document_class_form" model="ir.ui.view">
+            <field name="name">Journal Afip Documents Form</field>
+            <field name="model">account.journal.afip_document_class</field>
             <field name="arch" type="xml">
-		    <form string="AFIP Web service Error">
-                    <field name="name"/>
-                    <field name="code"/>
-                    <field name="description"/>
+                <form string="Journal AFIP Documents">
+                    <field name="afip_document_class_id"/>
+                    <field name='sequence_id'/>
                 </form>
             </field>
-        </record>
+        </record> -->
 
-        <record id="view_wsfe_error_tree" model="ir.ui.view">
-            <field name="name">wsfe_error.tree</field>
-            <field name="model">afip.wsfe_error</field>
+        <record id="view_journal_afip_document_class_tree" model="ir.ui.view">
+            <field name="name">Journal Afip Documents Tree</field>
+            <field name="model">account.journal.afip_document_class</field>
             <field name="arch" type="xml">
-		        <tree string="AFIP Web service Error">
-                    <field name="name"/>
-                    <field name="code"/>
+                <tree string="Journal AFIP Documents" editable="top">
+                    <field name="afip_document_class_id"/>
+                    <field name='sequence_id' required="context.get('journal_type',False)in('sale','sale_refund')" invisible="context.get('journal_type',False)not in['sale','sale_refund']"/>
                 </tree>
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="act_wsfe_error">
-            <field name="name">Electronic Invoice Errors</field>
+<!--         <record model="ir.actions.act_window" id="action_journal_afip_document_class">
+            <field name="name">Action Journal Afip Documents</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">afip.wsfe_error</field>
+            <field name="res_model">account.journal.afip_document_class</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-
-        <menuitem name="Electronic Invoice Errors" action="act_wsfe_error" id="menu_action_wsfe_error" parent="l10n_ar_wsafip.menu_wsafip"/>
-
+ -->
     </data>
 </openerp>
 <!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4

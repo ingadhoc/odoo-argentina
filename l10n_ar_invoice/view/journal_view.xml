@@ -29,8 +29,8 @@
             <field name="inherit_id" ref="account.view_account_journal_search"/>
             <field name="arch" type="xml">
                 <field name="name" position="after">
-                    <field name='afip_document_class_id'/>
-                    <field name='product_types'/>                    
+                    <!-- <field name='afip_document_class_id'/> -->
+                    <!-- <field name='product_types'/>                     -->
                     <field name="point_of_sale"/>
                 </field>
             </field>
@@ -44,16 +44,17 @@
                 <field name="code" position="replace"/>
                 <field name="type" position="after">
                     <field name="journal_subtype" attrs="{'invisible': [('type','not in',['purchase','sale'])],'required': [('type','in',['purchase','sale'])]}"/>
-                    <field name='afip_document_class_id' attrs="{'invisible':[('type','not in',['purchase','sale','sale_refund','purchase_refund'])]}" on_change="on_change_afip_document_class(afip_document_class_id, code, context)"/>
+                    <field name="point_of_sale" attrs="{'invisible': [('type','not in',['purchase','sale','purchase_refund','sale_refund'])],'required': [('type','in',['purchase','sale','purchase_refund','sale_refund'])]}"/>
+                    <!-- <field name='afip_document_class_id' attrs="{'invisible':[('type','not in',['purchase','sale','sale_refund','purchase_refund'])]}" on_change="on_change_afip_document_class(afip_document_class_id, code, context)"/> -->
                     <field name="code"/>
                 </field>
                 <notebook position="inside">
-                    <page string="AFIP">
-                        <group colspan="2" col="2">
-                            <separator string="AFIP" colspan="4"/>
-                            <field name='product_types'/> 
-                            <field name="point_of_sale"/>
-                        </group>
+                    <page string="AFIP" attrs="{'invisible': [('type','not in',['purchase','sale','purchase_refund','sale_refund'])]}">
+                        <!-- <group> -->
+                            <!-- <separator string="AFIP" colspan="4"/> -->
+                            <field name='journal_document_class_ids' context="{'journal_type':type}"/> 
+                            <!-- <field name='product_types'/>  -->
+                        <!-- </group> -->
                     </page>
                 </notebook>
             </field>

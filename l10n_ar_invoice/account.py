@@ -1,56 +1,73 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-# Copyright (C) 2012 OpenERP - Team de Localización Argentina.
-# https://launchpad.net/~openerp-l10n-ar-localization
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 from openerp.osv import fields, osv
+
+class account_move(osv.osv):
+    _inherit = "account.move"
+    _columns = {
+        'afip_document_class_id': fields.many2one('afip.document_class', 'Afip Document Class'),
+        'document_number': fields.char('Document Number', size=64, required=True),
+    }
+
+class account_journal_afip_document_class(osv.osv):
+    _name = "account.journal.afip_document_class"
+    _description = "Journal Afip Documents"
+
+    def name_get(self, cr, uid, ids, context=None):
+        # res = {}
+        result= []
+        # if not all(ids):
+        #     return result        
+        for record in self.browse(cr, uid, ids, context=context):
+            result.append((record.id,record.afip_document_class_id.name))
+            # res[record.id] = record.afip_document_class_id.name
+        return result
+# TODO hacer esta funcion search
+    # def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
+    #     if not args:
+    #         args = []
+    #     if context is None:
+    #         context = {}
+    #     ids = []
+    #     if name:
+    #         ids = self.search(cr, user, [('document_number','=',name)] + args, limit=limit, context=context)
+    #         # ids = self.search(cr, user, [('number','=',name)] + args, limit=limit, context=context)
+    #     if not ids:
+    #         ids = self.search(cr, user, [('document_number',operator,name)] + args, limit=limit, context=context)
+    #         # ids = self.search(cr, user, [('name',operator,name)] + args, limit=limit, context=context)
+    #     return self.name_get(cr, user, ids, context)        
+
+    _columns = {
+        'afip_document_class_id': fields.many2one('afip.document_class', 'Afip Document Class', required=True),
+        'sequence_id': fields.many2one('ir.sequence', 'Entry Sequence', required=False, help="This field contains the information related to the numbering of the documents entries of this document class."),
+        'journal_id': fields.many2one('account.journal', 'Journal', required=True),
+    }
 
 class account_journal(osv.osv):
     _inherit = "account.journal"
     _columns = {
-        'code': fields.char('Code', size=10, required=True,
-                            help="The code will be used to generate the numbers of the journal entries of this journal."),
-        'point_of_sale': fields.integer('Point of sale ID'),
+# No lo queremos sobre escribir por ahora
+        # 'code': fields.char('Code', size=10, required=True,
+        #                     help="The code will be used to generate the numbers of the journal entries of this journal."),
+        'journal_document_class_ids': fields.one2many('account.journal.afip_document_class','journal_id','Documents Class',),
+        'point_of_sale': fields.integer('Point of sale'),
         'journal_subtype': fields.selection([('invoice','Invoices'),('debit_note','Debit Notes'),('other_document','Other Documents')], string='Journal Subtype', help='It defines some behaviours on automatic journal selection and in menus where it is shown.'),        
-        # 'journal_subtype': fields.selection([('invoice','Invoices'),('credit_note','Credit Notes'),('debit_note','Debit Notes'),('other_document','Other Documents')], string='Journal Subtype', help='It defines some behaviours on automatic journal selection and in menus where it is shown.'),
-        'afip_document_class_id': fields.many2one('afip.document_class', 'Afip Document Class'),
-        'product_types': fields.char('Product types',
-                                     help='Only use products with this product types in this journals. '
-                                     'Types must be a subset of adjust, consu and service separated by commas.'),
+        # 'journal_subtype': fields.selection([('invoice','Invoices'),('credit_note','Credit Notes'),('debit_note','Debit Notes'),('other_document','Other Documents')], string='Journal Subtype', help='It defines some behaviours on automatic journal selection and in menus where it is shown.'),        
+# Lo agregamos si lo necesitamos mas adelante
+        # 'product_types': fields.char('Product types',
+        #                              help='Only use products with this product types in this journals. '
+        #                              'Types must be a subset of adjust, consu and service separated by commas.'),
     }
 
-    def on_change_afip_document_class(self, cr, uid, ids, afip_document_class_id, code, context=None):
-        # TODO hacer esta funcion y agregar funcionalidad de puntos de venta
-        if afip_document_class_id and not code:
-            print 'return codigo del diario'
-            return {}
-        return {}
+    # def _check_product_types(self, cr, uid, ids, context=None):
+    #     for jc in self.browse(cr, uid, ids, context=context):
+    #         if jc.product_types:
+    #             types = set(jc.product_types.split(','))
+    #             res = types.issubset(['adjust','consu','service'])
+    #         else:
+    #             res = True
+    #     return res
 
-    def _check_product_types(self, cr, uid, ids, context=None):
-        for jc in self.browse(cr, uid, ids, context=context):
-            if jc.product_types:
-                types = set(jc.product_types.split(','))
-                res = types.issubset(['adjust','consu','service'])
-            else:
-                res = True
-        return res
-
-    _constraints = [(_check_product_types, 'You provided an invalid list of product types. Must been separated by commas.', ['product_types'])]
+    # _constraints = [(_check_product_types, 'You provided an invalid list of product types. Must been separated by commas.', ['product_types'])]
 
     _defaults = {
         'journal_subtype': 'invoice',

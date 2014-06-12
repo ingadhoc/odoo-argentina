@@ -6,6 +6,11 @@ class account_move(osv.osv):
     _columns = {
         'afip_document_class_id': fields.many2one('afip.document_class', 'Afip Document Class'),
         'document_number': fields.char('Document Number', size=64, required=True),
+        # 'documen_model_id': fields.function(_get_document_data, string='Document Model',
+        #     type='many2one', relation='account.invoice', fnct_search=_invoice_search),
+        # 'model': fields.char('Related Document Model', size=128, select=1),
+        # 'res_id': fields.integer('Related Document ID', select=1),
+        # 'document_id': fields.reference('Source Document', required=True, selection=_get_document_types, size=128),        
     }
 
 class account_journal_afip_document_class(osv.osv):
@@ -36,10 +41,13 @@ class account_journal_afip_document_class(osv.osv):
     #         # ids = self.search(cr, user, [('name',operator,name)] + args, limit=limit, context=context)
     #     return self.name_get(cr, user, ids, context)        
 
+    _order = 'journal_id desc, sequence, id'
+    
     _columns = {
         'afip_document_class_id': fields.many2one('afip.document_class', 'Afip Document Class', required=True),
         'sequence_id': fields.many2one('ir.sequence', 'Entry Sequence', required=False, help="This field contains the information related to the numbering of the documents entries of this document class."),
         'journal_id': fields.many2one('account.journal', 'Journal', required=True),
+        'sequence': fields.integer('Sequence', help="Gives the sequence order when displaying a list of sales order lines."),
     }
 
 class account_journal(osv.osv):

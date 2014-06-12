@@ -85,15 +85,13 @@ class account_invoice(osv.osv):
     def name_get(self, cr, uid, ids, context=None):
         if not ids:
             return []
-        # TODO mejorar esto para mantenerlo parecido a odoo
-        # types = {
-        #         'out_invoice': _('Invoice'),
-        #         'in_invoice': _('Supplier Invoice'),
-        #         'out_refund': _('Refund'),
-        #         'in_refund': _('Supplier Refund'),
-        #         }
-        # return [(r['id'], '%s %s' % (r['number'] or types[r['type']], r['name'] or '')) for r in self.read(cr, uid, ids, ['type', 'number', 'name'], context, load='_classic_write')]
-        return [(r['id'], r['document_number'] or r['number'] or '') for r in self.read(cr, uid, ids, ['type', 'number', 'document_number'], context, load='_classic_write')]
+        types = {
+                'out_invoice': _('Invoice'),
+                'in_invoice': _('Supplier Invoice'),
+                'out_refund': _('Refund'),
+                'in_refund': _('Supplier Refund'),
+                }
+        return [(r['id'], '%s %s' % (r['document_number'] or types[r['type']], r['number'] or '')) for r in self.read(cr, uid, ids, ['type', 'number', 'document_number'], context, load='_classic_write')]
 
     def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
         if not args:
@@ -114,7 +112,28 @@ class account_invoice(osv.osv):
         # TODO este campo no deberia estar duplicado aca y en el account.move
         'journal_document_class_id': fields.many2one('account.journal.afip_document_class', 'Documents Class'),
         'document_number': fields.related('move_id','document_number', type='char', readonly=True, size=64, relation='account.move', store=True, string='Document Number'),
+        # 'sequence_id': fields.related('journal_id', 'sequence_id', type='many2one', string='Sequence', readonly=True, relation="ir.sequence"),
+        'next_invoice_number': fields.related('journal_document_class_id','sequence_id', 'number_next', type='integer', string='Next Document Number', readonly=True),
+
     }
+
+    def _check_document_number(self, cr, uid, ids, context=None):
+        for invoice in self.browse(cr, uid, ids, context=context):
+            if invoice.type in ['out_invoice','out_refund'] and invoice.document_number:
+                domain = [('type','in',('out_invoice','out_refund')),
+                    ('document_number','=',invoice.document_number),
+                    ('journal_document_class_id.afip_document_class_id','=',invoice.journal_document_class_id.afip_document_class_id.id),
+                    ('company_id','=',invoice.company_id.id)]
+                invoice_ids = self.search(cr, uid, domain, context=context)
+                if invoice_ids:
+                    return False
+        return True
+
+    _sql_constraints = [
+        ('number_supplier_invoice_number', 'unique(supplier_invoice_number, partner_id, company_id)', 'Supplier Invoice Number must be unique per Supplier and Company!'),
+    ]
+
+    _constraints = [(_check_document_number, 'Invoice Document Number must be unique per Document Class and Company!', ['product_types'])]
 
     def action_number(self, cr, uid, ids, context=None):
         obj_sequence = self.pool.get('ir.sequence')
@@ -192,6 +211,17 @@ class account_invoice(osv.osv):
 
             document_letter_ids = document_letter_obj.search(cr, uid, [('issuer_ids', 'in', issuer_responsability_id),('receptor_ids', 'in', receptor_responsability_id)], context=context)
         return document_letter_ids          
+
+    def on_change_journal_document_class_id(self, cr, uid, ids, journal_document_class_id):     
+        result = {}
+        next_invoice_number = False
+        if journal_document_class_id:
+            journal_document_class = self.pool['account.journal.afip_document_class'].browse(cr, uid, journal_document_class_id)
+            if journal_document_class.sequence_id:
+                next_invoice_number = journal_document_class.sequence_id.number_next
+        
+        result['value'] = {'next_invoice_number':next_invoice_number}
+        return result
 
     def onchange_partner_id(self, cr, uid, ids, type, partner_id,
                             date_invoice=False, payment_term=False,

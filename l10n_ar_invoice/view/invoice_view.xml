@@ -37,6 +37,10 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
+                <form>
+                    <field name="available_document_letter_ids" invisible="1"/>
+                </form>
+
                 <field name="partner_id" position="attributes">
                     <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,journal_id)</attribute>
                 </field>
@@ -46,9 +50,14 @@
                 </field>
 
                 <field name="journal_id" position="after">
-                    <field name="journal_document_class_id" required="True" domain="[('journal_id','=',journal_id),('afip_document_class_id.document_letter_id','in',available_document_letter_ids[0][2])]" widget="selection"/>
-                    <field name="available_document_letter_ids" invisible="0"/>
+                    <field name="journal_document_class_id" required="True" domain="[('journal_id','=',journal_id),('afip_document_class_id.document_letter_id','in',available_document_letter_ids[0][2])]" widget="selection" on_change="on_change_journal_document_class_id(journal_document_class_id)"/>
+                    <!-- <field name="next_invoice_number"/> -->
                 </field>    
+
+                <label string="Draft Refund " position="after">
+                    <label string="- Next Number: " attrs="{'invisible': ['|',('state','not in',('draft',)), ('type','not in',['out_refund','out_invoice'])]}"/>
+                    <field name="next_invoice_number" class="oe_inline" attrs="{'invisible': [('state','not in',['draft'])]}"/>
+                </label>
 
                 <field name="journal_id" position="attributes">
                     <attribute name="on_change">onchange_journal_id(journal_id, partner_id, context)</attribute>
@@ -61,6 +70,10 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
+                <form>
+                    <field name="available_document_letter_ids" invisible="1"/>
+                </form>
+
                 <field name="partner_id" position="attributes">
                     <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,journal_id)</attribute>
                 </field>
@@ -68,12 +81,11 @@
                 <field name="supplier_invoice_number" position="replace"/>
                 <field name="number" position="replace">
                     <field name="document_number" readonly="1" class="oe_inline"/>
-                    <field name="supplier_invoice_number" attrs="{'invisible':[('document_number','!=',False)]}" required="True" class="oe_inline"/>
                 </field>
                 
                 <field name="journal_id" position="after">
                     <field name="journal_document_class_id" required="True" domain="[('journal_id','=',journal_id),('afip_document_class_id.document_letter_id','in',available_document_letter_ids[0][2])]" widget="selection"/>
-                    <field name="available_document_letter_ids" invisible="0"/>
+                    <field name="supplier_invoice_number" attrs="{'invisible':[('document_number','!=',False)]}" required="True" class="oe_inline"/>
                 </field>    
 
                 <field name="journal_id" position="attributes">

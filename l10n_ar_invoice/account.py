@@ -3,14 +3,19 @@ from openerp.osv import fields, osv
 
 class account_move(osv.osv):
     _inherit = "account.move"
+
+    def _get_document_data(self, cr, uid, ids, name, arg, context=None):
+        """ TODO """
+        res = {}
+        for record in self.browse(cr, uid, ids, context=context):
+            document_number = False
+            if record.model and record.res_id:
+                document_number = self.pool[record.model].browse(cr, uid, record.res_id, context=context).document_number
+            res[record.id] = document_number
+        return res
+
     _columns = {
-        'afip_document_class_id': fields.many2one('afip.document_class', 'Afip Document Class'),
-        'document_number': fields.char('Document Number', size=64, required=True),
-        # 'documen_model_id': fields.function(_get_document_data, string='Document Model',
-        #     type='many2one', relation='account.invoice', fnct_search=_invoice_search),
-        # 'model': fields.char('Related Document Model', size=128, select=1),
-        # 'res_id': fields.integer('Related Document ID', select=1),
-        # 'document_id': fields.reference('Source Document', required=True, selection=_get_document_types, size=128),        
+        'document_class_id': fields.many2one('afip.document_class', 'Document Type', readonly=True),
     }
 
 class account_journal_afip_document_class(osv.osv):
@@ -22,28 +27,14 @@ class account_journal_afip_document_class(osv.osv):
         for record in self.browse(cr, uid, ids, context=context):
             result.append((record.id,record.afip_document_class_id.name))
         return result
-# TODO hacer esta funcion search
-    # def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
-    #     if not args:
-    #         args = []
-    #     if context is None:
-    #         context = {}
-    #     ids = []
-    #     if name:
-    #         ids = self.search(cr, user, [('document_number','=',name)] + args, limit=limit, context=context)
-    #         # ids = self.search(cr, user, [('number','=',name)] + args, limit=limit, context=context)
-    #     if not ids:
-    #         ids = self.search(cr, user, [('document_number',operator,name)] + args, limit=limit, context=context)
-    #         # ids = self.search(cr, user, [('name',operator,name)] + args, limit=limit, context=context)
-    #     return self.name_get(cr, user, ids, context)        
 
     _order = 'journal_id desc, sequence, id'
     
     _columns = {
-        'afip_document_class_id': fields.many2one('afip.document_class', 'Afip Document Class', required=True),
-        'sequence_id': fields.many2one('ir.sequence', 'Entry Sequence', required=False, help="This field contains the information related to the numbering of the documents entries of this document class."),
+        'afip_document_class_id': fields.many2one('afip.document_class', 'Document Type', required=True),
+        'sequence_id': fields.many2one('ir.sequence', 'Entry Sequence', required=False, help="This field contains the information related to the numbering of the documents entries of this document type."),
         'journal_id': fields.many2one('account.journal', 'Journal', required=True),
-        'sequence': fields.integer('Sequence', help="Gives the sequence order when displaying a list of sales order lines."),
+        'sequence': fields.integer('Sequence',),
     }
 
 class account_journal(osv.osv):
@@ -51,6 +42,7 @@ class account_journal(osv.osv):
     _columns = {
         'journal_document_class_ids': fields.one2many('account.journal.afip_document_class','journal_id','Documents Class',),
         'point_of_sale': fields.integer('Point of sale'),
+        'use_documents': fields.boolean('Use Documents?'),
         # Lo agregamos si lo necesitamos mas adelante
         # 'product_types': fields.char('Product types',
         #                              help='Only use products with this product types in this journals. '

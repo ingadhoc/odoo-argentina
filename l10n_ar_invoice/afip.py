@@ -12,6 +12,7 @@ class afip_document_class(osv.osv):
         'report_name': fields.char('Name on Reports', help='Name that will be printed in reports, for example "CREDIT NOTE"'),
         'vat_discriminated' : fields.boolean('Vat Discriminated on Invoices?', help="If True, the vat will be discriminated on invoice report."),
         # 'journal_subtype': fields.selection([('invoice','Invoices'),('credit_note','Credit Notes'),('debit_note','Debit Notes'),('other_document','Other Documents')], string='Journal Subtype', help='It defines some behaviours on automatic journal selection and in menus where it is shown.'),        
+        'document_type': fields.selection([('invoice','Invoices'),('credit_note','Credit Notes'),('debit_note','Debit Notes'),('other_document','Other Documents')], string='Document Type', help='It defines some behaviours on automatic journal selection and in menus where it is shown.'),
         'active': fields.boolean('Active'),
     }
 

@@ -18,14 +18,17 @@
             <field name="name">account.journal.ar.form</field>
             <field name="inherit_id" ref="account.view_account_journal_form"/>
             <field name="arch" type="xml">
-                <field name="code" position="replace"/>
                 <field name="type" position="after">
-                    <field name="point_of_sale" attrs="{'invisible': [('type','not in',['purchase','sale','purchase_refund','sale_refund'])],'required': [('type','in',['purchase','sale','purchase_refund','sale_refund'])]}"/>
-                    <field name="code"/>
+                    <field name="use_documents" attrs="{'invisible': [('type','not in',['purchase','sale','purchase_refund','sale_refund'])]}"/>
                 </field>
+                    
                 <notebook position="inside">
-                    <page string="AFIP" attrs="{'invisible': [('type','not in',['purchase','sale','purchase_refund','sale_refund'])]}">
+                    <page string="Documents" attrs="{'invisible': ['|',('use_documents','=',False),('type','not in',['purchase','sale','purchase_refund','sale_refund'])]}">
+                        <button name="%(action_account_journal_document_config_form)d" string="Create Journal Documents" type="action" context="{'type':type}"/>
+                        <group>
+                            <field name="point_of_sale" attrs="{'invisible': ['|',('type','not in',['sale','sale_refund'])],'required': [('use_documents','=',True),('type','in',['sale','sale_refund'])]}"/>
                             <field name='journal_document_class_ids' context="{'journal_type':type}"/> 
+                        </group>
                     </page>
                 </notebook>
             </field>

@@ -91,7 +91,9 @@ class account_invoice(osv.osv):
                 'out_refund': _('Refund'),
                 'in_refund': _('Supplier Refund'),
                 }
-        return [(r['id'], '%s %s' % (r['document_number'] or types[r['type']], r['number'] or '')) for r in self.read(cr, uid, ids, ['type', 'number', 'document_number'], context, load='_classic_write')]
+        # we change thisone for
+        # return [(r['id'], '%s %s' % (r['number'] or types[r['type']], r['name'] or '')) for r in self.read(cr, uid, ids, ['type', 'number', 'name'], context, load='_classic_write')]                
+        return [(r['id'], '%s %s' % (r['reference'] or types[r['type']], r['number'] or '')) for r in self.read(cr, uid, ids, ['type', 'number', 'reference'], context, load='_classic_write')]
 
     def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
         if not args:
@@ -100,32 +102,37 @@ class account_invoice(osv.osv):
             context = {}
         ids = []
         if name:
-            ids = self.search(cr, user, [('document_number','=',name)] + args, limit=limit, context=context)
+            ids = self.search(cr, user, [('reference','=',name)] + args, limit=limit, context=context)
         if not ids:
-            ids = self.search(cr, user, [('document_number',operator,name)] + args, limit=limit, context=context)
+            ids = self.search(cr, user, [('reference',operator,name)] + args, limit=limit, context=context)
         return self.name_get(cr, user, ids, context)
 
     _columns = {
         'printed_amount_untaxed': fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Subtotal', multi='printed',),
         'printed_tax_ids': fields.function(_printed_prices, type='one2many', relation='account.invoice.tax', string='Tax', multi='printed'),
         'available_document_letter_ids': fields.function(_get_available_document_letters, relation='afip.document_letter', type='many2many', string='Available Document Letters'),
-        # TODO este campo no deberia estar duplicado aca y en el account.move
-        'journal_document_class_id': fields.many2one('account.journal.afip_document_class', 'Documents Class'),
-        'document_number': fields.related('move_id','document_number', type='char', readonly=True, size=64, relation='account.move', store=True, string='Document Number'),
-        # 'sequence_id': fields.related('journal_id', 'sequence_id', type='many2one', string='Sequence', readonly=True, relation="ir.sequence"),
-        'next_invoice_number': fields.related('journal_document_class_id','sequence_id', 'number_next', type='integer', string='Next Document Number', readonly=True),
-
+        'journal_document_class_id': fields.many2one('account.journal.afip_document_class', 'Documents Type', readonly=True, states={'draft':[('readonly',False)]}),
+        'afip_document_class_id': fields.related('journal_document_class_id', 'afip_document_class_id',relation='afip.document_class', type='many2one', string='Document Type', readonly=True, store=True),
+        'next_invoice_number': fields.related('journal_document_class_id','sequence_id', 'number_next_actual', type='integer', string='Next Document Number', readonly=True),
+        'use_documents': fields.related('journal_id','use_documents', type='boolean', string='Use Documents?', readonly=True),
     }
 
-    def _check_document_number(self, cr, uid, ids, context=None):
+    def _check_reference(self, cr, uid, ids, context=None):
+    # def _check_document_number(self, cr, uid, ids, context=None):
         for invoice in self.browse(cr, uid, ids, context=context):
-            if invoice.type in ['out_invoice','out_refund'] and invoice.document_number:
+            if invoice.type in ['out_invoice','out_refund'] and invoice.reference and invoice.state == 'open':
+            # if invoice.type in ['out_invoice','out_refund'] and invoice.document_number:
                 domain = [('type','in',('out_invoice','out_refund')),
-                    ('document_number','=',invoice.document_number),
+                    ('reference','=',invoice.reference),
+                    # ('document_number','=',invoice.document_number),
                     ('journal_document_class_id.afip_document_class_id','=',invoice.journal_document_class_id.afip_document_class_id.id),
-                    ('company_id','=',invoice.company_id.id)]
+                    ('company_id','=',invoice.company_id.id),
+                    ('id','!=',invoice.id)]
                 invoice_ids = self.search(cr, uid, domain, context=context)
+                print 'domain', domain
+                print 'invoice_ids', invoice_ids
                 if invoice_ids:
+                    # return True
                     return False
         return True
 
@@ -133,22 +140,74 @@ class account_invoice(osv.osv):
         ('number_supplier_invoice_number', 'unique(supplier_invoice_number, partner_id, company_id)', 'Supplier Invoice Number must be unique per Supplier and Company!'),
     ]
 
-    _constraints = [(_check_document_number, 'Invoice Document Number must be unique per Document Class and Company!', ['product_types'])]
+    _constraints = [(_check_reference, 'Invoice Reference Number must be unique per Document Class and Company!', ['referece','afip_document_class_id','company_id'])]
+    # _constraints = [(_check_document_number, 'Invoice Document Number must be unique per Document Class and Company!', ['product_types'])]
 
-    def action_number(self, cr, uid, ids, context=None):
+    def create(self, cr, uid, vals, context=None):
+        '''We modify create for 2 popuses:
+        - Modify create function so it can try to set a right document for the invoice
+        - If reference in values, we clean it for argentinian companies as it will be used for invoice number
+        ''' 
+        # First purpose
+        if not context:
+            context = {}
+        partner_id = vals.get('partner_id', False)
+        journal_id = vals.get('journal_id', False)
+        if journal_id and partner_id:
+            journal = self.pool['account.journal'].browse(cr, uid, journal_id)
+            journal_type = journal.type
+            letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=journal.company_id.id)
+            domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
+            journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
+            if journal_document_class_ids:
+                vals['journal_document_class_id'] = journal_document_class_ids[0]
+
+        # second purpose
+        # TODO hacer que se limpie la reference solamente para companias argentinas
+        if 'reference' in vals:
+            vals['reference'] = False
+        return super(account_invoice, self).create(cr, uid, vals, context=context)
+
+    def action_move_create(self, cr, uid, ids, context=None):
         obj_sequence = self.pool.get('ir.sequence')
+        
+        # We write reference field with next invoice number by document type
+        for obj_inv in self.browse(cr, uid, ids, context=context):
+            invtype = obj_inv.type
+            # if we have a journal_document_class_id is beacuse we are in a company that use this function
+            # also if it has a reference number we use it (for example when cancelling for modification)
+            if obj_inv.journal_document_class_id and not obj_inv.reference:
+                if invtype in ('out_invoice', 'out_refund'):
+                    if not obj_inv.journal_document_class_id.sequence_id:
+                        raise osv.except_osv(_('Error!'), _('Please define sequence on the journal related documents to this invoice.'))
+                    reference = obj_sequence.next_by_id(cr, uid, obj_inv.journal_document_class_id.sequence_id.id, context)
+                elif invtype in ('in_invoice', 'in_refund'):
+                    reference = obj_inv.supplier_invoice_number
+                obj_inv.write({'reference':reference})
+        res = super(account_invoice, self).action_move_create(cr, uid, ids, context=context)
+        
+        # on created moves we write the document type
         for obj_inv in self.browse(cr, uid, ids, context=context):
             invtype = obj_inv.type
             # if we have a journal_document_class_id is beacuse we are in a company that use this function
             if obj_inv.journal_document_class_id:
-                if invtype in ('out_invoice', 'out_refund'):
-                    if not obj_inv.journal_document_class_id.sequence_id:
-                        raise osv.except_osv(_('Error!'), _('Please define sequence on the journal related documents to this invoice.'))
-                    document_number = obj_sequence.next_by_id(cr, uid, obj_inv.journal_document_class_id.sequence_id.id, context)
-                elif invtype in ('in_invoice', 'in_refund'):
-                    document_number = obj_inv.supplier_invoice_number
-                obj_inv.write({'document_number':document_number})
-        return super(account_invoice, self).action_number(cr, uid, ids, context)
+                obj_inv.move_id.write({'document_class_id':obj_inv.journal_document_class_id.afip_document_class_id.id})
+        return res
+
+    # def action_number(self, cr, uid, ids, context=None):
+    #     obj_sequence = self.pool.get('ir.sequence')
+    #     for obj_inv in self.browse(cr, uid, ids, context=context):
+    #         invtype = obj_inv.type
+    #         # if we have a journal_document_class_id is beacuse we are in a company that use this function
+    #         if obj_inv.journal_document_class_id:
+    #             if invtype in ('out_invoice', 'out_refund'):
+    #                 if not obj_inv.journal_document_class_id.sequence_id:
+    #                     raise osv.except_osv(_('Error!'), _('Please define sequence on the journal related documents to this invoice.'))
+    #                 document_number = obj_sequence.next_by_id(cr, uid, obj_inv.journal_document_class_id.sequence_id.id, context)
+    #             elif invtype in ('in_invoice', 'in_refund'):
+    #                 document_number = obj_inv.supplier_invoice_number
+    #             obj_inv.write({'document_number':document_number})
+    #     return super(account_invoice, self).action_number(cr, uid, ids, context)
 
     # TODO si deja de ser related hay que blanquearlo
     # def copy(self, cr, uid, id, default=None, context=None):
@@ -256,21 +315,6 @@ class account_invoice(osv.osv):
                 journal_document_class_id = journal_document_class_ids[0]
             if 'domain' not in result: result['domain'] = {}        
             result['domain']['journal_document_class_id'] = [('id', 'in', journal_document_class_ids)]  
+            result['value']['use_documents'] = journal.use_documents
         result['value']['journal_document_class_id'] = journal_document_class_id
         return result
-
-    def create(self, cr, uid, vals, context=None):
-        ''' Modify create function so it can try to set a right document for the invoice'''
-        if not context:
-            context = {}
-        partner_id = vals.get('partner_id', False)
-        journal_id = vals.get('journal_id', False)
-        if journal_id and partner_id:
-            journal = self.pool['account.journal'].browse(cr, uid, journal_id)
-            journal_type = journal.type
-            letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=journal.company_id.id)
-            domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
-            journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
-            if journal_document_class_ids:
-                vals['journal_document_class_id'] = journal_document_class_ids[0]
-        return super(account_invoice, self).create(cr, uid, vals, context)

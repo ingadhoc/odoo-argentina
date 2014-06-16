@@ -11,3 +11,5 @@ access_afip_document_letter_manager,afip.document_letter.manager,model_afip_docu
 access_afip_document_letter_user,afip.document_letter.user,model_afip_document_letter,,1,0,0,0
 access_afip_optional_type_manager,afip.optional_type.manager,model_afip_optional_type,account.group_account_manager,1,1,1,1
 access_afip_optional_type_user,afip.optional_type.user,model_afip_optional_type,,1,0,0,0
+access_journal_afip_document_class_manager,journal_afip_document_class.manager,model_account_journal_afip_document_class,account.group_account_manager,1,1,1,1
+access_journal_afip_document_class_user,journal_afip_document_class.user,model_account_journal_afip_document_class,,1,0,0,0

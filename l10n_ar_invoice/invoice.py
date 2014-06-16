@@ -73,12 +73,12 @@ class account_invoice(osv.osv):
 
             afip_document_class_id = invoice.journal_document_class_id.afip_document_class_id
             if afip_document_class_id and not afip_document_class_id.vat_discriminated:
-                printed_amount_untaxed = sum(line.printed_price_net for line in invoice.invoice_line)
+                printed_amount_untaxed = sum(line.printed_price_subtotal for line in invoice.invoice_line)
                 printed_tax_ids = [x.id for x in invoice.tax_line if not x.tax_code_id.vat_tax]
-            
             res[invoice.id] = {
                 'printed_amount_untaxed': printed_amount_untaxed,
                 'printed_tax_ids': printed_tax_ids,
+                'printed_amount_tax': invoice.amount_total - printed_amount_untaxed,
             }
         return res
 
@@ -91,8 +91,6 @@ class account_invoice(osv.osv):
                 'out_refund': _('Refund'),
                 'in_refund': _('Supplier Refund'),
                 }
-        # we change thisone for
-        # return [(r['id'], '%s %s' % (r['number'] or types[r['type']], r['name'] or '')) for r in self.read(cr, uid, ids, ['type', 'number', 'name'], context, load='_classic_write')]                
         return [(r['id'], '%s %s' % (r['reference'] or types[r['type']], r['number'] or '')) for r in self.read(cr, uid, ids, ['type', 'number', 'reference'], context, load='_classic_write')]
 
     def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
@@ -108,6 +106,7 @@ class account_invoice(osv.osv):
         return self.name_get(cr, user, ids, context)
 
     _columns = {
+        'printed_amount_tax': fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Tax', multi='printed',),
         'printed_amount_untaxed': fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Subtotal', multi='printed',),
         'printed_tax_ids': fields.function(_printed_prices, type='one2many', relation='account.invoice.tax', string='Tax', multi='printed'),
         'available_document_letter_ids': fields.function(_get_available_document_letters, relation='afip.document_letter', type='many2many', string='Available Document Letters'),
@@ -129,8 +128,6 @@ class account_invoice(osv.osv):
                     ('company_id','=',invoice.company_id.id),
                     ('id','!=',invoice.id)]
                 invoice_ids = self.search(cr, uid, domain, context=context)
-                print 'domain', domain
-                print 'invoice_ids', invoice_ids
                 if invoice_ids:
                     # return True
                     return False
@@ -141,7 +138,6 @@ class account_invoice(osv.osv):
     ]
 
     _constraints = [(_check_reference, 'Invoice Reference Number must be unique per Document Class and Company!', ['referece','afip_document_class_id','company_id'])]
-    # _constraints = [(_check_document_number, 'Invoice Document Number must be unique per Document Class and Company!', ['product_types'])]
 
     def create(self, cr, uid, vals, context=None):
         '''We modify create for 2 popuses:
@@ -305,16 +301,17 @@ class account_invoice(osv.osv):
     def onchange_journal_id(self, cr, uid, ids, journal_id=False, partner_id=False, context=None):
         result = super(account_invoice, self).onchange_journal_id(cr, uid, ids, journal_id, context)
         journal_document_class_id = False        
-        if journal_id and partner_id:
+        if journal_id:
             journal = self.pool['account.journal'].browse(cr, uid, journal_id)
-            journal_type = journal.type
-            letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=journal.company_id.id)
-            domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
-            journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
-            if journal_document_class_ids:
-                journal_document_class_id = journal_document_class_ids[0]
-            if 'domain' not in result: result['domain'] = {}        
-            result['domain']['journal_document_class_id'] = [('id', 'in', journal_document_class_ids)]  
             result['value']['use_documents'] = journal.use_documents
+            if partner_id:
+                journal_type = journal.type
+                letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=journal.company_id.id)
+                domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
+                journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
+                if journal_document_class_ids:
+                    journal_document_class_id = journal_document_class_ids[0]
+                if 'domain' not in result: result['domain'] = {}        
+                result['domain']['journal_document_class_id'] = [('id', 'in', journal_document_class_ids)]  
         result['value']['journal_document_class_id'] = journal_document_class_id
         return result

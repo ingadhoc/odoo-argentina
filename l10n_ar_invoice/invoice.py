@@ -60,7 +60,9 @@ class account_invoice(osv.osv):
         result = {}
         for invoice in self.browse(cr, uid, ids, context=context):
             journal_type = self.get_journal_type(cr, uid, invoice.type, context=context)
-            letter_ids = self.get_valid_document_letters(cr, uid, invoice.partner_id.id, journal_type, company_id=invoice.company_id.id)            
+            letter_ids = []
+            if invoice.use_documents:
+                letter_ids = self.get_valid_document_letters(cr, uid, invoice.partner_id.id, journal_type, company_id=invoice.company_id.id)            
             result[invoice.id] = letter_ids
         return result
 
@@ -137,7 +139,7 @@ class account_invoice(osv.osv):
         ('number_supplier_invoice_number', 'unique(supplier_invoice_number, partner_id, company_id)', 'Supplier Invoice Number must be unique per Supplier and Company!'),
     ]
 
-    _constraints = [(_check_reference, 'Invoice Reference Number must be unique per Document Class and Company!', ['referece','afip_document_class_id','company_id'])]
+    # _constraints = [(_check_reference, 'Invoice Reference Number must be unique per Document Class and Company!', ['referece','afip_document_class_id','company_id'])]
 
     def create(self, cr, uid, vals, context=None):
         '''We modify create for 2 popuses:
@@ -150,18 +152,19 @@ class account_invoice(osv.osv):
         partner_id = vals.get('partner_id', False)
         journal_id = vals.get('journal_id', False)
         if journal_id and partner_id:
-            journal = self.pool['account.journal'].browse(cr, uid, journal_id)
-            journal_type = journal.type
-            letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=journal.company_id.id)
-            domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
-            journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
-            if journal_document_class_ids:
-                vals['journal_document_class_id'] = journal_document_class_ids[0]
+            journal = self.pool['account.journal'].browse(cr, uid, int(journal_id), context=context)
+            if journal.use_documents:
+                journal_type = journal.type
+                letter_ids = self.get_valid_document_letters(cr, uid, int(partner_id), journal_type, company_id=journal.company_id.id)
+                domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
+                journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
+                if journal_document_class_ids:
+                    vals['journal_document_class_id'] = journal_document_class_ids[0]
 
-        # second purpose
-        # TODO hacer que se limpie la reference solamente para companias argentinas
-        if 'reference' in vals:
-            vals['reference'] = False
+                # second purpose
+                if 'reference' in vals:
+                    vals['reference'] = False
+
         return super(account_invoice, self).create(cr, uid, vals, context=context)
 
     def action_move_create(self, cr, uid, ids, context=None):
@@ -206,12 +209,12 @@ class account_invoice(osv.osv):
     #     return super(account_invoice, self).action_number(cr, uid, ids, context)
 
     # TODO si deja de ser related hay que blanquearlo
-    # def copy(self, cr, uid, id, default=None, context=None):
-    #     default = default or {}
-    #     default.update({
-    #         # 'document_number':False,
-    #         })
-    #     return super(account_invoice, self).copy(cr, uid, id, default, context)
+    def copy(self, cr, uid, id, default=None, context=None):
+        default = default or {}
+        default.update({
+            'supplier_invoice_number':False,
+            })
+        return super(account_invoice, self).copy(cr, uid, id, default, context)
 
     def get_journal_type(self, cr, uid, invoice_type, context=None):
         if invoice_type == 'in_invoice':
@@ -278,25 +281,26 @@ class account_invoice(osv.osv):
         result['value'] = {'next_invoice_number':next_invoice_number}
         return result
 
-    def onchange_partner_id(self, cr, uid, ids, type, partner_id,
-                            date_invoice=False, payment_term=False,
-                            partner_bank_id=False, company_id=False, journal_id=False):
-        result = super(account_invoice,self).onchange_partner_id(cr, uid, ids,
-                       type, partner_id, date_invoice, payment_term,
-                       partner_bank_id, company_id,)
-        if 'value' not in result: result['value'] = {}                
-        journal_document_class_id = False
-        if journal_id and partner_id:
-            journal_type = self.get_journal_type(cr, uid, type)
-            letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=company_id)
-            domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
-            journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
-            if journal_document_class_ids:
-                journal_document_class_id = journal_document_class_ids[0]
-            if 'domain' not in result: result['domain'] = {}          
-            result['domain']['journal_document_class_id'] = [('id', 'in', journal_document_class_ids)]
-        result['value']['journal_document_class_id'] = journal_document_class_id
-        return result
+    # def onchange_partner_id(self, cr, uid, ids, type, partner_id,
+    #                         date_invoice=False, payment_term=False,
+    #                         partner_bank_id=False, company_id=False, journal_id=False):
+    #     result = super(account_invoice,self).onchange_partner_id(cr, uid, ids,
+    #                    type, partner_id, date_invoice, payment_term,
+    #                    partner_bank_id, company_id,)
+    #     if 'value' not in result: result['value'] = {}                
+    #     journal_document_class_id = False
+    #     if journal_id and partner_id:
+    #         journal_type = self.get_journal_type(cr, uid, type)
+    #         letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=company_id)
+    #         domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
+    #         journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
+    #         if journal_document_class_ids:
+    #             journal_document_class_id = journal_document_class_ids[0]
+    #         if 'domain' not in result: result['domain'] = {}          
+    #         result['domain']['journal_document_class_id'] = [('id', 'in', journal_document_class_ids)]
+    #     if 'value' not in result: result['value'] = {}          
+    #     result['value']['journal_document_class_id'] = journal_document_class_id
+    #     return result
 
     def onchange_journal_id(self, cr, uid, ids, journal_id=False, partner_id=False, context=None):
         result = super(account_invoice, self).onchange_journal_id(cr, uid, ids, journal_id, context)

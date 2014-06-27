@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp.osv import fields, osv
+from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 import logging
 
@@ -30,6 +30,11 @@ class account_journal_document_config(osv.osv_memory):
         wizard = self.browse(cr, uid, ids[0], context=context)
         for journal in self.pool['account.journal'].browse(cr, uid, journal_ids, context=context):
           responsability = journal.company_id.responsability_id
+          if not responsability.id:
+              raise orm.except_orm(_('Your company has not setted any responsability'),
+                      _('Please, set your company responsability in the company partner before continue.'))            
+              _logger.warning('Your company "%s" has not setted any responsability.' % journal.company_id.name)
+        
           journal_type = journal.type
           if journal_type in ['sale', 'sale_refund']:
             letter_ids = [x.id for x in responsability.issued_letter_ids]

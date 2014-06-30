@@ -41,9 +41,9 @@
                     <field name="use_documents" invisible="1"/>
                 </form>
 
-<!--                 <field name="partner_id" position="attributes">
+                <field name="partner_id" position="attributes">
                     <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,journal_id)</attribute>
-                </field> -->
+                </field>
 
                 <field name="number" position="attributes">
                     <attribute name="attrs">{'invisible':[('use_documents','=',True)]}</attribute>
@@ -80,9 +80,9 @@
                     <field name="use_documents" invisible="1"/>
                 </form>
 
-<!--                 <field name="partner_id" position="attributes">
+                <field name="partner_id" position="attributes">
                     <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,journal_id)</attribute>
-                </field> -->
+                </field>
 
                 <!-- <field name="supplier_invoice_number" position="replace"/> -->
                 <field name="supplier_invoice_number" position="attributes">

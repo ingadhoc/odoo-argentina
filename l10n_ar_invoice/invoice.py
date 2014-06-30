@@ -208,7 +208,6 @@ class account_invoice(osv.osv):
     #             obj_inv.write({'document_number':document_number})
     #     return super(account_invoice, self).action_number(cr, uid, ids, context)
 
-    # TODO si deja de ser related hay que blanquearlo
     def copy(self, cr, uid, id, default=None, context=None):
         default = default or {}
         default.update({
@@ -281,26 +280,26 @@ class account_invoice(osv.osv):
         result['value'] = {'next_invoice_number':next_invoice_number}
         return result
 
-    # def onchange_partner_id(self, cr, uid, ids, type, partner_id,
-    #                         date_invoice=False, payment_term=False,
-    #                         partner_bank_id=False, company_id=False, journal_id=False):
-    #     result = super(account_invoice,self).onchange_partner_id(cr, uid, ids,
-    #                    type, partner_id, date_invoice, payment_term,
-    #                    partner_bank_id, company_id,)
-    #     if 'value' not in result: result['value'] = {}                
-    #     journal_document_class_id = False
-    #     if journal_id and partner_id:
-    #         journal_type = self.get_journal_type(cr, uid, type)
-    #         letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=company_id)
-    #         domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
-    #         journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
-    #         if journal_document_class_ids:
-    #             journal_document_class_id = journal_document_class_ids[0]
-    #         if 'domain' not in result: result['domain'] = {}          
-    #         result['domain']['journal_document_class_id'] = [('id', 'in', journal_document_class_ids)]
-    #     if 'value' not in result: result['value'] = {}          
-    #     result['value']['journal_document_class_id'] = journal_document_class_id
-    #     return result
+    def onchange_partner_id(self, cr, uid, ids, type, partner_id,
+                            date_invoice=False, payment_term=False,
+                            partner_bank_id=False, company_id=False, journal_id=False):
+        result = super(account_invoice,self).onchange_partner_id(cr, uid, ids,
+                       type, partner_id, date_invoice, payment_term,
+                       partner_bank_id, company_id,)
+        if 'value' not in result: result['value'] = {}                
+        journal_document_class_id = False
+        if journal_id and partner_id:
+            journal_type = self.get_journal_type(cr, uid, type)
+            letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=company_id)
+            domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
+            journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
+            if journal_document_class_ids:
+                journal_document_class_id = journal_document_class_ids[0]
+            if 'domain' not in result: result['domain'] = {}          
+            result['domain']['journal_document_class_id'] = [('id', 'in', journal_document_class_ids)]
+        if 'value' not in result: result['value'] = {}          
+        result['value']['journal_document_class_id'] = journal_document_class_id
+        return result
 
     def onchange_journal_id(self, cr, uid, ids, journal_id=False, partner_id=False, context=None):
         result = super(account_invoice, self).onchange_journal_id(cr, uid, ids, journal_id, context)

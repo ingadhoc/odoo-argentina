@@ -26,7 +26,8 @@
             <field name="background_image" type="base64" file="l10n_ar_report_invoice/static/invoice_back.png"/>
             <field name="account_invoice_split_invoice" eval="False"/>
             <field name="account_invoice_lines_to_split">20</field>
-            <field name="account_invoice_journal_ids" search="[('journal_subtype','=','invoice'),('type','=','sale')]"/>
+            <field name="account_invoice_journal_ids" search="[('type','=','sale')]"/>
+            <!-- <field name="account_invoice_journal_ids" search="[('journal_subtype','=','invoice'),('type','=','sale')]"/> -->
         </record>
 
     <!-- Printed Debit/Credit Notes -->
@@ -46,7 +47,6 @@
             <field name="background_image" type="base64" file="l10n_ar_report_invoice/static/invoice_back.png"/>
             <field name="account_invoice_split_invoice" eval="False"/>
             <field name="account_invoice_lines_to_split">20</field>
-            <field name="account_invoice_journal_ids" search="['|',('journal_subtype','=','debit_note'),('type','=','sale_refund')]"/>
         </record>        
 
     </data>

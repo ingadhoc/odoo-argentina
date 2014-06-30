@@ -1,36 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-##############################################################################
-#
-# Copyright (C) 2012 OpenERP - Team de Localización Argentina.
-# https://launchpad.net/~openerp-l10n-ar-localization
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
--->
 <openerp>
     <data>
 
         <record id="view_account_journal_ar_filter" model="ir.ui.view">
             <field name="model">account.journal</field>
-            <field name="name">account.journal.ar.form</field>
+            <field name="name">account.journal.ar.filter</field>
             <field name="inherit_id" ref="account.view_account_journal_search"/>
             <field name="arch" type="xml">
                 <field name="name" position="after">
-                    <field name='afip_document_class_id'/>
-                    <field name='product_types'/>                    
                     <field name="point_of_sale"/>
                 </field>
             </field>
@@ -41,18 +18,16 @@
             <field name="name">account.journal.ar.form</field>
             <field name="inherit_id" ref="account.view_account_journal_form"/>
             <field name="arch" type="xml">
-                <field name="code" position="replace"/>
                 <field name="type" position="after">
-                    <field name="journal_subtype" attrs="{'invisible': [('type','not in',['purchase','sale'])],'required': [('type','in',['purchase','sale'])]}"/>
-                    <field name='afip_document_class_id' attrs="{'invisible':[('type','not in',['purchase','sale','sale_refund','purchase_refund'])]}" on_change="on_change_afip_document_class(afip_document_class_id, code, context)"/>
-                    <field name="code"/>
+                    <field name="use_documents" attrs="{'invisible': [('type','not in',['purchase','sale','purchase_refund','sale_refund'])]}"/>
                 </field>
+                    
                 <notebook position="inside">
-                    <page string="AFIP">
-                        <group colspan="2" col="2">
-                            <separator string="AFIP" colspan="4"/>
-                            <field name='product_types'/> 
-                            <field name="point_of_sale"/>
+                    <page string="Documents" attrs="{'invisible': ['|',('use_documents','=',False),('type','not in',['purchase','sale','purchase_refund','sale_refund'])]}">
+                        <button name="%(action_account_journal_document_config_form)d" string="Create Journal Documents" type="action" context="{'type':type}"/>
+                        <group>
+                            <field name="point_of_sale" attrs="{'invisible': ['|',('type','not in',['sale','sale_refund'])],'required': [('use_documents','=',True),('type','in',['sale','sale_refund'])]}"/>
+                            <field name='journal_document_class_ids' context="{'journal_type':type}"/> 
                         </group>
                     </page>
                 </notebook>

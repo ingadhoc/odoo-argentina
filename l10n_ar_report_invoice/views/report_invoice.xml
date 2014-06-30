@@ -27,15 +27,15 @@
                 <span t-if="company.responsability_id">IVA: <span t-field="company.responsability_id.name"/></span>
             </div>
 
-            <div t-if="print_title and o.journal_id.afip_document_class_id">
-                <span t-field="o.journal_id.afip_document_class_id.report_name"/>
+            <div t-if="print_title and o.journal_document_class_id.afip_document_class_id">
+                <span t-field="o.journal_document_class_id.afip_document_class_id.report_name"/>
             </div>
 
-            <div t-if="print_letter and o.journal_id.afip_document_class_id">
-                <span t-field="o.journal_id.afip_document_class_id.document_letter_id.name"/>
+            <div t-if="print_letter and o.journal_document_class_id.afip_document_class_id">
+                <span t-field="o.journal_document_class_id.afip_document_class_id.document_letter_id.name"/>
             </div>
-            <div t-if="print_code and o.journal_id.afip_document_class_id">
-                Code N<span t-field="o.journal_id.afip_document_class_id.afip_code"/>
+            <div t-if="print_code and o.journal_document_class_id.afip_document_class_id">
+                Code N<span t-field="o.journal_document_class_id.afip_document_class_id.afip_code"/>
             </div>
             <span t-raw="legend"/>
 
@@ -65,7 +65,7 @@
             <div>
                 Phone: <span t-field="o.partner_id.commercial_partner_id.phone"/>
                 Email: <span t-field="o.partner_id.commercial_partner_id.email"/>
-                <span t-if="o.partner_id.parent_id">Contact: <span t-field="o.partner.name"/></span>                    
+                <span t-if="o.partner_id.parent_id">Contact: <span t-field="o.partner_id.name"/></span>                    
             </div>
             <div>
                 <span t-if="o.payment_term">Sale Condition: <span t-field="o.payment_term.name"/></span>

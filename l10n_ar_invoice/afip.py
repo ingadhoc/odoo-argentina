@@ -1,23 +1,4 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-# Copyright (C) 2012 OpenERP - Team de Localización Argentina.
-# https://launchpad.net/~openerp-l10n-ar-localization
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 from openerp.osv import fields, osv
 
 class afip_document_class(osv.osv):
@@ -30,47 +11,14 @@ class afip_document_class(osv.osv):
         'document_letter_id': fields.many2one('afip.document_letter', 'Document Letter'),
         'report_name': fields.char('Name on Reports', help='Name that will be printed in reports, for example "CREDIT NOTE"'),
         'vat_discriminated' : fields.boolean('Vat Discriminated on Invoices?', help="If True, the vat will be discriminated on invoice report."),
-        'journal_subtype': fields.selection([('invoice','Invoices'),('credit_note','Credit Notes'),('debit_note','Debit Notes'),('other_document','Other Documents')], string='Journal Subtype', help='It defines some behaviours on automatic journal selection and in menus where it is shown.'),        
+        # 'journal_subtype': fields.selection([('invoice','Invoices'),('credit_note','Credit Notes'),('debit_note','Debit Notes'),('other_document','Other Documents')], string='Journal Subtype', help='It defines some behaviours on automatic journal selection and in menus where it is shown.'),        
+        'document_type': fields.selection([('invoice','Invoices'),('credit_note','Credit Notes'),('debit_note','Debit Notes'),('other_document','Other Documents')], string='Document Type', help='It defines some behaviours on automatic journal selection and in menus where it is shown.'),
         'active': fields.boolean('Active'),
     }
 
     _defaults = {
         'active': True,
     }    
-
-    def create_journals(cr, uid, ids, context=None):
-        account_obj = self.pool['account.journal']
-        sequence_obj = self.pool['ir.sequence']
-        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
-        
-        point_of_sale = context.get('point_of_sale', 1)
-        sequence_id = context.get('sequence_id', False)        
-        company_id = context.get('company_id', user.company_id.id) 
-        
-        for record in self.browse(cr, uid, ids, context=context):
-            name = u"%s (%04i-%s)" % (record.name, point_of_sale, record.code_template)
-
-            if not sequence_id:
-                # TODO make prefix, suffix, padding and implementation configurable
-                seq_vals = {
-                    'name': name,
-                    'prefix': u"%s%04i" % (record.code_template, point_of_sale),
-                    # 'suffix': , 
-                    'padding': 8,
-                    'implementation': 'no_gap',
-                }
-                sequence_id = sequence_obj.create(cr, uid, seq_vals, context=context)
-            vals = {
-                'name': name,
-                'code': u"%s%04i" % (record.code_template, point_of_sale),
-                'afip_document_class_id': record.id,
-                'company_id': company_id,
-                'point_of_sale': point_of_sale,
-                'sequence_id': sequence_id,
-                # 'sequence_name': rel[item['row']],
-                'type': item['type'],
-            }
-            account_obj.create(cr, uid, vals, context=context)
 
 class afip_document_letter(osv.osv):
     _name='afip.document_letter'
@@ -196,5 +144,3 @@ class afip_optional_type(osv.osv):
     _defaults = {
         'active': True,
     }    
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

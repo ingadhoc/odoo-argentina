@@ -1,23 +1,4 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-# Copyright (C) 2012 OpenERP - Team de Localización Argentina.
-# https://launchpad.net/~openerp-l10n-ar-localization
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 {   'active': False,
     'author': 'OpenERP - Team de Localizaci\xc3\xb3n Argentina',
     'category': 'Localization/Argentina',
@@ -27,6 +8,7 @@
     'depends': [   
                     'account',
                     'l10n_ar_base',
+                    # 'l10n_ar_document',
                    'l10n_ar_base_vat', # Es usado en los onchange de documentos y demas
                    ],
     'description': '''
@@ -53,7 +35,6 @@
                       'data/afip.document_class.csv',
                       'data/document_type.xml', 
                       'data/partner.xml',
-                      'data/invoice_workflow.xml',
                       'data/country.xml',
                       'data/res.currency.csv',
                       'data/afip.concept_type.csv',
@@ -67,12 +48,14 @@
                       'view/afip_document_type_view.xml',
                       'view/afip_responsability_view.xml',
                       'view/afip_document_class_view.xml',
+                      'view/account_journal_afip_document_class_view.xml',
                       'view/journal_view.xml',
                       'view/tax_code_view.xml',
                       'view/invoice_view.xml',
-                      'view/res_config_view.xml',
-                      'security/ir.model.access.csv'
+                      'view/account_move_view.xml',
+                      'view/config_view.xml',
+                      'view/report_invoice.xml',
+                      'security/ir.model.access.csv',
                       ],
     'version': '2.7.243',
     'website': 'https://launchpad.net/~openerp-l10n-ar-localization'}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

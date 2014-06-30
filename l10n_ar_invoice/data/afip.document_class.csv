@@ -1,23 +1,23 @@
-id,afip_code,code_template,name,document_letter_id/id,journal_subtype,report_name,vat_discriminated
-dc_a_f,1,FVA,FACTURAS A,dl_a,invoice,FACTURA,True
-dc_a_nd,2,NDA,NOTAS DE DEBITO A,dl_a,debit_note,NOTA DE DEBITO,True
-dc_a_nc,3,NCA,NOTAS DE CREDITO A,dl_a,credit_note,NOTA DE CREDITO,True
+id,afip_code,code_template,name,document_letter_id/id,report_name,vat_discriminated,document_type
+dc_a_f,1,FVA,FACTURAS A,dl_a,FACTURA,True,invoice
+dc_a_nd,2,NDA,NOTAS DE DEBITO A,dl_a,NOTA DE DEBITO,True,debit_note
+dc_a_nc,3,NCA,NOTAS DE CREDITO A,dl_a,NOTA DE CREDITO,True,credit_note
 dc_a_r,4,ReA,RECIBOS A,dl_a,,,
 dc_a_nvc,5,VCA,NOTAS DE VENTA AL CONTADO A,dl_a,,,
-dc_b_f,6,FVB,FACTURAS B,dl_b,invoice,FACTURA,False
-dc_b_nd,7,NDB,NOTAS DE DEBITO B,dl_b,debit_note,NOTA DE DEBITO,False
-dc_b_nc,8,NCB,NOTAS DE CREDITO B,dl_b,credit_note,NOTA DE CREDITO,False
+dc_b_f,6,FVB,FACTURAS B,dl_b,FACTURA,False,invoice
+dc_b_nd,7,NDB,NOTAS DE DEBITO B,dl_b,NOTA DE DEBITO,False,debit_note
+dc_b_nc,8,NCB,NOTAS DE CREDITO B,dl_b,NOTA DE CREDITO,False,credit_note
 dc_b_r,9,ReB,RECIBOS B,dl_b,,,
 dc_b_nvc,10,VCB,NOTAS DE VENTA AL CONTADO B,dl_b,,,
-dc_c_f,11,FVC,FACTURAS C,dl_c,invoice,FACTURA,False
-dc_c_nd,12,NDC,NOTAS DE DEBITO C,dl_c,debit_note,NOTA DE DEBITO,False
-dc_c_nc,13,NCC,NOTAS DE CREDITO C,dl_c,credit_note,NOTA DE CREDITO,False
+dc_c_f,11,FVC,FACTURAS C,dl_c,FACTURA,False,invoice
+dc_c_nd,12,NDC,NOTAS DE DEBITO C,dl_c,NOTA DE DEBITO,False,debit_note
+dc_c_nc,13,NCC,NOTAS DE CREDITO C,dl_c,NOTA DE CREDITO,False,credit_note
 dc_aduana,14,DoA,DOCUMENTO ADUANERO,,,,
 dc_c_r,15,ReC,RECIBOS C,dl_c,,,
 dc_c_nvc,16,NVC,NOTAS DE VENTA AL CONTADO C,dl_c,,,
-dc_e_f,19,FVE,FACTURAS DE EXPORTACION,dl_e,invoice,FACTURA,True
-dc_e_nd,20,NDE,NOTAS DE DEBITO POR OPERACIONES CON EL EXTERIOR,dl_e,debit_note,NOTA DE DEBITO,True
-dc_e_nc,21,NCE,NOTAS DE CREDITO POR OPERACIONES CON EL EXTERIOR,dl_e,credit_note,NOTA DE CREDITO,True
+dc_e_f,19,FVE,FACTURAS DE EXPORTACION,dl_e,FACTURA,True,invoice
+dc_e_nd,20,NDE,NOTAS DE DEBITO POR OPERACIONES CON EL EXTERIOR,dl_e,NOTA DE DEBITO,True,debit_note
+dc_e_nc,21,NCE,NOTAS DE CREDITO POR OPERACIONES CON EL EXTERIOR,dl_e,NOTA DE CREDITO,True,credit_note
 dc_e_fs,22,FVE,FACTURAS - PERMISO EXPORTACION SIMPLIFICADO - DTO. 855/97,,,,
 dc_usados,30,,COMPROBANTES DE COMPRA DE BIENES USADOS,,,,
 dc_mandato,31,,MANDATO - CONSIGNACION,,,,
@@ -31,9 +31,9 @@ dc_a_o_rg1415,39,,OTROS COMPROBANTES A QUE CUMPLEN CON LA R G  1415,,,,
 dc_b_o_rg1415,40,,OTROS COMPROBANTES B QUE CUMPLAN CON LA R.G. N° 1415,,,,
 dc_c_o_rg1415,41,,OTROS COMPROBANTES C QUE CUMPLAN CON LA R.G. N° 1415,,,,
 dc_a_rf,50,,RECIBO FACTURA A  REGIMEN DE FACTURA DE CREDITO,,,,
-dc_m_f,51,FVM,FACTURAS M,dl_m,invoice,FACTURA,True
-dc_m_nd,52,NDM,NOTAS DE DEBITO M,dl_m,debit_note,NOTA DE DEBITO,True
-dc_m_nc,53,NCM,NOTAS DE CREDITO M,dl_m,credit_note,NOTA DE CREDITO,True
+dc_m_f,51,FVM,FACTURAS M,dl_m,FACTURA,True,invoice
+dc_m_nd,52,NDM,NOTAS DE DEBITO M,dl_m,NOTA DE DEBITO,True,debit_note
+dc_m_nc,53,NCM,NOTAS DE CREDITO M,dl_m,NOTA DE CREDITO,True,credit_note
 dc_m_r,54,ReM,RECIBOS M,dl_m,,,
 dc_m_nvc,55,NVM,NOTAS DE VENTA AL CONTADO M,dl_m,,,
 dc_m_rg1415,56,,COMPROBANTES M DEL ANEXO I  APARTADO A  INC F   R G  N  1415,,,,

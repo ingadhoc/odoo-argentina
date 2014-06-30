@@ -1,49 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-##############################################################################
-#
-# Copyright (C) 2012 OpenERP - Team de Localización Argentina.
-# https://launchpad.net/~openerp-l10n-ar-localization
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
--->
 <openerp>
     <data>
 
+        <record id="view_account_invoice_filter" model="ir.ui.view">
+            <field name="name">l10n_ar.invoice.search</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <field name="number" position="replace">
+                    <field name="number" string="Invoice" filter_domain="['|','|','|', '|', ('reference','ilike',self), ('number','ilike',self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', self)]"/>
+                </field>
+                <field name="partner_id" position="after">
+                    <field name="afip_document_class_id"/>
+                </field>
+                <filter string="Journal" position="after">
+                    <filter string="Document Type" icon="terp-folder-orange" domain="[]" context="{'group_by':'afip_document_class_id'}"/>
+                </filter>
+            </field>
+        </record>
+
+        <record id="invoice_tree" model="ir.ui.view">
+            <field name="name">l10n_ar.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="number" position="after">
+                    <field name="afip_document_class_id"/>
+                    <field name="reference"/>
+                </field>
+            </field>
+        </record>
+            
         <record id="view_invoice_form" model="ir.ui.view">
             <field name="name">l10n_ar.invoice.form</field>
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
-                <!-- We add context con on_change functions so we can map journals according to the menu where we are -->
-                <field name="partner_id" position="attributes">
-                    <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,context)</attribute>
-                </field>
-                <field name="company_id" position="attributes">
-                    <attribute name="on_change">onchange_company_id(company_id,partner_id,type,invoice_line,currency_id,context)</attribute>
-                </field>
-
-                <!-- We add this functional field so it can be used on journal domain -->
                 <form>
-                    <field name="available_journal_ids" invisible="1"/>
+                    <field name="available_document_letter_ids" invisible="1"/>
+                    <field name="use_documents" invisible="1"/>
                 </form>
 
+<!--                 <field name="partner_id" position="attributes">
+                    <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,journal_id)</attribute>
+                </field> -->
+
+                <field name="number" position="attributes">
+                    <attribute name="attrs">{'invisible':[('use_documents','=',True)]}</attribute>
+                </field>
+                <field name="number" position="after">
+                    <field name="reference" attrs="{'invisible':[('use_documents','=',False)]}" readonly="1" class="oe_inline"/>
+                </field>
+
+                <field name="journal_id" position="after">
+                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)]}" domain="[('journal_id','=',journal_id),('afip_document_class_id.document_letter_id','in',available_document_letter_ids[0][2])]" widget="selection" on_change="on_change_journal_document_class_id(journal_document_class_id)"/>
+                    <!-- <field name="next_invoice_number"/> -->
+                </field>    
+
+                <label string="Draft Refund " position="after">
+                        <label string="- Next Number: " attrs="{'invisible': ['|',('reference','!=',False),('state','!=','draft')]}" class="oe_inline"/>
+                    <!-- <label string="- Next Number: " attrs="{'invisible': ['|',('state','not in',('draft',)), ('type','not in',['out_refund','out_invoice'])]}"/> -->
+                        <field name="next_invoice_number" attrs="{'invisible': ['|',('reference','!=',False),('state','!=','draft')]}" class="oe_inline"/>
+                    <!-- <field name="next_invoice_number" class="oe_inline" attrs="{'invisible': [('state','not in',['draft']),('reference','=',False]}"/> -->
+                </label>
+
                 <field name="journal_id" position="attributes">
-                    <attribute name="domain">[('id','in',available_journal_ids[0][2])]</attribute>
-                </field>                    
+                    <attribute name="on_change">onchange_journal_id(journal_id, partner_id, context)</attribute>
+                </field>               
             </field>
         </record>
 
@@ -52,154 +75,43 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
-                <!-- We add context con on_change functions so we can map journals according to the menu where we are -->
-                <field name="partner_id" position="attributes">
-                    <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,context)</attribute>
-                </field>
-                <field name="company_id" position="attributes">
-                    <attribute name="on_change">onchange_company_id(company_id,partner_id,type,invoice_line,currency_id,context)</attribute>
-                </field>
-                
-                <!-- We add this functional field so it can be used on journal domain -->
                 <form>
-                    <field name="available_journal_ids" invisible="1"/>
+                    <field name="available_document_letter_ids" invisible="1"/>
+                    <field name="use_documents" invisible="1"/>
                 </form>
 
+<!--                 <field name="partner_id" position="attributes">
+                    <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,journal_id)</attribute>
+                </field> -->
+
+                <!-- <field name="supplier_invoice_number" position="replace"/> -->
+                <field name="supplier_invoice_number" position="attributes">
+                    <attribute name="attrs">{'invisible':[('reference','!=',False)]}</attribute>
+                    <attribute name="required">True</attribute>
+                </field>
+
+                
+                <!-- We hide reference fields-->
+                <label for="reference_type" position="replace"/>
+                <xpath expr="//sheet/group/group/div" position="replace"/>
+
+                <field name="number" position="attributes">
+                    <attribute name="attrs">{'invisible':[('use_documents','=',True)]}</attribute>
+                </field>
+                <field name="number" position="after">
+                    <field name="reference" attrs="{'invisible':[('use_documents','=',False)]}" readonly="1" class="oe_inline"/>
+                </field>
+                
+                <field name="journal_id" position="after">
+                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)]}" domain="[('journal_id','=',journal_id),('afip_document_class_id.document_letter_id','in',available_document_letter_ids[0][2])]" widget="selection"/>
+                    <!-- <field name="supplier_invoice_number" attrs="{'invisible':[('reference','!=',False)]}" required="True" class="oe_inline"/> -->
+                </field>    
+
                 <field name="journal_id" position="attributes">
-                    <attribute name="domain">[('id','in',available_journal_ids[0][2])]</attribute>
+                    <attribute name="on_change">onchange_journal_id(journal_id, partner_id, context)</attribute>
                 </field>      
             </field>
         </record>
 
-        <!-- Customer Debit Notes -->
-        <record id="action_customer_debit_notes" model="ir.actions.act_window">
-            <field name="name">Customer Debit Notes</field>
-            <field name="res_model">account.invoice</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar,graph</field>
-            <field eval="False" name="view_id"/>
-            <field name="domain">[('type','=','out_invoice'),('journal_id.journal_subtype','=','debit_note')]</field>
-            <field name="context">{'default_type':'out_invoice', 'journal_subtype':'debit_note', 'journal_type': 'sale'}</field>
-            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
-            <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Click to create customer debit notes.
-              </p>
-            </field>
-        </record>
-
-        <record id="action_customer_debit_notes_tree" model="ir.actions.act_window.view">
-            <field eval="1" name="sequence"/>
-            <field name="view_mode">tree</field>
-            <field name="act_window_id" ref="action_customer_debit_notes"/>
-        </record>
-
-        <record id="action_customer_debit_notes_form" model="ir.actions.act_window.view">
-            <field eval="2" name="sequence"/>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="account.invoice_form"/>
-            <field name="act_window_id" ref="action_customer_debit_notes"/>
-        </record>        
-        
-        <menuitem action="action_customer_debit_notes" id="menu_action_customer_debit_notes" parent="account.menu_finance_receivables" groups="customer_debit_notes"/>
-
-        <!-- Customer Other Documents -->
-        <record id="action_customer_other_documents" model="ir.actions.act_window">
-            <field name="name">Customer Other Documents</field>
-            <field name="res_model">account.invoice</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar,graph</field>
-            <field eval="False" name="view_id"/>
-            <field name="domain">[('type','=','out_invoice'),('journal_id.journal_subtype','=','other_document')]</field>
-            <field name="context">{'default_type':'out_invoice', 'journal_subtype':'other_document', 'journal_type': 'sale'}</field>
-            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
-            <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Click to create other customer document.
-              </p>
-            </field>
-        </record>
-
-        <record id="action_customer_other_documents_tree" model="ir.actions.act_window.view">
-            <field eval="1" name="sequence"/>
-            <field name="view_mode">tree</field>
-            <field name="act_window_id" ref="action_customer_other_documents"/>
-        </record>
-
-        <record id="action_customer_other_documents_form" model="ir.actions.act_window.view">
-            <field eval="2" name="sequence"/>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="account.invoice_form"/>
-            <field name="act_window_id" ref="action_customer_other_documents"/>
-        </record>        
-        
-        <menuitem action="action_customer_other_documents" id="menu_action_customer_other_documents" sequence="11" parent="account.menu_finance_receivables" groups="customer_other_documents"/>        
-
-        <!-- Supplier Debit Notes -->
-        <record id="action_supplier_debit_notes" model="ir.actions.act_window">
-            <field name="name">Supplier Debit Notes</field>
-            <field name="res_model">account.invoice</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar,graph</field>
-            <field eval="False" name="view_id"/>
-            <field name="domain">[('type','=','in_invoice'),('journal_id.journal_subtype','=','debit_note')]</field>
-            <field name="context">{'default_type':'in_invoice', 'journal_subtype':'debit_note', 'journal_type': 'purchase', 'type':'in_invoice'}</field>
-            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
-            <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Click to create Supplier debit notes.
-              </p>
-            </field>
-        </record>
-
-        <record id="action_supplier_debit_notes_tree" model="ir.actions.act_window.view">
-            <field eval="1" name="sequence"/>
-            <field name="view_mode">tree</field>
-            <field name="act_window_id" ref="action_supplier_debit_notes"/>
-        </record>
-
-        <record id="action_supplier_debit_notes_form" model="ir.actions.act_window.view">
-            <field eval="2" name="sequence"/>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="account.invoice_supplier_form"/>
-            <field name="act_window_id" ref="action_supplier_debit_notes"/>
-        </record>              
-        
-        <menuitem action="action_supplier_debit_notes" id="menu_action_supplier_debit_notes" parent="account.menu_finance_payables" groups="supplier_debit_notes"/>
-
-        <!-- Supplier Other Documents -->
-        <record id="action_supplier_other_documents" model="ir.actions.act_window">
-            <field name="name">Supplier Other Documents</field>
-            <field name="res_model">account.invoice</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar,graph</field>
-            <field eval="False" name="view_id"/>
-            <field name="domain">[('type','=','in_invoice'),('journal_id.journal_subtype','=','other_document')]</field>
-            <field name="context">{'default_type':'in_invoice', 'journal_subtype':'other_document', 'journal_type': 'purchase', 'type':'in_invoice'}</field>
-            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
-            <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Click to create other supplier document.
-              </p>
-            </field>
-        </record>
-
-        <record id="action_supplier_other_documents_tree" model="ir.actions.act_window.view">
-            <field eval="1" name="sequence"/>
-            <field name="view_mode">tree</field>
-            <field name="act_window_id" ref="action_supplier_other_documents"/>
-        </record>
-
-        <record id="action_supplier_other_documents_form" model="ir.actions.act_window.view">
-            <field eval="2" name="sequence"/>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="account.invoice_supplier_form"/>
-            <field name="act_window_id" ref="action_supplier_other_documents"/>
-        </record>           
-        
-        <menuitem action="action_supplier_other_documents" id="menu_action_supplier_other_documents" sequence="11" parent="account.menu_finance_payables" groups="supplier_other_documents"/>        
-
     </data>
 </openerp>
-<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
-     -->

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_receipt_receiptbook_search" model="ir.ui.view">
+            <field name="name">receipt.receiptbook.search</field>
+            <field name="model">receipt.receiptbook</field>
+            <field name="arch" type="xml">
+                <search string="Receipt Books">
+                    <field name="name"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_receipt_receiptbook_tree" model="ir.ui.view">
+            <field name="name">receipt.receiptbook.tree</field>
+            <field name="model">receipt.receiptbook</field>
+            <field name="arch" type="xml">
+                <tree string="Receipt Books">
+                    <field name="name"/>
+                    <field name="range_fix"/>
+                    <field name="range_desde"/>
+                    <field name="range_hasta"/>
+                    <field name="actual_number"/>
+                    <field name="receipt_type"/>
+                    <field name="type_custsupl"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_receipt_receiptbook_form" model="ir.ui.view">
+            <field name="name">receipt.receiptbook.form</field>
+            <field name="model">receipt.receiptbook</field>
+            <field name="arch" type="xml">
+                <form string="Receipt Books" version="7.0"> 
+                <header string="Receipt Books">
+                        <button name="wkf_active" string="In Use"  states="draft"/>
+                        <button name="wkf_used" string="Used"  states="active"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,used" statusbar_colors='{"active":"blue"}'/>
+                </header>
+                <sheet string="Receipt Books">
+                    <group col="4">
+                        <field name="name"/>
+                        <group>  
+                            <field name="receipt_type" />
+                            <field name="type_custsupl" />
+                        </group>
+                    </group>
+                    <group string="Ranges" colspan="2" >
+                        <field name="range_fix" placeholder="0000"/>  
+                        <field name="range_desde" on_change="onchange_desde(range_desde,actual_number)"/>
+                        <field name="range_hasta" on_change="onchange_hasta(range_desde,range_hasta)"/>
+                    </group>
+                    <group  colspan="4" col="2" >   
+                        <field name="actual_number"  attrs="{'invisible':[('receipt_type','=','manual')]}"/>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+        
+
+
+        <record id="action_receipt_receiptbook_form" model="ir.actions.act_window">
+            <field name="name">Receiptbooks</field>
+            <field name="res_model">receipt.receiptbook</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_receipt_receiptbook_search"/>
+        </record>
+        
+       <menuitem action="action_receipt_receiptbook_form" id="menu_action_receipt_receiptbook_form" parent="account.menu_configuration_misc" sequence="100"/>
+ 
+    </data>
+</openerp>        

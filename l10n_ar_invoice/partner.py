@@ -1,4 +1,23 @@
 # -*- coding: utf-8 -*-
+##############################################################################
+#
+# Copyright (C) 2012 OpenERP - Team de Localización Argentina.
+# https://launchpad.net/~openerp-l10n-ar-localization
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import re
@@ -12,8 +31,8 @@ class res_partner(osv.osv):
                                             on_change="onchange_document(vat,document_type_id,document_number)"),
         'document_number': fields.char('Document number', size=64, select=1,
                                        on_change="onchange_document(vat,document_type_id,document_number)"),
-        'iibb': fields.char('Gross Income', size=64),
-        'start_date': fields.date('Start-up Date'),
+        'iibb': fields.char('Ingresos Brutos', size=64),
+        'start_date': fields.date('Inicio de actividades'),
     }
 
     def onchange_document(self, cr, uid, ids, vat, document_type, document_number, context={}):
@@ -69,5 +88,7 @@ class res_partner(osv.osv):
         
         for part in self.read(cr, uid, ids, ['document_number', 'document_type_id', 'vat', 'is_vat_subject']):
             pass
+
+res_partner()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

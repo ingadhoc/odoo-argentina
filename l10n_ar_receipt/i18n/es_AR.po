@@ -1,0 +1,377 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* l10n_ar_receipt
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0-20130313-002537\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-09-13 14:11+0000\n"
+"PO-Revision-Date: 2013-09-13 14:11+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_ar_receipt
+#: model:ir.actions.act_window,help:l10n_ar_receipt.action_receipt_pay_vendor
+msgid "Sales payment allows you to register the payments you receive from your customers. In order to record a payment, you must enter the customer, the payment method (=the journal) and the payment amount. OpenERP will propose to you automatically the reconciliation of this payment with the open invoices or sales receipts."
+msgstr "El Pago de Ventas le permite registrar los pagos que recibe de sus clientes. Con el fin de grabar un pago, debe introducir el cliente, la forma de pago (= la revista) y el importe del pago. OpenERP le propondrá automáticamente la reconciliación de este pago con las facturas pendientes o recibos de compras."
+
+#. module: l10n_ar_receipt
+#: view:receipt.receipt:0
+msgid "Payment Vouchers of Suppliers"
+msgstr "Comprobante de Pagos de Proveedores"
+
+#. module: l10n_ar_receipt
+#: view:receipt.receiptbook:0
+#: selection:receipt.receiptbook,state:0
+msgid "In Use"
+msgstr "En Uso"
+
+#. module: l10n_ar_receipt
+#: view:account.voucher:0
+#: field:account.voucher,receipt_id:0
+#: model:ir.model,name:l10n_ar_receipt.model_receipt_receipt
+#: model:ir.ui.menu,name:l10n_ar_receipt.receipt_menu
+#: field:receipt.pay,receipt:0
+#: field:receipt.receipt.line,receipt_id:0
+msgid "Receipt"
+msgstr "Recibos"
+
+#. module: l10n_ar_receipt
+#: model:ir.actions.report.xml,name:l10n_ar_receipt.receipt_pay_report
+msgid "Print Receipt Pay"
+msgstr "Imprimir Recibo"
+
+#. module: l10n_ar_receipt
+#: model:ir.ui.menu,name:l10n_ar_receipt.proof_menu
+#: view:receipt.receipt:0
+msgid "Payment Vouchers"
+msgstr "Comprobante de Pagos"
+
+#. module: l10n_ar_receipt
+#: model:ir.actions.act_window,name:l10n_ar_receipt.receipts_list_action
+#: selection:receipt.receipt,receipt_type:0
+msgid "receipt"
+msgstr "Recibo"
+
+#. module: l10n_ar_receipt
+#: view:receipt.pay:0
+msgid "Receipt Pay"
+msgstr "Recibo"
+
+#. module: l10n_ar_receipt
+#: view:receipt.pay:0
+msgid "cancel"
+msgstr "cancelar"
+
+#. module: l10n_ar_receipt
+#: view:receipt.receipt:0
+msgid "Receipt List"
+msgstr "Lista de Recibos"
+
+#. module: l10n_ar_receipt
+#: selection:receipt.receiptbook,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: l10n_ar_receipt
+#: selection:receipt.receiptbook,type_custsupl:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: l10n_ar_receipt
+#: view:account.voucher:0
+msgid "Payments with Receipt"
+msgstr "Pagos con Recibos"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receiptbook,receipt_type:0
+msgid "Type of Sequence"
+msgstr "Tipo de Secuencia"
+
+#. module: l10n_ar_receipt
+#: model:ir.actions.act_window,name:l10n_ar_receipt.action_receipt_receiptbook_form
+#: model:ir.ui.menu,name:l10n_ar_receipt.menu_action_receipt_receiptbook_form
+msgid "Receiptbooks"
+msgstr "Talonario de Recibos"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receipt,receipt_type:0
+msgid "Receipt Type"
+msgstr "Tipo de Recibos"
+
+#. module: l10n_ar_receipt
+#: view:receipt.receipt:0
+msgid "Receipts List"
+msgstr "Lista de Recibos"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receipt,total_ammount:0
+msgid "Total Ammount"
+msgstr "Total"
+
+#. module: l10n_ar_receipt
+#: view:receipt.receiptbook:0
+#: selection:receipt.receiptbook,state:0
+msgid "Used"
+msgstr "Usado"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receipt.line,name:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: l10n_ar_receipt
+#: view:account.voucher:0
+msgid "Payments with Payment Voucher"
+msgstr "Pagos con Comprobantes de Pagos"
+
+#. module: l10n_ar_receipt
+#: field:receipt.pay,receiptbook_id:0
+msgid "Receipt Book"
+msgstr "Talonario de Recibos"
+
+#. module: l10n_ar_receipt
+#: model:ir.actions.act_window,name:l10n_ar_receipt.receipt_pay_wizard
+msgid "Create Receipt Pay"
+msgstr "Crear Recibo"
+
+#. module: l10n_ar_receipt
+#: field:receipt.pay,total_amount:0
+msgid "Total Amount"
+msgstr "Total"
+
+#. module: l10n_ar_receipt
+#: view:receipt.receipt:0
+msgid "customer Receipts"
+msgstr "Recibo de cliente"
+
+#. module: l10n_ar_receipt
+#: view:receipt.receiptbook:0
+msgid "Ranges"
+msgstr "Rangos"
+
+#. module: l10n_ar_receipt
+#: view:account.voucher:0
+msgid "Payment Proof"
+msgstr "Comprobante de Pagos"
+
+#. module: l10n_ar_receipt
+#: view:receipt.receipt:0
+msgid "Search Receipts"
+msgstr "Búsqueda Recibos"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receiptbook,user_id:0
+msgid "User"
+msgstr "Usuario"
+
+#. module: l10n_ar_receipt
+#: model:ir.actions.act_window,name:l10n_ar_receipt.action_receipt_pay_vendor
+msgid "Customer Debit Payment"
+msgstr "Customer Debit Payment"
+
+#. module: l10n_ar_receipt
+#: view:account.voucher:0
+msgid "Journal Items"
+msgstr "Items del Diario"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receiptbook,actual_number:0
+msgid "Next Receipt Number"
+msgstr "Siguiente Numero de Recibo"
+
+#. module: l10n_ar_receipt
+#: view:receipt.receiptbook:0
+msgid "Receipt Books"
+msgstr "Talonario de Recibos"
+
+#. module: l10n_ar_receipt
+#: field:receipt.pay,partner:0
+#: field:receipt.pay,partner_id:0
+#: selection:receipt.receiptbook,type_custsupl:0
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: l10n_ar_receipt
+#: view:receipt.pay:0
+msgid "Receipts Pay"
+msgstr "Recibos"
+
+#. module: l10n_ar_receipt
+#: view:account.voucher:0
+msgid "Payment Voucher"
+msgstr "Comprobante de Pago"
+
+#. module: l10n_ar_receipt
+#: field:receipt.pay,date:0
+#: field:receipt.receipt,date:0
+msgid "Receipt Date"
+msgstr "Fecha de Recibo"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receiptbook,range_fix:0
+msgid "Receipt Fix"
+msgstr "Prefijo"
+
+#. module: l10n_ar_receipt
+#: model:ir.model,name:l10n_ar_receipt.model_receipt_pay
+msgid "Receipt Pay wizard"
+msgstr "Wizard de Recibos"
+
+#. module: l10n_ar_receipt
+#: selection:receipt.receiptbook,receipt_type:0
+msgid "Manual"
+msgstr "Manual"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receipt,voucher_ids:0
+msgid "Vouchers Lines"
+msgstr "Detalle de Pago"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receiptbook,name:0
+msgid "ReceiptBook Name"
+msgstr "Nombre de Talonario"
+
+#. module: l10n_ar_receipt
+#: view:receipt.receipt:0
+msgid "Payment Vouchers List"
+msgstr "Lista de Comprobante de Pago"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receiptbook,range_desde:0
+msgid "Receipt Number Desde"
+msgstr "Numero Recibo desde"
+
+#. module: l10n_ar_receipt
+#: view:receipt.pay:0
+msgid "Manual Receipt Number"
+msgstr "Numero de Recibo Manual"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receiptbook,type_custsupl:0
+msgid "Type of clients"
+msgstr "Tipo de Clientes"
+
+#. module: l10n_ar_receipt
+#: selection:receipt.receiptbook,receipt_type:0
+msgid "Automatic"
+msgstr "Automatico"
+
+#. module: l10n_ar_receipt
+#: selection:receipt.receipt,receipt_type:0
+msgid "payment"
+msgstr "pago"
+
+#. module: l10n_ar_receipt
+#: model:ir.actions.act_window,name:l10n_ar_receipt.create_receipt_pay_wiz_action
+msgid "Create Receipt "
+msgstr "Crear Recibo "
+
+#. module: l10n_ar_receipt
+#: field:receipt.pay,name:0
+#: field:receipt.receipt,name:0
+msgid "Receipt number"
+msgstr "Numero Recibo"
+
+#. module: l10n_ar_receipt
+#: field:receipt.pay,fix_name_man:0
+msgid "Receipt Fix Number"
+msgstr "Numero Prefijo"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receiptbook,state:0
+msgid "State"
+msgstr "Estado"
+
+#. module: l10n_ar_receipt
+#: model:ir.actions.act_window,name:l10n_ar_receipt.action_review_voucher_list_proof
+msgid "Vouchers Entries Proof"
+msgstr "Vouchers Entries Proof"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receipt,receiptbook_id:0
+msgid "ReceiptBook"
+msgstr "Talonario de Recibo"
+
+#. module: l10n_ar_receipt
+#: model:ir.model,name:l10n_ar_receipt.model_account_voucher
+msgid "Accounting Voucher"
+msgstr "Accounting Voucher"
+
+#. module: l10n_ar_receipt
+#: field:receipt.pay,receiptbook_auto:0
+msgid "Receipt set type"
+msgstr "Receipt set type"
+
+#. module: l10n_ar_receipt
+#: field:receipt.pay,name_man:0
+msgid "Number"
+msgstr "Numero"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receiptbook,change_date:0
+msgid "Change Date"
+msgstr "Cambiar Fecha"
+
+#. module: l10n_ar_receipt
+#: sql_constraint:receipt.receipt:0
+msgid "The name must be unique!"
+msgstr "El numero debe ser unico!"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receipt.line,voucher_id:0
+msgid "Voucher"
+msgstr "Comprobante"
+
+#. module: l10n_ar_receipt
+#: model:ir.model,name:l10n_ar_receipt.model_receipt_receipt_line
+msgid "Receipt Line"
+msgstr "Detalle de Recibo"
+
+#. module: l10n_ar_receipt
+#: model:ir.model,name:l10n_ar_receipt.model_receipt_receiptbook
+msgid "Manage Receiptbook"
+msgstr "Configurar Talonario de Recibo"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receipt,partner_id:0
+msgid "Partner"
+msgstr "Partner"
+
+#. module: l10n_ar_receipt
+#: help:receipt.pay,receiptbook_auto:0
+msgid "This boolean helps you to use receipt manual or automatic sequence"
+msgstr "This boolean helps you to use receipt manual or automatic sequence"
+
+#. module: l10n_ar_receipt
+#: view:account.voucher:0
+#: view:receipt.receipt:0
+msgid "Receipts"
+msgstr "Recibos"
+
+#. module: l10n_ar_receipt
+#: view:receipt.receipt:0
+msgid "Search Payment Vouchers"
+msgstr "Buscar Comprobante de Pago"
+
+#. module: l10n_ar_receipt
+#: view:receipt.pay:0
+msgid "or"
+msgstr "o"
+
+#. module: l10n_ar_receipt
+#: field:receipt.receiptbook,range_hasta:0
+msgid "Receipt Number Hasta"
+msgstr "Numero Recibo Hasta"
+
+#. module: l10n_ar_receipt
+#: model:ir.actions.act_window,name:l10n_ar_receipt.proof_list_action
+msgid "proof"
+msgstr "comprobante"
+

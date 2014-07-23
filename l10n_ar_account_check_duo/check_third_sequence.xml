@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!--Sequence types for account third Check -->
+
+        <record  id="seq_type_check_third" model="ir.sequence.type">
+            <field name="name">check third</field>
+            <field name="code">check.third</field>
+        </record>
+
+        <!--Sequences for account third Check -->
+
+        <record  id="seq_check_third" model="ir.sequence">
+            <field name="name">check third</field>
+            <field name="code">check.third</field>
+            <field name="padding">20</field>
+       <!--     <field name="prefix">R 0001-</field> -->
+        </record>
+    </data>
+</openerp>  
+ 

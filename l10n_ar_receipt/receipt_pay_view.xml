@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <!--Crea Pantalla tipo Formulario para Receipt Pay  colspan="2"  readonly="1"  attrs="{'readonly':[('type','=','view')]}" confirm="Are you sure to add those pay?"-->
+        <record model="ir.ui.view" id="receipt_pay_wizard_form_view">
+            <field name="name">receipt.pay.form</field>
+            <field name="model">receipt.pay</field>
+            <field name="arch" type="xml">
+                <form string="Receipts Pay" version="7.0">
+                    <group >
+                        <group > 
+                            <field name="name" readonly="1" />
+                        </group>    
+                        <group string="Manual Receipt Number" colspan="2"  attrs="{'invisible':[('fix_name_man','=',False)]}" > 
+                            <field name="fix_name_man" readonly="1" />
+                            <field name="name_man"/>
+                        </group>
+                        <group > 
+                            <field name="receiptbook_id" on_change="onchange_receiptbook_id(receiptbook_id,fix_name_man,name_man,name)" />
+                            <field name="date"/>
+                        </group>
+                        <group >
+                            <field name="partner"/> 
+                            <field name="total_amount" />
+                        </group>
+                    </group>    
+                    <footer>
+                        <button type="object" name="action_receipt" string="Receipt Pay" icon="gtk-ok" />
+                        or
+                        <button type="special" special="cancel" string="cancel" icon="gtk-cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        
+        <!--Crea el action invocado por el submenu Create Receipt Pay-->
+        <record model="ir.actions.act_window" id="create_receipt_pay_wiz_action">
+            <field name="name">Create Receipt </field>
+            <field name="res_model">receipt.pay</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+
+          <!--Crea action lateral para el Create Receipt Pay-->
+        <act_window name="Create Receipt Pay"
+            src_model="account.voucher"
+            res_model="receipt.pay"
+            id="receipt_pay_wizard"
+            view_mode="form"
+            key2="client_action_multi"
+            target="new"/> 
+            
+   
+    </data>
+</openerp>

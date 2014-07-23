@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="account.account_issuedcheck_hreject_form_view">
+            <field name="name">account.issuedcheck.hreject.wizard.form</field>
+            <field name="model">account.issuedcheck.hreject</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Handed Check Reject" col="2" version="7.0">
+                    <group> 
+                        <label string="It will create a Supplier Invoice. If you choose expenses on 'Invoice To Customer' then it will add expenses on Customer invoice, else, if you choose 'Record Expenses' then it will make an account.move with the choosen espense account." colspan="2"/>
+                        <field name="reject_date"/>
+                        <field name="expense"/>
+                        <field name="expense_amount" attrs="{'invisible':[('expense','not in',['supplier_expenses'])],'required':[('expense','in',['supplier_expenses'])]}"/>
+                        <field name="expense_account" attrs="{'invisible':[('expense','not in',['supplier_expenses'])],'required':[('expense','in',['supplier_expenses'])]}"/>                        
+                    </group>
+                    <footer>
+                        <button string="Confirm" name="action_hreject_issued" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>     
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            name="Handed Checks Rejected"
+            res_model="account.issuedcheck.hreject"
+            src_model="account.issued.check"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_check_issue_hrejected"/>
+
+    </data>
+</openerp>

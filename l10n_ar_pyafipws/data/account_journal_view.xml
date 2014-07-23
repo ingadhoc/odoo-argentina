@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_account_journal_pyafipws_form">
+            <field name="name">account.journal.afip.form</field>
+            <field name="model">account.journal</field>
+			<field name="inherit_id" ref="account.view_account_journal_form" />
+                <field name="type">form</field>
+                <field name="arch" type="xml"> 
+                <notebook>
+                    <page string="Argentina AFIP Webservices">
+                        <group col="2" colspan="3">
+                            <field name="pyafipws_electronic_invoice_service"/>
+                            <field name="pyafipws_invoice_type"></field>
+                            <field name="pyafipws_point_of_sale"></field>
+                            <!---field name="pyafipws_last_invoice_number" /-->
+                        </group>
+                        <group col="1" colspan="1">
+                            <button name="test_pyafipws_dummy" 
+                                    string="Test Dummy" type="object"/>
+                            <button name="test_pyafipws_point_of_sales" 
+                                    string="Verificar Ptos. Vta." type="object"/>
+                            <button name="get_pyafipws_last_invoice" 
+                                    string="Obtener Último N°" type="object"/>
+                        </group>
+                    </page>
+                </notebook>
+			</field>  
+		</record>
+    </data>
+</openerp>
+

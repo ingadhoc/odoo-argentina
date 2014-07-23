@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="account.check_hreject_form_view">
+            <field name="name">account.check.hreject.wizard.form</field>
+            <field name="model">account.check.hreject</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Reject Handed Check" col="2" version="7.0">
+                    <group>
+                        <label string="It will create a Supplier Invoice and a Customer Invoice. If you choose to 'Supplier Expenses' then it will add expenses on Supplier invoices. If you also choose 'Invoice Expenses to Customer' then, it will also add expenses to Customer Invoice" colspan="2"/>
+                        <field name="reject_date"/>
+                        <field name="expense"/>
+                        <field name="expense_to_customer" attrs="{'invisible':[('expense','not in',['supplier_expenses'])]}"/>
+                        <field name="expense_amount" attrs="{'invisible':[('expense','not in',['supplier_expenses'])],'required':[('expense','in',['supplier_expenses'])]}"/>
+                        <field name="expense_account" attrs="{'invisible':[('expense','not in',['supplier_expenses'])],'required':[('expense','in',['supplier_expenses'])]}"/>
+                    </group>    
+                    <footer>
+                        <button string="Confirm" name="action_hreject" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>     
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            name="Handed Check Rejected"
+            res_model="account.check.hreject"
+            src_model="account.third.check"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_check_hrejected"/>
+
+    </data>
+</openerp>

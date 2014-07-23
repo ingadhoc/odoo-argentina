@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="account_invoice_form">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml"> 
+                <notebook>
+	                <page string="Factura Electronica Argentina">
+    	                <group col="8" colspan="4">
+		                    <field name="pyafipws_concept"/>
+		                    <field name="pyafipws_billing_start_date"/>					
+                            <field name="pyafipws_billing_end_date"/>
+                            <field name="pyafipws_incoterms"/>
+                        </group>
+                        <group col="6" colspan="3">
+		                    <field name="pyafipws_result"></field>
+		                    <field name="pyafipws_cae"></field>
+		                    <field name="pyafipws_cae_due_date"></field>
+                        </group>
+                        <group col="2" colspan="1">
+                            <button name="do_pyafipws_request_cae" 
+                                        string="Obtener CAE" type="object"/>
+                            <button name="do_pyafipws_validate_cae" 
+                                        string="Verificar CAE" type="object"/>
+                        </group>
+                        <group col="2" colspan="4"> 
+    	                    <field name="pyafipws_message"></field>
+                        </group>
+                        <group col="1" colspan="4">                        
+                            <field name="pyafipws_barcode_img" 
+                                   img_width="370" img_height="30" 
+                                   width="370" height="30" widget="image" 
+                                   nolabel="1"/> 
+                        </group>
+	                </page>
+                </notebook>
+			</field>  
+        </record>
+        <record id="account.act_open" model="workflow.activity">
+            <field name="wkf_id" ref="account.wkf"/>
+            <field name="name">open</field>
+            <field name="action">action_date_assign()
+action_move_create()
+action_number()
+action_pyafipws_request_cae()
+write({'state':'open'})</field>
+            <field name="kind">function</field>
+        </record>
+    </data>
+</openerp>
+ 

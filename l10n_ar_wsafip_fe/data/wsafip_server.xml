@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C), 2012, OpenERP - Team de Localización Argentina.
+ https://launchpad.net/~openerp-l10n-ar-localization
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<openerp>
+    <data>
+
+    <record model='wsafip.server' id='wsfe_prod'>
+        <field name='name'>Factura Electrónica</field>
+        <field name='code'>wsfe</field>
+	    <field name='class'>production</field>
+	    <field name='url'>https://servicios1.afip.gov.ar/wsfev1/service.asmx</field>
+	</record>
+
+    <record model='wsafip.server' id='wsfe_homo'>
+        <field name='name'>Factura Electrónica</field>
+        <field name='code'>wsfe</field>
+	    <field name='class'>homologation</field>
+	    <field name='url'> https://wswhomo.afip.gov.ar/wsfev1/service.asmx</field>
+	</record>
+
+    <!-- Update Concept Action -->
+    <record id="action_server_wsfe_update_afip_concept_type" model="ir.actions.server">
+            <field name="name">Update Concept</field>
+            <field name="condition">obj.server_id.code == 'wsfe'</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="state">code</field>
+            <field name="code">obj.server_id.wsfe_update_afip_concept_type(obj.id)</field>
+    </record>
+
+    <record model="ir.values" id="action_wsfe_update_afip_concept">
+            <field name="name">action_module_wsfe_update_afip_concept_type</field>
+            <field name="action_id" ref="action_server_wsfe_update_afip_concept_type" />
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_server_wsfe_update_afip_concept_type'))" />
+            <field name="key">action</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="model">wsafip.connection</field>
+            <field name="key2">client_action_multi</field>
+    </record>
+
+    <!-- Update Journal Class Action -->
+    <record id="action_server_wsfe_update_journal_class" model="ir.actions.server">
+            <field name="name">Update Journal Class</field>
+            <field name="condition">obj.server_id.code == 'wsfe'</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="state">code</field>
+            <field name="code">obj.server_id.wsfe_update_journal_class(obj.id)</field>
+    </record>
+
+    <record model="ir.values" id="action_wsfe_update_journal_class">
+            <field name="name">action_module_wsfe_update_journal_class</field>
+            <field name="action_id" ref="action_server_wsfe_update_journal_class" />
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_server_wsfe_update_journal_class'))" />
+            <field name="key">action</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="model">wsafip.connection</field>
+            <field name="key2">client_action_multi</field>
+    </record>
+
+	<!-- Update Document Type Action -->
+    <record id="action_server_wsfe_update_document_type" model="ir.actions.server">
+            <field name="name">Update Document Type</field>
+            <field name="condition">obj.server_id.code == 'wsfe'</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="state">code</field>
+            <field name="code">obj.server_id.wsfe_update_document_type(obj.id)</field>
+    </record>
+
+    <record model="ir.values" id="action_wsfe_update_document_type">
+            <field name="name">action_module_wsfe_update_document_type</field>
+            <field name="action_id" ref="action_server_wsfe_update_document_type" />
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_server_wsfe_update_document_type'))" />
+            <field name="key">action</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="model">wsafip.connection</field>
+            <field name="key2">client_action_multi</field>
+    </record>
+
+
+    <!-- Update Currency Action -->
+    <record id="action_server_wsfe_update_currency" model="ir.actions.server">
+            <field name="name">Update Currency</field>
+            <field name="condition">obj.server_id.code == 'wsfe'</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="state">code</field>
+            <field name="code">obj.server_id.wsfe_update_currency(obj.id)</field>
+    </record>
+
+    <record model="ir.values" id="action_wsfe_update_currency">
+            <field name="name">action_module_wsfe_update_currency</field>
+            <field name="action_id" ref="action_server_wsfe_update_currency" />
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_server_wsfe_update_currency'))" />
+            <field name="key">action</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="model">wsafip.connection</field>
+            <field name="key2">client_action_multi</field>
+    </record>
+	
+    <!-- Update Tax Action -->
+    <record id="action_server_wsfe_update_tax" model="ir.actions.server">
+            <field name="name">Update Taxes</field>
+            <field name="condition">obj.server_id.code == 'wsfe'</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="state">code</field>
+            <field name="code">obj.server_id.wsfe_update_tax(obj.id)</field>
+    </record>
+
+    <record model="ir.values" id="action_wsfe_update_tax">
+            <field name="name">action_module_wsfe_update_tax</field>
+            <field name="action_id" ref="action_server_wsfe_update_tax" />
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_server_wsfe_update_tax'))" />
+            <field name="key">action</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="model">wsafip.connection</field>
+            <field name="key2">client_action_multi</field>
+    </record>
+	
+    <!-- Update Optional Types -->
+    <record id="action_server_wsfe_update_optional" model="ir.actions.server">
+            <field name="name">Optional Types</field>
+            <field name="condition">obj.server_id.code == 'wsfe'</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="state">code</field>
+            <field name="code">obj.server_id.wsfe_update_optional_types(obj.id)</field>
+    </record>
+
+    <record model="ir.values" id="action_wsfe_update_optional">
+            <field name="name">action_module_wsfe_update_optional</field>
+            <field name="action_id" ref="action_server_wsfe_update_optional" />
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_server_wsfe_update_optional'))" />
+            <field name="key">action</field>
+            <field name="model_id" ref="l10n_ar_wsafip.model_wsafip_connection" />
+            <field name="model">wsafip.connection</field>
+            <field name="key2">client_action_multi</field>
+    </record>
+
+
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
+     -->

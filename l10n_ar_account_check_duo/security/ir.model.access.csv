@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_issued_check_full,account_check_duo_access_issued,model_account_issued_check,account.group_account_invoice,1,1,1,1
+access_account_third_check_full,account_check_duo_access_third,model_account_third_check,account.group_account_invoice,1,1,1,1
+access_account_checkbook_full,account_account_checkbook_access,model_account_checkbook,account.group_account_invoice,1,1,1,1
+access_ticket_deposit_full,account_ticket_deposit_access,model_ticket_deposit,account.group_account_invoice,1,1,1,1
+access_account_check_duo_third,access_account_check_duo_third,model_account_third_check,,1,1,1,1
+access_account_check_duo_issued,access_account_check_duo_issued,model_account_issued_check,,1,1,1,1
+access_account_ticketdeposit_full,access_account_ticketdeposit_full,model_ticket_deposit,,1,1,1,1
+access_account_checkbook_full,access_account_checkbook_full,model_account_checkbook,,1,1,1,1

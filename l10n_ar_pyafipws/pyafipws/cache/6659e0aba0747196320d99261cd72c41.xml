@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<loginTicketResponse version="1">
+    <header>
+        <source>CN=wsaahomo, O=AFIP, C=AR, SERIALNUMBER=CUIT 33693450239</source>
+        <destination>C=ar, O=evoip, SERIALNUMBER=CUIT 30711370303, CN=pyafipws</destination>
+        <uniqueId>2167773579</uniqueId>
+        <generationTime>2013-11-28T12:19:40.252-03:00</generationTime>
+        <expirationTime>2013-11-29T00:19:40.252-03:00</expirationTime>
+    </header>
+    <credentials>
+        <token>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pgo8c3NvIHZlcnNpb249IjIuMCI+CiAgICA8aWQgdW5pcXVlX2lkPSIyNDE2MTgxOTEzIiBzcmM9IkNOPXdzYWFob21vLCBPPUFGSVAsIEM9QVIsIFNFUklBTE5VTUJFUj1DVUlUIDMzNjkzNDUwMjM5IiBnZW5fdGltZT0iMTM4NTY1MTkyMCIgZXhwX3RpbWU9IjEzODU2OTUxODAiIGRzdD0iQ049d3NmZSwgTz1BRklQLCBDPUFSIi8+CiAgICA8b3BlcmF0aW9uIHZhbHVlPSJncmFudGVkIiB0eXBlPSJsb2dpbiI+CiAgICAgICAgPGxvZ2luIHVpZD0iQz1hciwgTz1ldm9pcCwgU0VSSUFMTlVNQkVSPUNVSVQgMzA3MTEzNzAzMDMsIENOPXB5YWZpcHdzIiBzZXJ2aWNlPSJ3c2ZlIiByZWdtZXRob2Q9IjIyIiBlbnRpdHk9IjMzNjkzNDUwMjM5IiBhdXRobWV0aG9kPSJjbXMiPgogICAgICAgICAgICA8cmVsYXRpb25zPgogICAgICAgICAgICAgICAgPHJlbGF0aW9uIHJlbHR5cGU9IjQiIGtleT0iMzA3MTEzNzAzMDMiLz4KICAgICAgICAgICAgPC9yZWxhdGlvbnM+CiAgICAgICAgPC9sb2dpbj4KICAgIDwvb3BlcmF0aW9uPgo8L3Nzbz4KCg==</token>
+        <sign>R+JBaLCOtWohWZ19rq0TYjCfTkJFB/KZsjWok9cgsjrDJh/5l9ap7eE/BurDGitLUzQaCHUdotiyeyPbLGZDCfUAsldCp0ymfVtFgWlYZo4djhVeLcSvdG5Da6vricEccRLSpiNCjK0EV/Uv1yYDz+cv6SPtbEGBSJAzTEZIUDs=</sign>
+    </credentials>
+</loginTicketResponse>
+

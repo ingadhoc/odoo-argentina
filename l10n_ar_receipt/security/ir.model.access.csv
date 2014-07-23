@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+receipt_full_account_user,receiptpay_full_account_user,model_receipt_receipt,account.group_account_user,1,1,1,1
+receipt_full_account_invoice,receipt_full_account_invoice,model_receipt_receipt,account.group_account_invoice,1,1,1,1
+receipt_full_accout_manager,receipt_full_accout_manager,model_receipt_receipt,account.group_account_manager,1,1,1,1
+receipt_receiptbook_full_accout_manager,receipt_receiptbook_full_accout_manager,model_receipt_receiptbook,account.group_account_manager,1,1,1,1
+receipt_receiptbook_invoice,receipt_receiptbook_invoice,model_receipt_receiptbook,account.group_account_invoice,1,1,1,1
+receipt_full_all,receipt_full_all,model_receipt_receipt,,1,1,1,1
+receipt_full_all,receipt_full_all,model_receipt_receipt_line,,1,1,1,1
+receipt_receiptbook_full_all,receipt_receiptbook_full_all,model_receipt_receiptbook,,1,1,1,1
+
+

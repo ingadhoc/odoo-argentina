@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2010 Elepe Servicios (http://www.elepeservicios.com.ar)
+ All Rights Reserved
+
+ Author : Dario Kevin De Giacomo (Elepe Servicios)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<openerp>
+    <data> 
+        <record id="view_invoice_form" model="ir.ui.view">
+            <field name="model">account.invoice</field>
+            <field name="name">account.invoice.afip.form</field>
+            <field name="inherit_id" ref="account.invoice_form" />
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/group/group/field[@name='date_invoice']" position="after"> 
+                    <field name="afip_export_rspn" invisible="1"/>
+                </xpath>
+                <notebook>
+                    <page string="Export Configuration" attrs="{'invisible': [('afip_export_rspn', '!=', 'EXT')]}" >
+                        <group>
+                            <group>
+                                <field name="afip_export_concept" attrs="{'required': [('afip_export_rspn', '==', 'EXT')], 
+                                                                          'readonly': [('state', '!=', 'draft')]}" 
+                                                                  colspan="2" 
+                                                                  on_change="onchange_concept_export(afip_export_concept)"/>
+                                                                  
+                                <field name="afip_export_lang_invoice" attrs="{'required': [('afip_export_rspn', '==', 'EXT')], 
+                                                                               'readonly': [('state', '!=', 'draft')]}" 
+                                                                       colspan="2"/>
+                                                                       
+                                <field name="afip_export_exist_perm" invisible="1" 
+                                                                     on_change="onchange_permissions(afip_export_exist_perm)"/>
+                                                                     
+                            </group>
+                            
+                            <group>
+                                <field name="afip_export_incoterm" widget="selection" 
+                                                                   colspan="2" 
+                                                                   attrs="{'required':  [('afip_export_rspn', '==', 'EXT'), 
+                                                                                         ('afip_export_concept', '==', '1')], 
+                                                                           'readonly':  [('state', '!=', 'draft')]}"/>
+                                                                           
+                                <field name="afip_export_dst_pais" domain="[('afip_code','!=','False')]" 
+                                                                   colspan="2" 
+                                                                   attrs="{'readonly': [('state', '!=', 'draft')],
+                                                                           'required':  [('afip_export_rspn', '==', 'EXT')]}"/>
+                                                                   
+                            </group>
+                        </group>
+                        <field name="afip_export_permissions" attrs="{'readonly': [('state', '!=', 'draft')], 
+                                                                      'required': ['|', ('afip_export_rspn', '==', 'EXT'), 
+                                                                                        ('afip_export_concept', '==', '1')], 
+                                                                      'invisible': [('afip_export_concept', '!=', '1')] }">
+                                                                      
+                            <tree colors="grey:valid_permission==False; green:valid_permission==True" fonts="bold:valid_permission==True">
+                                <field name="permission_code"/>
+                                <field name="dst_merc"/>
+                                <field name="valid_permission"/>
+                            </tree>
+                            <form>
+                                <field name="permission_code" required="1"/>
+                                <field name="dst_merc" required="1"/>
+                            </form>
+                        </field>
+                        <button class="oe_highlight" string='Validate Permissions' name='button_check_permissions' type='object' attrs="{'invisible': ['|', ('afip_export_concept', '!=', '1'), ('state', '!=', 'draft')]}"/>
+                        <group>
+                            <field name="afip_export_obs_com" class="oe_inline" placeholder="Observations..." attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
+     -->

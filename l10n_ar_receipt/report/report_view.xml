@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <report id="receipt_pay_report" string="Print Receipt Pay"
+            model="receipt.receipt" name="receipt.pay.report"
+            rml="receipt_pay/report/receipt_pay_print.rml" />
+    </data>
+</openerp>

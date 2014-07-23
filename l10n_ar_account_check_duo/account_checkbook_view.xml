@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_checkbook_search" model="ir.ui.view">
+            <field name="name">account.checkbook.search</field>
+            <field name="model">account.checkbook</field>
+            <field name="arch" type="xml">
+                <search string="Checkbooks">
+                    <field name="name"/>
+                    <field name="account_bank_id"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_account_checkbook_tree" model="ir.ui.view">
+            <field name="name">account.checkbook.tree</field>
+            <field name="model">account.checkbook</field>
+            <field name="arch" type="xml">
+                <tree string="Checkbooks">
+                    <field name="name"/>
+                    <field name="range_desde"/>
+                    <field name="range_hasta"/>
+                    <field name="actual_number"/>
+                    <field name="account_bank_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_account_checkbook_form" model="ir.ui.view">
+            <field name="name">account.checkbook.form</field>
+            <field name="model">account.checkbook</field>
+            <field name="arch" type="xml">
+                <form string="Checkbooks" version="7.0"> 
+                <header string="Checkbooks">
+                        <button name="wkf_active" string="In Use"  states="draft"/>
+                        <button name="wkf_used" string="Used"  states="active"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,used" statusbar_colors='{"active":"blue"}'/>
+                </header>
+                <sheet string="Checkbooks">
+                    <group col="4">          
+                        <field name="name"/>  
+                        <field name="account_bank_id"/>
+                    </group>
+                    <group string="Ranges" colspan="2" >  
+                        <field name="range_desde"/>
+                        <field name="range_hasta"/>
+                    </group>
+                    <group  colspan="4" col="2" >   
+                        <field name="actual_number" />
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>                     
+                </form>
+            </field>
+        </record>
+        
+
+
+        <record id="action_account_checkbooks_form" model="ir.actions.act_window">
+            <field name="name">Checkbooks</field>
+            <field name="res_model">account.checkbook</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_account_checkbook_search"/>
+        </record>
+        
+       <menuitem action="action_account_checkbooks_form" id="menu_action_account_checkbooks_form" parent="account.menu_configuration_misc" sequence="101"/>
+ 
+    </data>
+</openerp>        

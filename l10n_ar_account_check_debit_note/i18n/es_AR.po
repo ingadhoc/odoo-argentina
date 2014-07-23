@@ -1,0 +1,248 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* account_check_debit_note
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-10-31 00:48+0000\n"
+"PO-Revision-Date: 2012-10-31 11:46-0300\n"
+"Last-Translator: s <poyo.ar@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: account_check_debit_note
+#: model:ir.actions.act_window,name:account_check_debit_note.action_debit_note_tree
+#: model:ir.ui.menu,name:account_check_debit_note.menu_action_debit_tree
+msgid "Customer Debit Notes"
+msgstr "Nota de Débito de Clientes"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:298
+#, python-format
+msgid ""
+"Cannot create the invoice !\n"
+"The payment term defined gives a computed amount greater than the total invoiced amount."
+msgstr ""
+"No se puede crear la factura !\n"
+"El termino de pago definido da una cantidad calculada mayorque el monto total de la factura."
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:268
+#, python-format
+msgid "No Invoice Lines !"
+msgstr "No hay línea de factura !"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:214
+#, python-format
+msgid "Invoice line account company does not match with invoice company."
+msgstr "La cuenta en la línea de la factura, no coincide con la cuenta de la empresa en la factura."
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:287
+#, python-format
+msgid "Bad total !"
+msgstr "Error en el total !"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:234
+#, python-format
+msgid ""
+"Can't find any account journal of %s type for this company.\n"
+"\n"
+"You can create one in the menu: \n"
+"Configuration\\Financial Accounting\\Accounts\\Journals."
+msgstr ""
+"No se puede encontrar un diario de cuenta  del %s tipo para esta empresa.\n"
+"\n"
+"Puede crear uno en el menu: \n"
+"Configuración\\Contabilidad Financiera\\Cuentas\\Journals."
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:51
+#, python-format
+msgid "You have to define an analytic journal on the '%s' journal!"
+msgstr "Debe definir el diario analítico en el  '%s'  diario!"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:123
+#: code:addons/account_check_debit_note/invoice.py:189
+#: code:addons/account_check_debit_note/invoice.py:204
+#: code:addons/account_check_debit_note/invoice.py:213
+#: code:addons/account_check_debit_note/invoice.py:234
+#, python-format
+msgid "Configuration Error !"
+msgstr "Error de Configuración !"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:443
+#, python-format
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: account_check_debit_note
+#: view:account.invoice:0
+msgid "Type"
+msgstr "Tipo"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:268
+#, python-format
+msgid "Please create some invoice lines."
+msgstr "Por favor crear alguna línea de factura."
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:266
+#: code:addons/account_check_debit_note/invoice.py:298
+#, python-format
+msgid "Error !"
+msgstr "Error !"
+
+#. module: account_check_debit_note
+#: model:ir.model,name:account_check_debit_note.model_account_journal
+msgid "Journal"
+msgstr "Diarios"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:534
+#, python-format
+msgid "is validated."
+msgstr "Es válido."
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:266
+#, python-format
+msgid "Please define sequence on invoice journal"
+msgstr "Por favor defina una secuencia en el diario de factura."
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:465
+#, python-format
+msgid "There is no Accounting Journal of type Sale/Purchase defined!"
+msgstr "Esta no es un Diario de cuenta del tipo Venta/Compra"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:459
+#, python-format
+msgid "Invoice '%s' is waiting for validation."
+msgstr "La Factura '%s' está siendo validada."
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:534
+#, python-format
+msgid "Invoice "
+msgstr "Factura"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:441
+#, python-format
+msgid "Customer"
+msgstr "Clientes"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:467
+#, python-format
+msgid "Unknown Error"
+msgstr "Error desconocido"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:558
+#, python-format
+msgid "Pay Invoice"
+msgstr "Pago de Factura"
+
+#. module: account_check_debit_note
+#: constraint:account.journal:0
+msgid "Configuration error! The currency chosen should be shared by the default accounts too."
+msgstr "Error de Configuración! La moneda elegida también debe ser compartida por las cuentas por defecto."
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:205
+#, python-format
+msgid "Can not find account chart for this company in invoice line account, Please Create account."
+msgstr "No se puede encontrar la cuenta para esta empresa en la línea de Factura, Por favor crear una cuenta."
+
+#. module: account_check_debit_note
+#: model:ir.actions.act_window,name:account_check_debit_note.action_supplier_debit_note_tree
+#: model:ir.ui.menu,name:account_check_debit_note.menu_action_supplier_debit_note_tree
+msgid "Supplier Debit Notes"
+msgstr "Nota de Débito del Proveedor"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:378
+#, python-format
+msgid "UserError"
+msgstr "Error de Usuario"
+
+#. module: account_check_debit_note
+#: sql_constraint:account.invoice:0
+msgid "Invoice Number must be unique per Company!"
+msgstr "Invoice Number must be unique per Company!"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:287
+#, python-format
+msgid ""
+"Please verify the price of the invoice !\n"
+"The real total does not match the computed total."
+msgstr ""
+"Por favor, verifique el monto de la factura !\n"
+"El total no coincide con el total computado."
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:51
+#: code:addons/account_check_debit_note/invoice.py:88
+#, python-format
+msgid "No Analytic Journal !"
+msgstr "No es un Diario Analítico !"
+
+#. module: account_check_debit_note
+#: model:ir.model,name:account_check_debit_note.model_account_voucher
+msgid "Accounting Voucher"
+msgstr "Accounting Voucher"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:88
+#, python-format
+msgid "You must define an analytic journal of type '%s' !"
+msgstr "Debe definir un Diario Analítico del tipo  '%s' !"
+
+#. module: account_check_debit_note
+#: sql_constraint:account.journal:0
+msgid "The name of the journal must be unique per company !"
+msgstr "El nombre del diario debe ser único por cada empresa !"
+
+#. module: account_check_debit_note
+#: sql_constraint:account.journal:0
+msgid "The code of the journal must be unique per company !"
+msgstr "El nombre del diario debe ser único por cada empresa !"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:464
+#, python-format
+msgid "Configuration Error!"
+msgstr "Configuration Error!"
+
+#. module: account_check_debit_note
+#: model:ir.model,name:account_check_debit_note.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:124
+#: code:addons/account_check_debit_note/invoice.py:190
+#, python-format
+msgid "Can not find account chart for this company, Please Create account."
+msgstr "No se puede encontrar la cuenta para esta empresa, Por favor crear una cuenta."
+
+#. module: account_check_debit_note
+#: code:addons/account_check_debit_note/invoice.py:379
+#, python-format
+msgid "Cannot create invoice move on centralised journal"
+msgstr "Cannot create invoice move on centralised journal"
+

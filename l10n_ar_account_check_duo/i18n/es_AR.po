@@ -1,0 +1,800 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* l10n_ar_account_check_duo
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0-20130313-002537\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-03 04:17+0000\n"
+"PO-Revision-Date: 2013-09-13 16:45-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.issued.check,clearing:0
+#: field:account.third.check,clearing:0
+msgid "Clearing"
+msgstr "Clearing"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.third.check,sequence_number:0
+msgid "Id Number"
+msgstr "Id Número"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.check.dreject,reject_date:0
+#: field:account.check.hreject,reject_date:0
+#: field:account.issuedcheck.hreject,reject_date:0
+msgid "Reject Date"
+msgstr "Fecha Rechazo"
+
+#. module: l10n_ar_account_check_duo
+#: selection:account.third.check,state:0
+msgid "Deposited"
+msgstr "Depositado"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.issued.check,checkbook_id:0
+msgid "Checkbook"
+msgstr "Chequera"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.checkbook,range_desde:0
+msgid "Check Number Desde"
+msgstr "Numero Cheque desde"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.third.check,vat:0
+msgid "Vat"
+msgstr "Vat"
+
+#. module: l10n_ar_account_check_duo
+#: field:ticket.deposit,total_ammount:0
+msgid "Total Ammount"
+msgstr "Total"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.model,name:l10n_ar_account_check_duo.model_account_check_sold
+msgid "account.check.sold"
+msgstr "Cheque Vendido"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.check.sold,sold_date:0
+msgid "Sold Date"
+msgstr "Fecha venta"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.issued.check,amount:0
+msgid "Amount Check"
+msgstr "Monto"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.issued.check,company_id:0
+#: field:account.third.check,company_id:0
+msgid "Company"
+msgstr "Empresa"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.third.check,reject_debit_note_prov:0
+msgid "Reject Debit Note Prov"
+msgstr "Nota de Debito del Proveedor"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.checkbook:0
+msgid "Ranges"
+msgstr "Rangos"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.model,name:l10n_ar_account_check_duo.model_wizard_ticket_deposit
+msgid "wizard.ticket.deposit"
+msgstr "Boleta de Deposito"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.model,name:l10n_ar_account_check_duo.model_account_check_hreject
+msgid "account.check.hreject"
+msgstr "Cheque rechazado"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.issued.check:0
+#: view:account.voucher:0
+#: field:account.voucher,issued_check_ids:0
+#: model:ir.actions.act_window,name:l10n_ar_account_check_duo.action_issued_check
+#: model:ir.ui.menu,name:l10n_ar_account_check_duo.menu_treasury_issued_check
+msgid "Issued Checks"
+msgstr "Cheques Propios"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.journal:0
+#: field:account.journal,use_third_check:0
+#: field:account.voucher,use_third_check:0
+msgid "Use Third Checks"
+msgstr "Mostrar Solapa  Cheques de Terceros"
+
+#. module: l10n_ar_account_check_duo
+#: view:res.partner.bank:0
+#: field:res.partner.bank,account_id:0
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.voucher,show_check_page:0
+msgid "Show Check Page"
+msgstr "Mostrar Listado de Cheques"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_checkbook.py:97
+#, python-format
+msgid "You cant change the checkbook´s state, there is one active !"
+msgstr "No puede cambiar el estado de la chequera, existe una activa/en uso!"
+
+#. module: l10n_ar_account_check_duo
+#: view:wizard.ticket.deposit:0
+msgid "Ticket Checks Deposit"
+msgstr "Boleta de Depósitos"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.actions.act_window,help:l10n_ar_account_check_duo.action_debit_vendor_receipt
+msgid "Sales payment allows you to register the payments you receive from your customers. In order to record a payment, you must enter the customer, the payment method (=the journal) and the payment amount. OpenERP will propose to you automatically the reconciliation of this payment with the open invoices or sales receipts."
+msgstr "Sales payment allows you to register the payments you receive from your customers. In order to record a payment, you must enter the customer, the payment method (=the journal) and the payment amount. OpenERP will propose to you automatically the reconciliation of this payment with the open invoices or sales receipts."
+
+#. module: l10n_ar_account_check_duo
+#: view:account.third.check:0
+#: field:account.third.check,source_partner_id:0
+msgid "Source Partner"
+msgstr " Partner Origen"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.issued.check:0
+#: view:account.third.check:0
+#: field:wizard.ticket.deposit,total_amount:0
+msgid "Total Amount"
+msgstr "Total"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.checkbook,name:0
+msgid "CheckBook Name"
+msgstr "Nombre Chequera"
+
+#. module: l10n_ar_account_check_duo
+#: selection:account.issued.check,state:0
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.third.check,amount:0
+msgid "Check Amount"
+msgstr "Monto"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.checkbook:0
+#: model:ir.actions.act_window,name:l10n_ar_account_check_duo.action_account_checkbooks_form
+#: model:ir.ui.menu,name:l10n_ar_account_check_duo.menu_action_account_checkbooks_form
+msgid "Checkbooks"
+msgstr "Chequeras"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.checkbook,change_date:0
+#: field:account.issued.check,change_date:0
+#: field:account.third.check,change_date:0
+msgid "Change Date"
+msgstr "Fecha de Cambio"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.check.dreject,make_expense:0
+#: field:account.check.hreject,make_expense:0
+#: field:account.issuedcheck.hreject,make_expense:0
+msgid "Make Expenses ?"
+msgstr "Genera Gastos?"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.third.check,date_in:0
+msgid "Date In"
+msgstr "Fecha de Entrada"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.voucher:0
+msgid "Payment Information"
+msgstr "Información del Pago"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.issued.check:0
+msgid "Partner"
+msgstr "Partner"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.issued.check,clearing_date:0
+#: field:account.third.check,clearing_date:0
+msgid "Clearing Date"
+msgstr "Fecha de Clearing"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_voucher.py:233
+#, python-format
+msgid "The associated journal force that the total amount is the same as the one paid with checks."
+msgstr "The associated journal force that the total amount is the same as the one paid with checks."
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.model,name:l10n_ar_account_check_duo.model_account_issued_check
+msgid "Manage Checks Issued"
+msgstr "Gestion de Cheques Propios"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.model,name:l10n_ar_account_check_duo.model_account_voucher
+msgid "Accounting Voucher"
+msgstr "Accounting Voucher"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_voucher.py:89
+#, python-format
+msgid "Journal must be fill"
+msgstr "El diario debe ser cargado.\""
+
+#. module: l10n_ar_account_check_duo
+#: field:account.third.check,ticket_deposit_id:0
+#: model:ir.actions.act_window,name:l10n_ar_account_check_duo.action_ticket_deposit_menu
+#: model:ir.model,name:l10n_ar_account_check_duo.model_ticket_deposit
+#: model:ir.ui.menu,name:l10n_ar_account_check_duo.menu_treasury_ticket_deposit
+#: view:ticket.deposit:0
+#: field:ticket.deposit.line,ticket_deposit_id:0
+#: field:wizard.ticket.deposit,ticket_deposit:0
+msgid "Ticket Deposit"
+msgstr "Boleta de Deposito"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_checkbook.py:78
+#, python-format
+msgid "Range hasta  must be greater than range desde"
+msgstr "Rango hasta debe ser mayor al rango desde"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.checkbook,state:0
+#: view:account.issued.check:0
+#: field:account.issued.check,state:0
+#: view:account.third.check:0
+#: field:account.third.check,state:0
+msgid "State"
+msgstr "Estado"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:324
+#, python-format
+msgid "Vat number must be 11 numbers !"
+msgstr "El número de CUIT debe tener 11 números !"
+
+#. module: l10n_ar_account_check_duo
+#: selection:account.issued.check,clearing:0
+#: selection:account.third.check,clearing:0
+msgid "72 hs"
+msgstr "72 hs"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:104
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:112
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:148
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:153
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:164
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:174
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:302
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:312
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:320
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:324
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:335
+#: code:addons/l10n_ar_account_check_duo/account_checkbook.py:57
+#: code:addons/l10n_ar_account_check_duo/account_checkbook.py:66
+#: code:addons/l10n_ar_account_check_duo/account_checkbook.py:78
+#: code:addons/l10n_ar_account_check_duo/account_checkbook.py:97
+#, python-format
+msgid "Error !"
+msgstr "Error !"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.actions.act_window,name:l10n_ar_account_check_duo.action_check_deposit
+msgid "Check Deposit"
+msgstr "Depositar Cheque"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.check.deposit,date:0
+#: field:wizard.ticket.deposit,date:0
+msgid "Deposit Date"
+msgstr "Fecha de Deposito"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.issued.check,reject_debit_note:0
+#: field:account.third.check,reject_debit_note:0
+msgid "Reject Debit Note"
+msgstr "Nota de Débito"
+
+#. module: l10n_ar_account_check_duo
+#: view:ticket.deposit:0
+msgid "ticket Deposit...."
+msgstr "Boleta de Deposito"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_checkbook.py:57
+#, python-format
+msgid "You can drop the checkbook(s) only in  draft state !"
+msgstr "No puede eliminar la(s) chequera(s), solo en estado borrador !"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.third.check:0
+msgid "In Holding"
+msgstr "En Cartera"
+
+#. module: l10n_ar_account_check_duo
+#: field:ticket.deposit,name:0
+msgid "Ticket Deposit number"
+msgstr "Numero de Boleta de Deposito"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:148
+#, python-format
+msgid "You must be create a checkbook or change state"
+msgstr "Debe crear una chequera o cambiar de estado."
+
+#. module: l10n_ar_account_check_duo
+#: help:account.issued.check,company_id:0
+#: help:account.third.check,company_id:0
+msgid "Company related to this Check"
+msgstr "La Empresa esta relacionada con este cheque"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.journal:0
+#: field:account.journal,use_issued_check:0
+#: field:account.voucher,use_issued_check:0
+msgid "Use Issued Checks"
+msgstr "Mostar solapa de Cheques  Propios"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_voucher.py:232
+#, python-format
+msgid "Cannot Validate Voucher"
+msgstr "No se puede validar el pago"
+
+#. module: l10n_ar_account_check_duo
+#: view:wizard.ticket.deposit:0
+msgid "Tickets Checks Deposit"
+msgstr "Boletas de Cheques Depositados"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.model,name:l10n_ar_account_check_duo.model_account_check_deposit
+msgid "account.check.deposit"
+msgstr "account.check.deposit"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.actions.act_window,name:l10n_ar_account_check_duo.action_check_dreject
+msgid "Rejected Deposited Check"
+msgstr "Cheque Depositado-Rechazado"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.third.check,clearing_date_hasta:0
+msgid "Clearing Date Hasta"
+msgstr "Fecha de Clearing Hasta"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.issued.check:0
+#: field:account.issued.check,receiving_partner_id:0
+#: view:account.third.check:0
+#: field:account.third.check,destiny_partner_id:0
+msgid "Destiny Partner"
+msgstr "Empresa Destino"
+
+#. module: l10n_ar_account_check_duo
+#: field:ticket.deposit,checks_ids:0
+msgid "Check Lines"
+msgstr "Detalle de Cheques"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.check.dreject,expense_amount:0
+#: field:account.check.hreject,expense_amount:0
+#: field:account.check.sold,expense_amount:0
+#: field:account.issuedcheck.hreject,expense_amount:0
+msgid "Expense Amount"
+msgstr "Importe de Gastos"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.issued.check,date:0
+msgid "Date Check"
+msgstr "Fecha del Cheque"
+
+#. module: l10n_ar_account_check_duo
+#: selection:account.issued.check,state:0
+#: selection:account.third.check,state:0
+msgid "Hand-Rejected"
+msgstr "Entregado-Rechazado"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.third.check:0
+msgid "Desde fecha Clearing"
+msgstr "Desde fecha Clearing"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.journal:0
+msgid "Check Configuration"
+msgstr "Configuración del Cheque"
+
+#. module: l10n_ar_account_check_duo
+#: sql_constraint:account.issued.check:0
+msgid "The number must be unique!"
+msgstr "El número debe ser único!"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.journal:0
+#: field:account.journal,validate_only_checks:0
+msgid "Validate only Checks"
+msgstr "Validar monto total de cheques"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.issued.check,debit_date:0
+msgid "Date Debit"
+msgstr "Fecha de Débito"
+
+#. module: l10n_ar_account_check_duo
+#: field:ticket.deposit,date:0
+msgid "Ticket Deposit Date"
+msgstr "Fecha de Boleta de Deposito"
+
+#. module: l10n_ar_account_check_duo
+#: selection:account.issued.check,state:0
+#: selection:account.third.check,state:0
+msgid "Handed"
+msgstr "Entregado"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.model,name:l10n_ar_account_check_duo.model_account_check_dreject
+msgid "account.check.dreject"
+msgstr "account.check.dreject"
+
+#. module: l10n_ar_account_check_duo
+#: selection:account.checkbook,state:0
+#: selection:account.issued.check,state:0
+#: selection:account.third.check,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:112
+#, python-format
+msgid "The Check must be create on one payment !"
+msgstr "El Cheque debe ser creado en un pago!"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.third.check:0
+msgid "Hasta fecha Clearing"
+msgstr "Hasta fecha Clearing"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_voucher.py:140
+#, python-format
+msgid "The check must be in holding state."
+msgstr "El Cheque debe estar en estado \"En Cartera\"."
+
+#. module: l10n_ar_account_check_duo
+#: field:account.check.dreject,invoice_expense:0
+#: field:account.check.hreject,invoice_expense:0
+#: field:account.issuedcheck.hreject,invoice_expense:0
+msgid "Invoice Expense?"
+msgstr "Facturar los Gastos?"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.voucher:0
+#: model:ir.ui.menu,name:l10n_ar_account_check_duo.menu_account_check
+msgid "Checks"
+msgstr "Cheques"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.issued.check:0
+#: field:account.issued.check,number:0
+#: view:account.third.check:0
+#: field:account.third.check,number:0
+msgid "Check Number"
+msgstr "Número Cheque"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.checkbook:0
+#: selection:account.checkbook,state:0
+msgid "Used"
+msgstr "Usado"
+
+#. module: l10n_ar_account_check_duo
+#: help:account.journal,validate_only_checks:0
+msgid "If marked, when validating a voucher, verifies that the total amounth of the voucher is the same as the checks used."
+msgstr "If marked, when validating a voucher, verifies that the total amounth of the voucher is the same as the checks used."
+
+#. module: l10n_ar_account_check_duo
+#: selection:account.third.check,state:0
+msgid "Sold"
+msgstr "Vendido"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.third.check,date:0
+msgid "Check Date"
+msgstr "Fecha Cheque"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.issued.check:0
+msgid "Issued Checks..."
+msgstr "Cheques Propios..."
+
+#. module: l10n_ar_account_check_duo
+#: field:account.checkbook,user_id:0
+#: field:account.issued.check,user_id:0
+#: field:account.third.check,user_id:0
+msgid "User"
+msgstr "Usuario"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.actions.act_window,name:l10n_ar_account_check_duo.action_debit_vendor_receipt
+msgid "Customer Debit Payment"
+msgstr "Customer Debit Payment"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.issued.check:0
+#: view:account.third.check:0
+#: view:ticket.deposit:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:153
+#, python-format
+msgid "The Checkbook is not active"
+msgstr "La Chequera no esta activa."
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.model,name:l10n_ar_account_check_duo.model_ticket_deposit_line
+msgid "Ticket Deposit Line"
+msgstr "Detalle de Boleta de Deposito"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.third.check,account_bank_id:0
+msgid "Destiny Account"
+msgstr "Cuenta destino"
+
+#. module: l10n_ar_account_check_duo
+#: selection:account.third.check,state:0
+msgid "Dep-Rejected"
+msgstr "Depositado-Rechazado"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.third.check:0
+msgid "Third Checks..."
+msgstr "Cheques de Terceros..."
+
+#. module: l10n_ar_account_check_duo
+#: field:account.check.dreject,expense_account:0
+#: field:account.check.hreject,expense_account:0
+#: field:account.check.sold,expense_account:0
+#: field:account.issuedcheck.hreject,expense_account:0
+msgid "Expense Account"
+msgstr "Cuenta de gastos"
+
+#. module: l10n_ar_account_check_duo
+#: view:ticket.deposit:0
+msgid "Name Ticket"
+msgstr "Nombre"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:104
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:335
+#, python-format
+msgid "The Check must  be in draft state only for unlink !"
+msgstr "El Cheque debe estar en estado \"Borrador\" para ser eliminado !"
+
+#. module: l10n_ar_account_check_duo
+#: selection:account.issued.check,clearing:0
+#: selection:account.third.check,clearing:0
+msgid "48 hs"
+msgstr "48 hs"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/wizard_issued/check_issued_hreject.py:112
+#: code:addons/l10n_ar_account_check_duo/wizard_third/check_dreject.py:106
+#: code:addons/l10n_ar_account_check_duo/wizard_third/check_hreject.py:162
+#, python-format
+msgid "Error"
+msgstr "Error"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.model,name:l10n_ar_account_check_duo.model_account_third_check
+msgid "Manage Checks Third"
+msgstr "Gestion de Cheque de Terceros"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.model,name:l10n_ar_account_check_duo.model_account_issuedcheck_hreject
+msgid "account issued check hreject"
+msgstr "account issued check hreject"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.issued.check,issued:0
+msgid "Issued"
+msgstr "Propios"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.model,name:l10n_ar_account_check_duo.model_res_partner_bank
+msgid "Bank Accounts"
+msgstr "Cuenta Bancaria"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.issued.check,voucher_id:0
+#: field:account.third.check,voucher_id:0
+msgid "Voucher"
+msgstr "Cheques"
+
+#. module: l10n_ar_account_check_duo
+#: view:wizard.ticket.deposit:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.checkbook:0
+#: selection:account.checkbook,state:0
+msgid "In Use"
+msgstr "En Uso"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.actions.act_window,name:l10n_ar_account_check_duo.action_check_issue_hrejected
+msgid "Reject Handed Checks"
+msgstr "Rechazar  Cheques Entregados"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.model,name:l10n_ar_account_check_duo.model_account_checkbook
+msgid "Manage Checkbook"
+msgstr "Gestion de Chequeras"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.checkbook,range_hasta:0
+msgid "Check Number Hasta"
+msgstr "Numero Hasta"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:164
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:302
+#, python-format
+msgid "Ckeck Number must be 8 numbers !"
+msgstr "El numero debe ser hasta 8 digitos!"
+
+#. module: l10n_ar_account_check_duo
+#: field:ticket.deposit.line,account_third_check_id:0
+msgid "Thirds Checks"
+msgstr "Cheques de Terceros"
+
+#. module: l10n_ar_account_check_duo
+#: selection:account.third.check,state:0
+msgid "Holding"
+msgstr "En Cartera"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_voucher.py:140
+#, python-format
+msgid "State!"
+msgstr "Estado!"
+
+#. module: l10n_ar_account_check_duo
+#: field:ticket.deposit.line,name:0
+msgid "Description"
+msgstr "Descripcion"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.model,name:l10n_ar_account_check_duo.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.checkbook,account_bank_id:0
+#: field:account.issued.check,account_bank_id:0
+msgid "Account Bank"
+msgstr "Cuenta Bancaria"
+
+#. module: l10n_ar_account_check_duo
+#: help:account.journal,use_issued_check:0
+msgid "Allow to user Issued Checks in associated vouchers."
+msgstr "Allow to user Issued Checks in associated vouchers."
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.actions.act_window,name:l10n_ar_account_check_duo.action_check_sold
+msgid "Check Sold"
+msgstr "Cheque Vendido"
+
+#. module: l10n_ar_account_check_duo
+#: help:account.journal,use_third_check:0
+msgid "Allow to user Third Checks in associated vouchers."
+msgstr "Allow to user Third Checks in associated vouchers."
+
+#. module: l10n_ar_account_check_duo
+#: field:account.third.check,bank_id:0
+msgid "Bank"
+msgstr "Banco"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_checkbook.py:66
+#, python-format
+msgid "Ckeck range desde must be 8 numbers !"
+msgstr "El rango de numeros debe ser hasta 8 digitos!"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.check.deposit,bank_account_id:0
+#: field:account.check.sold,bank_account_id:0
+#: view:ticket.deposit:0
+#: field:ticket.deposit,bank_account_id:0
+#: field:wizard.ticket.deposit,bank_account_id:0
+msgid "Bank Account"
+msgstr "Cuenta Bancaria"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:174
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:312
+#, python-format
+msgid "Clearing date must be greater than check date"
+msgstr "Fecha de Clearing debe ser mayor a la fecha del cheque"
+
+#. module: l10n_ar_account_check_duo
+#: field:wizard.ticket.deposit,name:0
+msgid "Ticket deposited number"
+msgstr "Numero Boleta de Deposito"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_check_duo.py:320
+#, python-format
+msgid "Vat number must be not null !"
+msgstr "El Número de CUIT no puede estar vacio!"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/wizard_issued/check_issued_hreject.py:112
+#: code:addons/l10n_ar_account_check_duo/wizard_third/check_dreject.py:107
+#: code:addons/l10n_ar_account_check_duo/wizard_third/check_hreject.py:162
+#, python-format
+msgid "You must assign expense account and amount !"
+msgstr "Debe asignar la cuenta de gastos y el importe !"
+
+#. module: l10n_ar_account_check_duo
+#: selection:account.issued.check,clearing:0
+#: selection:account.third.check,clearing:0
+msgid "24 hs"
+msgstr "24 hs"
+
+#. module: l10n_ar_account_check_duo
+#: field:account.checkbook,actual_number:0
+msgid "Next Check Number"
+msgstr "Proximo Numero de Cheque"
+
+#. module: l10n_ar_account_check_duo
+#: code:addons/l10n_ar_account_check_duo/account_voucher.py:89
+#, python-format
+msgid "ATENTION !"
+msgstr "ATENCION !"
+
+#. module: l10n_ar_account_check_duo
+#: view:account.third.check:0
+#: view:account.voucher:0
+#: field:account.voucher,third_check_ids:0
+#: field:account.voucher,third_check_receipt_ids:0
+#: model:ir.actions.act_window,name:l10n_ar_account_check_duo.action_third_check
+#: model:ir.ui.menu,name:l10n_ar_account_check_duo.menu_treasury_third_check
+msgid "Third Checks"
+msgstr "Cheque de Terceros"
+
+#. module: l10n_ar_account_check_duo
+#: view:wizard.ticket.deposit:0
+msgid "or"
+msgstr "o"
+
+#. module: l10n_ar_account_check_duo
+#: sql_constraint:ticket.deposit:0
+msgid "The name must be unique!"
+msgstr "El nombre deber ser único!"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.actions.act_window,name:l10n_ar_account_check_duo.action_ticket_deposit
+msgid "Ticket Check Deposit"
+msgstr "Boleta de Deposito"
+
+#. module: l10n_ar_account_check_duo
+#: model:ir.actions.act_window,name:l10n_ar_account_check_duo.action_check_hrejected
+msgid "Rejected Handed Checks"
+msgstr "Rechazar Cheques Entregados"
+

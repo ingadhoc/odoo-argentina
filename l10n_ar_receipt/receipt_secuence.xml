@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!--Sequence types for Receip Pay -->
+
+        <record  id="seq_type_receipt_pay" model="ir.sequence.type">
+            <field name="name">Receip Pay</field>
+            <field name="code">receipt.pay</field>
+        </record>
+
+        <!--Sequences for Receip Pay-->
+
+        <record  id="seq_receipt_pay" model="ir.sequence">
+            <field name="name">Receip Pay</field>
+            <field name="code">receipt.pay</field>
+            <field name="padding">8</field>
+            <field name="prefix">R 0001-</field>
+        </record>
+    </data>
+</openerp>  
+ 

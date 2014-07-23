@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data> 
+   <!-- Ticket Deposit Check -->
+   
+        <record model="ir.ui.view" id="view_ticket_deposit_tree">
+            <field name="name">ticket.deposit.tree</field>
+            <field name="model">ticket.deposit</field>
+            <field name="arch" type="xml">
+                <tree string="Ticket Deposit">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="bank_account_id"/>
+                    <field name="total_ammount"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_ticket_deposit_form">
+            <field name="name">ticket.deposit.form</field>
+            <field name="model">ticket.deposit</field>
+            <field name="arch" type="xml">
+                <form string="Ticket Deposit" version="7.0"> 
+                    <group>    
+                        <field name="name"/>
+                        <field name="date"/>
+                        <separator  colspan="8"/>
+                        <field name="bank_account_id"/>
+                        <field name="total_ammount"/>
+                    </group>    
+                    <group>
+                        <field name="checks_ids" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_ticket_deposit_search" model="ir.ui.view">
+            <field name="name">ticket.deposit.search</field>
+            <field name="model">ticket.deposit</field>
+            <field name="arch" type="xml">
+                <search string="ticket Deposit....">
+                    <filter string="Date" icon="terp-gtk-jump-to-rtl" domain="[]" context="{'group_by':'date'}"/>
+                    <field name="name" select="1" string="Name Ticket"/>
+                    <field name="bank_account_id" select="1" string="Bank Account"/>
+                </search>
+            </field>
+        </record>
+
+
+       <!-- Third Check Menu -->
+        <record model="ir.actions.act_window" id="action_ticket_deposit_menu">
+            <field name="name">Ticket Deposit</field>
+            <field name="res_model">ticket.deposit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ticket_deposit_search"/>
+        </record>
+        
+        <menuitem
+            action="action_ticket_deposit_menu"
+            id="menu_treasury_ticket_deposit"
+            name="Ticket Deposit"
+            sequence="60"
+            parent="account.menu_finance_bank_and_cash"/> 
+
+
+                                            
+    </data>
+</openerp>                    

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data noupdate="False">
+		<record model='afip.document_class' id='dc_A'>
+			<field name='name'>A</field>
+			<field name='description'>A</field>
+		</record> 
+		<record model='afip.document_class' id='dc_B'>
+			<field name='name'>B</field>
+			<field name='description'>B</field>
+		</record> 
+		<record model='afip.document_class' id='dc_C'>
+			<field name='name'>C</field>
+			<field name='description'>C</field>
+		</record> 
+		<record model='afip.document_class' id='dc_M'>
+			<field name='name'>M</field>
+			<field name='description'>M</field>
+		</record> 
+		<record model='afip.document_class' id='dc_E'>
+			<field name='name'>E</field>
+			<field name='description'>E</field>
+		</record> 
+		<record model='afip.document_class' id='dc_X'>
+			<field name='name'>X</field>
+			<field name='description'>X</field>
+		</record> 
+	</data>
+</openerp>

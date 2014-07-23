@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+##############################################################################
+#
+# Copyright (C) 2012 OpenERP - Team de Localización Argentina.
+# https://launchpad.net/~openerp-l10n-ar-localization
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+-->
+<openerp>
+    <data>
+
+        <record id="view_afip_journal_class_form" model="ir.ui.view">
+            <field name="name">afip.journal_class.form</field>
+            <field name="model">afip.journal_class</field>
+            <field name="arch" type="xml">
+                <form string="AFIP Journal class">
+                    <field name="name"/>
+                    <field name='code'/>
+                    <field name='document_class_id'/>
+                    <field name='type'/>
+                    <field name='afip_code'/>
+                    <field name='active'/>
+                    <field name='journal_ids'/>
+                    <field name='product_types'/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_afip_journal_class_tree" model="ir.ui.view">
+            <field name="name">afip.journal_class.tree</field>
+            <field name="model">afip.journal_class</field>
+            <field name="arch" type="xml">
+                <tree string="AFIP Journal class">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="afip_code"/>
+                    <field name='active'/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_afip_journal_class">
+            <field name="name">AFIP Journal class</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">afip.journal_class</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Journal class" action="act_afip_journal_class" id="menu_action_afip_journal_class" parent="menu_afip_config"/>
+
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
+     -->

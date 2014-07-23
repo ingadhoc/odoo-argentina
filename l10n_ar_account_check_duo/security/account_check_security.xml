@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <!--<data noupdate="0">-->
+    <data>
+        <record id="access_account_issued_check" model="ir.model.access">
+			<field name="model_id" ref="model_account_issued_check"/>
+			<field name="name">account.issued.check.access</field>
+			<field eval="1" name="perm_read"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field eval="1" name="perm_unlink"/>
+			<field name="group_id" ref="account.group_account_invoice"/>
+		</record>
+		
+		<record id="access_account_third_check" model="ir.model.access">
+			<field name="model_id" ref="model_account_third_check"/>
+			<field name="name">account.issued.check.access</field>
+			<field eval="1" name="perm_read"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field eval="1" name="perm_unlink"/>
+			<field name="group_id" ref="account.group_account_invoice"/>
+		</record>
+		
+		<record id="issued_check_rule" model="ir.rule">
+            <field name="name">Issued Check Multi-Company</field>
+            <field model="ir.model" name="model_id" ref="model_account_issued_check"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+        
+        <record id="third_check_rule" model="ir.rule">
+            <field name="name">Third Check Multi-Company</field>
+            <field model="ir.model" name="model_id" ref="model_account_third_check"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+        
+    </data>
+</openerp>

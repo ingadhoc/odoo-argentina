@@ -1,0 +1,39 @@
+"id","code","afip_code","name","active"
+"doc_cpf","CPF",0,"CI Policía Federal",1
+"doc_cib","CIB",1,"CI Buenos Aires",1
+"doc_cik","CIK",2,"CI Catamarca",1
+"doc_cix","CIX",3,"CI Córdoba",1
+"doc_ciw","CIW",4,"CI Corrientes",1
+"doc_cie","CIE",5,"CI Entre Ríos",1
+"doc_ciy","CIY",6,"CI Jujuy",1
+"doc_cim","CIM",7,"CI Mendoza",1
+"doc_cif","CIF",8,"CI La Rioja",1
+"doc_cia","CIA",9,"CI Salta",1
+"doc_cij","CIJ",10,"CI San Juan",1
+"doc_cid","CID",11,"CI San Luis",1
+"doc_cis","CIS",12,"CI Santa Fe",1
+"doc_cig","CIG",13,"CI Santiago del Estero",1
+"doc_cit","CIT",14,"CI Tucumán",1
+"doc_cih","CIH",16,"CI Chaco",1
+"doc_ciu","CIU",17,"CI Chubut",1
+"doc_cip","CIP",18,"CI Formosa",1
+"doc_cin","CIN",19,"CI Misiones",1
+"doc_ciq","CIQ",20,"CI Neuquén",1
+"doc_cil","CIL",21,"CI La Pampa",1
+"doc_cir","CIR",22,"CI Río Negro",1
+"doc_ciz","CIZ",23,"CI Santa Cruz",1
+"doc_civ","CIV",24,"CI Tierra del Fuego",1
+"doc_cuit","CUIT",80,"CUIT",1
+"doc_cuil","CUIL",86,"CUIL",1
+"doc_cdi","CDI",87,"CDI",1
+"doc_le","LE",89,"LE",1
+"doc_lc","LC",90,"LC",1
+"doc_ciex","CIEX",91,"CI extranjera",1
+"doc_et","ET",92,"en trámite",1
+"doc_an","AN",93,"Acta nacimiento",1
+"doc_pass","PASS",94,"Pasaporte",1
+"doc_cibar","CIBAR",95,"CI Bs. As. RNP",1
+"doc_dni","DNI",96,"DNI",1
+"doc_sinivg","SINIVG",99,"Sin identificar/venta global diaria",1
+"doc_cdm","CDM",30,"Certificado de Migración",1
+"doc_anses","ANSES",88,"Usado por Anses para Padrón",1

@@ -1,7 +1,0 @@
-id,name,issuer_ids/id,receptor_ids/id
-dl_a,A,res_IVARI,"res_IVARNI,res_IVARI"
-dl_b,B,res_IVARI,"res_CF,res_RM,res_IVANR,res_IVAE"
-dl_c,C,"res_IVANR,res_RM,res_IVARNI,res_IVAE","res_RM,res_IVARI,res_IVARNI,res_IVANR,res_CF"
-dl_m,M,,
-dl_e,E,"res_IVARI,res_RM",res_EXT
-dl_x,X,"res_IVARI,res_IVANR,res_RM,res_IVARNI,res_IVAE","res_IVARI,res_IVANR,res_RM,res_IVARNI,res_IVAE"

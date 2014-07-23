@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+        <!-- crea Pantalla tipo search cliente para Recibos-->
+        <record id="view_voucher_customer_inherit_filter" model="ir.ui.view">
+            <field name="name">receipt.voucher.customer.inherit.select</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_customer_pay"/>
+            <field name="arch" type="xml">
+                <xpath expr="/search/field[@name='date']" position="after">
+                    <field name="receipt_id" string="Receipts" />
+				</xpath>
+				<xpath expr="/search/group/filter[@string='Status']" position="after">
+					<filter string="Receipts" icon="terp-camera_test" domain="[('receipt_id','!=',False)]"  help="Payments with Receipts"/>
+				</xpath>
+            </field>
+	    </record>   
+          
+        <!-- Search  Proof-->
+        <record id="view_voucher_filter_vendor_proof_inherit" model="ir.ui.view">
+            <field name="name">voucher.filter.vendor.proof.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_vendor_pay"/>
+            <field name="arch" type="xml">
+                <xpath expr="/search/field[@name='date']" position="after">
+                    <field name="receipt_id" string="Payment Voucher" />
+				</xpath>
+				<xpath expr="/search/group/filter[@string='Status']" position="after">
+                    <filter string="Payment Voucher" icon="terp-camera_test" domain="[('receipt_id','!=',False)]"  help="Payments with Payment Voucher"/>
+				</xpath>
+            </field>
+	    </record>    
+                
+    </data>
+</openerp>

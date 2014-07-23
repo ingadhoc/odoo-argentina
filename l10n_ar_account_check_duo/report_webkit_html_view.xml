@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+                <report auto="False"
+                id="report_webkit_thirdcheck_html"
+                model="account.third.check"
+                name="webkit.account.thirdcheck"
+                file="l10n_ar_account_check_duo/report/report_webkit_thirdcheck_html.mako"
+                string="WebKit Report Third Check"
+                report_type="webkit"
+                webkit_header="report_webkit.ir_header_webkit_basesample0"/>
+                
+    </data>
+</openerp>

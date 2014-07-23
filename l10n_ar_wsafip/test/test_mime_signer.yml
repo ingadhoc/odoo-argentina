@@ -1,0 +1,7 @@
+-
+ Now test sign a simple message
+-
+  !python {model: crypto.certificate}: |
+        S = self.smime(cr, uid, [ref('cert_ar_0')], 'Hola mundo')
+
+

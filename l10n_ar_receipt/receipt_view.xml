@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+        <!-- customer-->
+  		<!-- crea Pantalla tipo lista para Receipt -->
+		<record model="ir.ui.view" id="receipts_tree_view">
+			<field name="name">receipt.receipt.tree</field>
+			<field name="model">receipt.receipt</field>
+			<field name="arch" type="xml"> 
+				<tree string="Receipts List" >
+                        <field name="date" />
+                        <field name="name" />
+                        <field name="receiptbook_id" />
+                        <field name="partner_id" />
+                        <field name="total_ammount" />
+                        <field name="receipt_type" invisible ="1" />  
+				</tree>	
+			</field>
+	    </record>	
+		
+	<!-- crea Pantalla tipo Formulario para Receipt -->
+		<record model="ir.ui.view" id="receipts_form_view">
+			<field name="name">receipt.receipt.form</field>
+			<field name="model">receipt.receipt</field>
+			<field name="arch" type="xml"> 
+				<form string="Receipts List"  >
+                    <group string="Receipt List" >
+                        <field name="date" />
+                        <field name="name"/>
+                        <field name="receiptbook_id" />
+                        <field name="partner_id" colspan="1" />
+                        <field name="total_ammount"/>
+                        <field name="voucher_ids" colspan="4" nolabel="1" />
+                    </group> 
+				</form>	
+			</field>
+	    </record>		
+	  
+        <record id="view_receipt_filter" model="ir.ui.view">
+            <field name="name">receipt.receipt.select</field>
+            <field name="model">receipt.receipt</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <search string="Search Receipts">
+                    <filter string="Receipts"
+						icon="terp-partner"
+						domain="[('receipt_type','=','receipt')]"
+						name="receipts"
+						help="customer Receipts"/>
+                    <field name="name" />
+                    <field name="partner_id"/>
+                    <separator  colspan="2"/>
+                </search>
+            </field>
+        </record>   
+        
+	    	    	
+	<!-- crea el action invocado por el submenu Receipt-->
+      <record model="ir.actions.act_window" id="receipts_list_action">
+		<field name="name">receipt</field>
+		<field name="res_model">receipt.receipt</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_receipt_filter"/>
+        <field name="context">{'search_default_receipts':1}</field>
+	</record>	
+	
+        <record id="action_receipt_list_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="receipts_tree_view"/>  
+            <field name="act_window_id" ref="receipts_list_action"/>
+    </record>
+        
+    <record id="action_receipt_list_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field> 
+            <field name="view_id" ref="receipts_form_view"/>  
+            <field name="act_window_id" ref="receipts_list_action"/> 
+    </record>  
+	    
+		<!-- crea el sub menu para el Receipt--> 
+		<menuitem id="receipt_menu" name="Receipt" sequence="100" 
+            parent="account.menu_finance_receivables" action="receipts_list_action" icon="STOCK_JUSTIFY_FILL" />	
+            
+        
+
+                                            
+    </data>
+</openerp>                    

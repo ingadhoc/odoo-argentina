@@ -1,250 +1,214 @@
 # -*- coding: utf-8 -*-
+##############################################################################
+#
+# Copyright (C) 2012 OpenERP - Team de Localización Argentina.
+# https://launchpad.net/~openerp-l10n-ar-localization
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 import logging
-import openerp.addons.decimal_precision as dp
 
 _logger = logging.getLogger(__name__)
+
+_all_taxes = lambda x: True
+_all_except_vat = lambda x: x.tax_code_id.parent_id.name != 'IVA'
 
 class account_invoice_line(osv.osv):
     """
     En argentina como no se diferencian los impuestos en las facturas, excepto el IVA,
-    agrego campos que ignoran el iva solamenta a la hora de imprimir los valores.
+    agrego funciones que ignoran el iva solamenta a la hora de imprimir los valores.
+
+    En esta nueva versión se cambia las tres variables a una única función 'price_calc'
+    que se reemplaza de la siguiente manera:
+
+        'price_unit_vat_included'         -> price_calc(use_vat=True, quantity=1, discount=True)[id]
+        'price_subtotal_vat_included'     -> price_calc(use_vat=True, discount=True)[id]
+        'price_unit_not_vat_included'     -> price_calc(use_vat=False, quantity=1, discount=True)[id]
+        'price_subtotal_not_vat_included' -> price_calc(use_vat=False, discount=True)[id]
+
+    Y ahora puede imprimir sin descuento:
+
+        price_calc(use_vat=True, quantity=1, discount=False)
     """
 
     _inherit = "account.invoice.line"
 
-    def _printed_prices(self, cr, uid, ids, name, args, context=None):
+    def price_calc(self, cr, uid, ids, use_vat=True, tax_filter=None, quantity=None, discount=None, context=None):
         res = {}
-        tax_obj = self.pool['account.tax']
+        tax_obj = self.pool.get('account.tax')
         cur_obj = self.pool.get('res.currency')
-
-        for line in self.browse(cr, uid, ids, context=context):
-            _round = (lambda x: cur_obj.round(cr, uid, line.invoice_id.currency_id, x)) if line.invoice_id else (lambda x: x)
-            quantity = line.quantity
-            discount = line.discount
-            printed_price_unit = line.price_unit
-            printed_price_net = line.price_unit * (1-(discount or 0.0)/100.0)
-            printed_price_subtotal = printed_price_net * quantity
-
-            afip_document_class_id = line.invoice_id.journal_document_class_id.afip_document_class_id
-            if afip_document_class_id and not afip_document_class_id.vat_discriminated:
-                vat_taxes = [x for x in line.invoice_line_tax_id if x.tax_code_id.vat_tax]
-                taxes = tax_obj.compute_all(cr, uid,
-                                            vat_taxes, printed_price_net, 1,
-                                            product=line.product_id,
-                                            partner=line.invoice_id.partner_id)
-                printed_price_unit = _round(taxes['total_included'] * (1+(discount or 0.0)/100.0))
-                printed_price_net = _round(taxes['total_included'])
-                printed_price_subtotal = _round(taxes['total_included'] * quantity)
-            
-            res[line.id] = {
-                'printed_price_unit': printed_price_unit,
-                'printed_price_net': printed_price_net,
-                'printed_price_subtotal': printed_price_subtotal, 
-            }
+        _tax_filter = tax_filter or ( use_vat and _all_taxes ) or _all_except_vat
+        for line in self.browse(cr, uid, ids):
+            _quantity = quantity if quantity is not None else line.quantity
+            _discount = discount if discount is not None else line.discount
+            _price = line.price_unit * (1-(_discount or 0.0)/100.0)
+            _tax_ids = filter(_tax_filter, line.invoice_line_tax_id)
+            taxes = tax_obj.compute_all(cr, uid,
+                                        _tax_ids, _price, _quantity,
+                                        product=line.product_id,
+                                        partner=line.invoice_id.partner_id)
+            res[line.id] = taxes['total_included']
+            if line.invoice_id:
+                cur = line.invoice_id.currency_id
+                res[line.id] = cur_obj.round(cr, uid, cur, res[line.id])
         return res
 
-    _columns = {
-        'printed_price_unit': fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Unit Price', multi='printed',),
-        'printed_price_net': fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Net Price', multi='printed'),
-        'printed_price_subtotal': fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Subtotal', multi='printed'),
-    }    
+    def compute_all(self, cr, uid, ids, tax_filter=None, context=None):
+        res = {}
+        tax_obj = self.pool.get('account.tax')
+        cur_obj = self.pool.get('res.currency')
+        _tax_filter = tax_filter
+        for line in self.browse(cr, uid, ids):
+            _quantity = line.quantity
+            _discount = line.discount
+            _price = line.price_unit * (1-(_discount or 0.0)/100.0)
+            _tax_ids = filter(_tax_filter, line.invoice_line_tax_id)
+            taxes = tax_obj.compute_all(cr, uid,
+                                        _tax_ids, _price, _quantity,
+                                        product=line.product_id,
+                                        partner=line.invoice_id.partner_id)
+
+            _round = (lambda x: cur_obj.round(cr, uid, line.invoice_id.currency_id, x)) if line.invoice_id else (lambda x: x)
+            res[line.id] = {
+                'amount_untaxed': _round(taxes['total']),
+                'amount_tax': _round(taxes['total_included'])-_round(taxes['total']),
+                'amount_total': _round(taxes['total_included']), 
+                'taxes': taxes['taxes'],
+            }
+        return res.get(len(ids)==1 and ids[0], res)
+
+account_invoice_line()
 
 class account_invoice(osv.osv):
     _inherit = "account.invoice"
 
-    def _get_available_document_letters(self, cr, uid, ids, field_name, arg, context=None):
+    def _get_available_journal_ids(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:
             context = {}
         result = {}
         for invoice in self.browse(cr, uid, ids, context=context):
             journal_type = self.get_journal_type(cr, uid, invoice.type, context=context)
-            letter_ids = []
-            if invoice.use_documents:
-                letter_ids = self.get_valid_document_letters(cr, uid, invoice.partner_id.id, journal_type, company_id=invoice.company_id.id)            
-            result[invoice.id] = letter_ids
+            journal_ids = self.get_valid_journals(cr, uid, invoice.partner_id.id, journal_type, company_id=invoice.company_id.id)            
+            result[invoice.id] = journal_ids
         return result
 
-    def _printed_prices(self, cr, uid, ids, name, args, context=None):
-        res = {}
-
-        for invoice in self.browse(cr, uid, ids, context=context):
-            printed_amount_untaxed = invoice.amount_untaxed
-            printed_tax_ids = [x.id for x in invoice.tax_line]
-
-            afip_document_class_id = invoice.journal_document_class_id.afip_document_class_id
-            if afip_document_class_id and not afip_document_class_id.vat_discriminated:
-                printed_amount_untaxed = sum(line.printed_price_subtotal for line in invoice.invoice_line)
-                printed_tax_ids = [x.id for x in invoice.tax_line if not x.tax_code_id.vat_tax]
-            res[invoice.id] = {
-                'printed_amount_untaxed': printed_amount_untaxed,
-                'printed_tax_ids': printed_tax_ids,
-                'printed_amount_tax': invoice.amount_total - printed_amount_untaxed,
-            }
-        return res
-
-    def name_get(self, cr, uid, ids, context=None):
-        if not ids:
-            return []
-        types = {
-                'out_invoice': _('Invoice'),
-                'in_invoice': _('Supplier Invoice'),
-                'out_refund': _('Refund'),
-                'in_refund': _('Supplier Refund'),
-                }
-        return [(r['id'], '%s %s' % (r['reference'] or types[r['type']], r['number'] or '')) for r in self.read(cr, uid, ids, ['type', 'number', 'reference'], context, load='_classic_write')]
-
-    def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
-        if not args:
-            args = []
-        if context is None:
-            context = {}
-        ids = []
-        if name:
-            ids = self.search(cr, user, [('reference','=',name)] + args, limit=limit, context=context)
-        if not ids:
-            ids = self.search(cr, user, [('reference',operator,name)] + args, limit=limit, context=context)
-        return self.name_get(cr, user, ids, context)
-
     _columns = {
-        'printed_amount_tax': fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Tax', multi='printed',),
-        'printed_amount_untaxed': fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Subtotal', multi='printed',),
-        'printed_tax_ids': fields.function(_printed_prices, type='one2many', relation='account.invoice.tax', string='Tax', multi='printed'),
-        'available_document_letter_ids': fields.function(_get_available_document_letters, relation='afip.document_letter', type='many2many', string='Available Document Letters'),
-        'journal_document_class_id': fields.many2one('account.journal.afip_document_class', 'Documents Type', readonly=True, states={'draft':[('readonly',False)]}),
-        'afip_document_class_id': fields.related('journal_document_class_id', 'afip_document_class_id',relation='afip.document_class', type='many2one', string='Document Type', readonly=True, store=True),
-        'next_invoice_number': fields.related('journal_document_class_id','sequence_id', 'number_next_actual', type='integer', string='Next Document Number', readonly=True),
-        'use_documents': fields.related('journal_id','use_documents', type='boolean', string='Use Documents?', readonly=True),
+        'available_journal_ids': fields.function(_get_available_journal_ids, relation='account.journal', type='many2many', string='Available Journals'),
     }
 
-    def _check_reference(self, cr, uid, ids, context=None):
-    # def _check_document_number(self, cr, uid, ids, context=None):
-        for invoice in self.browse(cr, uid, ids, context=context):
-            if invoice.type in ['out_invoice','out_refund'] and invoice.reference and invoice.state == 'open':
-            # if invoice.type in ['out_invoice','out_refund'] and invoice.document_number:
-                domain = [('type','in',('out_invoice','out_refund')),
-                    ('reference','=',invoice.reference),
-                    # ('document_number','=',invoice.document_number),
-                    ('journal_document_class_id.afip_document_class_id','=',invoice.journal_document_class_id.afip_document_class_id.id),
-                    ('company_id','=',invoice.company_id.id),
-                    ('id','!=',invoice.id)]
-                invoice_ids = self.search(cr, uid, domain, context=context)
-                if invoice_ids:
-                    # return True
-                    return False
-        return True
+    def afip_validation(self, cr, uid, ids, context={}):
 
-    _sql_constraints = [
-        ('number_supplier_invoice_number', 'unique(supplier_invoice_number, partner_id, company_id)', 'Supplier Invoice Number must be unique per Supplier and Company!'),
-    ]
+        for invoice in self.browse(cr, uid, ids):
+            if invoice.type == 'in_invoice':
+                journal_type = 'purchase'
+            elif invoice.type == 'in_refund':
+                journal_type = 'purchase_refund'
+            elif invoice.type == 'out_invoice':
+                journal_type = 'sale'
+            elif invoice.type == 'out_refund':
+                journal_type = 'sale_refund'
 
-    # _constraints = [(_check_reference, 'Invoice Reference Number must be unique per Document Class and Company!', ['referece','afip_document_class_id','company_id'])]
+            journal_ids = self.get_valid_journals(cr, uid, invoice.partner_id.id, journal_type, company_id=invoice.company_id.id)
 
-    def create(self, cr, uid, vals, context=None):
-        '''We modify create for 2 popuses:
-        - Modify create function so it can try to set a right document for the invoice
-        - If reference in values, we clean it for argentinian companies as it will be used for invoice number
-        ''' 
-        # First purpose
-        if not context:
-            context = {}
-        partner_id = vals.get('partner_id', False)
-        journal_id = vals.get('journal_id', False)
-        if journal_id and partner_id:
-            journal = self.pool['account.journal'].browse(cr, uid, int(journal_id), context=context)
-            if journal.use_documents:
-                journal_type = journal.type
-                letter_ids = self.get_valid_document_letters(cr, uid, int(partner_id), journal_type, company_id=journal.company_id.id)
-                domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
-                journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
-                if journal_document_class_ids:
-                    vals['journal_document_class_id'] = journal_document_class_ids[0]
+            if invoice.journal_id.id not in journal_ids:
+                raise osv.except_osv(_('Invalid Journal'),
+                    _('Invalid journal selection for actual partner and company.'))
 
-                # second purpose
-                if 'reference' in vals:
-                    vals['reference'] = False
+    def compute_all(self, cr, uid, ids, line_filter=lambda line: True, tax_filter=lambda tax: True, context=None):
+        res = {}
+        for inv in self.browse(cr, uid, ids, context=context):
+            amounts = []
+            for line in inv.invoice_line:
+                if line_filter(line):
+                    amounts.append(line.compute_all(tax_filter=tax_filter, context=context))
 
-        return super(account_invoice, self).create(cr, uid, vals, context=context)
+            s = {
+                 'amount_total': 0,
+                 'amount_tax': 0,
+                 'amount_untaxed': 0,
+                 'taxes': [],
+                }
+            for amount in amounts:
+                for key, value in amount.items():
+                    s[key] = s.get(key, 0) + value
 
-    def action_move_create(self, cr, uid, ids, context=None):
-        obj_sequence = self.pool.get('ir.sequence')
+            res[inv.id] = s
+
+        return res.get(len(ids)==1 and ids[0], res)
+
+    def onchange_partner_id(self, cr, uid, ids, type, partner_id,
+                            date_invoice=False, payment_term=False,
+                            partner_bank_id=False, company_id=False, context=None):
+        result = super(account_invoice,self).onchange_partner_id(cr, uid, ids,
+                       type, partner_id, date_invoice, payment_term,
+                       partner_bank_id, company_id,)
         
-        # We write reference field with next invoice number by document type
-        for obj_inv in self.browse(cr, uid, ids, context=context):
-            invtype = obj_inv.type
-            # if we have a journal_document_class_id is beacuse we are in a company that use this function
-            # also if it has a reference number we use it (for example when cancelling for modification)
-            if obj_inv.journal_document_class_id and not obj_inv.reference:
-                if invtype in ('out_invoice', 'out_refund'):
-                    if not obj_inv.journal_document_class_id.sequence_id:
-                        raise osv.except_osv(_('Error!'), _('Please define sequence on the journal related documents to this invoice.'))
-                    reference = obj_sequence.next_by_id(cr, uid, obj_inv.journal_document_class_id.sequence_id.id, context)
-                elif invtype in ('in_invoice', 'in_refund'):
-                    reference = obj_inv.supplier_invoice_number
-                obj_inv.write({'reference':reference})
-        res = super(account_invoice, self).action_move_create(cr, uid, ids, context=context)
         
-        # on created moves we write the document type
-        for obj_inv in self.browse(cr, uid, ids, context=context):
-            invtype = obj_inv.type
-            # if we have a journal_document_class_id is beacuse we are in a company that use this function
-            if obj_inv.journal_document_class_id:
-                obj_inv.move_id.write({'document_class_id':obj_inv.journal_document_class_id.afip_document_class_id.id})
-        return res
-
-    # def action_number(self, cr, uid, ids, context=None):
-    #     obj_sequence = self.pool.get('ir.sequence')
-    #     for obj_inv in self.browse(cr, uid, ids, context=context):
-    #         invtype = obj_inv.type
-    #         # if we have a journal_document_class_id is beacuse we are in a company that use this function
-    #         if obj_inv.journal_document_class_id:
-    #             if invtype in ('out_invoice', 'out_refund'):
-    #                 if not obj_inv.journal_document_class_id.sequence_id:
-    #                     raise osv.except_osv(_('Error!'), _('Please define sequence on the journal related documents to this invoice.'))
-    #                 document_number = obj_sequence.next_by_id(cr, uid, obj_inv.journal_document_class_id.sequence_id.id, context)
-    #             elif invtype in ('in_invoice', 'in_refund'):
-    #                 document_number = obj_inv.supplier_invoice_number
-    #             obj_inv.write({'document_number':document_number})
-    #     return super(account_invoice, self).action_number(cr, uid, ids, context)
-
-    def copy(self, cr, uid, id, default=None, context=None):
-        default = default or {}
-        default.update({
-            'supplier_invoice_number':False,
-            })
-        return super(account_invoice, self).copy(cr, uid, id, default, context)
-
-    def get_journal_type(self, cr, uid, invoice_type, context=None):
-        if invoice_type == 'in_invoice':
+        if type == 'in_invoice':
             journal_type = 'purchase'
-        elif invoice_type == 'in_refund':
+        elif type == 'in_refund':
             journal_type = 'purchase_refund'
-        elif invoice_type == 'out_invoice':
+        elif type == 'out_invoice':
             journal_type = 'sale'
-        elif invoice_type == 'out_refund':
+        elif type == 'out_refund':
             journal_type = 'sale_refund'
-        else:
-            journal_type = False
-        return journal_type
 
-    def get_valid_document_letters(self, cr, uid, partner_id, journal_type, company_id=False, context=None):
-        if context is None:
-            context = {}
+        journal_id = False
+        journal_ids = False
+        normal_journal_ids = False
+        
+        if company_id and partner_id:
+            normal_journal_ids = self.get_valid_journals(cr, uid, partner_id, journal_type, is_debit_note=False, company_id=company_id)
+            journal_ids = self.get_valid_journals(cr, uid, partner_id, journal_type, company_id=company_id)
 
-        document_letter_obj = self.pool.get('afip.document_letter')
+        if normal_journal_ids:            
+            journal_id = normal_journal_ids[0]
+        
+        if 'value' not in result: result['value'] = {}
+        result['value'].update({
+           'journal_id': journal_id,
+        })      
+
+        if 'domain' not in result: result['domain'] = {}          
+        result['domain'].update({
+           'journal_id': [('id', 'in', journal_ids)],
+        })  
+        return result
+
+    def get_valid_journals(self, cr, uid, partner_id, journal_type, is_debit_note=None, company_id=False, context=None):
+        # Type could be purchase or sale
+        journal_obj = self.pool.get('account.journal')
+        resp_relation_obj = self.pool.get('afip.responsability_relation')
+        responsability_obj = self.pool.get('afip.responsability')
         user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
         partner = self.pool.get('res.partner').browse(cr, uid, partner_id, context=context)
 
-        if not partner_id or not company_id or not journal_type:
-            return []
-            
-        partner = partner.commercial_partner_id
+        if partner.parent_id:
+            partner = partner.parent_id
 
+        if context is None:
+            context = {}
         if company_id == False:
             company_id = context.get('company_id', user.company_id.id) 
         company = self.pool.get('res.company').browse(cr, uid, company_id, context)
 
+        journal_ids = []
+        journal_filter = []
+        journal_filter.append(('company_id','=',company_id))
         map_invoice = False
         if journal_type in ['sale','sale_refund']:
             issuer_responsability_id = company.partner_id.responsability_id.id
@@ -259,62 +223,126 @@ class account_invoice(osv.osv):
         else:
             raise orm.except_orm(_('Journal Type Error'),
                     _('Journal Type Not defined)'))
-
+        if journal_type:
+            journal_filter.append(('type','=',journal_type))
+            
+        # Now we check if the company has mapping journals enable
         if map_invoice:
             if not company.partner_id.responsability_id.id:
                 raise orm.except_orm(_('Your company has not setted any responsability'),
                         _('Please, set your company responsability in the company partner before continue.'))            
                 _logger.warning('Your company "%s" has not setted any responsability.' % company.name)
 
-            document_letter_ids = document_letter_obj.search(cr, uid, [('issuer_ids', 'in', issuer_responsability_id),('receptor_ids', 'in', receptor_responsability_id)], context=context)
-        return document_letter_ids          
+            document_class_ids = []
 
-    def on_change_journal_document_class_id(self, cr, uid, ids, journal_document_class_id):     
-        result = {}
-        next_invoice_number = False
-        if journal_document_class_id:
-            journal_document_class = self.pool['account.journal.afip_document_class'].browse(cr, uid, journal_document_class_id)
-            if journal_document_class.sequence_id:
-                next_invoice_number = journal_document_class.sequence_id.number_next
+            resp_relation_ids = resp_relation_obj.search(cr, uid, [('issuer_id', '=', issuer_responsability_id),('receptor_id', '=', receptor_responsability_id)], context=context)
+
+            for resp_relation in resp_relation_obj.browse(cr, uid, resp_relation_ids, context):
+                if resp_relation.document_class_id not in document_class_ids:
+                    document_class_ids.append(resp_relation.document_class_id.id)
+            journal_filter.append(('journal_class_id.document_class_id','in',document_class_ids))
         
-        result['value'] = {'next_invoice_number':next_invoice_number}
-        return result
+        if is_debit_note != None:
+            journal_filter.append(('is_debit_note','=',is_debit_note))
+            journal_ids = journal_obj.search(cr, uid, journal_filter, context)
+        else:
+            debit_journal_filter = journal_filter[:]
+            debit_journal_filter.append(('is_debit_note','=',True))
+            journal_filter.append(('is_debit_note','=',False))
+            
+            # We look for jorunals not debit notes
+            journal_ids = journal_obj.search(cr, uid, journal_filter, context=context)
+            # We append debit notes
+            journal_ids.extend(journal_obj.search(cr, uid, debit_journal_filter, context=context))
 
-    def onchange_partner_id(self, cr, uid, ids, type, partner_id,
-                            date_invoice=False, payment_term=False,
-                            partner_bank_id=False, company_id=False, journal_id=False):
+        return journal_ids  
+
+
+    def onchange_company_id(self, cr, uid, ids, company_id, part_id, type, invoice_line, currency_id):
         result = super(account_invoice,self).onchange_partner_id(cr, uid, ids,
-                       type, partner_id, date_invoice, payment_term,
-                       partner_bank_id, company_id,)
-        if 'value' not in result: result['value'] = {}                
-        journal_document_class_id = False
-        if journal_id and partner_id:
-            journal_type = self.get_journal_type(cr, uid, type)
-            letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=company_id)
-            domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
-            journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
-            if journal_document_class_ids:
-                journal_document_class_id = journal_document_class_ids[0]
-            if 'domain' not in result: result['domain'] = {}          
-            result['domain']['journal_document_class_id'] = [('id', 'in', journal_document_class_ids)]
-        if 'value' not in result: result['value'] = {}          
-        result['value']['journal_document_class_id'] = journal_document_class_id
-        return result
+                       company_id, part_id, type, invoice_line, currency_id)        
+        partner_id = part_id
 
-    def onchange_journal_id(self, cr, uid, ids, journal_id=False, partner_id=False, context=None):
-        result = super(account_invoice, self).onchange_journal_id(cr, uid, ids, journal_id, context)
-        journal_document_class_id = False        
-        if journal_id:
-            journal = self.pool['account.journal'].browse(cr, uid, journal_id)
-            result['value']['use_documents'] = journal.use_documents
-            if partner_id:
-                journal_type = journal.type
-                letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=journal.company_id.id)
-                domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
-                journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
-                if journal_document_class_ids:
-                    journal_document_class_id = journal_document_class_ids[0]
-                if 'domain' not in result: result['domain'] = {}        
-                result['domain']['journal_document_class_id'] = [('id', 'in', journal_document_class_ids)]  
-        result['value']['journal_document_class_id'] = journal_document_class_id
-        return result
+        if type == 'in_invoice':
+            journal_type = 'purchase'
+        elif type == 'in_refund':
+            journal_type = 'purchase_refund'
+        elif type == 'out_invoice':
+            journal_type = 'sale'
+        elif type == 'out_refund':
+            journal_type = 'sale_refund'
+
+        journal_id = False
+        journal_ids = False
+        normal_journal_ids = False
+        
+        if company_id and partner_id:
+            normal_journal_ids = self.get_valid_journals(cr, uid, partner_id, journal_type, is_debit_note=False, company_id=company_id)
+            journal_ids = self.get_valid_journals(cr, uid, partner_id, journal_type, company_id=company_id)
+
+        if normal_journal_ids:            
+            journal_id = normal_journal_ids[0]
+        
+        if 'value' not in result: result['value'] = {}
+        result['value'].update({
+           'journal_id': journal_id,
+        })      
+
+        if 'domain' not in result: result['domain'] = {}          
+        result['domain'].update({
+           'journal_id': [('id', 'in', journal_ids)],
+        })    
+
+        return result    
+
+    def get_journal_type(self, cr, uid, invoice_type, context=None):
+        if invoice_type == 'in_invoice':
+            journal_type = 'purchase'
+        elif invoice_type == 'in_refund':
+            journal_type = 'purchase_refund'
+        elif invoice_type == 'out_invoice':
+            journal_type = 'sale'
+        elif invoice_type == 'out_refund':
+            journal_type = 'sale_refund'
+        else:
+            journal_type = False
+        return journal_type          
+
+    def _get_journal(self, cr, uid, context=None):
+        '''We change the default _get_journal_ function. If there is a partner on the context
+        we will try to choose the right journal'''
+
+        res = super(account_invoice,self)._get_journal(cr, uid, context=context)
+        partner_id = context.get('partner_id', False)
+        journal_type = context.get('journal_type', False)
+        if not partner_id:
+            partner_id = context.get('default_partner_id', False)            
+        print 'get_journal'
+        if partner_id and journal_type:
+            user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+            company_id = context.get('company_id', user.company_id.id)
+            journal_ids = self.get_valid_journals(cr, uid, partner_id, journal_type, company_id=company_id, context=context)
+            print 'journal_ids', journal_ids
+            if journal_ids: 
+                res = journal_ids[0]
+        return res
+
+    def create(self, cr, uid, vals, context=None):
+        ''' Modify create function so it can try to set a right journal for the invoice'''
+        if not context:
+            context = {}
+        partner_id = vals.get('partner_id', False)
+        journal_type = vals.get('journal_type', False)
+        # Intentamos hacer esto de qeu si viene un joruanl no lo cambie pero la verdad es que en diversas ocasiones viene un jorunal equivocado, por ejemplo en modulo sale
+        # journal_id = vals.get('journal_id', False)
+        # if not journal_id:
+        if not journal_type:
+            invoice_type = vals.get('type', False)
+            journal_type = self.get_journal_type(cr, uid, invoice_type, context=context)      
+        if partner_id and journal_type:
+            user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+            company_id = vals.get('company_id', context.get('company_id',user.company_id.id))
+            journal_ids = self.get_valid_journals(cr, uid, partner_id, journal_type, company_id=company_id, context=context)
+            if journal_ids:
+                vals['journal_id'] = journal_ids[0]
+        return super(account_invoice, self).create(cr, uid, vals, context)

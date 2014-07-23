@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="account.check_sold_form_view">
+            <field name="name">account.check.sold.wizard.form</field>
+            <field name="model">account.check.sold</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Check Sold" col="2" version="7.0">
+                    <group>
+                        <label string="It will create an account move for the given account with the defined expenses." colspan="2"/>                        
+                        <field name="sold_date"/>
+                        <field name="destiny_account_id"/>
+                        <field name="expense"/>
+                        <field name="expense_amount" attrs="{'invisible':[('expense','not in',['record_expenses'])],'required':[('expense','in',['record_expenses'])]}"/>
+                        <field name="expense_account" attrs="{'invisible':[('expense','not in',['record_expenses'])],'required':[('expense','in',['record_expenses'])]}"/>
+                    </group>    
+                    <footer>
+                        <button string="Confirm" name="action_sold" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            name="Check Sold"
+            res_model="account.check.sold"
+            src_model="account.third.check"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_check_sold"/>
+
+    </data>
+</openerp>

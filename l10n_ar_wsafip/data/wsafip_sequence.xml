@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="True">
+
+        <record model='ir.sequence.type' id='ws_sequence_type'>
+            <field name='name'>Sequence of Batch Number for AFIP Web Services</field>
+            <field name='code'>ws_afip_sequence</field>
+            <field name='implementation'>standard</field>
+        </record>
+
+    </data>
+</openerp>

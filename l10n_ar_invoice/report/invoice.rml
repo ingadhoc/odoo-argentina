@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<document filename="invoice.pdf">
+    <template pageSize="(21cm,29.7cm)"
+        title="Factura Genérica para Argentina pre-impresa"
+        author="Cristian S. Rocha"
+        allowSplitting="0"
+        topMargin="0"
+	bottomMargin="0"
+	showBoundary="0"
+        >
+    <pageTemplate id="first">
+      <!-- date -->
+      <frame id="date_label"          x1="12.500cm" y1="27.000cm" width="4.5cm"  height="1.0cm"/>
+      <frame id="date"                x1="17.000cm" y1="27.000cm" width="3.0cm"  height="1.0cm"/>
+      <!-- info -->
+      <frame id="info"                x1="12.500cm" y1="25.000cm" width="7.5cm"  height="2.0cm"/>
+      <!-- header -->
+      <frame id="partner_label"       x1="1.700cm"  y1="21.000cm" width="8.5cm"  height="4.0cm"/>
+      <frame id="partner"             x1="10.200cm" y1="21.000cm" width="9.8cm"  height="4.0cm"/>
+      <!-- invoice notes -->
+      <frame id="note"                x1="1.700cm"  y1="18.500cm" width="18.3cm" height="2.5cm"/>
+      <!-- body -->
+      <frame id="details"             x1="1.700cm"  y1="6.0cm"    width="18.3cm" height="12.5cm"/>
+      <!-- footer -->
+      <frame id="observ"              x1="1.700cm"  y1="2.5cm"    width="12.3cm" height="3.5cm"/>
+      <frame id="calc_label"          x1="14.000cm" y1="2.5cm"    width="6.0cm"  height="3.5cm"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+      <paraStyle name='big'
+          fontName='Helvetica'
+          fontSize='16'
+          spaceBefore='0'
+          />
+      <paraStyle name='body'
+          fontName='Helvetica'
+          fontSize='9'
+          leftIndent='0cm'
+          spaceAfter='0cm'
+          spaceBefore='0cm'
+          />
+      <paraStyle name='body-bold'
+          fontName='Helvetica-Bold'
+          fontSize='9'
+          leftIndent='0cm'
+          spaceAfter='0cm'
+          spaceBefore='0cm'
+          />
+      <paraStyle name='details'
+          fontName='Helvetica'
+          fontSize='9'
+          leftIndent='0cm'
+          spaceAfter='0cm'
+          spaceBefore='0cm'
+          />
+      <paraStyle name='tiny'
+          fontName='Helvetica'
+          fontSize='8'
+          leftIndent='0cm'
+          spaceAfter='0cm'
+          spaceBefore='0cm'
+          />
+      <paraStyle name='tiny-bold'
+          fontName='Helvetica-Bold'
+          fontSize='8'
+          leftIndent='0cm'
+          spaceAfter='0cm'
+          spaceBefore='0cm'
+          />
+      <paraStyle name='number'
+          fontName='Helvetica'
+          fontSize='9'
+          />
+      <blockTableStyle id="Details">
+          <blockValign value="TOP" start="0,0" stop="0,-1"/>
+          <blockValign value="TOP" start="1,0" stop="1,-1"/>
+          <blockValign value="TOP" start="2,0" stop="2,-1"/>
+          <blockValign value="TOP" start="3,0" stop="3,-1"/>
+          <blockValign value="TOP" start="4,0" stop="4,-1"/>
+          <blockAlignment value="CENTER" start="0,0" stop="-1,0"/>
+          <blockAlignment value="LEFT"   start="0,1" stop="0,-1"/>
+          <blockAlignment value="RIGHT"  start="1,1" stop="1,-1"/>
+          <blockAlignment value="LEFT"   start="2,1" stop="2,-1"/>
+          <blockAlignment value="RIGHT"  start="3,1" stop="3,-1"/>
+          <blockAlignment value="RIGHT"  start="4,1" stop="4,-1"/>
+	  <lineStyle kind="GRID" colorName="silver"/>
+	  <lineStyle kind="LINEBELOW" colorName="black" start="0,0" stop="-1,0"/>
+	  <blockFont name="Helvetica-Bold" size="9" start="0,0" stop="-1,0"/>
+	  <blockFont name="Helvetica" size="9" start="0,1" stop="-1,-1"/>
+      </blockTableStyle>
+      <blockTableStyle id="Total">
+          <blockValign value="TOP" start="0,0" stop="-1,-1"/>
+          <blockAlignment value="RIGHT" start="0,0" stop="0,-1"/>
+          <blockAlignment value="RIGHT" start="1,0" stop="1,-1"/>
+      </blockTableStyle>
+  </stylesheet>
+  <story>
+    <para>[[ repeatIn(objects,'o') ]]</para>
+    <para>[[ setLang(o.partner_id.lang) ]] </para>
+      <para style='body-bold' alignment='RIGHT'>Fecha de Emisión:</para>
+      <nextFrame/>
+      <para style='body-bold' alignment='LEFT'>[[ formatLang(o.date_invoice,date=True) ]]</para>
+      <nextFrame/>
+      <para style='tiny'>.</para>
+      <para style='tiny'>.</para>
+      <para style='tiny'>.</para>
+      <nextFrame/>
+      <para style='body-bold' alignment='RIGHT'>CUIT:</para>
+      <para style='body-bold' alignment='RIGHT'>Apellido y Nombre / Razón Social:</para>
+      <para style='body-bold' alignment='RIGHT'>Domicilio:</para>
+      <para style='body-bold' alignment='RIGHT'>.</para>
+      <para style='body-bold' alignment='RIGHT'>Condición Frente al IVA:</para>
+      <para style='body-bold' alignment='RIGHT'>Condición de Venta:</para>
+      <para style='body-bold' alignment='RIGHT'>Nro. de Remito:</para>
+      <nextFrame/>
+      <para style='body'>[[ o.partner_id.printed_vat or removeParentNode('para') ]]</para>
+      <para style='body'>[[ o.partner_id.title.name or '' ]] [[ o.partner_id.name ]]</para>
+      <para style='body'>[[ o.partner_id.street ]], ( [[ o.partner_id.zip or '----' ]] )</para>
+      <para style='body'>[[ o.partner_id.city or '']], [[ o.partner_id.state_id.name or '' ]], [[ o.partner_id.country_id.name or '' ]].</para>
+      <para style='body'>Responsable [[ (not o.partner_id.vat_subjected) and removeParentNode('para') ]] [[ o.partner_id.property_account_position.name or '' ]]</para>
+      <para style='body'>No Responsable [[ o.partner_id.vat_subjected and removeParentNode('para') ]] [[ o.partner_id.property_account_position.name or '' ]]</para>
+      <para style='body'>[[ o.payment_term.name or 'Sin definir' ]]</para>
+      <para style='body'>[[ o.origin or 'Sin definir' ]]</para>
+      <nextFrame/>
+      <para style='tiny'>[[ o.comment or '' ]]</para>
+      <nextFrame/>
+        <section>
+          <para style="body">[[ repeatIn(o.invoice_line,'l') ]]</para>
+	      <blockTable colWidths="9cm,2cm,2cm,2.5cm,2.5cm" style="Details">
+        <tr>
+          <td>Descripción</td>
+          <td>Cantidad</td>
+          <td>Unidades</td>
+	  <td>P. Unit.</td>
+          <td>Importe</td>
+        </tr>
+        <tr>
+	  <td><para><b>[[ l.name ]]</b></para></td>
+          <td>[[ formatLang(l.quantity) ]]</td>
+          <td>[[ l.uos_id.name ]]</td>
+	  <td><para>[[ formatLang(l.price_calc(use_vat=not is_class(o, 'A'), quantity=1)[l.id]) ]] $</para></td>
+	  <td><para>[[ formatLang(l.price_calc(use_vat=not is_class(o, 'A'))[l.id]) ]] $</para></td>
+        </tr>
+          </blockTable>
+        </section>
+      <nextFrame/>
+        <para style="tiny-bold">Información de Facturación</para>
+	<para style="tiny">Factura [[ ((o.journal_id.code[0] in ['F']) or removeParentNode('para')) and '']] [[ o.number ]]</para>
+	<para style="tiny">Nota de Crédito [[ ((o.journal_id.code[0] in ['C']) or removeParentNode('para')) and '']] [[ o.number ]]</para>
+	<para style="tiny">Nota de Débito [[ ((o.journal_id.code[0] in ['D']) or removeParentNode('para')) and '']] [[ o.number ]]</para>
+	<para style="tiny">PRO-FORMA [[ ((o.type == 'out_invoice' and o.state == 'proforma2') or removeParentNode('para')) and '' ]]</para>
+	<para style="tiny">Factura Preliminar [[ ((o.type == 'out_invoice' and o.state == 'draft') or removeParentNode('para')) and '' ]]</para>
+	<para style="tiny">Factura Cancelada [[ ((o.type == 'out_invoice' and o.state == 'cancel') or removeParentNode('para')) and '' ]]</para>
+      <nextFrame/>
+	<blockTable colWidths="2cm,2cm" style="Total">
+	  <tr>
+	    <td>Subtotal:[[ (is_class(o, 'A') or removeParentNode('tr')) and '']]</td>
+	    <td>[[ formatLang(o.amount_untaxed) ]] $</td>
+	  </tr>
+	  <tr>
+	    <td>IVA:[[ (is_class(o,'A') or removeParentNode('tr')) and '']]</td>
+	    <td>[[ formatLang(o.amount_tax) ]] $</td>
+	  </tr>
+	  <tr>
+	    <td>Total:</td>
+	    <td>[[ formatLang(o.amount_total) ]] $</td>
+	  </tr>
+        </blockTable>
+    </story>
+</document>

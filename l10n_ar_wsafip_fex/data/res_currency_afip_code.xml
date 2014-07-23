@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2010 Elepe Servicios (http://www.elepeservicios.com.ar)
+ All Rights Reserved
+
+ Author : Dario Kevin De Giacomo (Elepe Servicios)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<openerp>
+    <data>
+    
+    
+<!-- UNIDADES DE MAYOR NECESIDAD -->
+
+        <!-- ARGENTINA -->
+        <record id="base.ARS" model="res.currency"> 
+                <field name="afip_code">PES</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- EE.UU. -->
+        <record id="base.USD" model="res.currency"> 
+                <field name="afip_code">DOL</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- MEXICO -->
+        <record id="base.MXN" model="res.currency"> 
+                <field name="afip_code">010</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- URUGUAY -->
+        <record id="base.UYU" model="res.currency"> 
+                <field name="afip_code">011</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- PARAGUAY -->
+        <record id="base.PYG" model="res.currency"> 
+                <field name="afip_code">029</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- CANADA -->
+        <record id="base.CAD" model="res.currency"> 
+                <field name="afip_code">018</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- JAPON -->
+        <record id="base.JPY" model="res.currency"> 
+                <field name="afip_code">019</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- VENEZUELA -->
+        <record id="base.VEF" model="res.currency"> 
+                <field name="afip_code">021</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- REINO UNIDO -->
+        <record id="base.GBP" model="res.currency"> 
+                <field name="afip_code">023</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- AUSTRALIA -->
+        <record id="base.AUD" model="res.currency"> 
+                <field name="afip_code">026</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- BOLIVIA -->
+        <record id="base.BOB" model="res.currency"> 
+                <field name="afip_code">031</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- COLOMBIA -->
+        <record id="base.COP" model="res.currency"> 
+                <field name="afip_code">032</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- CHILE -->
+        <record id="base.CLP" model="res.currency"> 
+                <field name="afip_code">033</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- ECUADOR -->
+        <record id="base.ECS" model="res.currency"> 
+                <field name="afip_code">036</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- BRASIL -->
+        <record id="base.BRL" model="res.currency"> 
+                <field name="afip_code">012</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- PERU -->
+        <record id="base.PEN" model="res.currency"> 
+                <field name="afip_code">035</field>
+                <field name="active">True</field>
+        </record>
+        
+        <!-- EURO --> 
+        <record id="base.EUR" model="res.currency"> 
+                <field name="afip_code">060</field>
+                <field name="active">True</field>
+        </record> 
+        
+        
+        
+        
+<!-- UNIDADES DE BAJA NECESIDAD --> 
+ 
+ 
+ 
+        
+        <!-- RAND SUDAFRICANO -->
+        <record id="base.ZAR" model="res.currency"> 
+                <field name="afip_code">034</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- ISRAEL SHEKEL --> 
+        <record id="base.ILS" model="res.currency"> 
+                <field name="afip_code">030</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- CORONAS DANESAS -->
+        <record id="base.DKK" model="res.currency"> 
+                <field name="afip_code">014</field>
+                <field name="active">True</field>
+        </record>
+        
+        <!-- CORONAS NORUEGAS --> 
+        <record id="base.NOK" model="res.currency"> 
+                <field name="afip_code">015</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- CORONAS SUECAS -->
+        <record id="base.SEK" model="res.currency"> 
+                <field name="afip_code">016</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- CORONA CHECA -->
+        <record id="base.CZK" model="res.currency"> 
+                <field name="afip_code">024</field>
+                <field name="active">True</field>
+        </record>
+        
+        <!-- DINAR YUGOSLAVO --> 
+        <record id="base.YUM" model="res.currency"> 
+                <field name="afip_code">025</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- FLORIN (ANTILLAS HOLANDESAS) --> 
+        <record id="base.ANG" model="res.currency"> 
+                <field name="afip_code">028</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- ZLOTY POLACO -->
+        <record id="base.PLN" model="res.currency"> 
+                <field name="afip_code">061</field>
+                <field name="active">True</field>
+        </record> 
+        
+        <!-- FRANCO SUIZO --> 
+        <record id="base.CHF" model="res.currency"> 
+                <field name="afip_code">009</field>
+                <field name="active">True</field>
+        </record> 
+
+
+    </data>
+</openerp>

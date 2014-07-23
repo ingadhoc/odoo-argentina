@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="account_third_checks" model="workflow">
+            <field name="name">Third Checks Workflow</field>
+            <field name="osv">account.third.check</field>
+            <field name="on_create">True</field>
+        </record>
+
+    <!-- Activities -->
+
+        <record id="activ_draft" model="workflow.activity">
+            <field name="wkf_id" ref="account_third_checks"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+        </record>
+
+        <record id="activ_holding" model="workflow.activity">
+            <field name="wkf_id" ref="account_third_checks"/>
+            <field name="name">holding</field>
+            <field name="kind">function</field>
+            <field name="action">wkf_holding()</field>
+        </record>
+
+        <record id="activ_deposited" model="workflow.activity">
+            <field name="wkf_id" ref="account_third_checks"/>
+            <field name="name">deposited</field>
+            <field name="kind">function</field>
+            <field name="action">wkf_deposited()</field>
+        </record>
+
+        <record id="activ_drejected" model="workflow.activity">
+            <field name="wkf_id" ref="account_third_checks"/>
+            <field name="name">drejected</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">function</field>
+            <field name="action">wkf_drejected()</field>
+        </record>
+
+        <record id="activ_handed" model="workflow.activity">
+            <field name="wkf_id" ref="account_third_checks"/>
+            <field name="name">handed</field>
+            <field name="kind">function</field>
+            <field name="action">wkf_handed()</field>
+        </record>
+        
+        <record id="activ_hrejected" model="workflow.activity">
+            <field name="wkf_id" ref="account_third_checks"/>
+            <field name="name">hrejected</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">function</field>
+            <field name="action">wkf_hrejected()</field>
+        </record>
+
+        <record id="activ_sold" model="workflow.activity">
+            <field name="wkf_id" ref="account_third_checks"/>
+            <field name="name">sold</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">function</field>
+            <field name="action">wkf_sold()</field>
+        </record>
+        
+    <!-- Transition -->
+
+        <record id="trans_check_holding" model="workflow.transition">
+            <field name="act_from" ref="activ_draft"/>
+            <field name="act_to" ref="activ_holding"/>
+            <field name="signal">draft_holding</field>
+        </record>
+
+        <record id="trans_holding_deposited" model="workflow.transition">
+            <field name="act_from" ref="activ_holding"/>
+            <field name="act_to" ref="activ_deposited"/>
+            <field name="signal">holding_deposited</field>
+        </record>
+
+        <record id="trans_deposited_drejected" model="workflow.transition">
+            <field name="act_from" ref="activ_deposited"/>
+            <field name="act_to" ref="activ_drejected"/>
+            <field name="signal">deposited_drejected</field>
+        </record>
+
+        <record id="trans_holding_handed" model="workflow.transition">
+            <field name="act_from" ref="activ_holding"/>
+            <field name="act_to" ref="activ_handed"/>
+            <field name="signal">holding_handed</field>
+        </record>
+        
+        <record id="trans_handed_hrejected" model="workflow.transition">
+            <field name="act_from" ref="activ_handed"/>
+            <field name="act_to" ref="activ_hrejected"/>
+            <field name="signal">handed_hrejected</field>
+        </record>
+        
+        <record id="trans_holding_sold" model="workflow.transition">
+            <field name="act_from" ref="activ_holding"/>
+            <field name="act_to" ref="activ_sold"/>
+            <field name="signal">holding_sold</field>
+        </record>
+
+
+    </data>
+</openerp>

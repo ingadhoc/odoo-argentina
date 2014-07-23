@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="wizard_ticket_deposit_form_view">
+            <field name="name">ticket.deposit.wizard.form</field>
+            <field name="model">wizard.ticket.deposit</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Tickets Checks Deposit" col="2" version="7.0">
+                    <group>
+                        <field name="name"/>
+                        <field name="bank_account_id"/>
+                        <field name="date"/>
+                        <field name="total_amount"/>
+                    </group>    
+                    <footer>
+                        <button string="Confirm" name="action_ticket_deposit" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>    
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            name="Ticket Check Deposit"
+            res_model="wizard.ticket.deposit"
+            src_model="account.third.check"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_ticket_deposit"/>
+        
+    </data>
+</openerp>

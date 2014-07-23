@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+                
+		<!-- Tree Recibos (ambos)-->
+
+		<record id="voucher_receipts_form_inherit_view" model="ir.ui.view">
+			<field name="name">receipts.voucher.inherit.view</field>
+			<field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_voucher_tree"/>
+			<field name="arch" type="xml"> 
+				<xpath expr="/tree/field[@name='state']" position="after">
+                    <field name="receipt_id" string="Receipt"/>
+				</xpath>
+			</field>
+	    </record>	
+        
+        
+				
+        <!-- Search Recibos invisible="not context.get('receipt',True)"-->
+
+		<!-- crea Pantalla tipo search cliente para Recibos-->
+        <record id="view_voucher_customer_inherit_filter" model="ir.ui.view">
+            <field name="name">receipt.voucher.customer.inherit.select</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_customer_pay"/>
+            <field name="arch" type="xml">
+                <xpath expr="/search/field[@name='date']" position="after">
+                    <field name="receipt_id" string="Receipt" />
+				</xpath>
+				<xpath expr="/search/group/filter[@string='Status']" position="after">
+					<filter string="Receipt" icon="terp-camera_test" domain="[('receipt_id','!=',False)]"  help="Payments with Receipt"/>
+				</xpath>
+            </field>
+	    </record>   
+          
+        <!-- Search  Proof-->
+        <record id="view_voucher_filter_vendor_proof_inherit" model="ir.ui.view">
+            <field name="name">voucher.filter.vendor.proof.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_vendor_pay"/>
+            <field name="arch" type="xml">
+                <xpath expr="/search/field[@name='date']" position="after">
+                    <field name="receipt_id" string="Payment Voucher" />
+				</xpath>
+				<xpath expr="/search/group/filter[@string='Status']" position="after">
+                    <filter string="Payment Voucher" icon="terp-camera_test" domain="[('receipt_id','!=',False)]"  help="Payments with Payment Voucher"/>
+				</xpath>
+            </field>
+	    </record>   
+        
+        
+        <!-- Receipt Form  -->
+        <record id="view_vendor_receipts_pay_form" model="ir.ui.view">
+            <field name="name">account.voucher.form.receipts.pay.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
+            <field name="arch" type="xml">
+               <!-- <xpath expr="/sheet/notebook/page[@string='Journal Items']" position="after">
+                    <page string="Receipts Pay" attrs="{'invisible':[('state','in',['draft'])]}" >
+                        <field name="receipt_id" colspan="4" />
+                    </page>
+                </xpath>  -->     
+                <page string="Journal Items" position="after" >
+                    <page string="Receipts" attrs="{'invisible':[('state','in',['draft'])]}" >
+                        <field name="receipt_id" colspan="4" />
+                    </page>
+                </page>
+            </field>
+        </record>
+        
+        <!-- Payment Proof Form-->
+                       <!-- <xpath expr="/sheet/notebook/page[@string='Journal Items']" position="after">
+                    <page string="Payments Proof" attrs="{'invisible':[('state','in',['draft'])]}" >
+                        <field name="receipt_id" colspan="4" />
+                    </page>
+                </xpath> -->
+        <record id="view_sale_proof_pay_form" model="ir.ui.view">
+            <field name="name">account.voucher.form.proof.pay.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+            <field name="arch" type="xml">
+                <page string="Journal Items" position="after" >
+                    <page string="Payment Proof" attrs="{'invisible':[('state','in',['draft'])]}">
+                        <field name="receipt_id" colspan="4" />
+                    </page>
+                </page>    
+            </field>
+        </record>
+        
+        
+        <!-- Receipt -->
+        
+        <record id="action_receipt_pay_vendor" model="ir.actions.act_window">
+            <field name="name">Customer Debit Payment</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_type">form</field>
+          <!--  <field name="domain">[('type','=','receipt')]</field>
+            <field name="context">{'type':'receipt'}</field>-->
+            <field name="search_view_id" ref="view_voucher_customer_inherit_filter"/>
+           <!--  <field name="search_view_id" ref="account_voucher.view_voucher_filter_customer_pay"/> -->
+            <field name="view_id" eval="False"/>
+            <field name="target">current</field>
+            <field name="help">Sales payment allows you to register the payments you receive from your customers. In order to record a payment, you must enter the customer, the payment method (=the journal) and the payment amount. OpenERP will propose to you automatically the reconciliation of this payment with the open invoices or sales receipts.</field>
+        </record>
+        
+        <record id="action_receipt_pay_vendor_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <!--  <field name="context">{'type':'receipt'}</field>
+            <field name="domain">[('type','=','receipt')]</field>-->
+            <field name="view_id" ref="voucher_receipts_form_inherit_view"/>  
+            <field name="act_window_id" ref="action_receipt_pay_vendor"/>
+        </record>
+        
+        <record id="action_receipt_pay_vendor_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+          <!--    <field name="context">{'type':'receipt'}</field>
+            <field name="domain">[('type','=','receipt')]</field>-->
+            <field name="view_id" ref="view_vendor_receipts_pay_form"/>  
+            <field name="act_window_id" ref="action_receipt_pay_vendor"/> 
+        </record>  
+        
+        <!-- Proof -->
+        <record model="ir.actions.act_window" id="action_review_voucher_list_proof">
+            <field name="name">Vouchers Entries Proof</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_type">form</field>
+            <field name="view_id" eval="False"/>
+          <!--  <field name="domain">[('type','=','payment')]</field>
+            <field name="context">{'type':'payment'}</field> -->
+           <!-- <field name="search_view_id" ref="account_voucher.view_voucher_filter_sale"/> -->
+            <field name="search_view_id" ref="view_voucher_filter_vendor_proof_inherit"/>
+            <field name="target">current</field>
+        </record> 
+        
+        <record id="action_proof_pay_sale_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+          <!--  <field name="context">{'type':'payment'}</field>
+            <field name="domain">[('type','=','payment')]</field> -->
+            <field name="view_id" ref="voucher_receipts_form_inherit_view"/>  
+            <field name="act_window_id" ref="action_review_voucher_list_proof"/>
+        </record>
+        
+        <record id="action_proof_pay_vendor_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+         <!--   <field name="context">{'type':'payment'}</field>
+            <field name="domain">[('type','=','payment')]</field> -->
+            <field name="view_mode">form</field> 
+            <field name="view_id" ref="view_sale_proof_pay_form"/>  
+            <field name="act_window_id" ref="action_review_voucher_list_proof"/> 
+        </record>  
+        
+    </data>
+</openerp>

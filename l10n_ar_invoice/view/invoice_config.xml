@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (C), 2012, OpenERP - Team de Localización Argentina.
+ https://launchpad.net/~openerp-l10n-ar-localization
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<openerp>
+    <data>
+
+        <record id="view_invoice_ar_del_journal_tree" model="ir.ui.view">
+            <field name="name">l10n_ar_invoice.del_journal.tree</field>
+            <field name="model">l10n_ar_invoice.del_journal</field>
+            <field name="arch" type="xml">
+              <tree string="Journals to delete" editable="bottom" >
+			<field name="journal_id" widget="selection"/>
+              </tree>
+	    </field>
+	</record>
+ 
+        <record id="view_invoice_ar_new_sequence_tree" model="ir.ui.view">
+            <field name="name">l10n_ar_invoice.new_sequence.tree</field>
+            <field name="model">l10n_ar_invoice.new_sequence</field>
+            <field name="arch" type="xml">
+              <tree string="Sequences to create" editable="bottom" >
+			<field name="name"/>
+			<field name="code"/>
+			<field name="number_next"/>
+			<field name="prefix"/>
+			<field name="suffix"/>
+			<field name="padding"/>
+              </tree>
+	    </field>
+	</record>
+ 
+
+        <record id="view_invoice_ar_new_journal_tree" model="ir.ui.view">
+            <field name="name">l10n_ar_invoice.new_journal.tree</field>
+            <field name="model">l10n_ar_invoice.new_journal</field>
+            <field name="arch" type="xml">
+              <tree string="Journals to create" editable="bottom" >
+		    <field name="name"/>
+		    <field name="code"/>
+		    <field name="type"/>
+		    <field name="point_of_sale"/>
+              </tree>
+	    </field>
+	</record>
+ 
+        <record id="view_invoice_ar_new_journal_form" model="ir.ui.view">
+            <field name="name">l10n_ar_invoice.new_journal.form</field>
+            <field name="model">l10n_ar_invoice.new_journal</field>
+            <field name="arch" type="xml">
+              <form string="Journals to create">
+		    <field name="name"/>
+		    <field name="code"/>
+		    <field name="type"/>
+		    <field name="point_of_sale"/>
+              </form>
+	    </field>
+	</record>
+
+        <record id="view_invoice_ar_installer" model="ir.ui.view">
+            <field name="name">l10n_ar_invoice.config.form</field>
+            <field name="model">l10n_ar_invoice.config</field>
+            <field name="inherit_id" ref="base.res_config_view_base"/>
+            <field name="arch" type="xml">
+              <data>
+                <form position="attributes" version="7.0">
+                    <attribute name="string">Invoice Configuration for Argentina</attribute>
+                </form>
+                <group string="res_config_contents" position="replace">
+		    <group colspan="8">
+			    <field name="company_id" widget="selection"
+				    on_change="update_company_id(company_id)"
+				    /><newline/>
+			    <field name="cuit" /><newline/>
+			    <field name="iibb" /><newline/>
+			    <field name="start_date" /><newline/>
+			    <field name="responsability_id" widget="selection"
+				    on_change="onchange_form(company_id, responsability_id, do_export, remove_old_journals, point_of_sale)"
+				    /><newline/>
+			    <field name="do_export"
+				    on_change="onchange_form(company_id, responsability_id, do_export, remove_old_journals, point_of_sale)"
+				    /><newline/>
+			    <field name="remove_old_journals"
+				    on_change="onchange_form(company_id, responsability_id, do_export, remove_old_journals, point_of_sale)"
+				    /><newline/>
+			    <field name="point_of_sale"
+				    on_change="onchange_form(company_id, responsability_id, do_export, remove_old_journals, point_of_sale)"
+				    /><newline/>
+			    <group colspan="4" groups="base.group_extended">
+				    <notebook >
+					    <page string='Journals to delete'>
+					    <field name="journals_to_delete" colspan="4" nolabel="1"/>
+					    </page>
+					    <page string='Sequences to create'>
+					    <field name="sequences_to_create" colspan="4" nolabel="1"/>
+					    </page>
+					    <page string='Journals to create'>
+					    <field name="journals_to_create" colspan="4" nolabel="1"/>
+					    </page>
+				    </notebook>
+			    </group>
+		    </group>
+		    </group>
+              </data>
+            </field>
+        </record>
+
+	<record id="action_invoice_ar_installer" model="ir.actions.act_window">
+	  <field name="name">Invoice Configuration</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">l10n_ar_invoice.config</field>
+	  <field name="view_id" ref="view_invoice_ar_installer"/>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+	</record>
+
+	<record id="invoice_installer_todo" model="ir.actions.todo">
+        <field name="name">Argentina Invoices/Journals Configuration</field>
+		<field name="action_id" ref="action_invoice_ar_installer"/>
+		<field name="sequence">20</field>
+		<field name="type">automatic</field>
+	</record>
+
+    </data>
+</openerp>
+<!--
+     vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+-->

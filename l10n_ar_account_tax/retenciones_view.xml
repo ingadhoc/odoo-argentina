@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_company_page_retenciones">
+            <field name="name">res.company.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <notebook position="inside">
+                        <page string="Agente de Retención">
+                            <field default_get="{'tax_withholding_ids': tax_withholding_ids}" name="tax_withholding_ids" nolabel="1">
+                                <form string="Invoice lines">
+                                    <field name="account_tax_id" />
+                                    <field name="fecha" />
+                                    <field name="numero_agente" />
+                                </form>
+                                <tree string="Invoice lines">
+                                    <field name="account_tax_id" />
+                                    <field name="fecha" />
+                                    <field name="numero_agente" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_partner_page_inscripto">
+            <field name="name">res.partner.form.inherit4</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <data>
+                <xpath expr="/form/sheet/field[@name='image']" position="after">
+                    <field name="responsability_code" invisible="0"/>
+                </xpath>
+                    <notebook position="inside">
+                        <page string="Condicion impuestos" attrs="{'invisible':[('responsability_code','!=','IVARI')]}">
+<!--
+HDB dsd acount/partner_view.xml
+-->
+                            <field colspan="4" context="{'impuesto_ids': impuesto_ids}" name="impuesto_ids" nolabel="1">
+                                <form string="Tax details'HDB ">
+                                    <field name="account_tax_id" />
+                                    <field name="account_regimenes_ganancia" />
+                                    <field name="inscripto" />
+                                    <field name="comentario"/>
+                                    <field colspan="6" context="{'excepciones': excepciones}" name="excepciones" nolabel="1">
+                                        <form string= "Cargar excepcion">
+                                            <field name= "fecha_desde_exceptuado"/>
+                                            <field name= "fecha_hasta_exceptuado"/>
+                                            <separator colspan="6" string="Comentarios"/>
+                                            <field name= "comentarios" colspan="6" nolabel="1"/>
+                                            <field name="comprobante" string="Comprobande de excepcion" filename="comprobante_fname"/>
+                                            <field name="comprobante_fname"/>
+
+                                        </form>
+                                        <tree string="Excepciones">
+                                            <field name= "fecha_desde_exceptuado"/>
+                                            <field name= "fecha_hasta_exceptuado"/>
+                                        </tree>
+                                    </field>
+<!--inscripto
+                                    <field name="partner_id"/>
+-->
+                                </form>
+                                <tree string="Tax details'HDB ">
+                                    <field name="account_tax_id" />
+                                    <field name="account_regimenes_ganancia" />
+                                    <field name="inscripto" />
+                                    <field name="excepciones"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </data>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_tax_page_imponible_ganancias">
+            <field name="name">account.tax.form.inherit</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="arch" type="xml">
+                <data>
+                <form>
+                <notebook position="inside" >
+                        <page string="Regimenes Ganancia" attrs="{'invisible':[('name','!=','ganancias')]}"> <!--WARNINGGG "= ganancias"-->
+                            <separator colspan="4" string="Retencion minima"/>
+                            <field name="retencion_minima_inscriptos" string="Inscriptos"/>
+                            <field name="retencion_minima_no_inscriptos" string="No Inscriptos"/>
+                            <field context="{'regimen_ganancia': regimen_ganancia}" name="regimen_ganancia" colspan="6" nolabel="1">
+                                <form string="Regimen ganancia ">
+                                    <field name="codigo_de_regimen" />
+                                    <field name="anexo_referencia" />
+                                    <field name="concepto_referencia" />
+                                    <separator colspan="4" string="Montos"/>
+                                    <group colspan="6" col="3">
+                                        <field name="retener_porcentaje_inscripto"/>
+                                        <field name="retener_porcentaje_no_inscripto"/>
+                                        <field name="monto_no_sujeto_a_retencion"/>
+                                    </group>
+                                </form>
+                                <tree string="Regimenes">
+                                    <field name="codigo_de_regimen" />
+                                    <field name="anexo_referencia" />
+                                    <field name="retener_porcentaje_inscripto"/>
+                                    <field name="retener_porcentaje_no_inscripto"/>
+                                    <field name="monto_no_sujeto_a_retencion"/>
+                                    <field name="concepto_referencia"/>
+                                </tree>
+                            </field>
+                            <field context="{'imponible_ganancias_ids': imponible_ganancias_ids}" name="imponible_ganancias_ids" colspan="6" nolabel="1">
+                                <form string="Escala">
+                                    <field name="importe_desde" />
+                                    <field name="importe_hasta" />
+                                    <field name="retener_importe_fijo" />
+                                    <field name="retener_porcentaje"/>
+                                    <field name="importe_excedente"/>
+                                </form>
+                                <tree string="Escala">
+                                    <field name="importe_desde" />
+                                    <field name="importe_hasta" />
+                                    <field name="retener_importe_fijo"/>
+                                    <field name="retener_porcentaje"/>
+                                    <field name="importe_excedente"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_voucher_retencion_ganancias">
+            <field name="name">account.voucher.payment.form2</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="payment_option" position="after" >
+                        <button name="calcular_retencion" string="Calcular retenciones"
+                        type="object" icon="gtk-execute"
+                        attrs="{'readonly':[('state','=','posted')]}"/>
+                        <field name="monto_retencion" />
+                        <field context="{'retencion': retencion}" name="retencion" nolabel="1" readonly="True">
+                            <form string="retencion" >
+                                <field name="tax_id" />
+                                <field name="monto" />
+                            </form>
+                            <tree string="retencion" >
+                                <field name="tax_id" />
+                                <field name="monto" />
+                                <field name="regimen_id" />
+<!--regimen_id
+                                <field context="{'retencion': retencion}" name="regimen_id" nolabel="1">
+                                    <field
+-->
+                            </tree>
+                        </field>
+                    </field>
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_regimenes_ganancia_tree">
+            <field name="name">account.regimenes.tree</field>
+            <field name="model">account.regimenes.ganancia</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="regimenes" >
+                    <field name="codigo_de_regimen"/>
+                    <field name="retener_porcentaje_inscripto"/>
+                    <field name="retener_porcentaje_no_inscripto"/>
+                    <field name="monto_no_sujeto_a_retencion"/>
+                    <field name="anexo_referencia"/>
+                    <field name="concepto_referencia"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_regimenes_ganancia_search">
+            <field name="name">account.regimenes.search</field>
+            <field name="model">account.regimenes.ganancia</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="search regimenes" >
+                    <group>
+                        <field name="codigo_de_regimen"/>
+                        <separator orientation="vertical"/>
+                        <field name="retener_porcentaje_inscripto"/>
+                        <field name="retener_porcentaje_no_inscripto"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+<!--
+        VISTA REGISTRO RETENCIONES
+-->
+
+        <record model="ir.ui.view" id="view_registro_retenciones_tree">
+            <field name="name">registro.retenciones.tree</field>
+            <field name="model">registro.retenciones</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Retenciones" >
+                    <field name="voucher_id"/>
+                    <field name="tax_id"/>
+                    <field name="monto"/>
+                    <field name="regimen_id"/>
+                    <field name="nro_retencion"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_registro_retenciones_form">
+            <field name="name">registro.retenciones.form</field>
+            <field name="model">registro.retenciones</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Retenciones" >
+                    <field name="voucher_id"/>
+                    <field name="tax_id"/>
+                    <field name="monto"/>
+                    <field name="regimen_id"/>
+                    <field name="nro_retencion"/>
+                </form>
+            </field>
+        </record>
+
+<!--
+         Defino accion para registro_retnciones
+-->
+        <record model="ir.actions.act_window" id="action_registro_retenciones_tree">
+            <field name="name">Retenciones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">registro.retenciones</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+<!--
+        defino act_window.view para relacionar action con tree y form
+-->
+        <record id="action_view_registro_retenciones" model="ir.actions.act_window.view">
+            <field eval="20" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_registro_retenciones_form"/>
+            <field name="act_window_id" ref="action_registro_retenciones_tree"/>
+        </record>
+
+        <record id="action_view_registro_retenciones" model="ir.actions.act_window.view">
+            <field eval="20" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_registro_retenciones_tree"/>
+            <field name="act_window_id" ref="action_registro_retenciones_tree"/>
+        </record>
+<!--
+         menu item retenciones
+-->
+        <menuitem id="Retenciones"
+            action="action_registro_retenciones_tree"
+            parent="account.menu_finance_payables"
+            name="Retenciones" />
+
+<!--
+        <record model="ir.ui.view" id="view_regimenes_ganancia_form">
+            <field name="name">account.regimenes.form</field>
+            <field name="model">account.regimenes.ganancia</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="regimenes" >
+                    <field name="codigo_de_regimen"/>
+                    <field name="retener_porcentaje_inscripto"/>
+                    <field name="retener_porcentaje_no_inscripto"/>
+                    <field name="monto_no_sujeto_a_retencion"/>
+                    <field name="codigo_de_regimen"/>
+                    <field name="concepto_referencia"/>
+                </form>
+            </field>
+        </record>
+-->
+<!--
+        <record id="view_tax_tree" model="ir.ui.view">
+            <field name="name">account.tax.tree</field>
+            <field name="model">account.tax</field>
+            <field name="type">tree</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Account Tax">
+                    <field name="name"/>
+                    <field name="price_include" groups="base.group_extended"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_account_tax_search" model="ir.ui.view">
+            <field name="name">account.tax.search</field>
+            <field name="model">account.tax</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Taxes">
+                    <group col="10" colspan="4">
+                        <field name="name"/>
+                        <field name="description"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+-->
+
+
+
+    </data>
+</openerp>

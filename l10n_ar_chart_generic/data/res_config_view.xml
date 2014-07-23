@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_config_settings" model="ir.ui.view">
+            <field name="name">account settings</field>
+            <field name="model">account.config.settings</field>
+	    <field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="arch" type="xml">
+		    <xpath expr="//separator[@string='eInvoicing &amp; Payments']/following-sibling::group/label" position="before">
+			    <label for="id" string="Options"/>
+			    <div>
+				    <div>
+					<field name="module_l10n_ar_invoice" class="oe_inline"/>
+					<label for="module_l10n_ar_invoice"/>
+				    </div>
+				    <div>
+					<field name="module_l10n_ar_wsafip_fe" class="oe_inline"/>
+					<label for="module_l10n_ar_wsafip_fe"/>
+				    </div>
+			    </div>
+		    </xpath>
+
+		    <xpath expr="//group[@name='bank_cash']/div" position="inside">
+			    <div>
+				<field name="module_l10n_ar_bank" class="oe_inline"/>
+				<label for="module_l10n_ar_bank"/>
+			    </div>
+		    </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

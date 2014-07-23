@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+##############################################################################
+#
+# Copyright (C) 2012 OpenERP - Team de Localización Argentina.
+# https://launchpad.net/~openerp-l10n-ar-localization
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+-->
+<openerp>
+    <data>
+
+        <record id="view_account_config_settings" model="ir.ui.view">
+            <field name="name">account settings</field>
+            <field name="model">account.config.settings</field>
+            <field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="arch" type="xml">
+                <separator string='eInvoicing &amp; Payments' position="after">
+                    <group>
+                        <label for="id" string="Configuration"/>
+                        <div>
+                            <div>
+                                <button string="Create new point of sale for AFIP"
+                                    icon="gtk-go-forward"
+                                    name="%(action_invoice_ar_installer)d"
+                                    type="action"
+                                    class="oe_link"/>
+                            </div>
+                        </div>
+                    </group>
+                </separator>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
+     -->

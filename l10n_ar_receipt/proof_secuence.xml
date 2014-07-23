@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!--Sequence types for Proof Pay -->
+
+        <record  id="seq_type_proof_pay" model="ir.sequence.type">
+            <field name="name">Proof Pay</field>
+            <field name="code">proof.pay</field>
+        </record>
+
+        <!--Sequences for Proof Pay-->
+
+        <record  id="seq_proof_pay" model="ir.sequence">
+            <field name="name">Proof Pay</field>
+            <field name="code">proof.pay</field>
+            <field name="padding">8</field>
+            <field name="prefix">P 0001-</field>
+        </record>
+    </data>
+</openerp>  
+ 

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <!-- Payment -->
+
+        <record id="view_vendor_payment_check_form" model="ir.ui.view">
+            <field name="name">account.voucher.form.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+            <field name="arch" type="xml">                
+                <page string="Payment Information" position="after"> 
+                    <page string="Checks" attrs="{'invisible':[('show_check_page','=', False)]}">
+                        <field name="show_check_page" invisible="1"/>
+                        <field name="use_issued_check" invisible="1"/>
+                        <field name="use_third_check" invisible="1"/>
+                        <group attrs="{'invisible':[('use_issued_check','=', False)]}" col="1">
+                            <field name="issued_check_ids"
+                                        on_change="onchange_issued_checks(issued_check_ids, third_check_ids, journal_id, partner_id, currency_id, type, date)">
+                                <tree colors="blue:state == 'draft';black:state in ('handed');red:state == 'hrejected';gray:state == 'cancel'" string="Issued Checks">
+                                    <field name="number"/>
+                                    <field name="date"/>
+                                    <field name="clearing_date"/>
+                                    <field name="checkbook_id"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                    <field name="user_id"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group attrs="{'invisible':[('use_third_check','=', False)]}" col="1">
+                            <field name="third_check_ids"
+                                        domain="[('state', '=', 'holding')]"
+                                        on_change="onchange_third_check_ids(issued_check_ids, third_check_ids, journal_id, partner_id, currency_id, type, date)" create='false'>
+                            </field>                                   
+                        </group>    
+                    </page>
+                </page>
+            </field>
+        </record> 
+
+   <!-- Receipt -->
+
+        <record id="view_vendor_receipt_check_form" model="ir.ui.view">
+            <field name="name">account.voucher.form.receipt.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
+            <field name="arch" type="xml">
+                <page string="Payment Information" position="after" >
+                    <page string="Checks" attrs="{'invisible':[('show_check_page','=', False)]}">
+                        <field name="show_check_page" invisible="1"/>
+                        <field name="use_issued_check" invisible="1"/>
+                        <field name="use_third_check" invisible="1"/>
+                        <group col="1">
+                            <field name="third_check_receipt_ids" colspan="4"
+                                    on_change="onchange_third_check_receipt_ids(third_check_receipt_ids, journal_id, partner_id, currency_id, type, date,state)">
+                                <tree colors="blue:state == 'draft';black:state in ('handed','deposited','sold');red:state in ('hrejected','drejected');gray:state == 'cancel'" string="Third Checks">
+                                    <!-- <field name="sequence_number"/> -->
+                                    <field name="number"/>
+                                    <field name="date"/>
+                                    <field name="clearing_date"/>
+                                    <field name="source_partner_id"/>
+                                    <field name="bank_id"/>
+                                    <field name="destiny_partner_id"/>
+                                    <field name="amount" sum="Total Amount"/>
+                                    <field name="user_id"/>
+                                    <field name="state"/>
+                                </tree>   
+                            </field>
+                        </group>                       
+                    </page>
+                </page>
+            </field>
+        </record>
+        
+        
+<!--         <record id="action_debit_vendor_receipt" model="ir.actions.act_window">
+            <field name="name">Customer Debit Payment</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('type','=','receipt')]</field>
+            <field name="context">{'type':'receipt'}</field>
+            <field name="search_view_id" ref="account_voucher.view_voucher_filter_customer_pay"/>
+            <field name="view_id" eval="False"/>
+            <field name="target">current</field>
+            <field name="help">Sales payment allows you to register the payments you receive from your customers. In order to record a payment, you must enter the customer, the payment method (=the journal) and the payment amount. OpenERP will propose to you automatically the reconciliation of this payment with the open invoices or sales receipts.</field>
+        </record>
+        
+        <record id="action_debit_vendor_receipt_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="act_window_id" ref="action_debit_vendor_receipt"/>
+        </record>
+        
+        <record id="action_debit_vendor_receipt_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_vendor_receipt_check_form"/>  
+            <field name="act_window_id" ref="view_vendor_payment_check_form"/>
+        </record>  
+         -->
+
+    </data>
+</openerp>

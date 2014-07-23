@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<loginTicketResponse version="1">
+    <header>
+        <source>CN=wsaahomo, O=AFIP, C=AR, SERIALNUMBER=CUIT 33693450239</source>
+        <destination>C=ar, O=pyafipws-sistemas agiles, SERIALNUMBER=CUIT 20267565393, CN=mariano reingart</destination>
+        <uniqueId>597591660</uniqueId>
+        <generationTime>2013-07-27T20:40:40.504-03:00</generationTime>
+        <expirationTime>2013-07-28T08:40:40.504-03:00</expirationTime>
+    </header>
+    <credentials>
+        <token>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pgo8c3NvIHZlcnNpb249IjIuMCI+CiAgICA8aWQgdW5pcXVlX2lkPSIzNzA0MzA5ODExIiBzcmM9IkNOPXdzYWFob21vLCBPPUFGSVAsIEM9QVIsIFNFUklBTE5VTUJFUj1DVUlUIDMzNjkzNDUwMjM5IiBnZW5fdGltZT0iMTM3NDk2ODM4MCIgZXhwX3RpbWU9IjEzNzUwMTE2NDAiIGRzdD0iQ049d3NmZSwgTz1BRklQLCBDPUFSIi8+CiAgICA8b3BlcmF0aW9uIHZhbHVlPSJncmFudGVkIiB0eXBlPSJsb2dpbiI+CiAgICAgICAgPGxvZ2luIHVpZD0iQz1hciwgTz1weWFmaXB3cy1zaXN0ZW1hcyBhZ2lsZXMsIFNFUklBTE5VTUJFUj1DVUlUIDIwMjY3NTY1MzkzLCBDTj1tYXJpYW5vIHJlaW5nYXJ0IiBzZXJ2aWNlPSJ3c2ZlIiByZWdtZXRob2Q9IjIyIiBlbnRpdHk9IjMzNjkzNDUwMjM5IiBhdXRobWV0aG9kPSJjbXMiPgogICAgICAgICAgICA8cmVsYXRpb25zPgogICAgICAgICAgICAgICAgPHJlbGF0aW9uIHJlbHR5cGU9IjQiIGtleT0iMjAyNjc1NjUzOTMiLz4KICAgICAgICAgICAgPC9yZWxhdGlvbnM+CiAgICAgICAgPC9sb2dpbj4KICAgIDwvb3BlcmF0aW9uPgo8L3Nzbz4KCg==</token>
+        <sign>sT7XCDJtZgeb9j22tmsnKKBUkvXYBwnmXQfSEcHZoZOi7SXbagex+qSyJATmBhqBHNHM64VM8Yd8RRnLddePOvSoAIxSErAkgZ0a0VfyrMlUGHxpmOYH9d7CIfR2TWem5t1X1EvXRj3H9S10y9+acVazYLlfbpIhB5dgwi9MKC4=</sign>
+    </credentials>
+</loginTicketResponse>
+

@@ -245,26 +245,20 @@ class account_invoice(osv.osv):
             company_id = context.get('company_id', user.company_id.id) 
         company = self.pool.get('res.company').browse(cr, uid, company_id, context)
 
-        map_invoice = False
         if journal_type in ['sale','sale_refund']:
             issuer_responsability_id = company.partner_id.responsability_id.id
             receptor_responsability_id = partner.responsability_id.id 
-            if company.map_customer_invoice_journals:
-                map_invoice = True
         elif journal_type in ['purchase','purchase_refund']:
             issuer_responsability_id = partner.responsability_id.id    
-            receptor_responsability_id = company.partner_id.responsability_id.id
-            if company.map_supplier_invoice_journals:
-                map_invoice = True            
+            receptor_responsability_id = company.partner_id.responsability_id.id         
         else:
             raise orm.except_orm(_('Journal Type Error'),
                     _('Journal Type Not defined)'))
 
-        if map_invoice:
-            if not company.partner_id.responsability_id.id:
-                raise orm.except_orm(_('Your company has not setted any responsability'),
-                        _('Please, set your company responsability in the company partner before continue.'))            
-                _logger.warning('Your company "%s" has not setted any responsability.' % company.name)
+        if not company.partner_id.responsability_id.id:
+            raise orm.except_orm(_('Your company has not setted any responsability'),
+                    _('Please, set your company responsability in the company partner before continue.'))            
+            _logger.warning('Your company "%s" has not setted any responsability.' % company.name)
 
             document_letter_ids = document_letter_obj.search(cr, uid, [('issuer_ids', 'in', issuer_responsability_id),('receptor_ids', 'in', receptor_responsability_id)], context=context)
         return document_letter_ids          

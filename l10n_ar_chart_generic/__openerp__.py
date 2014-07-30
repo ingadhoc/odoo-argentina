@@ -35,6 +35,8 @@ Incluye:
 """,
     'depends': [
         'account',
+        'account_chart',
+        'l10n_multilang',
         # 'base_vat',
         # 'base_iban',
         # 'l10n_ar_states',

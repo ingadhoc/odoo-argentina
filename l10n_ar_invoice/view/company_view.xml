@@ -11,10 +11,6 @@
                     <field name="iibb"/>
                     <field name="start_date"/>
                 </field>
-                <group name="account_grp"  position="inside">
-                    <field name="map_supplier_invoice_journals"/>
-                    <field name="map_customer_invoice_journals"/>
-                </group>
             </field>
         </record>
 

@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
- Copyright (C), 2012, OpenERP - Team de Localización Argentina.
- https://launchpad.net/~openerp-l10n-ar-localization
-
- This program is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program. If not, see <http://www.gnu.org/licenses/>.
--->
 <openerp>
     <data>
 
@@ -110,6 +93,14 @@
             <field name="parent_id" ref="ri_bancos"/>
         </record>  
 
+        <record model="account.account.template" id="ri__tarjetas_de_credito_cobrar">
+            <field name="type">liquidity</field>
+            <field name="code">1112020</field>
+            <field name="user_type" ref="account.data_account_type_bank"/>
+            <field name="name">Tarjetas de crédito a cobrar xxxxx</field>
+            <field name="parent_id" ref="ri_bancos"/>
+        </record>
+
         <record model="account.account.template" id="ri_creditos_comerciales">
             <field name="type">view</field>
             <field name="code">112</field>
@@ -143,7 +134,7 @@
             <field name="parent_id" ref="ri_activo_corriente"/>
         </record>
 
-        <record model="account.account.template" id="ri_deudores_morosos">
+        <record model="account.account.template" id="ri_deudores_varios">
             <field name="type">receivable</field>
             <field name="code">1130010</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
@@ -296,7 +287,7 @@
         </record>
 
         <record model="account.account.template" id="ri_creditos_iibb_sf">
-            <field name="type">other</field>
+            <field name="type">view</field>
             <field name="code">114340</field>
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS BRUTOS PROV. SANTA FÉ</field>
@@ -640,9 +631,9 @@
             <field name="parent_id" ref="ri_comunes"/>
         </record>
 
-        <record model="account.account.template" id="ri_pago_proveedores">
+        <record model="account.account.template" id="ri_pago_acreedores">
             <field name="type">payable</field>
-            <field name="code">2131010</field>
+            <field name="code">2131030</field>
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Acreedores varios</field>
             <field name="parent_id" ref="ri_comunes"/>
@@ -680,11 +671,11 @@
             <field name="parent_id" ref="ri_pasivo_corriente"/>
         </record>
 
-        <record model="account.account.template" id="ri_tarjetas_de_credito">
+        <record model="account.account.template" id="ri_tarjeta_de_credito_pagar">
             <field name="type">other</field>
             <field name="code">2140010</field>
             <field name="user_type" ref="account.data_account_type_payable"/>
-            <field name="name">Tarjetas de crédito</field>
+            <field name="name">Tarjeta de crédito a pagar xxxxx</field>
             <field name="parent_id" ref="ri_bancarias"/>
         </record>
 

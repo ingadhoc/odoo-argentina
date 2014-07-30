@@ -42,7 +42,7 @@
                 </form>
 
                 <field name="partner_id" position="attributes">
-                    <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,journal_id)</attribute>
+                    <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id, company_id, journal_id,context)</attribute>
                 </field>
 
                 <field name="number" position="attributes">
@@ -81,7 +81,7 @@
                 </form>
 
                 <field name="partner_id" position="attributes">
-                    <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,journal_id)</attribute>
+                    <attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,journal_id,context)</attribute>
                 </field>
 
                 <!-- <field name="supplier_invoice_number" position="replace"/> -->

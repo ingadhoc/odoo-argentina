@@ -82,7 +82,9 @@
                 </field>
 
                 <field name="supplier_invoice_number" position="attributes">
-                    <attribute name="attrs">{'invisible':[('reference','!=',False)],'required':[('reference','!=',False)]}</attribute>
+                    <!-- Comento esto, no se porque razon lo quise hacer invisible en algunos casos -->
+                    <!-- <attribute name="attrs">{'invisible':[('reference','!=',False)]}</attribute> -->
+                    <attribute name="required">True</attribute>
                 </field>
 
                 

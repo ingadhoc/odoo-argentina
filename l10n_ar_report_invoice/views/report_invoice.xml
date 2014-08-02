@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="argentian_header">
+    <!-- Multicompany -->
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <div class="header">
+        <div class="row">
+            <div class="col-xs-3">
+                <img t-if="report.print_logo =='company_logo'" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                <img t-if="report.print_logo =='specified_logo' and report.logo" t-att-src="'data:image/png;base64,%s' % report.logo" style="max-height: 45px;"/>
+            </div>
+            <div class="col-xs-9 text-right" style="margin-top:20px;" t-field="company.rml_header1"/>
+            <div t-if="print_header">
+                <div t-field="company.partner_id" 
+                        t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                        style="border-bottom: 1px solid black;"/>
+                <span t-if="company.phone">Tel: <span t-field="company.website"/></span>
+                <span t-field="company.email"/>
+                <span t-field="company.website"/>
+                <span t-if="company.responsability_id">IVA: <span t-field="company.responsability_id.name"/></span>
+            </div>
+
+            <div t-if="print_title and o.journal_document_class_id.afip_document_class_id">
+                <span t-field="o.journal_document_class_id.afip_document_class_id.report_name"/>
+            </div>
+
+            <div t-if="print_letter and o.journal_document_class_id.afip_document_class_id">
+                <span t-field="o.journal_document_class_id.afip_document_class_id.document_letter_id.name"/>
+            </div>
+            <div t-if="print_code and o.journal_document_class_id.afip_document_class_id">
+                Code N<span t-field="o.journal_document_class_id.afip_document_class_id.afip_code"/>
+            </div>
+            <span t-raw="legend"/>
+
+            <div t-if="print_number">
+                Nº: <span t-field="o.number"/>
+            </div>
+
+            <span t-field="o.date_invoice"/>
+            
+            <div t-if="print_header">
+                <span t-if="company.phone">Tel: <span t-field="company.website"/></span>
+                CUIT: <span t-field="company.partner_id.formated_vat"/>
+                Ing. Brutos: <span t-field="company.iibb"/>
+                Inicio de actividades: <span t-field="company.start_date"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-5 col-xs-offset-7">
+                <address t-field="o.partner_id.commercial_partner_id"
+                    t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}' />
+                <span t-field="o.partner_id.vat"/>
+            </div>
+            <div>
+                CUIT: <span t-field="o.partner_id.commercial_partner_id.formated_vat"/>
+                <span t-if="o.partner_id.commercial_partner_id.responsability_id">Cond IVA: <span t-field="o.partner_id.commercial_partner_id.responsability_id.name"/></span>
+            </div>
+            <div>
+                Phone: <span t-field="o.partner_id.commercial_partner_id.phone"/>
+                Email: <span t-field="o.partner_id.commercial_partner_id.email"/>
+                <span t-if="o.partner_id.parent_id">Contact: <span t-field="o.partner_id.name"/></span>                    
+            </div>
+            <div>
+                <span t-if="o.payment_term">Sale Condition: <span t-field="o.payment_term.name"/></span>
+                Maturities: 
+                <span t-if="print_commercial">Commercial: <span t-field="o.user_id.name"/></span>                    
+                Origin: <span t-field="o.origin"/>
+                <span t-if="o.partner_id.ref">Customer Code:<span  t-field="o.partner_id.ref"/></span>                   
+            </div>
+        </div>        
+    </div>
+</template>
+
+<template id="report_invoice_view_document">
+    <!-- <t t-call="report.external_layout"> -->
+        <t t-call="l10n_ar_report_invoice.argentian_header"/>
+        <style>
+        body
+        {
+        background-image:url('/l10n_ar_report_invoice/static/invoice_back.png');
+        <!-- background-color:#cccccc; -->
+        <!-- background-size:A4 portrait; -->
+        background-size: auto;
+        <!-- background-size:A4 landscape; -->
+        <!-- background-size:100% 100%; -->
+        <!-- background-size:80px 60px; -->
+        background-repeat:no-repeat; 
+        background-attachment:fixed;
+        background-position:center;                
+        }
+        </style>
+<!--         <style>
+        body
+        {
+        background-image:url(t-att-src="'data:image/png;base64,%s' % company.logo");
+        background-color:#cccccc;
+        }
+        </style> -->
+        <div class="page">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>VAT%</th>
+                        <th>List Price</th>
+                        <th groups="sale.group_discount_per_so_line">DIS%</th>
+                        <th groups="sale.group_discount_per_so_line">Net Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody class="invoice_tbody">
+                    <tr t-foreach="o.invoice_line" t-as="l">
+                        <!-- TODO add [0:108] -->
+                        <td><span t-field="l.name"/></td>
+                        <td>
+                            <span t-esc="', '.join(map(lambda x: x.name, l.invoice_line_tax_id))"/>
+                        </td>
+                        <!-- TODO price depending responsability -->
+                        <td>
+                            <span t-field="l.printed_price_unit"/>
+                            <!-- <span t-field="l.price_unit"/> -->
+                        </td>
+                        <td groups="sale.group_discount_per_so_line">
+                            <span t-field="l.discount"/>
+                        </td>
+                        <!-- TODO price depending responsability -->
+                        <td groups="sale.group_discount_per_so_line">
+                            <span t-field="l.printed_price_net"/>
+                            <!-- <span t-field="l.price_unit" t-field-options='{"widget": "monetary"}'/> -->
+                        </td>
+                        <td>
+                            <span t-field="l.quantity"/>
+                            <span t-field="l.uos_id" groups="product.group_uom"/>
+                        </td>
+                        <td>
+                            <span t-field="l.printed_price_subtotal"/>
+                            <!-- <span t-field="l.price_subtotal"  t-field-options='{"widget": "monetary"}'/> -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-xs-4 pull-right">
+                    <table class="table table-condensed">
+                        <tr class="border-black">
+                            <td><strong>Subtotal</strong></td>
+                            <td class="text-right">
+                                <span t-field="o.printed_amount_untaxed" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Taxes</td>
+                            <td class="text-right">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Tax</th>
+                                            <th class="text-right">Base</th>
+                                            <th class="text-right">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="o.printed_tax_ids" t-as="tax_line">
+                                            <td><span t-field="tax_line.tax_code_id.name"/></td>
+                                            <td class="text-right">
+                                                <span t-field="tax_line.base"
+                                                    t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="tax_line.amount"
+                                                    t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>                                
+                            </td>
+                        </tr>
+                         <span t-raw="to_word(o.amount_total)"/>
+                        <tr class="border-black">
+                            <td><strong>Total</strong></td>
+                            <td class="text-right">
+                                 <span t-field="o.amount_total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <p t-if="o.comment">
+                <strong>Comment:</strong>
+                <span t-field="o.comment"/>
+            </p>
+        </div>
+    <!-- </t> -->
+</template>
+
+<!-- Printed Invoices -->
+<template id="report_invoice_view">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'l10n_ar_report_invoice.report_invoice_view_document')"/>
+        </t>
+    </t>
+</template>
+
+<!-- Printed Debit/Credit Notes -->
+<template id="report_credit_debit_view">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'l10n_ar_report_invoice.report_invoice_view_document')"/>
+        </t>
+    </t>
+</template>
+
+<!-- Sended Invoices/Credi/Debit Notes -->
+<template id="account.report_invoice">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'l10n_ar_report_invoice.report_invoice_view_document')"/>
+        </t>
+    </t>
+</template>
+</data>
+</openerp>

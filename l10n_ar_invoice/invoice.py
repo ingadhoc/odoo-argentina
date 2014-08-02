@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from openerp import osv, models, fields, api, _
+from openerp.osv import fields as old_fields
 from openerp.exceptions import except_orm, Warning, RedirectWarning
 import openerp.addons.decimal_precision as dp
 
@@ -10,47 +11,42 @@ class account_invoice_line(models.Model):
     """
 
     _inherit = "account.invoice.line"
-    
-    @api.one
-    @api.depends('price_unit','quantity','discount','invoice_line_tax_id')
-    def _printed_prices(self):
-        tax_obj = self.env['account.tax']
-        cur_obj = self.env['res.currency']
+    def _printed_prices(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        tax_obj = self.pool['account.tax']
+        cur_obj = self.pool.get('res.currency')
 
-        _round = (lambda x: cur_obj.round(self.invoice_id.currency_id, x)) if self.invoice_id else (lambda x: x)
-        quantity = self.quantity
-        discount = self.discount
-        printed_price_unit = self.price_unit
-        printed_price_net = self.price_unit * (1-(discount or 0.0)/100.0)
-        printed_price_subtotal = printed_price_net * quantity
+        for line in self.browse(cr, uid, ids, context=context):
+            _round = (lambda x: cur_obj.round(cr, uid, line.invoice_id.currency_id, x)) if line.invoice_id else (lambda x: x)
+            quantity = line.quantity
+            discount = line.discount
+            printed_price_unit = line.price_unit
+            printed_price_net = line.price_unit * (1-(discount or 0.0)/100.0)
+            printed_price_subtotal = printed_price_net * quantity
 
-        afip_document_class_id = self.invoice_id.journal_document_class_id.afip_document_class_id
-        if afip_document_class_id and not afip_document_class_id.vat_discriminated:
-            vat_taxes = [x for x in self.invoice_line_tax_id if x.tax_code_id.vat_tax]
-            taxes = tax_obj.compute_all(
-                                        vat_taxes, printed_price_net, 1,
-                                        product=self.product_id,
-                                        partner=self.invoice_id.partner_id)
-            printed_price_unit = _round(taxes['total_included'] * (1+(discount or 0.0)/100.0))
-            printed_price_net = _round(taxes['total_included'])
-            printed_price_subtotal = _round(taxes['total_included'] * quantity)
-        
-        self.printed_price_unit = printed_price_unit
-        self.printed_price_net = printed_price_net
-        self.printed_price_subtotal = printed_price_subtotal
+            afip_document_class_id = line.invoice_id.journal_document_class_id.afip_document_class_id
+            if afip_document_class_id and not afip_document_class_id.vat_discriminated:
+                vat_taxes = [x for x in line.invoice_line_tax_id if x.tax_code_id.vat_tax]
+                taxes = tax_obj.compute_all(cr, uid,
+                                            vat_taxes, printed_price_net, 1,
+                                            product=line.product_id,
+                                            partner=line.invoice_id.partner_id)
+                printed_price_unit = _round(taxes['total_included'] * (1+(discount or 0.0)/100.0))
+                printed_price_net = _round(taxes['total_included'])
+                printed_price_subtotal = _round(taxes['total_included'] * quantity)
+            
+            res[line.id] = {
+                'printed_price_unit': printed_price_unit,
+                'printed_price_net': printed_price_net,
+                'printed_price_subtotal': printed_price_subtotal, 
+            }
+        return res
 
-    printed_price_unit = fields.Float(
-        compute='_printed_prices', 
-        digits_compute=dp.get_precision('Account'), 
-        string='Unit Price',)
-    printed_price_net = fields.Float(
-        compute='_printed_prices', 
-        digits_compute=dp.get_precision('Account'), 
-        string='Net Price',)
-    printed_price_subtotal = fields.Float(
-        compute='_printed_prices', 
-        digits_compute=dp.get_precision('Account'), 
-        string='Subtotal',)
+    _columns = {
+        'printed_price_unit': old_fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Unit Price', multi='printed',),
+        'printed_price_net': old_fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Net Price', multi='printed'),
+        'printed_price_subtotal': old_fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Subtotal', multi='printed'),
+    }    
 
 class account_invoice(models.Model):
     _inherit = "account.invoice"
@@ -66,19 +62,29 @@ class account_invoice(models.Model):
             print 'letter_ids', letter_ids
         self.available_document_letter_ids = letter_ids
 
-    @api.one
-    @api.depends('amount_untaxed','amount_total','tax_line','journal_document_class_id')
-    def _printed_prices(self):
-        printed_amount_untaxed = self.amount_untaxed
-        printed_tax_ids = [x.id for x in self.tax_line]
+    def _printed_prices(self, cr, uid, ids, name, args, context=None):
+        res = {}
 
-        afip_document_class_id = self.journal_document_class_id.afip_document_class_id
-        if afip_document_class_id and not afip_document_class_id.vat_discriminated:
-            printed_amount_untaxed = sum(line.printed_price_subtotal for line in self.invoice_line)
-            printed_tax_ids = [x.id for x in self.tax_line if not x.tax_code_id.vat_tax]
-        self.printed_amount_untaxed = printed_amount_untaxed
-        self.printed_tax_ids = printed_tax_ids
-        self.printed_amount_tax = self.amount_total - printed_amount_untaxed
+        for invoice in self.browse(cr, uid, ids, context=context):
+            printed_amount_untaxed = invoice.amount_untaxed
+            printed_tax_ids = [x.id for x in invoice.tax_line]
+
+            afip_document_class_id = invoice.journal_document_class_id.afip_document_class_id
+            if afip_document_class_id and not afip_document_class_id.vat_discriminated:
+                printed_amount_untaxed = sum(line.printed_price_subtotal for line in invoice.invoice_line)
+                printed_tax_ids = [x.id for x in invoice.tax_line if not x.tax_code_id.vat_tax]
+            res[invoice.id] = {
+                'printed_amount_untaxed': printed_amount_untaxed,
+                'printed_tax_ids': printed_tax_ids,
+                'printed_amount_tax': invoice.amount_total - printed_amount_untaxed,
+            }
+        return res
+
+    _columns = {
+        'printed_amount_tax': old_fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Tax', multi='printed',),
+        'printed_amount_untaxed': old_fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Subtotal', multi='printed',),
+        'printed_tax_ids': old_fields.function(_printed_prices, type='one2many', relation='account.invoice.tax', string='Tax', multi='printed'),
+    }        
 
     @api.multi
     def name_get(self):
@@ -109,18 +115,6 @@ class account_invoice(models.Model):
         'afip.document_letter', 
         compute='_get_available_document_letters', 
         string='Available Document Letters')
-    printed_amount_tax = fields.Float(
-        compute='_printed_prices', 
-        digits_compute=dp.get_precision('Account'), 
-        string='Tax',)
-    printed_amount_untaxed = fields.Float(
-        compute='_printed_prices', 
-        digits_compute=dp.get_precision('Account'), 
-        string='Subtotal',)
-    printed_tax_ids = fields.One2many(
-        'account.invoice.tax', 
-        compute='_printed_prices', 
-        string='Tax',)    
     supplier_invoice_number = fields.Char(
         copy=False)
     journal_document_class_id = fields.Many2one(

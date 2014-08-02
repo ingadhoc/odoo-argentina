@@ -2,22 +2,22 @@
 <openerp>
 <data>
 <template id="report_invoice_document" inherit_id="account.report_invoice_document" name="Argentina Invoice">
-        <span t-field="o.number" position="before">
+        <xpath expr="//span[@t-field='o.number']" position="replace">
             <span t-field="o.journal_document_class_id.afip_document_class_id.document_letter_id.name"/>
-        </span>    
-        <span t-field="l.price_unit" position="replace">  
+        </xpath>
+        <xpath expr="//span[@t-field='l.price_unit']" position="replace">
             <span t-field="l.printed_price_unit"/>  
-        </span>
-        <span t-field="l.price_subtotal" position="replace">  
+        </xpath>
+        <xpath expr="//span[@t-field='l.price_subtotal']" position="replace">
             <span t-field="l.printed_price_subtotal" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
-        </span>
-        <span t-field="o.amount_untaxed" position="replace">  
+        </xpath>
+        <xpath expr="//span[@t-field='o.amount_untaxed']" position="replace">
             <span t-field="o.printed_amount_untaxed" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
-        </span>
-        <span t-field="o.amount_tax" position="replace">  
+        </xpath>
+        <xpath expr="//span[@t-field='o.amount_tax']" position="replace">
             <span t-field="o.printed_amount_tax" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
-        </span>
-        <tr t-foreach="o.tax_line" position="replace">
+        </xpath>
+        <xpath expr="//tr[@t-foreach='o.tax_line']" position="replace">
             <tr t-foreach="o.printed_tax_ids" t-as="t">
                 <td><span t-field="t.name"/></td>
                 <td class="text-right">
@@ -29,7 +29,7 @@
                         t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
                 </td>
             </tr>
-        </tr>
+        </xpath>
 </template>
 </data>
 </openerp>

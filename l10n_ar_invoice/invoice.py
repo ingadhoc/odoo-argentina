@@ -275,14 +275,16 @@ class account_invoice(models.Model):
         if 'value' not in result: result['value'] = {}                
         journal_document_class_id = False
         if journal_id and partner_id:
-            journal_type = self.get_journal_type(cr, uid, type)
-            letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=company_id)
-            domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
-            journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
-            if journal_document_class_ids:
-                journal_document_class_id = journal_document_class_ids[0]
-            if 'domain' not in result: result['domain'] = {}          
-            result['domain']['journal_document_class_id'] = [('id', 'in', journal_document_class_ids)]
+            journal = self.pool['account.journal'].browse(cr, uid, journal_id, context=context)
+            if journal.use_documents:
+                journal_type = self.get_journal_type(cr, uid, type)
+                letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=company_id)
+                domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
+                journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
+                if journal_document_class_ids:
+                    journal_document_class_id = journal_document_class_ids[0]
+                if 'domain' not in result: result['domain'] = {}          
+                result['domain']['journal_document_class_id'] = [('id', 'in', journal_document_class_ids)]
         if 'value' not in result: result['value'] = {}          
         result['value']['journal_document_class_id'] = journal_document_class_id
         return result
@@ -293,7 +295,7 @@ class account_invoice(models.Model):
         if journal_id:
             journal = self.pool['account.journal'].browse(cr, uid, journal_id)
             result['value']['use_documents'] = journal.use_documents
-            if partner_id:
+            if partner_id and journal.use_documents:
                 journal_type = journal.type
                 letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=journal.company_id.id)
                 domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]

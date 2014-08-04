@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 <data>
+
+<template id="l10n_ar_report_invoice.html_container" inherit_id="report_extended.html_container" name="Extended Base Report">
+    <xpath expr="//head" position="inside">
+        <style type="text/css">
+            .other_info {
+                margin-top: 824px;
+            }
+        </style>
+    </xpath>
+</template>
+
 <template id="argentian_header">
     <!-- Multicompany -->
     <t t-if="o and 'company_id' in o">
@@ -81,30 +92,10 @@
 <template id="report_invoice_view_document">
     <!-- <t t-call="report.external_layout"> -->
         <t t-call="l10n_ar_report_invoice.argentian_header"/>
-        <style>
-        body
-        {
-        background-image:url('/l10n_ar_report_invoice/static/invoice_back.png');
-        <!-- background-color:#cccccc; -->
-        <!-- background-size:A4 portrait; -->
-        background-size: auto;
-        <!-- background-size:A4 landscape; -->
-        <!-- background-size:100% 100%; -->
-        <!-- background-size:80px 60px; -->
-        background-repeat:no-repeat; 
-        background-attachment:fixed;
-        background-position:center;                
-        }
-        </style>
-<!--         <style>
-        body
-        {
-        background-image:url(t-att-src="'data:image/png;base64,%s' % company.logo");
-        background-color:#cccccc;
-        }
-        </style> -->
+        
         <div class="page">
-            <table class="table table-condensed">
+                
+            <table class="table table-condensed other_info">
                 <thead>
                     <tr>
                         <th>Description</th>
@@ -198,6 +189,10 @@
                 <strong>Comment:</strong>
                 <span t-field="o.comment"/>
             </p>
+
+            <div class="background_image">
+                <img alt="" src="/l10n_ar_report_invoice/static/invoice_back.png"/>
+            </div>
         </div>
     <!-- </t> -->
 </template>

@@ -54,7 +54,7 @@
                       'view/invoice_view.xml',
                       'view/account_move_view.xml',
                       'view/config_view.xml',
-                      'view/report_invoice.xml',
+                      # 'view/report_invoice.xml',
                       'security/ir.model.access.csv',
                       ],
     'version': '2.7.243',

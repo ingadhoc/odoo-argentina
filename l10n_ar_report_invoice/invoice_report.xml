@@ -11,15 +11,15 @@
 
     <!-- Printed Invoice -->
         <report 
-            id="report_invoice"
+            id="action_report_invoice"
             string="Argentinian Invoice"
             model="account.invoice" 
             report_type="qweb-html"
-            file="l10n_ar_report_invoice.report_invoice_view"
-            name="l10n_ar_report_invoice.report_invoice_view"
+            file="l10n_ar_report_invoice.report_invoice"
+            name="l10n_ar_report_invoice.report_invoice"
         />
 
-        <record id="report_invoice" model="ir.actions.report.xml">
+        <record id="action_report_invoice" model="ir.actions.report.xml">
             <field name="print_logo">no_logo</field>
             <!-- <field name="logo" type="base64" file="l10n_ar_report_invoice/static/invoice_back.png"/> -->
             <field name="use_background_image" eval="False"/>
@@ -32,15 +32,15 @@
 
     <!-- Printed Debit/Credit Notes -->
         <report 
-            id="report_credit_debit"
+            id="action_report_credit_debit"
             string="Argentinian Credit/Debit Note"
             model="account.invoice" 
             report_type="qweb-html"
-            file="l10n_ar_report_invoice.report_credit_debit_view"
-            name="l10n_ar_report_invoice.report_credit_debit_view"
+            file="l10n_ar_report_invoice.report_credit_debit"
+            name="l10n_ar_report_invoice.report_credit_debit"
         />
 
-        <record id="report_credit_debit" model="ir.actions.report.xml">
+        <record id="action_report_credit_debit" model="ir.actions.report.xml">
             <field name="print_logo">no_logo</field>
             <!-- <field name="logo" type="base64" file="l10n_ar_report_invoice/static/invoice_back.png"/> -->
             <field name="use_background_image" eval="False"/>

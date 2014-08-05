@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Argentinian Like Invoice Report',
+    'name': 'Argentinian Like Receipt Report',
     'version': '1.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'summary': '',
     'description': """
-Argentinian Like Invoice Report
+Argentinian Like Receipt Report
 ===============================
     """,
     'author':  'Ingenieria ADHOC',
@@ -14,13 +14,12 @@ Argentinian Like Invoice Report
     'images': [
     ],
     'depends': [
-        'report_extended_account',
-        'l10n_ar_invoice',
+        'report_extended_voucher_receipt',
+        'account_check',
     ],
     'data': [
-        'invoice_report.xml',
-        # 'views/report_invoice.xml',
-        'views/invoice_temp.xml',
+        'receipt_report.xml',
+        'views/report_receipt.xml',
     ],
     'demo': [
     ],

@@ -2,6 +2,15 @@
 <openerp>
 <data>
 <template id="argentian_header" name="Argentinian Header">
+    <!-- Configurations -->
+    <t t-set="header_height" t-value="55"/>        
+    <t t-set="title_height" t-value="12"/>
+    <t t-set="page_info_height" t-value="30"/>
+    <t t-set="logo_height" t-value="25"/>
+    <t t-set="company_info_height" t-value="header_height - logo_height"/>
+    <t t-set="other_company_info_height" t-value="header_height - title_height - page_info_height"/>
+    <t t-set="partner_info_height" t-value="35"/>
+    
     <!-- Multicompany -->
     <t t-if="o and 'company_id' in o">
         <t t-set="company" t-value="o.company_id"/>
@@ -64,84 +73,23 @@ padding: 2mm;" t-raw="document_letter"/></h1></td></tr>
                 </div>
             </div>
         </div>
-    </div>
-</template>
-
-<template id="argentian_header2">
-    <!-- Multicompany -->
-    <t t-if="o and 'company_id' in o">
-        <t t-set="company" t-value="o.company_id"></t>
-    </t>
-    <t t-if="not o or not 'company_id' in o">
-        <t t-set="company" t-value="res_company"></t>
-    </t>
-
-    <div class="header">
-        <div class="row">
-            <div class="col-xs-3">
-                <img t-if="report.print_logo =='company_logo'" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
-                <img t-if="report.print_logo =='specified_logo' and report.logo" t-att-src="'data:image/png;base64,%s' % report.logo" style="max-height: 45px;"/>
+        <!-- Informacion del partner -->
+        <div class="row" t-att-style="row_border1 + 'min-height:%imm;' % (partner_info_height)">
+            <div class="col-xs-6">
+                Cliente: <strong><span t-field="o.partner_id.commercial_partner_id"/></strong><br/>
+                <div>Dirección: <strong><span t-field="o.partner_id.commercial_partner_id.contact_address"/></strong></div><br/>
+                Cond. I.V.A.: <strong><span t-field="o.partner_id.commercial_partner_id.responsability_id"/></strong><br/>
+                CUIT: <strong><span t-field="o.partner_id.commercial_partner_id.formated_vat"/></strong>
             </div>
-            <div class="col-xs-9 text-right" style="margin-top:20px;" t-field="company.rml_header1"/>
-            <div t-if="print_header">
-                <div t-field="company.partner_id" 
-                        t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
-                        style="border-bottom: 1px solid black;"/>
-                <span t-if="company.phone">Tel: <span t-field="company.website"/></span>
-                <span t-field="company.email"/>
-                <span t-field="company.website"/>
-                <span t-if="company.responsability_id">IVA: <span t-field="company.responsability_id.name"/></span>
-            </div>
-
-            <div t-if="print_title and o.journal_document_class_id.afip_document_class_id">
-                <span t-field="o.journal_document_class_id.afip_document_class_id.report_name"/>
-            </div>
-
-            <div t-if="print_letter and o.journal_document_class_id.afip_document_class_id">
-                <span t-field="o.journal_document_class_id.afip_document_class_id.document_letter_id.name"/>
-            </div>
-            <div t-if="print_code and o.journal_document_class_id.afip_document_class_id">
-                Code N<span t-field="o.journal_document_class_id.afip_document_class_id.afip_code"/>
-            </div>
-            <span t-raw="legend"/>
-
-            <div t-if="print_number">
-                Nº: <span t-field="o.number"/>
-            </div>
-
-            <span t-field="o.date_invoice"/>
-            
-            <div t-if="print_header">
-                <span t-if="company.phone">Tel: <span t-field="company.website"/></span>
-                CUIT: <span t-field="company.partner_id.formated_vat"/>
-                Ing. Brutos: <span t-field="company.iibb"/>
-                Inicio de actividades: <span t-field="company.start_date"/>
+            <div class="col-xs-6">
+                Teléfono: <strong><span t-field="o.partner_id.commercial_partner_id.phone"/></strong><br/>
+                Email: <strong><span t-field="o.partner_id.commercial_partner_id.email"/></strong><br/>
+                <t t-if="o.partner_id != o.partner_id.commercial_partner_id">Contacto: <b><span t-field="o.partner_id"/></b></t>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-5 col-xs-offset-7">
-                <address t-field="o.partner_id.commercial_partner_id"
-                    t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}' />
-                <span t-field="o.partner_id.vat"/>
-            </div>
-            <div>
-                CUIT: <span t-field="o.partner_id.commercial_partner_id.formated_vat"/>
-                <span t-if="o.partner_id.commercial_partner_id.responsability_id">Cond IVA: <span t-field="o.partner_id.commercial_partner_id.responsability_id.name"/></span>
-            </div>
-            <div>
-                Phone: <span t-field="o.partner_id.commercial_partner_id.phone"/>
-                Email: <span t-field="o.partner_id.commercial_partner_id.email"/>
-                <span t-if="o.partner_id.parent_id">Contact: <span t-field="o.partner_id.name"/></span>                    
-            </div>
-            <div>
-                <span t-if="o.payment_term">Sale Condition: <span t-field="o.payment_term.name"/></span>
-                Maturities: 
-                <span t-if="print_commercial">Commercial: <span t-field="o.user_id.name"/></span>                    
-                Origin: <span t-field="o.origin"/>
-                <span t-if="o.partner_id.ref">Customer Code:<span  t-field="o.partner_id.ref"/></span>                   
-            </div>
-        </div>        
+        <t t-raw="0"/>
     </div>
 </template>
+
 </data>
 </openerp>

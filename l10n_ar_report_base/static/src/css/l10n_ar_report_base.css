@@ -1,9 +1,16 @@
+/*esta clase es por si marcamos que no queremos bordes*/
 .table-no-border > thead > tr > th {
   border-bottom: 0 !important;
 }
+/*esta clase sobreescribe el borde por defecto por uno negro*/
 .table-ar-items > thead > tr > th {
   border-bottom: 1px solid;
 }
+/*Esto es para que no se separe el encabezado de la tabla del cuerpo que va a venir despues*/
+.table-ar-items {
+  margin-bottom:0;
+}
+/*aca seteamos todo en center por defecto y otros cambios*/
 .table-ar-items > thead > tr > th,
 .table-ar-items > tbody > tr > th,
 .table-ar-items > tfoot > tr > th,
@@ -14,10 +21,12 @@
   border-top: 0;
   text-align: center;
 }
+/*solo para la primer columna lo ponemos a la izquierda*/
 .table-ar-items th:first-child,
 .table-ar-items td:first-child {
   text-align: left; 
 }
+/*aca seteamos todo en center por defecto y otros cambios*/
 .table-ar-totals > thead > tr > th,
 .table-ar-totals > tbody > tr > th,
 .table-ar-totals > tfoot > tr > th,
@@ -28,14 +37,17 @@
   border-top: 0;
   text-align: center;
 }
+/*solo para la primer columna lo ponemos a la izquierda*/
 .table-ar-totals th:first-child,
 .table-ar-totals td:first-child {
   text-align: right; 
 }
+/*a la clase de tr 'totals' le ponemos fuente mas grande*/
 .table-ar-totals tr.totals > td,
 .table-ar-totals tr.totals > th {
   font-size: 1.1em;
 }
+/*a la clase de tr 'taxes' le ponemos fuente mas chic*/
 .table-ar-totals tr.taxes > td,
 .table-ar-totals tr.taxes > th {
   font-size: 0.8em;

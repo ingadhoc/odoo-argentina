@@ -3,23 +3,17 @@
     <data>
     <!-- Receipt -->
         <report 
-            id="action_report_receipt"
+            id="action_report_ar_receipt"
             string="Argentinian Receipt"
             model="account.voucher.receipt" 
             report_type="qweb-html"
-            file="l10n_ar_report_receipt.report_receipt"
-            name="l10n_ar_report_receipt.report_receipt"
+            file="l10n_ar_report_receipt.report_ar_receipt"
+            name="l10n_ar_report_receipt.report_ar_receipt"
         />
 
-        <record id="action_report_receipt" model="ir.actions.report.xml">
+        <record id="action_report_ar_receipt" model="ir.actions.report.xml">
             <field name="print_logo">no_logo</field>
-            <!-- <field name="logo" type="base64" file="l10n_ar_report_invoice/static/invoice_back.png"/> -->
-            <field name="use_background_image" eval="False"/>
-            <field name="background_image" type="base64" file="l10n_ar_report_invoice/static/invoice_back.png"/>
-            <field name="account_invoice_split_invoice" eval="False"/>
-            <field name="account_invoice_lines_to_split">20</field>
-            <field name="account_invoice_journal_ids" search="[('type','=','sale')]"/>
-            <!-- <field name="account_invoice_journal_ids" search="[('journal_subtype','=','invoice'),('type','=','sale')]"/> -->
+            <field name="paperformat_id" ref="l10n_ar_report_base.paperformat_argentinian_report"/>
         </record>
 
     </data>

@@ -2,22 +2,14 @@
 <openerp>
 <data>
 
-<template id="report_ar_sale_order_document">
-    
+<template id="report_ar_sale_order_document">    
     <!-- CONFIGURATIONS -->
-    <!-- TODO este vendria del reporte -->
-    <t t-set="header_height" t-value="55"/>        
     <t t-set="lines_height" t-value="138"/>
     <t t-set="footer_block_height" t-value="32"/>
-    <t t-set="title_height" t-value="12"/>
-    <t t-set="page_info_height" t-value="30"/>
-    <t t-set="logo_height" t-value="25"/>
-    <t t-set="partner_info_height" t-value="35"/>
     <t t-set="other_info_height" t-value="18"/>
 
-    <t t-set="company_info_height" t-value="header_height - logo_height"/>
-    <t t-set="other_company_info_height" t-value="header_height - title_height - page_info_height"/>
     <t t-set="row_border1" t-value="''"/>
+
 
     <!-- Seteamos clase de tabla sin border -->
     <t t-set="table_no_border" t-value="'table-no-border'"/>
@@ -26,57 +18,77 @@
         <t t-set="table_no_border" t-value="''"/>
         <!-- Toma el estilo de la tabla -->
         <t t-set="row_border1" t-value="'border:1px solid;'"/>
-    </t>
+    </t>    
 
-
-
-
+    <!-- Header Data  -->
     <t t-set="document_date" t-value="o.date_order"/>
     <t t-if="print_number">
         <t t-set="document_number" t-value="o.name"/>
-        <!-- TODO esto va para invoices -->
-        <!-- <t t-set="document_number" t-value="o.number"/> -->
     </t>
 
     <t t-if="print_code">
         <t t-set="afip_code" t-value="'Code xx'"/>
-        <!-- TODO esto va para invoices -->
-<!--         <t t-if="o.journal_document_class_id.afip_document_class_id">
-            <t set="afip_code" t-value="o.journal_document_class_id.afip_document_class_id.afip_code"/>
-        </t> -->
     </t>
 
     <t t-if="print_letter">
         <t t-set="document_letter" t-value="'X'"/>
-        <!-- TODO esto va para invoices -->
-<!--         <t t-if="o.journal_document_class_id.afip_document_class_id">
-            <t set="document_letter" t-value="o.journal_document_class_id.afip_document_class_id.document_letter_id.name"/>
-        </t> -->
     </t>
-
     <t t-if="print_title">
-        <!-- TODO agregar para sales orders -->
         <t t-set="document_title" t-value="'Presupuesto'"/>
-        <!-- TODO esto va para invoices -->
-<!--         <t t-if="o.journal_document_class_id">
-            <t t-set="document_title" t-value="o.journal_document_class_id.afip_document_class_id.report_name"/>
-        </t>
-        <t t-if="not o.journal_document_class_id">
-            <t t-set="document_title" t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Invoice</span>
-            <t t-set="document_title" t-if="o.type == 'out_invoice' and o.state == 'proforma2'">PRO-FORMA</span>
-            <t t-set="document_title" t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
-            <t t-set="document_title" t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
-            <t t-set="document_title" t-if="o.type == 'out_refund'">Refund</span>
-            <t t-set="document_title" t-if="o.type == 'in_refund'">Supplier Refund</span>
-            <t t-set="document_title" t-if="o.type == 'in_invoice'">Supplier Invoice</span>
-            <t t-set="document_title" t-field="o.number"/>
-        </t> -->
     </t>        
 
-    <t t-call="l10n_ar_report_base.argentian_header"/>
+    <t t-call="l10n_ar_report_base.argentian_header">
+        <div class="row" t-att-style="row_border1 + 'margin-top:1mm;min-height:%imm;' %(other_info_height)">
+            <div class="col-xs-6">
+                Cond. Venta:<strong><span t-field="o.payment_term"/></strong><br/>
+                Referencia:<strong><span t-field="o.client_order_ref"/></strong>
+            </div>
+            <div class="col-xs-6">
+                <t t-if="print_commercial">Comercial: <strong><span t-field="o.user_id.name"/></strong></t><br/>
+                Doc. Origen:<strong><span t-field="o.origin"/></strong>
+            </div>
+        </div>
+    </t>
 
     <div class="page">
-aaaaaaaaaaaa
+        <div class="row" t-att-style="row_border1 + 'margin-top:2mm;min-height:%imm;' %(lines_height)">
+            <table t-att-class="'table table-ar-items ' + table_no_border">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Imp.</th>
+                        <th>P. Lista</th>
+                        <th groups="sale.group_discount_per_so_line">%BON.</th>
+                        <th groups="sale.group_discount_per_so_line">P. Neto</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody class="invoice_tbody">
+                    <tr t-foreach="o.order_line" t-as="l">
+                        <td style="max-width:70mm"><span t-raw="l.name[0:108]"/></td>
+                        <td style="max-width:17mm;font-size:0.8em">
+                            <span t-esc="', '.join(map(lambda x: x.description, l.tax_id))"/>
+                        </td>
+                        <td>
+                            <span t-field="l.price_unit"/>
+                        </td>
+                        <td groups="sale.group_discount_per_so_line"><span t-field="l.discount"/></td>
+                        <td groups="sale.group_discount_per_so_line">
+                            <span t-field="l.price_net"/>
+                        </td>                        
+                        <td>
+                            <span t-field="l.product_uom_qty"/>
+                            <span t-field="l.product_uom"  groups="product.group_uom"/>
+                        </td>
+                        <td>
+                            <span t-field="l.price_subtotal" 
+                                t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>
 

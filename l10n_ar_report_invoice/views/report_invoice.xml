@@ -4,18 +4,10 @@
 
 <template id="report_ar_invoice_document">
     <!-- CONFIGURATIONS -->
-    <!-- TODO este vendria del reporte -->
-    <t t-set="header_height" t-value="55"/>        
     <t t-set="lines_height" t-value="138"/>
     <t t-set="footer_block_height" t-value="32"/>
-    <t t-set="title_height" t-value="12"/>
-    <t t-set="page_info_height" t-value="30"/>
-    <t t-set="logo_height" t-value="25"/>
-    <t t-set="partner_info_height" t-value="35"/>
     <t t-set="other_info_height" t-value="18"/>
 
-    <t t-set="company_info_height" t-value="header_height - logo_height"/>
-    <t t-set="other_company_info_height" t-value="header_height - title_height - page_info_height"/>
     <t t-set="row_border1" t-value="''"/>
 
     <!-- Seteamos clase de tabla sin border -->
@@ -26,88 +18,56 @@
         <!-- Toma el estilo de la tabla -->
         <t t-set="row_border1" t-value="'border:1px solid;'"/>
     </t>
+    
+    <!-- Header Data  -->
+    <t t-set="document_date" t-value="o.date_invoice"/>
+    <t t-if="print_number">
+        <t t-set="document_number" t-value="o.number"/>
+    </t>
 
-    <div class="header">
-        <div class="row">
-            <div class="col-xs-5">
-                <div t-att-style="'min-height: %imm;' % logo_height">
-                    <img t-if="report.print_logo =='company_logo'" t-att-src="'data:image/png;base64,%s' % company.logo" t-att-style="'max-height: %imm;' % logo_height"/>
-                    <img t-if="report.print_logo =='specified_logo' and report.logo" t-att-src="'data:image/png;base64,%s' % report.logo" t-att-style="'max-height: %imm;' % logo_height"/>
-                </div>
-                <div t-att-style="'min-height: %imm;' % company_info_height" t-if="print_header">
-                    <table>
-                        <tr><td><b><span t-field="company.partner_id"/></b></td></tr>
-                        <tr><td><span t-field="company.partner_id.street"/></td></tr>
-                        <tr><td>(<span t-field="company.partner_id.zip"/>) <span t-field="company.partner_id.city"/> - <span t-field="company.state_id"/> - <span t-field="company.country_id"/></td></tr>
-                        <tr><td>Tel. <span t-field="company.partner_id.phone"/></td></tr>
-                        <tr><td><b><span t-field="company.partner_id.email"/></b></td></tr>
-                        <tr><td><b><div t-field="company.website" style="border-bottom: 1px solid black;"/></b></td></tr>
-                        <tr><td><b><div t-field="company.responsability_id"/></b></td></tr>
-                    </table>
-                </div>
-            </div>
-            <div class="col-xs-2 text-center">
-                    <table style="text-align:center;margin: auto;margin-top:15mm">
-                        <tr><td t-if="print_letter and o.journal_document_class_id.afip_document_class_id"><h1><span style="border: 1px solid;
-    padding: 3mm;" t-field="o.journal_document_class_id.afip_document_class_id.document_letter_id.name"/></h1></td></tr>
-                        <tr><td t-if="print_code and o.journal_document_class_id.afip_document_class_id"><h5>Código N</h5><span t-field="o.journal_document_class_id.afip_document_class_id.afip_code"/></td></tr>
-                        <tr><td style="width: 22mm;"><span t-raw="legend"/></td></tr>
-                    </table>
-            </div>
-            <div class="col-xs-5">
-                <div t-att-style="'min-height: %imm;' % title_height">
-                    <table>
-                        <tr><td><h2>
-                            <t t-if="print_title">
-                                <t t-if="o.journal_document_class_id">
-                                    <span t-field="o.journal_document_class_id.afip_document_class_id.report_name"/>
-                                </t>
-                                <t t-if="not o.journal_document_class_id">
-                                    <span t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Invoice</span>
-                                    <span t-if="o.type == 'out_invoice' and o.state == 'proforma2'">PRO-FORMA</span>
-                                    <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
-                                    <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
-                                    <span t-if="o.type == 'out_refund'">Refund</span>
-                                    <span t-if="o.type == 'in_refund'">Supplier Refund</span>
-                                    <span t-if="o.type == 'in_invoice'">Supplier Invoice</span>
-                                    <span t-field="o.number"/>
-                                </t>
-                            </t>
-                        </h2></td></tr>
-                    </table>
-                </div>
-                <div t-att-style="'min-height: %imm;' % page_info_height">
-                    <table>
-                        <tr><td t-if="print_number">Nº: <span t-field="o.number"/><span t-field="o.number"/></td></tr>
-                        <tr><td>Fecha: <span t-field="o.date_invoice"/></td></tr>
-                        <tr><td t-if="print_numbering">Pagina <span class="page"/> de <span class="topage"/></td></tr>
-                    </table>
-                </div>
-                <div t-att-style="'min-height: %imm;' % other_company_info_height" t-if="print_header">
-                    <table>
-                        <tr><td>CUIT: <span t-field="company.partner_id.formated_vat"/></td></tr>
-                        <tr><td>Ing. Brutos: <span t-field="company.iibb"/></td></tr>
-                        <tr><td>Inicio de actividades: <span t-field="company.start_date"/></td></tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+    <t t-if="print_code">
+        <t t-if="o.journal_document_class_id.afip_document_class_id">
+            <t set="afip_code" t-value="o.journal_document_class_id.afip_document_class_id.afip_code"/>
+        </t>
+    </t>
 
-    <div class="page">
-        <div class="row" t-att-style="row_border1 + 'min-height:%imm;' % (partner_info_height)">
-            <div class="col-xs-6">
-                Cliente: <strong><span t-field="o.commercial_partner_id"/></strong><br/>
-                <div>Dirección: <strong><span t-field="o.commercial_partner_id.contact_address"/></strong></div><br/>
-                Cond. I.V.A.: <strong><span t-field="o.commercial_partner_id.responsability_id"/></strong><br/>
-                CUIT: <strong><span t-field="o.commercial_partner_id.formated_vat"/></strong>
-            </div>
-            <div class="col-xs-6">
-                Teléfono: <strong><span t-field="o.commercial_partner_id.phone"/></strong><br/>
-                Email: <strong><span t-field="o.commercial_partner_id.email"/></strong><br/>
-                <t t-if="o.partner_id != o.commercial_partner_id">Contacto: <b><span t-field="o.partner_id"/></b></t>
-            </div>
-        </div>
+    <t t-if="print_letter">
+        <t t-if="o.journal_document_class_id.afip_document_class_id">
+            <t set="document_letter" t-value="o.journal_document_class_id.afip_document_class_id.document_letter_id.name"/>
+        </t>
+    </t>
+
+    <t t-if="print_title">
+        <t t-if="o.journal_document_class_id">
+            <t t-set="document_title" t-value="o.journal_document_class_id.afip_document_class_id.report_name"/>
+        </t>
+        <t t-if="not o.journal_document_class_id">
+            <t t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">
+                <t t-set="document_title" t-value="'Invoice'"/>
+            </t>
+            <t t-if="o.type == 'out_invoice' and o.state == 'proforma2'">
+                <t t-set="document_title" t-value="'PRO-FORMA'"/>
+            </t>
+            <t t-if="o.type == 'out_invoice' and o.state == 'draft'">
+                <t t-set="document_title" t-value="'Draft Invoice'"/>
+            </t>
+            <t t-if="o.type == 'out_invoice' and o.state == 'cancel'">
+                <t t-set="document_title" t-value="'Cancelled Invoice'"/>
+            </t>
+            <t t-if="o.type == 'out_refund'">
+                <t t-set="document_title" t-value="'Refund'"/>
+            </t>
+            <t t-if="o.type == 'in_refund'">
+                <t t-set="document_title" t-value="'Supplier Refund'"/>
+            </t>
+            <t t-if="o.type == 'in_invoice'">
+                <t t-set="document_title" t-value="'Supplier Invoice'"/>
+            </t>
+        </t>
+    </t>        
+    
+    <!-- Call header -->
+    <t t-call="l10n_ar_report_base.argentian_header">
         <div class="row" t-att-style="row_border1 + 'margin-top:1mm;min-height:%imm;' %(other_info_height)">
             <div class="col-xs-6">
                 Cond. Venta:<strong><span t-field="o.payment_term"/></strong><br/>
@@ -123,7 +83,9 @@
                 Doc. Origen:<strong><span t-field="o.origin"/></strong>
             </div>
         </div>
-
+    </t>
+    
+    <div class="page">
         <div class="row" t-att-style="row_border1 + 'margin-top:2mm;min-height:%imm;' %(lines_height)">
             <table t-att-class="'table table-ar-items ' + table_no_border">
                 <thead>

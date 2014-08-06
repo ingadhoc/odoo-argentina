@@ -1,32 +1,32 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Voucher Receipts and Invoice Integration',
+    'name': 'Argentinian Like Quoatation Report',
     'version': '1.0',
-    'category': 'Accounting & Finance',
+    'category': 'Localization/Argentina',
     'sequence': 14,
     'summary': '',
     'description': """
-Receipt
-=======
-TODO
+Argentinian Like Quoatation Report
+==================================
     """,
     'author':  'Ingenieria ADHOC',
     'website': 'www.ingadhoc.com',
     'images': [
     ],
     'depends': [
-        'account_voucher_receipt',
-        'l10n_ar_invoice',
+        'report_extended_sale',
         'l10n_ar_report_base',
     ],
     'data': [
-        'views/receiptbook_view.xml',
+        'sale_report.xml',
+        'views/report_sale_order.xml',
     ],
     'demo': [
     ],
     'test': [
     ],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
     'application': False,
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

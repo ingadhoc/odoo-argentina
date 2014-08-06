@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<template id="report_ar_sale_order_document">
+    
+    <!-- CONFIGURATIONS -->
+    <!-- TODO este vendria del reporte -->
+    <t t-set="header_height" t-value="55"/>        
+    <t t-set="lines_height" t-value="138"/>
+    <t t-set="footer_block_height" t-value="32"/>
+    <t t-set="title_height" t-value="12"/>
+    <t t-set="page_info_height" t-value="30"/>
+    <t t-set="logo_height" t-value="25"/>
+    <t t-set="partner_info_height" t-value="35"/>
+    <t t-set="other_info_height" t-value="18"/>
+
+    <t t-set="company_info_height" t-value="header_height - logo_height"/>
+    <t t-set="other_company_info_height" t-value="header_height - title_height - page_info_height"/>
+    <t t-set="row_border1" t-value="''"/>
+
+    <!-- Seteamos clase de tabla sin border -->
+    <t t-set="table_no_border" t-value="'table-no-border'"/>
+    <t t-if="print_background">
+        <!-- Borramos clase de tabla sin border -->
+        <t t-set="table_no_border" t-value="''"/>
+        <!-- Toma el estilo de la tabla -->
+        <t t-set="row_border1" t-value="'border:1px solid;'"/>
+    </t>
+
+
+
+
+    <t t-set="document_date" t-value="o.date_order"/>
+    <t t-if="print_number">
+        <t t-set="document_number" t-value="o.name"/>
+        <!-- TODO esto va para invoices -->
+        <!-- <t t-set="document_number" t-value="o.number"/> -->
+    </t>
+
+    <t t-if="print_code">
+        <t t-set="afip_code" t-value="'Code xx'"/>
+        <!-- TODO esto va para invoices -->
+<!--         <t t-if="o.journal_document_class_id.afip_document_class_id">
+            <t set="afip_code" t-value="o.journal_document_class_id.afip_document_class_id.afip_code"/>
+        </t> -->
+    </t>
+
+    <t t-if="print_letter">
+        <t t-set="document_letter" t-value="'X'"/>
+        <!-- TODO esto va para invoices -->
+<!--         <t t-if="o.journal_document_class_id.afip_document_class_id">
+            <t set="document_letter" t-value="o.journal_document_class_id.afip_document_class_id.document_letter_id.name"/>
+        </t> -->
+    </t>
+
+    <t t-if="print_title">
+        <!-- TODO agregar para sales orders -->
+        <t t-set="document_title" t-value="'Presupuesto'"/>
+        <!-- TODO esto va para invoices -->
+<!--         <t t-if="o.journal_document_class_id">
+            <t t-set="document_title" t-value="o.journal_document_class_id.afip_document_class_id.report_name"/>
+        </t>
+        <t t-if="not o.journal_document_class_id">
+            <t t-set="document_title" t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Invoice</span>
+            <t t-set="document_title" t-if="o.type == 'out_invoice' and o.state == 'proforma2'">PRO-FORMA</span>
+            <t t-set="document_title" t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
+            <t t-set="document_title" t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
+            <t t-set="document_title" t-if="o.type == 'out_refund'">Refund</span>
+            <t t-set="document_title" t-if="o.type == 'in_refund'">Supplier Refund</span>
+            <t t-set="document_title" t-if="o.type == 'in_invoice'">Supplier Invoice</span>
+            <t t-set="document_title" t-field="o.number"/>
+        </t> -->
+    </t>        
+
+    <t t-call="l10n_ar_report_base.argentian_header"/>
+
+    <div class="page">
+aaaaaaaaaaaa
+    </div>
+</template>
+
+<!-- Printed Sale Order -->
+<template id="report_ar_sale_order">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'l10n_ar_report_sale.report_ar_sale_order_document')"/>
+        </t>
+    </t>
+</template>
+
+</data>
+</openerp>

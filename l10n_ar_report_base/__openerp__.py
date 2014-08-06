@@ -14,13 +14,12 @@ Argentinian Like Invoice Report
     'images': [
     ],
     'depends': [
-        'report_extended_account',
-        'l10n_ar_invoice',
-        'l10n_ar_report_base',
+        'report',
     ],
     'data': [
-        'invoice_report.xml',
-        'views/report_invoice.xml',
+        'report_paperformat.xml',
+        'report_layout_view.xml',
+        'view/report_ar_header.xml',
     ],
     'demo': [
     ],
@@ -28,6 +27,6 @@ Argentinian Like Invoice Report
     ],
     'installable': True,
     'auto_install': False,
-    'application': False,
+    'application': True,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

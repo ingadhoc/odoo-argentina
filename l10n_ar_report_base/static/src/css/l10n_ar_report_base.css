@@ -1,0 +1,42 @@
+.table-no-border > thead > tr > th {
+  border-bottom: 0 !important;
+}
+.table-ar-items > thead > tr > th {
+  border-bottom: 1px solid;
+}
+.table-ar-items > thead > tr > th,
+.table-ar-items > tbody > tr > th,
+.table-ar-items > tfoot > tr > th,
+.table-ar-items > thead > tr > td,
+.table-ar-items > tbody > tr > td,
+.table-ar-items > tfoot > tr > td {
+  padding: 5px;
+  border-top: 0;
+  text-align: center;
+}
+.table-ar-items th:first-child,
+.table-ar-items td:first-child {
+  text-align: left; 
+}
+.table-ar-totals > thead > tr > th,
+.table-ar-totals > tbody > tr > th,
+.table-ar-totals > tfoot > tr > th,
+.table-ar-totals > thead > tr > td,
+.table-ar-totals > tbody > tr > td,
+.table-ar-totals > tfoot > tr > td {
+  padding: 1px;
+  border-top: 0;
+  text-align: center;
+}
+.table-ar-totals th:first-child,
+.table-ar-totals td:first-child {
+  text-align: right; 
+}
+.table-ar-totals tr.totals > td,
+.table-ar-totals tr.totals > th {
+  font-size: 1.1em;
+}
+.table-ar-totals tr.taxes > td,
+.table-ar-totals tr.taxes > th {
+  font-size: 0.8em;
+}

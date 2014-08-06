@@ -2,216 +2,230 @@
 <openerp>
 <data>
 
-<template id="argentian_header">
-    <!-- Multicompany -->
-    <t t-if="o and 'company_id' in o">
-        <t t-set="company" t-value="o.company_id"></t>
-    </t>
-    <t t-if="not o or not 'company_id' in o">
-        <t t-set="company" t-value="res_company"></t>
+<template id="report_ar_invoice_document">
+    <!-- CONFIGURATIONS -->
+    <!-- TODO este vendria del reporte -->
+    <t t-set="header_height" t-value="55"/>        
+    <t t-set="lines_height" t-value="138"/>
+    <t t-set="footer_block_height" t-value="32"/>
+    <t t-set="title_height" t-value="12"/>
+    <t t-set="page_info_height" t-value="30"/>
+    <t t-set="logo_height" t-value="25"/>
+    <t t-set="partner_info_height" t-value="35"/>
+    <t t-set="other_info_height" t-value="18"/>
+
+    <t t-set="company_info_height" t-value="header_height - logo_height"/>
+    <t t-set="other_company_info_height" t-value="header_height - title_height - page_info_height"/>
+    <t t-set="row_border1" t-value="''"/>
+
+    <!-- Seteamos clase de tabla sin border -->
+    <t t-set="table_no_border" t-value="'table-no-border'"/>
+    <t t-if="print_background">
+        <!-- Borramos clase de tabla sin border -->
+        <t t-set="table_no_border" t-value="''"/>
+        <!-- Toma el estilo de la tabla -->
+        <t t-set="row_border1" t-value="'border:1px solid;'"/>
     </t>
 
     <div class="header">
         <div class="row">
-            <div class="col-xs-3">
-                <img t-if="report.print_logo =='company_logo'" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
-                <img t-if="report.print_logo =='specified_logo' and report.logo" t-att-src="'data:image/png;base64,%s' % report.logo" style="max-height: 45px;"/>
+            <div class="col-xs-5">
+                <div t-att-style="'min-height: %imm;' % logo_height">
+                    <img t-if="report.print_logo =='company_logo'" t-att-src="'data:image/png;base64,%s' % company.logo" t-att-style="'max-height: %imm;' % logo_height"/>
+                    <img t-if="report.print_logo =='specified_logo' and report.logo" t-att-src="'data:image/png;base64,%s' % report.logo" t-att-style="'max-height: %imm;' % logo_height"/>
+                </div>
+                <div t-att-style="'min-height: %imm;' % company_info_height" t-if="print_header">
+                    <table>
+                        <tr><td><b><span t-field="company.partner_id"/></b></td></tr>
+                        <tr><td><span t-field="company.partner_id.street"/></td></tr>
+                        <tr><td>(<span t-field="company.partner_id.zip"/>) <span t-field="company.partner_id.city"/> - <span t-field="company.state_id"/> - <span t-field="company.country_id"/></td></tr>
+                        <tr><td>Tel. <span t-field="company.partner_id.phone"/></td></tr>
+                        <tr><td><b><span t-field="company.partner_id.email"/></b></td></tr>
+                        <tr><td><b><div t-field="company.website" style="border-bottom: 1px solid black;"/></b></td></tr>
+                        <tr><td><b><div t-field="company.responsability_id"/></b></td></tr>
+                    </table>
+                </div>
             </div>
-            <div class="col-xs-9 text-right" style="margin-top:20px;" t-field="company.rml_header1"/>
-            <div t-if="print_header">
-                <div t-field="company.partner_id" 
-                        t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
-                        style="border-bottom: 1px solid black;"/>
-                <span t-if="company.phone">Tel: <span t-field="company.website"/></span>
-                <span t-field="company.email"/>
-                <span t-field="company.website"/>
-                <span t-if="company.responsability_id">IVA: <span t-field="company.responsability_id.name"/></span>
+            <div class="col-xs-2 text-center">
+                    <table style="text-align:center;margin: auto;margin-top:15mm">
+                        <tr><td t-if="print_letter and o.journal_document_class_id.afip_document_class_id"><h1><span style="border: 1px solid;
+    padding: 3mm;" t-field="o.journal_document_class_id.afip_document_class_id.document_letter_id.name"/></h1></td></tr>
+                        <tr><td t-if="print_code and o.journal_document_class_id.afip_document_class_id"><h5>Código N</h5><span t-field="o.journal_document_class_id.afip_document_class_id.afip_code"/></td></tr>
+                        <tr><td style="width: 22mm;"><span t-raw="legend"/></td></tr>
+                    </table>
             </div>
-
-            <div t-if="print_title and o.journal_document_class_id.afip_document_class_id">
-                <span t-field="o.journal_document_class_id.afip_document_class_id.report_name"/>
-            </div>
-
-            <div t-if="print_letter and o.journal_document_class_id.afip_document_class_id">
-                <span t-field="o.journal_document_class_id.afip_document_class_id.document_letter_id.name"/>
-            </div>
-            <div t-if="print_code and o.journal_document_class_id.afip_document_class_id">
-                Code N<span t-field="o.journal_document_class_id.afip_document_class_id.afip_code"/>
-            </div>
-            <span t-raw="legend"/>
-
-            <div t-if="print_number">
-                Nº: <span t-field="o.number"/>
-            </div>
-
-            <span t-field="o.date_invoice"/>
-            
-            <div t-if="print_header">
-                <span t-if="company.phone">Tel: <span t-field="company.website"/></span>
-                CUIT: <span t-field="company.partner_id.formated_vat"/>
-                Ing. Brutos: <span t-field="company.iibb"/>
-                Inicio de actividades: <span t-field="company.start_date"/>
+            <div class="col-xs-5">
+                <div t-att-style="'min-height: %imm;' % title_height">
+                    <table>
+                        <tr><td><h2>
+                            <t t-if="print_title">
+                                <t t-if="o.journal_document_class_id">
+                                    <span t-field="o.journal_document_class_id.afip_document_class_id.report_name"/>
+                                </t>
+                                <t t-if="not o.journal_document_class_id">
+                                    <span t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Invoice</span>
+                                    <span t-if="o.type == 'out_invoice' and o.state == 'proforma2'">PRO-FORMA</span>
+                                    <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
+                                    <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
+                                    <span t-if="o.type == 'out_refund'">Refund</span>
+                                    <span t-if="o.type == 'in_refund'">Supplier Refund</span>
+                                    <span t-if="o.type == 'in_invoice'">Supplier Invoice</span>
+                                    <span t-field="o.number"/>
+                                </t>
+                            </t>
+                        </h2></td></tr>
+                    </table>
+                </div>
+                <div t-att-style="'min-height: %imm;' % page_info_height">
+                    <table>
+                        <tr><td t-if="print_number">Nº: <span t-field="o.number"/><span t-field="o.number"/></td></tr>
+                        <tr><td>Fecha: <span t-field="o.date_invoice"/></td></tr>
+                        <tr><td t-if="print_numbering">Pagina <span class="page"/> de <span class="topage"/></td></tr>
+                    </table>
+                </div>
+                <div t-att-style="'min-height: %imm;' % other_company_info_height" t-if="print_header">
+                    <table>
+                        <tr><td>CUIT: <span t-field="company.partner_id.formated_vat"/></td></tr>
+                        <tr><td>Ing. Brutos: <span t-field="company.iibb"/></td></tr>
+                        <tr><td>Inicio de actividades: <span t-field="company.start_date"/></td></tr>
+                    </table>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-5 col-xs-offset-7">
-                <address t-field="o.partner_id.commercial_partner_id"
-                    t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}' />
-                <span t-field="o.partner_id.vat"/>
-            </div>
-            <div>
-                CUIT: <span t-field="o.partner_id.commercial_partner_id.formated_vat"/>
-                <span t-if="o.partner_id.commercial_partner_id.responsability_id">Cond IVA: <span t-field="o.partner_id.commercial_partner_id.responsability_id.name"/></span>
-            </div>
-            <div>
-                Phone: <span t-field="o.partner_id.commercial_partner_id.phone"/>
-                Email: <span t-field="o.partner_id.commercial_partner_id.email"/>
-                <span t-if="o.partner_id.parent_id">Contact: <span t-field="o.partner_id.name"/></span>                    
-            </div>
-            <div>
-                <span t-if="o.payment_term">Sale Condition: <span t-field="o.payment_term.name"/></span>
-                Maturities: 
-                <span t-if="print_commercial">Commercial: <span t-field="o.user_id.name"/></span>                    
-                Origin: <span t-field="o.origin"/>
-                <span t-if="o.partner_id.ref">Customer Code:<span  t-field="o.partner_id.ref"/></span>                   
-            </div>
-        </div>        
     </div>
-</template>
 
-<template id="report_invoice_document">
-    <!-- <t t-call="report.external_layout"> -->
-        <t t-call="l10n_ar_report_invoice.argentian_header"/>
-        
-        <div class="page">
-                
-            <table class="table table-condensed other_info">
+    <div class="page">
+        <div class="row" t-att-style="row_border1 + 'min-height:%imm;' % (partner_info_height)">
+            <div class="col-xs-6">
+                Cliente: <strong><span t-field="o.commercial_partner_id"/></strong><br/>
+                <div>Dirección: <strong><span t-field="o.commercial_partner_id.contact_address"/></strong></div><br/>
+                Cond. I.V.A.: <strong><span t-field="o.commercial_partner_id.responsability_id"/></strong><br/>
+                CUIT: <strong><span t-field="o.commercial_partner_id.formated_vat"/></strong>
+            </div>
+            <div class="col-xs-6">
+                Teléfono: <strong><span t-field="o.commercial_partner_id.phone"/></strong><br/>
+                Email: <strong><span t-field="o.commercial_partner_id.email"/></strong><br/>
+                <t t-if="o.partner_id != o.commercial_partner_id">Contacto: <b><span t-field="o.partner_id"/></b></t>
+            </div>
+        </div>
+        <div class="row" t-att-style="row_border1 + 'margin-top:1mm;min-height:%imm;' %(other_info_height)">
+            <div class="col-xs-6">
+                Cond. Venta:<strong><span t-field="o.payment_term"/></strong><br/>
+                Vencimientos:
+                <t t-foreach="o.move_id.line_id" t-as="ml">
+                    <span t-if="ml.date_maturity">
+                        <span t-field="ml.date_maturity"/> - <span t-field="ml.debit" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                    </span><br/>
+                </t>
+            </div>
+            <div class="col-xs-6">
+                <t t-if="print_commercial">Comercial: <strong><span t-field="o.user_id.name"/></strong></t><br/>
+                Doc. Origen:<strong><span t-field="o.origin"/></strong>
+            </div>
+        </div>
+
+        <div class="row" t-att-style="row_border1 + 'margin-top:2mm;min-height:%imm;' %(lines_height)">
+            <table t-att-class="'table table-ar-items ' + table_no_border">
                 <thead>
                     <tr>
                         <th>Description</th>
-                        <th>VAT%</th>
-                        <th>List Price</th>
-                        <th groups="sale.group_discount_per_so_line">DIS%</th>
-                        <th groups="sale.group_discount_per_so_line">Net Price</th>
-                        <th>Quantity</th>
+                        <th>Imp.</th>
+                        <th>P. Lista</th>
+                        <th groups="sale.group_discount_per_so_line">%BON.</th>
+                        <th groups="sale.group_discount_per_so_line">P. Neto</th>
+                        <th>Cantidad</th>
                         <th>Total</th>
                     </tr>
                 </thead>
                 <tbody class="invoice_tbody">
                     <tr t-foreach="o.invoice_line" t-as="l">
-                        <!-- TODO add [0:108] -->
-                        <td><span t-field="l.name"/></td>
-                        <td>
-                            <span t-esc="', '.join(map(lambda x: x.name, l.invoice_line_tax_id))"/>
+                        <td style="max-width:70mm"><span t-raw="l.name[0:108]"/></td>
+                        <td style="max-width:17mm;font-size:0.8em">
+                            <span t-esc="', '.join(map(lambda x: x.description, l.invoice_line_tax_id))"/>
                         </td>
-                        <!-- TODO price depending responsability -->
                         <td>
                             <span t-field="l.printed_price_unit"/>
-                            <!-- <span t-field="l.price_unit"/> -->
                         </td>
-                        <td groups="sale.group_discount_per_so_line">
-                            <span t-field="l.discount"/>
-                        </td>
-                        <!-- TODO price depending responsability -->
+                        <td groups="sale.group_discount_per_so_line"><span t-field="l.discount"/></td>
                         <td groups="sale.group_discount_per_so_line">
                             <span t-field="l.printed_price_net"/>
-                            <!-- <span t-field="l.price_unit" t-field-options='{"widget": "monetary"}'/> -->
-                        </td>
+                        </td>                        
                         <td>
                             <span t-field="l.quantity"/>
-                            <span t-field="l.uos_id" groups="product.group_uom"/>
+                            <span t-field="l.uos_id"  groups="product.group_uom"/>
                         </td>
                         <td>
-                            <span t-field="l.printed_price_subtotal"/>
-                            <!-- <span t-field="l.price_subtotal"  t-field-options='{"widget": "monetary"}'/> -->
+                            <span t-field="l.printed_price_subtotal" 
+                                t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
                         </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
 
-            <div class="row">
-                <div class="col-xs-4 pull-right">
-                    <table class="table table-condensed">
-                        <tr class="border-black">
-                            <td><strong>Subtotal</strong></td>
-                            <td class="text-right">
-                                <span t-field="o.printed_amount_untaxed" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Taxes</td>
-                            <td class="text-right">
-                                <table class="table table-condensed">
-                                    <thead>
-                                        <tr>
-                                            <th>Tax</th>
-                                            <th class="text-right">Base</th>
-                                            <th class="text-right">Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr t-foreach="o.printed_tax_ids" t-as="tax_line">
-                                            <td><span t-field="tax_line.tax_code_id.name"/></td>
-                                            <td class="text-right">
-                                                <span t-field="tax_line.base"
-                                                    t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
-                                            </td>
-                                            <td class="text-right">
-                                                <span t-field="tax_line.amount"
-                                                    t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>                                
-                            </td>
-                        </tr>
-                         <span t-raw="to_word(o.amount_total)"/>
-                        <tr class="border-black">
-                            <td><strong>Total</strong></td>
-                            <td class="text-right">
-                                 <span t-field="o.amount_total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <p t-if="o.comment">
-                <strong>Comment:</strong>
-                <span t-field="o.comment"/>
-            </p>
-
-            <div class="background_image">
-                <img alt="" src="/l10n_ar_report_invoice/static/invoice_back.png"/>
+    <div class="footer">
+        <div class="row" t-att-style="'min-height: %imm;' % footer_block_height">
+            <div class="col-xs-7" t-att-style="row_border1 + 'min-height: %imm;' % footer_block_height+ 'max-height: %imm;' % footer_block_height">
+                <p t-if="o.comment">
+                    <b>Comment:</b>
+                    <span t-field="o.comment"/>
+                </p> 
+            </div>                     
+            <div class="col-xs-5 pull-right" t-att-style="row_border1 + 'min-height: %imm;' % footer_block_height  + 'max-height: %imm;' % footer_block_height  + 'width:41%;'">
+                <table class="table table-ar-totals">
+                    <tr>                    
+                        <td><b>Subtotal</b></td>
+                        <td></td>
+                        <td><b><span t-field="o.printed_amount_untaxed" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/></b></td>
+                    </tr>
+                    <tr>
+                        <td><b>Impuestos</b></td>
+                        <td><b>Base</b></td>
+                        <td><b>Importe</b></td>
+                    </tr>
+                    <tr class="taxes" t-foreach="o.printed_tax_ids" t-as="tax_line">
+                        <td><span t-field="tax_line.tax_code_id.name"/></td>
+                        <td><span t-field="tax_line.base" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/></td>
+                        <td><span t-field="tax_line.amount" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/></td>
+                    </tr>
+                    <tr class="totals">
+                        <td><b>Total</b></td>
+                        <td></td>
+                        <td><b><span t-field="o.amount_total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/></b></td>
+                    </tr>
+                </table>
             </div>
         </div>
-    <!-- </t> -->
+    </div>
 </template>
 
 <!-- Printed Invoices -->
-<template id="report_invoice">
+<template id="report_ar_invoice">
     <t t-call="report.html_container">
         <t t-foreach="doc_ids" t-as="doc_id">
-            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'l10n_ar_report_invoice.report_invoice_document')"/>
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'l10n_ar_report_invoice.report_ar_invoice_document')"/>
         </t>
     </t>
 </template>
 
 <!-- Printed Debit/Credit Notes -->
-<template id="report_credit_debit">
+<template id="report_ar_credit_debit">
     <t t-call="report.html_container">
         <t t-foreach="doc_ids" t-as="doc_id">
-            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'l10n_ar_report_invoice.report_invoice_document')"/>
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'l10n_ar_report_invoice.report_ar_invoice_document')"/>
         </t>
     </t>
 </template>
 
 <!-- Sended Invoices/Credi/Debit Notes -->
-<template id="account.report_invoice">
+<!-- Change here if we want to change defult report -->
+<!-- <template id="account.report_invoice">
     <t t-call="report.html_container">
         <t t-foreach="doc_ids" t-as="doc_id">
-            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'l10n_ar_report_invoice.report_invoice_document')"/>
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'l10n_ar_report_invoice.report_ar_invoice_document')"/>
         </t>
     </t>
-</template>
+</template> -->
 </data>
 </openerp>

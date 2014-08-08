@@ -52,15 +52,19 @@ class account_invoice(models.Model):
     _inherit = "account.invoice"
 
     @api.one
-    @api.depends('journal_id')
+    @api.depends('journal_id','partner_id')
     def _get_available_document_letters(self):
         journal_type = self.get_journal_type(self.type)
         letter_ids = []
+        letter_id = False
         self.available_document_letter_ids = self.env['afip.document_letter']
         if self.use_documents:
             letter_ids = self.get_valid_document_letters(self.partner_id.id, journal_type, self.company_id.id)
-            print 'letter_ids', letter_ids
+            print 'letters', letter_ids
+            if letter_ids:
+                letter_id = letter_ids[0]
         self.available_document_letter_ids = letter_ids
+        self.journal_document_class_id = letter_id
 
     def _printed_prices(self, cr, uid, ids, name, args, context=None):
         res = {}
@@ -120,7 +124,9 @@ class account_invoice(models.Model):
     journal_document_class_id = fields.Many2one(
         'account.journal.afip_document_class', 
         'Documents Type', 
+        compute="_get_available_document_letters",
         readonly=True, 
+        store=True, 
         states={'draft':[('readonly',False)]})
     afip_document_class_id = fields.Many2one(
         'afip.document_class', 
@@ -264,46 +270,4 @@ class account_invoice(models.Model):
                 next_invoice_number = journal_document_class.sequence_id.number_next
         
         result['value'] = {'next_invoice_number':next_invoice_number}
-        return result
-    
-    def onchange_partner_id(self, cr, uid, ids, type, partner_id,
-                            date_invoice=False, payment_term=False,
-                            partner_bank_id=False, company_id=False, journal_id=False, context=None):
-        result = super(account_invoice,self).onchange_partner_id(cr, uid, ids,
-                       type, partner_id, date_invoice, payment_term,
-                       partner_bank_id, company_id, context=context)
-        if 'value' not in result: result['value'] = {}                
-        journal_document_class_id = False
-        if journal_id and partner_id:
-            journal = self.pool['account.journal'].browse(cr, uid, journal_id, context=context)
-            if journal.use_documents:
-                journal_type = self.get_journal_type(cr, uid, type)
-                letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=company_id)
-                domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
-                journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
-                if journal_document_class_ids:
-                    journal_document_class_id = journal_document_class_ids[0]
-                if 'domain' not in result: result['domain'] = {}          
-                result['domain']['journal_document_class_id'] = [('id', 'in', journal_document_class_ids)]
-        if 'value' not in result: result['value'] = {}          
-        result['value']['journal_document_class_id'] = journal_document_class_id
-        return result
-
-    def onchange_journal_id(self, cr, uid, ids, journal_id=False, partner_id=False, context=None):
-        result = super(account_invoice, self).onchange_journal_id(cr, uid, ids, journal_id, context)
-        journal_document_class_id = False        
-        if journal_id:
-            journal = self.pool['account.journal'].browse(cr, uid, journal_id)
-            result['value']['use_documents'] = journal.use_documents
-            if partner_id and journal.use_documents:
-                journal_type = journal.type
-                letter_ids = self.get_valid_document_letters(cr, uid, partner_id, journal_type, company_id=journal.company_id.id)
-                domain = ['|',('afip_document_class_id.document_letter_id','=',False),('afip_document_class_id.document_letter_id','in',letter_ids),('journal_id','=',journal_id)]
-                journal_document_class_ids = self.pool['account.journal.afip_document_class'].search(cr, uid, domain)
-                if journal_document_class_ids:
-                    journal_document_class_id = journal_document_class_ids[0]
-                if 'domain' not in result: result['domain'] = {}        
-                result['domain']['journal_document_class_id'] = [('id', 'in', journal_document_class_ids)]  
-        if 'value' not in result: result['value'] = {}          
-        result['value']['journal_document_class_id'] = journal_document_class_id
         return result

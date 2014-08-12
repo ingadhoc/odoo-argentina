@@ -28,6 +28,12 @@
             <field name="paperformat_id" ref="l10n_ar_report_base.paperformat_argentinian_report"/>
         </record>
 
+        <function
+            eval="[ref('action_report_ar_invoice')])"
+            id="update_lines_ar_invoice"
+            model="ir.actions.report.xml"
+            name="update_lines_that_apply"/>
+
     <!-- Printed Debit/Credit Notes -->
         <report 
             id="action_report_ar_credit_debit"

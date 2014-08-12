@@ -1,0 +1,155 @@
+<openerp>
+    <data noupdate="1">
+        <record model="report.configuration.default" id="report_configuration_defaults_1">
+            <field name="name">print_number</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report_configuration_defaults_2">
+            <field name="name">print_letter</field>
+            <field name="apply_to_all" eval="True"/>
+            <!-- <field name="apply_to_all" eval="False"/> -->
+            <!-- <field name="apply_to_model_id" ref="account.model_account_invoice"/>             -->
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record> 
+
+        <record model="report.configuration.default" id="report_configuration_defaults_3">
+            <field name="name">print_header</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report_configuration_defaults_4">
+            <field name="name">print_title</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report_configuration_defaults_5">
+            <field name="name">print_code</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report_configuration_defaults_6">
+            <field name="name">legend</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_text">Doc. no válido como factura</field>
+            <field name="value_type">text</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report_configuration_defaults_7">
+            <field name="name">print_commercial</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report_configuration_defaults_8">
+            <field name="name">print_numbering</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report_configuration_defaults_9">
+            <field name="name">print_background</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+        
+        <record model="report.configuration.default" id="report_configuration_defaults_10">
+            <field name="name">header_height</field>
+            <field name="apply_to_all" eval="True"/>
+            <!-- Uptadate because used in all reports -->
+            <field name="override_values" eval="True"/>
+            <field name="value_type">text</field>
+            <field name="value_text">55</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+        
+        <record model="report.configuration.default" id="report_configuration_defaults_11">
+            <field name="name">title_height</field>
+            <field name="apply_to_all" eval="True"/>
+            <!-- Uptadate because used in all reports -->
+            <field name="override_values" eval="True"/>
+            <field name="value_type">text</field>
+            <field name="value_text">12</field>
+            <field name="value_boolean" eval="True"/>
+        </record>       
+        
+        <record model="report.configuration.default" id="report_configuration_defaults_12">
+            <field name="name">page_info_height</field>
+            <field name="apply_to_all" eval="True"/>
+            <!-- Uptadate because used in all reports -->
+            <field name="override_values" eval="True"/>
+            <field name="value_type">text</field>
+            <field name="value_text">30</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report_configuration_defaults_13">
+            <field name="name">logo_height</field>
+            <field name="apply_to_all" eval="True"/>
+            <!-- Uptadate because used in all reports -->
+            <field name="override_values" eval="True"/>
+            <field name="value_type">text</field>
+            <field name="value_text">25</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+            
+        <record model="report.configuration.default" id="report_configuration_defaults_14">
+            <field name="name">partner_info_height</field>
+            <field name="apply_to_all" eval="True"/>
+            <!-- Uptadate because used in all reports -->
+            <field name="override_values" eval="True"/>
+            <field name="value_type">text</field>
+            <field name="value_text">35</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report_configuration_defaults_15">
+            <field name="name">lines_height</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">text</field>
+            <field name="value_text">138</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report_configuration_defaults_16">
+            <field name="name">footer_block_height</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">text</field>
+            <field name="value_text">32</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report_configuration_defaults_17">
+            <field name="name">other_info_height</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">text</field>
+            <field name="value_text">18</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+    </data>
+</openerp>

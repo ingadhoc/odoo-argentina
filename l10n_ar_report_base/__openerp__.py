@@ -14,12 +14,13 @@ Argentinian Like Invoice Report
     'images': [
     ],
     'depends': [
-        'report',
+        'report_extended',
     ],
     'data': [
         'report_paperformat.xml',
         'report_layout_view.xml',
         'view/report_ar_header.xml',
+        'data/report_configuration_defaults_data.xml',
     ],
     'demo': [
     ],

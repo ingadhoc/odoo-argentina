@@ -87,22 +87,22 @@
 								<label for="module_l10n_ar_report_invoice" />
 							</div>		
 							<div name='module_l10n_ar_report_remit'>
-								<field name="module_l10n_ar_report_remit"
+								<field name="module_l10n_ar_report_remit" readonly="1"
 									class="oe_inline" />
 								<label for="module_l10n_ar_report_remit" />
 							</div>		
 							<div name='module_l10n_ar_report_purchase'>
-								<field name="module_l10n_ar_report_purchase"
+								<field name="module_l10n_ar_report_purchase" readonly="1"
 									class="oe_inline" />
 								<label for="module_l10n_ar_report_purchase" />
 							</div>		
 							<div name='module_l10n_ar_report_sale'>
-								<field name="module_l10n_ar_report_sale"
+								<field name="module_l10n_ar_report_sale" readonly="1"
 									class="oe_inline" />
 								<label for="module_l10n_ar_report_sale" />
 							</div>		
 							<div name='module_l10n_ar_report_receipt'>
-								<field name="module_l10n_ar_report_receipt"
+								<field name="module_l10n_ar_report_receipt" readonly="1"
 									class="oe_inline" />
 								<label for="module_l10n_ar_report_receipt" />
 							</div>								

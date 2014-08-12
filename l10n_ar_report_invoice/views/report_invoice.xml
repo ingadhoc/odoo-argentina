@@ -4,9 +4,9 @@
 
 <template id="report_ar_invoice_document">
     <!-- CONFIGURATIONS -->
-    <t t-set="lines_height" t-value="138"/>
-    <t t-set="footer_block_height" t-value="32"/>
-    <t t-set="other_info_height" t-value="18"/>
+    <t t-set="lines_height" t-value="int(lines_height)"/>
+    <t t-set="footer_block_height" t-value="int(footer_block_height)"/>
+    <t t-set="other_info_height" t-value="int(other_info_height)"/>
 
     <t t-set="row_border1" t-value="''"/>
 
@@ -180,14 +180,5 @@
     </t>
 </template>
 
-<!-- Sended Invoices/Credi/Debit Notes -->
-<!-- Change here if we want to change defult report -->
-<!-- <template id="account.report_invoice">
-    <t t-call="report.html_container">
-        <t t-foreach="doc_ids" t-as="doc_id">
-            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'l10n_ar_report_invoice.report_ar_invoice_document')"/>
-        </t>
-    </t>
-</template> -->
 </data>
 </openerp>

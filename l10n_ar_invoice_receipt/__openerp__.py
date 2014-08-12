@@ -17,7 +17,6 @@ TODO
     'depends': [
         'account_voucher_receipt',
         'l10n_ar_invoice',
-        'l10n_ar_report_base',
     ],
     'data': [
         'views/receiptbook_view.xml',

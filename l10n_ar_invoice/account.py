@@ -43,9 +43,6 @@ class account_journal(osv.osv):
         'journal_document_class_ids': fields.one2many('account.journal.afip_document_class','journal_id','Documents Class',),
         'point_of_sale': fields.integer('Point of sale'),
         'use_documents': fields.boolean('Use Documents?'),
-        }
-        
-    _defaults = {
     }
 
 class res_currency(osv.osv):

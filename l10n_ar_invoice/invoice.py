@@ -124,13 +124,11 @@ class account_invoice(models.Model):
         if self.use_documents:
             letter_ids = self.get_valid_document_letters(
                 self.partner_id.id, journal_type, self.company_id.id)
-            print 'letters', letter_ids
             document_classes = self.env['account.journal.afip_document_class'].search([
                 ('journal_id','=',self.journal_id.id),
                 '|',('afip_document_class_id.document_letter_id','in',letter_ids),
                 ('afip_document_class_id.document_letter_id','=',False)])
 
-            print 'document_classes', document_classes.ids
             document_class_ids = document_classes.ids
             if document_class_ids:
                 document_class_id = document_class_ids[0]

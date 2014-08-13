@@ -37,7 +37,7 @@
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
                 <form>
-                    <field name="available_document_letter_ids" invisible="1"/>
+                    <field name="available_journal_document_class_ids" invisible="1"/>
                     <field name="use_documents" invisible="1"/>
                 </form>
 
@@ -49,7 +49,7 @@
                 </field>
 
                 <field name="journal_id" position="after">
-                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)]}" domain="[('journal_id','=',journal_id),('afip_document_class_id.document_letter_id','in',available_document_letter_ids[0][2])]" widget="selection" on_change="on_change_journal_document_class_id(journal_document_class_id)"/>
+                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)]}" domain="[('id','in',available_journal_document_class_ids[0][2])]" widget="selection" on_change="on_change_journal_document_class_id(journal_document_class_id)"/>
                 </field>    
 
                 <label string="Draft Refund " position="after">
@@ -66,7 +66,7 @@
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
                 <form>
-                    <field name="available_document_letter_ids" invisible="1"/>
+                    <field name="available_journal_document_class_ids" invisible="1"/>
                     <field name="use_documents" invisible="1"/>
                 </form>
 
@@ -87,7 +87,7 @@
                 </field>
                 
                 <field name="journal_id" position="after">
-                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)]}" domain="[('journal_id','=',journal_id),('afip_document_class_id.document_letter_id','in',available_document_letter_ids[0][2])]" widget="selection"/>
+                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)]}" domain="[('id','in',available_journal_document_class_ids[0][2])]" widget="selection"/>
                 </field>    
 
             </field>

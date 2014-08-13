@@ -43,6 +43,22 @@ class account_journal(osv.osv):
         'journal_document_class_ids': fields.one2many('account.journal.afip_document_class','journal_id','Documents Class',),
         'point_of_sale': fields.integer('Point of sale'),
         'use_documents': fields.boolean('Use Documents?'),
+        # Lo agregamos si lo necesitamos mas adelante
+        # 'product_types': fields.char('Product types',
+        #                              help='Only use products with this product types in this journals. '
+        #                              'Types must be a subset of adjust, consu and service separated by commas.'),
+    }
+
+    # def _check_product_types(self, cr, uid, ids, context=None):
+    #     for jc in self.browse(cr, uid, ids, context=context):
+    #         if jc.product_types:
+    #             types = set(jc.product_types.split(','))
+    #             res = types.issubset(['adjust','consu','service'])
+    #         else:
+    #             res = True
+    #     return res
+
+    # _constraints = [(_check_product_types, 'You provided an invalid list of product types. Must been separated by commas.', ['product_types'])]
 
     _defaults = {
     }

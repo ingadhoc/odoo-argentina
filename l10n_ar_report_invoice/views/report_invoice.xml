@@ -43,25 +43,31 @@
         </t>
         <t t-if="not o.journal_document_class_id">
             <t t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">
-                <t t-set="document_title" t-value="'Invoice'"/>
+                <t t-set="document_title" t-value="'Factura'"/>
+                <!-- <t t-set="document_title" t-value="'Invoice'"/> -->
             </t>
             <t t-if="o.type == 'out_invoice' and o.state == 'proforma2'">
                 <t t-set="document_title" t-value="'PRO-FORMA'"/>
             </t>
             <t t-if="o.type == 'out_invoice' and o.state == 'draft'">
-                <t t-set="document_title" t-value="'Draft Invoice'"/>
+                <t t-set="document_title" t-value="'Factura Borrador'"/>
+                <!-- <t t-set="document_title" t-value="'Draft Invoice'"/> -->
             </t>
             <t t-if="o.type == 'out_invoice' and o.state == 'cancel'">
-                <t t-set="document_title" t-value="'Cancelled Invoice'"/>
+                <t t-set="document_title" t-value="'Factura Cancelada'"/>
+                <!-- <t t-set="document_title" t-value="'Cancelled Invoice'"/> -->
             </t>
             <t t-if="o.type == 'out_refund'">
-                <t t-set="document_title" t-value="'Refund'"/>
+                <t t-set="document_title" t-value="'Nota de Crédito'"/>
+                <!-- <t t-set="document_title" t-value="'Refund'"/> -->
             </t>
             <t t-if="o.type == 'in_refund'">
-                <t t-set="document_title" t-value="'Supplier Refund'"/>
+                <t t-set="document_title" t-value="'Nota de Crédito'"/>
+                <!-- <t t-set="document_title" t-value="'Supplier Refund'"/> -->
             </t>
             <t t-if="o.type == 'in_invoice'">
-                <t t-set="document_title" t-value="'Supplier Invoice'"/>
+                <t t-set="document_title" t-value="'Factura'"/>
+                <!-- <t t-set="document_title" t-value="'Supplier Invoice'"/> -->
             </t>
         </t>
     </t>        

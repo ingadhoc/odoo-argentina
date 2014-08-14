@@ -180,5 +180,14 @@
     </t>
 </template>
 
+<!-- Other Invoice -->
+<template id="report_ar_other_invoice">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'l10n_ar_report_invoice.report_ar_invoice_document')"/>
+        </t>
+    </t>
+</template>
+
 </data>
 </openerp>

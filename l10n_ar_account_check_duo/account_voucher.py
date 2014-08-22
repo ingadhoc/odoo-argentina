@@ -48,6 +48,14 @@ class account_voucher(osv.osv):
         'use_third_check': False,
     }
     
+    def copy(self, cr, uid, id, default=None, context=None):
+        default = default or {}
+        default.update({
+            'issued_check_ids':[],
+            'third_check_receipt_ids':[],
+            'third_check_ids':[],
+        })
+        return super(account_voucher, self).copy(cr, uid, id, default, context)
 
     def _amount_checks(self, cr, uid, voucher_id):
         res = {}

@@ -13,9 +13,9 @@
                 <field name="partner_id" position="after">
                     <field name="afip_document_class_id"/>
                 </field>
-                <filter string="Journal" position="after">
+                <group string="Group By">
                     <filter string="Document Type" icon="terp-folder-orange" domain="[]" context="{'group_by':'afip_document_class_id'}"/>
-                </filter>
+                </group>
             </field>
         </record>
 

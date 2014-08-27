@@ -67,7 +67,7 @@ class l10n_ar_banks_wizard(osv.osv_memory):
                                                          state_translate[bank['state']]
                                                          if bank['state'] in state_translate 
                                                          else bank['state'])])[0],
-                    'update' : time.strftime('%Y-%m-%d'),
+                    'update_date' : time.strftime('%Y-%m-%d'),
             })
 	    Bancos_ids = banks_obj.search(cr, uid, [('name', '=', bank.get('name')),('country', '=', idargentina),('active', '=', False)])
 	    if not(Bancos_ids):

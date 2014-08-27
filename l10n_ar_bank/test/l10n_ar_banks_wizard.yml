@@ -7,6 +7,6 @@
     bid = banks_obj.search(cr, uid, [('name','=','Nuevo Banco De Entre Rios S.A.')])
     bank = banks_obj.browse(cr, uid, bid)[0]
     import datetime as dt
-    if (bank.update != dt.date.today().isoformat()):
+    if (bank.update_date != dt.date.today().isoformat()):
        raise RuntimeError('El banco no fue actualizado!')
     

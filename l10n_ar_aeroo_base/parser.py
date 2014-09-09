@@ -2,6 +2,7 @@ import logging
 logger = logging.getLogger('report_aeroo')
 
 from openerp.report import report_sxw
+import conversor
 from openerp.report.report_sxw import rml_parse
 
 class Parser(rml_parse):

@@ -80,7 +80,12 @@
 							<div name='module_l10n_ar_vat_reports'>
 								<field name="module_l10n_ar_vat_reports" readonly="1" class="oe_inline" />
 								<label for="module_l10n_ar_vat_reports" />
-							</div>
+							</div>							
+						</div>
+					</group>
+					<group>
+						<label for="id" string="Qweb Reports" />
+						<div name="reports">
 							<div name='module_l10n_ar_report_invoice'>
 								<field name="module_l10n_ar_report_invoice"
 									class="oe_inline" />
@@ -106,6 +111,36 @@
 									class="oe_inline" />
 								<label for="module_l10n_ar_report_receipt" />
 							</div>								
+						</div>
+					</group>
+					<group>
+						<label for="id" string="Aeroo Reports" />
+						<div name="reports">
+							<div name='module_l10n_ar_aeroo_invoice'>
+								<field name="module_l10n_ar_aeroo_invoice"
+									class="oe_inline" />
+								<label for="module_l10n_ar_aeroo_invoice" />
+							</div>
+							<div name='module_l10n_ar_aeroo_remit'>
+								<field name="module_l10n_ar_aeroo_remit" readonly="1"
+									class="oe_inline" />
+								<label for="module_l10n_ar_aeroo_remit" />
+							</div>		
+							<div name='module_l10n_ar_aeroo_purchase'>
+								<field name="module_l10n_ar_aeroo_purchase" readonly="1"
+									class="oe_inline" />
+								<label for="module_l10n_ar_aeroo_purchase" />
+							</div>		
+							<div name='module_l10n_ar_aeroo_sale'>
+								<field name="module_l10n_ar_aeroo_sale" readonly="1"
+									class="oe_inline" />
+								<label for="module_l10n_ar_aeroo_sale" />
+							</div>		
+							<div name='module_l10n_ar_aeroo_receipt'>
+								<field name="module_l10n_ar_aeroo_receipt" readonly="1"
+									class="oe_inline" />
+								<label for="module_l10n_ar_aeroo_receipt" />
+							</div>	
 						</div>
 					</group>
 

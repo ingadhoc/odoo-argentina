@@ -58,7 +58,18 @@ class argentinian_base_configuration(osv.osv_memory):
         'module_l10n_ar_report_sale': fields.boolean('Argentinian Like Sale Reports',
             help = """Installs the l10n_ar_report_sale module."""),
         'module_l10n_ar_report_receipt': fields.boolean('Argentinian Like Receipt Report',
-            help = """Installs the l10n_ar_report_receipt module."""),        
+            help = """Installs the l10n_ar_report_receipt module."""),       
+        # Aeroo reports
+        'module_l10n_ar_aeroo_invoice': fields.boolean('Argentinian Aeroo Like Invoice Report',
+            help = """Installs the module_l10n_ar_aeroo_invoice module."""),
+        'module_l10n_ar_aeroo_remit': fields.boolean('Argentinian Aeroo Like Remit Report',
+            help = """Installs the l10n_ar_aeroo_remit module."""),
+        'module_l10n_ar_aeroo_purchase': fields.boolean('Argentinian Aeroo Like Purchase Reports',
+            help = """Installs the l10n_ar_aeroo_purchase module."""),
+        'module_l10n_ar_aeroo_sale': fields.boolean('Argentinian Aeroo Like Sale Reports',
+            help = """Installs the l10n_ar_aeroo_sale module."""),
+        'module_l10n_ar_aeroo_receipt': fields.boolean('Argentinian Aeroo Like Receipt Report',
+            help = """Installs the l10n_ar_aeroo_receipt module."""),        
     }        
     
     _defaults = {

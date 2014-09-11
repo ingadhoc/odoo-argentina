@@ -25,6 +25,7 @@ import time
 _logger = logging.getLogger(__name__)
 from tools.translate import _
 from datetime import datetime
+from openerp import netsvc
 
 class account_checkbook(osv.osv):
     
@@ -93,6 +94,13 @@ class account_checkbook(osv.osv):
     def wkf_used(self, cr, uid, ids,context=None):
         self.write(cr, uid, ids, { 'state' : 'used' })
         return True
-   
-        
+
+    def action_cancel_draft(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'draft'})
+        wf_service = netsvc.LocalService("workflow")
+        for cb_id in ids:
+            wf_service.trg_delete(uid, 'account.checkbook', cb_id, cr)
+            wf_service.trg_create(uid, 'account.checkbook', cb_id, cr)
+        return True
+
 account_checkbook()

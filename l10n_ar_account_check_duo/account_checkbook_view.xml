@@ -38,6 +38,7 @@
                 <header string="Checkbooks">
                         <button name="wkf_active" string="In Use"  states="draft"/>
                         <button name="wkf_used" string="Used"  states="active"/>
+                        <button name="action_cancel_draft" string="To Draft" type="object" states="used"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,active,used" statusbar_colors='{"active":"blue"}'/>
                 </header>
                 <sheet string="Checkbooks">

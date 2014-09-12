@@ -61,7 +61,11 @@ class Parser(rml_parse):
         self.localcontext.update({
             'number_to_string': self.number_to_string,
             'partner_address': self.partner_address,
+            'net_price': self.net_price,
         })
+
+    def net_price(self, gross_price, discount):
+        return gross_price * (1-(discount / 100))
 
     def number_to_string(self, val):
         return conversor.to_word(val)

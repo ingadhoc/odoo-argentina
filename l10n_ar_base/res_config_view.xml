@@ -121,10 +121,10 @@
 									class="oe_inline" />
 								<label for="module_l10n_ar_aeroo_invoice" />
 							</div>
-							<div name='module_l10n_ar_aeroo_remit'>
-								<field name="module_l10n_ar_aeroo_remit"
+							<div name='module_l10n_ar_aeroo_stock'>
+								<field name="module_l10n_ar_aeroo_stock"
 									class="oe_inline" />
-								<label for="module_l10n_ar_aeroo_remit" />
+								<label for="module_l10n_ar_aeroo_stock" />
 							</div>		
 							<div name='module_l10n_ar_aeroo_purchase'>
 								<field name="module_l10n_ar_aeroo_purchase"

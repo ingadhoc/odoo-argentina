@@ -11,7 +11,7 @@ class Parser(rml_parse):
 
     def __init__(self, cr, uid, name, context):
         super(self.__class__, self).__init__(cr, uid, name, context)
-
+        print ' aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
         # We search for the report
         report_obj = self.pool['ir.actions.report.xml']
         report_id = report_obj.search(
@@ -41,15 +41,14 @@ class Parser(rml_parse):
                 self.localcontext.update({'company': active_object.company_id})
 
         # We add logo
+        print_logo = False
         if report.print_logo == 'specified_logo':
-            self.localcontext.update({'logo_report': report.logo})
+            print_logo = report.logo
         elif report.print_logo == 'company_logo':
             if active_object.company_id.logo:
-                self.localcontext.update(
-                    {'logo_report': active_object.company_id.logo})
-        else:
-            self.localcontext.update({'logo_report': False})
+                print_logo = active_object.company_id.logo
 
+        self.localcontext.update({'logo_report': print_logo})
         # We add background_image
         self.localcontext.update(
             {'use_background_image': report.use_background_image})

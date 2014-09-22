@@ -91,10 +91,10 @@
 									class="oe_inline" />
 								<label for="module_l10n_ar_report_invoice" />
 							</div>		
-							<div name='module_l10n_ar_report_remit'>
-								<field name="module_l10n_ar_report_remit" readonly="1"
+							<div name='module_l10n_ar_report_stock'>
+								<field name="module_l10n_ar_report_stock" readonly="1"
 									class="oe_inline" />
-								<label for="module_l10n_ar_report_remit" />
+								<label for="module_l10n_ar_report_stock" />
 							</div>		
 							<div name='module_l10n_ar_report_purchase'>
 								<field name="module_l10n_ar_report_purchase" readonly="1"

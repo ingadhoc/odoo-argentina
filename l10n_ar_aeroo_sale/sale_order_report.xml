@@ -5,6 +5,7 @@
             <field name="name">Argentinian Aeroo Sale Order</field>
             <field name="type">ir.actions.report.xml</field>
             <field name="model">sale.order</field>
+            <field name="sequence" eval="7"/>            
             <field name="report_name">aeroo_report_ar_sale_order</field>
             <field name="report_type">aeroo</field>
             <field name="in_format">oo-odt</field>

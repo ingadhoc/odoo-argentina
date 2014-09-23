@@ -1,0 +1,60 @@
+<openerp>
+    <data noupdate="1">
+        <record model="report.configuration.default" id="report_configuration_defaults_print_warranty">
+            <field name="name">print_warranty</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="stock.model_stock_picking"/>            
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="False"/>
+        </record> 
+        <record model="report.configuration.default" id="report_configuration_defaults_print_serial_number">
+            <field name="name">print_serial_number</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="stock.model_stock_picking"/>            
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="False"/>
+        </record>  
+        <record model="report.configuration.default" id="report_configuration_defaults_print_lot_life_date">
+            <field name="name">print_lot_life_date</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="stock.model_stock_picking"/>            
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="False"/>
+        </record>   
+        <record model="report.configuration.default" id="report_configuration_defaults_use_stock_picking_print_sequence">
+            <field name="name">use_stock_picking_print_sequence</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="stock.model_stock_picking"/>            
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="False"/>
+        </record>    
+        <record model="report.configuration.default" id="report_configuration_defaults_use_stock_picking_print_sequence">
+            <field name="name">use_stock_picking_print_sequence</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="stock.model_stock_picking"/>            
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="False"/>
+        </record>
+        <record model="report.configuration.default" id="report_configuration_defaults_picking_title">
+            <field name="name">picking_title</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="stock.model_stock_picking"/>            
+            <field name="override_values" eval="False"/>
+            <field name="value_type">text</field>
+            <field name="value_text">ORDEN DE ENTREGA</field>
+        </record> 
+        <record model="report.configuration.default" id="report_configuration_defaults_remit_title">
+            <field name="name">remit_title</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="stock.model_stock_picking"/>            
+            <field name="override_values" eval="False"/>
+            <field name="value_type">text</field>
+            <field name="value_text">REMITO</field>
+        </record> 
+    </data>
+</openerp>

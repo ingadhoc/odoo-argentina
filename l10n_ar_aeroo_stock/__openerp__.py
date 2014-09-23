@@ -16,8 +16,10 @@ Argentinian Like Stock Picking Aeroo Report
     'depends': [
         'report_extended_stock',
         'l10n_ar_aeroo_base',
+        'delivery_extension',
     ],
     'data': [
+        'report_configuration_defaults_data.xml',
         'report.xml',
     ],
     'demo': [

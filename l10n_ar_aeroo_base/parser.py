@@ -11,7 +11,7 @@ class Parser(rml_parse):
 
     def __init__(self, cr, uid, name, context):
         super(self.__class__, self).__init__(cr, uid, name, context)
-        print ' aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
         # We search for the report
         report_obj = self.pool['ir.actions.report.xml']
         report_id = report_obj.search(
@@ -32,21 +32,32 @@ class Parser(rml_parse):
         # We add the report
         self.localcontext.update({'report': report})
 
+        active_object = False
+        company = False
         # We add the company of the active object
         if 'active_model' in context and 'active_id' in context:
             active_model_obj = self.pool.get(context['active_model'])
             active_object = active_model_obj.browse(
                 cr, uid, context['active_id'], context=context)
             if hasattr(active_object, 'company_id') and active_object.company_id:
-                self.localcontext.update({'company': active_object.company_id})
+                company = active_object.company_id
 
+        if not company:
+            company = self.pool['res.users'].browse(cr, uid, uid, context).company_id
+
+        self.localcontext.update({'company': company})
+
+        print 'contextcontextcontext', context
+        print 'active_model_obj', active_model_obj
+        # print 'active_model_obj', active_model_obj.name
+        
         # We add logo
         print_logo = False
         if report.print_logo == 'specified_logo':
             print_logo = report.logo
         elif report.print_logo == 'company_logo':
-            if active_object.company_id.logo:
-                print_logo = active_object.company_id.logo
+            if company.logo:
+                print_logo = company.logo
 
         self.localcontext.update({'logo_report': print_logo})
         # We add background_image
@@ -62,6 +73,7 @@ class Parser(rml_parse):
             'number_to_string': self.number_to_string,
             'partner_address': self.partner_address,
             'net_price': self.net_price,
+            'context': context,
         })
 
     def net_price(self, gross_price, discount):

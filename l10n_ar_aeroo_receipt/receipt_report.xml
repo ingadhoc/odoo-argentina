@@ -6,6 +6,7 @@
             <field name="type">ir.actions.report.xml</field>
             <field name="model">account.voucher.receipt</field>
             <field name="report_name">aeroo_report_ar_receipt</field>
+            <field name="sequence" eval="7"/>  
             <field name="report_type">aeroo</field>
             <field name="in_format">oo-odt</field>
             <field name="parser_loc">l10n_ar_aeroo_base/parser.py</field>

@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_wsafip_connection_manager","wsafip.connection.manager","model_wsafip_connection","group_wsafip_admin",1,1,1,1
+"access_wsafip_connection_user","wsafip.connection.user","model_wsafip_connection","group_wsafip_user",1,0,0,0
+"access_wsafip_server_manager","wsafip.server.manager","model_wsafip_server","group_wsafip_admin",1,1,1,1
+"access_wsafip_server_user","wsafip.server.user","model_wsafip_server","group_wsafip_user",1,0,0,0

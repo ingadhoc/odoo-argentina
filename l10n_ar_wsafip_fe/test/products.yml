@@ -1,0 +1,46 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+# Copyright (C) 2012 OpenERP - Team de Localización Argentina.
+# https://launchpad.net/~openerp-l10n-ar-localization
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+# 
+# Los siguientes productos son necesarios para calcular correctamente los
+# impuestos en las facturas.
+#
+#-----------------------------------------------------------------------------
+- Create product with IVA 0%
+- !record {model: product.product, id: prod_iva0 }:
+    name: Producto IVA 0%
+    taxes_id: !ref {model: account.tax, search: "[('name','=','01003000:V')]"}
+
+- Create product with IVA 10.5%
+- !record {model: product.product, id: prod_iva10 }:
+    name: Producto IVA 10.5%
+    taxes_id: !ref {model: account.tax, search: "[('name','=','01003004:V')]"}
+
+- Create product with IVA 21%
+- !record {model: product.product, id: prod_iva21 }:
+    name: Producto IVA 21%
+    taxes_id: !ref {model: account.tax, search: "[('name','=','01003005:V')]"}
+
+- Create product with IVA 27%
+- !record {model: product.product, id: prod_iva27 }:
+    name: Producto IVA 27%
+    taxes_id: !ref {model: account.tax, search: "[('name','=','01003006:V')]"}
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

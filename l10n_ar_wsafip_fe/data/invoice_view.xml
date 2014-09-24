@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (C), 2012, OpenERP - Team de Localización Argentina.
+ https://launchpad.net/~openerp-l10n-ar-localization
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<openerp>
+    <data> 
+        <record id="view_invoice_form" model="ir.ui.view">
+            <field name="model">account.invoice</field>
+            <field name="name">account.invoice.afip.form</field>
+            <field name="inherit_id" ref="account.invoice_form" />
+            <field name="arch" type="xml">
+                <field name="invoice_line" position="replace">
+                    <field context="{'partner_id': partner_id, 'price_type': context.get('price_type') or False, 'type': type}" name="invoice_line" on_change="onchange_invoice_line(invoice_line)">
+                        <tree string="Invoice lines" editable="bottom">
+                            <field name="product_id"
+                                on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.currency_id, context, parent.company_id)"/>
+                            <field name="name"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="account_id" groups="account.group_account_user"
+                                domain="[('company_id', '=', parent.company_id), ('journal_id', '=', parent.journal_id), ('type', '=', 'other')]"
+                                on_change="onchange_account_id(product_id, parent.partner_id, parent.type, parent.fiscal_position,account_id)"/>
+                            <field name="account_analytic_id" groups="analytic.group_analytic_accounting"
+                                domain="[('type','!=','view'), ('company_id', '=', parent.company_id)]"/>
+                            <field name="quantity"/>
+                            <field name="uos_id" groups="product.group_uom"
+                                on_change="uos_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.currency_id, context, parent.company_id)"/>
+                            <field name="price_unit"/>
+                            <field name="discount" groups="sale.group_discount_per_so_line"/>
+                            <field name="invoice_line_tax_id" widget="many2many_tags" context="{'type':parent.type}"
+                                domain="[('parent_id','=',False),('company_id', '=', parent.company_id)]"/>
+                            <field name="price_subtotal"/>
+                        </tree>
+                    </field>
+                </field>
+ 
+                <notebook position="before">
+                    <field name='afip_concept' invisible="1"/>
+                    <group col="4" attrs="{'invisible':[('afip_concept','not in',['2','3'])]}">
+                        <field name='afip_service_start' attrs="{'required':[('afip_concept','in',['2','3'])]}"/>
+                        <field name='afip_service_end' attrs="{'required':[('afip_concept','in',['2','3'])]}"/>
+                    </group>
+                </notebook>
+                <field name="move_id" position="after">
+                    <field name='afip_batch_number' invisible="1" readonly="1"/>
+                    <field name='afip_cae' readonly="1"/>
+                    <field name='afip_cae_due' readonly="1"/>
+                    <field name='afip_error_id' readonly="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
+     -->

@@ -15,6 +15,22 @@
             <field name="override_values" eval="False"/>
             <field name="value_type">boolean</field>
             <field name="value_boolean" eval="False"/>
+        </record>
+        <record model="report.configuration.default" id="report_configuration_defaults_draft_title">
+            <field name="name">draft_title</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="sale.model_sale_order"/>            
+            <field name="override_values" eval="False"/>
+            <field name="value_type">text</field>
+            <field name="value_text">PRESUPUESTO</field>
+        </record> 
+        <record model="report.configuration.default" id="report_configuration_defaults_progress_title">
+            <field name="name">progress_title</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="sale.model_sale_order"/>            
+            <field name="override_values" eval="False"/>
+            <field name="value_type">text</field>
+            <field name="value_text">ORDEN DE VENTA</field>
         </record> 
     </data>
 </openerp>

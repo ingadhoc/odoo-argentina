@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <record id="action_aeroo_report_ar_receipt" model="ir.actions.report.xml">
-            <field name="name">Argentinian Aeroo Receipt</field>
+        <record id="action_aeroo_report_ar_stock_picking" model="ir.actions.report.xml">
+            <field name="name">Argentinian Aeroo Picking Order</field>
             <field name="type">ir.actions.report.xml</field>
-            <field name="model">account.voucher.receipt</field>
-            <field name="report_name">aeroo_report_ar_receipt</field>
-            <field name="sequence" eval="7"/>  
+            <field name="model">stock.picking</field>
+            <field name="sequence" eval="7"/>
+            <field name="report_name">aeroo_report_ar_picking</field>
             <field name="report_type">aeroo</field>
             <field name="in_format">oo-odt</field>
             <field name="parser_loc">l10n_ar_aeroo_base/parser.py</field>
             <field name="parser_state">loc</field>
-            <field name="report_rml">l10n_ar_aeroo_receipt/receipt.odt</field>
+            <field name="report_rml">l10n_ar_aeroo_stock/stock_picking.odt</field>
             <field name="tml_source">file</field>
             <field name="print_logo">company_logo</field> <!-- Or 'company_logo' or ''  -->
-            <field name="background_image" type="base64" file="l10n_ar_aeroo_receipt/receipt.png"/>
+            <field name="background_image" type="base64" file="l10n_ar_aeroo_stock/stock_picking.png"/>
             <field name="use_background_image" eval="True"/>
+            <field name="stock_report_type">remit</field>
         </record>
 
     </data>
@@ -23,7 +24,7 @@
     <data noupdate="1">
         <!-- Iniciamos los key values sin update-->
         <function
-            eval="([ref('action_aeroo_report_ar_receipt')])"
+            eval="([ref('action_aeroo_report_ar_stock_picking')])"
             id="update_lines_ar_receipt"
             model="ir.actions.report.xml"
             name="update_lines_that_apply"/>    

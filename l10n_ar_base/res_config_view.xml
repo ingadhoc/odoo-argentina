@@ -91,10 +91,10 @@
 									class="oe_inline" />
 								<label for="module_l10n_ar_report_invoice" />
 							</div>		
-							<div name='module_l10n_ar_report_remit'>
-								<field name="module_l10n_ar_report_remit" readonly="1"
+							<div name='module_l10n_ar_report_stock'>
+								<field name="module_l10n_ar_report_stock" readonly="1"
 									class="oe_inline" />
-								<label for="module_l10n_ar_report_remit" />
+								<label for="module_l10n_ar_report_stock" />
 							</div>		
 							<div name='module_l10n_ar_report_purchase'>
 								<field name="module_l10n_ar_report_purchase" readonly="1"
@@ -121,23 +121,23 @@
 									class="oe_inline" />
 								<label for="module_l10n_ar_aeroo_invoice" />
 							</div>
-							<div name='module_l10n_ar_aeroo_remit'>
-								<field name="module_l10n_ar_aeroo_remit" readonly="1"
+							<div name='module_l10n_ar_aeroo_stock'>
+								<field name="module_l10n_ar_aeroo_stock"
 									class="oe_inline" />
-								<label for="module_l10n_ar_aeroo_remit" />
+								<label for="module_l10n_ar_aeroo_stock" />
 							</div>		
 							<div name='module_l10n_ar_aeroo_purchase'>
-								<field name="module_l10n_ar_aeroo_purchase" readonly="1"
+								<field name="module_l10n_ar_aeroo_purchase"
 									class="oe_inline" />
 								<label for="module_l10n_ar_aeroo_purchase" />
 							</div>		
 							<div name='module_l10n_ar_aeroo_sale'>
-								<field name="module_l10n_ar_aeroo_sale" readonly="1"
+								<field name="module_l10n_ar_aeroo_sale"
 									class="oe_inline" />
 								<label for="module_l10n_ar_aeroo_sale" />
 							</div>		
 							<div name='module_l10n_ar_aeroo_receipt'>
-								<field name="module_l10n_ar_aeroo_receipt" readonly="1"
+								<field name="module_l10n_ar_aeroo_receipt"
 									class="oe_inline" />
 								<label for="module_l10n_ar_aeroo_receipt" />
 							</div>	

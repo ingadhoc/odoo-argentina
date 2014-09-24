@@ -32,8 +32,8 @@
             <field name="value_type">boolean</field>
             <field name="value_boolean" eval="False"/>
         </record>    
-        <record model="report.configuration.default" id="report_configuration_defaults_use_stock_picking_print_sequence">
-            <field name="name">use_stock_picking_print_sequence</field>
+        <record model="report.configuration.default" id="report_configuration_defaults_use_stock_remit">
+            <field name="name">use_stock_remit</field>
             <field name="apply_to_all" eval="False"/>
             <field name="apply_to_model_id" ref="stock.model_stock_picking"/>            
             <field name="override_values" eval="False"/>

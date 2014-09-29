@@ -37,7 +37,7 @@ publicarlas en los repositorios p\xc3\xbablicos.
         'data/wsafip_server.xml',
         'views/wsafip_menuitem.xml',
         'views/wsafip_server_view.xml',
-        # 'views/wsafip_config_view.xml',
+        'views/wsafip_config_view.xml',
         'views/wsafip_connection_view.xml',
         'security/wsafip_security.xml',
         'security/ir.model.access.csv',

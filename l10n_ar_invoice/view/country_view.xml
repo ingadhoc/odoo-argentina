@@ -7,7 +7,7 @@
             <field name="model">res.country</field>
             <field name="inherit_id" ref="base.view_country_form"/>
             <field name="arch" type="xml">
-		<field name="code" position="after">
+		        <field name="code" position="after">
                     <field name="cuit_juridica"/>
                     <field name="cuit_fisica"/>
                     <field name="cuit_otro"/>
@@ -20,7 +20,7 @@
             <field name="model">res.country</field>
             <field name="inherit_id" ref="base.view_country_tree"/>
             <field name="arch" type="xml">
-		    <field name="code" position="after">
+		        <field name="code" position="after">
                     <field name="cuit_juridica"/>
                     <field name="cuit_fisica"/>
                     <field name="cuit_otro"/>

@@ -46,7 +46,7 @@ class l10n_ar_wsafip_keygen_config(osv.osv_memory):
                 cr, uid, [pk_id], x509_name, context=context)
 
     _name = 'l10n_ar_wsafip.keygen_config'
-    _inherit = 'res.config'
+    _inherit = 'res.config.installer'
     _columns = {
         'wsafip_company_id': fields.many2one('res.company', 'Company', required=True),
         'wsafip_country_id': fields.many2one('res.country', 'Country', required=True),
@@ -61,7 +61,6 @@ class l10n_ar_wsafip_keygen_config(osv.osv_memory):
         'wsafip_department': 'IT',
         'wsafip_name': 'AFIP Web Services',
     }
-l10n_ar_wsafip_keygen_config()
 
 
 class l10n_ar_wsafip_loadcert_config(osv.osv_memory):
@@ -96,7 +95,7 @@ class l10n_ar_wsafip_loadcert_config(osv.osv_memory):
             wz.wsafip_request_id.write({'state': 'confirmed'})
 
     _name = 'l10n_ar_wsafip.loadcert_config'
-    _inherit = 'res.config'
+    _inherit = 'res.config.installer'
     _columns = {
         'wsafip_request_id': fields.many2one('crypto.certificate', 'Certificate Request', required=True),
         'wsafip_request_file': fields.binary('Download Signed Certificate Request', readonly=True),
@@ -106,7 +105,5 @@ class l10n_ar_wsafip_loadcert_config(osv.osv_memory):
     _defaults = {
         'wsafip_request_filename': 'request.csr',
     }
-l10n_ar_wsafip_loadcert_config()
-
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -25,6 +25,4 @@ class wsafip_server(osv.osv):
         'conn_id': fields.one2many('wsafip.connection', 'server_id', 'Service Connections'),
     }
 
-wsafip_server()
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

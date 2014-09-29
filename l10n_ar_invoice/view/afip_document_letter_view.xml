@@ -7,11 +7,13 @@
             <field name="model">afip.document_letter</field>
             <field name="arch" type="xml">
                 <form string="AFIP Document class">
-                    <field name="name"/>                    
-                    <field name="active"/>                    
-                    <field name="issuer_ids"/>
-                    <field name="receptor_ids"/>
-                    <field name="afip_document_class_ids" colspan="4"/>
+                    <group>
+                        <field name="name"/>                    
+                        <field name="active"/>                    
+                        <field name="issuer_ids"/>
+                        <field name="receptor_ids"/>
+                        <field name="afip_document_class_ids" colspan="4"/>
+                    </group>
                 </form>
             </field>
         </record>

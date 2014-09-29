@@ -100,6 +100,7 @@ class wsafip_connection(osv.osv):
                     datetime.now(tzlocal()) + timedelta(0, 60)).isoformat(),
                 service=ws.server_id.code
             )
+
             msg = ws.certificate.smime(msg)[ws.certificate.id]
             head, body, end = msg.split('\n\n')
 

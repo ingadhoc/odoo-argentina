@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Base Config Settings Form View -->
+        <record id="view_argentinian_base_configuration" model="ir.ui.view">
+            <field name="name">argentinian.base.settings</field>
+            <field name="model">argentinian.base.config.settings</field>
+            <field name="inherit_id" ref="l10n_ar_invoice.view_argentinian_base_configuration"/>
+            <field name="arch" type="xml">
+                <button name="%(account.action_account_journal_form)d" position="after">
+                    <button string="Associate point of sale to AFIP electronic invoice"
+                        icon="gtk-go-forward"
+                        name="%(action_wsafip_fe_config)d"
+                        type="action"
+                        class="oe_link"/>
+                </button>
+            </field>
+        </record>
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4 -->

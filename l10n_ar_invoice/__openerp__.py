@@ -48,6 +48,7 @@
                       'view/afip_document_type_view.xml',
                       'view/afip_responsability_view.xml',
                       'view/afip_document_class_view.xml',
+                      'view/afip_point_of_sale_view.xml',
                       'view/account_journal_afip_document_class_view.xml',
                       'view/journal_view.xml',
                       'view/tax_code_view.xml',
@@ -56,6 +57,7 @@
                       'view/config_view.xml',
                       # 'view/report_invoice.xml',
                       'security/ir.model.access.csv',
+                      'security/l10n_ar_invoice_security.xml',
                       ],
     'version': '2.7.243',
     'website': 'https://launchpad.net/~openerp-l10n-ar-localization'}

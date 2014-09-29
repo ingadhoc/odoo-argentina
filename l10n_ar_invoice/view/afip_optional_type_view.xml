@@ -7,9 +7,11 @@
             <field name="model">afip.optional_type</field>
             <field name="arch" type="xml">
                 <form string="AFIP Optional type">
-                    <field name="name"/>
-                    <field name='afip_code'/>
-                    <field name='active'/>
+                    <group>
+                        <field name="name"/>
+                        <field name='afip_code'/>
+                        <field name='active'/>
+                    </group>
                 </form>
             </field>
         </record>

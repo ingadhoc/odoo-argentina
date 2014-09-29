@@ -66,7 +66,7 @@ class res_partner(osv.osv):
             Otra opción es asignar a la argentina los prefijos: 'cuit' 'dni' 'ci', etc...
             
             Del prefijo se toma el número de documento. Que opinanará la comunidad?"""
-        
+        # TODO
         for part in self.read(cr, uid, ids, ['document_number', 'document_type_id', 'vat', 'is_vat_subject']):
             pass
 

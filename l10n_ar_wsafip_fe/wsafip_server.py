@@ -1,23 +1,4 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-# Copyright (C) 2012 OpenERP - Team de Localización Argentina.
-# https://launchpad.net/~openerp-l10n-ar-localization
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from suds.client import Client
@@ -118,274 +99,299 @@ class wsafip_server(osv.osv):
                          response.DbServer)
         return r
 
-    def wsfe_update_afip_concept_type(self, cr, uid, ids, conn_id, context=None):
+    def wsfe_update_afip_concept_type(
+        self, cr, uid, ids, conn_id, context=None):
         """
         Update concepts class.
 
-        AFIP Description: Recuperador de valores referenciales de códigos de Tipos de Conceptos (FEParamGetTiposConcepto)
+        AFIP Description: Recuperador de valores referenciales de códigos de
+        Tipos de Conceptos (FEParamGetTiposConcepto)
         """
-        journal_obj = self.pool.get('afip.journal_class')
         conn_obj = self.pool.get('wsafip.connection')
 
         for srv in self.browse(cr, uid, ids, context=context):
             # Ignore servers without code WSFE.
-            if srv.code != 'wsfe': continue
+            if srv.code != 'wsfe':
+                continue
 
             # Take the connection, continue if connected or clockshifted
-            conn = conn_obj.browse(cr, uid, conn_id, context=context) 
-            conn.login() # Login if nescesary.
-            if conn.state not in  [ 'connected', 'clockshifted' ]: continue
+            conn = conn_obj.browse(cr, uid, conn_id, context=context)
+            conn.login()  # Login if nescesary.
+            if conn.state not in ['connected', 'clockshifted']:
+                continue
 
             # Build request
             try:
                 _logger.debug('Updating concept class from AFIP Web service')
                 srvclient = Client(srv.url+'?WSDL', transport=HttpsTransport())
-                response = srvclient.service.FEParamGetTiposConcepto(Auth=conn.get_auth())
+                response = srvclient.service.FEParamGetTiposConcepto(
+                    Auth=conn.get_auth())
 
                 # Take list of concept type
                 concepttype_list = [
                     {'afip_code': ct.Id,
                      'name': ct.Desc,
-                     'active': ct.FchHasta in [None, 'NULL'] }
-                    for ct in response.ResultGet.ConceptoTipo ]
+                     'active': ct.FchHasta in [None, 'NULL']}
+                    for ct in response.ResultGet.ConceptoTipo]
             except Exception as e:
-                _logger.error('AFIP Web service error!: (%i) %s' % (e[0], e[1]))
-                raise osv.except_osv(_(u'AFIP Web service error'),
-                                     _(u'System return error %i: %s') % (e[0], e[1]))
+                _logger.error(
+                    'AFIP Web service error!: (%i) %s' % (e[0], e[1]))
+                raise osv.except_osv(
+                    _(u'AFIP Web service error'),
+                    _(u'System return error %i: %s') % (e[0], e[1]))
 
             _update(self.pool, cr, uid,
                     'afip.concept_type',
                     concepttype_list,
                     can_create=True,
-                    domain=[('afip_code','!=',0)]
-                   )
-
-        return
-
+                    domain=[('afip_code', '!=', 0)])
 
     def wsfe_update_journal_class(self, cr, uid, ids, conn_id, context=None):
         """
         Update journal class.
 
-        AFIP Description: Recuperador de valores referenciales de códigos de Tipos de comprobante (FEParamGetTiposCbte)
+        AFIP Description: Recuperador de valores referenciales de códigos de
+        Tipos de comprobante (FEParamGetTiposCbte)
         """
-        journal_obj = self.pool.get('afip.journal_class')
         conn_obj = self.pool.get('wsafip.connection')
 
         for srv in self.browse(cr, uid, ids, context=context):
             # Ignore servers without code WSFE.
-            if srv.code != 'wsfe': continue
+            if srv.code != 'wsfe':
+                continue
 
             # Take the connection, continue if connected or clockshifted
-            conn = conn_obj.browse(cr, uid, conn_id, context=context) 
-            conn.login() # Login if nescesary.
-            if conn.state not in  [ 'connected', 'clockshifted' ]: continue
+            conn = conn_obj.browse(cr, uid, conn_id, context=context)
+            conn.login()  # Login if nescesary.
+            if conn.state not in ['connected', 'clockshifted']:
+                continue
 
             try:
                 _logger.info('Updating journal class from AFIP Web service')
                 srvclient = Client(srv.url+'?WSDL', transport=HttpsTransport())
-                response = srvclient.service.FEParamGetTiposCbte(Auth=conn.get_auth())
+                response = srvclient.service.FEParamGetTiposCbte(
+                    Auth=conn.get_auth())
 
                 # Take list of journal class
                 journalclass_list = [
-                    { 'afip_code': c.Id,
-                      'name': c.Desc,
-                      'active': c.FchHasta  in [None, 'NULL']}
+                    {'afip_code': c.Id,
+                        'name': c.Desc,
+                        'active': c.FchHasta in [None, 'NULL']}
                     for c in response.ResultGet.CbteTipo
                 ]
             except Exception as e:
-                _logger.error('AFIP Web service error!: (%i) %s' % (e[0], e[1]))
-                raise osv.except_osv(_(u'AFIP Web service error'),
-                                     _(u'System return error %i: %s') % (e[0], e[1]))
+                _logger.error(
+                    'AFIP Web service error!: (%i) %s' % (e[0], e[1]))
+                raise osv.except_osv(
+                    _(u'AFIP Web service error'),
+                    _(u'System return error %i: %s') % (e[0], e[1]))
 
             _update(self.pool, cr, uid,
                     'afip.journal_class',
                     journalclass_list,
                     can_create=False,
-                    domain=[('afip_code','!=',0)]
-                   )
-
-        return
+                    domain=[('afip_code', '!=', 0)])
 
     def wsfe_update_document_type(self, cr, uid, ids, conn_id, context=None):
         """
-        Update document type. This function must be called from connection model.
+        Update document type.
+        This function must be called from connection model.
 
-        AFIP Description: Recuperador de valores referenciales de códigos de Tipos de Documentos (FEParamGetTiposDoc)
+        AFIP Description: Recuperador de valores referenciales de códigos de
+        Tipos de Documentos (FEParamGetTiposDoc)
         """
-        doctype_obj = self.pool.get('afip.document_type')
         conn_obj = self.pool.get('wsafip.connection')
 
         for srv in self.browse(cr, uid, ids, context=context):
             # Ignore servers without code WSFE.
-            if srv.code != 'wsfe': continue
+            if srv.code != 'wsfe':
+                continue
 
             # Take the connection, continue if connected or clockshifted
-            conn = conn_obj.browse(cr, uid, conn_id, context=context) 
-            conn.login() # Login if nescesary.
-            if conn.state not in  [ 'connected', 'clockshifted' ]: continue
+            conn = conn_obj.browse(cr, uid, conn_id, context=context)
+            conn.login()  # Login if nescesary.
+            if conn.state not in ['connected', 'clockshifted']:
+                continue
 
             try:
                 _logger.info('Updating document types from AFIP Web service')
                 srvclient = Client(srv.url+'?WSDL', transport=HttpsTransport())
-                response = srvclient.service.FEParamGetTiposDoc(Auth=conn.get_auth())
+                response = srvclient.service.FEParamGetTiposDoc(
+                    Auth=conn.get_auth())
 
                 # Take list of document types
                 doctype_list = [
-                    { 'afip_code': c.Id,
-                      'name': c.Desc,
-                      'code': c.Desc,
-                      'active': c.FchHasta in [None, 'NULL'] }
+                    {'afip_code': c.Id,
+                        'name': c.Desc,
+                        'code': c.Desc,
+                        'active': c.FchHasta in [None, 'NULL']}
                     for c in response.ResultGet.DocTipo
                 ]
             except Exception as e:
-                _logger.error('AFIP Web service error!: (%i) %s' % (e[0], e[1]))
-                raise osv.except_osv(_(u'AFIP Web service error'),
-                                     _(u'System return error %i: %s') % (e[0], e[1]))
+                _logger.error(
+                    'AFIP Web service error!: (%i) %s' % (e[0], e[1]))
+                raise osv.except_osv(
+                    _(u'AFIP Web service error'),
+                    _(u'System return error %i: %s') % (e[0], e[1]))
 
             _update(self.pool, cr, uid,
                     'afip.document_type',
                     doctype_list,
                     can_create=True,
-                    domain=[]
-                   )
+                    domain=[])
 
-        return True
- 
     def wsfe_update_optional_types(self, cr, uid, ids, conn_id, context=None):
         """
-        Update optional types. This function must be called from connection model.
+        Update optional types.
+        This function must be called from connection model.
 
-        AFIP Description: Recuperador de valores referenciales de códigos de Tipos de datos Opcionales (FEParamGetTiposOpcional)
+        AFIP Description: Recuperador de valores referenciales de códigos de
+        Tipos de datos Opcionales (FEParamGetTiposOpcional)
         """
         conn_obj = self.pool.get('wsafip.connection')
 
         for srv in self.browse(cr, uid, ids, context=context):
             # Ignore servers without code WSFE.
-            if srv.code != 'wsfe': continue
+            if srv.code != 'wsfe':
+                continue
 
             # Take the connection, continue if connected or clockshifted
-            conn = conn_obj.browse(cr, uid, conn_id, context=context) 
-            conn.login() # Login if nescesary.
-            if conn.state not in  [ 'connected', 'clockshifted' ]: continue
+            conn = conn_obj.browse(cr, uid, conn_id, context=context)
+            conn.login()  # Login if nescesary.
+            if conn.state not in ['connected', 'clockshifted']:
+                continue
 
             try:
                 _logger.info('Updating currency from AFIP Web service')
                 srvclient = Client(srv.url+'?WSDL', transport=HttpsTransport())
-                response = srvclient.service.FEParamGetTiposOpcional(Auth=conn.get_auth())
+                response = srvclient.service.FEParamGetTiposOpcional(
+                    Auth=conn.get_auth())
 
                 # Take list of currency
                 currency_list = [
-                    { 'afip_code': c.Id,
-                      'name': c.Desc,
-                      'active': c.FchHasta in [None, 'NULL'] }
+                    {'afip_code': c.Id,
+                        'name': c.Desc,
+                        'active': c.FchHasta in [None, 'NULL']}
                     for c in response.ResultGet.OpcionalTipo
                 ]
             except Exception as e:
-                _logger.error('AFIP Web service error!: (%i) %s' % (e[0], e[1]))
-                raise osv.except_osv(_(u'AFIP Web service error'),
-                                     _(u'System return error %i: %s') % (e[0], e[1]))
+                _logger.error(
+                    'AFIP Web service error!: (%i) %s' % (e[0], e[1]))
+                raise osv.except_osv(
+                    _(u'AFIP Web service error'),
+                    _(u'System return error %i: %s') % (e[0], e[1]))
 
             _update(self.pool, cr, uid,
                     'afip.optional_type',
                     currency_list,
                     can_create=True,
-                    domain=[]
-                   )
-        return True
- 
+                    domain=[])
+
     def wsfe_update_currency(self, cr, uid, ids, conn_id, context=None):
         """
         Update currency. This function must be called from connection model.
 
-        AFIP Description: Recuperador de valores referenciales de códigos de Tipos de Monedas (FEParamGetTiposMonedas) 
+        AFIP Description: Recuperador de valores referenciales de códigos de
+        Tipos de Monedas (FEParamGetTiposMonedas)
         """
+
         conn_obj = self.pool.get('wsafip.connection')
 
         for srv in self.browse(cr, uid, ids, context=context):
             # Ignore servers without code WSFE.
-            if srv.code != 'wsfe': continue
+            if srv.code != 'wsfe':
+                continue
 
             # Take the connection, continue if connected or clockshifted
-            conn = conn_obj.browse(cr, uid, conn_id, context=context) 
-            conn.login() # Login if nescesary.
-            if conn.state not in  [ 'connected', 'clockshifted' ]: continue
+            conn = conn_obj.browse(cr, uid, conn_id, context=context)
+            conn.login()  # Login if nescesary.
+            if conn.state not in ['connected', 'clockshifted']:
+                continue
 
             try:
                 _logger.info('Updating currency from AFIP Web service')
                 srvclient = Client(srv.url+'?WSDL', transport=HttpsTransport())
-                response = srvclient.service.FEParamGetTiposMonedas(Auth=conn.get_auth())
+                response = srvclient.service.FEParamGetTiposMonedas(
+                    Auth=conn.get_auth())
 
                 # Take list of currency
                 currency_list = [
-                    { 'afip_code': c.Id,
-                      'name': c.Desc,
-                      'active': c.FchHasta in [None, 'NULL'] }
+                    {'afip_code': c.Id,
+                        'name': c.Desc,
+                        'active': c.FchHasta in [None, 'NULL']}
                     for c in response.ResultGet.Moneda
                 ]
             except Exception as e:
-                _logger.error('AFIP Web service error!: (%i) %s' % (e[0], e[1]))
-                raise osv.except_osv(_(u'AFIP Web service error'),
-                                     _(u'System return error %i: %s') % (e[0], e[1]))
+                _logger.error(
+                    'AFIP Web service error!: (%i) %s' % (e[0], e[1]))
+                raise osv.except_osv(
+                    _(u'AFIP Web service error'),
+                    _(u'System return error %i: %s') % (e[0], e[1]))
 
             _update(self.pool, cr, uid,
                     'res.currency',
                     currency_list,
                     can_create=False,
-                    domain=[]
-                   )
-        return True
+                    domain=[])
 
     def wsfe_update_tax(self, cr, uid, ids, conn_id, context=None):
         """
         Update taxes. This function must be called from connection model.
 
-        AFIP Description: Recuperador de valores referenciales de códigos de Tipos de Tributos (FEParamGetTiposTributos)
+        AFIP Description: Recuperador de valores referenciales de códigos de
+        Tipos de Tributos (FEParamGetTiposTributos)
         """
         conn_obj = self.pool.get('wsafip.connection')
 
         for srv in self.browse(cr, uid, ids, context=context):
             # Ignore servers without code WSFE.
-            if srv.code != 'wsfe': continue
+            if srv.code != 'wsfe':
+                continue
 
             # Take the connection, continue if connected or clockshifted
-            conn = conn_obj.browse(cr, uid, conn_id, context=context) 
-            conn.login() # Login if nescesary.
-            if conn.state not in  [ 'connected', 'clockshifted' ]: continue
+            conn = conn_obj.browse(cr, uid, conn_id, context=context)
+            conn.login()  # Login if nescesary.
+            if conn.state not in ['connected', 'clockshifted']:
+                continue
 
             _escape_ = lambda s: s.replace('%', '%%')
 
             try:
                 _logger.info('Updating currency from AFIP Web service')
                 srvclient = Client(srv.url+'?WSDL', transport=HttpsTransport())
-                response = srvclient.service.FEParamGetTiposTributos(Auth=conn.get_auth())
+                response = srvclient.service.FEParamGetTiposTributos(
+                    Auth=conn.get_auth())
 
                 # Take list of taxes
                 tax_list = [
-                    { 'afip_code': c.Id,
-                      'name': c.Desc }
+                    {'afip_code': c.Id,
+                        'name': c.Desc}
                     for c in response.ResultGet.TributoTipo
                 ]
 
                 # Take IVA codes
-                response = srvclient.service.FEParamGetTiposIva(Auth=conn.get_auth())
+                response = srvclient.service.FEParamGetTiposIva(
+                    Auth=conn.get_auth())
                 tax_list.extend([
-                    { 'afip_code': c.Id,
-                      'name': "%s" % _escape_(c.Desc) }
+                    {'afip_code': c.Id,
+                        'name': "%s" % _escape_(c.Desc)}
                     for c in response.ResultGet.IvaTipo
                 ])
 
             except Exception as e:
-                _logger.error('AFIP Web service error!: (%i) %s' % (e[0], e[1]))
-                raise osv.except_osv(_(u'AFIP Web service error'),
-                                     _(u'System return error %i: %s') % (e[0], e[1]))
+                _logger.error(
+                    'AFIP Web service error!: (%i) %s' % (e[0], e[1]))
+                raise osv.except_osv(
+                    _(u'AFIP Web service error'),
+                    _(u'System return error %i: %s') % (e[0], e[1]))
 
             tax_code_obj = self.pool.get('account.tax.code')
 
-
             for tc in tax_list:
-                tax_code_ids = tax_code_obj.search(cr, uid, [('name','ilike', tc['name'])])
-                _logger.debug("Tax '%s' match with %s" % (tc['name'], tax_code_ids))
+                tax_code_ids = tax_code_obj.search(
+                    cr, uid, [('name', 'ilike', tc['name'])])
+                _logger.debug(
+                    "Tax '%s' match with %s" % (tc['name'], tax_code_ids))
                 if tax_code_ids:
                     w = dict(tc)
                     del w['name']
@@ -393,83 +399,96 @@ class wsafip_server(osv.osv):
 
         return True
 
-    def wsfe_get_last_invoice_number(self, cr, uid, ids, conn_id, ptoVta, cbteTipo, context=None):
+    def wsfe_get_last_invoice_number(
+            self, cr, uid, ids, conn_id, ptoVta, cbteTipo, context=None):
         """
         Get last ID number from AFIP
 
-        AFIP Description: Recuperador de ultimo valor de comprobante registrado (FECompUltimoAutorizado)
+        AFIP Description: Recuperador de ultimo valor de comprobante registrado
+        (FECompUltimoAutorizado)
         """
         conn_obj = self.pool.get('wsafip.connection')
 
-        r={}
+        r = {}
 
         for srv in self.browse(cr, uid, ids, context=context):
             # Ignore servers without code WSFE.
-            if srv.code != 'wsfe': continue
+            if srv.code != 'wsfe':
+                continue
 
             # Take the connection
-            conn = conn_obj.browse(cr, uid, conn_id, context=context) 
-            conn.login() # Login if nescesary.
-            if conn.state not in  [ 'connected', 'clockshifted' ]:
+            conn = conn_obj.browse(cr, uid, conn_id, context=context)
+            conn.login()  # Login if nescesary.
+            if conn.state not in ['connected', 'clockshifted']:
                 r[srv.id] = False
                 continue
 
             try:
-                _logger.info('Take last invoice number from AFIP Web service (pto vta: %s, cbte tipo: %s)' % (ptoVta, cbteTipo))
+                _logger.info('Take last invoice number from AFIP Web service\
+                    (pto vta: %s, cbte tipo: %s)' % (ptoVta, cbteTipo))
                 srvclient = Client(srv.url+'?WSDL', transport=HttpsTransport())
-                response = srvclient.service.FECompUltimoAutorizado(Auth=conn.get_auth(), PtoVta=ptoVta, CbteTipo=cbteTipo)
+                response = srvclient.service.FECompUltimoAutorizado(
+                    Auth=conn.get_auth(), PtoVta=ptoVta, CbteTipo=cbteTipo)
 
             except Exception as e:
-                _logger.error('AFIP Web service error!: (%i) %s' % (e[0], e[1]))
-                raise osv.except_osv(_(u'AFIP Web service error'),
-                                     _(u'System return error %i: %s\n'
-                                       u'Pueda que esté intente realizar esta operación'
-                                       u'desde el servidor de homologación.'
-                                       u'Intente desde el servidor de producción.') % (e[0], e[1]))
+                _logger.error(
+                    'AFIP Web service error!: (%i) %s' % (e[0], e[1]))
+                raise osv.except_osv(
+                    _(u'AFIP Web service error'),
+                    _(u'System return error %i: %s\n'
+                        u'Pueda que esté intente realizar esta operación'
+                        u'desde el servidor de homologación.'
+                        u'Intente desde el servidor de producción.') %
+                    (e[0], e[1]))
 
             if hasattr(response, 'Errors'):
                 for e in response.Errors.Err:
-                    code = e.Code
-                    _logger.error('AFIP Web service error!: (%i) %s' % (e.Code, e.Msg))
+                    _logger.error(
+                        'AFIP Web service error!: (%i) %s' % (e.Code, e.Msg))
                 r[srv.id] = False
             else:
                 r[srv.id] = int(response.CbteNro)
         return r
 
-    def wsfe_get_cae(self, cr, uid, ids, conn_id, invoice_request, context=None):
+    def wsfe_get_cae(
+            self, cr, uid, ids, conn_id, invoice_request, context=None):
         """
         Get CAE.
 
-        AFIP Description: Método de autorización de comprobantes electrónicos por CAE (FECAESolicitar)
+        AFIP Description: Método de autorización de comprobantes electrónicos
+        por CAE (FECAESolicitar)
         """
         conn_obj = self.pool.get('wsafip.connection')
         r = {}
 
         for srv in self.browse(cr, uid, ids, context=context):
             # Ignore servers without code WSFE.
-            if srv.code != 'wsfe': continue
+            if srv.code != 'wsfe':
+                continue
 
             # Take the connection
-            conn = conn_obj.browse(cr, uid, conn_id, context=context) 
-            conn.login() # Login if nescesary.
-            if conn.state not in  [ 'connected', 'clockshifted' ]: continue
+            conn = conn_obj.browse(cr, uid, conn_id, context=context)
+            conn.login()  # Login if nescesary.
+            if conn.state not in ['connected', 'clockshifted']:
+                continue
 
             _logger.info('Get CAE from AFIP Web service')
 
             try:
                 srvclient = Client(srv.url+'?WSDL', transport=HttpsTransport())
                 first = invoice_request.keys()[0]
-                response = srvclient.service.FECAESolicitar(Auth=conn.get_auth(),
-                    FeCAEReq = [{
-                        'FeCabReq':{
+                response = srvclient.service.FECAESolicitar(
+                    Auth=conn.get_auth(),
+                    FeCAEReq=[{
+                        'FeCabReq': {
                             'CantReg': len(invoice_request),
                             'PtoVta': invoice_request[first]['PtoVta'],
                             'CbteTipo': invoice_request[first]['CbteTipo'],
                         },
                         'FeDetReq': [
-                            { 'FECAEDetRequest': dict(
-                                [ (k, v) for k,v in req.iteritems()
-                                 if k not in ['CantReg', 'PtoVta', 'CbteTipo'] ] ) }
+                            {'FECAEDetRequest': dict(
+                            [(k, v) for k,v in req.iteritems()
+                            if k not in ['CantReg', 'PtoVta', 'CbteTipo']])}
                             for req in invoice_request.itervalues()
                         ],
                     }]
@@ -483,9 +502,14 @@ class wsafip_server(osv.osv):
                 raise osv.except_osv(_(u'AFIP Web service error'),
                                      _(u'System return error %i: %s') % (e[0], e[1]))
                                      
-            soapRequest = [{ 'FeCabReq':{ 'CantReg': len(invoice_request), 'PtoVta': invoice_request[first]['PtoVta'], 'CbteTipo': invoice_request[first]['CbteTipo'],}, 'FeDetReq': [{ 'FECAEDetRequest': dict([ (k, v) for k,v in req.iteritems() if k not in ['CantReg', 'PtoVta', 'CbteTipo'] ] ) } for req in invoice_request.itervalues()], }]
+            soapRequest = [{'FeCabReq': {
+                'CantReg': len(invoice_request),
+                'PtoVta': invoice_request[first]['PtoVta'],
+                'CbteTipo': invoice_request[first]['CbteTipo']},
+                'FeDetReq': [{'FECAEDetRequest': dict(
+                    [(k, v) for k,v in req.iteritems() if k not in ['CantReg', 'PtoVta', 'CbteTipo']])} for req in invoice_request.itervalues()],}]
 
-            common_error = [ (e.Code, unicode(e.Msg)) for e in response.Errors[0] ] if response.FeCabResp.Resultado in ["P", "R"] and hasattr(response, 'Errors') else []
+            common_error = [(e.Code, unicode(e.Msg)) for e in response.Errors[0]] if response.FeCabResp.Resultado in ["P", "R"] and hasattr(response, 'Errors') else []
             _logger.error('Request error: %s' % (common_error,))
 
             for resp in response.FeDetResp.FECAEDetResponse:
@@ -580,7 +604,5 @@ class wsafip_server(osv.osv):
                 }
 
         return r
-
-wsafip_server()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

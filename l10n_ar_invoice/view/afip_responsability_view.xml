@@ -7,11 +7,13 @@
             <field name="model">afip.responsability</field>
             <field name="arch" type="xml">
                 <form string="AFIP Responsability">
-                    <field name="name"/>
-                    <field name='code'/>
-                    <field name='issued_letter_ids'/>
-                    <field name='received_letter_ids'/>
-                    <field name='active'/>
+                    <group>
+                        <field name="name"/>
+                        <field name='code'/>
+                        <field name='issued_letter_ids'/>
+                        <field name='received_letter_ids'/>
+                        <field name='active'/>
+                    </group>
                 </form>
             </field>
         </record>

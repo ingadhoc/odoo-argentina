@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="account.view_account_journal_search"/>
             <field name="arch" type="xml">
                 <field name="name" position="after">
-                    <field name="point_of_sale"/>
+                    <field name="point_of_sale_id"/>
                 </field>
             </field>
         </record>
@@ -26,9 +26,10 @@
                     <page string="Documents" attrs="{'invisible': ['|',('use_documents','=',False),('type','not in',['purchase','sale','purchase_refund','sale_refund'])]}">
                         <button name="%(action_account_journal_document_config_form)d" string="Create Journal Documents" type="action" context="{'type':type}"/>
                         <group>
-                            <field name="point_of_sale" attrs="{'invisible': ['|',('type','not in',['sale','sale_refund'])],'required': [('use_documents','=',True),('type','in',['sale','sale_refund'])]}"/>
-                            <field name='journal_document_class_ids' context="{'journal_type':type}"/> 
+                            <field name="point_of_sale_id" attrs="{'invisible': ['|',('type','not in',['sale','sale_refund'])],'required': [('use_documents','=',True),('type','in',['sale','sale_refund'])]}"/>
+                            <field name="point_of_sale" attrs="{'invisible': ['|',('type','not in',['sale','sale_refund'])]}"/>
                         </group>
+                        <field name='journal_document_class_ids' context="{'journal_type':type}"/> 
                     </page>
                 </notebook>
             </field>

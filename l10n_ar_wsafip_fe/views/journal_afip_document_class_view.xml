@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data> 
+        <record id="view_journal_afip_document_class_tree" model="ir.ui.view">
+            <field name="name">Journal Afip Documents Tree</field>
+            <field name="model">account.journal.afip_document_class</field>
+            <field name="inherit_id" ref="l10n_ar_invoice.view_journal_afip_document_class_tree"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name='afip_connection_id'/>
+                    <field name='afip_state'/>
+                    <field name='afip_items_generated'/>
+                </tree>
+            </field>
+        </record>
+  </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4 -->

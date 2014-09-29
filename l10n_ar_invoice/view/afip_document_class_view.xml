@@ -7,14 +7,16 @@
             <field name="model">afip.document_class</field>
             <field name="arch" type="xml">
                 <form string="AFIP Document Class">
-                    <field name="name"/>
-                    <field name='afip_code'/>
-                    <field name='code_template'/>
-                    <field name='document_letter_id'/>
-                    <field name='report_name'/>
-                    <field name='document_type'/>
-                    <field name='vat_discriminated'/>
-                    <field name='active'/>
+                    <group>
+                        <field name="name"/>
+                        <field name='afip_code'/>
+                        <field name='code_template'/>
+                        <field name='document_letter_id'/>
+                        <field name='report_name'/>
+                        <field name='document_type'/>
+                        <field name='vat_discriminated'/>
+                        <field name='active'/>
+                    </group>
                 </form>
             </field>
         </record>

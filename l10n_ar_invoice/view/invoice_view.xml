@@ -49,7 +49,7 @@
                 </field>
 
                 <field name="journal_id" position="after">
-                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)]}" domain="[('id','in',available_journal_document_class_ids[0][2])]" widget="selection" on_change="on_change_journal_document_class_id(journal_document_class_id)"/>
+                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)]}" domain="[('id','in',available_journal_document_class_ids[0][2])]" on_change="on_change_journal_document_class_id(journal_document_class_id)"/>
                 </field>    
 
                 <label string="Draft Refund" position="after">
@@ -87,7 +87,7 @@
                 </field>
                 
                 <field name="journal_id" position="after">
-                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)]}" domain="[('id','in',available_journal_document_class_ids[0][2])]" widget="selection"/>
+                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)]}" domain="[('id','in',available_journal_document_class_ids[0][2])]"/>
                 </field>    
 
             </field>

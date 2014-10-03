@@ -1,0 +1,68 @@
+<openerp>
+    <data noupdate="1">
+        <!-- key shared by aeroo reports and qweb -->
+        <record model="report.configuration.default" id="report.report_configuration_defaults_1">
+            <field name="name">print_number</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report.report_configuration_defaults_2">
+            <field name="name">print_letter</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record> 
+
+        <record model="report.configuration.default" id="report.report_configuration_defaults_3">
+            <field name="name">print_header</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report.report_configuration_defaults_4">
+            <field name="name">print_title</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report.report_configuration_defaults_5">
+            <field name="name">print_code</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report.report_configuration_defaults_6">
+            <field name="name">legend</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_text">Doc. no válido como factura</field>
+            <field name="value_type">text</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report.report_configuration_defaults_7">
+            <field name="name">print_commercial</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="True"/>
+        </record>
+
+        <record model="report.configuration.default" id="report.report_configuration_force_letter">
+            <field name="name">force_letter</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">text</field>
+        </record>         
+    </data>
+</openerp>

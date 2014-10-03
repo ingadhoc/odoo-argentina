@@ -1,0 +1,18 @@
+<openerp>
+    <data noupdate="1">
+        <record model="report.configuration.default" id="report_configuration_force_code">
+            <field name="name">force_code</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="account.model_account_invoice"/>            
+            <field name="override_values" eval="False"/>
+            <field name="value_type">text</field>
+        </record> 
+        <record model="report.configuration.default" id="report_configuration_force_title">
+            <field name="name">force_title</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="account.model_account_invoice"/>            
+            <field name="override_values" eval="False"/>
+            <field name="value_type">text</field>
+        </record>
+    </data>
+</openerp>

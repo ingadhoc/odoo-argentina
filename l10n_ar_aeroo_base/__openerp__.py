@@ -15,9 +15,10 @@ Base Module For Argentinian Like Aeroo Reports
     ],
     'depends': [
         'report_aeroo',
-        'l10n_ar_report_base', # Este lo ponemos porque levanta las palabras claves
+        'report_extended',
     ],
     'data': [
+        'report_configuration_defaults_data.xml',
     ],
     'demo': [
     ],

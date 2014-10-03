@@ -20,6 +20,7 @@ Argentinian Like Invoice Aeroo Report
     ],
     'data': [
         'invoice_report.xml',
+        'report_configuration_defaults_data.xml',
     ],
     'demo': [
     ],

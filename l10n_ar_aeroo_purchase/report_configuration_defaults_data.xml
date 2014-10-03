@@ -1,0 +1,20 @@
+<openerp>
+    <data noupdate="1">
+        <record model="report.configuration.default" id="report_configuration_purchase_draft_title">
+            <field name="name">draft_title</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="purchase.model_purchase_order"/>            
+            <field name="override_values" eval="False"/>
+            <field name="value_type">text</field>
+            <field name="value_text">PRESUPUESTO</field>
+        </record> 
+        <record model="report.configuration.default" id="report_configuration_purchase_progress_title">
+            <field name="name">progress_title</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="purchase.model_purchase_order"/>            
+            <field name="override_values" eval="False"/>
+            <field name="value_type">text</field>
+            <field name="value_text">ORDEN DE COMPRA</field>
+        </record> 
+    </data>
+</openerp>

@@ -19,6 +19,7 @@ Argentinian Like Purchase Order Aeroo Report
     ],
     'data': [
         'report.xml',
+        'report_configuration_defaults_data.xml',
     ],
     'demo': [
     ],

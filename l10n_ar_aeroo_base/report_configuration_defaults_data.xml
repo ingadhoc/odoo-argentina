@@ -33,14 +33,6 @@
             <field name="value_boolean" eval="True"/>
         </record>
 
-        <record model="report.configuration.default" id="report.report_configuration_defaults_5">
-            <field name="name">print_code</field>
-            <field name="apply_to_all" eval="True"/>
-            <field name="override_values" eval="False"/>
-            <field name="value_type">boolean</field>
-            <field name="value_boolean" eval="True"/>
-        </record>
-
         <record model="report.configuration.default" id="report.report_configuration_defaults_6">
             <field name="name">legend</field>
             <field name="apply_to_all" eval="True"/>

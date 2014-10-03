@@ -18,8 +18,8 @@ Argentinian Like Purchase Order Aeroo Report
         'l10n_ar_aeroo_base',
     ],
     'data': [
-        'report.xml',
         'report_configuration_defaults_data.xml',
+        'report.xml',
     ],
     'demo': [
     ],

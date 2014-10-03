@@ -19,8 +19,8 @@ Argentinian Like Invoice Aeroo Report
         'l10n_ar_aeroo_base',
     ],
     'data': [
-        'invoice_report.xml',
         'report_configuration_defaults_data.xml',
+        'invoice_report.xml',
     ],
     'demo': [
     ],

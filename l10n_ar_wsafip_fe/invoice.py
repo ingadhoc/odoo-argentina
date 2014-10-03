@@ -233,12 +233,6 @@ class invoice(models.Model):
 
         return r[ids] if isinstance(ids, int) else r
 
-    @api.multi
-    def action_number(self):
-        print 'self.number', self.reference
-        self.action_retrieve_cae()
-        return super(invoice, self).action_number()
-
     def compute_all(self, cr, uid, ids, line_filter=lambda line: True, tax_filter=lambda tax: True, context=None):
         # TODO reemplazar esta funcion, tal vez directamente la podemos no usar, esta para las lineas de aca abajo
                 # 'ImpOpEx': inv.compute_all(line_filter=lambda line: len(line.invoice_line_tax_id) == 0)['amount_total'],
@@ -265,6 +259,12 @@ class invoice(models.Model):
             res[inv.id] = s
 
         return res.get(len(ids)==1 and ids[0], res)
+
+    @api.multi
+    def action_number(self):
+        print 'self.number', self.reference
+        # self.action_retrieve_cae()
+        return super(invoice, self).action_number()
 
     def action_retrieve_cae(self, cr, uid, ids, context=None):
         """

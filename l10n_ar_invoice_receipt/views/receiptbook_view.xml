@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="account_voucher_receipt.view_receipt_receiptbook_form"/>
             <field name="arch" type="xml">
                 <field name="sequence_id" position="after">
-                    <field name="afip_document_class_id"/>
+                    <field name="afip_document_class_id" required="True"/>
                 </field>
             </field>
         </record>

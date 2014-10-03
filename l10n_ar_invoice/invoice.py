@@ -251,6 +251,7 @@ class account_invoice(models.Model):
                 obj_inv.write({'reference': reference})
         res = super(account_invoice, self).action_move_create()
 
+        # We need the move to be reated in order to read the move_id as following
         # on created moves we write the document type
         for obj_inv in self:
             invtype = obj_inv.type

@@ -21,6 +21,7 @@ Argentinian Like Invoice Aeroo Report
     'data': [
         'report_configuration_defaults_data.xml',
         'invoice_report.xml',
+        'invoice_template.xml',
     ],
     'demo': [
     ],

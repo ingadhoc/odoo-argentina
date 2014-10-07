@@ -7,9 +7,7 @@
         <field name="report_template" ref="l10n_ar_aeroo_invoice.action_aeroo_report_ar_invoice"/>
     </record>
 
-    <record id="portal_sale.email_template_edi_invoice" model="email.template">
-        <field name="report_template" ref="l10n_ar_aeroo_invoice.action_aeroo_report_ar_invoice"/>
-    </record>
+    
 
     </data>
 

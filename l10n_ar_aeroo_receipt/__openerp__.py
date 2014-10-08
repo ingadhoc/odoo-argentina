@@ -20,6 +20,7 @@ Argentinian Like Receipt Aeroo Report
     ],
     'data': [
         'receipt_report.xml',
+        'voucher_receipt_template.xml',
     ],
     'demo': [
     ],

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="report_extended_stock.email_template_report_stock" model="email.template">
+            <field name="report_template" ref="l10n_ar_aeroo_stock.action_aeroo_report_ar_stock_picking"/>        
+        </record>
+    </data>   
+</openerp>

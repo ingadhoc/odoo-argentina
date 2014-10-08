@@ -22,6 +22,7 @@ Argentinian Like Stock Picking Aeroo Report
     'data': [
         'report_configuration_defaults_data.xml',
         'report.xml',
+        'stock_picking_template.xml',
     ],
     'demo': [
     ],

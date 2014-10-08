@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp import osv, models, fields, api, _
 from openerp.osv import fields as old_fields
-from openerp.exceptions import except_orm, Warning, RedirectWarning
+from openerp.exceptions import except_orm, Warning
 import openerp.addons.decimal_precision as dp
 
 
@@ -51,15 +51,24 @@ class account_invoice_line(models.Model):
         return res
 
     _columns = {
-        'printed_price_unit': old_fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Unit Price', multi='printed',),
-        'printed_price_net': old_fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Net Price', multi='printed'),
-        'printed_price_subtotal': old_fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Subtotal', multi='printed'),
+        'printed_price_unit': old_fields.function(
+            _printed_prices, type='float',
+            digits_compute=dp.get_precision('Account'),
+            string='Unit Price', multi='printed',),
+        'printed_price_net': old_fields.function(
+            _printed_prices, type='float',
+            digits_compute=dp.get_precision('Account'),
+            string='Net Price', multi='printed'),
+        'printed_price_subtotal': old_fields.function(
+            _printed_prices, type='float',
+            digits_compute=dp.get_precision('Account'),
+            string='Subtotal', multi='printed'),
     }
 
 
 class account_invoice(models.Model):
     _inherit = "account.invoice"
-    
+
     def _printed_prices(self, cr, uid, ids, name, args, context=None):
         res = {}
 
@@ -81,9 +90,18 @@ class account_invoice(models.Model):
         return res
 
     _columns = {
-        'printed_amount_tax': old_fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Tax', multi='printed',),
-        'printed_amount_untaxed': old_fields.function(_printed_prices, type='float', digits_compute=dp.get_precision('Account'), string='Subtotal', multi='printed',),
-        'printed_tax_ids': old_fields.function(_printed_prices, type='one2many', relation='account.invoice.tax', string='Tax', multi='printed'),
+        'printed_amount_tax': old_fields.function(
+            _printed_prices, type='float',
+            digits_compute=dp.get_precision('Account'),
+            string='Tax', multi='printed',),
+        'printed_amount_untaxed': old_fields.function(
+            _printed_prices,
+            type='float', digits_compute=dp.get_precision('Account'),
+            string='Subtotal', multi='printed',),
+        'printed_tax_ids': old_fields.function(
+            _printed_prices,
+            type='one2many', relation='account.invoice.tax', string='Tax',
+            multi='printed'),
     }
 
     @api.multi
@@ -96,9 +114,9 @@ class account_invoice(models.Model):
         }
         result = []
         for inv in self:
-            # result.append((inv.id, "%s %s" % (inv.number or TYPES[inv.type], inv.name or '')))
             result.append(
-                (inv.id, "%s %s" % (inv.reference or TYPES[inv.type], inv.number or '')))
+                (inv.id, "%s %s" % (
+                    inv.reference or TYPES[inv.type], inv.number or '')))
         return result
 
     @api.model
@@ -108,11 +126,9 @@ class account_invoice(models.Model):
         if name:
             recs = self.search([('number', '=', name)] + args, limit=limit)
         if not recs:
-            # recs = self.search([('name', operator, name)] + args, limit=limit)
             recs = self.search(
                 [('reference', operator, name)] + args, limit=limit)
         return recs.name_get()
-
 
     @api.one
     @api.depends('journal_id', 'partner_id')
@@ -126,14 +142,14 @@ class account_invoice(models.Model):
                 self.partner_id.id, journal_type, self.company_id.id)
             document_classes = self.env['account.journal.afip_document_class'].search([
                 ('journal_id','=',self.journal_id.id),
-                '|',('afip_document_class_id.document_letter_id','in',letter_ids),
+                '|', ('afip_document_class_id.document_letter_id', 'in', letter_ids),
                 ('afip_document_class_id.document_letter_id','=',False)])
 
             document_class_ids = document_classes.ids
             if document_class_ids:
                 document_class_id = document_class_ids[0]
         self.available_journal_document_class_ids = document_class_ids
-        self.journal_document_class_id = document_class_id    
+        self.journal_document_class_id = document_class_id
 
     available_journal_document_class_ids = fields.Many2many(
         'account.journal.afip_document_class',
@@ -180,14 +196,17 @@ class account_invoice(models.Model):
                     _('Supplier Invoice Number must be unique per Supplier and Company!'))
 
     _sql_constraints = [
-        ('number_supplier_invoice_number', 'unique(supplier_invoice_number, partner_id, company_id)',
+        ('number_supplier_invoice_number',
+            'unique(supplier_invoice_number, partner_id, company_id)',
          'Supplier Invoice Number must be unique per Supplier and Company!'),
     ]
 
     def create(self, cr, uid, vals, context=None):
         '''We modify create for 2 popuses:
-        - Modify create function so it can try to set a right document for the invoice
-        - If reference in values, we clean it for argentinian companies as it will be used for invoice number
+        - Modify create function so it can try to set a right document for
+        the invoice
+        - If reference in values, we clean it for argentinian companies as
+        it will be used for invoice number
         '''
         # First purpose
         if not context:
@@ -212,12 +231,13 @@ class account_invoice(models.Model):
                 # second purpose
                 if 'reference' in vals:
                     vals['reference'] = False
-
-        return super(account_invoice, self).create(cr, uid, vals, context=context)
+        return super(account_invoice, self).create(
+            cr, uid, vals, context=context)
 
     @api.multi
     def onchange_journal_id(self, journal_id=False):
-        '''We modify it so ff reference in values, we clean it for argentinian companies as it will be used for invoice number
+        '''We modify it so ff reference in values, we clean it for argentinian
+        companies as it will be used for invoice number
         '''
         res = super(account_invoice, self).onchange_journal_id(
             journal_id=journal_id)
@@ -236,7 +256,8 @@ class account_invoice(models.Model):
         # We write reference field with next invoice number by document type
         for obj_inv in self:
             invtype = obj_inv.type
-            # if we have a journal_document_class_id is beacuse we are in a company that use this function
+            # if we have a journal_document_class_id is beacuse we are in a
+            # company that use this function
             # also if it has a reference number we use it (for example when
             # cancelling for modification)
             if obj_inv.journal_document_class_id and not obj_inv.reference:
@@ -251,8 +272,8 @@ class account_invoice(models.Model):
                 obj_inv.write({'reference': reference})
         res = super(account_invoice, self).action_move_create()
 
-        # We need the move to be reated in order to read the move_id as following
-        # on created moves we write the document type
+        # We need the move to be reated in order to read the move_id as
+        # following on created moves we write the document type
         for obj_inv in self:
             invtype = obj_inv.type
             # if we have a journal_document_class_id is beacuse we are in a
@@ -275,7 +296,9 @@ class account_invoice(models.Model):
             journal_type = False
         return journal_type
 
-    def get_valid_document_letters(self, cr, uid, partner_id, journal_type, company_id=False, context=None):
+    def get_valid_document_letters(
+            self, cr, uid, partner_id, journal_type,
+            company_id=False, context=None):
         if context is None:
             context = {}
 
@@ -289,7 +312,7 @@ class account_invoice(models.Model):
 
         partner = partner.commercial_partner_id
 
-        if company_id == False:
+        if not company_id:
             company_id = context.get('company_id', user.company_id.id)
         company = self.pool.get('res.company').browse(
             cr, uid, company_id, context)
@@ -309,14 +332,18 @@ class account_invoice(models.Model):
                              _('Please, set your company responsability in the company partner before continue.'))
 
         document_letter_ids = document_letter_obj.search(cr, uid, [(
-            'issuer_ids', 'in', issuer_responsability_id), ('receptor_ids', 'in', receptor_responsability_id)], context=context)
+            'issuer_ids', 'in', issuer_responsability_id),
+            ('receptor_ids', 'in', receptor_responsability_id)],
+            context=context)
         return document_letter_ids
 
-    def on_change_journal_document_class_id(self, cr, uid, ids, journal_document_class_id):
+    def on_change_journal_document_class_id(
+            self, cr, uid, ids, journal_document_class_id):
         result = {}
         next_invoice_number = False
         if journal_document_class_id:
-            journal_document_class = self.pool['account.journal.afip_document_class'].browse(
+            journal_document_class = self.pool[
+                'account.journal.afip_document_class'].browse(
                 cr, uid, journal_document_class_id)
             if journal_document_class.sequence_id:
                 next_invoice_number = journal_document_class.sequence_id.number_next

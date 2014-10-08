@@ -6,7 +6,7 @@
             <field name="apply_to_model_id" ref="purchase.model_purchase_order"/>            
             <field name="override_values" eval="False"/>
             <field name="value_type">text</field>
-            <field name="value_text">PRESUPUESTO</field>
+            <field name="value_text">PEDIDO DE PRESUPUESTO</field>
         </record> 
         <record model="report.configuration.default" id="report_configuration_purchase_progress_title">
             <field name="name">progress_title</field>

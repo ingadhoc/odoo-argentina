@@ -41,8 +41,10 @@ def _calc_concept(product_types):
 
 
 class invoice_line(models.Model):
+
     """TODO borrar esto, usamos esta funcion solo apra el compute_all que tmb queremos borrar de la clase invoice"""
     _inherit = "account.invoice.line"
+
     def compute_all(self, cr, uid, ids, tax_filter=None, context=None):
         res = {}
         tax_obj = self.pool.get('account.tax')
@@ -51,21 +53,23 @@ class invoice_line(models.Model):
         for line in self.browse(cr, uid, ids):
             _quantity = line.quantity
             _discount = line.discount
-            _price = line.price_unit * (1-(_discount or 0.0)/100.0)
+            _price = line.price_unit * (1 - (_discount or 0.0) / 100.0)
             _tax_ids = filter(_tax_filter, line.invoice_line_tax_id)
             taxes = tax_obj.compute_all(cr, uid,
                                         _tax_ids, _price, _quantity,
                                         product=line.product_id,
                                         partner=line.invoice_id.partner_id)
 
-            _round = (lambda x: cur_obj.round(cr, uid, line.invoice_id.currency_id, x)) if line.invoice_id else (lambda x: x)
+            _round = (lambda x: cur_obj.round(
+                cr, uid, line.invoice_id.currency_id, x)) if line.invoice_id else (lambda x: x)
             res[line.id] = {
                 'amount_untaxed': _round(taxes['total']),
-                'amount_tax': _round(taxes['total_included'])-_round(taxes['total']),
-                'amount_total': _round(taxes['total_included']), 
+                'amount_tax': _round(taxes['total_included']) - _round(taxes['total']),
+                'amount_total': _round(taxes['total_included']),
                 'taxes': taxes['taxes'],
             }
-        return res.get(len(ids)==1 and ids[0], res)
+        return res.get(len(ids) == 1 and ids[0], res)
+
 
 class invoice(models.Model):
     _inherit = "account.invoice"
@@ -75,7 +79,7 @@ class invoice(models.Model):
         'invoice_line',
         'invoice_line.product_id',
         'invoice_line.product_id.type',
-        )
+    )
     def _get_concept(self):
         product_types = set(
             [line.product_id.type for line in self.invoice_line])
@@ -115,7 +119,6 @@ class invoice(models.Model):
         'AFIP Status',
         copy=False,
         readonly=True)
-
 
     def valid_batch(self, cr, uid, ids, *args):
         """
@@ -177,17 +180,17 @@ class invoice(models.Model):
             r[inv.id] = []
 
             for tax in inv.tax_line:
-                #TODO, mejorar esto, muy feo y no se para que
-                if tax.account_id.name == 'IVA a pagar':
-                    continue
                 if tax.tax_code_id:
-                    r[inv.id].append({
-                        'Id': tax.tax_code_id.parent_afip_code,
-                        'Desc': tax.tax_code_id.name,
-                        'BaseImp': tax.base_amount,
-                        'Alic': (tax.tax_amount / tax.base_amount),
-                        'Importe': tax.tax_amount,
-                    })
+                    if tax.tax_code_id.vat_tax:
+                        continue
+                    else:
+                        r[inv.id].append({
+                            'Id': tax.tax_code_id.parent_afip_code,
+                            'Desc': tax.tax_code_id.name,
+                            'BaseImp': tax.base_amount,
+                            'Alic': (tax.tax_amount / tax.base_amount),
+                            'Importe': tax.tax_amount,
+                        })
                 else:
                     raise osv.except_osv(_(u'TAX without tax-code'),
                                          _(u'Please, check if you set tax code for invoice or refund to tax %s.') % tax.name)
@@ -202,13 +205,18 @@ class invoice(models.Model):
             r[inv.id] = []
 
             for tax in inv.tax_line:
-                if tax.account_id.name != 'IVA a pagar':
-                    continue
-                r[inv.id].append({
-                    'Id': tax.tax_code_id.parent_afip_code,
-                    'BaseImp': tax.base_amount,
-                    'Importe': tax.tax_amount,
-                })
+                if tax.tax_code_id:
+                    if not tax.tax_code_id.vat_tax:
+                        continue
+                    else:
+                        r[inv.id].append({
+                            'Id': tax.tax_code_id.parent_afip_code,
+                            'BaseImp': tax.base_amount,
+                            'Importe': tax.tax_amount,
+                        })
+                else:
+                    raise osv.except_osv(_(u'TAX without tax-code'),
+                                         _(u'Please, check if you set tax code for invoice or refund to tax %s.') % tax.name)
 
         return r[ids] if isinstance(ids, int) else r
 
@@ -244,27 +252,29 @@ class invoice(models.Model):
             amounts = []
             for line in inv.invoice_line:
                 if line_filter(line):
-                    amounts.append(line.compute_all(tax_filter=tax_filter, context=context))
+                    amounts.append(
+                        line.compute_all(tax_filter=tax_filter, context=context))
 
             s = {
-                 'amount_total': 0,
-                 'amount_tax': 0,
-                 'amount_untaxed': 0,
-                 'taxes': [],
-                }
+                'amount_total': 0,
+                'amount_tax': 0,
+                'amount_untaxed': 0,
+                'taxes': [],
+            }
             for amount in amounts:
                 for key, value in amount.items():
                     s[key] = s.get(key, 0) + value
 
             res[inv.id] = s
 
-        return res.get(len(ids)==1 and ids[0], res)
+        return res.get(len(ids) == 1 and ids[0], res)
 
     @api.multi
     def action_number(self):
-        print 'self.number', self.reference
-        # self.action_retrieve_cae()
-        return super(invoice, self).action_number()
+        self.valid_batch()
+        self.action_retrieve_cae()
+        res = super(invoice, self).action_number()
+        return res
 
     def action_retrieve_cae(self, cr, uid, ids, context=None):
         """
@@ -300,12 +310,11 @@ class invoice(models.Model):
             Servers[conn.id] = conn.server_id.id
 
             # Take the last number of the "number".
-            # Could not work if your number have not 8 digits.
-            invoice_number = int(re_number.search(inv.reference).group())
-            # invoice_number = int(re_number.search(inv.number).group())
+            invoice_number = inv.next_invoice_number
 
             _f_date = lambda d: d and d.replace('-', '')
-
+            print 'self.get_taxes(cr, uid, inv.id)}', self.get_taxes(cr, uid, inv.id)
+            print 'inv.currency_id.afip_code', inv.currency_id.afip_code
             # Build request dictionary
             if conn.id not in Requests:
                 Requests[conn.id] = {}
@@ -336,7 +345,7 @@ class invoice(models.Model):
                 'Opcionales': {'Opcional': self.get_optionals(cr, uid, inv.id)},
             }.iteritems() if v is not None)
             Inv2id[invoice_number] = inv.id
-
+        print 'Requests', Requests
         for c_id, req in Requests.iteritems():
             conn = conn_obj.browse(cr, uid, c_id)
             res = serv_obj.wsfe_get_cae(

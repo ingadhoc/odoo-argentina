@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
-from openerp.osv import fields, osv
+from openerp.osv import fields
+from openerp import fields as new_fields
+from openerp import api, models
 
-class afip_tax_code(osv.osv):
+
+class afip_tax_code(models.Model):
     _inherit = 'account.tax.code'
 
     def _get_parent_afip_code(self, cr, uid, ids, field_name, args, context=None):
@@ -13,7 +16,8 @@ class afip_tax_code(osv.osv):
                 r[_id] = tc['afip_code']
             elif tc['parent_id']:
                 p_id = tc['parent_id'][0]
-                r[_id] = self._get_parent_afip_code(cr, uid, [p_id], None, None)[p_id]
+                r[_id] = self._get_parent_afip_code(
+                    cr, uid, [p_id], None, None)[p_id]
             else:
                 r[_id] = 0
 
@@ -37,7 +41,8 @@ class afip_tax_code(osv.osv):
 
         return r
 
-class account_move(osv.osv):
+
+class account_move(models.Model):
     _inherit = "account.move"
 
     def _get_document_data(self, cr, uid, ids, name, arg, context=None):
@@ -46,26 +51,45 @@ class account_move(osv.osv):
         for record in self.browse(cr, uid, ids, context=context):
             document_number = False
             if record.model and record.res_id:
-                document_number = self.pool[record.model].browse(cr, uid, record.res_id, context=context).document_number
+                document_number = self.pool[record.model].browse(
+                    cr, uid, record.res_id, context=context).document_number
             res[record.id] = document_number
         return res
 
-    _columns = {
-        'document_class_id': fields.many2one('afip.document_class', 'Document Type', readonly=True),
-    }
+    document_class_id = new_fields.Many2one(
+        'afip.document_class',
+        'Document Type',
+        copy=False,
+        # readonly=True
+    )
+    afip_document_number = new_fields.Char(
+        string='Document Number',
+        copy=False,)
 
-class account_journal_afip_document_class(osv.osv):
+    @api.one
+    @api.depends('afip_document_number', 'name')
+    def _get_document_number(self):
+        self.document_number = self.afip_document_number or self.name
+
+    document_number = new_fields.Char(
+        compute='_get_document_number',
+        string='Document Number',
+        readonly=True,
+        store=True)
+
+
+class account_journal_afip_document_class(models.Model):
     _name = "account.journal.afip_document_class"
     _description = "Journal Afip Documents"
 
     def name_get(self, cr, uid, ids, context=None):
-        result= []
+        result = []
         for record in self.browse(cr, uid, ids, context=context):
-            result.append((record.id,record.afip_document_class_id.name))
+            result.append((record.id, record.afip_document_class_id.name))
         return result
 
     _order = 'journal_id desc, sequence, id'
-    
+
     _columns = {
         'afip_document_class_id': fields.many2one('afip.document_class', 'Document Type', required=True),
         'sequence_id': fields.many2one('ir.sequence', 'Entry Sequence', required=False, help="This field contains the information related to the numbering of the documents entries of this document type."),
@@ -73,23 +97,26 @@ class account_journal_afip_document_class(osv.osv):
         'sequence': fields.integer('Sequence',),
     }
 
-class account_journal(osv.osv):
+
+class account_journal(models.Model):
     _inherit = "account.journal"
     _columns = {
-        'journal_document_class_ids': fields.one2many('account.journal.afip_document_class','journal_id','Documents Class',),
+        'journal_document_class_ids': fields.one2many('account.journal.afip_document_class', 'journal_id', 'Documents Class',),
         'point_of_sale_id': fields.many2one('afip.point_of_sale', 'Point of sale'),
         'point_of_sale': fields.related(
-            'point_of_sale_id', 'number', type='integer', string='Point of sale', readonly=True), #for compatibility
+            'point_of_sale_id', 'number', type='integer', string='Point of sale', readonly=True),  # for compatibility
         'use_documents': fields.boolean('Use Documents?'),
     }
 
-class res_currency(osv.osv):
+
+class res_currency(models.Model):
     _inherit = "res.currency"
     _columns = {
         'afip_code': fields.char('AFIP Code', size=4),
     }
 
-class account_tax_code(osv.osv):
+
+class account_tax_code(models.Model):
     _inherit = "account.tax.code"
     _columns = {
         'vat_tax': fields.boolean('VAT Tax?', help="If VAT tax then it will or not be printed on invoices acording partners responsabilities, also, it will or not be use on vat declaration"),

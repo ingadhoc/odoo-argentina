@@ -55,6 +55,7 @@
                       'view/invoice_view.xml',
                       'view/account_move_view.xml',
                       'view/config_view.xml',
+                      'view/currency_view.xml',
                       # 'view/report_invoice.xml',
                       'security/ir.model.access.csv',
                       'security/l10n_ar_invoice_security.xml',

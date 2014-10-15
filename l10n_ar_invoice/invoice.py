@@ -39,8 +39,10 @@ class account_invoice_line(models.Model):
                                         partner=line.invoice_id.partner_id)
             other_taxes_amount = _round(taxes['total_included']) - _round(taxes['total'])
 
+            # TODO: tal vez mejorar esto de que se buscan los iva por el que tiene padre llamado "IVA"
+            # Antes habiamos agregado un vampo vat_tax en los code pero el tema es que tambien hay que agregarlo en el template de los tax code y en los planes de cuenta, resulta medio engorroso
             vat_taxes = [
-                x for x in line.invoice_line_tax_id if x.tax_code_id.vat_tax]
+                x for x in line.invoice_line_tax_id if x.tax_code_id.parent_id.name == 'IVA']
             taxes = tax_obj.compute_all(cr, uid,
                                         vat_taxes, printed_price_net, 1,
                                         product=line.product_id,

@@ -51,7 +51,6 @@
                       'view/afip_point_of_sale_view.xml',
                       'view/account_journal_afip_document_class_view.xml',
                       'view/journal_view.xml',
-                      'view/tax_code_view.xml',
                       'view/invoice_view.xml',
                       'view/account_move_view.xml',
                       'view/config_view.xml',

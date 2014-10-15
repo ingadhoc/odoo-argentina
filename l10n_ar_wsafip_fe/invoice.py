@@ -187,7 +187,7 @@ class invoice(models.Model):
         res = []
         for tax in self.tax_line:
             if tax.tax_code_id:
-                if tax.tax_code_id.vat_tax:
+                if tax.tax_code_id.parent_id.name == 'IVA':
                     continue
                 else:
                     res.append({
@@ -208,7 +208,7 @@ class invoice(models.Model):
         res = []
         for tax in self.tax_line:
             if tax.tax_code_id:
-                if not tax.tax_code_id.vat_tax:
+                if tax.tax_code_id.parent_id.name != 'IVA':
                     continue
                 else:
                     res.append({

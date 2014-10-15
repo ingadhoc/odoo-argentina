@@ -21,14 +21,14 @@ API y GUI para acceder a las Web Services de Factura Electrónica de la AFIP
         'views/invoice_view.xml',
         'views/journal_afip_document_class_view.xml',
         'views/wsfe_error_view.xml',
-        'views/res_config_view.xml',
         'views/wsafip_fe_config_view.xml',
         'data/afip.wsfe_error.csv',
         'data/wsafip_server.xml',
         'security/wsafip_fe_security.xml',
         'security/ir.model.access.csv',
         'wizard/query_invoices_view.xml',
-        'wizard/validate_invoices_view.xml'
+        'wizard/validate_invoices_view.xml',
+        'views/res_config_view.xml',
     ],
     'version': '2.7.244',
  }

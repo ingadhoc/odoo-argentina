@@ -2,7 +2,7 @@
 <openerp>
     <data>
         <record id="account.email_template_edi_invoice" model="email.template">
-            <field name="report_template" ref="l10n_ar_aeroo_invoice.action_aeroo_report_ar_invoice"/>
+            <field name="report_template" ref="l10n_ar_aeroo_einvoice.action_aeroo_report_ar_einvoice"/>
         </record>
     </data>
 </openerp>

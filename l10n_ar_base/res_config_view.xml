@@ -62,6 +62,11 @@
 								<field name="module_l10n_ar_invoice"
 									class="oe_inline" />
 								<label for="module_l10n_ar_invoice" />
+							</div>	
+							<div name='module_l10n_ar_wsafip_fe'>
+								<field name="module_l10n_ar_wsafip_fe"
+									class="oe_inline" />
+								<label for="module_l10n_ar_wsafip_fe" />
 							</div>							
 						</div>
 					</group>
@@ -83,7 +88,7 @@
 							</div>							
 						</div>
 					</group>
-					<group>
+<!-- 					<group>
 						<label for="id" string="Qweb Reports" />
 						<div name="reports">
 							<div name='module_l10n_ar_report_invoice'>
@@ -112,7 +117,7 @@
 								<label for="module_l10n_ar_report_receipt" />
 							</div>								
 						</div>
-					</group>
+					</group> -->
 					<group>
 						<label for="id" string="Aeroo Reports" />
 						<div name="reports">
@@ -120,6 +125,11 @@
 								<field name="module_l10n_ar_aeroo_invoice"
 									class="oe_inline" />
 								<label for="module_l10n_ar_aeroo_invoice" />
+							</div>
+							<div name='module_l10n_ar_aeroo_einvoice'>
+								<field name="module_l10n_ar_aeroo_einvoice"
+									class="oe_inline" />
+								<label for="module_l10n_ar_aeroo_einvoice" />
 							</div>
 							<div name='module_l10n_ar_aeroo_stock'>
 								<field name="module_l10n_ar_aeroo_stock"

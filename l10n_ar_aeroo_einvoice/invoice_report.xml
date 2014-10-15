@@ -6,7 +6,7 @@
             <field name="name">Argentinian Aeroo Electronic Invoice</field>
             <field name="type">ir.actions.report.xml</field>
             <field name="model">account.invoice</field>
-            <field name="sequence" eval="8"/>  
+            <field name="sequence" eval="5"/>  
             <field name="report_name">aeroo_report_ar_einvoice</field>
             <field name="report_type">aeroo</field>
             <field name="in_format">oo-odt</field>

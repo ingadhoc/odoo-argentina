@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from openerp.osv import fields, osv
+from openerp.osv import osv
 from openerp.tools.translate import _
 from suds.client import Client
 from suds import WebFault
 import logging
-import sys
 from sslhttps import HttpsTransport
+from openerp.exceptions import Warning
 
 # logging.getLogger('suds.transport').setLevel(logging.DEBUG)
 
@@ -498,10 +498,11 @@ class wsafip_server(osv.osv):
                 raise osv.except_osv(_(u'AFIP Web service error'),
                                      _(u'System return error: %s') % e[0])
             except Exception as e:
-                _logger.error('AFIP Web service error!: (%i) %s' % (e[0], e[1]))
-                raise osv.except_osv(_(u'AFIP Web service error'),
-                                     _(u'System return error %i: %s') % (e[0], e[1]))
-                                     
+                _logger.error('AFIP Web service error!: %s' % (str(e)))
+                raise Warning(_(
+                    'AFIP Web service error, System return error "%s"' %
+                    (str(e))))
+
             soapRequest = [{'FeCabReq': {
                 'CantReg': len(invoice_request),
                 'PtoVta': invoice_request[first]['PtoVta'],

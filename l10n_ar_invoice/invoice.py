@@ -30,13 +30,29 @@ class account_invoice_line(models.Model):
             printed_price_subtotal = printed_price_net * quantity
 
             afip_document_class_id = line.invoice_id.journal_document_class_id.afip_document_class_id
+
+            not_vat_taxes = [
+                x for x in line.invoice_line_tax_id if not x.tax_code_id.vat_tax]
+            taxes = tax_obj.compute_all(cr, uid,
+                                        not_vat_taxes, printed_price_net, 1,
+                                        product=line.product_id,
+                                        partner=line.invoice_id.partner_id)
+            other_taxes_amount = _round(taxes['total_included']) - _round(taxes['total'])
+
+            vat_taxes = [
+                x for x in line.invoice_line_tax_id if x.tax_code_id.vat_tax]
+            taxes = tax_obj.compute_all(cr, uid,
+                                        vat_taxes, printed_price_net, 1,
+                                        product=line.product_id,
+                                        partner=line.invoice_id.partner_id)
+            vat_amount = _round(taxes['total_included']) - _round(taxes['total'])
+
+            exempt_amount = 0.0
+            if not vat_taxes:
+                exempt_amount = _round(taxes['total_included'])
+
+            # For document that not discriminate we include the prices
             if afip_document_class_id and not afip_document_class_id.vat_discriminated:
-                vat_taxes = [
-                    x for x in line.invoice_line_tax_id if x.tax_code_id.vat_tax]
-                taxes = tax_obj.compute_all(cr, uid,
-                                            vat_taxes, printed_price_net, 1,
-                                            product=line.product_id,
-                                            partner=line.invoice_id.partner_id)
                 printed_price_unit = _round(
                     taxes['total_included'] * (1 + (discount or 0.0) / 100.0))
                 printed_price_net = _round(taxes['total_included'])
@@ -47,6 +63,9 @@ class account_invoice_line(models.Model):
                 'printed_price_unit': printed_price_unit,
                 'printed_price_net': printed_price_net,
                 'printed_price_subtotal': printed_price_subtotal,
+                'vat_amount': vat_amount,
+                'other_taxes_amount': other_taxes_amount,
+                'exempt_amount': exempt_amount,
             }
         return res
 
@@ -63,6 +82,18 @@ class account_invoice_line(models.Model):
             _printed_prices, type='float',
             digits_compute=dp.get_precision('Account'),
             string='Subtotal', multi='printed'),
+        'vat_amount': old_fields.function(
+            _printed_prices, type='float',
+            digits_compute=dp.get_precision('Account'),
+            string='Vat Amount', multi='printed'),
+        'other_taxes_amount': old_fields.function(
+            _printed_prices, type='float',
+            digits_compute=dp.get_precision('Account'),
+            string='Other Taxes Amount', multi='printed'),
+        'exempt_amount': old_fields.function(
+            _printed_prices, type='float',
+            digits_compute=dp.get_precision('Account'),
+            string='Exempt Amount', multi='printed'),
     }
 
 
@@ -76,6 +107,15 @@ class account_invoice(models.Model):
             printed_amount_untaxed = invoice.amount_untaxed
             printed_tax_ids = [x.id for x in invoice.tax_line]
 
+            vat_amount = sum(
+                line.vat_amount for line in invoice.invoice_line)
+            vat_amount = sum(
+                line.vat_amount for line in invoice.invoice_line)
+            other_taxes_amount = sum(
+                line.other_taxes_amount for line in invoice.invoice_line)
+            exempt_amount = sum(
+                line.exempt_amount for line in invoice.invoice_line)
+
             afip_document_class_id = invoice.journal_document_class_id.afip_document_class_id
             if afip_document_class_id and not afip_document_class_id.vat_discriminated:
                 printed_amount_untaxed = sum(
@@ -86,6 +126,9 @@ class account_invoice(models.Model):
                 'printed_amount_untaxed': printed_amount_untaxed,
                 'printed_tax_ids': printed_tax_ids,
                 'printed_amount_tax': invoice.amount_total - printed_amount_untaxed,
+                'vat_amount': vat_amount,
+                'other_taxes_amount': other_taxes_amount,
+                'exempt_amount': exempt_amount,
             }
         return res
 
@@ -102,6 +145,18 @@ class account_invoice(models.Model):
             _printed_prices,
             type='one2many', relation='account.invoice.tax', string='Tax',
             multi='printed'),
+        'exempt_amount': old_fields.function(
+            _printed_prices, type='float',
+            digits_compute=dp.get_precision('Account'),
+            string='Exempt Amount', multi='printed'),
+        'vat_amount': old_fields.function(
+            _printed_prices, type='float',
+            digits_compute=dp.get_precision('Account'),
+            string='Vat Amount', multi='printed'),
+        'other_taxes_amount': old_fields.function(
+            _printed_prices, type='float',
+            digits_compute=dp.get_precision('Account'),
+            string='Other Taxes Amount', multi='printed')
     }
 
     @api.multi

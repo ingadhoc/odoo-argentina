@@ -10,7 +10,26 @@
                     <field name='afip_connection_id'/>
                     <field name='afip_state'/>
                     <field name='afip_items_generated'/>
+                    <button name="get_afip_items_generated" icon="gtk-refresh" string="Update Number of Invoices Generated" type="object"/>
                 </tree>
+            </field>
+        </record>
+
+        <record id="view_journal_afip_document_class_form" model="ir.ui.view">
+            <field name="name">Journal Afip Documents Form</field>
+            <field name="model">account.journal.afip_document_class</field>
+            <field name="inherit_id" ref="l10n_ar_invoice.view_journal_afip_document_class_form"/>
+            <field name="arch" type="xml">
+                <header>
+                    <button name="get_afip_items_generated" string="Refresh Afip Remote Data" type="object"/>
+                </header>
+                <group>
+                    <group>
+                        <field name='afip_connection_id'/>
+                        <field name='afip_state'/>
+                        <field name='afip_items_generated'/>
+                    </group>
+                </group>
             </field>
         </record>
   </data>

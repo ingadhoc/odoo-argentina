@@ -12,5 +12,25 @@
                 </tree>
             </field>
         </record>
+        <record id="view_journal_afip_document_class_form" model="ir.ui.view">
+            <field name="name">Journal Afip Documents Form</field>
+            <field name="model">account.journal.afip_document_class</field>
+            <field name="arch" type="xml">
+                <form string="Journal AFIP Documents">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="sequence"/>
+                                <field name="journal_id"/>
+                                <field name="afip_document_class_id"/>
+                                <field name="sequence_id" required="True"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
     </data>
 </openerp>

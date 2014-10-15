@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import fields, models, api, _
+from openerp import fields, models, api
 import logging
 import urllib2
 
@@ -51,7 +51,7 @@ class account_journal_afip_document_class(models.Model):
         self.afip_state = afip_state
 
     @api.one
-    def _get_afip_items_generated(self):
+    def get_afip_items_generated(self):
         glin = lambda conn, ps, jc: conn.server_id.wsfe_get_last_invoice_number(
             conn.id, ps, jc)[conn.server_id.id]
         afip_items_generated = False
@@ -98,7 +98,7 @@ class account_journal_afip_document_class(models.Model):
         ],
         help="Connect to the AFIP and check service status.")
     afip_items_generated = fields.Integer(
-        compute='_get_afip_items_generated',
+        readonly=True,
         string='Number of Invoices Generated',
         help="Connect to the AFIP and check how many invoices was generated.")
 

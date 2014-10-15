@@ -4,6 +4,7 @@ from openerp.osv import osv
 from openerp.osv.orm import browse_null
 import re
 import logging
+from openerp.exceptions import Warning
 
 _logger = logging.getLogger(__name__)
 
@@ -38,37 +39,6 @@ def _calc_concept(product_types):
     else:
         concept = False
     return concept
-
-
-class invoice_line(models.Model):
-
-    """TODO borrar esto, usamos esta funcion solo apra el compute_all que tmb queremos borrar de la clase invoice"""
-    _inherit = "account.invoice.line"
-
-    def compute_all(self, cr, uid, ids, tax_filter=None, context=None):
-        res = {}
-        tax_obj = self.pool.get('account.tax')
-        cur_obj = self.pool.get('res.currency')
-        _tax_filter = tax_filter
-        for line in self.browse(cr, uid, ids):
-            _quantity = line.quantity
-            _discount = line.discount
-            _price = line.price_unit * (1 - (_discount or 0.0) / 100.0)
-            _tax_ids = filter(_tax_filter, line.invoice_line_tax_id)
-            taxes = tax_obj.compute_all(cr, uid,
-                                        _tax_ids, _price, _quantity,
-                                        product=line.product_id,
-                                        partner=line.invoice_id.partner_id)
-
-            _round = (lambda x: cur_obj.round(
-                cr, uid, line.invoice_id.currency_id, x)) if line.invoice_id else (lambda x: x)
-            res[line.id] = {
-                'amount_untaxed': _round(taxes['total']),
-                'amount_tax': _round(taxes['total_included']) - _round(taxes['total']),
-                'amount_total': _round(taxes['total_included']),
-                'taxes': taxes['taxes'],
-            }
-        return res.get(len(ids) == 1 and ids[0], res)
 
 
 class invoice(models.Model):
@@ -120,182 +90,96 @@ class invoice(models.Model):
         copy=False,
         readonly=True)
 
-    def valid_batch(self, cr, uid, ids, *args):
-        """
-        Increment batch number groupping by afip connection server.
-        """
-        seq_obj = self.pool.get('ir.sequence')
-        conns = []
-        invoices = {}
-        for inv in self.browse(cr, uid, ids):
-            if not inv.journal_document_class_id:
-                continue
-            conn = inv.journal_document_class_id.afip_connection_id
-            if not conn:
-                continue
-            if inv.journal_document_class_id.afip_items_generated + 1 != inv.journal_document_class_id.sequence_id.number_next:
-                raise osv.except_osv(_(u'Syncronization Error'),
-                                     _(u'La AFIP espera que el próximo número de secuencia sea %i, pero el sistema indica que será %i. Hable inmediatamente con su administrador del sistema para resolver este problema.') %
-                                     (inv.journal_document_class_id.afip_items_generated + 1, inv.journal_document_class_id.sequence_id.number_next))
-            conns.append(conn)
-            invoices[conn.id] = invoices.get(conn.id, []) + [inv.id]
+    @api.multi
+    def action_cancel(self):
+        for inv in self:
+            if self.afip_cae:
+                raise osv.except_orm(
+                    _('Error!'),
+                    _('Cancellation of electronic invoices is not implemented yet.'))
+        return super(invoice, self).action_cancel()
 
-        for conn in conns:
-            prefix = conn.batch_sequence_id.prefix or ''
-            suffix = conn.batch_sequence_id.suffix or ''
-            sid_re = re.compile('%s(\d*)%s' % (prefix, suffix))
-            sid = seq_obj.next_by_id(cr, uid, conn.batch_sequence_id.id)
-            self.write(cr, uid, invoices[conn.id], {
-                'afip_batch_number': int(sid_re.search(sid).group(1)),
-            })
-
-        return True
-
-    def get_related_invoices(self, cr, uid, ids, *args):
+    @api.one
+    def get_related_invoices(self):
         """
         List related invoice information to fill CbtesAsoc
         """
-        r = {}
-        _ids = [ids] if isinstance(ids, int) else ids
+        res = []
+        rel_invoices = self.search([
+            ('number', '=', self.origin),
+            ('state', 'not in',
+                ['draft', 'proforma', 'proforma2', 'cancel'])])
+        for rel_inv in rel_invoices:
+            journal = rel_inv.journal_id
+            res.append({
+                'Tipo': rel_inv.afip_document_class_id.afip_code,
+                'PtoVta': journal.point_of_sale,
+                'Nro': rel_inv.number,
+            })
+        return res
 
-        for inv in self.browse(cr, uid, _ids):
-            r[inv.id] = []
-            rel_inv_ids = self.search(cr, uid, [('number', '=', inv.origin),
-                                                ('state', 'not in', ['draft', 'proforma', 'proforma2', 'cancel'])])
-            for rel_inv in self.browse(cr, uid, rel_inv_ids):
-                journal = rel_inv.journal_id
-                r[inv.id].append({
-                    'Tipo': rel_inv.journal_document_class_id.afip_document_class_id.afip_code,
-                    'PtoVta': journal.point_of_sale,
-                    'Nro': rel_inv.number,
-                })
-
-        return r[ids] if isinstance(ids, int) else r
-
-    def get_taxes(self, cr, uid, ids, *args):
-        r = {}
-        _ids = [ids] if isinstance(ids, int) else ids
-
-        for inv in self.browse(cr, uid, _ids):
-            r[inv.id] = []
-
-            for tax in inv.tax_line:
-                if tax.tax_code_id:
-                    if tax.tax_code_id.vat_tax:
-                        continue
-                    else:
-                        r[inv.id].append({
-                            'Id': tax.tax_code_id.parent_afip_code,
-                            'Desc': tax.tax_code_id.name,
-                            'BaseImp': tax.base_amount,
-                            'Alic': (tax.tax_amount / tax.base_amount),
-                            'Importe': tax.tax_amount,
-                        })
+    @api.one
+    def get_taxes(self):
+        res = []
+        for tax in self.tax_line:
+            if tax.tax_code_id:
+                if tax.tax_code_id.vat_tax:
+                    continue
                 else:
-                    raise osv.except_osv(_(u'TAX without tax-code'),
-                                         _(u'Please, check if you set tax code for invoice or refund to tax %s.') % tax.name)
+                    res.append({
+                        'Id': tax.tax_code_id.parent_afip_code,
+                        'Desc': tax.tax_code_id.name,
+                        'BaseImp': tax.base_amount,
+                        'Alic': (tax.tax_amount / tax.base_amount),
+                        'Importe': tax.tax_amount,
+                    })
+            else:
+                raise Warning(_('TAX without tax-code!\
+                     Please, check if you set tax code for invoice or \
+                     refund on tax %s.') % tax.name)
+        return res
 
-        return r[ids] if isinstance(ids, int) else r
-
-    def get_vat(self, cr, uid, ids, *args):
-        r = {}
-        _ids = [ids] if isinstance(ids, int) else ids
-
-        for inv in self.browse(cr, uid, _ids):
-            r[inv.id] = []
-
-            for tax in inv.tax_line:
-                if tax.tax_code_id:
-                    if not tax.tax_code_id.vat_tax:
-                        continue
-                    else:
-                        r[inv.id].append({
-                            'Id': tax.tax_code_id.parent_afip_code,
-                            'BaseImp': tax.base_amount,
-                            'Importe': tax.tax_amount,
-                        })
+    @api.one
+    def get_vat(self):
+        res = []
+        for tax in self.tax_line:
+            if tax.tax_code_id:
+                if not tax.tax_code_id.vat_tax:
+                    continue
                 else:
-                    raise osv.except_osv(_(u'TAX without tax-code'),
-                                         _(u'Please, check if you set tax code for invoice or refund to tax %s.') % tax.name)
-
-        return r[ids] if isinstance(ids, int) else r
-
-    def get_optionals(self, cr, uid, ids, *args):
-        optional_type_obj = self.pool.get('afip.optional_type')
-
-        r = {}
-        _ids = [ids] if isinstance(ids, int) else ids
-        optional_type_ids = optional_type_obj.search(cr, uid, [])
-
-        for inv in self.browse(cr, uid, _ids):
-            r[inv.id] = []
-            for optional_type in optional_type_obj.browse(cr, uid, optional_type_ids):
-                if optional_type.apply_rule and optional_type.value_computation:
-                    """
-                    Debería evaluar apply_rule para saber si esta opción se computa
-                    para esta factura. Y si se computa, se evalua value_computation
-                    sobre la factura y se obtiene el valor que le corresponda.
-                    Luego se debe agregar al output r.
-                    """
-                    raise NotImplemented
-
-        return r[ids] if isinstance(ids, int) else r
-
-    def compute_all(self, cr, uid, ids, line_filter=lambda line: True, tax_filter=lambda tax: True, context=None):
-        # TODO reemplazar esta funcion, tal vez directamente la podemos no usar, esta para las lineas de aca abajo
-                # 'ImpOpEx': inv.compute_all(line_filter=lambda line: len(line.invoice_line_tax_id) == 0)['amount_total'],
-                # 'ImpIVA': inv.compute_all(tax_filter=lambda tax: 'IVA' in _get_parents(tax.tax_code_id))['amount_tax'],
-                # 'ImpTrib': inv.compute_all(tax_filter=lambda tax: 'IVA' not in _get_parents(tax.tax_code_id))['amount_tax'],
-
-        res = {}
-        for inv in self.browse(cr, uid, ids, context=context):
-            amounts = []
-            for line in inv.invoice_line:
-                if line_filter(line):
-                    amounts.append(
-                        line.compute_all(tax_filter=tax_filter, context=context))
-
-            s = {
-                'amount_total': 0,
-                'amount_tax': 0,
-                'amount_untaxed': 0,
-                'taxes': [],
-            }
-            for amount in amounts:
-                for key, value in amount.items():
-                    s[key] = s.get(key, 0) + value
-
-            res[inv.id] = s
-
-        return res.get(len(ids) == 1 and ids[0], res)
+                    res.append({
+                        'Id': tax.tax_code_id.parent_afip_code,
+                        'BaseImp': tax.base_amount,
+                        'Importe': tax.tax_amount,
+                    })
+            else:
+                raise Warning(_('TAX without tax-code!\
+                     Please, check if you set tax code for invoice or \
+                     refund on tax %s.') % tax.name)
+        return res
 
     @api.multi
     def action_number(self):
-        self.valid_batch()
         self.action_retrieve_cae()
         res = super(invoice, self).action_number()
         return res
 
-    def action_retrieve_cae(self, cr, uid, ids, context=None):
+    @api.multi
+    def action_retrieve_cae(self):
         """
         Contact to the AFIP to get a CAE number.
         """
-        if context is None:
-            context = {}
-
-        conn_obj = self.pool.get('wsafip.connection')
-        serv_obj = self.pool.get('wsafip.server')
-        currency_obj = self.pool.get('res.currency')
+        conn_obj = self.env['wsafip.connection']
 
         Servers = {}
         Requests = {}
         Inv2id = {}
-        for inv in self.browse(cr, uid, ids, context=context):
+        for inv in self:
             journal = inv.journal_id
-            document_class = inv.journal_document_class_id.afip_document_class_id
+            document_class = inv.afip_document_class_id
             conn = inv.journal_document_class_id.afip_connection_id
 
-            # Ignore journals with cae
+            # Ignore invoices with cae
             if inv.afip_cae and inv.afip_cae_due:
                 continue
 
@@ -313,8 +197,7 @@ class invoice(models.Model):
             invoice_number = inv.next_invoice_number
 
             _f_date = lambda d: d and d.replace('-', '')
-            print 'self.get_taxes(cr, uid, inv.id)}', self.get_taxes(cr, uid, inv.id)
-            print 'inv.currency_id.afip_code', inv.currency_id.afip_code
+
             # Build request dictionary
             if conn.id not in Requests:
                 Requests[conn.id] = {}
@@ -331,28 +214,37 @@ class invoice(models.Model):
                 # TODO: Averiguar como calcular el Importe Neto no Gravado
                 'ImpTotConc': 0,
                 'ImpNeto': inv.amount_untaxed,
-                'ImpOpEx': inv.compute_all(line_filter=lambda line: len(line.invoice_line_tax_id) == 0)['amount_total'],
-                'ImpIVA': inv.compute_all(tax_filter=lambda tax: 'IVA' in _get_parents(tax.tax_code_id))['amount_tax'],
-                'ImpTrib': inv.compute_all(tax_filter=lambda tax: 'IVA' not in _get_parents(tax.tax_code_id))['amount_tax'],
+                # TODO cambiar la funcion de estos campos
+                # ESTE SON LOS QUE NO TIENEN IMPUESTOS, estan exentos
+                'ImpOpEx': inv.exempt_amount,
+                # 'ImpOpEx': inv.compute_all(line_filter=lambda line: len(line.invoice_line_tax_id) == 0)['amount_total'],
+                # ESTE TIENE QUE SER CON TODOS LOS IMPUESTOS QUE SEAN VAT
+                'ImpIVA': inv.vat_amount,
+                # 'ImpIVA': inv.compute_all(tax_filter=lambda tax: 'IVA' in _get_parents(tax.tax_code_id))['amount_tax'],
+                # ESTE TIENE QUE SER CON TODOS LOS IMPUESTOS QUE NO SEAN VAT
+                'ImpTrib': inv.other_taxes_amount,
+                # 'ImpTrib': inv.compute_all(tax_filter=lambda tax: 'IVA' not in _get_parents(tax.tax_code_id))['amount_tax'],
+
                 'FchServDesde': _f_date(inv.afip_service_start) if inv.afip_concept != '1' else None,
                 'FchServHasta': _f_date(inv.afip_service_end) if inv.afip_concept != '1' else None,
                 'FchVtoPago': _f_date(inv.date_due) if inv.afip_concept != '1' else None,
                 'MonId': inv.currency_id.afip_code,
-                'MonCotiz': currency_obj.compute(cr, uid, inv.currency_id.id, inv.company_id.currency_id.id, 1.),
-                'CbtesAsoc': {'CbteAsoc': self.get_related_invoices(cr, uid, inv.id)},
-                'Tributos': {'Tributo': self.get_taxes(cr, uid, inv.id)},
-                'Iva': {'AlicIva': self.get_vat(cr, uid, inv.id)},
-                'Opcionales': {'Opcional': self.get_optionals(cr, uid, inv.id)},
+                'MonCotiz': inv.currency_id.compute(
+                    1.,
+                    inv.company_id.currency_id),
+                'CbtesAsoc': {'CbteAsoc': inv.get_related_invoices()[0]},
+                'Tributos': {'Tributo': inv.get_taxes()[0]},
+                'Iva': {'AlicIva': inv.get_vat()[0]},
+                # TODO implementar los optionals
+                'Opcionales': {},
             }.iteritems() if v is not None)
             Inv2id[invoice_number] = inv.id
         print 'Requests', Requests
         for c_id, req in Requests.iteritems():
-            conn = conn_obj.browse(cr, uid, c_id)
-            res = serv_obj.wsfe_get_cae(
-                cr, uid, [conn.server_id.id], c_id, req)
+            res = conn_obj.browse(c_id).server_id.wsfe_get_cae(c_id, req)
             for k, v in res.iteritems():
                 if 'CAE' in v:
-                    self.write(cr, uid, Inv2id[k], {
+                    self.browse(Inv2id[k]).write({
                         'afip_cae': v['CAE'],
                         'afip_cae_due': v['CAEFchVto'],
                     })
@@ -366,103 +258,4 @@ class invoice(models.Model):
                     raise osv.except_osv(_(u'AFIP Validation Error'), msg)
 
         return True
-
-# TODO verificar esta
-    # def invoice_print(self, cr, uid, ids, context=None):
-    #     '''
-    #     This function prints the invoice and mark it as sent, so that we can see more easily the next step of the workflow
-    #     '''
-    #     assert len(
-    #         ids) == 1, 'This option should only be used for a single id at a time.'
-    #     self.write(cr, uid, ids, {'sent': True}, context=context)
-    #     datas = {
-    #         'ids': ids,
-    #         'model': 'account.invoice',
-    #         'form': self.read(cr, uid, ids[0], context=context)
-    #     }
-    #     is_electronic = bool(
-    #         self.browse(cr, uid, ids[0]).journal_id.afip_connection_id)
-    #     return {
-    #         'type': 'ir.actions.report.xml',
-    #         'report_name': 'account.invoice_fe' if is_electronic else 'account.invoice',
-    #         'datas': datas,
-    #         'nodestroy': True
-    #     }
-
-    def afip_get_currency_code(self, cr, uid, ids, currency_id, context=None):
-        """
-        Take the AFIP currency code. If not set update database.
-        """
-        currency_obj = self.pool.get('res.currency')
-
-        afip_code = currency_obj.read(
-            cr, uid, currency_id, ['afip_code'], context=context)
-
-        if not afip_code['afip_code']:
-            self.afip_update_currency(cr, uid, ids, context=context)
-
-            afip_code = currency_obj.read(
-                cr, uid, currency_id, ['afip_code'], context=context)
-
-        return afip_code['afip_code']
-
-    def afip_update_currency(self, cr, uid, ids, context=None):
-        """
-        Update currency codes from AFIP database.
-        """
-        for inv in self.browse(cr, uid, ids[:1], context=context):
-            auth = inv.afip_document_class_id.afip_connection_id
-
-            # Only process if set to connect to afip
-            if not auth:
-                continue
-
-            # Ignore invoice if connection server is not type WSFE.
-            if auth.server_id.code != 'wsfe':
-                continue
-
-            auth.login()  # Login if nescesary.
-
-            # Ignore if cant connect to server.
-            if auth.state not in ['connected', 'clockshifted']:
-                continue
-
-            # Build request
-            request = FEParamGetTiposMonedasSoapIn()
-            request = auth.set_auth_request(request)
-
-            response = get_bind(auth.server_id).FEParamGetTiposMonedas(request)
-
-        pass
-
-    def onchange_invoice_line(self, cr, uid, ids, invoice_line):
-        product_obj = self.pool.get('product.product')
-        invoice_line_obj = self.pool.get('account.invoice.line')
-        res = {}
-
-        product_types = set()
-
-        # Existing lines.
-        lines = {pid: d for a, pid, d in invoice_line if a in [1, 4]}
-        for l in invoice_line_obj.browse(cr, uid, lines.keys()):
-            if lines[l.id] and 'product_id' in lines[l.id]:
-                # Change product_id
-                product_types.update(
-                    [p.type for p in product_obj.browse(cr, uid, [lines[l.id]['product_id']])])
-            else:
-                # No change product_id
-                product_types.add(l.product_id.type)
-
-        # Inserted new lines
-        lines = [d for a, pid, d in invoice_line if a in [0]]
-        for d in lines:
-            if d and 'product_id' in d:
-                product_types.update(
-                    [p.type for p in product_obj.browse(cr, uid, [d['product_id']])])
-
-        if product_types:
-            res['value'] = {'afip_concept': _calc_concept(product_types)}
-
-        return res
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

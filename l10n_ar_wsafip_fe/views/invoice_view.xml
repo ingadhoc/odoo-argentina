@@ -17,10 +17,11 @@
                     <field name='afip_service_end' attrs="{'invisible':[('afip_concept','not in',['2','3'])],'required':[('afip_concept','in',['2','3'])]}"/>
                 </field>
                 <field name="move_id" position="after">
-                    <field name='afip_batch_number' invisible="1" readonly="1"/>
-                    <field name='afip_cae' readonly="1"/>
-                    <field name='afip_cae_due' readonly="1"/>
-                    <field name='afip_error_id' readonly="1"/>
+                    <field name='afip_batch_number' invisible="1"/>
+                    <field name='afip_cae'/>
+                    <field name='afip_cae_due'/>
+                    <!-- TODO falta implementar -->
+                    <!-- <field name='afip_error_id'/> -->
                 </field>
             </field>
         </record>

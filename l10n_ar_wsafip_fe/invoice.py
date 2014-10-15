@@ -61,14 +61,15 @@ class invoice(models.Model):
                    ('2', 'Service'),
                    ('3', 'Mixed')],
         string="AFIP concept",)
-    afip_result = fields.Selection(
-        [('', 'No CAE'), ('A', 'Accepted'),
-         ('R', 'Rejected'), ('O', 'Observed')],
-        'Status',
-        default="",
-        copy=False,
-        help='This state is asigned by the AFIP. If * No CAE * state mean you\
-        have no generate this invoice by ')
+# TODO ver si implementamos el afip result
+    # afip_result = fields.Selection(
+    #     [('', 'No CAE'), ('A', 'Accepted'),
+    #      ('R', 'Rejected'), ('O', 'Observed')],
+    #     'Status',
+    #     default="",
+    #     copy=False,
+    #     help='This state is asigned by the AFIP. If * No CAE * state mean you\
+    #     have no generate this invoice by ')
     afip_service_start = fields.Date(
         string='Service Start Date')
     afip_service_end = fields.Date(
@@ -80,15 +81,77 @@ class invoice(models.Model):
     afip_cae = fields.Char(
         copy=False,
         string='CAE number',
+        readonly=True,
         size=24)
     afip_cae_due = fields.Date(
         copy=False,
-        string='CAE due Date')
-    afip_error_id = fields.Many2one(
-        'afip.wsfe_error',
-        'AFIP Status',
-        copy=False,
-        readonly=True)
+        readonly=True,
+        string='CAE due Date',)
+# TODO ver si implementamos el error id
+    # afip_error_id = fields.Many2one(
+    #     'afip.wsfe_error',
+    #     'AFIP Status',
+    #     copy=False,
+    #     readonly=True)
+    afip_barcode = fields.Char(
+        compute='_get_barcode',
+        string='AFIP Barcode')
+    afip_barcode_img = fields.Binary(
+        compute='_get_barcode',
+        string='AFIP Barcode')
+
+    @api.one
+    @api.depends('afip_cae')
+    def _get_barcode(self):
+        barcode = False
+        if self.afip_cae:
+            cae_due = ''.join(
+                [c for c in str(self.afip_cae_due or '') if c.isdigit()])
+            barcode = ''.join([str(self.company_id.partner_id.vat[2:]),
+                               "%02d" % int(self.afip_document_class_id.afip_code),
+                               "%04d" % int(self.journal_id.point_of_sale),
+                               str(self.afip_cae), cae_due])
+            barcode = barcode + self.verification_digit_modulo10(barcode)
+        self.afip_barcode = barcode
+
+        "Generate the required barcode Interleaved of 7 image using PIL"
+        image = False
+        if barcode:
+            from pyi25 import PyI25
+            from cStringIO import StringIO as StringIO
+            # create the helper:
+            pyi25 = PyI25()
+            output = StringIO()
+            # call the helper:
+            bars = ''.join([c for c in barcode if c.isdigit()])
+            if not bars:
+                bars = "00"
+            pyi25.GenerarImagen(bars, output, extension="PNG")
+            # get the result and encode it for openerp binary field:
+            image = output.getvalue()
+            image = output.getvalue().encode("base64")
+            output.close()
+        self.afip_barcode_img = image
+
+    @api.model
+    def verification_digit_modulo10(self, code):
+        "Calculate the verification digit 'modulo 10'"
+        # Step 1: sum all digits in odd positions, left to right
+        code = code.strip()
+        if not code or not code.isdigit():
+            return ''
+        etapa1 = sum([int(c) for i, c in enumerate(code) if not i % 2])
+        # Step 2: multiply the step 1 sum by 3
+        etapa2 = etapa1 * 3
+        # Step 3: start from the left, sum all the digits in even positions
+        etapa3 = sum([int(c) for i, c in enumerate(code) if i % 2])
+        # Step 4: sum the results of step 2 and 3
+        etapa4 = etapa2 + etapa3
+        # Step 5: the minimun value that summed to step 4 is a multiple of 10
+        digito = 10 - (etapa4 - (int(etapa4 / 10) * 10))
+        if digito == 10:
+            digito = 0
+        return str(digito)
 
     @api.multi
     def action_cancel(self):
@@ -96,7 +159,8 @@ class invoice(models.Model):
             if self.afip_cae:
                 raise osv.except_orm(
                     _('Error!'),
-                    _('Cancellation of electronic invoices is not implemented yet.'))
+                    _('You can not cancel an electronic invoice (has CAE assigned).\
+                    You should do a credit note instead.'))
         return super(invoice, self).action_cancel()
 
     @api.one
@@ -214,17 +278,9 @@ class invoice(models.Model):
                 # TODO: Averiguar como calcular el Importe Neto no Gravado
                 'ImpTotConc': 0,
                 'ImpNeto': inv.amount_untaxed,
-                # TODO cambiar la funcion de estos campos
-                # ESTE SON LOS QUE NO TIENEN IMPUESTOS, estan exentos
                 'ImpOpEx': inv.exempt_amount,
-                # 'ImpOpEx': inv.compute_all(line_filter=lambda line: len(line.invoice_line_tax_id) == 0)['amount_total'],
-                # ESTE TIENE QUE SER CON TODOS LOS IMPUESTOS QUE SEAN VAT
                 'ImpIVA': inv.vat_amount,
-                # 'ImpIVA': inv.compute_all(tax_filter=lambda tax: 'IVA' in _get_parents(tax.tax_code_id))['amount_tax'],
-                # ESTE TIENE QUE SER CON TODOS LOS IMPUESTOS QUE NO SEAN VAT
                 'ImpTrib': inv.other_taxes_amount,
-                # 'ImpTrib': inv.compute_all(tax_filter=lambda tax: 'IVA' not in _get_parents(tax.tax_code_id))['amount_tax'],
-
                 'FchServDesde': _f_date(inv.afip_service_start) if inv.afip_concept != '1' else None,
                 'FchServHasta': _f_date(inv.afip_service_end) if inv.afip_concept != '1' else None,
                 'FchVtoPago': _f_date(inv.date_due) if inv.afip_concept != '1' else None,
@@ -239,7 +295,6 @@ class invoice(models.Model):
                 'Opcionales': {},
             }.iteritems() if v is not None)
             Inv2id[invoice_number] = inv.id
-        print 'Requests', Requests
         for c_id, req in Requests.iteritems():
             res = conn_obj.browse(c_id).server_id.wsfe_get_cae(c_id, req)
             for k, v in res.iteritems():

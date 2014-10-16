@@ -27,11 +27,8 @@ class account_voucher_receipt (osv.osv):
             cr, uid, ids, context)
         for receipt in self.browse(cr, uid, ids, context=context):
             for voucher in receipt.voucher_ids:
-                print 'voucher', voucher
-                print 'move_id', voucher.move_id
-                print 'receipt.name', receipt.name
                 voucher.move_id.write({
-                    'ref': receipt.name,
+                    'afip_document_number': receipt.name,
                     'document_class_id': receipt.receiptbook_id.afip_document_class_id and receipt.receiptbook_id.afip_document_class_id.id or False,
                 })
         return res

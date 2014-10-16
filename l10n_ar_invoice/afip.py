@@ -26,8 +26,9 @@ class afip_point_of_sale(models.Model):
         default=lambda self: self.env['res.company']._company_default_get(
             'afip.point_of_sale'),)
 
-    _sql_constraints = [('number_unique','unique(number, company_id)',
-        'Number Must be Unique per Company!'),]
+    _sql_constraints = [('number_unique', 'unique(number, company_id)',
+                         'Number Must be Unique per Company!'), ]
+
 
 class afip_document_class(models.Model):
     _name = 'afip.document_class'
@@ -49,8 +50,8 @@ class afip_document_class(models.Model):
         help="If True, the vat will be discriminated on invoice report.")
     document_type = fields.Selection(
         [('invoice', 'Invoices'), ('credit_note', 'Credit Notes'),
-         ('debit_note','Debit Notes'), ('other_document', 'Other Documents')],
-        string='Document Type', 
+         ('debit_note', 'Debit Notes'), ('other_document', 'Other Documents')],
+        string='Document Type',
         help='It defines some behaviours on automatic journal selection and\
         in menus where it is shown.')
     active = fields.Boolean(
@@ -58,8 +59,8 @@ class afip_document_class(models.Model):
 
 
 class afip_document_letter(models.Model):
-    _name='afip.document_letter'
-    _description='Afip Document letter'
+    _name = 'afip.document_letter'
+    _description = 'Afip Document letter'
 
     name = fields.Char(
         'Name', size=64, required=True)
@@ -74,12 +75,12 @@ class afip_document_letter(models.Model):
     active = fields.Boolean(
         'Active', default=True)
 
-    _sql_constraints = [('name','unique(name)', 'Name must be unique!'),]
+    _sql_constraints = [('name', 'unique(name)', 'Name must be unique!'), ]
 
 
 class afip_responsability(models.Model):
-    _name='afip.responsability'
-    _description='AFIP VAT Responsability'
+    _name = 'afip.responsability'
+    _description = 'AFIP VAT Responsability'
 
     name = fields.Char(
         'Name', size=64, required=True)
@@ -94,13 +95,13 @@ class afip_responsability(models.Model):
         'afip.document_letter', 'afip_doc_letter_receptor_rel',
         'responsability_id', 'letter_id', 'Received Document Letters')
 
-    _sql_constraints = [('name','unique(name)', 'Name must be unique!'),
-                        ('code','unique(code)', 'Code must be unique!')]
+    _sql_constraints = [('name', 'unique(name)', 'Name must be unique!'),
+                        ('code', 'unique(code)', 'Code must be unique!')]
 
 
 class afip_document_type(models.Model):
     _name = 'afip.document_type'
-    _description='AFIP document types'
+    _description = 'AFIP document types'
 
     name = fields.Char(
         'Name', size=120, required=True)
@@ -114,10 +115,10 @@ class afip_document_type(models.Model):
 
 class afip_concept_type(models.Model):
     _name = 'afip.concept_type'
-    _description='AFIP concept types'
+    _description = 'AFIP concept types'
 
     name = fields.Char(
-        'Name', size=120,required=True)
+        'Name', size=120, required=True)
     afip_code = fields.Integer(
         'AFIP Code', required=True)
     active = fields.Boolean(
@@ -129,20 +130,19 @@ class afip_concept_type(models.Model):
         consu and service separated by commas.',
         required=True)
 
-
     @api.one
     @api.constrains('product_types')
     def _check_product_types(self):
         if self.product_types:
             types = set(self.product_types.split(','))
-            if not types.issubset(['adjust','consu','service']):
+            if not types.issubset(['adjust', 'consu', 'service']):
                 raise Warning(_('You provided an invalid list of product types.\
                 Must been separated by commas'))
 
 
 class afip_optional_type(models.Model):
     _name = 'afip.optional_type'
-    _description='AFIP optional types'
+    _description = 'AFIP optional types'
 
     name = fields.Char(
         'Name', size=120, required=True)

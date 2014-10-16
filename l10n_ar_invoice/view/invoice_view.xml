@@ -25,7 +25,7 @@
             <field name="inherit_id" ref="account.invoice_tree"/>
             <field name="arch" type="xml">
                 <field name="number" position="attributes">
-                    <attribute name="inivisible">1</attribute>
+                    <attribute name="invisible">1</attribute>
                 </field>
                 <field name="number" position="after">
                     <field name="afip_document_class_id"/>
@@ -46,11 +46,9 @@
 
                 <field name="number" position="attributes">
                     <attribute name="invisible">1</attribute>
-                    <!-- <attribute name="attrs">{'invisible':[('use_documents','=',True)]}</attribute> -->
                 </field>
                 <field name="number" position="after">
                     <field name="document_number" class="oe_inline"/>
-                    <!-- <field name="reference" attrs="{'invisible':[('use_documents','=',False)]}" readonly="1" class="oe_inline"/> -->
                 </field>
 
                 <field name="journal_id" position="after">
@@ -79,18 +77,11 @@
                     <attribute name="attrs">{'required':[('use_documents','=',True)]}</attribute>
                 </field>
 
-                
-                <!-- We hide reference fields-->
-<!--                 <label for="reference_type" position="replace"/>
-                <xpath expr="//sheet/group/group/div" position="replace"/> -->
-
                 <field name="number" position="attributes">
                     <attribute name="invisible">1</attribute>
-                    <!-- <attribute name="attrs">{'invisible':[('use_documents','=',True)]}</attribute> -->
                 </field>
                 <field name="number" position="after">
                     <field name="document_number" class="oe_inline"/>
-                    <!-- <field name="reference" attrs="{'invisible':[('use_documents','=',False)]}" readonly="1" class="oe_inline"/> -->
                 </field>
                 
                 <field name="journal_id" position="after">

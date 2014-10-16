@@ -187,7 +187,9 @@ class account_invoice(models.Model):
     @api.one
     @api.depends('journal_id', 'partner_id')
     def _get_available_journal_document_class(self):
-        journal_type = self.get_journal_type(self.type)
+        # Lo hicimos asi porque si no podria dar errores si en el context habia un default de otra clase
+        invoice_type = self.with_context({}).type
+        journal_type = self.get_journal_type(invoice_type)
         document_class_ids = []
         document_class_id = False
         self.available_journal_document_class_ids = self.env[

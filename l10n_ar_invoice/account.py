@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from openerp.osv import fields
 from openerp import fields as new_fields
-from openerp import api, models
+from openerp import api, models, _
+from openerp.exceptions import Warning
 
 
 class afip_tax_code(models.Model):
@@ -78,6 +79,24 @@ class account_move(models.Model):
         store=True)
 
 
+class account_move_line(models.Model):
+    _inherit = "account.move.line"
+
+    document_class_id = new_fields.Many2one(
+        'afip.document_class',
+        'Document Type',
+        related='move_id.document_class_id',
+        # store=True,
+        readonly=True,
+    )
+    document_number = new_fields.Char(
+        string='Document Number',
+        related='move_id.document_number',
+        # store=True,
+        readonly=True,
+        )
+
+
 class account_journal_afip_document_class(models.Model):
     _name = "account.journal.afip_document_class"
     _description = "Journal Afip Documents"
@@ -107,6 +126,13 @@ class account_journal(models.Model):
             'point_of_sale_id', 'number', type='integer', string='Point of sale', readonly=True),  # for compatibility
         'use_documents': fields.boolean('Use Documents?'),
     }
+
+    @api.one
+    @api.constrains('point_of_sale_id', 'company_id')
+    def _check_company_id(self):
+        if self.point_of_sale_id.company_id != self.company_id:
+            raise Warning(_('The company of the point of sale and of the \
+                journal must be the same!'))
 
 
 class res_currency(models.Model):

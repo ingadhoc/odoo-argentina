@@ -32,7 +32,7 @@ class account_invoice_line(models.Model):
             afip_document_class_id = line.invoice_id.journal_document_class_id.afip_document_class_id
 
             not_vat_taxes = [
-                x for x in line.invoice_line_tax_id if not x.tax_code_id.vat_tax]
+                x for x in line.invoice_line_tax_id if not x.tax_code_id.parent_id.name != 'IVA']
             taxes = tax_obj.compute_all(cr, uid,
                                         not_vat_taxes, printed_price_net, 1,
                                         product=line.product_id,

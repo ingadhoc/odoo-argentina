@@ -51,6 +51,11 @@ class account_journal_afip_document_class(models.Model):
         self.afip_state = afip_state
 
     @api.one
+    def update_afip_data(self):
+        self.get_afip_items_generated()
+        self._get_afip_state()
+
+    @api.one
     def get_afip_items_generated(self):
         glin = lambda conn, ps, jc: conn.server_id.wsfe_get_last_invoice_number(
             conn.id, ps, jc)[conn.server_id.id]
@@ -72,6 +77,7 @@ class account_journal_afip_document_class(models.Model):
     afip_state = fields.Selection(
         compute='_get_afip_state',
         string='Connection state',
+        store=True,
         selection=[
             ('connected', 'Connected'),
             ('connection_service_error',

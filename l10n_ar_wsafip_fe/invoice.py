@@ -49,11 +49,16 @@ class invoice(models.Model):
         'invoice_line',
         'invoice_line.product_id',
         'invoice_line.product_id.type',
+        'journal_document_class_id.afip_connection_id',
     )
     def _get_concept(self):
-        product_types = set(
-            [line.product_id.type for line in self.invoice_line])
-        self.afip_concept = _calc_concept(product_types)
+        afip_concept = False
+        # If document has no connection then it is not electronic
+        if self.journal_document_class_id.afip_connection_id:
+            product_types = set(
+                [line.product_id.type for line in self.invoice_line])
+            afip_concept = _calc_concept(product_types)
+        self.afip_concept = afip_concept
 
     afip_concept = fields.Selection(
         compute='_get_concept',

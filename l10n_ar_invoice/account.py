@@ -70,13 +70,19 @@ class account_move(models.Model):
     @api.one
     @api.depends('afip_document_number', 'name')
     def _get_document_number(self):
-        self.document_number = self.afip_document_number or self.name
+        if self.afip_document_number and self.document_class_id:
+            document_number = (self.document_class_id.doc_code_prefix or '') + \
+                self.afip_document_number
+        else:
+            document_number = self.name
+        self.document_number = document_number
 
     document_number = new_fields.Char(
         compute='_get_document_number',
         string='Document Number',
         readonly=True,
-        store=True)
+        # store=True
+        )
 
 
 class account_move_line(models.Model):

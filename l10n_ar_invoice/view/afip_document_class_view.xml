@@ -10,6 +10,7 @@
                     <group>
                         <field name="name"/>
                         <field name='afip_code'/>
+                        <field name='doc_code_prefix'/>
                         <field name='code_template'/>
                         <field name='document_letter_id'/>
                         <field name='report_name'/>
@@ -28,6 +29,7 @@
                 <tree string="AFIP Document Class">
                     <field name="name"/>
                     <field name="afip_code"/>
+                    <field name="doc_code_prefix"/>
                     <field name="code_template"/>
                     <field name="document_letter_id"/>
                     <field name='report_name'/>

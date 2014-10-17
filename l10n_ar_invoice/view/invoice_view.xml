@@ -24,11 +24,17 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_tree"/>
             <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="reference"/>
+                </field>
+                <field name="origin" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
                 <field name="number" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
                 <field name="number" position="after">
-                    <field name="afip_document_class_id"/>
+                    <field name="afip_document_class_id" invisible="1"/>
                     <field name="document_number"/>
                 </field>
             </field>
@@ -43,6 +49,13 @@
                     <field name="available_journal_document_class_ids" invisible="1"/>
                     <field name="use_documents" invisible="1"/>
                 </form>
+
+                <field name="fiscal_position" position="after">
+                    <field name="reference"/>
+                </field>
+                <field name="name" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
 
                 <field name="number" position="attributes">
                     <attribute name="invisible">1</attribute>

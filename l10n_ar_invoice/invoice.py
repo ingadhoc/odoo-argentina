@@ -237,8 +237,8 @@ class account_invoice(models.Model):
     @api.one
     @api.depends('afip_document_number', 'number')
     def _get_document_number(self):
-        if self.use_documents:
-            document_number = self.afip_document_number
+        if self.afip_document_number and self.afip_document_class_id:
+            document_number = (self.afip_document_class_id.doc_code_prefix or '') + self.afip_document_number
         else:
             document_number = self.number
         self.document_number = document_number
@@ -247,7 +247,8 @@ class account_invoice(models.Model):
         compute='_get_document_number',
         string='Document Number',
         readonly=True,
-        store=True)
+        # store=True
+        )
     next_invoice_number = fields.Integer(
         related='journal_document_class_id.sequence_id.number_next_actual',
         string='Next Document Number',
@@ -339,7 +340,7 @@ class account_invoice(models.Model):
                 document_class_id = obj_inv.journal_document_class_id.afip_document_class_id.id
                 obj_inv.move_id.write(
                     {'document_class_id': document_class_id,
-                    'document_number': self.afip_document_number})
+                    'afip_document_number': self.afip_document_number})
         res = super(account_invoice, self).action_number()
 
         return res

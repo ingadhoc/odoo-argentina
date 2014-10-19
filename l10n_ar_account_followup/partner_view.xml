@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <!--Inherited view -->
+        <record id="view_partner_inherit_followup_form" model="ir.ui.view">
+            <field name="name">res.partner.followup.form.inherit</field>
+            <field name="inherit_id" ref="account_followup.view_partner_inherit_followup_form"/>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='unreconciled_aml_ids']/tree/field[@name='move_id']" position="after">
+            		<field name="document_number"/>
+            		<field name="ref"/>
+            	</xpath>
+            	<xpath expr="//field[@name='unreconciled_aml_ids']/tree/field[@name='move_id']" position="attributes">
+            		<attribute name="invisible">1</attribute>
+            	</xpath>
+            	<xpath expr="//field[@name='unreconciled_aml_ids']/tree/field[@name='reconcile_partial_id']" position="attributes">
+            		<attribute name="invisible">1</attribute>
+            	</xpath>
+            </field>
+        </record>
+	</data>
+</openerp>

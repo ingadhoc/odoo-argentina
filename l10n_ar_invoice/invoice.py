@@ -117,6 +117,8 @@ class account_invoice(models.Model):
                 line.other_taxes_amount for line in invoice.invoice_line)
             exempt_amount = sum(
                 line.exempt_amount for line in invoice.invoice_line)
+            vat_tax_ids = [
+                x.id for x in invoice.tax_line if x.tax_code_id.parent_id.name == 'IVA']
 
             afip_document_class_id = invoice.journal_document_class_id.afip_document_class_id
             if afip_document_class_id and not afip_document_class_id.vat_discriminated:
@@ -127,6 +129,7 @@ class account_invoice(models.Model):
             res[invoice.id] = {
                 'printed_amount_untaxed': printed_amount_untaxed,
                 'printed_tax_ids': printed_tax_ids,
+                'vat_tax_ids': vat_tax_ids,
                 'printed_amount_tax': invoice.amount_total - printed_amount_untaxed,
                 'vat_amount': vat_amount,
                 'other_taxes_amount': other_taxes_amount,
@@ -151,6 +154,10 @@ class account_invoice(models.Model):
             _printed_prices, type='float',
             digits_compute=dp.get_precision('Account'),
             string='Exempt Amount', multi='printed'),
+        'vat_tax_ids': old_fields.function(
+            _printed_prices,
+            type='one2many', relation='account.invoice.tax',
+            string='VAT Taxes', multi='printed'),
         'vat_amount': old_fields.function(
             _printed_prices, type='float',
             digits_compute=dp.get_precision('Account'),
@@ -233,6 +240,13 @@ class account_invoice(models.Model):
         string='Document Number',
         copy=False,
         readonly=True,)
+    responsability_id = fields.Many2one(
+        'afip.responsability',
+        string='Responsability',
+        related='commercial_partner_id.responsability_id',)
+    formated_vat = fields.Char(
+        string='Responsability',
+        related='commercial_partner_id.formated_vat',)
 
     @api.one
     @api.depends('afip_document_number', 'number')

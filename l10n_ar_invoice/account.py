@@ -136,7 +136,7 @@ class account_journal(models.Model):
     @api.one
     @api.constrains('point_of_sale_id', 'company_id')
     def _check_company_id(self):
-        if self.point_of_sale_id.company_id != self.company_id:
+        if self.point_of_sale_id and self.point_of_sale_id.company_id != self.company_id:
             raise Warning(_('The company of the point of sale and of the \
                 journal must be the same!'))
 

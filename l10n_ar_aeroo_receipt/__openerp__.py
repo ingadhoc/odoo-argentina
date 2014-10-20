@@ -17,6 +17,7 @@ Argentinian Like Receipt Aeroo Report
         'report_extended_voucher_receipt',
         'account_check',
         'l10n_ar_aeroo_base',
+        'l10n_ar_invoice',
     ],
     'data': [
         'receipt_report.xml',

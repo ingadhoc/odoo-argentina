@@ -79,18 +79,18 @@
 							</div>						
 						</div>
 					</group>
-					<group>
+<!-- 					<group>
 						<label for="id" string="Reports" />
 						<div name="reports">
-							<div name='module_l10n_ar_vat_reports'>
-								<field name="module_l10n_ar_vat_reports" readonly="1" class="oe_inline" />
-								<label for="module_l10n_ar_vat_reports" />
-							</div>							
 						</div>
-					</group>
+					</group> -->
 					<group>
 						<label for="id" string="Aeroo Reports" />
 						<div name="reports">
+							<div name='module_l10n_ar_vat_reports'>
+								<field name="module_l10n_ar_account_vat_ledger" class="oe_inline" />
+								<label for="module_l10n_ar_account_vat_ledger" />
+							</div>							
 							<div name='module_l10n_ar_aeroo_invoice'>
 								<field name="module_l10n_ar_aeroo_invoice"
 									class="oe_inline" />

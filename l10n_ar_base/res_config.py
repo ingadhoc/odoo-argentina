@@ -31,7 +31,9 @@ class argentinian_base_configuration(osv.osv_memory):
         'module_account_accountant': fields.boolean('Manage Financial and Analytic Accounting.',
             help = """Installs the account_accountant module. """),         
         'module_l10n_ar_wsafip_fe': fields.boolean('Use Electronic Invoicing.',
-            help = """Installs the l10n_ar_wsafip_fe module. """),                         
+            help = """Installs the l10n_ar_wsafip_fe module. """),              
+        'module_l10n_ar_account_vat_ledger': fields.boolean('Add Account VAT Ledger models and report.',
+            help = """Installs the l10n_ar_account_vat_ledger module. """),                         
         # 'default_coding_method':fields.selection([('category','Based on the Category'), ('group','Based on Major / Sub Groups')], required=True, default_model='product.product'),     
         # Aeroo reports
         'module_l10n_ar_aeroo_invoice': fields.boolean('Argentinian Aeroo Like Invoice Report',

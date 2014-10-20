@@ -1,10 +1,10 @@
 {
-    "name": "Argentina VAT Reports",
+    "name": "Argentinian VAT Ledger Management",
     "description": """
-Argentina VAT Reports
-=====================
+Argentinian VAT Ledger Management
+=================================
 Creates Sale and Purchase VAT report menus in
-"accounting/reporting/taxes report"
+"accounting/period processing/VAT Ledger"
     """,
     "version": "0.1",
     'author': 'ADHOC SA',
@@ -15,8 +15,6 @@ Creates Sale and Purchase VAT report menus in
     ],
     "category": "Reporting subsystems",
     "data": [
-        # 'wizard/report_prompt.xml',
-        # 'report/report_data.xml',
         'account_vat_report_view.xml',
         'report/account_vat_ledger_report.xml',
         'security/security.xml',

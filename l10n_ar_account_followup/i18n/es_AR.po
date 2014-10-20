@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-20 00:20+0000\n"
-"PO-Revision-Date: 2014-10-19 21:21-0300\n"
+"POT-Creation-Date: 2014-10-20 22:56+0000\n"
+"PO-Revision-Date: 2014-10-20 19:57-0300\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,14 +17,34 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #. module: l10n_ar_account_followup
+#: code:addons/l10n_ar_account_followup/account_followup.py:40
 #: view:website:account_followup.report_followup
+#, python-format
 msgid "Amount"
 msgstr "Monto"
+
+#. module: l10n_ar_account_followup
+#: code:addons/l10n_ar_account_followup/account_followup.py:61
+#, python-format
+msgid "Amount due"
+msgstr "Monto Adeudado"
 
 #. module: l10n_ar_account_followup
 #: view:website:account_followup.report_followup
 msgid "Document"
 msgstr "Documento"
+
+#. module: l10n_ar_account_followup
+#: code:addons/l10n_ar_account_followup/account_followup.py:37
+#, python-format
+msgid "Document Number"
+msgstr "Número de Document"
+
+#. module: l10n_ar_account_followup
+#: code:addons/l10n_ar_account_followup/account_followup.py:39
+#, python-format
+msgid "Due Date"
+msgstr "Fecha de Venc."
 
 #. module: l10n_ar_account_followup
 #: code:addons/l10n_ar_account_followup/account_followup_print.py:83
@@ -33,7 +53,9 @@ msgid "Error!"
 msgstr "Error!"
 
 #. module: l10n_ar_account_followup
+#: code:addons/l10n_ar_account_followup/account_followup.py:36
 #: view:website:account_followup.report_followup
+#, python-format
 msgid "Invoice Date"
 msgstr "Fecha de factura"
 
@@ -43,12 +65,20 @@ msgid "Li."
 msgstr "Li."
 
 #. module: l10n_ar_account_followup
+#: code:addons/l10n_ar_account_followup/account_followup.py:41
+#, python-format
+msgid "Lit."
+msgstr "Lit."
+
+#. module: l10n_ar_account_followup
 #: view:website:account_followup.report_followup
 msgid "Maturity Date"
 msgstr "Fecha de vencimiento"
 
 #. module: l10n_ar_account_followup
+#: code:addons/l10n_ar_account_followup/account_followup.py:38
 #: view:website:account_followup.report_followup
+#, python-format
 msgid "Reference"
 msgstr "Referencia"
 

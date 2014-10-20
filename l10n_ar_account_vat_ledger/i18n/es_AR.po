@@ -1,0 +1,143 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_ar_account_vat_ledger
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-20 22:18+0000\n"
+"PO-Revision-Date: 2014-10-20 19:20-0300\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:115
+#, python-format
+msgid "%s VAT Ledger %s"
+msgstr "Libro de IVA %s %s"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model,name:l10n_ar_account_vat_ledger.model_account_vat_ledger
+msgid "Account VAT Ledger"
+msgstr "Libro de IVA"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.actions.report.xml,name:l10n_ar_account_vat_ledger.report_account_vat_ledger
+msgid "Account Vat Ledger"
+msgstr "Libro de IVA"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model,name:l10n_ar_account_vat_ledger.model_afip_document_class
+msgid "Afip Document Class"
+msgstr "Clase de Documento de Afip"
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+msgid "Cancel"
+msgstr "Cancelado"
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+msgid "Journals"
+msgstr "Diarios"
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+msgid "Notes"
+msgstr "Notas"
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+msgid "Present"
+msgstr "Presentado"
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:114
+#, python-format
+msgid "Purchases"
+msgstr "Compras"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.actions.act_window,name:l10n_ar_account_vat_ledger.action_account_purchase_vat_ledger
+#: model:ir.ui.menu,name:l10n_ar_account_vat_ledger.menu_account_purchase_vat_ledger
+msgid "Purchases VAT Ledger"
+msgstr "Libro de IVA Compras"
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:112
+#, python-format
+msgid "Sales"
+msgstr "Ventas"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.actions.act_window,name:l10n_ar_account_vat_ledger.action_account_sale_vat_ledger
+#: model:ir.ui.menu,name:l10n_ar_account_vat_ledger.menu_account_sale_vat_ledger
+msgid "Sales VAT Ledger"
+msgstr "Libro de IVA Ventas"
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+msgid "Summary"
+msgstr "Resumen"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model,name:l10n_ar_account_vat_ledger.model_account_tax_code
+msgid "Tax Code"
+msgstr "Código de impuesto"
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+msgid "To Draft"
+msgstr "A Borrador"
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:127
+#, python-format
+msgid "To set \"Presented\" you must set the \"Last Page\" first"
+msgstr ""
+"Para marcar como \"Presentado\" primero debe establecer la \"Última Página\""
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:124
+#, python-format
+msgid "To set \"Presented\" you must upload the \"Presented Ledger\" first"
+msgstr ""
+"Para marcar como \"Presentado\" primero debe cargar el archivo en el campo "
+"\"Libro Presentado\""
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+msgid "Total"
+msgstr "Total"
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_tree
+msgid "VAT Ledger"
+msgstr "Libro de IVA"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.ui.menu,name:l10n_ar_account_vat_ledger.account_vat_ledger_parent_menu
+msgid "VAT Ledgers"
+msgstr "Libros de IVA"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model,name:l10n_ar_account_vat_ledger.model_afip_responsability
+msgid "VAT Responsability"
+msgstr "Cond. IVA"

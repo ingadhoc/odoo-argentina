@@ -189,27 +189,35 @@ class account_invoice(models.Model):
             recs = self.search([('document_number', '=', name)] + args, limit=limit)
         if not recs:
             recs = self.search([('name', operator, name)] + args, limit=limit)
-        return recs.name_get()    
+        return recs.name_get()
 
     @api.one
     @api.depends('journal_id', 'partner_id')
     def _get_available_journal_document_class(self):
-        # Lo hicimos asi porque si no podria dar errores si en el context habia un default de otra clase
-        invoice_type = self.with_context({}).type
-        journal_type = self.get_journal_type(invoice_type)
+        invoice_type = self.type
         document_class_ids = []
         document_class_id = False
+
+        # Lo hicimos asi porque si no podria dar errores si en el context habia
+        # un default de otra clase
+        if invoice_type not in [
+                'out_invoice', 'in_invoice', 'out_refund', 'in_refund']:
+            self.available_journal_document_class_ids = document_class_ids
+            self.journal_document_class_id = document_class_id
+            return True
+        journal_type = self.get_journal_type(invoice_type)
         self.available_journal_document_class_ids = self.env[
             'account.journal.afip_document_class']
+
         if self.use_documents:
             letter_ids = self.get_valid_document_letters(
                 self.partner_id.id, journal_type, self.company_id.id)
-            document_classes = self.env['account.journal.afip_document_class'].search([
+            document_classes = self.env[
+                'account.journal.afip_document_class'].search([
                 ('journal_id', '=', self.journal_id.id),
                 '|', ('afip_document_class_id.document_letter_id',
                       'in', letter_ids),
                 ('afip_document_class_id.document_letter_id', '=', False)])
-
             document_class_ids = document_classes.ids
             if document_class_ids:
                 document_class_id = document_class_ids[0]

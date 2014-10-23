@@ -8,6 +8,7 @@
     'description': """
 Argentinian Sale Total Fields
 =============================
+Add fields in sale orders so that you can print sale orders with vay included or not depending on VAT responsabilities
     """,
     'author':  'Ingenieria ADHOC',
     'website': 'www.ingadhoc.com',
@@ -19,13 +20,14 @@ Argentinian Sale Total Fields
     ],
     'data': [
         'sale_view.xml',
+        'res_company_view.xml',
     ],
     'demo': [
     ],
     'test': [
     ],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
     'application': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

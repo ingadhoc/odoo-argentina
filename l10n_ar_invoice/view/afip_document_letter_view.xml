@@ -12,6 +12,7 @@
                         <field name="active"/>                    
                         <field name="issuer_ids"/>
                         <field name="receptor_ids"/>
+                        <field name="vat_discriminated"/>
                         <field name="afip_document_class_ids" colspan="4"/>
                     </group>
                 </form>
@@ -24,6 +25,7 @@
             <field name="arch" type="xml">
                 <tree string="AFIP Document class">
                     <field name="name"/>
+                    <field name="vat_discriminated"/>
                 </tree>
             </field>
         </record>

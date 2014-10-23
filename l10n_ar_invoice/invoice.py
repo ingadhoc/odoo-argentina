@@ -54,7 +54,7 @@ class account_invoice_line(models.Model):
                 exempt_amount = _round(taxes['total_included'])
 
             # For document that not discriminate we include the prices
-            if afip_document_class_id and not afip_document_class_id.vat_discriminated:
+            if afip_document_class_id and not afip_document_class_id.document_letter_id.vat_discriminated:
                 printed_price_unit = _round(
                     taxes['total_included'] * (1 + (discount or 0.0) / 100.0))
                 printed_price_net = _round(taxes['total_included'])
@@ -111,8 +111,6 @@ class account_invoice(models.Model):
 
             vat_amount = sum(
                 line.vat_amount for line in invoice.invoice_line)
-            vat_amount = sum(
-                line.vat_amount for line in invoice.invoice_line)
             other_taxes_amount = sum(
                 line.other_taxes_amount for line in invoice.invoice_line)
             exempt_amount = sum(
@@ -121,7 +119,7 @@ class account_invoice(models.Model):
                 x.id for x in invoice.tax_line if x.tax_code_id.parent_id.name == 'IVA']
 
             afip_document_class_id = invoice.journal_document_class_id.afip_document_class_id
-            if afip_document_class_id and not afip_document_class_id.vat_discriminated:
+            if afip_document_class_id and not afip_document_class_id.document_letter_id.vat_discriminated:
                 printed_amount_untaxed = sum(
                     line.printed_price_subtotal for line in invoice.invoice_line)
                 printed_tax_ids = [
@@ -129,8 +127,8 @@ class account_invoice(models.Model):
             res[invoice.id] = {
                 'printed_amount_untaxed': printed_amount_untaxed,
                 'printed_tax_ids': printed_tax_ids,
-                'vat_tax_ids': vat_tax_ids,
                 'printed_amount_tax': invoice.amount_total - printed_amount_untaxed,
+                'vat_tax_ids': vat_tax_ids,
                 'vat_amount': vat_amount,
                 'other_taxes_amount': other_taxes_amount,
                 'exempt_amount': exempt_amount,
@@ -205,13 +203,13 @@ class account_invoice(models.Model):
             self.available_journal_document_class_ids = document_class_ids
             self.journal_document_class_id = document_class_id
             return True
-        journal_type = self.get_journal_type(invoice_type)
+        operation_type = self.get_operation_type(invoice_type)
         self.available_journal_document_class_ids = self.env[
             'account.journal.afip_document_class']
 
         if self.use_documents:
             letter_ids = self.get_valid_document_letters(
-                self.partner_id.id, journal_type, self.company_id.id)
+                self.partner_id.id, operation_type, self.company_id.id)
             document_classes = self.env[
                 'account.journal.afip_document_class'].search([
                 ('journal_id', '=', self.journal_id.id),
@@ -302,39 +300,7 @@ class account_invoice(models.Model):
          'Supplier Invoice Number must be unique per Supplier and Company!'),
     ]
 
-# TODO enemos que arreglar esta funcion para que ande bien
-    # def create(self, cr, uid, vals, context=None):
-    #     '''We modify create for 2 popuses:
-    #     - Modify create function so it can try to set a right document for
-    #     the invoice
-    #     # - If reference in values, we clean it for argentinian companies as
-    #     # it will be used for invoice number
-    #     '''
-    #     # First purpose
-    #     if not context:
-    #         context = {}
-    #     partner_id = vals.get('partner_id', False)
-    #     journal_id = vals.get('journal_id', False)
-    #     if journal_id and partner_id:
-    #         journal = self.pool['account.journal'].browse(
-    #             cr, uid, int(journal_id), context=context)
-    #         if journal.use_documents:
-    #             journal_type = journal.type
-    #             letter_ids = self.get_valid_document_letters(
-    #                 cr, uid, int(partner_id), journal_type, company_id=journal.company_id.id)
-    #             domain = ['|', ('afip_document_class_id.document_letter_id', '=', False), (
-    #                 'afip_document_class_id.document_letter_id', 'in', letter_ids), ('journal_id', '=', journal_id)]
-    #             journal_document_class_ids = self.pool[
-    #                 'account.journal.afip_document_class'].search(cr, uid, domain)
-    #             if journal_document_class_ids:
-    #                 vals['journal_document_class_id'] = journal_document_class_ids[
-    #                     0]
 
-    #             # second purpose
-    #             if 'reference' in vals:
-    #                 vals['reference'] = False
-    #     return super(account_invoice, self).create(
-    #         cr, uid, vals, context=context)
 
 
     @api.multi
@@ -367,21 +333,17 @@ class account_invoice(models.Model):
 
         return res
 
-    def get_journal_type(self, cr, uid, invoice_type, context=None):
-        if invoice_type == 'in_invoice':
-            journal_type = 'purchase'
-        elif invoice_type == 'in_refund':
-            journal_type = 'purchase_refund'
-        elif invoice_type == 'out_invoice':
-            journal_type = 'sale'
-        elif invoice_type == 'out_refund':
-            journal_type = 'sale_refund'
+    def get_operation_type(self, cr, uid, invoice_type, context=None):
+        if invoice_type in ['in_invoice', 'in_refund']:
+            operation_type = 'purchase'
+        elif invoice_type in ['out_invoice', 'out_refund']:
+            operation_type = 'sale'
         else:
-            journal_type = False
-        return journal_type
+            operation_type = False
+        return operation_type
 
     def get_valid_document_letters(
-            self, cr, uid, partner_id, journal_type,
+            self, cr, uid, partner_id, operation_type='sale',
             company_id=False, context=None):
         if context is None:
             context = {}
@@ -391,7 +353,7 @@ class account_invoice(models.Model):
         partner = self.pool.get('res.partner').browse(
             cr, uid, partner_id, context=context)
 
-        if not partner_id or not company_id or not journal_type:
+        if not partner_id or not company_id or not operation_type:
             return []
 
         partner = partner.commercial_partner_id
@@ -401,15 +363,15 @@ class account_invoice(models.Model):
         company = self.pool.get('res.company').browse(
             cr, uid, company_id, context)
 
-        if journal_type in ['sale', 'sale_refund']:
+        if operation_type == 'sale':
             issuer_responsability_id = company.partner_id.responsability_id.id
             receptor_responsability_id = partner.responsability_id.id
-        elif journal_type in ['purchase', 'purchase_refund']:
+        elif operation_type == 'purchase':
             issuer_responsability_id = partner.responsability_id.id
             receptor_responsability_id = company.partner_id.responsability_id.id
         else:
-            raise except_orm(_('Journal Type Error'),
-                             _('Journal Type Not defined)'))
+            raise except_orm(_('Operation Type Error'),
+                             _('Operation Type Must be "Sale" or "Purchase"'))
 
         if not company.partner_id.responsability_id.id:
             raise except_orm(_('Your company has not setted any responsability'),

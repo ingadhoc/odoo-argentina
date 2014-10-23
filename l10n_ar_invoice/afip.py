@@ -48,9 +48,6 @@ class afip_document_class(models.Model):
     report_name = fields.Char(
         'Name on Reports',
         help='Name that will be printed in reports, for example "CREDIT NOTE"')
-    vat_discriminated = fields.Boolean(
-        'Vat Discriminated on Invoices?',
-        help="If True, the vat will be discriminated on invoice report.")
     document_type = fields.Selection(
         [('invoice', 'Invoices'), ('credit_note', 'Credit Notes'),
          ('debit_note', 'Debit Notes'), ('other_document', 'Other Documents')],
@@ -77,6 +74,9 @@ class afip_document_letter(models.Model):
         'letter_id', 'responsability_id', 'Receptors',)
     active = fields.Boolean(
         'Active', default=True)
+    vat_discriminated = fields.Boolean(
+        'Vat Discriminated on Invoices?',
+        help="If True, the vat will be discriminated on invoice report.")
 
     _sql_constraints = [('name', 'unique(name)', 'Name must be unique!'), ]
 

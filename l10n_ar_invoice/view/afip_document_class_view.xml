@@ -15,7 +15,6 @@
                         <field name='document_letter_id'/>
                         <field name='report_name'/>
                         <field name='document_type'/>
-                        <field name='vat_discriminated'/>
                         <field name='active'/>
                     </group>
                 </form>
@@ -34,7 +33,6 @@
                     <field name="document_letter_id"/>
                     <field name='report_name'/>
                     <field name='document_type'/>
-                    <field name='vat_discriminated'/>                    
                 </tree>
             </field>
         </record>

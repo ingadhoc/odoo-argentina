@@ -53,9 +53,9 @@
                 <field name="fiscal_position" position="after">
                     <field name="reference"/>
                 </field>
-                <field name="name" position="attributes">
+                <xpath expr="//page[@string='Other Info']//field[@name='name']" position="attributes">
                     <attribute name="invisible">1</attribute>
-                </field>
+                </xpath>
 
                 <field name="number" position="attributes">
                     <attribute name="invisible">1</attribute>

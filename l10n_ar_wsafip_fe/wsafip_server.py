@@ -380,10 +380,10 @@ class wsafip_server(osv.osv):
 
             except Exception as e:
                 _logger.error(
-                    'AFIP Web service error!: (%i) %s' % (e[0], e[1]))
+                    'AFIP Web service error!: %s' % (e))
                 raise osv.except_osv(
                     _(u'AFIP Web service error'),
-                    _(u'System return error %i: %s') % (e[0], e[1]))
+                    _(u'System return error: %s') % (e))
 
             tax_code_obj = self.pool.get('account.tax.code')
 

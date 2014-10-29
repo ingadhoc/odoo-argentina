@@ -37,17 +37,21 @@ class account_invoice_line(models.Model):
                                         not_vat_taxes, printed_price_net, 1,
                                         product=line.product_id,
                                         partner=line.invoice_id.partner_id)
-            other_taxes_amount = _round(taxes['total_included']) - _round(taxes['total'])
+            other_taxes_amount = _round(
+                taxes['total_included']) - _round(taxes['total'])
 
             # TODO: tal vez mejorar esto de que se buscan los iva por el que tiene padre llamado "IVA"
-            # Antes habiamos agregado un vampo vat_tax en los code pero el tema es que tambien hay que agregarlo en el template de los tax code y en los planes de cuenta, resulta medio engorroso
+            # Antes habiamos agregado un vampo vat_tax en los code pero el tema
+            # es que tambien hay que agregarlo en el template de los tax code y
+            # en los planes de cuenta, resulta medio engorroso
             vat_taxes = [
                 x for x in line.invoice_line_tax_id if x.tax_code_id.parent_id.name == 'IVA']
             taxes = tax_obj.compute_all(cr, uid,
                                         vat_taxes, printed_price_net, 1,
                                         product=line.product_id,
                                         partner=line.invoice_id.partner_id)
-            vat_amount = _round(taxes['total_included']) - _round(taxes['total'])
+            vat_amount = _round(
+                taxes['total_included']) - _round(taxes['total'])
 
             exempt_amount = 0.0
             if not vat_taxes:
@@ -176,7 +180,8 @@ class account_invoice(models.Model):
         }
         result = []
         for inv in self:
-            result.append((inv.id, "%s %s" % (inv.document_number or TYPES[inv.type], inv.name or '')))
+            result.append(
+                (inv.id, "%s %s" % (inv.document_number or TYPES[inv.type], inv.name or '')))
         return result
 
     @api.model
@@ -184,7 +189,8 @@ class account_invoice(models.Model):
         args = args or []
         recs = self.browse()
         if name:
-            recs = self.search([('document_number', '=', name)] + args, limit=limit)
+            recs = self.search(
+                [('document_number', '=', name)] + args, limit=limit)
         if not recs:
             recs = self.search([('name', operator, name)] + args, limit=limit)
         return recs.name_get()
@@ -198,32 +204,37 @@ class account_invoice(models.Model):
 
         # Lo hicimos asi porque si no podria dar errores si en el context habia
         # un default de otra clase
-        if invoice_type not in [
-                'out_invoice', 'in_invoice', 'out_refund', 'in_refund']:
-            self.available_journal_document_class_ids = document_class_ids
-            self.journal_document_class_id = document_class_id
-            return True
-        operation_type = self.get_operation_type(invoice_type)
         self.available_journal_document_class_ids = self.env[
             'account.journal.afip_document_class']
+        if invoice_type in [
+                'out_invoice', 'in_invoice', 'out_refund', 'in_refund']:
+            operation_type = self.get_operation_type(invoice_type)
 
-        if self.use_documents:
-            letter_ids = self.get_valid_document_letters(
-                self.partner_id.id, operation_type, self.company_id.id)
-            document_classes = self.env[
-                'account.journal.afip_document_class'].search([
-                ('journal_id', '=', self.journal_id.id),
-                '|', ('afip_document_class_id.document_letter_id',
-                      'in', letter_ids),
-                ('afip_document_class_id.document_letter_id', '=', False)])
-            document_class_ids = document_classes.ids
-            if document_class_ids:
-                document_class_id = document_class_ids[0]
+            if self.use_documents:
+                letter_ids = self.get_valid_document_letters(
+                    self.partner_id.id, operation_type, self.company_id.id)
+                document_classes = self.env[
+                    'account.journal.afip_document_class'].search([
+                        ('journal_id', '=', self.journal_id.id),
+                        '|', ('afip_document_class_id.document_letter_id',
+                              'in', letter_ids),
+                        ('afip_document_class_id.document_letter_id', '=', False)])
+                document_class_ids = document_classes.ids
+                if document_class_ids:
+                    document_class_id = document_class_ids[0]
         self.available_journal_document_class_ids = document_class_ids
         self.journal_document_class_id = document_class_id
 
     available_journal_document_class_ids = fields.Many2many(
         'account.journal.afip_document_class',
+        # TODO hay un warning cada vez que se crea una factura que dice:
+        # No such field(s) in model account.invoice:available_journal_document_class_ids
+        # la unica forma que encontre de sacarlo es agregando el store, lo dejo
+        # por las dudas pero la idea es ver si la api se arregla, no hace falta
+        # y podemos borrar esto
+        # 'available_journal_class_invoice_rel',
+        # 'invoice_id', 'journal_class_id',
+        # store=True,
         compute='_get_available_journal_document_class',
         string='Available Journal Document Classes')
     supplier_invoice_number = fields.Char(
@@ -258,7 +269,8 @@ class account_invoice(models.Model):
     @api.depends('afip_document_number', 'number')
     def _get_document_number(self):
         if self.afip_document_number and self.afip_document_class_id:
-            document_number = (self.afip_document_class_id.doc_code_prefix or '') + self.afip_document_number
+            document_number = (
+                self.afip_document_class_id.doc_code_prefix or '') + self.afip_document_number
         else:
             document_number = self.number
         self.document_number = document_number
@@ -268,7 +280,7 @@ class account_invoice(models.Model):
         string='Document Number',
         readonly=True,
         # store=True
-        )
+    )
     next_invoice_number = fields.Integer(
         related='journal_document_class_id.sequence_id.number_next_actual',
         string='Next Document Number',
@@ -284,7 +296,7 @@ class account_invoice(models.Model):
         if self.type in ['out_invoice', 'out_refund'] and self.reference and self.state == 'open':
             domain = [('type', 'in', ('out_invoice', 'out_refund')),
                       # ('reference', '=', self.reference),
-                      ('document_number','=',self.document_number),
+                      ('document_number', '=', self.document_number),
                       ('journal_document_class_id.afip_document_class_id', '=',
                        self.journal_document_class_id.afip_document_class_id.id),
                       ('company_id', '=', self.company_id.id),
@@ -299,9 +311,6 @@ class account_invoice(models.Model):
             'unique(supplier_invoice_number, partner_id, company_id)',
          'Supplier Invoice Number must be unique per Supplier and Company!'),
     ]
-
-
-
 
     @api.multi
     def action_number(self):
@@ -328,7 +337,7 @@ class account_invoice(models.Model):
                 document_class_id = obj_inv.journal_document_class_id.afip_document_class_id.id
                 obj_inv.move_id.write(
                     {'document_class_id': document_class_id,
-                    'afip_document_number': self.afip_document_number})
+                     'afip_document_number': self.afip_document_number})
         res = super(account_invoice, self).action_number()
 
         return res

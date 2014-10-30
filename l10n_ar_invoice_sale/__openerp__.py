@@ -22,8 +22,10 @@ NOTAS PARA MEJORAR Y TRADUCIR:
         'l10n_ar_invoice',
     ],
     'data': [
+        'security/invoice_sale_security.xml',
         'sale_view.xml',
         'res_company_view.xml',
+        'res_config_view.xml',
     ],
     'demo': [
     ],

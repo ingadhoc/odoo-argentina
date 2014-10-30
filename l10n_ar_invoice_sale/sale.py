@@ -60,6 +60,7 @@ class sale_order_line(models.Model):
                     taxes['total_included'] * quantity)
 
             res[line.id] = {
+                'price_unit_with_tax': line.price_unit + vat_amount + other_taxes_amount,
                 'printed_price_unit': printed_price_unit,
                 'printed_price_net': printed_price_net,
                 'printed_price_subtotal': printed_price_subtotal,
@@ -70,17 +71,21 @@ class sale_order_line(models.Model):
         return res
 
     _columns = {
+        'price_unit_with_tax': fields.function(
+            _printed_prices, type='float',
+            digits_compute=dp.get_precision('Product Price'),
+            string='Unit Price w/ Taxes', multi='printed',),
         'printed_price_unit': fields.function(
             _printed_prices, type='float',
-            digits_compute=dp.get_precision('Account'),
+            digits_compute=dp.get_precision('Product Price'),
             string='Unit Price', multi='printed',),
         'printed_price_net': fields.function(
             _printed_prices, type='float',
-            digits_compute=dp.get_precision('Account'),
+            digits_compute=dp.get_precision('Product Price'),
             string='Net Price', multi='printed'),
         'printed_price_subtotal': fields.function(
             _printed_prices, type='float',
-            digits_compute=dp.get_precision('Account'),
+            digits_compute=dp.get_precision('Product Price'),
             string='Subtotal', multi='printed'),
         'vat_amount': fields.function(
             _printed_prices, type='float',

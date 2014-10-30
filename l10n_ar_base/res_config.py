@@ -35,6 +35,9 @@ class argentinian_base_configuration(osv.osv_memory):
         'module_l10n_ar_account_vat_ledger': fields.boolean('Add Account VAT Ledger models and report.',
             help = """Installs the l10n_ar_account_vat_ledger module. """),                         
         # 'default_coding_method':fields.selection([('category','Based on the Category'), ('group','Based on Major / Sub Groups')], required=True, default_model='product.product'),     
+        # Sales
+        'module_l10n_ar_invoice_sale': fields.boolean('Add availabilty to use VAT included or not on sales',
+            help = """Installs the l10n_ar_invoice_sale module."""),
         # Aeroo reports
         'module_l10n_ar_aeroo_invoice': fields.boolean('Argentinian Aeroo Like Invoice Report',
             help = """Installs the module_l10n_ar_aeroo_invoice module."""),

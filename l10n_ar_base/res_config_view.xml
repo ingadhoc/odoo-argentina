@@ -55,6 +55,16 @@
 							</div>
 						</div>						
 					</group>
+					<separator string="Sales" />
+					<group>
+						<label for="id" string="Sales" />
+						<div name="sales">
+							<div name='module_l10n_ar_invoice_sale'>
+								<field name="module_l10n_ar_invoice_sale" class="oe_inline" />
+								<label for="module_l10n_ar_invoice_sale" />
+							</div>
+						</div>						
+					</group>
 					<group>
 						<label for="id" string="Invoicing" />	
 						<div name="invoicing">

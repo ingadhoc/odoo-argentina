@@ -69,9 +69,9 @@ class account_invoice_line(models.Model):
                 'printed_price_unit': printed_price_unit,
                 'printed_price_net': printed_price_net,
                 'printed_price_subtotal': printed_price_subtotal,
-                'vat_amount': vat_amount,
-                'other_taxes_amount': other_taxes_amount,
-                'exempt_amount': exempt_amount,
+                'vat_amount': vat_amount * quantity,
+                'other_taxes_amount': other_taxes_amount * quantity,
+                'exempt_amount': exempt_amount * quantity,
             }
         return res
 

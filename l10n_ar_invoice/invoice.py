@@ -29,8 +29,6 @@ class account_invoice_line(models.Model):
                 (1 - (discount or 0.0) / 100.0)
             printed_price_subtotal = printed_price_net * quantity
 
-            afip_document_class_id = line.invoice_id.journal_document_class_id.afip_document_class_id
-
             not_vat_taxes = [
                 x for x in line.invoice_line_tax_id if x.tax_code_id.parent_id.name != 'IVA']
             taxes = tax_obj.compute_all(cr, uid,
@@ -58,7 +56,7 @@ class account_invoice_line(models.Model):
                 exempt_amount = _round(taxes['total_included'])
 
             # For document that not discriminate we include the prices
-            if afip_document_class_id and not afip_document_class_id.document_letter_id.vat_discriminated:
+            if not line.invoice_id.vat_discriminated:
                 printed_price_unit = _round(
                     taxes['total_included'] * (1 + (discount or 0.0) / 100.0))
                 printed_price_net = _round(taxes['total_included'])
@@ -122,8 +120,7 @@ class account_invoice(models.Model):
             vat_tax_ids = [
                 x.id for x in invoice.tax_line if x.tax_code_id.parent_id.name == 'IVA']
 
-            afip_document_class_id = invoice.journal_document_class_id.afip_document_class_id
-            if afip_document_class_id and not afip_document_class_id.document_letter_id.vat_discriminated:
+            if not invoice.vat_discriminated:
                 printed_amount_untaxed = sum(
                     line.printed_price_subtotal for line in invoice.invoice_line)
                 printed_tax_ids = [
@@ -224,6 +221,26 @@ class account_invoice(models.Model):
                     document_class_id = document_class_ids[0]
         self.available_journal_document_class_ids = document_class_ids
         self.journal_document_class_id = document_class_id
+
+    @api.one
+    @api.depends(
+        'afip_document_class_id',
+        'afip_document_class_id.document_letter_id',
+        'afip_document_class_id.document_letter_id.vat_discriminated',
+        'company_id',
+        'company_id.invoice_vat_discrimination_default',)
+    def get_vat_discriminated(self):
+        vat_discriminated = False
+        if self.afip_document_class_id.document_letter_id.vat_discriminated or self.company_id.invoice_vat_discrimination_default == 'discriminate_default':
+            vat_discriminated = True
+        self.vat_discriminated = vat_discriminated
+
+    vat_discriminated = fields.Boolean(
+        'Discriminate VAT?',
+        compute="get_vat_discriminated",
+        store=True,
+        readonly=False,
+        help="Discriminate VAT on Quotations and Sale Orders?")
 
     available_journal_document_class_ids = fields.Many2many(
         'account.journal.afip_document_class',

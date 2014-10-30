@@ -50,6 +50,10 @@
                     <field name="use_documents" invisible="1"/>
                 </form>
 
+                <xpath expr="//page[@string='Other Info']//field[@name='company_id']" position="after">
+                    <field name="vat_discriminated"/>
+                </xpath>
+
                 <field name="fiscal_position" position="after">
                     <field name="reference"/>
                 </field>

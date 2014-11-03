@@ -111,8 +111,23 @@ class account_invoice(models.Model):
             printed_amount_untaxed = invoice.amount_untaxed
             printed_tax_ids = [x.id for x in invoice.tax_line]
 
-            vat_amount = sum(
-                line.vat_amount for line in invoice.invoice_line)
+            # vat_amount = sum(
+            #     line.vat_amount for line in invoice.invoice_line)
+            vat_amount = sum([
+                x.tax_amount for x in invoice.tax_line if x.tax_code_id.parent_id.name == 'IVA'])
+        # res = []
+        # for tax in self.tax_line:
+        #     if tax.tax_code_id:
+        #         if tax.tax_code_id.parent_id.name != 'IVA':
+        #             continue
+        #         else:
+        #             res.append({
+        #                 'Id': tax.tax_code_id.parent_afip_code,
+        #                 'BaseImp': tax.base_amount,
+        #                 'Importe': tax.tax_amount,
+        #             })
+        #     else:
+
             other_taxes_amount = sum(
                 line.other_taxes_amount for line in invoice.invoice_line)
             exempt_amount = sum(

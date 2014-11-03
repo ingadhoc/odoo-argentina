@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="account.view_account_invoice_filter"/>
             <field name="arch" type="xml">
                 <field name="number" position="attributes">
-                    <attribute name="filter_domain">['|','|','|','|', ('document_number','ilike',self), ('number','ilike',self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', self)]</attribute>
+                    <attribute name="filter_domain">['|','|','|','|', ('afip_document_number','ilike',self), ('number','ilike',self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', self)]</attribute>
                 </field>
                 <field name="partner_id" position="after">
                     <field name="afip_document_class_id"/>

@@ -54,6 +54,8 @@ class account_journal_afip_document_class(models.Model):
     def update_afip_data(self):
         self.get_afip_items_generated()
         self._get_afip_state()
+        self.afip_connection_id.server_id.wsfe_update_tax(
+            self.afip_connection_id.id)
 
     @api.one
     def get_afip_items_generated(self):

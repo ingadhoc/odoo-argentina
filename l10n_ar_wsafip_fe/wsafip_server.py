@@ -389,7 +389,7 @@ class wsafip_server(osv.osv):
 
             for tc in tax_list:
                 tax_code_ids = tax_code_obj.search(
-                    cr, uid, [('name', 'ilike', tc['name'])])
+                    cr, uid, [('name', '=like', '% ' + tc['name'])])
                 _logger.debug(
                     "Tax '%s' match with %s" % (tc['name'], tax_code_ids))
                 if tax_code_ids:

@@ -81,7 +81,7 @@ class account_move(models.Model):
         compute='_get_document_number',
         string='Document Number',
         readonly=True,
-        # store=True
+        store=True
         )
 
 
@@ -92,13 +92,13 @@ class account_move_line(models.Model):
         'afip.document_class',
         'Document Type',
         related='move_id.document_class_id',
-        # store=True,
+        store=True,
         readonly=True,
     )
     document_number = new_fields.Char(
         string='Document Number',
         related='move_id.document_number',
-        # store=True,
+        store=True,
         readonly=True,
         )
 

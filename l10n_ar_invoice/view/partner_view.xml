@@ -13,10 +13,8 @@
                     <field name="start_date"/>
                 </field>
                 <field name="property_account_position" position="before">
-                    <field name="document_type_id" colspan="1"
-                            on_change="onchange_document(vat,document_type_id,document_number)"/>
-                    <field name="document_number" colspan="1"
-                            on_change="onchange_document(vat,document_type_id,document_number)"/>                        
+                    <field name="document_type_id" colspan="1"/>
+                    <field name="document_number" colspan="1"/>                        
                 </field>
             </field>
         </record>

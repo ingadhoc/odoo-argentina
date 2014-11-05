@@ -68,7 +68,12 @@ class account_move(models.Model):
         copy=False,)
 
     @api.one
-    @api.depends('afip_document_number', 'name')
+    @api.depends(
+        'afip_document_number',
+        'name',
+        'document_class_id',
+        'document_class_id.doc_code_prefix',
+        )
     def _get_document_number(self):
         if self.afip_document_number and self.document_class_id:
             document_number = (self.document_class_id.doc_code_prefix or '') + \
@@ -81,7 +86,7 @@ class account_move(models.Model):
         compute='_get_document_number',
         string='Document Number',
         readonly=True,
-        # store=True
+        store=True
         )
 
 
@@ -92,13 +97,13 @@ class account_move_line(models.Model):
         'afip.document_class',
         'Document Type',
         related='move_id.document_class_id',
-        # store=True,
+        store=True,
         readonly=True,
     )
     document_number = new_fields.Char(
         string='Document Number',
         related='move_id.document_number',
-        # store=True,
+        store=True,
         readonly=True,
         )
 

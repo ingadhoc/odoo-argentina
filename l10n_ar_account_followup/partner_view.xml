@@ -7,17 +7,12 @@
             <field name="inherit_id" ref="account_followup.view_partner_inherit_followup_form"/>
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
-            	<xpath expr="//field[@name='unreconciled_aml_ids']/tree/field[@name='move_id']" position="after">
-            		<field name="document_number"/>
-            		<field name="ref"/>
-            	</xpath>
-            	<xpath expr="//field[@name='unreconciled_aml_ids']/tree/field[@name='move_id']" position="attributes">
-            		<attribute name="invisible">1</attribute>
-            	</xpath>
-            	<xpath expr="//field[@name='unreconciled_aml_ids']/tree/field[@name='reconcile_partial_id']" position="attributes">
-            		<attribute name="invisible">1</attribute>
-            	</xpath>
+                <field name="unreconciled_aml_ids" position="replace">
+                    <!-- reemplazamos la vista embembida por una vista nueva por un problema de la api con el onchange ya que existia este campo document_number en patner y en el acccount move line y traia problemas -->
+                    <field name="unreconciled_aml_ids" context="{'tree_view_ref':'l10n_ar_account_followup.view_move_line_form'}"/>
+                </field>
             </field>
         </record>
+
 	</data>
 </openerp>

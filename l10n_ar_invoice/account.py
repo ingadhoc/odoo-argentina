@@ -68,7 +68,12 @@ class account_move(models.Model):
         copy=False,)
 
     @api.one
-    @api.depends('afip_document_number', 'name')
+    @api.depends(
+        'afip_document_number',
+        'name',
+        'document_class_id',
+        'document_class_id.doc_code_prefix',
+        )
     def _get_document_number(self):
         if self.afip_document_number and self.document_class_id:
             document_number = (self.document_class_id.doc_code_prefix or '') + \

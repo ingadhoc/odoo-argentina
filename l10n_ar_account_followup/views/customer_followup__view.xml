@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="report_followup" inherit_id="account_followup.report_followup">
+    <xpath expr="//t[@t-foreach='getLines(o)']/table/thead/tr" position="replace">
+        <tr>
+            <th>Invoice Date</th>
+            <th>Document</th>
+            <th class="text-center">Reference</th>
+            <th class="text-center">Maturity Date</th>
+            <th class="text-right">Amount</th>
+            <th class="text-center">Li.</th>
+        </tr>
+    </xpath>
+    <xpath expr="//t[@t-foreach='getLines(o)']/table/tbody/tr" position="replace">
+        <tr t-foreach="cur_lines['line']" t-as="line">
+            <td><span t-esc="formatLang(line['date'],date = True)"/></td>
+            <td><span t-esc="line['document_number']"/></td>
+            <td><span t-esc="line['ref']"/></td>
+            <td class="text-center"><span t-esc="line['date_maturity'] and formatLang(line['date_maturity'], date=True)"/></td>
+            <td class="text-right"><span t-esc="formatLang(line['balance'], currency_obj=line['currency_id'])"/></td>
+            <td><span t-esc="line['blocked'] and 'X' or ''"/></td>
+        </tr>
+    </xpath>
+</template>
+</data>
+</openerp>

@@ -6,10 +6,53 @@ from openerp.tools.translate import _
 class res_partner(osv.osv):
     _inherit = "res.partner"
 
+    def _get_followup_overdue_query(self, cr, uid, args, overdue_only=False, context=None):
+        '''
+        This function is used to build the query and arguments to use when making a search on functional fields
+            * payment_amount_due
+            * payment_amount_overdue
+        Basically, the query is exactly the same except that for overdue there is an extra clause in the WHERE.
+
+        :param args: arguments given to the search in the usual domain notation (list of tuples)
+        :param overdue_only: option to add the extra argument to filter on overdue accounting entries or not
+        :returns: a tuple with
+            * the query to execute as first element
+            * the arguments for the execution of this query
+        :rtype: (string, [])
+        '''
+        company_id = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
+        company_obj = self.pool.get('res.company')
+        company_ids = company_obj.search(cr, uid, [('id', 'child_of',company_id)])
+        company_ids.append(company_id)
+
+        having_where_clause = ' AND '.join(map(lambda x: '(SUM(bal2) %s %%s)' % (x[1]), args))
+        having_values = [x[2] for x in args]
+        print 'having_values', having_values
+        query = self.pool.get('account.move.line')._query_get(cr, uid, context=context)
+        overdue_only_str = overdue_only and 'AND date_maturity <= NOW()' or ''
+        return ('''SELECT pid AS partner_id, SUM(bal2) FROM
+                    (SELECT CASE WHEN bal IS NOT NULL THEN bal
+                    ELSE 0.0 END AS bal2, p.id as pid FROM
+                    (SELECT (debit-credit) AS bal, partner_id
+                    FROM account_move_line l
+                    WHERE account_id IN
+                            (SELECT id FROM account_account
+                            WHERE type=\'receivable\' AND active)
+                    ''' + overdue_only_str + '''
+                    AND reconcile_id IS NULL
+                    AND company_id in %s
+                    AND ''' + query + ''') AS l
+                    RIGHT JOIN res_partner p
+                    ON p.id = partner_id ) AS pl
+                    GROUP BY pid HAVING ''' + having_where_clause, [tuple(company_ids)] + having_values)
+
     def _payment_earliest_date_search(self, cr, uid, obj, name, args, context=None):
         if not args:
             return []
         company_id = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
+        company_obj = self.pool.get('res.company')
+        company_ids = company_obj.search(cr, uid, [('id', 'child_of',company_id)])
+        company_ids.append(company_id)
         having_where_clause = ' AND '.join(map(lambda x: '(MIN(l.date_maturity) %s %%s)' % (x[1]), args))
         having_values = [x[2] for x in args]
         query = self.pool.get('account.move.line')._query_get(cr, uid, context=context)
@@ -17,12 +60,12 @@ class res_partner(osv.osv):
                     'WHERE account_id IN '\
                         '(SELECT id FROM account_account '\
                         'WHERE type=\'receivable\' AND active) '\
-                    'AND l.company_id = %s '
+                    'AND l.company_id in %s '
                     'AND reconcile_id IS NULL '\
                     'AND '+query+' '\
                     'AND partner_id IS NOT NULL '\
                     'GROUP BY partner_id HAVING '+ having_where_clause,
-                     [company_id] + having_values)
+                     [tuple(company_ids)] + having_values)
         res = cr.fetchall()
         if not res:
             return [('id','=','0')]
@@ -58,8 +101,8 @@ class res_partner(osv.osv):
             worst_due_date = False
             amount_due = amount_overdue = 0.0
             for aml in partner.unreconciled_aml_ids:
-                company_ids = company_obj.search(cr, uid, [('id', 'child_of',aml.company_id.id)])
-                company_ids.append(aml.company_id.id) 
+                company_ids = company_obj.search(cr, uid, [('id', 'child_of',company.id)])
+                company_ids.append(company.id)
                 if (aml.company_id.id in company_ids):
                     date_maturity = aml.date_maturity or aml.date
                     if not worst_due_date or date_maturity < worst_due_date:

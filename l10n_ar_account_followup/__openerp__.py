@@ -16,8 +16,11 @@ Adjust Account Follow UP for Argentinian Localization
     'data': [
         'account_move_line_view.xml',
         'partner_view.xml',
+        'wizard/account_company_followup_wizard.xml',
         'views/report_followup.xml',
         'views/customer_followup__view.xml',
+        'views/account_company_select.xml',
+
     ],
     'demo': [],
     'test': [],

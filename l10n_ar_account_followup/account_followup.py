@@ -151,7 +151,11 @@ class res_partner(osv.osv):
         context = dict(context, lang=partner.lang)
         followup_table = ''
         if partner.unreconciled_aml_ids:
-            company = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id
+            company_id = context.get('company_id', False)
+            if not company_id:
+                company = self.pool.get('res.company').browse(cr, uid, uid, context=context).company_id
+            else:
+                company = self.pool.get('res.company').browse(cr, uid, company_id, context=context)
             current_date = fields.date.context_today(self, cr, uid, context=context)
             rml_parse = account_followup_print.report_rappel(cr, uid, "followup_rml_parser")
             final_res = rml_parse._lines_get_with_partner(partner, company.id)
@@ -189,4 +193,30 @@ class res_partner(osv.osv):
                                 <center>''' + _("Amount due") + ''' : %s </center>''' % (total)
         return followup_table
 
+    def do_button_print(self, cr, uid, ids, company_id=False, context=None):
+        assert(len(ids) == 1)
+        if not company_id:
+            company_id = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
+        #search if the partner has accounting entries to print. If not, it may not be present in the
+        #psql view the report is based on, so we need to stop the user here.
+        if not self.pool.get('account.move.line').search(cr, uid, [
+                                                                   ('partner_id', '=', ids[0]),
+                                                                   ('account_id.type', '=', 'receivable'),
+                                                                   ('reconcile_id', '=', False),
+                                                                   ('state', '!=', 'draft'),
+                                                                   ('company_id', '=', company_id),
+                                                                  ], context=context):
+            raise osv.except_osv(_('Error!'),_("The partner does not have any accounting entries to print in the overdue report for the current company."))
+        self.message_post(cr, uid, [ids[0]], body=_('Printed overdue payments report'), context=context)
+        #build the id of this partner in the psql view. Could be replaced by a search with [('company_id', '=', company_id),('partner_id', '=', ids[0])]
+        wizard_partner_ids = [ids[0] * 10000 + company_id]
+        followup_ids = self.pool.get('account_followup.followup').search(cr, uid, [('company_id', '=', company_id)], context=context)
+        if not followup_ids:
+            raise osv.except_osv(_('Error!'),_("There is no followup plan defined for the current company."))
+        data = {
+            'date': fields.date.today(),
+            'followup_id': followup_ids[0],
+        }
+        #call the print overdue report on this partner
+        return self.do_partner_print(cr, uid, wizard_partner_ids, data, context=context)
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

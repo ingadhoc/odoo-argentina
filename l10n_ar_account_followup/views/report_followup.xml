@@ -12,5 +12,17 @@
                 </field>
             </field>
         </record>
+
+        <record id="view_account_followup_tree" model="ir.ui.view">
+            <field name="name">account_followup.print.tree</field>
+            <field name="model">account_followup.print</field>
+            <field name="inherit_id" ref="account_followup.view_account_followup_print"/>
+            <field name="arch" type="xml">
+               
+                <field name="followup_id" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </field>
+            </field>
+        </record>
     </data>
 </openerp>

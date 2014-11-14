@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <form string="Select Company" version="7.0">
                     <group>
-                        <field name="company_id" />
+                        <field name="company_id" required="1"/>
                     </group>
                     <footer>
                         <button string="Confirm" name="confirm_company" type="object" class="oe_highlight" />

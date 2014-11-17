@@ -72,14 +72,6 @@
                                         <field name="amount_total" sum="Total"/>
                                     </tree>
                                 </field>
-                                <label for="tax_code_ids"/>
-                                <field name="tax_code_ids" context="{'vat_ledger_id': active_id}">
-                                    <tree>
-                                        <field name="name"/>
-                                        <field name="amount_untaxed" sum="Total"/>
-                                        <field name="amount_tax" sum="Total"/>
-                                    </tree>
-                                </field>
                                 <label for="responsability_ids"/>
                                 <field name="responsability_ids" context="{'vat_ledger_id': active_id}">
                                     <tree>
@@ -89,6 +81,23 @@
                                         <field name="amount_total" sum="Total"/>
                                     </tree>
                                 </field>
+                                <label for="tax_code_ids"/>
+                                <field name="tax_code_ids" context="{'vat_ledger_id': active_id}">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="amount_untaxed" sum="Total"/>
+                                        <field name="amount_tax" sum="Total"/>
+                                    </tree>
+                                </field>
+                                <group>
+                                    <group attrs="{'invisible':[('other_taxes_amount','=',False)]}">
+                                        <label for="other_taxes_base" string="Other Taxes"/>
+                                        <div>
+                                            (<field name="other_taxes_base"  class="oe_inline"/>)
+                                            <field name="other_taxes_amount" class="oe_inline"/>
+                                        </div>
+                                    </group>
+                                </group>
                             </page>
     	                    <page string="Notes" name="notes">
     	                        <field name="note"/>

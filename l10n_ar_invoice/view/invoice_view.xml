@@ -52,6 +52,7 @@
                 <form>
                     <field name="available_journal_document_class_ids" invisible="1"/>
                     <field name="use_documents" invisible="1"/>
+                    <field name="afip_document_number" invisible="1"/>
                 </form>
 
                 <xpath expr="//page[@string='Other Info']//field[@name='company_id']" position="after">
@@ -72,8 +73,13 @@
                     <field name="document_number" class="oe_inline"/>
                 </field>
 
+                <!-- Esto es por un mini bug de odoo ya que no se deberia poder cabmiar de diario y que se mantenga secuencia o numeraion de otro diario, hay que exigir borrar los numeros  -->
+                <field name="journal_id" position="attributes">
+                    <attribute name="attrs">{'readonly':['|','|',('state','!=','draft'),('afip_document_number','!=',False),('internal_number','!=',False)]}</attribute>
+                </field>
+
                 <field name="journal_id" position="after">
-                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)]}" domain="[('id','in',available_journal_document_class_ids[0][2])]"/>
+                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)],'readonly':['|',('state','!=','draft'),('afip_document_number','!=',False)]}" domain="[('id','in',available_journal_document_class_ids[0][2])]"/>
                 </field>    
 
                 <label string="Draft Refund" position="after">
@@ -92,6 +98,7 @@
                 <form>
                     <field name="available_journal_document_class_ids" invisible="1"/>
                     <field name="use_documents" invisible="1"/>
+                    <field name="afip_document_number" invisible="1"/>
                 </form>
 
                 <field name="supplier_invoice_number" position="attributes">
@@ -104,9 +111,14 @@
                 <field name="number" position="after">
                     <field name="document_number" class="oe_inline"/>
                 </field>
-                
+
+                <!-- Esto es por un mini bug de odoo ya que no se deberia poder cabmiar de diario y que se mantenga secuencia o numeraion de otro diario, hay que exigir borrar los numeros  -->
+                <field name="journal_id" position="attributes">
+                    <attribute name="attrs">{'readonly':['|','|',('state','!=','draft'),('afip_document_number','!=',False),('internal_number','!=',False)]}</attribute>
+                </field>
+
                 <field name="journal_id" position="after">
-                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)]}" domain="[('id','in',available_journal_document_class_ids[0][2])]"/>
+                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)],'readonly':['|',('state','!=','draft'),('afip_document_number','!=',False)]}" domain="[('id','in',available_journal_document_class_ids[0][2])]"/>
                 </field>    
 
             </field>

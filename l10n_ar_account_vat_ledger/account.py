@@ -74,7 +74,8 @@ class account_tax_code(models.Model):
     def get_amounts(self, vat_ledger):
         taxes_domain = [
             ('invoice_id', 'in', vat_ledger.invoice_ids.ids),
-            ('tax_code_id.parent_id.name', '=', 'IVA')]
+            ('tax_code_id.id', '=', self.id)]
+            # ('tax_code_id.parent_id.name', '=', 'IVA')]
         invoice_taxes = self.env['account.invoice.tax'].search(
             taxes_domain)
         amount_untaxed = sum([x.base for x in invoice_taxes])

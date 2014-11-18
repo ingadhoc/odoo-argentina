@@ -33,7 +33,9 @@ class argentinian_base_configuration(osv.osv_memory):
         'module_l10n_ar_wsafip_fe': fields.boolean('Use Electronic Invoicing.',
             help = """Installs the l10n_ar_wsafip_fe module. """),              
         'module_l10n_ar_account_vat_ledger': fields.boolean('Add Account VAT Ledger models and report.',
-            help = """Installs the l10n_ar_account_vat_ledger module. """),                         
+            help = """Installs the l10n_ar_account_vat_ledger module. """),                 
+        'module_l10n_ar_perception': fields.boolean('Add Percepcion Mangament.',
+            help = """Installs the l10n_ar_l10n_ar_perception module. """),                         
         # 'default_coding_method':fields.selection([('category','Based on the Category'), ('group','Based on Major / Sub Groups')], required=True, default_model='product.product'),     
         # Sales
         'module_l10n_ar_invoice_sale': fields.boolean('Add availabilty to use VAT included or not on sales',

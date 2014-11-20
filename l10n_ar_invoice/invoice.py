@@ -214,14 +214,28 @@ class account_invoice(models.Model):
             if self.use_documents:
                 letter_ids = self.get_valid_document_letters(
                     self.partner_id.id, operation_type, self.company_id.id)
+                domain = [
+                    ('journal_id', '=', self.journal_id.id),
+                    '|', ('afip_document_class_id.document_letter_id',
+                          'in', letter_ids),
+                    ('afip_document_class_id.document_letter_id', '=', False)]
+
+                # If document_type in context we try to serch specific document
+                document_type = self._context.get('document_type', False)
+                if document_type:
+                    document_classes = self.env[
+                        'account.journal.afip_document_class'].search(
+                        domain + [('afip_document_class_id.document_type', '=', document_type)])
+                    if document_classes.ids:
+                        document_class_id = document_classes.ids[0]
+
+                # For domain, we search all documents
                 document_classes = self.env[
-                    'account.journal.afip_document_class'].search([
-                        ('journal_id', '=', self.journal_id.id),
-                        '|', ('afip_document_class_id.document_letter_id',
-                              'in', letter_ids),
-                        ('afip_document_class_id.document_letter_id', '=', False)])
+                    'account.journal.afip_document_class'].search(domain)
                 document_class_ids = document_classes.ids
-                if document_class_ids:
+
+                # If not specific document type found, we choose another one
+                if not document_class_id and document_class_ids:
                     document_class_id = document_class_ids[0]
         self.available_journal_document_class_ids = document_class_ids
         self.journal_document_class_id = document_class_id

@@ -180,10 +180,15 @@ class invoice(models.Model):
                 ['draft', 'proforma', 'proforma2', 'cancel'])])
         for rel_inv in rel_invoices:
             journal = rel_inv.journal_id
+            afip_document_number = rel_inv.afip_document_number.split('-')
+            try:
+                afip_document_number = int(afip_document_number[1])
+            except:
+                raise Warning(_('Error getting related document number'))
             res.append({
                 'Tipo': rel_inv.afip_document_class_id.afip_code,
                 'PtoVta': journal.point_of_sale,
-                'Nro': rel_inv.number,
+                'Nro': afip_document_number,
             })
         return res
 

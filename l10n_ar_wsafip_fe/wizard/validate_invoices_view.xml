@@ -19,9 +19,9 @@
 <openerp>
     <data>
 
-    <record id="l10n_ar_wsafip_fe_update_invoice" model="ir.ui.view">
-        <field name="name">l10n_ar_wsafip_fe.query_invoices.form</field>
-        <field name="model">l10n_ar_wsafip_fe.query_invoices</field>
+    <record id="l10n_ar_wsafip_fe_validate_invoice" model="ir.ui.view">
+        <field name="name">l10n_ar_wsafip_fe.validate_invoices.form</field>
+        <field name="model">l10n_ar_wsafip_fe.validate_invoices</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
           <form string="Create and Update Invoices with AFIP" version="7.0">
@@ -29,8 +29,6 @@
                   <field name="journal_id" on_change="onchange_journal_id(first_invoice_number, journal_id)" domain="[('afip_connection_id','!=',False)]"/>
                   <field name="first_invoice_number"/>
                   <field name="last_invoice_number"/>
-                  <field name="update_invoices"/>
-                  <field name="create_invoices"/>
               </group>
               <footer>
                   <button string="Execute" name="execute" type="object" icon="gtk-ok" colspan="2"/> 
@@ -41,22 +39,22 @@
         </field>
     </record>
 
-    <record id="action_l10n_ar_wsafip_fe_update_invoice" model="ir.actions.act_window">
-        <field name="name">Update and Create Invoices from AFIP</field>
+    <record id="action_l10n_ar_wsafip_fe_validate_invoice" model="ir.actions.act_window">
+        <field name="name">Generate CAE from validated invoices</field>
         <field name="type">ir.actions.act_window</field>
         <field name="context">{'search_default_journal_id': active_id, 'default_journal_id': active_id}</field>
         <field name="src_model">account.journal</field>
-        <field name="res_model">l10n_ar_wsafip_fe.query_invoices</field>
+        <field name="res_model">l10n_ar_wsafip_fe.validate_invoices</field>
         <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
 
-    <record model="ir.values" id="action_l10n_ar_wsafip_fe_update_invoice_values">
+    <record model="ir.values" id="action_l10n_ar_wsafip_fe_validate_invoice_values">
         <field name="model_id" ref="account.model_account_journal" />
-        <field name="name">Update and Create Invoices</field>
+        <field name="name">Generate CAE from validated invoices</field>
         <field name="key2">client_action_multi</field>
-        <field name="value" eval="'ir.actions.act_window,' +str(ref('action_l10n_ar_wsafip_fe_update_invoice'))" />
+        <field name="value" eval="'ir.actions.act_window,' +str(ref('action_l10n_ar_wsafip_fe_validate_invoice'))" />
         <field name="key">action</field>
         <field name="model">account.journal</field>
     </record>

@@ -89,6 +89,7 @@ class invoice(osv.osv):
 
     _defaults = {
         'afip_result': '',
+        'afip_concept': '3',
     }
     
     def copy(self, cr, uid, id, default=None, context=None):
@@ -369,12 +370,30 @@ class invoice(osv.osv):
     
     def onchange_invoice_line(self, cr, uid, ids, invoice_line):
         product_obj = self.pool.get('product.product')
+        invoice_line_obj = self.pool.get('account.invoice.line')
         res = {}
 
-        product_ids = [ d['product_id'] for a, o, d in invoice_line if d and 'product_id' in d ]
-        product_types = set( p.type for p in product_obj.browse(cr, uid, product_ids) )
+        product_types = set()
 
-        res['value'] = { 'afip_concept': _calc_concept(product_types) }
+        # Existing lines. 
+        lines = { pid: d for a, pid, d in invoice_line if a in [1,4] }
+        for l in invoice_line_obj.browse(cr, uid, lines.keys()):
+            if lines[l.id] and 'product_id' in lines[l.id]:
+                # Change product_id
+                product_types.update([ p.type for p in product_obj.browse(cr, uid, [lines[l.id]['product_id']])])
+            else:
+                # No change product_id
+                product_types.add(l.product_id.type)
+
+        # Inserted new lines
+        lines = [ d for a, pid, d in invoice_line if a in [0] ]
+        for d in lines:
+            if d and 'product_id' in d:
+                product_types.update([ p.type for p in product_obj.browse(cr, uid, [d['product_id']])])
+
+        if product_types:
+            res['value'] = { 'afip_concept': _calc_concept(product_types) }
+
         return res
 
 invoice()

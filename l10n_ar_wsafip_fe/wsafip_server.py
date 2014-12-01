@@ -376,7 +376,6 @@ class wsafip_server(osv.osv):
                 ])
 
             except Exception as e:
-                import pdb; pdb.set_trace()
                 _logger.error('AFIP Web service error!: (%i) %s' % (e[0], e[1]))
                 raise osv.except_osv(_(u'AFIP Web service error'),
                                      _(u'System return error %i: %s') % (e[0], e[1]))
@@ -486,16 +485,19 @@ class wsafip_server(osv.osv):
                                      
             soapRequest = [{ 'FeCabReq':{ 'CantReg': len(invoice_request), 'PtoVta': invoice_request[first]['PtoVta'], 'CbteTipo': invoice_request[first]['CbteTipo'],}, 'FeDetReq': [{ 'FECAEDetRequest': dict([ (k, v) for k,v in req.iteritems() if k not in ['CantReg', 'PtoVta', 'CbteTipo'] ] ) } for req in invoice_request.itervalues()], }]
 
+            common_error = [ (e.Code, unicode(e.Msg)) for e in response.Errors[0] ] if response.FeCabResp.Resultado in ["P", "R"] and hasattr(response, 'Errors') else []
+            _logger.error('Request error: %s' % (common_error,))
+
             for resp in response.FeDetResp.FECAEDetResponse:
                 if resp.Resultado == 'R':
                     # Existe Error!
-                    _logger.error('Rejected invoice: %s' % (resp,))
+                    _logger.error('Invoice error: %s' % (resp,))
                     r[int(resp.CbteDesde)]={
                         'CbteDesde': resp.CbteDesde,
                         'CbteHasta': resp.CbteHasta,
                         'Observaciones': [ (o.Code, unicode(o.Msg)) for o in resp.Observaciones.Obs ]
                                 if hasattr(resp,'Observaciones') else [],
-                        'Errores': [ (e.Code, unicode(e.Msg)) for e in response.Errors.Err ]
+                        'Errores': common_error + [ (e.Code, unicode(e.Msg)) for e in response.Errors.Err ]
                                 if hasattr(response, 'Errors') else [],
                     }
                 else:

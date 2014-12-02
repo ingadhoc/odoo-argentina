@@ -38,7 +38,6 @@
                       'data/wsafip_connection_view.xml',
                       'data/wsafip_server_view.xml',
                       'data/wsafip_config.xml',
-                      'security/wsafip_security.xml',
                       'security/ir.model.access.csv'],
     'version': '2.7.244',
     'website': 'https://launchpad.net/~openerp-l10n-ar-localization'}

@@ -28,6 +28,5 @@ import journal
 import afip_export_incoterms
 import afip_export_permissions
 import product_uom
-import report
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

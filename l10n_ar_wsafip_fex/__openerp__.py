@@ -41,7 +41,6 @@
                       'data/invoice_view.xml',
                       'data/invoice_workflow.xml',
                       'data/journal_view.xml',
-                      'data/reports.xml',
                       'data/wsafip_fex_config.xml',
                       'data/res_config_view.xml',
                       'security/ir.model.access.csv',

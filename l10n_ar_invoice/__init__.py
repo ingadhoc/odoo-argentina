@@ -26,7 +26,6 @@ import config
 import partner
 import account
 import country
-import report
 import currency
 import company
 

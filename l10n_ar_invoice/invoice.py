@@ -295,7 +295,9 @@ class account_invoice(models.Model):
     responsability_id = fields.Many2one(
         'afip.responsability',
         string='Responsability',
-        related='commercial_partner_id.responsability_id',)
+        related='commercial_partner_id.responsability_id',
+        store=True,
+        )
     formated_vat = fields.Char(
         string='Responsability',
         related='commercial_partner_id.formated_vat',)

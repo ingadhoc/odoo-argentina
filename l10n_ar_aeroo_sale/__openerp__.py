@@ -8,6 +8,9 @@
     'description': """
 Argentinian Like Sale Order / Quotation Aeroo Report
 ====================================================
+Parameters requirements:
+* total_discount: require module "sale_pricelist_discount"
+* print_validity: require module "sale_order_validity"
     """,
     'author':  'Ingenieria ADHOC',
     'website': 'www.ingadhoc.com',

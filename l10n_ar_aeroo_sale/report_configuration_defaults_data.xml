@@ -31,6 +31,14 @@
             <field name="override_values" eval="False"/>
             <field name="value_type">text</field>
             <field name="value_text">ORDEN DE VENTA</field>
+        </record>  
+        <record model="report.configuration.default" id="report_configuration_total_discount">
+            <field name="name">total_discount</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="sale.model_sale_order"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="False"/>
         </record> 
     </data>
 </openerp>

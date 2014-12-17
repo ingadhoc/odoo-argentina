@@ -1,15 +1,8 @@
 # -*- coding: utf-8 -*-
 import time
-# from datetime import date, datetime
 from openerp import models, fields, api, _
 from openerp.osv import fields as old_fields
 from openerp.exceptions import Warning
-# from dateutil.relativedelta import relativedelta
-# from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
-
-
-# def get_date_length(date_format=DEFAULT_SERVER_DATE_FORMAT):
-#     return len((datetime.now()).strftime(date_format))
 
 
 class account_vat_ledger(models.Model):

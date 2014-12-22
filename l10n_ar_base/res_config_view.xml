@@ -53,6 +53,10 @@
 								<field name="module_l10n_ar_chart_generic" class="oe_inline" />
 								<label for="module_l10n_ar_chart_generic" />
 							</div>
+							<div name='module_l10n_ar_bank_cbu'>
+								<field name="module_l10n_ar_bank_cbu" class="oe_inline" />
+								<label for="module_l10n_ar_bank_cbu" />
+							</div>
 						</div>						
 					</group>
 					<group>
@@ -154,7 +158,6 @@
 								<field name="module_l10n_ar_partner_title" class="oe_inline" />
 								<label for="module_l10n_ar_partner_title" />
 							</div>
-
 							<div name='module_l10n_ar_states'>
 								<field name="module_l10n_ar_states" class="oe_inline" />
 								<label for="module_l10n_ar_states" />

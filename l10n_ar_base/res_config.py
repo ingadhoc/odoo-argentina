@@ -12,6 +12,8 @@ class argentinian_base_configuration(osv.osv_memory):
     _inherit = 'res.config.settings'
 
     _columns = {
+        'module_l10n_ar_bank_cbu': fields.boolean('Add CBU on bank account information',
+            help = """Installs the l10n_ar_bank_cbu module."""),
         'module_l10n_ar_chart_generic': fields.boolean('Generic Argentinian Chart of Account',
             help = """Installs the l10n_ar_chart_generic module."""),
         'module_l10n_ar_bank': fields.boolean('Banks of Argentina',

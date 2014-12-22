@@ -130,7 +130,8 @@ class account_vat_ledger(models.Model):
         other_taxes_domain = [
             ('invoice_id', 'in', invoices.ids),
             ('tax_code_id', '!=', False),
-            ('tax_code_id.parent_id.name', '!=', 'IVA'),
+            '|', ('tax_code_id.parent_id.name', '!=', 'IVA'),
+            ('tax_code_id.parent_id', '=', False),
             ]
         self.tax_code_ids = self.env['account.tax.code']
         other_group_taxes = self.env['account.invoice.tax'].read_group(

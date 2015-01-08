@@ -34,7 +34,7 @@
         </record>
         <record model='afip.responsability' id='res_EXT'>
             <field name='code'>EXT</field>
-            <field name='name'>Extrangero</field>
+            <field name='name'>Extranjero</field>
 	        <field name='active' eval="True"/>
         </record>
     </data>

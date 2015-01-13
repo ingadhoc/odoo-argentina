@@ -1,19 +1,20 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* l10n_ar_invoice
+# 	* l10n_ar_invoice
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 8.0alpha1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-30 15:34+0000\n"
-"PO-Revision-Date: 2014-05-30 13:29-0300\n"
+"PO-Revision-Date: 2015-01-08 16:18-0300\n"
 "Last-Translator: javier <jd@ingadhoc.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"X-Generator: Poedit 1.5.4\n"
 
 #. module: l10n_ar_invoice
 #: model:ir.actions.act_window,help:l10n_ar_invoice.action_supplier_debit_notes
@@ -73,12 +74,9 @@ msgid "AFIP"
 msgstr "AFIP"
 
 #. module: l10n_ar_invoice
-#: field:account.tax.code,afip_code:0
-#: field:afip.concept_type,afip_code:0
-#: field:afip.document_class,afip_code:0
-#: field:afip.document_type,afip_code:0
-#: field:afip.optional_type,afip_code:0
-#: field:res.currency,afip_code:0
+#: field:account.tax.code,afip_code:0 field:afip.concept_type,afip_code:0
+#: field:afip.document_class,afip_code:0 field:afip.document_type,afip_code:0
+#: field:afip.optional_type,afip_code:0 field:res.currency,afip_code:0
 msgid "AFIP Code"
 msgstr "Código de AFIP"
 
@@ -107,7 +105,7 @@ msgstr "Clase de Documento de AFIP"
 #. module: l10n_ar_invoice
 #: model:ir.actions.act_window,name:l10n_ar_invoice.act_afip_document_letter
 msgid "AFIP Document Letter"
-msgstr "Carta Documento de AFIP"
+msgstr "Leta de Comprobante de AFIP"
 
 #. module: l10n_ar_invoice
 #: view:afip.document_letter:0
@@ -153,12 +151,9 @@ msgid "AFIP optional types"
 msgstr "Tipos Opcional de AFIP"
 
 #. module: l10n_ar_invoice
-#: field:afip.concept_type,active:0
-#: field:afip.document_class,active:0
-#: field:afip.document_letter,active:0
-#: field:afip.document_type,active:0
-#: field:afip.optional_type,active:0
-#: field:afip.responsability,active:0
+#: field:afip.concept_type,active:0 field:afip.document_class,active:0
+#: field:afip.document_letter,active:0 field:afip.document_type,active:0
+#: field:afip.optional_type,active:0 field:afip.responsability,active:0
 msgid "Active"
 msgstr "Activo"
 
@@ -220,12 +215,15 @@ msgstr "Chequear Fecha en Período"
 
 #. module: l10n_ar_invoice
 #: help:l10n_ar_invoice.config,update_posted:0
-msgid "Check this box if you want to allow the cancellation the entries related to this journals or of the invoice related to this journals"
-msgstr "Marca esta casilla si quiere permitir la cancelación de entradas relacionadas a estos diarios o a la factura relacionada a estos diarios"
+msgid ""
+"Check this box if you want to allow the cancellation the entries related to "
+"this journals or of the invoice related to this journals"
+msgstr ""
+"Marca esta casilla si quiere permitir la cancelación de entradas "
+"relacionadas a estos diarios o a la factura relacionada a estos diarios"
 
 #. module: l10n_ar_invoice
-#: field:afip.document_type,code:0
-#: field:afip.responsability,code:0
+#: field:afip.document_type,code:0 field:afip.responsability,code:0
 msgid "Code"
 msgstr "Código"
 
@@ -252,7 +250,9 @@ msgstr "Tipos de Concepto"
 #. module: l10n_ar_invoice
 #: view:argentinian.base.config.settings:0
 msgid "Configure company data, invoice journals and other documents journals."
-msgstr "Configurar datos de la compañía, diarios de facturas y otros documentos de los diarios."
+msgstr ""
+"Configurar datos de la compañía, diarios de facturas y otros documentos de "
+"los diarios."
 
 #. module: l10n_ar_invoice
 #: view:l10n_ar_invoice.config:0
@@ -308,12 +308,12 @@ msgstr "Clases de Documento"
 #. module: l10n_ar_invoice
 #: field:afip.document_class,document_letter_id:0
 msgid "Document Letter"
-msgstr "Carta Documento"
+msgstr "Letra de Comprobante"
 
 #. module: l10n_ar_invoice
 #: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_document_letter
 msgid "Document Letters"
-msgstr "Cartas Documento"
+msgstr "Letras de Comprobante"
 
 #. module: l10n_ar_invoice
 #: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_document_type
@@ -323,7 +323,7 @@ msgstr "Tipos de Documento"
 #. module: l10n_ar_invoice
 #: model:ir.model,name:l10n_ar_invoice.model_afip_document_letter
 msgid "Document letter"
-msgstr "Carta Documento"
+msgstr "Letra de Comprobante"
 
 #. module: l10n_ar_invoice
 #: field:res.partner,document_number:0
@@ -342,12 +342,21 @@ msgstr "Eliminar los diarios existentes"
 
 #. module: l10n_ar_invoice
 #: help:l10n_ar_invoice.config,point_of_sale:0
-msgid "Este es el número que aparecerá como prefijo del número de la factura. Si solo tiene un solo talonario ese número es 1. Si necesita agregar un nuevo punto de venta debe acceder a opciones Administración/Configuración/Wizards de Configuración/Wizards de Configuración y ejecutar nuevamente el wizard de \"Configuración de Facturación\"."
-msgstr "Este es el número que aparecerá como prefijo del número de la factura. Si solo tiene un solo talonario ese número es 1. Si necesita agregar un nuevo punto de venta debe acceder a opciones Administración/Configuración/Wizards de Configuración/Wizards de Configuración y ejecutar nuevamente el wizard de \"Configuración de Facturación\"."
+msgid ""
+"Este es el número que aparecerá como prefijo del número de la factura. Si "
+"solo tiene un solo talonario ese número es 1. Si necesita agregar un nuevo "
+"punto de venta debe acceder a opciones Administración/Configuración/Wizards "
+"de Configuración/Wizards de Configuración y ejecutar nuevamente el wizard de "
+"\"Configuración de Facturación\"."
+msgstr ""
+"Este es el número que aparecerá como prefijo del número de la factura. Si "
+"solo tiene un solo talonario ese número es 1. Si necesita agregar un nuevo "
+"punto de venta debe acceder a opciones Administración/Configuración/Wizards "
+"de Configuración/Wizards de Configuración y ejecutar nuevamente el wizard de "
+"\"Configuración de Facturación\"."
 
 #. module: l10n_ar_invoice
-#: field:res.company,iibb:0
-#: field:res.partner,iibb:0
+#: field:res.company,iibb:0 field:res.partner,iibb:0
 msgid "Gross Income"
 msgstr "Ingreso Bruto"
 
@@ -363,13 +372,21 @@ msgstr "IIBB"
 
 #. module: l10n_ar_invoice
 #: help:l10n_ar_invoice.config,allow_date:0
-msgid "If checked, the entry won't be created if the entry date is not included into the selected period"
-msgstr "Si está marcado, la entrada no será creada si la fecha de entrada no está incluida dentro del período seleccionado"
+msgid ""
+"If checked, the entry won't be created if the entry date is not included "
+"into the selected period"
+msgstr ""
+"Si está marcado, la entrada no será creada si la fecha de entrada no está "
+"incluida dentro del período seleccionado"
 
 #. module: l10n_ar_invoice
 #: help:l10n_ar_invoice.config,group_invoice_lines:0
-msgid "If this box is checked, the system will try to group the accounting lines when generating them from invoices."
-msgstr "Si esta caja está marcada, el sistema tratará de agrupar las líneas contables cuando las generes desde facturas."
+msgid ""
+"If this box is checked, the system will try to group the accounting lines "
+"when generating them from invoices."
+msgstr ""
+"Si esta caja está marcada, el sistema tratará de agrupar las líneas "
+"contables cuando las generes desde facturas."
 
 #. module: l10n_ar_invoice
 #: field:l10n_ar_invoice.config,start_date:0
@@ -417,7 +434,7 @@ msgstr "Facturas"
 #. module: l10n_ar_invoice
 #: field:afip.responsability,issued_letter_ids:0
 msgid "Issued Document Letters"
-msgstr "Cartas Documento Emitidas"
+msgstr "Letras de Comprobantes Emitidas"
 
 #. module: l10n_ar_invoice
 #: field:afip.document_letter,issuer_ids:0
@@ -427,8 +444,12 @@ msgstr "Emisores"
 #. module: l10n_ar_invoice
 #: help:account.journal,journal_subtype:0
 #: help:afip.document_class,journal_subtype:0
-msgid "It defines some behaviours on automatic journal selection and in menus where it is shown."
-msgstr "Define algunos comportamientos en la selección automática de diario y en los menús, donde es mostrado."
+msgid ""
+"It defines some behaviours on automatic journal selection and in menus where "
+"it is shown."
+msgstr ""
+"Define algunos comportamientos en la selección automática de diario y en los "
+"menús, donde es mostrado."
 
 #. module: l10n_ar_invoice
 #: model:ir.model,name:l10n_ar_invoice.model_account_journal
@@ -474,12 +495,9 @@ msgid "Map Supplier Invoices Journals"
 msgstr "Diarios de Factura de Mapa de Proveedor"
 
 #. module: l10n_ar_invoice
-#: field:afip.concept_type,name:0
-#: field:afip.document_class,name:0
-#: field:afip.document_letter,name:0
-#: field:afip.document_type,name:0
-#: field:afip.optional_type,name:0
-#: field:afip.responsability,name:0
+#: field:afip.concept_type,name:0 field:afip.document_class,name:0
+#: field:afip.document_letter,name:0 field:afip.document_type,name:0
+#: field:afip.optional_type,name:0 field:afip.responsability,name:0
 msgid "Name"
 msgstr "Nombre"
 
@@ -489,8 +507,7 @@ msgid "Not repeat code!"
 msgstr "No repetir código!"
 
 #. module: l10n_ar_invoice
-#: sql_constraint:afip.document_letter:0
-#: sql_constraint:afip.responsability:0
+#: sql_constraint:afip.document_letter:0 sql_constraint:afip.responsability:0
 msgid "Not repeat name!"
 msgstr "No repetir nombre!"
 
@@ -506,8 +523,13 @@ msgstr "Sólo Diario sin movimientos y sin facturas son mostrados"
 
 #. module: l10n_ar_invoice
 #: help:account.journal,product_types:0
-msgid "Only use products with this product types in this journals. Types must be a subset of adjust, consu and service separated by commas."
-msgstr "Utilizar productos sólo con estos tipos de productos en estos diarios. Los tipos deben ser un subconjunto de ajustar, consu y servicio separados por comas."
+msgid ""
+"Only use products with this product types in this journals. Types must be a "
+"subset of adjust, consu and service separated by commas."
+msgstr ""
+"Utilizar productos sólo con estos tipos de productos en estos diarios. Los "
+"tipos deben ser un subconjunto de ajustar, consu y servicio separados por "
+"comas."
 
 #. module: l10n_ar_invoice
 #: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_optional_type
@@ -554,8 +576,12 @@ msgstr "Partner"
 #. module: l10n_ar_invoice
 #: code:addons/l10n_ar_invoice/invoice.py:259
 #, python-format
-msgid "Please, set your company responsability in the company partner before continue."
-msgstr "Por favor, ponga la resonsabilidad de su compañía en el partner de compañía antes de continuar."
+msgid ""
+"Please, set your company responsability in the company partner before "
+"continue."
+msgstr ""
+"Por favor, ponga la resonsabilidad de su compañía en el partner de compañía "
+"antes de continuar."
 
 #. module: l10n_ar_invoice
 #: field:account.journal,point_of_sale:0
@@ -571,7 +597,7 @@ msgstr "Tipos de Producto"
 #. module: l10n_ar_invoice
 #: field:afip.responsability,received_letter_ids:0
 msgid "Received Document Letters"
-msgstr "Cartas Documento Recibidas"
+msgstr "Letras de Comprobantes Recibidas"
 
 #. module: l10n_ar_invoice
 #: field:afip.document_letter,receptor_ids:0
@@ -626,24 +652,39 @@ msgstr "Mostrar Menú de Otros Documentos de Proveedor"
 
 #. module: l10n_ar_invoice
 #: help:l10n_ar_invoice.config,remove_old_journals:0
-msgid "Si es su primera instalación indique que necesita borrar los diarios existentes. Si agrega un nuevo punto de ventas indique que no va a eliminar los journals. Igual, puede indicar cuales borra y cuales no en el próximo paso."
-msgstr "Si es su primera instalación indique que necesita borrar los diarios existentes. Si agrega un nuevo punto de ventas indique que no va a eliminar los journals. Igual, puede indicar cuales borra y cuales no en el próximo paso."
+msgid ""
+"Si es su primera instalación indique que necesita borrar los diarios "
+"existentes. Si agrega un nuevo punto de ventas indique que no va a eliminar "
+"los journals. Igual, puede indicar cuales borra y cuales no en el próximo "
+"paso."
+msgstr ""
+"Si es su primera instalación indique que necesita borrar los diarios "
+"existentes. Si agrega un nuevo punto de ventas indique que no va a eliminar "
+"los journals. Igual, puede indicar cuales borra y cuales no en el próximo "
+"paso."
 
 #. module: l10n_ar_invoice
-#: field:res.company,start_date:0
-#: field:res.partner,start_date:0
+#: field:res.company,start_date:0 field:res.partner,start_date:0
 msgid "Start-up Date"
 msgstr "Fecha de Comienzo"
 
 #. module: l10n_ar_invoice
 #: help:res.company,map_customer_invoice_journals:0
-msgid "Suggest and Check journal on customer invoices based in their responsability. Suggested to be used on Argentinian Companies"
-msgstr "Sugerencias y diario de Cheque en facturas de cliente basadas en su responsabilidad. Sugerida para ser utilizada en Compañías Argentinas."
+msgid ""
+"Suggest and Check journal on customer invoices based in their "
+"responsability. Suggested to be used on Argentinian Companies"
+msgstr ""
+"Sugerencias y diario de Cheque en facturas de cliente basadas en su "
+"responsabilidad. Sugerida para ser utilizada en Compañías Argentinas."
 
 #. module: l10n_ar_invoice
 #: help:res.company,map_supplier_invoice_journals:0
-msgid "Suggest and Check journal on supplier invoices based in their responsability. Suggested to be used on Argentinian Companies"
-msgstr "Sugerencias y diario de Cheque en facturas de proveedor basadas en su responsabilidad. Sugerida para ser utilizada en Compañías Argentinas."
+msgid ""
+"Suggest and Check journal on supplier invoices based in their "
+"responsability. Suggested to be used on Argentinian Companies"
+msgstr ""
+"Sugerencias y diario de Cheque en facturas de proveedor basadas en su "
+"responsabilidad. Sugerida para ser utilizada en Compañías Argentinas."
 
 #. module: l10n_ar_invoice
 #: model:ir.actions.act_window,name:l10n_ar_invoice.action_supplier_debit_notes
@@ -670,7 +711,8 @@ msgstr "Para permitir a tu vendedor registrar notas de débito de cliente'."
 #. module: l10n_ar_invoice
 #: help:argentinian.base.config.settings,group_customer_other_documents:0
 msgid "To allow your salesman to register customer other documents like ???'."
-msgstr "Para permitir a tu vendedor registrar otros documentos de cliente como:"
+msgstr ""
+"Para permitir a tu vendedor registrar otros documentos de cliente como:"
 
 #. module: l10n_ar_invoice
 #: help:argentinian.base.config.settings,group_supplier_debit_notes:0
@@ -679,13 +721,20 @@ msgstr "Para permitir a tu vendedor registrar notas de débito de proveedor'."
 
 #. module: l10n_ar_invoice
 #: help:argentinian.base.config.settings,group_supplier_other_documents:0
-msgid "To allow your salesman to register supplier other documents like imports'."
-msgstr "Para permitir a tu vendedor registrar otros documentos de proveedor como importes'."
+msgid ""
+"To allow your salesman to register supplier other documents like imports'."
+msgstr ""
+"Para permitir a tu vendedor registrar otros documentos de proveedor como "
+"importes'."
 
 #. module: l10n_ar_invoice
 #: help:afip.concept_type,product_types:0
-msgid "Translate this product types to this AFIP concept. Types must be a subset of adjust, consu and service separated by commas."
-msgstr "Traducir este tipo de productos a este concepto de AFIP. Los tipos deben ser un subconjunto de ajustar, consu y servicio separados por comas."
+msgid ""
+"Translate this product types to this AFIP concept. Types must be a subset of "
+"adjust, consu and service separated by commas."
+msgstr ""
+"Traducir este tipo de productos a este concepto de AFIP. Los tipos deben ser "
+"un subconjunto de ajustar, consu y servicio separados por comas."
 
 #. module: l10n_ar_invoice
 #: code:addons/l10n_ar_invoice/partner.py:46
@@ -715,13 +764,20 @@ msgstr "Cuidado!"
 
 #. module: l10n_ar_invoice
 #: constraint:afip.concept_type:0
-msgid "You provided an invalid list of product types. Must been separated by commas"
-msgstr "Usted proporcionó una lista de tipos de producto no válida. Deben haber sido separado por comas"
+msgid ""
+"You provided an invalid list of product types. Must been separated by commas"
+msgstr ""
+"Usted proporcionó una lista de tipos de producto no válida. Deben haber sido "
+"separado por comas"
 
 #. module: l10n_ar_invoice
 #: constraint:account.journal:0
-msgid "You provided an invalid list of product types. Must been separated by commas."
-msgstr "Usted proporcionó una lista de tipos de producto no válida. Deben haber sido separado por comasYou provided an invalid list of product types. Must been separated by commas."
+msgid ""
+"You provided an invalid list of product types. Must been separated by commas."
+msgstr ""
+"Usted proporcionó una lista de tipos de producto no válida. Deben haber sido "
+"separado por comasYou provided an invalid list of product types. Must been "
+"separated by commas."
 
 #. module: l10n_ar_invoice
 #: code:addons/l10n_ar_invoice/invoice.py:258
@@ -746,16 +802,23 @@ msgstr "l10n_ar_invoice.config"
 
 #. module: l10n_ar_invoice
 #: view:account.invoice:0
-msgid "onchange_company_id(company_id,partner_id,type,invoice_line,currency_id,context)"
-msgstr "onchange_company_id(company_id,partner_id,type,invoice_line,currency_id,context)"
+msgid ""
+"onchange_company_id(company_id,partner_id,type,invoice_line,currency_id,"
+"context)"
+msgstr ""
+"onchange_company_id(company_id,partner_id,type,invoice_line,currency_id,"
+"context)"
 
 #. module: l10n_ar_invoice
 #: view:account.invoice:0
-msgid "onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,context)"
-msgstr "onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,context)"
+msgid ""
+"onchange_partner_id(type,partner_id,date_invoice,payment_term, "
+"partner_bank_id,company_id,context)"
+msgstr ""
+"onchange_partner_id(type,partner_id,date_invoice,payment_term, "
+"partner_bank_id,company_id,context)"
 
 #. module: l10n_ar_invoice
 #: view:l10n_ar_invoice.config:0
 msgid "or"
 msgstr "o"
-

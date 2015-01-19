@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-
-
 from openerp.osv import fields, osv
 import re
+_re_ar_vat = re.compile('ar(\d\d)(\d*)(\d)', re.IGNORECASE)
 
-_re_ar_vat = re.compile('ar(\d\d)(\d*)(\d)')
 
 class res_partner(osv.osv):
     _inherit = 'res.partner'
@@ -19,13 +17,15 @@ class res_partner(osv.osv):
         return res
 
     _columns = {
-        'formated_vat': fields.function(_get_formated_vat, method=True, string='Printeable VAT', type="char",
-                                       store=False),
+        'formated_vat': fields.function(
+            _get_formated_vat, method=True,
+            string='Printeable VAT', type="char"),
     }
 
     def format_vat_ar(self, vat):
         cuit_parse = _re_ar_vat.match(vat) if vat else None
-        cuit_string = '{0}-{1}-{2}'.format(*cuit_parse.groups()) if cuit_parse is not None else vat
+        cuit_string = '{0}-{1}-{2}'.format(
+            *cuit_parse.groups()) if cuit_parse is not None else vat
         return cuit_string
 
     def check_vat_ar(self, vat):

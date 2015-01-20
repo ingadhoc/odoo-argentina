@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import wizard
 import test
 import afip
 import partner

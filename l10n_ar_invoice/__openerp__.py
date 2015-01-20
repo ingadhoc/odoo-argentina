@@ -29,7 +29,6 @@
                 'test/bug_1042944.yml'],
     'data': [   
                       'security/l10n_ar_invoice_security.xml',
-                      'wizard/journal_config_wizard_view.xml',
                       'data/responsability.xml',
                       'data/afip.document_letter.csv',
                       'data/afip.document_class.csv',

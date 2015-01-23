@@ -21,7 +21,7 @@ class account_invoice_line(models.Model):
         price = self.price_unit * (1 - (self.discount or 0.0) / 100.0)
 
         price_unit_without_tax = self.invoice_line_tax_id.compute_all(
-            self.price_unit, self.quantity, product=self.product_id,
+            self.price_unit, 1, product=self.product_id,
             partner=self.invoice_id.partner_id)
 
         # For document that not discriminate we include the prices
@@ -32,8 +32,6 @@ class account_invoice_line(models.Model):
             printed_price_subtotal = printed_price_net * self.quantity
         else:
             printed_price_unit = price_unit_without_tax['total_included']
-            # printed_price_unit = all_taxes['total_included'] * (
-            #     1 + (self.discount or 0.0) / 100.0)
             printed_price_net = price_unit_without_tax['total_included'] * (
                 1 - (self.discount or 0.0) / 100.0)
             printed_price_subtotal = printed_price_net * self.quantity
@@ -117,10 +115,11 @@ class account_invoice(models.Model):
             printed_amount_untaxed = self.amount_untaxed
             printed_tax_ids = [x.id for x in self.tax_line]
         else:
-            printed_amount_untaxed = sum(
-                line.printed_price_subtotal for line in self.invoice_line)
-            printed_tax_ids = [
-                    x.id for x in self.tax_line if x.tax_code_id.parent_id.name != 'IVA']
+            # por ahora hacemos que no se imprima ninguno
+            printed_amount_untaxed = self.amount_total
+            # printed_amount_untaxed = sum(
+            #     line.printed_price_subtotal for line in self.invoice_line)
+            printed_tax_ids = False
 
         self.printed_amount_untaxed = printed_amount_untaxed
         self.printed_tax_ids = printed_tax_ids
@@ -204,7 +203,10 @@ class account_invoice(models.Model):
     @api.one
     @api.depends(
         'afip_document_class_id',
-        'company_id')
+        'afip_document_class_id.document_letter_id',
+        'afip_document_class_id.document_letter_id.vat_discriminated',
+        'company_id',
+        'company_id.invoice_vat_discrimination_default',)
     def get_vat_discriminated(self):
         vat_discriminated = False
         if self.afip_document_class_id.document_letter_id.vat_discriminated or self.company_id.invoice_vat_discrimination_default == 'discriminate_default':
@@ -248,6 +250,8 @@ class account_invoice(models.Model):
         )
     vat_discriminated = fields.Boolean(
         'Discriminate VAT?',
+        compute="get_vat_discriminated",
+        store=True,
         readonly=False,
         help="Discriminate VAT on Quotations and Sale Orders?",
         )

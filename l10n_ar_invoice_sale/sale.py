@@ -8,8 +8,9 @@ import openerp.addons.decimal_precision as dp
 class sale_order_line(models.Model):
 
     """
-    En argentina como no se diferencian los impuestos en las facturas, excepto el IVA,
-    agrego campos que ignoran el iva solamenta a la hora de imprimir los valores.
+    En argentina como no se diferencian los impuestos en las facturas, excepto
+    el IVA, agrego campos que ignoran el iva solamenta a la hora de imprimir
+    los valores. Extendemos dicha funcionalidad a las ordenes de venta
     """
 
     _inherit = "sale.order.line"

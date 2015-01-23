@@ -111,6 +111,7 @@ class account_move_line(models.Model):
 class account_journal_afip_document_class(models.Model):
     _name = "account.journal.afip_document_class"
     _description = "Journal Afip Documents"
+    _rec_name = 'afip_document_class_id'
 
     def name_get(self, cr, uid, ids, context=None):
         result = []

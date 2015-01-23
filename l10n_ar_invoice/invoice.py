@@ -70,27 +70,33 @@ class account_invoice_line(models.Model):
     printed_price_unit = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
-        string='Unit Price')
+        string='Unit Price'
+        )
     printed_price_net = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
-        string='Net Price')
+        string='Net Price',
+        )
     printed_price_subtotal = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
-        string='Subtotal')
+        string='Subtotal',
+        )
     vat_amount = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
-        string='Vat Amount')
+        string='Vat Amount',
+        )
     other_taxes_amount = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
-        string='Other Taxes Amount')
+        string='Other Taxes Amount',
+        )
     exempt_amount = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
-        string='Exempt Amount')
+        string='Exempt Amount',
+        )
 
 
 class account_invoice(models.Model):
@@ -98,7 +104,6 @@ class account_invoice(models.Model):
 
     @api.one
     def _printed_prices(self):
-
         vat_amount = sum([
                 x.tax_amount for x in self.tax_line if x.tax_code_id.parent_id.name == 'IVA'])
         other_taxes_amount = sum(
@@ -124,35 +129,6 @@ class account_invoice(models.Model):
         self.vat_amount = vat_amount
         self.other_taxes_amount = other_taxes_amount
         self.exempt_amount = exempt_amount
-
-    printed_amount_tax = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Tax')
-    printed_amount_untaxed = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Subtotal')
-    exempt_amount = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Exempt Amount')
-    vat_amount = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Vat Amount')
-    other_taxes_amount = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Other Taxes Amount')
-    printed_tax_ids = fields.One2many(
-        compute="_printed_prices",
-        comodel_name='account.invoice.tax',
-        string='Tax')
-    vat_tax_ids = fields.One2many(
-        compute="_printed_prices",
-        comodel_name='account.invoice.tax',
-        string='VAT Taxes')
 
     @api.multi
     def name_get(self):
@@ -222,68 +198,111 @@ class account_invoice(models.Model):
                     document_class_id = document_class_ids[0]
         self.available_journal_document_class_ids = document_class_ids
         self.journal_document_class_id = document_class_id
+        self.responsability_id = self.partner_id.commercial_partner_id.responsability_id
+        # self.responsability_id = self.partner_id and self.partner_id.commercial_partner_id.responsability_id or False
 
     @api.one
     @api.depends(
         'afip_document_class_id',
-        'afip_document_class_id.document_letter_id',
-        'afip_document_class_id.document_letter_id.vat_discriminated',
-        'company_id',
-        'company_id.invoice_vat_discrimination_default')
+        'company_id')
     def get_vat_discriminated(self):
         vat_discriminated = False
         if self.afip_document_class_id.document_letter_id.vat_discriminated or self.company_id.invoice_vat_discrimination_default == 'discriminate_default':
             vat_discriminated = True
         self.vat_discriminated = vat_discriminated
 
+    printed_amount_tax = fields.Float(
+        compute="_printed_prices",
+        digits_compute=dp.get_precision('Account'),
+        string='Tax'
+        )
+    printed_amount_untaxed = fields.Float(
+        compute="_printed_prices",
+        digits_compute=dp.get_precision('Account'),
+        string='Subtotal'
+        )
+    exempt_amount = fields.Float(
+        compute="_printed_prices",
+        digits_compute=dp.get_precision('Account'),
+        string='Exempt Amount'
+        )
+    vat_amount = fields.Float(
+        compute="_printed_prices",
+        digits_compute=dp.get_precision('Account'),
+        string='Vat Amount'
+        )
+    other_taxes_amount = fields.Float(
+        compute="_printed_prices",
+        digits_compute=dp.get_precision('Account'),
+        string='Other Taxes Amount'
+        )
+    printed_tax_ids = fields.One2many(
+        compute="_printed_prices",
+        comodel_name='account.invoice.tax',
+        string='Tax'
+        )
+    vat_tax_ids = fields.One2many(
+        compute="_printed_prices",
+        comodel_name='account.invoice.tax',
+        string='VAT Taxes'
+        )
     vat_discriminated = fields.Boolean(
         'Discriminate VAT?',
-        compute="get_vat_discriminated",
-        store=True,
         readonly=False,
-        help="Discriminate VAT on Quotations and Sale Orders?")
-
+        help="Discriminate VAT on Quotations and Sale Orders?",
+        )
     available_journal_document_class_ids = fields.Many2many(
         'account.journal.afip_document_class',
-        # TODO hay un warning cada vez que se crea una factura que dice:
-        # No such field(s) in model account.invoice:available_journal_document_class_ids
-        # la unica forma que encontre de sacarlo es agregando el store, lo dejo
-        # por las dudas pero la idea es ver si la api se arregla, no hace falta
-        # y podemos borrar esto
-        # 'available_journal_class_invoice_rel',
-        # 'invoice_id', 'journal_class_id',
-        # store=True,
         compute='_get_available_journal_document_class',
-        string='Available Journal Document Classes')
+        string='Available Journal Document Classes',
+        )
     supplier_invoice_number = fields.Char(
-        copy=False)
+        copy=False,
+        )
     journal_document_class_id = fields.Many2one(
         'account.journal.afip_document_class',
         'Documents Type',
-        compute="_get_available_journal_document_class",
         readonly=True,
-        store=True,
-        states={'draft': [('readonly', False)]})
+        states={'draft': [('readonly', False)]}
+        )
     afip_document_class_id = fields.Many2one(
         'afip.document_class',
         related='journal_document_class_id.afip_document_class_id',
         string='Document Type',
         copy=False,
         readonly=True,
-        store=True)
+        store=True,
+        )
     afip_document_number = fields.Char(
         string='Document Number',
         copy=False,
-        readonly=True,)
+        readonly=True,
+        )
     responsability_id = fields.Many2one(
         'afip.responsability',
         string='Responsability',
-        related='commercial_partner_id.responsability_id',
-        store=True,
+        readonly=True,
+        states={'draft': [('readonly', False)]}
         )
     formated_vat = fields.Char(
         string='Responsability',
-        related='commercial_partner_id.formated_vat',)
+        related='commercial_partner_id.formated_vat',
+        )
+    document_number = fields.Char(
+        compute='_get_document_number',
+        string='Document Number',
+        readonly=True,
+        )
+    next_invoice_number = fields.Integer(
+        related='journal_document_class_id.sequence_id.number_next_actual',
+        string='Next Document Number',
+        readonly=True
+        )
+    use_documents = fields.Boolean(
+        related='journal_id.use_documents',
+        string='Use Documents?',
+        readonly=True
+        )
 
     @api.one
     @api.depends('afip_document_number', 'number')
@@ -294,21 +313,6 @@ class account_invoice(models.Model):
         else:
             document_number = self.number
         self.document_number = document_number
-
-    document_number = fields.Char(
-        compute='_get_document_number',
-        string='Document Number',
-        readonly=True,
-        # store=True
-    )
-    next_invoice_number = fields.Integer(
-        related='journal_document_class_id.sequence_id.number_next_actual',
-        string='Next Document Number',
-        readonly=True)
-    use_documents = fields.Boolean(
-        related='journal_id.use_documents',
-        string='Use Documents?',
-        readonly=True)
 
     @api.one
     @api.constrains('supplier_invoice_number', 'partner_id', 'company_id')
@@ -359,10 +363,10 @@ class account_invoice(models.Model):
                     {'document_class_id': document_class_id,
                      'afip_document_number': self.afip_document_number})
         res = super(account_invoice, self).action_number()
-
         return res
 
-    def get_operation_type(self, cr, uid, invoice_type, context=None):
+    @api.model
+    def get_operation_type(self, invoice_type):
         if invoice_type in ['in_invoice', 'in_refund']:
             operation_type = 'purchase'
         elif invoice_type in ['out_invoice', 'out_refund']:
@@ -407,7 +411,7 @@ class account_invoice(models.Model):
                              _('Please, set your company responsability in the company partner before continue.'))
 
         document_letter_ids = document_letter_obj.search(cr, uid, [(
-            'issuer_ids', 'in', issuer_responsability_id),
-            ('receptor_ids', 'in', receptor_responsability_id)],
+            'issuer_ids', '=', issuer_responsability_id),
+            ('receptor_ids', '=', receptor_responsability_id)],
             context=context)
         return document_letter_ids

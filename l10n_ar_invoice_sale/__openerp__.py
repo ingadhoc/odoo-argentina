@@ -24,6 +24,7 @@ NOTAS PARA MEJORAR Y TRADUCIR:
     'data': [
         'security/invoice_sale_security.xml',
         'sale_view.xml',
+        'report/invoice_report_view.xml',
         'res_company_view.xml',
         'res_config_view.xml',
         'security/ir.model.access.csv',

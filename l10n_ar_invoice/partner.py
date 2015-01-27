@@ -17,7 +17,6 @@ class res_partner(models.Model):
 
     @api.onchange('document_number', 'document_type_id')
     def onchange_document(self):
-        print '11111111'
         mod_obj = self.env['ir.model.data']
         if self.document_number and ('afip.document_type', self.document_type_id.id) == mod_obj.get_object_reference('l10n_ar_invoice', 'dt_CUIT'):
             document_number = re.sub('[^1234567890]', '', str(self.document_number))

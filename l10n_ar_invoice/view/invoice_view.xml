@@ -58,6 +58,7 @@
 
                 <xpath expr="//page[@string='Other Info']//field[@name='company_id']" position="after">
                     <field name="vat_discriminated"/>
+                    <field name="responsability_id" attrs="{'invisible': [('state','=','draft')]}"/>
                 </xpath>
 
                 <field name="fiscal_position" position="after">
@@ -109,6 +110,9 @@
 
                 <field name="number" position="attributes">
                     <attribute name="invisible">1</attribute>
+                </field>
+                <field name="payment_term" position="after">
+                    <field name="responsability_id" attrs="{'invisible': [('state','=','draft')]}"/>
                 </field>
                 <field name="number" position="after">
                     <field name="document_number" class="oe_inline"/>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="act_report_extended_xml_view" model="ir.ui.view">
+            <field name="name">ir.actions.report.extended.account.xml</field>
+            <field name="model">ir.actions.report.xml</field>
+            <field name="inherit_id" ref="report_extended_account.act_report_extended_xml_view"/>
+            <field name="arch" type="xml">
+                <field name="account_invoice_journal_ids" position="after">
+                    <field name="afip_document_class_ids"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,42 @@
+id,invoice_id/id,product_id/id,quantity,account_id/id,name,price_unit
+invoice_line_01,l10n_ar_invoice.Invoice_1,product.product_product_4,1.0,l10n_ar_invoice.account_44,"[A2323] Pantalla iPad Retina
+Pantalla con retroiluminación LED de 7.9"", 128Gb
+Dual-core A5 con gráficos quad-core
+Cámara FaceTime HD, Fotos 1.2 MP",750
+invoice_line_02,l10n_ar_invoice.Invoice_2,product.product_product_4,1.0,l10n_ar_invoice.account_44,"[A2323] Pantalla iPad Retina
+Pantalla con retroiluminación LED de 7.9"", 128Gb
+Dual-core A5 con gráficos quad-core Cámara FaceTime HD, Fotos 1.2 MP",750
+invoice_line_03,l10n_ar_invoice.Invoice_3,product.product_product_5,1.0,l10n_ar_invoice.account_45,Ordenador personalizado ensamblado bajo pedido basado en los requisitos del cliente.,147
+invoice_line_04,l10n_ar_invoice.Invoice_4,product.product_product_5,1.0,l10n_ar_invoice.account_45,Ordenador personalizado ensamblado bajo pedido basado en los requisitos del cliente.,147
+invoice_line_05,l10n_ar_invoice.Invoice_5,product.product_product_4,1.0,l10n_ar_invoice.account_46,"[A2323] Pantalla iPad Retina
+Pantalla con retroiluminación LED de 7.9"", 128Gb
+Dual-core A5 con gráficos quad-core
+Cámara FaceTime HD, Fotos 1.2 MP",750
+invoice_line_06,l10n_ar_invoice.Invoice_6,product.product_product_4,1.0,l10n_ar_invoice.account_46,"[A2323] Pantalla iPad Retina
+Pantalla con retroiluminación LED de 7.9"", 128Gb
+Dual-core A5 con gráficos quad-core
+Cámara FaceTime HD, Fotos 1.2 MP",750
+invoice_line_07,l10n_ar_invoice.Invoice_7,product.product_product_4,1.0,l10n_ar_invoice.account_47,"[A2323] Pantalla iPad Retina
+Pantalla con retroiluminación LED de 7.9"", 128Gb
+Dual-core A5 con gráficos quad-core
+Cámara FaceTime HD, Fotos 1.2 MP",750
+invoice_line_08,l10n_ar_invoice.Invoice_8,product.product_product_4,1.0,l10n_ar_invoice.account_47,"[A2323] Pantalla iPad Retina
+Pantalla con retroiluminación LED de 7.9"", 128Gb
+Dual-core A5 con gráficos quad-core
+Cámara FaceTime HD, Fotos 1.2 MP",750
+invoice_line_09,l10n_ar_invoice.Invoice_9,product.product_product_4,1.0,l10n_ar_invoice.account_44,"[A2323] Pantalla iPad Retina
+Pantalla con retroiluminación LED de 7.9"", 128Gb
+Dual-core A5 con gráficos quad-core
+Cámara FaceTime HD, Fotos 1.2 MP",750
+invoice_line_10,l10n_ar_invoice.Invoice_10,product.product_product_4,1.0,l10n_ar_invoice.account_45,"[A2323] Pantalla iPad Retina
+Pantalla con retroiluminación LED de 7.9"", 128Gb
+Dual-core A5 con gráficos quad-core
+Cámara FaceTime HD, Fotos 1.2 MP",750
+invoice_line_11,l10n_ar_invoice.Invoice_11,product.product_product_4,1.0,l10n_ar_invoice.account_46,"[A2323] Pantalla iPad Retina
+Pantalla con retroiluminación LED de 7.9"", 128Gb
+Dual-core A5 con gráficos quad-core
+Cámara FaceTime HD, Fotos 1.2 MP",750
+invoice_line_12,l10n_ar_invoice.Invoice_12,product.product_product_4,1.0,l10n_ar_invoice.account_47,"[A2323] Pantalla iPad Retina
+Pantalla con retroiluminación LED de 7.9"", 128Gb
+Dual-core A5 con gráficos quad-core
+Cámara FaceTime HD, Fotos 1.2 MP",750

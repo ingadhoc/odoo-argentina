@@ -2,8 +2,14 @@
 {   'active': False,
     'author': 'OpenERP - Team de Localizaci\xc3\xb3n Argentina',
     'category': 'Localization/Argentina',
-    'demo_xml': [
-       'data/partner_demo.xml',
+    'demo': [
+       'demo/partner_demo.xml',
+       'demo/res.company.csv',
+       'demo/afip.point_of_sale.csv',
+       'demo/account.account.csv',
+       'demo/account.journal.csv',
+       'demo/account.invoice.csv',
+       'demo/account.invoice.line.csv',
       ],
     'depends': [   
                     'account',

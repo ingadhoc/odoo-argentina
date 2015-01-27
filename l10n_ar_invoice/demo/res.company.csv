@@ -1,0 +1,4 @@
+id,name,parent_id/id,responsability_id/id,vat
+c_1,Compania1,,,
+c_2,Compania2,c_1,l10n_ar_invoice.res_IVARI,AR20111111112
+c_3,Compania3,c_1,l10n_ar_invoice.res_RM,AR20222222223

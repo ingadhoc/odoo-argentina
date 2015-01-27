@@ -2,9 +2,6 @@
 {'active': False,
  'author': 'OpenERP - Team de Localizaci\xc3\xb3n Argentina',
  'category': 'Localization/Argentina',
- 'demo_xml': [
-     'data/partner_demo.xml',
- ],
  'depends': [
      'account',
      'l10n_ar_base',

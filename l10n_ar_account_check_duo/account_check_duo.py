@@ -93,26 +93,21 @@ class account_issued_check(osv.osv):
                 return False 
         return super(account_issued_check, self).unlink(cr, uid, ids, context=context)     
 
-
     def create(self, cr, uid, vals, context={}):        
         checkbook_obj = self.pool.get('account.checkbook')       
-        num = vals['checkbook_id'] 
+        num = vals['checkbook_id']
         book = checkbook_obj.browse(cr, uid, num, context=context)
-        
-        actual=0
-        hasta=0
-        actual= int(book.actual_number)
-        hasta= int(book.range_hasta)
+        actual = int(vals['number'])
+        hasta = int(book.range_hasta)
         if actual == hasta:
-            checkbook_obj.write(cr, uid, num, {'state': 'used',})  
+            checkbook_obj.write(cr, uid, num, {'state': 'used'})
         else:
-            if str(book.actual_number) < str(book.range_hasta):
-                sum_actual_number = int(book.actual_number) + 1
-                checkbook_obj.write(cr, uid, num, {'actual_number': str(sum_actual_number),
-                                              }) 
-        
+            sum_actual_number = actual + 1
+            checkbook_obj.write(cr, uid, num, {
+                'actual_number': str(sum_actual_number)})
+
         vals['account_bank_id'] = book.account_bank_id.id
-        res = super(account_issued_check, self).create(cr, uid, vals, context)            
+        res = super(account_issued_check, self).create(cr, uid, vals, context)
         return res
 
 

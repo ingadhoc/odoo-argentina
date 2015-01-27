@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+    <data noupdate="1">
     <!-- Printed Invoice -->
         <record id="action_aeroo_report_ar_einvoice" context="{'no_key_lines':True}" model="ir.actions.report.xml">
             <field name="name">Argentinian Aeroo Electronic Invoice</field>
@@ -20,10 +20,6 @@
             <field name="account_invoice_split_invoice" eval="False"/>
         </record>
 
-    </data>
-
-    <data noupdate="1">
-        <!-- Iniciamos los key values sin update-->
         <function
             eval="([ref('action_aeroo_report_ar_einvoice')])"
             id="update_lines_ar_invoice"

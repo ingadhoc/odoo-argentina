@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 import logging
-logger = logging.getLogger('report_aeroo')
-
-# from openerp.report import report_sxw
 import conversor
 from openerp.report.report_sxw import rml_parse
+logger = logging.getLogger('report_aeroo')
 
 
 class Parser(rml_parse):

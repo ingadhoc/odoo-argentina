@@ -59,7 +59,7 @@ class sale_order_line(models.Model):
         if not vat_taxes:
             exempt_amount = taxes['total_included']
 
-        self.price_unit_with_tax = printed_price_unit + vat_taxes_amount + not_vat_taxes_amount
+        self.price_unit_with_tax = printed_price_unit
         self.vat_amount = vat_taxes_amount * self.product_uom_qty
         self.other_taxes_amount = not_vat_taxes_amount * self.product_uom_qty
         self.exempt_amount = exempt_amount * self.product_uom_qty

@@ -71,12 +71,7 @@
 								<field name="module_l10n_ar_wsafip_fe"
 									class="oe_inline" />
 								<label for="module_l10n_ar_wsafip_fe" />
-							</div>		
-							<div name='module_l10n_ar_perception'>
-								<field name="module_l10n_ar_perception"
-									class="oe_inline" />
-								<label for="module_l10n_ar_perception" />
-							</div>							
+							</div>								
 						</div>
 					</group>
 					<group>

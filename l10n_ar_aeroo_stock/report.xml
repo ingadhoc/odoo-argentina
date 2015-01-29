@@ -16,7 +16,7 @@
             <field name="print_logo">company_logo</field> <!-- Or 'company_logo' or ''  -->
             <field name="background_image" type="base64" file="l10n_ar_aeroo_stock/stock_picking.png"/>
             <field name="use_background_image" eval="True"/>
-            <field name="stock_report_type">remit</field>
+            <field name="stock_report_type">voucher</field>
         </record>
 
         <!-- Iniciamos los key values sin update-->

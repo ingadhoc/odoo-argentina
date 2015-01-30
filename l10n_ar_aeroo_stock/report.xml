@@ -17,6 +17,7 @@
             <field name="background_image" type="base64" file="l10n_ar_aeroo_stock/stock_picking.png"/>
             <field name="use_background_image" eval="True"/>
             <field name="stock_report_type">voucher</field>
+            <field name="out_format" ref="report_aeroo.report_mimetypes_pdf_odt"/>
         </record>
 
         <!-- Iniciamos los key values sin update-->

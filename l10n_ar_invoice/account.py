@@ -180,7 +180,7 @@ class account_journal(models.Model):
                     journal_documents = self.journal_document_class_ids.search(
                         [('afip_document_class_id.document_letter_id', '=', document_class.document_letter_id.id),
                          ('journal_id.point_of_sale', '=', self.point_of_sale)])
-                    sequence_id = journal_documents and journal_documents.sequence_id.id or False
+                    sequence_id = journal_documents and journal_documents[0].sequence_id.id or False
                 else:
                     sequence_id = self.env['ir.sequence'].create({
                         'name': self.name + ' - ' + document_class.name,

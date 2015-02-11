@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
 from openerp import models, fields, api, _
-from openerp.osv import fields as old_fields
 from openerp.exceptions import Warning
 
 
@@ -11,10 +10,6 @@ class account_vat_ledger(models.Model):
     _description = "Account VAT Ledger"
     _inherit = ['mail.thread']
     _order = 'period_id desc'
-
-    _columns = {
-    'first_page': old_fields.float('sasdasdas')
-    }
 
     company_id = fields.Many2one(
         'res.company', string='Company', required=True,
@@ -35,9 +30,9 @@ class account_vat_ledger(models.Model):
         'account.journal', 'account_vat_ledger_journal_rel',
         'vat_ledger_id', 'journal_id', string='Journals', required=True,
         readonly=True, states={'draft': [('readonly', False)]},)
-    # first_page = fields.Integer(
-    #     "First Page", required=True,
-    #     readonly=True, states={'draft': [('readonly', False)]},)
+    first_page = fields.Integer(
+        "First Page", required=True,
+        readonly=True, states={'draft': [('readonly', False)]},)
     last_page = fields.Integer(
         "Last Page",
         readonly=True, states={'draft': [('readonly', False)]},)
@@ -212,6 +207,5 @@ class account_vat_ledger(models.Model):
 
     @api.multi
     def action_print(self):
-        assert len(
-            self) == 1, 'This option should only be used for a single id at a time.'
+        self.ensure_one
         return self.env['report'].get_action(self, 'report_account_vat_ledger')

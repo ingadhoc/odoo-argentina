@@ -55,6 +55,14 @@
             <field name="apply_to_all" eval="True"/>
             <field name="override_values" eval="False"/>
             <field name="value_type">text</field>
+        </record>
+
+        <record model="report.configuration.default" id="report.report_configuration_print_page_number">
+            <field name="name">print_page_number</field>
+            <field name="apply_to_all" eval="True"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="False"/>
         </record>         
     </data>
 </openerp>

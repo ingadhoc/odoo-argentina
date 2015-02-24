@@ -32,8 +32,8 @@
             <field name="value_type">text</field>
             <field name="value_text">ORDEN DE VENTA</field>
         </record>  
-        <record model="report.configuration.default" id="report_configuration_sale?list_price">
-            <field name="name">print_list_price</field>
+        <record model="report.configuration.default" id="report_configuration_sale_list_price">
+            <field name="name">print_list_price_and_total_discount</field>
             <field name="apply_to_all" eval="False"/>
             <field name="apply_to_model_id" ref="sale.model_sale_order"/>
             <field name="override_values" eval="False"/>

@@ -79,6 +79,8 @@ class account_vat_ledger(models.Model):
     @api.one
     @api.depends('journal_ids', 'period_id')
     def _get_data(self):
+        # para evitar errores con on change con usuarios distintos a admin
+        self = self.sudo()
         self.responsability_ids = self.env['afip.responsability'].search([])
 
         invoices_domain = [
@@ -170,9 +172,11 @@ class account_vat_ledger(models.Model):
             domain = [('type', 'in', ['purchase', 'purchase_refund'])]
         domain += [
             ('use_documents', '=', True),
-            '|',
+            # No tomamos los diarios de las cias hijas
+            # '|',
             ('company_id', '=', self.company_id.id),
-            ('company_id', 'child_of', self.company_id.id)]
+            # ('company_id', 'child_of', self.company_id.id)
+            ]
         journals = self.env['account.journal'].search(domain)
         self.journal_ids = journals
 

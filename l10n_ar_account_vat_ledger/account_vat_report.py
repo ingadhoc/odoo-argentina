@@ -79,7 +79,7 @@ class account_vat_ledger(models.Model):
     @api.one
     # Sacamos el depends por un error con el cache en esqume multi cia al
     # cambiar periodo de una cia hija con usuario distinto a admin
-    @api.depends('journal_ids', 'period_id')
+    # @api.depends('journal_ids', 'period_id')
     def _get_data(self):
         self.responsability_ids = self.env['afip.responsability'].search([])
 

@@ -77,10 +77,10 @@ class account_vat_ledger(models.Model):
         compute="_get_data")
 
     @api.one
+    # Sacamos el depends por un error con el cache en esqume multi cia al
+    # cambiar periodo de una cia hija con usuario distinto a admin
     @api.depends('journal_ids', 'period_id')
     def _get_data(self):
-        # para evitar errores con on change con usuarios distintos a admin
-        self = self.sudo()
         self.responsability_ids = self.env['afip.responsability'].search([])
 
         invoices_domain = [
@@ -97,7 +97,7 @@ class account_vat_ledger(models.Model):
         self.document_class_ids = document_class_ids
 
         # Get invoices
-        self.invoice_ids = self.env['account.invoice']
+        # self.invoice_ids = self.env['account.invoice']
         invoices = self.env['account.invoice'].search(invoices_domain)
         self.invoice_ids = invoices
 
@@ -130,7 +130,7 @@ class account_vat_ledger(models.Model):
             '|', ('tax_code_id.parent_id.name', '!=', 'IVA'),
             ('tax_code_id.parent_id', '=', False),
             ]
-        self.tax_code_ids = self.env['account.tax.code']
+        self.other_tax_code_ids = self.env['account.tax.code']
         other_group_taxes = self.env['account.invoice.tax'].read_group(
             other_taxes_domain, ['id', 'tax_code_id'], ['tax_code_id'])
         other_tax_code_ids = [

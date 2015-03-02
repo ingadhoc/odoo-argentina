@@ -18,7 +18,7 @@
 					<div>
 						<p>
 							<label
-								string="Allows you to configure options related to products, sales, purchase, warehouse and finance for your business according to argentinian localization. You may also find some tools that makes your life easier while workign with OpenERP." />
+								string="Allows you to configure options related to products, sales, purchase, warehouse and finance for your business according to argentinian localization. You may also find some tools that makes your life easier while working with OpenERP." />
 						</p>
 					</div>
 <!-- 					<separator string="Products" />

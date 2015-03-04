@@ -112,7 +112,7 @@ msgstr ""
 
 #. module: l10n_ar_partner_title
 #: model:res.partner.title,name:l10n_ar_partner_title.srl
-msgid "Sociedad Limitada"
+msgid "Sociedad de Responsabilidad Limitada"
 msgstr ""
 
 #. module: l10n_ar_partner_title

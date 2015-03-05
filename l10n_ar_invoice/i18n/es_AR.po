@@ -358,7 +358,7 @@ msgstr ""
 #. module: l10n_ar_invoice
 #: field:res.company,iibb:0 field:res.partner,iibb:0
 msgid "Gross Income"
-msgstr "Ingreso Bruto"
+msgstr "Ingresos Brutos"
 
 #. module: l10n_ar_invoice
 #: field:l10n_ar_invoice.config,group_invoice_lines:0

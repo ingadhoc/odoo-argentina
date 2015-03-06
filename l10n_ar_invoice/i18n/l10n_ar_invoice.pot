@@ -1,13 +1,13 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
 #	* l10n_ar_invoice
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 8.0alpha1\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-30 15:32+0000\n"
-"PO-Revision-Date: 2014-05-30 15:32+0000\n"
+"POT-Creation-Date: 2015-03-05 14:38+0000\n"
+"PO-Revision-Date: 2015-03-05 14:38+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,39 +16,87 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_ar_invoice
-#: model:ir.actions.act_window,help:l10n_ar_invoice.action_supplier_debit_notes
-msgid "<p class=\"oe_view_nocontent_create\">\n"
-"                Click to create Supplier debit notes.\n"
-"              </p>\n"
+#: model:email.template,body_html:l10n_ar_invoice.email_template_edi_invoice
+msgid "\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"    <p>Hello ${object.partner_id.name},</p>\n"
+"\n"
+"    <p>A new invoice is available for you: </p>\n"
+"    \n"
+"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"       &nbsp;&nbsp;<strong>REFERENCES</strong><br />\n"
+"       &nbsp;&nbsp;Invoice number: <strong>${object.document_number}</strong><br />\n"
+"       &nbsp;&nbsp;Invoice total: <strong>${object.amount_total} ${object.currency_id.name}</strong><br />\n"
+"       &nbsp;&nbsp;Invoice date: ${object.date_invoice}<br />\n"
+"       % if object.origin:\n"
+"       &nbsp;&nbsp;Order reference: ${object.origin}<br />\n"
+"       % endif\n"
+"       % if object.user_id:\n"
+"       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Invoice%20${object.number}\">${object.user_id.name}</a>\n"
+"       % endif\n"
+"    </p>  \n"
+"    \n"
+"    % if object.paypal_url:\n"
+"    <br/>\n"
+"    <p>It is also possible to directly pay with Paypal:</p>\n"
+"        <a style=\"margin-left: 120px;\" href=\"${object.paypal_url}\">\n"
+"            <img class=\"oe_edi_paypal_button\" src=\"/account/static/src/img/btn_paynowcc_lg.gif\"/>\n"
+"        </a>\n"
+"    % endif\n"
+"    \n"
+"    <br/>\n"
+"    <p>If you have any question, do not hesitate to contact us.</p>\n"
+"    <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
+"    <br/>\n"
+"    <br/>\n"
+"    <div style=\"width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;\">\n"
+"        <h3 style=\"margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;\">\n"
+"            <strong style=\"text-transform:uppercase;\">${object.company_id.name}</strong></h3>\n"
+"    </div>\n"
+"    <div style=\"width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;\">\n"
+"        <span style=\"color: #222; margin-bottom: 5px; display: block; \">\n"
+"        % if object.company_id.street:\n"
+"            ${object.company_id.street}<br/>\n"
+"        % endif\n"
+"        % if object.company_id.street2:\n"
+"            ${object.company_id.street2}<br/>\n"
+"        % endif\n"
+"        % if object.company_id.city or object.company_id.zip:\n"
+"            ${object.company_id.zip} ${object.company_id.city}<br/>\n"
+"        % endif\n"
+"        % if object.company_id.country_id:\n"
+"            ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
+"        % endif\n"
+"        </span>\n"
+"        % if object.company_id.phone:\n"
+"            <div style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; \">\n"
+"                Phone:&nbsp; ${object.company_id.phone}\n"
+"            </div>\n"
+"        % endif\n"
+"        % if object.company_id.website:\n"
+"            <div>\n"
+"                Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
+"            </div>\n"
+"        %endif\n"
+"        <p></p>\n"
+"    </div>\n"
+"</div>\n"
 "            "
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: model:ir.actions.act_window,help:l10n_ar_invoice.action_customer_debit_notes
-msgid "<p class=\"oe_view_nocontent_create\">\n"
-"                Click to create customer debit notes.\n"
-"              </p>\n"
-"            "
+#: model:email.template,subject:l10n_ar_invoice.email_template_edi_invoice
+msgid "${object.company_id.name|safe} Invoice (Ref ${object.document_number or 'n/a'})"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: model:ir.actions.act_window,help:l10n_ar_invoice.action_customer_other_documents
-msgid "<p class=\"oe_view_nocontent_create\">\n"
-"                Click to create other customer document.\n"
-"              </p>\n"
-"            "
+#: view:account.invoice:l10n_ar_invoice.view_invoice_form
+msgid "- Next Number:"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: model:ir.actions.act_window,help:l10n_ar_invoice.action_supplier_other_documents
-msgid "<p class=\"oe_view_nocontent_create\">\n"
-"                Click to create other supplier document.\n"
-"              </p>\n"
-"            "
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: view:account.journal:0
+#: view:res.currency:l10n_ar_invoice.view_currency_form
 msgid "AFIP"
 msgstr ""
 
@@ -63,7 +111,8 @@ msgid "AFIP Code"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:afip.concept_type:0
+#: view:afip.concept_type:l10n_ar_invoice.view_afip_concept_type_form
+#: view:afip.concept_type:l10n_ar_invoice.view_afip_concept_type_tree
 #: model:ir.actions.act_window,name:l10n_ar_invoice.act_afip_concept_type
 msgid "AFIP Concept type"
 msgstr ""
@@ -79,7 +128,8 @@ msgid "AFIP Description"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:afip.document_class:0
+#: view:afip.document_class:l10n_ar_invoice.view_afip_document_class_form
+#: view:afip.document_class:l10n_ar_invoice.view_afip_document_class_tree
 #: model:ir.actions.act_window,name:l10n_ar_invoice.act_afip_document_class
 msgid "AFIP Document Class"
 msgstr ""
@@ -90,26 +140,42 @@ msgid "AFIP Document Letter"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:afip.document_letter:0
+#: view:afip.document_letter:l10n_ar_invoice.view_afip_document_letter_form
+#: view:afip.document_letter:l10n_ar_invoice.view_afip_document_letter_tree
 msgid "AFIP Document class"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:afip.document_type:0
+#: view:afip.document_type:l10n_ar_invoice.view_afip_document_type_form
+#: view:afip.document_type:l10n_ar_invoice.view_afip_document_type_tree
 #: model:ir.actions.act_window,name:l10n_ar_invoice.act_afip_document_type
 msgid "AFIP Document type"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:afip.optional_type:0
+#: view:afip.optional_type:l10n_ar_invoice.view_afip_optional_type_form
+#: view:afip.optional_type:l10n_ar_invoice.view_afip_optional_type_tree
 #: model:ir.actions.act_window,name:l10n_ar_invoice.act_afip_optional_type
 msgid "AFIP Optional type"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:afip.responsability:0
+#: view:afip.point_of_sale:l10n_ar_invoice.view_afip_point_of_sale_form
+#: view:afip.point_of_sale:l10n_ar_invoice.view_afip_point_of_sale_tree
+#: model:ir.actions.act_window,name:l10n_ar_invoice.act_afip_point_of_sale
+msgid "AFIP Point Of Sale"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: view:afip.responsability:l10n_ar_invoice.view_afip_responsability_form
+#: view:afip.responsability:l10n_ar_invoice.view_afip_responsability_tree
 #: model:ir.actions.act_window,name:l10n_ar_invoice.act_afip_responsability
 msgid "AFIP Responsability"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: model:ir.model,name:l10n_ar_invoice.model_afip_responsability
+msgid "AFIP VAT Responsability"
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -133,6 +199,11 @@ msgid "AFIP optional types"
 msgstr ""
 
 #. module: l10n_ar_invoice
+#: model:ir.model,name:l10n_ar_invoice.model_account_move
+msgid "Account Entry"
+msgstr ""
+
+#. module: l10n_ar_invoice
 #: field:afip.concept_type,active:0
 #: field:afip.document_class,active:0
 #: field:afip.document_letter,active:0
@@ -143,7 +214,6 @@ msgid "Active"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:account.journal,afip_document_class_id:0
 #: model:ir.model,name:l10n_ar_invoice.model_afip_document_class
 msgid "Afip Document Class"
 msgstr ""
@@ -154,23 +224,18 @@ msgid "Afip Document Classes"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:l10n_ar_invoice.config,update_posted:0
-msgid "Allow Cancelling Entries"
+#: model:ir.model,name:l10n_ar_invoice.model_afip_document_letter
+msgid "Afip Document letter"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: model:ir.model,name:l10n_ar_invoice.model_afip_point_of_sale
+msgid "Afip Point Of Sale"
 msgstr ""
 
 #. module: l10n_ar_invoice
 #: field:afip.optional_type,apply_rule:0
 msgid "Apply rule"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: field:account.invoice,available_journal_ids:0
-msgid "Available Journals"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: field:l10n_ar_invoice.config,cuit:0
-msgid "CUIT"
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -189,21 +254,6 @@ msgid "CUIT persona juridica"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:l10n_ar_invoice.config:0
-msgid "Cancel"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: field:l10n_ar_invoice.config,allow_date:0
-msgid "Check Date in Period"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: help:l10n_ar_invoice.config,update_posted:0
-msgid "Check this box if you want to allow the cancellation the entries related to this journals or of the invoice related to this journals"
-msgstr ""
-
-#. module: l10n_ar_invoice
 #: field:afip.document_type,code:0
 #: field:afip.responsability,code:0
 msgid "Code"
@@ -215,12 +265,17 @@ msgid "Code Template for Journal"
 msgstr ""
 
 #. module: l10n_ar_invoice
+#: sql_constraint:afip.responsability:0
+msgid "Code must be unique!"
+msgstr ""
+
+#. module: l10n_ar_invoice
 #: model:ir.model,name:l10n_ar_invoice.model_res_company
 msgid "Companies"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:l10n_ar_invoice.config,company_id:0
+#: field:afip.point_of_sale,company_id:0
 msgid "Company"
 msgstr ""
 
@@ -230,13 +285,13 @@ msgid "Concept Types"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:argentinian.base.config.settings:0
-msgid "Configure company data, invoice journals and other documents journals."
+#: view:argentinian.base.config.settings:l10n_ar_invoice.view_argentinian_base_configuration
+msgid "Configure company data."
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:l10n_ar_invoice.config:0
-msgid "Confirm"
+#: view:argentinian.base.config.settings:l10n_ar_invoice.view_argentinian_base_configuration
+msgid "Configure invoice other documents journals."
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -245,8 +300,31 @@ msgid "Country"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: selection:afip.document_class,journal_subtype:0
-#: field:l10n_ar_invoice.config,credit_notes:0
+#: field:account.journal.afip_document_class,create_uid:0
+#: field:afip.concept_type,create_uid:0
+#: field:afip.document_class,create_uid:0
+#: field:afip.document_letter,create_uid:0
+#: field:afip.document_type,create_uid:0
+#: field:afip.optional_type,create_uid:0
+#: field:afip.point_of_sale,create_uid:0
+#: field:afip.responsability,create_uid:0
+msgid "Created by"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: field:account.journal.afip_document_class,create_date:0
+#: field:afip.concept_type,create_date:0
+#: field:afip.document_class,create_date:0
+#: field:afip.document_letter,create_date:0
+#: field:afip.document_type,create_date:0
+#: field:afip.optional_type,create_date:0
+#: field:afip.point_of_sale,create_date:0
+#: field:afip.responsability,create_date:0
+msgid "Created on"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: selection:afip.document_class,document_type:0
 msgid "Credit Notes"
 msgstr ""
 
@@ -256,33 +334,38 @@ msgid "Currency"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: model:ir.actions.act_window,name:l10n_ar_invoice.action_customer_debit_notes
-#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_customer_debit_notes
-msgid "Customer Debit Notes"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: model:ir.actions.act_window,name:l10n_ar_invoice.action_customer_other_documents
-#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_customer_other_documents
-msgid "Customer Other Documents"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: selection:account.journal,journal_subtype:0
-#: selection:afip.document_class,journal_subtype:0
-#: field:l10n_ar_invoice.config,debit_notes:0
+#: selection:afip.document_class,document_type:0
 msgid "Debit Notes"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: selection:l10n_ar_invoice.config,credit_notes:0
-#: selection:l10n_ar_invoice.config,debit_notes:0
-msgid "Do not use"
+#: help:res.company,invoice_vat_discrimination_default:0
+msgid "Definie behaviour on invoices reports. Discrimination or not will depend in partner and company responsability and AFIP letters setup:            * If No Discriminate Default, if no match found it won't discriminate by default            * If Discriminate Default, if no match found it would discriminate by default            "
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: help:account.invoice,vat_discriminated:0
+msgid "Discriminate VAT on Quotations and Sale Orders?"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: field:account.invoice,vat_discriminated:0
+msgid "Discriminate VAT?"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: view:account.move.line:l10n_ar_invoice.view_account_move_line_filter
+msgid "Document Class"
 msgstr ""
 
 #. module: l10n_ar_invoice
 #: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_document_class
 msgid "Document Classes"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: field:afip.document_class,doc_code_prefix:0
+msgid "Document Code Prefix"
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -296,13 +379,31 @@ msgid "Document Letters"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_document_type
-msgid "Document Types"
+#: field:account.invoice,afip_document_number:0
+#: field:account.move,afip_document_number:0
+#: field:account.move,document_number:0
+#: field:account.move.line,document_number:0
+msgid "Document Number"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_afip_document_letter
-msgid "Document letter"
+#: field:account.journal,document_sequence_type:0
+msgid "Document Sequence Type"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: view:account.invoice:l10n_ar_invoice.view_account_invoice_filter
+#: field:account.invoice,afip_document_class_id:0
+#: field:account.journal.afip_document_class,afip_document_class_id:0
+#: field:account.move,document_class_id:0
+#: field:account.move.line,document_class_id:0
+#: field:afip.document_class,document_type:0
+msgid "Document Type"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_document_type
+msgid "Document Types"
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -316,71 +417,69 @@ msgid "Document type"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:l10n_ar_invoice.config,remove_old_journals:0
-msgid "Eliminar los diarios existentes"
+#: view:account.journal:l10n_ar_invoice.view_account_journal_ar_form
+msgid "Documents"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: help:l10n_ar_invoice.config,point_of_sale:0
-msgid "Este es el número que aparecerá como prefijo del número de la factura. Si solo tiene un solo talonario ese número es 1. Si necesita agregar un nuevo punto de venta debe acceder a opciones Administración/Configuración/Wizards de Configuración/Wizards de Configuración y ejecutar nuevamente el wizard de \"Configuración de Facturación\"."
+#: field:account.journal,journal_document_class_ids:0
+msgid "Documents Class"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:res.company,iibb:0
+#: field:account.invoice,journal_document_class_id:0
+msgid "Documents Type"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: view:account.invoice:l10n_ar_invoice.view_invoice_form
+msgid "Draft Refund"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: field:account.journal.afip_document_class,sequence_id:0
+msgid "Entry Sequence"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/invoice.py:358
+#, python-format
+msgid "Error!"
+msgstr ""
+
+#. module: l10n_ar_invoice
 #: field:res.partner,iibb:0
 msgid "Gross Income"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:l10n_ar_invoice.config,group_invoice_lines:0
-msgid "Group Invoice Lines"
+#: view:account.invoice:l10n_ar_invoice.view_account_invoice_filter
+#: view:account.move.line:l10n_ar_invoice.view_account_move_line_filter
+msgid "Group By"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:l10n_ar_invoice.config,iibb:0
-msgid "IIBB"
+#: field:account.journal.afip_document_class,id:0
+#: field:afip.concept_type,id:0
+#: field:afip.document_class,id:0
+#: field:afip.document_letter,id:0
+#: field:afip.document_type,id:0
+#: field:afip.optional_type,id:0
+#: field:afip.point_of_sale,id:0
+#: field:afip.responsability,id:0
+msgid "ID"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: help:l10n_ar_invoice.config,allow_date:0
-msgid "If checked, the entry won't be created if the entry date is not included into the selected period"
+#: help:afip.document_letter,vat_discriminated:0
+msgid "If True, the vat will be discriminated on invoice report."
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: help:l10n_ar_invoice.config,group_invoice_lines:0
-msgid "If this box is checked, the system will try to group the accounting lines when generating them from invoices."
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: field:l10n_ar_invoice.config,start_date:0
-msgid "Inicio de Actividades"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/invoice.py:151
-#, python-format
-msgid "Invalid Journal"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/invoice.py:152
-#, python-format
-msgid "Invalid journal selection for actual partner and company."
-msgstr ""
-
-#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/invoice.py:135
 #: model:ir.model,name:l10n_ar_invoice.model_account_invoice
+#, python-format
 msgid "Invoice"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: model:ir.actions.act_window,name:l10n_ar_invoice.action_invoice_ar_installer
-msgid "Invoice Configuration"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: view:l10n_ar_invoice.config:0
-msgid "Invoice Configuration for Argentina"
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -389,8 +488,17 @@ msgid "Invoice Line"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: selection:account.journal,journal_subtype:0
-#: selection:afip.document_class,journal_subtype:0
+#: field:res.company,invoice_vat_discrimination_default:0
+msgid "Invoice VAT discrimination default"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: model:email.template,report_name:l10n_ar_invoice.email_template_edi_invoice
+msgid "Invoice_${(object.document_number or '').replace('/','_')}_${object.state == 'draft' and 'draft' or ''}"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: selection:afip.document_class,document_type:0
 msgid "Invoices"
 msgstr ""
 
@@ -405,52 +513,64 @@ msgid "Issuers"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: help:account.journal,journal_subtype:0
-#: help:afip.document_class,journal_subtype:0
-msgid "It defines some behaviours on automatic journal selection and in menus where it is shown."
+#: help:afip.document_class,document_type:0
+msgid "It defines some behaviours on automatic journal selection and        in menus where it is shown."
 msgstr ""
 
 #. module: l10n_ar_invoice
+#: field:account.journal.afip_document_class,journal_id:0
 #: model:ir.model,name:l10n_ar_invoice.model_account_journal
 msgid "Journal"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:account.journal,journal_subtype:0
-#: field:afip.document_class,journal_subtype:0
-msgid "Journal Subtype"
+#: view:account.journal.afip_document_class:l10n_ar_invoice.view_journal_afip_document_class_form
+#: view:account.journal.afip_document_class:l10n_ar_invoice.view_journal_afip_document_class_tree
+msgid "Journal AFIP Documents"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/invoice.py:248
-#, python-format
-msgid "Journal Type Error"
+#: model:ir.model,name:l10n_ar_invoice.model_account_journal_afip_document_class
+msgid "Journal Afip Documents"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/invoice.py:249
-#, python-format
-msgid "Journal Type Not defined)"
+#: model:ir.model,name:l10n_ar_invoice.model_account_move_line
+msgid "Journal Items"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:l10n_ar_invoice.config:0
-msgid "Journals to Remove"
+#: field:account.journal.afip_document_class,write_uid:0
+#: field:afip.concept_type,write_uid:0
+#: field:afip.document_class,write_uid:0
+#: field:afip.document_letter,write_uid:0
+#: field:afip.document_type,write_uid:0
+#: field:afip.optional_type,write_uid:0
+#: field:afip.point_of_sale,write_uid:0
+#: field:afip.responsability,write_uid:0
+msgid "Last Updated by"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:l10n_ar_invoice.config,journals_to_remove_ids:0
-msgid "Journals to delete"
+#: field:account.journal.afip_document_class,write_date:0
+#: field:afip.concept_type,write_date:0
+#: field:afip.document_class,write_date:0
+#: field:afip.document_letter,write_date:0
+#: field:afip.document_type,write_date:0
+#: field:afip.optional_type,write_date:0
+#: field:afip.point_of_sale,write_date:0
+#: field:afip.responsability,write_date:0
+msgid "Last Updated on"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:res.company,map_customer_invoice_journals:0
-msgid "Map Customer Invoices Journals"
+#: view:account.journal:l10n_ar_invoice.view_account_journal_search
+msgid "Liquidity"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:res.company,map_supplier_invoice_journals:0
-msgid "Map Supplier Invoices Journals"
+#: view:res.currency:l10n_ar_invoice.view_currency_form
+msgid "Miscellaneous"
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -459,34 +579,47 @@ msgstr ""
 #: field:afip.document_letter,name:0
 #: field:afip.document_type,name:0
 #: field:afip.optional_type,name:0
+#: field:afip.point_of_sale,name:0
 #: field:afip.responsability,name:0
 msgid "Name"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: sql_constraint:afip.responsability:0
-msgid "Not repeat code!"
-msgstr ""
-
-#. module: l10n_ar_invoice
 #: sql_constraint:afip.document_letter:0
 #: sql_constraint:afip.responsability:0
-msgid "Not repeat name!"
+msgid "Name must be unique!"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:l10n_ar_invoice.config,point_of_sale:0
-msgid "Número de Punto de Venta"
+#: field:afip.document_class,report_name:0
+msgid "Name on Reports"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:l10n_ar_invoice.config:0
-msgid "Only Journal without moves and without invoices are displayed"
+#: help:afip.document_class,report_name:0
+msgid "Name that will be printed in reports, for example \"CREDIT NOTE\""
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: help:account.journal,product_types:0
-msgid "Only use products with this product types in this journals. Types must be a subset of adjust, consu and service separated by commas."
+#: field:afip.point_of_sale,number:0
+msgid "Number"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: sql_constraint:afip.point_of_sale:0
+msgid "Number Must be Unique per Company!"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/invoice.py:410
+#, python-format
+msgid "Operation Type Error"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/invoice.py:411
+#, python-format
+msgid "Operation Type Must be \"Sale\" or \"Purchase\""
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -495,29 +628,17 @@ msgid "Optional Types"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: selection:account.journal,journal_subtype:0
-#: selection:afip.document_class,journal_subtype:0
+#: selection:afip.document_class,document_type:0
 msgid "Other Documents"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:l10n_ar_invoice.config:0
-msgid "Other Journals"
+#: view:account.journal:l10n_ar_invoice.view_account_journal_search
+msgid "Others"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:l10n_ar_invoice.config,other_purchase_journal_ids:0
-msgid "Other Purchase Journals"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: field:l10n_ar_invoice.config,other_sale_journal_ids:0
-msgid "Other Sale Journals"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: selection:l10n_ar_invoice.config,credit_notes:0
-#: selection:l10n_ar_invoice.config,debit_notes:0
+#: selection:account.journal,document_sequence_type:0
 msgid "Own Sequence"
 msgstr ""
 
@@ -532,20 +653,46 @@ msgid "Partner"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/invoice.py:259
+#: code:addons/l10n_ar_invoice/invoice.py:358
+#, python-format
+msgid "Please define sequence on the journal related documents to this invoice."
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/invoice.py:415
 #, python-format
 msgid "Please, set your company responsability in the company partner before continue."
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:account.journal,point_of_sale:0
-msgid "Point of sale ID"
+#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_point_of_sale
+msgid "Point Of Sales"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:account.journal,product_types:0
+#: field:account.journal,point_of_sale:0
+#: field:account.journal,point_of_sale_id:0
+msgid "Point of sale"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: help:afip.document_class,doc_code_prefix:0
+msgid "Prefix for Documents Codes on Invoices         and Account Moves. For eg. 'FA ' will build 'FA 0001-0000001' Document Number"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: view:account.invoice:l10n_ar_invoice.view_invoice_form
+msgid "Print Invoice"
+msgstr ""
+
+#. module: l10n_ar_invoice
 #: field:afip.concept_type,product_types:0
 msgid "Product types"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: view:account.journal:l10n_ar_invoice.view_account_journal_search
+msgid "Purchase"
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -559,82 +706,68 @@ msgid "Receptors"
 msgstr ""
 
 #. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/invoice.py:137
+#, python-format
+msgid "Refund"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: view:account.invoice:l10n_ar_invoice.view_invoice_form
+msgid "Refund Invoice"
+msgstr ""
+
+#. module: l10n_ar_invoice
 #: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_responsability
 msgid "Responsabilities"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:res.company,responsability_id:0
+#: field:account.invoice,responsability_id:0
 msgid "Responsability"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:l10n_ar_invoice.config,responsability_id:0
 #: field:res.partner,responsability_id:0
 msgid "Resposability"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: selection:l10n_ar_invoice.config,credit_notes:0
-#: selection:l10n_ar_invoice.config,debit_notes:0
+#: view:account.journal:l10n_ar_invoice.view_account_journal_search
+msgid "Sale"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: selection:account.journal,document_sequence_type:0
 msgid "Same Invoice Sequence"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:argentinian.base.config.settings,group_customer_debit_notes:0
-#: model:res.groups,name:l10n_ar_invoice.customer_debit_notes
-msgid "Show Customer Debit Notes Menu"
+#: field:account.journal.afip_document_class,sequence:0
+msgid "Sequence"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: field:argentinian.base.config.settings,group_customer_other_documents:0
-#: model:res.groups,name:l10n_ar_invoice.customer_other_documents
-msgid "Show Customer Other Documents Menu"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: field:argentinian.base.config.settings,group_supplier_debit_notes:0
-#: model:res.groups,name:l10n_ar_invoice.supplier_debit_notes
-msgid "Show Supplier Debit Notes Menu"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: field:argentinian.base.config.settings,group_supplier_other_documents:0
-#: model:res.groups,name:l10n_ar_invoice.supplier_other_documents
-msgid "Show Supplier Other Documents Menu"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: help:l10n_ar_invoice.config,remove_old_journals:0
-msgid "Si es su primera instalación indique que necesita borrar los diarios existentes. Si agrega un nuevo punto de ventas indique que no va a eliminar los journals. Igual, puede indicar cuales borra y cuales no en el próximo paso."
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: field:res.company,start_date:0
 #: field:res.partner,start_date:0
 msgid "Start-up Date"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: help:res.company,map_customer_invoice_journals:0
-msgid "Suggest and Check journal on customer invoices based in their responsability. Suggested to be used on Argentinian Companies"
+#: code:addons/l10n_ar_invoice/invoice.py:136
+#, python-format
+msgid "Supplier Invoice"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: help:res.company,map_supplier_invoice_journals:0
-msgid "Suggest and Check journal on supplier invoices based in their responsability. Suggested to be used on Argentinian Companies"
+#: sql_constraint:account.invoice:0
+#: code:addons/l10n_ar_invoice/invoice.py:335
+#, python-format
+msgid "Supplier Invoice Number must be unique per Supplier and Company!"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: model:ir.actions.act_window,name:l10n_ar_invoice.action_supplier_debit_notes
-#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_supplier_debit_notes
-msgid "Supplier Debit Notes"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: model:ir.actions.act_window,name:l10n_ar_invoice.action_supplier_other_documents
-#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_supplier_other_documents
-msgid "Supplier Other Documents"
+#: code:addons/l10n_ar_invoice/invoice.py:138
+#, python-format
+msgid "Supplier Refund"
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -643,40 +776,29 @@ msgid "Tax Code"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: help:argentinian.base.config.settings,group_customer_debit_notes:0
-msgid "To allow your salesman to register customer debit notes'."
+#: code:addons/l10n_ar_invoice/account.py:203
+#, python-format
+msgid "The company of the point of sale and of the                 journal must be the same!"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: help:argentinian.base.config.settings,group_customer_other_documents:0
-msgid "To allow your salesman to register customer other documents like ???'."
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: help:argentinian.base.config.settings,group_supplier_debit_notes:0
-msgid "To allow your salesman to register supplier debit notes'."
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: help:argentinian.base.config.settings,group_supplier_other_documents:0
-msgid "To allow your salesman to register supplier other documents like imports'."
+#: help:account.journal.afip_document_class,sequence_id:0
+msgid "This field contains the information related to the numbering of the documents entries of this document type."
 msgstr ""
 
 #. module: l10n_ar_invoice
 #: help:afip.concept_type,product_types:0
-msgid "Translate this product types to this AFIP concept. Types must be a subset of adjust, consu and service separated by commas."
+msgid "Translate this product types to this AFIP concept.        Types must be a subset of adjust,        consu and service separated by commas."
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/partner.py:46
-#, python-format
-msgid "VAT Number is wrong.\n"
-" Please verify the number before continue."
+#: field:account.journal,use_documents:0
+msgid "Use Documents?"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_afip_responsability
-msgid "VAT Responsability"
+#: help:account.journal,document_sequence_type:0
+msgid "Use own sequence or invoice sequence on Debit and Credit Notes?"
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -685,54 +807,65 @@ msgid "Value computation"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/partner.py:45
+#: field:afip.document_letter,vat_discriminated:0
+msgid "Vat Discriminated on Invoices?"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: selection:res.company,invoice_vat_discrimination_default:0
+msgid "Yes, Discriminate Default"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: selection:res.company,invoice_vat_discrimination_default:0
+msgid "Yes, No Discriminate Default"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/afip.py:142
 #, python-format
-msgid "Warning!"
+msgid "You provided an invalid list of product types.                Must been separated by commas"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: constraint:afip.concept_type:0
-msgid "You provided an invalid list of product types. Must been separated by commas"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: constraint:account.journal:0
-msgid "You provided an invalid list of product types. Must been separated by commas."
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/invoice.py:258
+#: code:addons/l10n_ar_invoice/invoice.py:414
 #, python-format
 msgid "Your company has not setted any responsability"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:account.invoice:0
-msgid "[('id','in',available_journal_ids[0][2])]"
+#: view:account.invoice:l10n_ar_invoice.view_account_invoice_filter
+msgid "['|','|','|','|', ('afip_document_number','ilike',self), ('number','ilike',self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', self)]"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_argentinian_base_config_settings
-msgid "argentinian.base.config.settings"
+#: view:account.journal:l10n_ar_invoice.view_account_journal_search
+msgid "liquidity"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_l10n_ar_invoice_config
-msgid "l10n_ar_invoice.config"
+#: view:account.journal:l10n_ar_invoice.view_account_journal_search
+msgid "others"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:account.invoice:0
-msgid "onchange_company_id(company_id,partner_id,type,invoice_line,currency_id,context)"
+#: view:account.journal:l10n_ar_invoice.view_account_journal_search
+msgid "purchase"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:account.invoice:0
-msgid "onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id,context)"
+#: view:account.journal:l10n_ar_invoice.view_account_journal_search
+msgid "sale"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: view:l10n_ar_invoice.config:0
-msgid "or"
+#: view:account.invoice:l10n_ar_invoice.view_invoice_form
+#: view:account.invoice:l10n_ar_invoice.view_supplier_invoice_form
+msgid "{'readonly':['|','|',('state','!=','draft'),('afip_document_number','!=',False),('internal_number','!=',False)]}"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: view:account.invoice:l10n_ar_invoice.view_supplier_invoice_form
+msgid "{'required':[('use_documents','=',True)]}"
 msgstr ""
 

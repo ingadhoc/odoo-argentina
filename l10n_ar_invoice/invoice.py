@@ -170,7 +170,8 @@ class account_invoice(models.Model):
             operation_type = self.get_operation_type(invoice_type)
 
             if self.use_documents:
-                letter_ids = self.get_valid_document_letters(
+                # corremos con sudo porque da errores con usuario portal en algunos casos
+                letter_ids = self.sudo().get_valid_document_letters(
                     self.partner_id.id, operation_type, self.company_id.id)
                 domain = [
                     ('journal_id', '=', self.journal_id.id),

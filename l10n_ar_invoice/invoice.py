@@ -69,32 +69,32 @@ class account_invoice_line(models.Model):
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
         string='Unit Price'
-        )
+    )
     printed_price_net = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
         string='Net Price',
-        )
+    )
     printed_price_subtotal = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
         string='Subtotal',
-        )
+    )
     vat_amount = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
         string='Vat Amount',
-        )
+    )
     other_taxes_amount = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
         string='Other Taxes Amount',
-        )
+    )
     exempt_amount = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
         string='Exempt Amount',
-        )
+    )
 
 
 class account_invoice(models.Model):
@@ -103,7 +103,7 @@ class account_invoice(models.Model):
     @api.one
     def _printed_prices(self):
         vat_amount = sum([
-                x.tax_amount for x in self.tax_line if x.tax_code_id.parent_id.name == 'IVA'])
+            x.tax_amount for x in self.tax_line if x.tax_code_id.parent_id.name == 'IVA'])
         other_taxes_amount = sum(
             line.other_taxes_amount for line in self.invoice_line)
         exempt_amount = sum(
@@ -218,58 +218,58 @@ class account_invoice(models.Model):
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
         string='Tax'
-        )
+    )
     printed_amount_untaxed = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
         string='Subtotal'
-        )
+    )
     exempt_amount = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
         string='Exempt Amount'
-        )
+    )
     vat_amount = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
         string='Vat Amount'
-        )
+    )
     other_taxes_amount = fields.Float(
         compute="_printed_prices",
         digits_compute=dp.get_precision('Account'),
         string='Other Taxes Amount'
-        )
+    )
     printed_tax_ids = fields.One2many(
         compute="_printed_prices",
         comodel_name='account.invoice.tax',
         string='Tax'
-        )
+    )
     vat_tax_ids = fields.One2many(
         compute="_printed_prices",
         comodel_name='account.invoice.tax',
         string='VAT Taxes'
-        )
+    )
     vat_discriminated = fields.Boolean(
         'Discriminate VAT?',
         compute="get_vat_discriminated",
         store=True,
         readonly=False,
         help="Discriminate VAT on Quotations and Sale Orders?",
-        )
+    )
     available_journal_document_class_ids = fields.Many2many(
         'account.journal.afip_document_class',
         compute='_get_available_journal_document_class',
         string='Available Journal Document Classes',
-        )
+    )
     supplier_invoice_number = fields.Char(
         copy=False,
-        )
+    )
     journal_document_class_id = fields.Many2one(
         'account.journal.afip_document_class',
         'Documents Type',
         readonly=True,
         states={'draft': [('readonly', False)]}
-        )
+    )
     afip_document_class_id = fields.Many2one(
         'afip.document_class',
         related='journal_document_class_id.afip_document_class_id',
@@ -277,37 +277,37 @@ class account_invoice(models.Model):
         copy=False,
         readonly=True,
         store=True,
-        )
+    )
     afip_document_number = fields.Char(
         string='Document Number',
         copy=False,
         readonly=True,
-        )
+    )
     responsability_id = fields.Many2one(
         'afip.responsability',
         string='Responsability',
         readonly=True,
         states={'draft': [('readonly', False)]}
-        )
+    )
     formated_vat = fields.Char(
         string='Responsability',
         related='commercial_partner_id.formated_vat',
-        )
+    )
     document_number = fields.Char(
         compute='_get_document_number',
         string='Document Number',
         readonly=True,
-        )
+    )
     next_invoice_number = fields.Integer(
         related='journal_document_class_id.sequence_id.number_next_actual',
         string='Next Document Number',
         readonly=True
-        )
+    )
     use_documents = fields.Boolean(
         related='journal_id.use_documents',
         string='Use Documents?',
         readonly=True
-        )
+    )
 
     @api.one
     @api.depends('afip_document_number', 'number')
@@ -420,3 +420,34 @@ class account_invoice(models.Model):
             ('receptor_ids', '=', receptor_responsability_id)],
             context=context)
         return document_letter_ids
+
+    @api.multi
+    def action_invoice_sent(self):
+        """ Open a window to compose an email, with the edi invoice template
+            message loaded by default
+        """
+        assert len(
+            self) == 1, 'This option should only be used for a single id at a time.'
+        template = self.env.ref(
+            'l10n_ar_invoice.email_template_edi_invoice', False)
+        compose_form = self.env.ref(
+            'mail.email_compose_message_wizard_form', False)
+        ctx = dict(
+            default_model='account.invoice',
+            default_res_id=self.id,
+            default_use_template=bool(template),
+            default_template_id=template.id,
+            default_composition_mode='comment',
+            mark_invoice_as_sent=True,
+        )
+        return {
+            'name': _('Compose Email'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form.id, 'form')],
+            'view_id': compose_form.id,
+            'target': 'new',
+            'context': ctx,
+        }

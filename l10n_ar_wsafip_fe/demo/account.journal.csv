@@ -1,0 +1,3 @@
+id,company_id/id,code,name,type,use_documents,point_of_sale_id/id
+journal_01,l10n_ar_invoice.c_3,FAV02,Ventas Electronica 0002,sale,True,l10n_ar_wsafip_fe.pre_03
+journal_02,l10n_ar_invoice.c_3,NCV02,NC venta Electronica 0002,sale,True,l10n_ar_wsafip_fe.pre_03

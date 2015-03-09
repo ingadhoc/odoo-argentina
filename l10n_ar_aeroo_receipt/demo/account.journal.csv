@@ -1,0 +1,3 @@
+id,company_id/id,code,name,sequence_id/id,type,check_type
+journal_001,l10n_ar_invoice.c_2,CH010,Cheques Propios,,Banco y cheques,Propio
+,l10n_ar_invoice.c_3,CH011,,,,

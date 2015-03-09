@@ -1,0 +1,4 @@
+id,company_id/id,account_id/id,journal_id/id,partner_id/id,reference_type,type,date_invoice
+invoice_1,l10n_ar_invoice.c_3,l10n_ar_invoice.account_41,l10n_ar_wsafip_fe.journal_01,base.res_partner_address_4,none,out_invoice,2014-12-31
+invoice_2,l10n_ar_invoice.c_3,l10n_ar_invoice.account_41,l10n_ar_wsafip_fe.journal_01,base.res_partner_address_4,none,out_invoice,2014-12-31
+invoice_3,l10n_ar_invoice.c_3,l10n_ar_invoice.account_43,l10n_ar_wsafip_fe.journal_02,base.res_partner_address_4,none,out_refund,2012-12-31

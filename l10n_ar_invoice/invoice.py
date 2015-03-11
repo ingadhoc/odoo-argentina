@@ -318,8 +318,9 @@ class account_invoice(models.Model):
     @api.one
     @api.constrains(
         'journal_id', 'partner_id',
-        'journal_document_class_id', 'responsability_id')
-    def _get_document_class_and_responsability(self):
+        'journal_document_class_id',
+        )
+    def _get_document_class(self):
         """ Como los campos responsability y journal document class no los
         queremos hacer funcion porque no queremos que sus valores cambien nunca
         y como con la funcion anterior solo se almacenan solo si se crea desde
@@ -327,6 +328,14 @@ class account_invoice(models.Model):
         computados"""
         if not self.journal_document_class_id and self.available_journal_document_class_ids:
             self.journal_document_class_id = self.available_journal_document_class_ids[0]
+
+    @api.one
+    @api.constrains(
+        'partner_id',
+        'responsability_id',
+        )
+    def _get_responsability(self):
+        """Ver descripcion de _get_document_class"""
         if not self.responsability_id:
             self.responsability_id = self.partner_id.commercial_partner_id.responsability_id
 

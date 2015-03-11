@@ -7,14 +7,17 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
+                <field name="website" position="after">
+                    <label for="document_number"/>
+                    <div class="address_format">
+                        <field name="document_type_id" options="{'no_open': True, 'no_create': True}" placeholder="Type" style="width: 45%"/>
+                        <field name="document_number" placeholder="Number" style="width: 53%"/>
+                    </div>
+                    <field name="responsability_id" options="{'no_open': True, 'no_create': True}"/>
+                </field>               
                 <field name="last_reconciliation_date" position="before">
-                    <field name="responsability_id" widget="selection"/>
                     <field name="iibb"/>
                     <field name="start_date"/>
-                </field>
-                <field name="property_account_position" position="before">
-                    <field name="document_type_id" colspan="1"/>
-                    <field name="document_number" colspan="1"/>                        
                 </field>
             </field>
         </record>

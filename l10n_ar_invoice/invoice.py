@@ -155,53 +155,6 @@ class account_invoice(models.Model):
         return recs.name_get()
 
     @api.one
-    @api.depends('journal_id', 'partner_id')
-    def _get_available_journal_document_class(self):
-        invoice_type = self.type
-        document_class_ids = []
-        document_class_id = False
-
-        # Lo hicimos asi porque si no podria dar errores si en el context habia
-        # un default de otra clase
-        self.available_journal_document_class_ids = self.env[
-            'account.journal.afip_document_class']
-        if invoice_type in [
-                'out_invoice', 'in_invoice', 'out_refund', 'in_refund']:
-            operation_type = self.get_operation_type(invoice_type)
-
-            if self.use_documents:
-                # corremos con sudo porque da errores con usuario portal en algunos casos
-                letter_ids = self.sudo().get_valid_document_letters(
-                    self.partner_id.id, operation_type, self.company_id.id)
-                domain = [
-                    ('journal_id', '=', self.journal_id.id),
-                    '|', ('afip_document_class_id.document_letter_id',
-                          'in', letter_ids),
-                    ('afip_document_class_id.document_letter_id', '=', False)]
-
-                # If document_type in context we try to serch specific document
-                document_type = self._context.get('document_type', False)
-                if document_type:
-                    document_classes = self.env[
-                        'account.journal.afip_document_class'].search(
-                        domain + [('afip_document_class_id.document_type', '=', document_type)])
-                    if document_classes.ids:
-                        document_class_id = document_classes.ids[0]
-
-                # For domain, we search all documents
-                document_classes = self.env[
-                    'account.journal.afip_document_class'].search(domain)
-                document_class_ids = document_classes.ids
-
-                # If not specific document type found, we choose another one
-                if not document_class_id and document_class_ids:
-                    document_class_id = document_class_ids[0]
-        self.available_journal_document_class_ids = document_class_ids
-        self.journal_document_class_id = document_class_id
-        self.responsability_id = self.partner_id.commercial_partner_id.responsability_id
-        # self.responsability_id = self.partner_id and self.partner_id.commercial_partner_id.responsability_id or False
-
-    @api.one
     @api.depends(
         'afip_document_class_id',
         'afip_document_class_id.document_letter_id',
@@ -309,6 +262,74 @@ class account_invoice(models.Model):
         readonly=True
     )
 
+    _sql_constraints = [
+        ('number_supplier_invoice_number',
+            'unique(supplier_invoice_number, partner_id, company_id)',
+         'Supplier Invoice Number must be unique per Supplier and Company!'),
+    ]
+
+    @api.one
+    @api.depends('journal_id', 'partner_id')
+    def _get_available_journal_document_class(self):
+        invoice_type = self.type
+        document_class_ids = []
+        document_class_id = False
+
+        # Lo hicimos asi porque si no podria dar errores si en el context habia
+        # un default de otra clase
+        self.available_journal_document_class_ids = self.env[
+            'account.journal.afip_document_class']
+        if invoice_type in [
+                'out_invoice', 'in_invoice', 'out_refund', 'in_refund']:
+            operation_type = self.get_operation_type(invoice_type)
+
+            if self.use_documents:
+                # corremos con sudo porque da errores con usuario portal en algunos casos
+                letter_ids = self.sudo().get_valid_document_letters(
+                    self.partner_id.id, operation_type, self.company_id.id)
+                domain = [
+                    ('journal_id', '=', self.journal_id.id),
+                    '|', ('afip_document_class_id.document_letter_id',
+                          'in', letter_ids),
+                    ('afip_document_class_id.document_letter_id', '=', False)]
+
+                # If document_type in context we try to serch specific document
+                document_type = self._context.get('document_type', False)
+                if document_type:
+                    document_classes = self.env[
+                        'account.journal.afip_document_class'].search(
+                        domain + [('afip_document_class_id.document_type', '=', document_type)])
+                    if document_classes.ids:
+                        document_class_id = document_classes.ids[0]
+
+                # For domain, we search all documents
+                document_classes = self.env[
+                    'account.journal.afip_document_class'].search(domain)
+                document_class_ids = document_classes.ids
+
+                # If not specific document type found, we choose another one
+                if not document_class_id and document_class_ids:
+                    document_class_id = document_class_ids[0]
+        self.available_journal_document_class_ids = document_class_ids
+        self.journal_document_class_id = document_class_id
+        self.responsability_id = self.partner_id.commercial_partner_id.responsability_id
+        # self.responsability_id = self.partner_id and self.partner_id.commercial_partner_id.responsability_id or False
+
+    @api.one
+    @api.constrains(
+        'journal_id', 'partner_id',
+        'journal_document_class_id', 'responsability_id')
+    def _get_document_class_and_responsability(self):
+        """ Como los campos responsability y journal document class no los
+        queremos hacer funcion porque no queremos que sus valores cambien nunca
+        y como con la funcion anterior solo se almacenan solo si se crea desde
+        interfaz, hacemos este hack de constraint para computarlos si no estan
+        computados"""
+        if not self.journal_document_class_id and self.available_journal_document_class_ids:
+            self.journal_document_class_id = self.available_journal_document_class_ids[0]
+        if not self.responsability_id:
+            self.responsability_id = self.partner_id.commercial_partner_id.responsability_id
+
     @api.one
     @api.depends('afip_document_number', 'number')
     def _get_document_number(self):
@@ -334,12 +355,6 @@ class account_invoice(models.Model):
             if invoice_ids:
                 raise Warning(
                     _('Supplier Invoice Number must be unique per Supplier and Company!'))
-
-    _sql_constraints = [
-        ('number_supplier_invoice_number',
-            'unique(supplier_invoice_number, partner_id, company_id)',
-         'Supplier Invoice Number must be unique per Supplier and Company!'),
-    ]
 
     @api.multi
     def action_number(self):

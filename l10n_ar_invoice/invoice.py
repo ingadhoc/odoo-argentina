@@ -336,7 +336,7 @@ class account_invoice(models.Model):
         )
     def _get_responsability(self):
         """Ver descripcion de _get_document_class"""
-        if not self.responsability_id:
+        if not self.responsability_id and self.partner_id.commercial_partner_id.responsability_id:
             self.responsability_id = self.partner_id.commercial_partner_id.responsability_id
 
     @api.one

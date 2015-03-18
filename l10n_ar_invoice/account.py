@@ -93,6 +93,14 @@ class account_move(models.Model):
 class account_move_line(models.Model):
     _inherit = "account.move.line"
 
+    @api.one
+    def name_get(self):
+        if self.ref:
+            name = ((self.id, (self.document_number or '')+' ('+self.ref+')'))
+        else:
+            name = ((self.id, self.document_number))
+        return name
+
     document_class_id = new_fields.Many2one(
         'afip.document_class',
         'Document Type',

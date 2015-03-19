@@ -104,8 +104,9 @@ class sale_order_line(models.Model):
 class sale_order(models.Model):
     _inherit = "sale.order"
 
+    # no podemos usar onchange porque ya hay onchange de api vieja sobre partner'
     @api.one
-    @api.onchange(
+    @api.depends(
         'partner_id',
         'partner_id.responsability_id',
         'company_id',
@@ -141,6 +142,7 @@ class sale_order(models.Model):
         compute='get_taxes')
     vat_discriminated = fields.Boolean(
         'Discriminate VAT?',
+        compute="get_vat_discriminated",
         help="Discriminate VAT on Quotations and Sale Orders?")
 
     @api.one

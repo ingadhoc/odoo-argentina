@@ -155,12 +155,10 @@ class account_invoice(models.Model):
         return recs.name_get()
 
     @api.one
-    @api.onchange(
-        'afip_document_class_id',
-        'afip_document_class_id.document_letter_id',
-        'afip_document_class_id.document_letter_id.vat_discriminated',
+    @api.depends(
+        'journal_document_class_id',
         'company_id',
-        'company_id.invoice_vat_discrimination_default',)
+        )
     def get_vat_discriminated(self):
         vat_discriminated = False
         if self.afip_document_class_id.document_letter_id.vat_discriminated or self.company_id.invoice_vat_discrimination_default == 'discriminate_default':
@@ -204,7 +202,8 @@ class account_invoice(models.Model):
     )
     vat_discriminated = fields.Boolean(
         'Discriminate VAT?',
-        help="Discriminate VAT on Quotations and Sale Orders?",
+        compute="get_vat_discriminated",
+        help="Discriminate VAT on Invoices?",
     )
     available_journal_document_class_ids = fields.Many2many(
         'account.journal.afip_document_class',

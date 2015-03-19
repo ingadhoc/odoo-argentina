@@ -72,7 +72,7 @@ class account_move(models.Model):
         'afip_document_number',
         'name',
         'document_class_id',
-        'document_class_id.doc_code_prefix',
+        # 'document_class_id.doc_code_prefix', #we disable this depnd because it makes update module performance low
     )
     def _get_document_number(self):
         if self.afip_document_number and self.document_class_id:

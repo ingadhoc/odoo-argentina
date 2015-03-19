@@ -105,7 +105,7 @@ class sale_order(models.Model):
     _inherit = "sale.order"
 
     @api.one
-    @api.depends(
+    @api.onchange(
         'partner_id',
         'partner_id.responsability_id',
         'company_id',
@@ -141,9 +141,6 @@ class sale_order(models.Model):
         compute='get_taxes')
     vat_discriminated = fields.Boolean(
         'Discriminate VAT?',
-        compute="get_vat_discriminated",
-        store=True,
-        readonly=False,
         help="Discriminate VAT on Quotations and Sale Orders?")
 
     @api.one

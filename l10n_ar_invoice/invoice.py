@@ -261,6 +261,11 @@ class account_invoice(models.Model):
         string='Use Documents?',
         readonly=True
     )
+    use_argentinian_localization = fields.Boolean(
+        related='company_id.use_argentinian_localization',
+        string='Use Argentinian Localization?',
+        readonly=True,
+    )
 
     _sql_constraints = [
         ('number_supplier_invoice_number',

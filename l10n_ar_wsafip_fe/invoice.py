@@ -63,6 +63,67 @@ class invoice(osv.osv):
             r[inv.id] = _calc_concept(product_types)
         return r
 
+    def verification_digit_modulo10(self, cr, uid, ids, code, context=None):
+        "Calculate the verification digit 'modulo 10'"
+        # Step 1: sum all digits in odd positions, left to right
+        code = code.strip()
+        if not code or not code.isdigit():
+            return ''
+        etapa1 = sum([int(c) for i, c in enumerate(code) if not i % 2])
+        # Step 2: multiply the step 1 sum by 3
+        etapa2 = etapa1 * 3
+        # Step 3: start from the left, sum all the digits in even positions
+        etapa3 = sum([int(c) for i, c in enumerate(code) if i % 2])
+        # Step 4: sum the results of step 2 and 3
+        etapa4 = etapa2 + etapa3
+        # Step 5: the minimun value that summed to step 4 is a multiple of 10
+        digito = 10 - (etapa4 - (int(etapa4 / 10) * 10))
+        if digito == 10:
+            digito = 0
+        return str(digito)
+
+    def _get_barcode(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for invoice in self.browse(cr, uid, ids, context=context):
+        #     if page.type == "category":
+        #        content = self._get_page_index(cr, uid, page, link=False)
+        #     else:
+        #        content = page.content
+
+            barcode = False
+            if invoice.afip_cae:
+                cae_due = ''.join(
+                    [c for c in str(invoice.afip_cae_due or '') if c.isdigit()])
+                barcode = ''.join([str(invoice.company_id.partner_id.vat[2:]),
+                                   "%02d" % int(invoice.journal_id.journal_class_id.afip_code),
+                                   "%04d" % int(invoice.journal_id.point_of_sale),
+                                   str(invoice.afip_cae), cae_due])
+                barcode = barcode + invoice.verification_digit_modulo10(barcode)
+
+
+            "Generate the required barcode Interleaved of 7 image using PIL"
+            image = False
+            if barcode:
+                from pyi25 import PyI25
+                from cStringIO import StringIO as StringIO
+                # create the helper:
+                pyi25 = PyI25()
+                output = StringIO()
+                # call the helper:
+                bars = ''.join([c for c in barcode if c.isdigit()])
+                if not bars:
+                    bars = "00"
+                pyi25.GenerarImagen(bars, output, extension="PNG")
+                # get the result and encode it for openerp binary field:
+                image = output.getvalue()
+                image = output.getvalue().encode("base64")
+                output.close()
+            res[invoice.id] = {
+                'afip_barcode_img': image,
+                'afip_barcode': barcode,
+            }
+        return res
+
     _inherit = "account.invoice"
     _columns = {
         'afip_concept': fields.function(_get_concept,
@@ -85,13 +146,15 @@ class invoice(osv.osv):
         'afip_cae': fields.char('CAE number', size=24),
         'afip_cae_due': fields.date('CAE due'),
         'afip_error_id': fields.many2one('afip.wsfe_error', 'AFIP Status', readonly=True),
+        'afip_barcode_img': fields.function(_get_barcode, type='binary', string='Barcode Image', multi='barcode'),
+        'afip_barcode': fields.function(_get_barcode, type='char', string='Barcode', multi='barcode'),
     }
 
     _defaults = {
         'afip_result': '',
         'afip_concept': '3',
     }
-    
+
     def copy(self, cr, uid, id, default=None, context=None):
         default = default or {}
         default.update({

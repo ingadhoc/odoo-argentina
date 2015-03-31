@@ -313,8 +313,6 @@ class account_invoice(models.Model):
                     document_class_id = document_class_ids[0]
         self.available_journal_document_class_ids = document_class_ids
         self.journal_document_class_id = document_class_id
-        # self.responsability_id = self.partner_id.commercial_partner_id.responsability_id
-        # self.responsability_id = self.partner_id and self.partner_id.commercial_partner_id.responsability_id or False
 
     @api.one
     @api.constrains(
@@ -329,16 +327,6 @@ class account_invoice(models.Model):
         computados"""
         if not self.journal_document_class_id and self.available_journal_document_class_ids:
             self.journal_document_class_id = self.available_journal_document_class_ids[0]
-
-    # @api.one
-    # @api.constrains(
-    #     'partner_id',
-    #     'responsability_id',
-    #     )
-    # def _get_responsability(self):
-        # """Ver descripcion de _get_document_class"""
-        # if not self.responsability_id and self.partner_id.commercial_partner_id.responsability_id:
-            # self.responsability_id = self.partner_id.commercial_partner_id.responsability_id
 
     @api.one
     @api.depends('afip_document_number', 'number')

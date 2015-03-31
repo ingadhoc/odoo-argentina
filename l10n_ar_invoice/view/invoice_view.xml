@@ -59,8 +59,7 @@
 
                 <xpath expr="//page[@string='Other Info']//field[@name='company_id']" position="after">
                     <field name="vat_discriminated"/>
-                    <field name="responsability_id"/>
-                    <!-- <field name="responsability_id" attrs="{'required':[('use_argentinian_localization','=',True)]}"/> -->
+                    <field name="responsability_id" states="open,paid"/>
                 </xpath>
 
                 <field name="fiscal_position" position="after">
@@ -115,8 +114,7 @@
                     <attribute name="invisible">1</attribute>
                 </field>
                 <field name="payment_term" position="after">
-                    <field name="responsability_id"/>
-                    <!-- <field name="responsability_id" attrs="{'required':[('use_argentinian_localization','=',True)]}"/> -->
+                    <field name="responsability_id" states="open,paid"/>
                 </field>
                 <field name="number" position="after">
                     <field name="document_number" class="oe_inline"/>

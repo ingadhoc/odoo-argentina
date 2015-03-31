@@ -8,7 +8,6 @@ from datetime import datetime, timedelta
 from openerp.tools.translate import _
 from suds.client import Client
 import suds
-from urllib2 import URLError
 import logging
 from M2Crypto.X509 import X509Error
 
@@ -90,15 +89,13 @@ class wsafip_connection(osv.osv):
                                         if _stat not in ['connected', 'clockshifted']]):
             uniqueid = randint(_intmin, _intmax)
             generationtime = (
-                datetime.now(tzlocal()) - timedelta(0, 60)).isoformat(),
+                datetime.now(tzlocal()) - timedelta(0, 60)).isoformat()
             expirationtime = (
-                datetime.now(tzlocal()) + timedelta(0, 60)).isoformat(),
+                datetime.now(tzlocal()) + timedelta(0, 60)).isoformat()
             msg = _login_message.format(
                 uniqueid=uniqueid - _intmin,
-                generationtime=(
-                    datetime.now(tzlocal()) - timedelta(0, 60)).isoformat(),
-                expirationtime=(
-                    datetime.now(tzlocal()) + timedelta(0, 60)).isoformat(),
+                generationtime=generationtime,
+                expirationtime=expirationtime,
                 service=ws.server_id.code
             )
 
@@ -108,9 +105,10 @@ class wsafip_connection(osv.osv):
             try:
                 aaclient = Client(ws.logging_id.url + '?WSDL')
                 response = aaclient.service.loginCms(in0=body)
-            except URLError, e:
-                raise osv.except_osv(_('AFIP Web Service unvailable'),
-                                     _('Check your access to internet or contact to your system administrator.'))
+            except:
+                raise osv.except_osv(
+                    _('AFIP Web Service unvailable'),
+                    _('Check your access to internet or contact to your system administrator.'))
 
             T = ET.fromstring(response)
 
@@ -155,7 +153,6 @@ class wsafip_connection(osv.osv):
             raise osv.except_osv(_('Error doing login'), _("%s" % e.message))
         except Exception, e:
             raise osv.except_osv(_('Unknown Error'), _("%s" % e))
-
         return {}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

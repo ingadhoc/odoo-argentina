@@ -236,7 +236,7 @@ class account_invoice(models.Model):
         'afip.responsability',
         string='Responsability',
         readonly=True,
-        states={'draft': [('readonly', False)]}
+        copy=False,
     )
     formated_vat = fields.Char(
         string='Responsability',
@@ -313,7 +313,7 @@ class account_invoice(models.Model):
                     document_class_id = document_class_ids[0]
         self.available_journal_document_class_ids = document_class_ids
         self.journal_document_class_id = document_class_id
-        self.responsability_id = self.partner_id.commercial_partner_id.responsability_id
+        # self.responsability_id = self.partner_id.commercial_partner_id.responsability_id
         # self.responsability_id = self.partner_id and self.partner_id.commercial_partner_id.responsability_id or False
 
     @api.one
@@ -330,15 +330,15 @@ class account_invoice(models.Model):
         if not self.journal_document_class_id and self.available_journal_document_class_ids:
             self.journal_document_class_id = self.available_journal_document_class_ids[0]
 
-    @api.one
-    @api.constrains(
-        'partner_id',
-        'responsability_id',
-        )
-    def _get_responsability(self):
-        """Ver descripcion de _get_document_class"""
-        if not self.responsability_id and self.partner_id.commercial_partner_id.responsability_id:
-            self.responsability_id = self.partner_id.commercial_partner_id.responsability_id
+    # @api.one
+    # @api.constrains(
+    #     'partner_id',
+    #     'responsability_id',
+    #     )
+    # def _get_responsability(self):
+        # """Ver descripcion de _get_document_class"""
+        # if not self.responsability_id and self.partner_id.commercial_partner_id.responsability_id:
+            # self.responsability_id = self.partner_id.commercial_partner_id.responsability_id
 
     @api.one
     @api.depends('afip_document_number', 'number')
@@ -378,6 +378,7 @@ class account_invoice(models.Model):
             # company that use this function
             # also if it has a reference number we use it (for example when
             # cancelling for modification)
+            inv_vals = {'responsability_id': self.partner_id.commercial_partner_id.responsability_id.id}
             if obj_inv.journal_document_class_id and not obj_inv.afip_document_number:
                 if invtype in ('out_invoice', 'out_refund'):
                     if not obj_inv.journal_document_class_id.sequence_id:
@@ -387,11 +388,13 @@ class account_invoice(models.Model):
                         obj_inv.journal_document_class_id.sequence_id.id)
                 elif invtype in ('in_invoice', 'in_refund'):
                     afip_document_number = obj_inv.supplier_invoice_number
-                obj_inv.write({'afip_document_number': afip_document_number})
+                inv_vals['afip_document_number'] = afip_document_number
                 document_class_id = obj_inv.journal_document_class_id.afip_document_class_id.id
-                obj_inv.move_id.write(
-                    {'document_class_id': document_class_id,
-                     'afip_document_number': self.afip_document_number})
+                obj_inv.move_id.write({
+                    'document_class_id': document_class_id,
+                    'afip_document_number': self.afip_document_number,
+                    })
+            obj_inv.write(inv_vals)
         res = super(account_invoice, self).action_number()
         return res
 

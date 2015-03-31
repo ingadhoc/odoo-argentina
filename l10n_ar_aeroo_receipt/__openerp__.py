@@ -8,6 +8,11 @@
     'description': """
 Argentinian Like Receipt Aeroo Report
 =====================================
+Por defecto se utiliza el reporte "l10n_ar_aeroo_receipt/receipt.odt" que detalla los pagos en
+* Cheques
+* Banco
+* Efectivo
+Si se quiere detallar en función a los diarios se puede cambiar en configuracion/tecnico/aeroo reports/reports, ubicando el reporte "Argentinian Aeroo Receipt" en valor de template path por "l10n_ar_aeroo_receipt/receipt_journal_detail.odt"
     """,
     'author':  'Ingenieria ADHOC',
     'website': 'www.ingadhoc.com',

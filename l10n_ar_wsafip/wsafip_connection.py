@@ -7,6 +7,7 @@ from dateutil.tz import tzlocal
 from datetime import datetime, timedelta
 from openerp.tools.translate import _
 from suds.client import Client
+import suds
 from urllib2 import URLError
 import logging
 from M2Crypto.X509 import X509Error
@@ -150,11 +151,11 @@ class wsafip_connection(osv.osv):
             self.login(cr, uid, ids)
         except X509Error, m:
             raise osv.except_osv(_('Certificate Error'), _(m))
+        except suds.WebFault, e:
+            raise osv.except_osv(_('Error doing login'), _("%s" % e.message))
         except Exception, e:
             raise osv.except_osv(_('Unknown Error'), _("%s" % e))
 
         return {}
-
-wsafip_connection()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -23,6 +23,7 @@ class sale_order_line(models.Model):
             self.price_unit, 1, product=self.product_id,
             partner=self.order_id.partner_id)
 
+        price_unit_with_tax = price_unit_without_tax['total_included']
         # For document that not discriminate we include the prices
         if self.order_id.vat_discriminated:
             printed_price_unit = price_unit_without_tax['total']
@@ -59,7 +60,7 @@ class sale_order_line(models.Model):
         if not vat_taxes:
             exempt_amount = taxes['total_included']
 
-        self.price_unit_with_tax = printed_price_unit
+        self.price_unit_with_tax = price_unit_with_tax
         self.vat_amount = vat_taxes_amount * self.product_uom_qty
         self.other_taxes_amount = not_vat_taxes_amount * self.product_uom_qty
         self.exempt_amount = exempt_amount * self.product_uom_qty

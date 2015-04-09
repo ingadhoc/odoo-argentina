@@ -188,8 +188,11 @@ class account_vat_ledger(models.Model):
              ('type', '=', self.type)],
             order='period_id desc', limit=1)
         if vat_ledgers:
-            next_period = self.env['account.period'].with_context(
-                company_id=self.company_id.id).next(vat_ledgers.period_id, 1)
+            next_period = self.env['account.period'].search(
+                [('company_id', '=', self.company_id.id),
+                 ('fiscalyear_id', '=', self.fiscalyear_id.id),
+                 ('date_start', '>', vat_ledgers.period_id.date_start),
+                 ], limit=1)
         else:
             next_period = self.env['account.period'].search(
                 [('company_id', '=', self.company_id.id),

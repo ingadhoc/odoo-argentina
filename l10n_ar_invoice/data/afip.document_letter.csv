@@ -2,6 +2,6 @@ id,name,issuer_ids/id,receptor_ids/id,vat_discriminated
 dl_a,A,res_IVARI,"res_IVARNI,res_IVARI",True
 dl_b,B,res_IVARI,"res_CF,res_RM,res_IVANR,res_IVAE",False
 dl_c,C,"res_IVANR,res_RM,res_IVARNI,res_IVAE","res_RM,res_IVARI,res_IVARNI,res_IVANR,res_CF,res_IVAE",False
-dl_m,M,,,True
+dl_m,M,res_IVARI,"res_IVARNI,res_IVARI",True
 dl_e,E,"res_IVARI,res_RM",res_EXT,False
 dl_x,X,"res_IVARI,res_IVANR,res_RM,res_IVARNI,res_IVAE","res_IVARI,res_IVANR,res_RM,res_IVARNI,res_IVAE",True

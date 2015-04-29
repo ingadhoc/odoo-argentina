@@ -380,7 +380,7 @@ class account_invoice(models.Model):
                 document_class_id = obj_inv.journal_document_class_id.afip_document_class_id.id
                 obj_inv.move_id.write({
                     'document_class_id': document_class_id,
-                    'afip_document_number': self.afip_document_number,
+                    'afip_document_number': afip_document_number,
                     })
             obj_inv.write(inv_vals)
         res = super(account_invoice, self).action_number()

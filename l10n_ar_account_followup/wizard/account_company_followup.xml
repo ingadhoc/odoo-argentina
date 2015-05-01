@@ -7,11 +7,11 @@
             <field name="model">res.partner</field>
             <field name="arch" type="xml" >
                 <button name="do_button_print" position="replace">
-                            <button name="%(l10n_ar_account_followup.action_account_select_company_form)d" type="object" string="Print Overdue Payments" context="{'mode':'payments'}" groups="account.group_account_user" 
+                            <button name="%(l10n_ar_account_followup.action_account_select_company_form)d" type="object" string="Print Overdue Payments" context="{'mode':'payments'}" groups="account.group_account_invoice" 
                                 help="Print overdue payments report independent of follow-up line" attrs="{'invisible':[('payment_amount_due', '&lt;=', 0.0)]}" />
                 </button>
                 <button name="do_partner_mail" position="replace">
-                            <button name="%(l10n_ar_account_followup.action_account_select_company_form)d" type="object" string="Send Overdue Email" context="{'mode':'mail'}" groups="account.group_account_user"
+                            <button name="%(l10n_ar_account_followup.action_account_select_company_form)d" type="object" string="Send Overdue Email" context="{'mode':'mail'}" groups="account.group_account_invoice"
                                 help="If not specified by the latest follow-up level, it will send from the default email template" attrs="{'invisible':[('payment_amount_due', '&lt;=', 0.0)]}"/>
                 </button>
                         

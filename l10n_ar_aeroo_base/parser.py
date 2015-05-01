@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-import logging
-logger = logging.getLogger('report_aeroo')
-
-# from openerp.report import report_sxw
 import conversor
 from openerp.report.report_sxw import rml_parse
 
@@ -21,13 +17,19 @@ class Parser(rml_parse):
             report = report[0]
 
         # We add all the key-value pairs of the report configuration
+        # We add keys so that you can use it in a safe way in reports
+        # (like keys.get('key name'))
+        keys = {}
         for report_conf_line in report.line_ids:
             if report_conf_line.value_type == 'text':
-                self.localcontext.update(
-                    {report_conf_line.name: report_conf_line.value_text})
+                key_value = report_conf_line.value_text
             elif report_conf_line.value_type == 'boolean':
-                self.localcontext.update(
-                    {report_conf_line.name: report_conf_line.value_boolean})
+                key_value = report_conf_line.value_boolean
+            self.localcontext.update(
+                {report_conf_line.name: key_value})
+            keys[report_conf_line.name] = key_value
+        self.localcontext.update(
+            {'keys': keys})
 
         # We add the report
         self.localcontext.update({'report': report})
@@ -39,18 +41,16 @@ class Parser(rml_parse):
             active_model_obj = self.pool.get(context['active_model'])
             active_object = active_model_obj.browse(
                 cr, uid, context['active_id'], context=context)
-            if hasattr(active_object, 'company_id') and active_object.company_id:
+            if hasattr(
+                    active_object, 'company_id') and active_object.company_id:
                 company = active_object.company_id
 
         if not company:
-            company = self.pool['res.users'].browse(cr, uid, uid, context).company_id
+            company = self.pool[
+                'res.users'].browse(cr, uid, uid, context).company_id
 
         self.localcontext.update({'company': company})
 
-        print 'contextcontextcontext', context
-        print 'active_model_obj', active_model_obj
-        # print 'active_model_obj', active_model_obj.name
-        
         # We add logo
         print_logo = False
         if report.print_logo == 'specified_logo':

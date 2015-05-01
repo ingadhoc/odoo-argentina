@@ -21,26 +21,6 @@ def _get_parents(child, parents=[]):
         return parents
 
 
-def _calc_concept(product_types):
-    if product_types == set(['consu']):
-        concept = '1'
-    elif product_types == set(['product']):
-        concept = '1'
-    elif product_types == set(['consu', 'product']):
-        concept = '1'
-    elif product_types == set(['service']):
-        concept = '2'
-    elif product_types == set(['consu', 'service']):
-        concept = '3'
-    elif product_types == set(['product', 'service']):
-        concept = '3'
-    elif product_types == set(['consu', 'product', 'service']):
-        concept = '3'
-    else:
-        concept = False
-    return concept
-
-
 class invoice(models.Model):
     _inherit = "account.invoice"
 
@@ -56,8 +36,16 @@ class invoice(models.Model):
         # If document has no connection then it is not electronic
         if self.journal_document_class_id.afip_connection_id:
             product_types = set(
-                [line.product_id.type for line in self.invoice_line])
-            afip_concept = _calc_concept(product_types)
+                [line.product_id.type for line in self.invoice_line if line.product_id])
+            consumible = set(['consu', 'product'])
+            service = set(['service'])
+            mixed = set(['consu', 'service', 'product'])
+            if product_types.issubset(mixed):
+                afip_concept = '3'
+            if product_types.issubset(service):
+                afip_concept = '2'
+            if product_types.issubset(consumible):
+                afip_concept = '1'
         self.afip_concept = afip_concept
 
     afip_concept = fields.Selection(
@@ -279,8 +267,8 @@ class invoice(models.Model):
                 'CbteTipo': document_class.afip_code,
                 'PtoVta': journal.point_of_sale,
                 'Concepto': inv.afip_concept,
-                'DocTipo': inv.partner_id.document_type_id.afip_code or '99',
-                'DocNro': int(inv.partner_id.document_type_id.afip_code is not None and inv.partner_id.document_number),
+                'DocTipo': inv.commercial_partner_id.document_type_id.afip_code or '99',
+                'DocNro': int(inv.commercial_partner_id.document_type_id.afip_code is not None and inv.commercial_partner_id.document_number),
                 'CbteDesde': invoice_number,
                 'CbteHasta': invoice_number,
                 'CbteFch': _f_date(inv.date_invoice),

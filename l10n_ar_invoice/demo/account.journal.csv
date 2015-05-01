@@ -1,0 +1,9 @@
+id,company_id/id,use_documents,type,name,code,point_of_sale_id/id
+journal_1,l10n_ar_invoice.c_2,True,sale,Ventas Pre-imp 0001,FAV01,l10n_ar_invoice.pre_01
+journal_2,l10n_ar_invoice.c_2,True,sale,NC Ventas Pre-imp 0001,NCV01,l10n_ar_invoice.pre_01
+journal_3,l10n_ar_invoice.c_2,True,purchase,Compras,FAC01,
+journal_4,l10n_ar_invoice.c_2,True,purchase,NC compras,NCC01,
+journal_5,l10n_ar_invoice.c_3,True,sale,Ventas Pre-imp 0001,FAV01,l10n_ar_invoice.pre_02
+journal_6,l10n_ar_invoice.c_3,True,sale,NC Ventas Pre-imp 0001,NCV01,l10n_ar_invoice.pre_02
+journal_7,l10n_ar_invoice.c_3,True,purchase,Compras,FAC01,
+journal_8,l10n_ar_invoice.c_3,True,purchase,NC compras,NCC01,

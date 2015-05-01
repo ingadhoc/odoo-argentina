@@ -22,5 +22,13 @@
             <field name="value_type">boolean</field>
             <field name="value_boolean" eval="True"/>
         </record>
+        <record model="report.configuration.default" id="l10n_ar_aeroo_base.report_configuration_invoice_list_price">
+            <field name="name">print_list_price_and_total_discount</field>
+            <field name="apply_to_all" eval="False"/>
+            <field name="apply_to_model_id" ref="account.model_account_invoice"/>
+            <field name="override_values" eval="False"/>
+            <field name="value_type">boolean</field>
+            <field name="value_boolean" eval="False"/>
+        </record> 
     </data>
 </openerp>

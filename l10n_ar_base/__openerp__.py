@@ -75,8 +75,8 @@ TODO
 * TODO1
 * TODO2
     """,
-    'author':  'Sistemas ADHOC',
-    'website': 'www.sistemasadhoc.com.ar',
+    'author':  'Ingenieria ADHOC',
+    'website': 'www.ingadhoc.com',
     'images': [
     ],
     'depends': [

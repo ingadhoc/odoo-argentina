@@ -72,8 +72,8 @@ class account_move(models.Model):
         'afip_document_number',
         'name',
         'document_class_id',
-        'document_class_id.doc_code_prefix',
-        )
+        # 'document_class_id.doc_code_prefix', #we disable this depnd because it makes update module performance low
+    )
     def _get_document_number(self):
         if self.afip_document_number and self.document_class_id:
             document_number = (self.document_class_id.doc_code_prefix or '') + \
@@ -87,11 +87,19 @@ class account_move(models.Model):
         string='Document Number',
         readonly=True,
         store=True
-        )
+    )
 
 
 class account_move_line(models.Model):
     _inherit = "account.move.line"
+
+    @api.one
+    def name_get(self):
+        if self.ref:
+            name = ((self.id, (self.document_number or '')+' ('+self.ref+')'))
+        else:
+            name = ((self.id, self.document_number))
+        return name
 
     document_class_id = new_fields.Many2one(
         'afip.document_class',
@@ -105,12 +113,13 @@ class account_move_line(models.Model):
         related='move_id.document_number',
         store=True,
         readonly=True,
-        )
+    )
 
 
 class account_journal_afip_document_class(models.Model):
     _name = "account.journal.afip_document_class"
     _description = "Journal Afip Documents"
+    _rec_name = 'afip_document_class_id'
 
     def name_get(self, cr, uid, ids, context=None):
         result = []
@@ -136,7 +145,64 @@ class account_journal(models.Model):
         'point_of_sale': fields.related(
             'point_of_sale_id', 'number', type='integer', string='Point of sale', readonly=True),  # for compatibility
         'use_documents': fields.boolean('Use Documents?'),
+        'document_sequence_type': fields.selection([('own_sequence', 'Own Sequence'), ('same_sequence', 'Same Invoice Sequence')], string='Document Sequence Type', help="Use own sequence or invoice sequence on Debit and Credit Notes?"),
     }
+
+    @api.one
+    @api.constrains(
+        'point_of_sale_id',
+        'company_id',
+        'use_documents',
+        )
+    def check_document_classes(self):
+        if not self.use_documents:
+            return True
+
+        responsability = self.company_id.responsability_id
+        if self.type in ['sale', 'sale_refund']:
+            letter_ids = [x.id for x in responsability.issued_letter_ids]
+        elif self.type in ['purchase', 'purchase_refund']:
+            letter_ids = [x.id for x in responsability.received_letter_ids]
+
+        if self.type in ['purchase', 'sale']:
+            document_types = ['invoice', 'debit_note']
+        elif self.type in ['purchase_refund', 'sale_refund']:
+            document_types = ['credit_note']
+
+        document_classes = self.env['afip.document_class'].search(
+            [('document_letter_id', 'in', letter_ids),
+             ('document_type', 'in', document_types)])
+
+        created_document_class_ids = [
+            x.afip_document_class_id.id for x in self.journal_document_class_ids]
+
+        sequence = 10
+        for document_class in document_classes:
+            sequence_id = False
+            if document_class.id in created_document_class_ids:
+                continue
+            if self.type in ['sale', 'sale_refund']:
+                # Si es nota de debito nota de credito y same sequence, no creamos la secuencia, buscamos una que exista
+                if document_class.document_type in [
+                        'debit_note', 'credit_note'] and self.document_sequence_type == 'same_sequence':
+                    journal_documents = self.journal_document_class_ids.search(
+                        [('afip_document_class_id.document_letter_id', '=', document_class.document_letter_id.id),
+                         ('journal_id.point_of_sale', '=', self.point_of_sale)])
+                    sequence_id = journal_documents and journal_documents[0].sequence_id.id or False
+                else:
+                    sequence_id = self.env['ir.sequence'].create({
+                        'name': self.name + ' - ' + document_class.name,
+                        'padding': 8,
+                        'prefix': "%04i-" % (self.point_of_sale),
+                        'company_id': self.company_id.id,
+                    }).id
+            self.journal_document_class_ids.create({
+                'afip_document_class_id': document_class.id,
+                'sequence_id': sequence_id,
+                'journal_id': self.id,
+                'sequence': sequence,
+            })
+            sequence += 10
 
     @api.one
     @api.constrains('point_of_sale_id', 'company_id')

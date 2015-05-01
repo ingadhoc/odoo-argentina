@@ -1,0 +1,13 @@
+id,company_id/id,account_id/id,journal_id/id,partner_id/id,reference_type,type,date_invoice
+Invoice_1,l10n_ar_invoice.c_2,l10n_ar_invoice.account_40,l10n_ar_invoice.journal_1,base.res_partner_address_4,none,out_invoice,2014-12-31
+Invoice_2,l10n_ar_invoice.c_2,l10n_ar_invoice.account_40,l10n_ar_invoice.journal_1,base.res_partner_address_4,none,out_invoice,2014-12-31
+Invoice_3,l10n_ar_invoice.c_3,l10n_ar_invoice.account_41,l10n_ar_invoice.journal_5,base.res_partner_address_5,none,out_invoice,2012-12-31
+Invoice_4,l10n_ar_invoice.c_3,l10n_ar_invoice.account_41,l10n_ar_invoice.journal_5,base.res_partner_address_6,none,out_invoice,2012-12-31
+Invoice_5,l10n_ar_invoice.c_2,l10n_ar_invoice.account_42,l10n_ar_invoice.journal_3,base.res_partner_1,none,in_invoice,2012-12-31
+Invoice_6,l10n_ar_invoice.c_2,l10n_ar_invoice.account_42,l10n_ar_invoice.journal_3,base.res_partner_1,none,in_invoice,2012-12-31
+Invoice_7,l10n_ar_invoice.c_3,l10n_ar_invoice.account_43,l10n_ar_invoice.journal_7,base.res_partner_1,none,in_invoice,2012-12-31
+Invoice_8,l10n_ar_invoice.c_3,l10n_ar_invoice.account_43,l10n_ar_invoice.journal_7,base.res_partner_1,none,in_invoice,2012-12-31
+Invoice_9,l10n_ar_invoice.c_2,l10n_ar_invoice.account_42,l10n_ar_invoice.journal_2,base.res_partner_address_4,none,out_refund,2012-12-31
+Invoice_10,l10n_ar_invoice.c_2,l10n_ar_invoice.account_42,l10n_ar_invoice.journal_4,base.res_partner_1,none,in_refund,2012-12-31
+Invoice_11,l10n_ar_invoice.c_3,l10n_ar_invoice.account_43,l10n_ar_invoice.journal_6,base.res_partner_address_5,none,out_refund,2012-12-31
+Invoice_12,l10n_ar_invoice.c_3,l10n_ar_invoice.account_43,l10n_ar_invoice.journal_8,base.res_partner_1,none,in_refund,2012-12-31

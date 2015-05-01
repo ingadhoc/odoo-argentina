@@ -1,0 +1,9 @@
+id,company_id/id,code,name,user_type/id,type
+account_40,l10n_ar_invoice.c_2,110240,Debtors,account.data_account_type_receivable,A cobrar
+account_41,l10n_ar_invoice.c_3,110600,Debtors,account.data_account_type_receivable,A cobrar
+account_42,l10n_ar_invoice.c_2,10500,Creditors,account.data_account_type_payable,A pagar
+account_43,l10n_ar_invoice.c_3,10600,Creditors,account.data_account_type_payable,A pagar
+account_44,l10n_ar_invoice.c_2,10601,Ventas,account.data_account_type_receivable,A cobrar
+account_45,l10n_ar_invoice.c_3,10602,Ventas,account.data_account_type_receivable,A cobrar
+account_46,l10n_ar_invoice.c_2,10603,Compras,account.data_account_type_payable,A pagar
+account_47,l10n_ar_invoice.c_3,10604,Compras,account.data_account_type_payable,A pagar

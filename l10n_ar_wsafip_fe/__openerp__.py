@@ -17,6 +17,11 @@ API y GUI para acceder a las Web Services de Factura Electrónica de la AFIP
              'test/com_ri2.yml',
              'test/com_rm1.yml',
              'test/journal.yml'],
+    'demo': [
+     # 'demo/afip.point_of_sale.csv',
+     # 'demo/account.journal.csv',
+     # 'demo/account.invoice.csv',
+    ],
     'data': [
         'views/invoice_view.xml',
         'views/journal_afip_document_class_view.xml',

@@ -5,6 +5,9 @@ from openerp import fields, models
 class res_company(models.Model):
     _inherit = "res.company"
 
+    use_argentinian_localization = fields.Boolean(
+        string="Use Argentinian Localization?",
+        default=True)
     responsability_id = fields.Many2one(
         related='partner_id.responsability_id',
         relation='afip.responsability',

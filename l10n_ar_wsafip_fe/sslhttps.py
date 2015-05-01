@@ -72,7 +72,7 @@ class HTTPS(httplib.HTTP):
     _connection_class = HTTPSConnection
 
     def __init__(self, host='', port=None, key_file=None, cert_file=None,
-                 strict=None, ssl_version=ssl.PROTOCOL_SSLv3):
+                 strict=None, ssl_version=ssl.PROTOCOL_SSLv23):
         # provide a default host, pass the X509 cert info
 
         # urf. compensate for bad input.

@@ -54,10 +54,12 @@
                     <field name="use_documents" invisible="1"/>
                     <field name="afip_document_number" invisible="1"/>
                     <field name="internal_number" invisible="1"/>
+                    <field name="use_argentinian_localization" invisible="1"/>
                 </form>
 
                 <xpath expr="//page[@string='Other Info']//field[@name='company_id']" position="after">
                     <field name="vat_discriminated"/>
+                    <field name="responsability_id" states="open,paid"/>
                 </xpath>
 
                 <field name="fiscal_position" position="after">
@@ -101,6 +103,7 @@
                     <field name="use_documents" invisible="1"/>
                     <field name="afip_document_number" invisible="1"/>
                     <field name="internal_number" invisible="1"/>
+                    <field name="use_argentinian_localization" invisible="1"/>
                 </form>
 
                 <field name="supplier_invoice_number" position="attributes">
@@ -109,6 +112,9 @@
 
                 <field name="number" position="attributes">
                     <attribute name="invisible">1</attribute>
+                </field>
+                <field name="payment_term" position="after">
+                    <field name="responsability_id" states="open,paid"/>
                 </field>
                 <field name="number" position="after">
                     <field name="document_number" class="oe_inline"/>

@@ -15,6 +15,11 @@
         <record model='afip.responsability' id='res_IVARI'>
             <field name='code'>IVARI</field>
             <field name='name'>IVA Responsable Inscripto</field>
+            <field name='active' eval="True"/>
+        </record>
+        <record model='afip.responsability' id='res_IVARIFM'>
+            <field name='code'>IVARIFM</field>
+            <field name='name'>IVA Responsable Inscripto Factura M</field>
 	        <field name='active' eval="True"/>
         </record>
         <record model='afip.responsability' id='res_IVARNI'>
@@ -34,7 +39,7 @@
         </record>
         <record model='afip.responsability' id='res_EXT'>
             <field name='code'>EXT</field>
-            <field name='name'>Extrangero</field>
+            <field name='name'>Extranjero</field>
 	        <field name='active' eval="True"/>
         </record>
     </data>

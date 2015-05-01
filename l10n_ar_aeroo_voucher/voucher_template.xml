@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="report_extended_voucher.email_template_edi_receipt" model="email.template">
+            <field name="report_template" ref="l10n_ar_aeroo_voucher.action_aeroo_report_ar_voucher"/>       
+        </record>
+    </data>   
+</openerp>

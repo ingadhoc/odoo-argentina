@@ -928,7 +928,21 @@
             <field name='email'>contactenos@hsbc.com.ar</field>
 	    <field name='update_date'>2012-08-18</field>
         </record>
-        <record model='res.bank' id='44096'>
+        <record model='res.bank' id='00015'>
+            <field name='name'>Industrial and Comercial Bank of China S.A.</field>
+            <field name='bic'>ICBC</field>
+            <field name='active'>AR30709447846</field>
+            <field name='street'>Bv Cecilia Grierson 355</field>
+            <field name='street2'>Piso 7</field>
+            <field name='zip'>C1107BHA</field>
+            <field name='city'>Ciudad Autónoma de Buenos Aires</field>
+            <field name='state' ref='l10n_ar_states.C'/>
+            <field name='country' ref='base.ar'/>
+            <field name='phone'>+54 810 444 4652</field>
+            <field name='fax'>+54 11 4820 1907</field>
+            <field name='email'>lavozdelcliente@icbc.com.ar</field>
+        </record>
+	<record model='res.bank' id='44096'>
             <field name='name'>John Deere Credit Compañía Financiera S.</field>
             <field name='code'>JOHNDEERE</field>
             <field name='active'>1</field>

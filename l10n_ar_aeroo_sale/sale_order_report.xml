@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+    <data noupdate="1">
         <record id="action_aeroo_report_ar_sale_order" model="ir.actions.report.xml">
             <field name="name">Argentinian Aeroo Sale Order</field>
             <field name="type">ir.actions.report.xml</field>
@@ -16,12 +16,9 @@
             <field name="print_logo">company_logo</field> <!-- Or 'company_logo' or ''  -->
             <field name="background_image" type="base64" file="l10n_ar_aeroo_sale/sale_order.png"/>
             <field name="use_background_image" eval="True"/>
+            <field name="out_format" ref="report_aeroo.report_mimetypes_pdf_odt"/>
         </record>
 
-    </data>
-
-    <data noupdate="1">
-        <!-- Iniciamos los key values sin update-->
         <function
             eval="([ref('action_aeroo_report_ar_sale_order')])"
             id="update_lines_ar_receipt"

@@ -12,6 +12,7 @@
                     <field name="start_date"/>
                 </field>
                  <group name="account_grp">
+                    <field name="use_argentinian_localization"/>
                     <field name="invoice_vat_discrimination_default"/>
                 </group>
             </field>

@@ -12,7 +12,7 @@ class afip_document_class(models.Model):
         string='Tax',
         compute='_get_amounts',)
     amount_total = fields.Float(
-        string='total',
+        string='Total',
         compute='_get_amounts',)
 
     @api.one

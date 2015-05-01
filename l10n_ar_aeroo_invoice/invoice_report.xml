@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+    <data noupdate="1">
     <!-- Printed Invoice -->
         <record id="action_aeroo_report_ar_invoice" context="{'no_key_lines':True}" model="ir.actions.report.xml">
             <field name="name">Argentinian Aeroo Invoice</field>
@@ -19,11 +19,10 @@
             <field name="use_background_image" eval="False"/>
             <field name="account_invoice_split_invoice" eval="False"/>
             <field name="account_invoice_lines_to_split">20</field>
+            <field name="out_format" ref="report_aeroo.report_mimetypes_pdf_odt"/>
         </record>
-    </data>
 
-    <data noupdate="1">
-        <!-- Iniciamos los key values sin update porque la factura manual no toma los valores por defecto-->
+        <!-- Iniciamos los key values porque la factura manual no toma los valores por defecto-->
         <record model="report.configuration.line" id="invoice_force_code">
             <field name="report_id" ref="action_aeroo_report_ar_invoice"/>
             <field name="name">force_code</field>

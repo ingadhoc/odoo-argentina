@@ -24,8 +24,8 @@
                     
                 <notebook position="inside">
                     <page string="Documents" attrs="{'invisible': ['|',('use_documents','=',False),('type','not in',['purchase','sale','purchase_refund','sale_refund'])]}">
-                        <button name="%(action_account_journal_document_config_form)d" string="Create Journal Documents" type="action" context="{'type':type}"/>
                         <group>
+                            <field name="document_sequence_type" attrs="{'invisible': ['|',('type','not in',['sale','sale_refund'])], 'required': [('type','in',['sale','sale_refund']),('use_documents','=',True)]}"/>
                             <field name="point_of_sale_id" attrs="{'invisible': ['|',('type','not in',['sale','sale_refund'])],'required': [('use_documents','=',True),('type','in',['sale','sale_refund'])]}" context="{'default_company_id':company_id}"/>
                             <field name="point_of_sale" attrs="{'invisible': ['|',('type','not in',['sale','sale_refund'])]}"/>
                         </group>

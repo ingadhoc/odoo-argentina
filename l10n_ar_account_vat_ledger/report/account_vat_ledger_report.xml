@@ -8,12 +8,10 @@
         <field name="report_name">report_account_vat_ledger</field>
         <field name="report_type">aeroo</field>
         <field name="in_format">oo-ods</field>
-        <field name="out_format" ref="report_aeroo.report_mimetypes_pdf_ods"/>
-        <field name="parser_loc"></field>
+        <field name="out_format" ref="report_aeroo.report_mimetypes_xls_odt"/>
         <field name="report_rml">l10n_ar_account_vat_ledger/report/account_vat_ledger.ods</field>
-        <field name='parser_loc'>l10n_ar_account_vat_ledger/parser.py</field>
-        <!-- <field name="parser_state"></field> -->
-        <field name='parser_state'>loc</field>
+        <field name="parser_loc"></field>
+        <field name="parser_state">default</field>
         <field name="tml_source">file</field>
     </record>
 </data>

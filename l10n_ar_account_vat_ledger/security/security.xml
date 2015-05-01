@@ -2,7 +2,7 @@
 <openerp>
 <data noupdate="0">
         <record model="ir.rule" id="multi_company_vat_ledger">
-            <field name="name">Point Of Sale Multi Company</field>
+            <field name="name">Vat Ledger Multi Company</field>
             <field name="model_id" ref="model_account_vat_ledger"/>
             <field name="global" eval="True"/>
             <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>

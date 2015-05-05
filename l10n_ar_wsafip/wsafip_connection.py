@@ -105,6 +105,10 @@ class wsafip_connection(osv.osv):
             try:
                 aaclient = Client(ws.logging_id.url + '?WSDL')
                 response = aaclient.service.loginCms(in0=body)
+            except Exception, e:
+                raise osv.except_osv(
+                    _('Could not connect'),
+                    _(' This is the what we received: %s' % e))
             except:
                 raise osv.except_osv(
                     _('AFIP Web Service unvailable'),

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {'active': False,
-    'author': 'OpenERP - Team de Localizaci\xc3\xb3n Argentina',
+    'author': 'OpenERP - Team de Localización Argentina',
     'category': 'Localization/Argentina',
     'demo': [],
     'depends': ['crypto'],
@@ -15,7 +15,7 @@ Incluye:
 
 El módulo l10n_ar_wsafip permite a OpenERP acceder a los servicios del AFIP a
 travésde Web Services. Este módulo es un servicio para administradores y
-programadores, donde podr\xc3\xa1n configurar el servidor, la autentificación
+programadores, donde podrían configurar el servidor, la autentificación
 y además tendrán acceso a una API genérica en Python para utilizar los
 servicios AFIP.
 
@@ -23,15 +23,17 @@ Para poder ejecutar los tests es necesario cargar la clave privada y el
 certificado al archivo test_key.yml.
 
 Tenga en cuenta que estas claves son personales y pueden traer conflicto
-publicarlas en los repositorios p\xc3\xbablicos.
+publicarlas en los repositorios públicos.
 """,
     'external_dependencies': {'python': ['suds']},
     'installable': True,
     'license': 'AGPL-3',
     'name': 'Argentina - Base para los Web Services del AFIP',
-    'test': ['test/test_key.yml',
-             'test/test_mime_signer.yml',
-             'test/test_wsafip_service.yml'],
+    'test': [
+        'test/test_key.yml',
+        'test/test_mime_signer.yml',
+        'test/test_wsafip_service.yml'
+    ],
     'data': [
         'data/wsafip_sequence.xml',
         'data/wsafip_server.xml',

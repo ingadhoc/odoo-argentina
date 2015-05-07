@@ -11,9 +11,11 @@
                   <attribute name="string">AFIP Web service Configuration - Request Generation</attribute>
               </form>
               <separator string="title" position="replace">
+                <p>With this wizard we are going to generate the keys and request to comunicate with AFIP Webservices</p>
                 <group>
                     <group>
-                        <field name="wsafip_company_id" widget="selection" on_change="update_data(wsafip_company_id)"/>
+                        <field name="wsafip_company_id" widget="selection"/>
+                        <field name="wsafip_company"/>
                         <field name="wsafip_country_id" widget="selection"/>
                         <field name="wsafip_state_id" widget="selection"/>
                     </group>
@@ -67,7 +69,7 @@
                 </ol>
                 <separator string="Download request and Upload certificate."/>
                 <group>
-                    <field name="wsafip_request_id" widget="selection" on_change="update_data(wsafip_request_id)"/>
+                    <field name="wsafip_request_id" widget="selection"/>
                     <field name="wsafip_request_filename" invisible="1"/>
                     <field name="wsafip_request_file" filename="wsafip_request_filename"/>
                     <field name="wsafip_response_file"/>

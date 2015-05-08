@@ -65,7 +65,7 @@ class l10n_ar_wsafip_keygen_config(models.TransientModel):
 
         pairkey = self.env['crypto.pairkey'].create({'name': self.wsafip_name})
         x509_name = X509.X509_Name()
-        x509_name.C = self.wsafip_country_id.name.encode('ascii', 'ignore')
+        x509_name.C = self.wsafip_country_id.code.encode('ascii', 'ignore')
         x509_name.ST = self.wsafip_state_id.name.encode('ascii', 'ignore')
         x509_name.L = self.wsafip_city.encode('ascii', 'ignore')
         x509_name.O = self.wsafip_company.encode('ascii', 'ignore')
@@ -102,7 +102,6 @@ class l10n_ar_wsafip_loadcert_config(models.TransientModel):
         """
         """
         self.ensure_one()
-        # certificate_obj = self.pool.get('crypto.certificate')
         self.wsafip_request_id.write(
             {'crt': base64.decodestring(self.wsafip_response_file)})
         try:

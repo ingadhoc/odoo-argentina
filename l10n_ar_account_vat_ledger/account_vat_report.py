@@ -98,7 +98,8 @@ class account_vat_ledger(models.Model):
 
         # Get invoices
         # self.invoice_ids = self.env['account.invoice']
-        invoices = self.env['account.invoice'].search(invoices_domain)
+        invoices = self.env['account.invoice'].search(
+            invoices_domain, order='date_invoice asc')
         self.invoice_ids = invoices
 
         # Get other taxes amounts (taxes without tax codes)

@@ -550,7 +550,7 @@ msgstr "Error!"
 #. module: l10n_ar_invoice
 #: field:res.partner,iibb:0
 msgid "Gross Income"
-msgstr "Ingreso Bruto"
+msgstr "Ingresos Brutos"
 
 #. module: l10n_ar_invoice
 #: view:account.invoice:l10n_ar_invoice.view_account_invoice_filter

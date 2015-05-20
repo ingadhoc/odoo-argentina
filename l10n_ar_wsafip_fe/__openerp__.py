@@ -3,7 +3,7 @@
     'author': 'odoo - Team de Localización Argentina',
     'category': 'Localization/Argentina',
     'demo': [],
-    'depends': ['l10n_ar_wsafip', 'l10n_ar_invoice'],
+    'depends': ['l10n_ar_wsafip'],
     'description': """
 API y GUI para acceder a las Web Services de Factura Electrónica de la AFIP
 """,

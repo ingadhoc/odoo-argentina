@@ -3,7 +3,10 @@
     'author': 'OpenERP - Team de Localización Argentina',
     'category': 'Localization/Argentina',
     'demo': [],
-    'depends': ['base'],
+    'depends': [
+        'base',
+        'l10n_ar_invoice',  # this dependency is becaouse of config menus
+        ],
     'description': """
 Configuración y API para acceder a las Web Services de la AFIP
 ==============================================================
@@ -39,11 +42,11 @@ publicarlas en los repositorios públicos.
         'data/wsafip_sequence.xml',
         'data/wsafip_server.xml',
         'wizard/upload_certificate_view.xml',
+        'wizard/config_view.xml',
         'views/wsafip_menuitem.xml',
         'views/wsafip_certificate_view.xml',
         'views/wsafip_certificate_alias_view.xml',
         'views/wsafip_server_view.xml',
-        # 'views/wsafip_config_view.xml',
         'views/wsafip_connection_view.xml',
         'security/ir.model.access.csv',
     ],

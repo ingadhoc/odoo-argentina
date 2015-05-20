@@ -31,12 +31,10 @@
             <field name="model">argentinian.base.config.settings</field>
             <field name="inherit_id" ref="l10n_ar_base.view_argentinian_base_configuration"/>
             <field name="arch" type="xml">
-                <div name="invoicing">
-                    <div attrs="{'invisible':[('module_l10n_ar_invoice','!=',True)]}">
-                        <button type="action" name="%(base.action_res_company_form)d" string="Configure company data." icon="gtk-execute" class="oe_link"/>
-                        <button type="action" name="%(account.action_account_journal_form)d" string="Configure invoice other documents journals." icon="gtk-execute" class="oe_link" context="{'search_default_sale':1,'search_default_purchase':1}"/>
-                    </div>              
-                </div>              
+                <div name="module_l10n_ar_invoice" position="inside">
+                    <button type="action" name="%(base.action_res_company_form)d" string="Configure companies data" icon="gtk-go-forward" class="oe_link"/>
+                    <button type="action" name="%(account.action_account_journal_form)d" string="Configure invoicing journals" icon="gtk-go-forward" class="oe_link" context="{'search_default_sale':1,'search_default_purchase':1}"/>
+                </div>               
             </field>
         </record>
     </data>

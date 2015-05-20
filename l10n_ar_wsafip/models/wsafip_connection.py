@@ -133,6 +133,10 @@ class wsafip_connection(models.Model):
                 service=self.server_id.code
             )
 
+            if not self.certificate_id:
+                raise Warning(_(
+                    'No certificate configured on AFIP connection %s' % (
+                        self.name)))
             msg = self.certificate_id.smime(msg)
             head, body, end = msg.split('\n\n')
 

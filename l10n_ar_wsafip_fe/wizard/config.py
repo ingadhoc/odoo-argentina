@@ -46,10 +46,10 @@ class l10n_ar_wsafip_fe_config(models.TransientModel):
         conn_class = 'homologation' if self.wsfe_for_homologation else 'production'
 
         # Hay que crear la autorizacion para el servicio si no existe.
-        connections = conn_obj.search(
-            [('partner_id', '=', company.partner_id.id)])
+        connection = conn_obj.search(
+            [('partner_id', '=', company.partner_id.id)], limit=1)
 
-        if not connections:
+        if not connection:
             # Hay que crear la secuencia de proceso en batch si no existe.
             sequences = sequence_obj.search(
                 [('code', '=', 'wsafip_fe_sequence')])
@@ -77,8 +77,6 @@ class l10n_ar_wsafip_fe_config(models.TransientModel):
                 'certificate_id': self.wsfe_certificate_id.id,
                 'batch_sequence_id': sequence.id,
             })
-        else:
-            connection = connections[0]
 
         # Asigno el conector al AFIP
         journal_afip_document_classes = journal_class_obj.search([
@@ -91,6 +89,8 @@ class l10n_ar_wsafip_fe_config(models.TransientModel):
 
         # Sincronizo el número de factura local con el remoto
         for journal_afip_document_class in journal_afip_document_classes:
+            # update afip data
+            journal_afip_document_class.update_afip_data()
             remote_number = journal_afip_document_class.afip_items_generated
             sequence = journal_afip_document_class.sequence_id
             if not type(remote_number) is bool:

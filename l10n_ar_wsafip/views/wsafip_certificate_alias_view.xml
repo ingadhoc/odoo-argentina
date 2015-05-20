@@ -35,13 +35,15 @@
                     </header>
                     <sheet string="AFIP Certificates">
                         <group>
+                            <field name="service_type"/>
+                            <field name="service_provider_cuit" attrs="{'invisible':[('service_type','!=','outsourced')],'required':[('service_type','=','outsourced')]}"/>
                             <field name="company_id"/>
+                            <field name="company_cuit" attrs="{'invisible':[('service_type','!=','in_house')],'required':[('service_type','=','in_house')]}"/>
                             <field name="company"/>
                             <field name="common_name"/>
                             <field name="country_id"/>
                             <field name="state_id"/>
                             <field name="city"/>
-                            <field name="cuit"/>
                         </group>
                         <notebook>
                             <page string="Ceritificates">

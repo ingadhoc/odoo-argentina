@@ -30,10 +30,12 @@ class wsafip_certificate_alias(models.Model):
         required=True,
         )
     company_id = fields.Many2one(
-        'res.company', 'Company',
+        'res.company',
+        'Company',
+        required=True,
         default=lambda self: self.env[
             'res.company']._company_default_get(
-                'l10n_ar_wsafip.keygen_config'),
+                'wsafip.certificate_alias'),
         states={'draft': [('readonly', False)]},
         readonly=True,
         )
@@ -64,15 +66,31 @@ class wsafip_certificate_alias(models.Model):
         )
     cuit = fields.Char(
         'CUIT',
+        compute='get_cuit',
+        required=True,
+        )
+    company_cuit = fields.Char(
+        'Company CUIT',
         size=16,
         states={'draft': [('readonly', False)]},
         readonly=True,
-        required=True,
+        )
+    service_provider_cuit = fields.Char(
+        'Service Provider CUIT',
+        size=16,
+        states={'draft': [('readonly', False)]},
+        readonly=True,
         )
     certificate_ids = fields.One2many(
         'wsafip.certificate',
         'alias_id',
         'Certificates',
+        )
+    service_type = fields.Selection(
+        [('in_house', 'In House'), ('outsourced', 'Outsourced')],
+        'Service Type',
+        default='in_house',
+        required=True,
         )
     state = fields.Selection([
             ('draft', 'Draft'),
@@ -88,6 +106,14 @@ class wsafip_certificate_alias(models.Model):
         if self.company:
             self.common_name = 'AFIP Web Services - %s' % self.company
 
+    @api.one
+    @api.depends('company_id', 'service_type', 'service_type')
+    def get_cuit(self):
+        if self.service_type == 'outsourced':
+            self.cuit = self.service_provider_cuit
+        else:
+            self.cuit = self.company_cuit
+
     @api.onchange('company_id')
     def change_company_id(self):
         if self.company_id:
@@ -96,7 +122,7 @@ class wsafip_certificate_alias(models.Model):
             self.state_id = self.company_id.state_id.id
             self.city = self.company_id.city
             if self.company_id.partner_id.vat:
-                self.cuit = self.company_id.partner_id.vat[2:]
+                self.company_cuit = self.company_id.partner_id.vat[2:]
 
     @api.multi
     def action_confirm(self):
@@ -109,6 +135,7 @@ class wsafip_certificate_alias(models.Model):
     def generate_key(self, key_length=1024):
         """
         """
+        # TODO agregar las cosas variables que tenia crypto a la hora de genrar las keys
         k = crypto.PKey()
         k.generate_key(crypto.TYPE_RSA, key_length)
         self.key = crypto.dump_privatekey(crypto.FILETYPE_PEM, k)

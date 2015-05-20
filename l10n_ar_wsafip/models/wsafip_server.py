@@ -15,16 +15,20 @@ class wsafip_server(models.Model):
 
     name = fields.Char(
         'Name',
+        required=True,
         )
     code = fields.Char(
-        'Code'
+        'Code',
+        required=True,
         )
     type = fields.Selection(
         [('production', 'Production'), ('homologation', 'Homologation')],
-        'Type'
+        'Type',
+        required=True,
         )
     url = fields.Char(
-        'URL'
+        'URL',
+        required=True,
         )
     auth_conn_ids = fields.One2many(
         'wsafip.connection',

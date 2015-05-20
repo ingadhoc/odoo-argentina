@@ -42,12 +42,12 @@ publicarlas en los repositorios públicos.
         'data/wsafip_sequence.xml',
         'data/wsafip_server.xml',
         'wizard/upload_certificate_view.xml',
-        'wizard/config_view.xml',
         'views/wsafip_menuitem.xml',
         'views/wsafip_certificate_view.xml',
         'views/wsafip_certificate_alias_view.xml',
         'views/wsafip_server_view.xml',
         'views/wsafip_connection_view.xml',
+        'wizard/config_view.xml',
         'security/ir.model.access.csv',
     ],
     'version': '2.7.244', }

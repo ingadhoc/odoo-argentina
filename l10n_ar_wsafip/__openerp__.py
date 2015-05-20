@@ -3,7 +3,7 @@
     'author': 'OpenERP - Team de Localización Argentina',
     'category': 'Localization/Argentina',
     'demo': [],
-    'depends': ['crypto'],
+    'depends': ['base'],
     'description': """
 Configuración y API para acceder a las Web Services de la AFIP
 ==============================================================
@@ -25,21 +25,25 @@ certificado al archivo test_key.yml.
 Tenga en cuenta que estas claves son personales y pueden traer conflicto
 publicarlas en los repositorios públicos.
 """,
-    'external_dependencies': {'python': ['suds']},
+    'external_dependencies': {'python': ['suds', 'M2Crypto']},
     'installable': True,
     'license': 'AGPL-3',
     'name': 'Argentina - Base para los Web Services del AFIP',
     'test': [
-        'test/test_key.yml',
-        'test/test_mime_signer.yml',
-        'test/test_wsafip_service.yml'
+    # TODO actualizar los test
+        # 'test/test_key.yml',
+        # 'test/test_mime_signer.yml',
+        # 'test/test_wsafip_service.yml'
     ],
     'data': [
         'data/wsafip_sequence.xml',
         'data/wsafip_server.xml',
+        'wizard/upload_certificate_view.xml',
         'views/wsafip_menuitem.xml',
+        'views/wsafip_certificate_view.xml',
+        'views/wsafip_certificate_alias_view.xml',
         'views/wsafip_server_view.xml',
-        'views/wsafip_config_view.xml',
+        # 'views/wsafip_config_view.xml',
         'views/wsafip_connection_view.xml',
         'security/ir.model.access.csv',
     ],

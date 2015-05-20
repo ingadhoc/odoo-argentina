@@ -49,7 +49,7 @@ msgid "State"
 msgstr "Estado"
 
 #. module: l10n_ar_wsafip
-#: field:wsafip.connection,certificate:0
+#: field:wsafip.connection,certificate_id:0
 msgid "Certificate Signer"
 msgstr "Firmante del Certificado"
 
@@ -160,9 +160,9 @@ msgid "Certificate Error"
 msgstr "Error en el Certificado"
 
 #. module: l10n_ar_wsafip
-#: field:wsafip.server,class:0
-msgid "Class"
-msgstr "Clase"
+#: field:wsafip.server,type:0
+msgid "Type"
+msgstr "Tipo"
 
 #. module: l10n_ar_wsafip
 #: field:wsafip.connection,generationtime:0
@@ -185,7 +185,7 @@ msgid "Country"
 msgstr "País"
 
 #. module: l10n_ar_wsafip
-#: selection:wsafip.server,class:0
+#: selection:wsafip.server,type:0
 msgid "Homologation"
 msgstr "Homologación"
 
@@ -253,7 +253,7 @@ msgid "Servers"
 msgstr "Servidores"
 
 #. module: l10n_ar_wsafip
-#: selection:wsafip.server,class:0
+#: selection:wsafip.server,type:0
 msgid "Production"
 msgstr "Producción"
 

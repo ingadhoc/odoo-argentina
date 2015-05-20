@@ -18,7 +18,7 @@
                             <field name="partner_id"/>
                             <field name="server_id"/>
                             <field name="logging_id"/>
-                            <field name="certificate"/>
+                            <field name="certificate_id"/>
                             <field name="batch_sequence_id"/>
                             <field name="uniqueid"/>
                             <field name="generationtime"/>

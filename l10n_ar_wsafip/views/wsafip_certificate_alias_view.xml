@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_wsafip_certificate_alias_form" model="ir.ui.view">
+            <field name="name">wsafip.certificate_alias.form</field>
+            <field name="model">wsafip.certificate_alias</field>
+            <field name="arch" type="xml">
+                <form string="AFIP Certificates">
+                    <header>
+                        <button name="action_confirm"
+                            type="object"
+                            states="draft"
+                            string="Confirm"
+                            class="oe_highlight"
+                            help="Confirm and generate Key"
+                            />
+                        <button name="action_create_certificate_request"
+                            type="object"
+                            states="confirmed"
+                            class="oe_highlight"
+                            string="Create Certificate Request"
+                            />
+                        <button name="action_cancel"
+                            type="object"
+                            states="draft,confirmed"
+                            string="Cancel"
+                            />
+                        <button name="action_to_draft"
+                            type="object"
+                            states="cancel"
+                            string="To Draft"
+                            />
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet string="AFIP Certificates">
+                        <group>
+                            <field name="company_id"/>
+                            <field name="company"/>
+                            <field name="common_name"/>
+                            <field name="country_id"/>
+                            <field name="state_id"/>
+                            <field name="city"/>
+                            <field name="cuit"/>
+                        </group>
+                        <notebook>
+                            <page string="Ceritificates">
+                                <field name="certificate_ids"/>
+                            </page>
+                            <page string="Key">
+                                <field name="key"/>
+                            </page>
+                        </notebook  >
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_wsafip_certificate_alias_tree" model="ir.ui.view">
+            <field name="name">wsafip.certificate_alias.tree</field>
+            <field name="model">wsafip.certificate_alias</field>
+            <field name="arch" type="xml">
+                <tree string="AFIP Certificates">
+                    <field name="common_name"/>
+                    <field name="company"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_wsafip_certificate_alias">
+            <field name="name">AFIP Certificate</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wsafip.certificate_alias</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Certificates" action="act_wsafip_certificate_alias" id="menu_action_wsafip_certificate_alias" parent="menu_wsafip"/>
+
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4 -->

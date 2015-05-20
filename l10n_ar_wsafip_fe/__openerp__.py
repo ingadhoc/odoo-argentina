@@ -32,7 +32,7 @@ API y GUI para acceder a las Web Services de Factura Electrónica de la AFIP
         'security/ir.model.access.csv',
         'wizard/query_invoices_view.xml',
         'wizard/validate_invoices_view.xml',
-        'views/res_config_view.xml',
+        'wizard/res_config_view.xml',
     ],
     'version': '2.7.244',
  }

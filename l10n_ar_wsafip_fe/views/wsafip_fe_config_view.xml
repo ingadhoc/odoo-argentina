@@ -14,7 +14,6 @@
                 <separator string="title" position="replace">
                     <group>
                         <field name="company_id" widget="selection"/>
-                        <!-- <field name="company_id" widget="selection" on_change="onchange_company(company_id)"/> -->
                         <field name="wsfe_certificate_id" widget="selection"/>
                         <field name="wsfe_for_homologation"/>
                         <field name="wsfe_point_of_sale_id" domain="[('company_id','=',company_id)]"/>

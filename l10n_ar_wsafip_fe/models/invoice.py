@@ -5,7 +5,8 @@ from openerp.osv.orm import browse_null
 import re
 import logging
 from openerp.exceptions import Warning
-
+from pyi25 import PyI25
+from cStringIO import StringIO as StringIO
 _logger = logging.getLogger(__name__)
 
 # Number Filter
@@ -110,8 +111,6 @@ class invoice(models.Model):
         "Generate the required barcode Interleaved of 7 image using PIL"
         image = False
         if barcode:
-            from pyi25 import PyI25
-            from cStringIO import StringIO as StringIO
             # create the helper:
             pyi25 = PyI25()
             output = StringIO()

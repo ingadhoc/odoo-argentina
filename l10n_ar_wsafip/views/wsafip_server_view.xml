@@ -13,7 +13,7 @@
                         <group>
                             <field name="name"/>
                             <field name="code"/>
-                            <field name="class"/>
+                            <field name="type"/>
                             <field name="url"/>
                         </group>
                     </sheet>
@@ -28,7 +28,7 @@
                 <tree string="AFIP server">
                     <field name="name"/>
                     <field name="code"/>
-                    <field name="class"/>
+                    <field name="type"/>
                     <field name="url"/>
                 </tree>
             </field>

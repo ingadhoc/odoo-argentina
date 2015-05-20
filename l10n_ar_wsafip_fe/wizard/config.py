@@ -9,23 +9,33 @@ class l10n_ar_wsafip_fe_config(models.TransientModel):
 
     _name = 'l10n_ar_wsafip_fe.config'
     _inherit = 'res.config.installer'
+
     company_id = fields.Many2one(
-        'res.company', 'Company',
+        'res.company',
+        'Company',
         default=lambda self: self.env['res.company']._company_default_get(
             'l10n_ar_wsafip_fe.config'),
-        required=True)
+        required=True
+        )
     wsfe_certificate_id = fields.Many2one(
-        'crypto.certificate', 'Certificate', required=True)
+        'wsafip.certificate',
+        'Certificate',
+        required=True
+        )
     wsfe_for_homologation = fields.Boolean(
-        'Is for homologation')
+        'Is for homologation'
+        )
     wsfe_point_of_sale_id = fields.Many2one(
-        'afip.point_of_sale', 'Point of Sale', required=True)
+        'afip.point_of_sale',
+        'Point of Sale',
+        required=True
+        )
 
-    @api.one
+    @api.multi
     def execute(self):
         """
         """
-        print 'execute multi!!!!'
+        self.ensure_one()
         conn_obj = self.env['wsafip.connection']
         afipserver_obj = self.env['wsafip.server']
         sequence_obj = self.env['ir.sequence']
@@ -52,21 +62,19 @@ class l10n_ar_wsafip_fe_config(models.TransientModel):
 
             # Crear el conector al AFIP
             loggings = afipserver_obj.search(
-                [('code', '=', 'wsaa'), ('class', '=', conn_class)])
+                [('code', '=', 'wsaa'), ('type', '=', conn_class)])
             servers = afipserver_obj.search(
-                [('code', '=', 'wsfe'), ('class', '=', conn_class)])
+                [('code', '=', 'wsfe'), ('type', '=', conn_class)])
             if not loggings:
                 raise Warning(_('Not Loggin Server  found for WSAA!'))
             if not servers:
                 raise Warning(_('Not Server found for WSFE!'))
-            print 'loggings', loggings.id
-            print 'servers', servers.id
             connection = conn_obj.create({
                 'name': 'AFIP Sequence Authorization Invoice: %s' % company.name,
                 'partner_id': company.partner_id.id,
                 'logging_id': loggings.id,
                 'server_id': servers.id,
-                'certificate': self.wsfe_certificate_id.id,
+                'certificate_id': self.wsfe_certificate_id.id,
                 'batch_sequence_id': sequence.id,
             })
         else:
@@ -99,7 +107,6 @@ class l10n_ar_wsafip_fe_config(models.TransientModel):
 
         # Actualizo el código de impuestos de la AFIP en los impuestos
         # locale.s
-        print '[connection.server_id.id]', [connection.server_id.id]
         self.pool['wsafip.server'].wsfe_update_tax(
             self._cr, self._uid, [connection.server_id.id],
             connection.id, self._context)
@@ -107,70 +114,4 @@ class l10n_ar_wsafip_fe_config(models.TransientModel):
 
         return True
 
-    # def execute(self, cr, uid, ids, context=None):
-    #     """
-    #     """
-    #     print 'execute!!!!'
-    #     conn_obj = self.pool.get('wsafip.connection')
-    #     journal_obj = self.pool.get('account.journal')
-    #     afipserver_obj = self.pool.get('wsafip.server')
-    #     sequence_obj = self.pool.get('ir.sequence')
-
-    #     for ws in self.browse(cr, uid, ids):
-    # Tomamos la compania
-    #         company = ws.company_id
-    #         conn_class = 'homologation' if ws.wsfe_for_homologation else 'production'
-
-    # Hay que crear la autorizacion para el servicio si no existe.
-    #         conn_ids = conn_obj.search(
-    #             cr, uid, [('partner_id', '=', company.partner_id.id)])
-
-    #         if len(conn_ids) == 0:
-    # Hay que crear la secuencia de proceso en batch si no existe.
-    #             seq_ids = sequence_obj.search(
-    #                 cr, uid, [('code', '=', 'wsafip_fe_sequence')])
-    #             if seq_ids:
-    #                 seq_id = seq_ids[0]
-    #             else:
-    #                 seq_id = sequence_obj.create(cr, uid, {
-    #                                              'name': 'Web Service AFIP Sequence for Invoices', 'code': 'ws_afip_sequence'})
-
-    # Crear el conector al AFIP
-    #             conn_id = conn_obj.create(cr, uid, {
-    #                 'name': 'AFIP Sequence Authorization Invoice: %s' % company.name,
-    #                 'partner_id': company.partner_id.id,
-    #                 'logging_id': afipserver_obj.search(cr, uid, [('code', '=', 'wsaa'), ('class', '=', conn_class)])[0],
-    #                 'server_id': afipserver_obj.search(cr, uid, [('code', '=', 'wsfe'), ('class', '=', conn_class)])[0],
-    #                 'certificate': ws.wsfe_certificate_id.id,
-    #                 'batch_sequence_id': seq_id,
-    #             })
-    #         else:
-    #             conn_id = conn_ids[0]
-
-    # Asigno el conector al AFIP
-    #         jou_ids = journal_obj.search(cr, uid, [('company_id', '=', company.id),
-    #                                                ('point_of_sale', '=',
-    #                                                 ws.wsfe_point_of_sale),
-    #                                                ('type', '=', 'sale')])
-
-    #         journal_obj.write(
-    #             cr, uid, jou_ids, {'afip_connection_id': conn_id})
-
-    # Sincronizo el número de factura local con el remoto
-    #         for journal in journal_obj.browse(cr, uid, jou_ids):
-    #             remote_number = journal.afip_items_generated
-    #             seq_id = journal.sequence_id.id
-    #             if not type(remote_number) is bool:
-    #                 _logger.info("Journal '%s' syncronized." % journal.name)
-    #                 sequence_obj.write(
-    #                     cr, uid, seq_id, {'number_next': remote_number + 1})
-    #             else:
-    #                 _logger.info("Journal '%s' cant be used." % journal.name)
-
-    # Actualizo el código de impuestos de la AFIP en los impuestos
-    # locale.s
-    #         conn = conn_obj.browse(cr, uid, conn_id)
-    #         conn.server_id.wsfe_update_tax(conn_id)
-
-    #     return True
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

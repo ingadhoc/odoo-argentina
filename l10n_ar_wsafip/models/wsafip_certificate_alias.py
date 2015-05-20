@@ -100,7 +100,8 @@ class wsafip_certificate_alias(models.Model):
 
     @api.multi
     def action_confirm(self):
-        self.generate_key()
+        if not self.key:
+            self.generate_key()
         self.write({'state': 'confirmed'})
         return True
 

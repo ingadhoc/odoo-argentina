@@ -464,13 +464,17 @@ class wsafip_server(osv.osv):
         for srv in self.browse(cr, uid, ids, context=context):
             # Ignore servers without code WSFE.
             if srv.code != 'wsfe':
-                continue
+                raise Warning(_('Service code is "%s" and should be "wsfe" for electronic invoice"' % (
+                    srv.code)))
+                # continue
 
             # Take the connection
             conn = conn_obj.browse(cr, uid, conn_id, context=context)
             conn.login()  # Login if nescesary.
             if conn.state not in ['connected', 'clockshifted']:
-                continue
+                raise Warning(_('Could not connect on connection %s' % (
+                    conn.name)))
+                # continue
 
             _logger.info('Get CAE from AFIP Web service')
 

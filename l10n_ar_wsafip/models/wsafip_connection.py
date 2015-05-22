@@ -96,6 +96,9 @@ class wsafip_connection(models.Model):
         )
 
     @api.one
+    @api.depends(
+        'uniqueid', 'generationtime', 'expirationtime', 'token', 'sign'
+        )
     def _get_state(self):
         if False in (
                 self.uniqueid, self.generationtime,

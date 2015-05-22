@@ -107,7 +107,7 @@ class wsafip_certificate_alias(models.Model):
             self.common_name = 'AFIP Web Services - %s' % self.company
 
     @api.one
-    @api.depends('company_id', 'service_type', 'service_type')
+    @api.depends('company_cuit', 'service_provider_cuit', 'service_type')
     def get_cuit(self):
         if self.service_type == 'outsourced':
             self.cuit = self.service_provider_cuit

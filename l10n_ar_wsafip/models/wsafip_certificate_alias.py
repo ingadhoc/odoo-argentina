@@ -33,9 +33,6 @@ class wsafip_certificate_alias(models.Model):
         'res.company',
         'Company',
         required=True,
-        default=lambda self: self.env[
-            'res.company']._company_default_get(
-                'wsafip.certificate_alias'),
         states={'draft': [('readonly', False)]},
         readonly=True,
         )

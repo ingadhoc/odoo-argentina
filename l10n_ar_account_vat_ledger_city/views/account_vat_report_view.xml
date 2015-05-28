@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+        <record model='ir.ui.view' id='account_vat_ledger_form'>
+            <field name='name'>Account VAT Ledger</field> 
+            <field name="model">account.vat.ledger</field>
+            <field name="inherit_id" ref="l10n_ar_account_vat_ledger.account_vat_ledger_form"/>
+            <field name='arch' type='xml'>
+                <!-- <field name="first_page" position="after">
+                    <field name="last_page"/>
+                </field> -->
+                <notebook>
+                    <page string="CITI" name="CITI">
+                        <group>
+                            <field name="report_filename" invisible="1"/>
+                            <field name="report" filename="report_filename"/>
+                            <field name="report_content"/>
+                            <field name="REGINFO_CV_CABECERA"/>
+                            <field name="REGINFO_CV_CBTE"/>
+                            <field name="REGINFO_CV_ALICUOTAS"/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>          
+    </data>
+</openerp>

@@ -54,7 +54,16 @@ class invoice(models.Model):
         selection=[('1', 'Consumible'),
                    ('2', 'Service'),
                    ('3', 'Mixed')],
-        string="AFIP concept",)
+        string="AFIP concept",
+        )
+    invoice_number = fields.Integer(
+        compute='_get_invoice_number',
+        string="Invoice Number",
+        )
+    point_of_sale = fields.Integer(
+        compute='_get_invoice_number',
+        string="Point Of Sale",
+        )
 # TODO ver si implementamos el afip result
     # afip_result = fields.Selection(
     #     [('', 'No CAE'), ('A', 'Accepted'),
@@ -65,22 +74,27 @@ class invoice(models.Model):
     #     help='This state is asigned by the AFIP. If * No CAE * state mean you\
     #     have no generate this invoice by ')
     afip_service_start = fields.Date(
-        string='Service Start Date')
+        string='Service Start Date'
+        )
     afip_service_end = fields.Date(
-        string='Service End Date')
+        string='Service End Date'
+        )
     afip_batch_number = fields.Integer(
         copy=False,
         string='Batch Number',
-        readonly=True)
+        readonly=True
+        )
     afip_cae = fields.Char(
         copy=False,
         string='CAE number',
         readonly=True,
-        size=24)
+        size=24
+        )
     afip_cae_due = fields.Date(
         copy=False,
         readonly=True,
-        string='CAE due Date',)
+        string='CAE due Date',
+        )
 # TODO ver si implementamos el error id
     # afip_error_id = fields.Many2one(
     #     'afip.wsfe_error',
@@ -89,10 +103,36 @@ class invoice(models.Model):
     #     readonly=True)
     afip_barcode = fields.Char(
         compute='_get_barcode',
-        string='AFIP Barcode')
+        string='AFIP Barcode'
+        )
     afip_barcode_img = fields.Binary(
         compute='_get_barcode',
-        string='AFIP Barcode')
+        string='AFIP Barcode Image'
+        )
+
+    @api.one
+    @api.depends('afip_document_number', 'number')
+    def _get_invoice_number(self):
+        """ Funcion que calcula numero de punto de venta y numero de factura
+        a partir del document number. Es utilizado principalmente por el modulo
+        de vat ledger citi
+        """
+        # TODO mejorar estp y almacenar punto de venta y numero de factura por separado
+        # de hecho con esto hacer mas facil la carga de los comprobantes de compra
+        if self.afip_document_number:
+            str_number = self.afip_document_number
+        else:
+            str_number = self.number
+        try:
+            splited_number = str_number.split('-')
+            invoice_number = int(splited_number.pop())
+            point_of_sale = int(splited_number.pop())
+        except:
+            raise Warning(_(
+                'Could not get invoice number and point of sale for invoice %s') % (
+                    str_number))
+        self.invoice_number = invoice_number
+        self.point_of_sale = point_of_sale
 
     @api.one
     @api.depends('afip_cae')

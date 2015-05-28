@@ -9,30 +9,35 @@ _logger = logging.getLogger(__name__)
 class account_vat_ledger(models.Model):
     _inherit = "account.vat.ledger"
 
-    report_content = fields.Text(
-        'Report Content',
-        compute='get_files',
-        readonly=True
-        )
     REGINFO_CV_ALICUOTAS = fields.Text(
         'REGINFO_CV_ALICUOTAS',
-        compute='get_REGINFO_CV_ALICUOTAS',
+        readonly=True,
         )
     REGINFO_CV_CBTE = fields.Text(
         'REGINFO_CV_CBTE',
-        compute='get_REGINFO_CV_CBTE',
+        readonly=True,
         )
     REGINFO_CV_CABECERA = fields.Text(
         'REGINFO_CV_CABECERA',
-        compute='get_REGINFO_CV_CABECERA',
+        readonly=True,
         )
-    report = fields.Binary(
-        'Download Report',
+    vouchers_file = fields.Binary(
+        'Vouchers File',
         compute='get_files',
         readonly=True
         )
-    report_filename = fields.Char(
-        'Filename',
+    vouchers_filename = fields.Char(
+        'Vouchers Filename',
+        readonly=True,
+        compute='get_files',
+        )
+    aliquots_file = fields.Binary(
+        'Aliquots File',
+        compute='get_files',
+        readonly=True
+        )
+    aliquots_filename = fields.Char(
+        'Aliquots Filename',
         readonly=True,
         compute='get_files',
         )
@@ -66,14 +71,37 @@ class account_vat_ledger(models.Model):
             int(round(amount, decimals) * 10**decimals))
 
     @api.one
-    @api.depends('invoice_ids')
+    @api.depends(
+        'REGINFO_CV_CBTE', 'REGINFO_CV_ALICUOTAS', 'type', 'period_id.name')
     def get_files(self):
-        report_content = '123123'
-        self.report_content = report_content
-        if self.report_content:
-            self.report_filename = 'request.txt'
-            self.report = base64.encodestring(
-                self.report_content)
+        if self.REGINFO_CV_ALICUOTAS:
+            self.aliquots_filename = _('Alicuots_%s_%s.txt') % (
+                self.type, self.period_id.name)
+            self.aliquots_file = base64.encodestring(
+                self.REGINFO_CV_ALICUOTAS.encode('utf-8'))
+        if self.REGINFO_CV_CBTE:
+            self.vouchers_filename = _('Vouchers_%s_%s.txt') % (
+                self.type, self.period_id.name)
+            self.vouchers_file = base64.encodestring(
+                self.REGINFO_CV_CBTE.encode('utf-8'))
+
+    @api.one
+    def compute_citi_data(self):
+        self.get_REGINFO_CV_CABECERA()
+        self.get_REGINFO_CV_CBTE()
+        self.get_REGINFO_CV_ALICUOTAS()
+
+    @api.model
+    def get_partner_document_code(self, partner):
+        if partner.document_type_id.afip_code:
+            return "{:0>2d}".format(partner.document_type_id.afip_code)
+        else:
+        # TODO agregar validaciones para los que se presentan sin numero de documento para operaciones menores a 1000 segun doc especificacion regimen de...
+            return '99'
+
+    def get_partner_document_number(self, partner):
+        # TODO agregar validaciones para los que se presentan sin numero de documento para operaciones menores a 1000 segun doc especificacion regimen de...
+        return (partner.document_number or '').rjust(20, '0')
 
     @api.one
     def get_REGINFO_CV_CABECERA(self):
@@ -139,11 +167,10 @@ class account_vat_ledger(models.Model):
         return res
 
     @api.one
-    @api.depends('invoice_ids')
     def get_REGINFO_CV_CBTE(self):
         res = []
         for inv in self.invoice_ids:
-            if inv.exempt_amount == 0:
+            if inv.exempt_amount and inv.exempt_amount != 0.0:
                 # TODO implementar de acuerdo a
                 # Si la alícuota de IVA  es igual a cero (0) o la operación responde a una operación de Canje se deberá completar de acuerdo con la siguiente codificación:
                 # Z- Exportaciones a la zona franca.
@@ -151,13 +178,12 @@ class account_vat_ledger(models.Model):
                 # E- Operaciones exentas.
                 # N- No gravado.
                 # C- Operaciones de Canje.
-                _logger.warning('Excempt operations not implemented yet')
+                raise Warning('Excempt operations not implemented yet. Check invoice %s' % inv.document_number)
 
             if inv.company_id.currency_id != inv.currency_id:
                 # TODO implementar otras monedas
-                _logger.warning('Other Currency different thatn company currency not implemented yet')
-            # row = []
-            # row.append(
+                raise Warning('Other Currency different than company currency not implemented yet. Check invoice %s' % inv.document_number)
+
             row = [
                 # Campo 1: Fecha de comprobante
                 fields.Date.from_string(inv.date_invoice).strftime('%Y%m%d'),
@@ -188,11 +214,10 @@ class account_vat_ledger(models.Model):
 
             row += [
                 # Campo 6: Código de documento del comprador. 
-                # TODO agregar validaciones para los que se presentan sin numero de documento para operaciones menores a 1000 segun doc especificacion regimen de...
-                str(inv.commercial_partner_id.document_type_id.afip_code) or '99',
+                self.get_partner_document_code(inv.commercial_partner_id),
 
                 # Campo 7: Número de Identificación del comprador
-                str(inv.commercial_partner_id.document_number).rjust(20, '0'),
+                self.get_partner_document_number(inv.commercial_partner_id),
 
                 # Campo 8: Apellido y Nombre del comprador.
                 inv.commercial_partner_id.name.ljust(30, ' ')[:30],
@@ -295,11 +320,11 @@ class account_vat_ledger(models.Model):
                     # Si el campo 23 es distinto de cero se consignará el importe del I.V.A. de la comisión
                     self.format_amount(0),
                     ]
+            print 'row', row
             res.append(''.join(row))
         self.REGINFO_CV_CBTE = '\n'.join(res)
 
     @api.one
-    @api.depends('invoice_ids')
     def get_REGINFO_CV_ALICUOTAS(self):
         res = []
         for inv in self.invoice_ids:
@@ -329,10 +354,10 @@ class account_vat_ledger(models.Model):
                 else:
                     row += [
                         # Campo 4: Código de documento del vendedor
-                        str(inv.commercial_partner_id.document_type_id.afip_code) or '99',
+                        self.get_partner_document_code(inv.commercial_partner_id),
 
                         # Campo 5: Número de identificación del vendedor
-                        str(inv.commercial_partner_id.document_number).rjust(20, '0'),
+                        self.get_partner_document_number(inv.commercial_partner_id),
 
                         # Campo 6: Importe Neto Gravado
                         self.format_amount(tax['BaseImp']),

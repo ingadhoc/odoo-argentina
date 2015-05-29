@@ -1,130 +1,184 @@
 # -*- coding: utf-8 -*-
-from openerp import osv, models, fields, api, _
+from openerp import models, fields, api, _
 from openerp.exceptions import except_orm, Warning
 import openerp.addons.decimal_precision as dp
-
-
-class account_invoice_line(models.Model):
-
-    """
-    En argentina como no se diferencian los impuestos en las facturas, excepto
-    el IVA, agrego campos que ignoran el iva solamenta a la hora de imprimir
-    los valores.
-    """
-
-    _inherit = "account.invoice.line"
-
-    @api.one
-    def _printed_prices(self):
-        taxes = self.env['account.tax']
-
-        price = self.price_unit * (1 - (self.discount or 0.0) / 100.0)
-
-        price_unit_without_tax = self.invoice_line_tax_id.compute_all(
-            self.price_unit, 1, product=self.product_id,
-            partner=self.invoice_id.partner_id)
-
-        # For document that not discriminate we include the prices
-        if self.invoice_id.vat_discriminated:
-            printed_price_unit = price_unit_without_tax['total']
-            printed_price_net = price_unit_without_tax['total'] * (
-                1 - (self.discount or 0.0) / 100.0)
-            printed_price_subtotal = printed_price_net * self.quantity
-        else:
-            printed_price_unit = price_unit_without_tax['total_included']
-            printed_price_net = price_unit_without_tax['total_included'] * (
-                1 - (self.discount or 0.0) / 100.0)
-            printed_price_subtotal = printed_price_net * self.quantity
-
-        self.printed_price_unit = printed_price_unit
-        self.printed_price_net = printed_price_net
-        self.printed_price_subtotal = printed_price_subtotal
-
-        # Not VAT taxes
-        not_vat_taxes = self.invoice_line_tax_id.filtered(
-            lambda r: r.tax_code_id.parent_id.name != 'IVA').compute_all(
-            price, 1,
-            product=self.product_id,
-            partner=self.invoice_id.partner_id)
-        not_vat_taxes_amount = not_vat_taxes[
-            'total_included'] - not_vat_taxes['total']
-
-        # VAT taxes
-        vat_taxes = self.invoice_line_tax_id.filtered(
-            lambda r: r.tax_code_id.parent_id.name == 'IVA').compute_all(
-            price, 1,
-            product=self.product_id,
-            partner=self.invoice_id.partner_id)
-        vat_taxes_amount = vat_taxes['total_included'] - vat_taxes['total']
-
-        exempt_amount = 0.0
-        if not vat_taxes:
-            exempt_amount = taxes['total_included']
-
-        self.vat_amount = vat_taxes_amount * self.quantity
-        self.other_taxes_amount = not_vat_taxes_amount * self.quantity
-        self.exempt_amount = exempt_amount * self.quantity
-
-    printed_price_unit = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Unit Price'
-    )
-    printed_price_net = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Net Price',
-    )
-    printed_price_subtotal = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Subtotal',
-    )
-    vat_amount = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Vat Amount',
-    )
-    other_taxes_amount = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Other Taxes Amount',
-    )
-    exempt_amount = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Exempt Amount',
-    )
 
 
 class account_invoice(models.Model):
     _inherit = "account.invoice"
 
+    invoice_number = fields.Integer(
+        compute='_get_invoice_number',
+        string="Invoice Number",
+        )
+    point_of_sale = fields.Integer(
+        compute='_get_invoice_number',
+        string="Point Of Sale",
+        )
+    printed_amount_tax = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits_compute=dp.get_precision('Account'),
+        string='Tax'
+        )
+    printed_amount_untaxed = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits_compute=dp.get_precision('Account'),
+        string='Subtotal'
+        )
+    exempt_amount = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits_compute=dp.get_precision('Account'),
+        string='Exempt Amount'
+        )
+    vat_amount = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits_compute=dp.get_precision('Account'),
+        string='Vat Amount'
+        )
+    other_taxes_amount = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits_compute=dp.get_precision('Account'),
+        string='Other Taxes Amount'
+        )
+    printed_tax_ids = fields.One2many(
+        compute="_get_taxes_and_prices",
+        comodel_name='account.invoice.tax',
+        string='Tax'
+        )
+    vat_tax_ids = fields.One2many(
+        compute="_get_taxes_and_prices",
+        comodel_name='account.invoice.tax',
+        string='VAT Taxes'
+        )
+    not_vat_tax_ids = fields.One2many(
+        compute="_get_taxes_and_prices",
+        comodel_name='account.invoice.tax',
+        string='Not VAT Taxes'
+        )
+    vat_discriminated = fields.Boolean(
+        'Discriminate VAT?',
+        compute="get_vat_discriminated",
+        help="Discriminate VAT on Invoices?",
+        )
+    available_journal_document_class_ids = fields.Many2many(
+        'account.journal.afip_document_class',
+        compute='_get_available_journal_document_class',
+        string='Available Journal Document Classes',
+        )
+    supplier_invoice_number = fields.Char(
+        copy=False,
+        )
+    journal_document_class_id = fields.Many2one(
+        'account.journal.afip_document_class',
+        'Documents Type',
+        readonly=True,
+        states={'draft': [('readonly', False)]}
+        )
+    afip_document_class_id = fields.Many2one(
+        'afip.document_class',
+        related='journal_document_class_id.afip_document_class_id',
+        string='Document Type',
+        copy=False,
+        readonly=True,
+        store=True,
+        )
+    afip_document_number = fields.Char(
+        string='Document Number',
+        copy=False,
+        readonly=True,
+        )
+    responsability_id = fields.Many2one(
+        'afip.responsability',
+        string='Responsability',
+        readonly=True,
+        copy=False,
+        )
+    formated_vat = fields.Char(
+        string='Responsability',
+        related='commercial_partner_id.formated_vat',
+        )
+    document_number = fields.Char(
+        compute='_get_document_number',
+        string='Document Number',
+        readonly=True,
+        )
+    next_invoice_number = fields.Integer(
+        related='journal_document_class_id.sequence_id.number_next_actual',
+        string='Next Document Number',
+        readonly=True
+        )
+    use_documents = fields.Boolean(
+        related='journal_id.use_documents',
+        string='Use Documents?',
+        readonly=True
+        )
+    use_argentinian_localization = fields.Boolean(
+        related='company_id.use_argentinian_localization',
+        string='Use Argentinian Localization?',
+        readonly=True,
+        )
+    afip_concept = fields.Selection(
+        compute='_get_concept',
+        selection=[('1', 'Consumible'),
+                   ('2', 'Service'),
+                   ('3', 'Mixed')],
+        string="AFIP concept",
+        )
+    afip_service_start = fields.Date(
+        string='Service Start Date'
+        )
+    afip_service_end = fields.Date(
+        string='Service End Date'
+        )
+
     @api.one
-    def _printed_prices(self):
-        vat_amount = sum([
-            x.tax_amount for x in self.tax_line if x.tax_code_id.parent_id.name == 'IVA'])
+    @api.depends(
+        'invoice_line',
+        'invoice_line.product_id',
+        'invoice_line.product_id.type',
+        'use_argentinian_localization',
+    )
+    def _get_concept(self):
+        afip_concept = False
+        # If document has no connection then it is not electronic
+        if self.use_argentinian_localization:
+            product_types = set(
+                [line.product_id.type for line in self.invoice_line if line.product_id])
+            consumible = set(['consu', 'product'])
+            service = set(['service'])
+            mixed = set(['consu', 'service', 'product'])
+            if product_types.issubset(mixed):
+                afip_concept = '3'
+            if product_types.issubset(service):
+                afip_concept = '2'
+            if product_types.issubset(consumible):
+                afip_concept = '1'
+        self.afip_concept = afip_concept
+
+    @api.one
+    def _get_taxes_and_prices(self):
         other_taxes_amount = sum(
-            line.other_taxes_amount for line in self.invoice_line)
+            self.invoice_line.mapped('other_taxes_amount'))
         exempt_amount = sum(
-            line.exempt_amount for line in self.invoice_line)
-        vat_tax_ids = [
-            x.id for x in self.tax_line if x.tax_code_id.parent_id.name == 'IVA']
+            self.invoice_line.mapped('exempt_amount'))
+        vat_taxes = self.tax_line.filtered(
+            lambda r: r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
+        not_vat_taxes = self.tax_line - vat_taxes
+        vat_amount = sum(
+            vat_taxes.mapped('tax_amount'))
 
         if self.vat_discriminated:
             printed_amount_untaxed = self.amount_untaxed
-            printed_tax_ids = [x.id for x in self.tax_line]
+            printed_taxes = self.tax_line
         else:
-            # por ahora hacemos que no se imprima ninguno
             printed_amount_untaxed = self.amount_total
-            # printed_amount_untaxed = sum(
-            #     line.printed_price_subtotal for line in self.invoice_line)
-            printed_tax_ids = False
+            printed_taxes = False
 
         self.printed_amount_untaxed = printed_amount_untaxed
-        self.printed_tax_ids = printed_tax_ids
+        self.printed_tax_ids = printed_taxes
         self.printed_amount_tax = self.amount_total - printed_amount_untaxed
-        self.vat_tax_ids = vat_tax_ids
+        self.vat_tax_ids = vat_taxes
+        self.not_vat_tax_ids = not_vat_taxes
         self.vat_amount = vat_amount
         self.other_taxes_amount = other_taxes_amount
         self.exempt_amount = exempt_amount
@@ -139,8 +193,11 @@ class account_invoice(models.Model):
         }
         result = []
         for inv in self:
-            result.append(
-                (inv.id, "%s %s" % (inv.document_number or TYPES[inv.type], inv.name or '')))
+            result.append((
+                inv.id,
+                "%s %s" % (
+                    inv.document_number or TYPES[inv.type],
+                    inv.name or '')))
         return result
 
     @api.model
@@ -165,103 +222,27 @@ class account_invoice(models.Model):
             vat_discriminated = True
         self.vat_discriminated = vat_discriminated
 
-    printed_amount_tax = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Tax'
-    )
-    printed_amount_untaxed = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Subtotal'
-    )
-    exempt_amount = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Exempt Amount'
-    )
-    vat_amount = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Vat Amount'
-    )
-    other_taxes_amount = fields.Float(
-        compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Other Taxes Amount'
-    )
-    printed_tax_ids = fields.One2many(
-        compute="_printed_prices",
-        comodel_name='account.invoice.tax',
-        string='Tax'
-    )
-    vat_tax_ids = fields.One2many(
-        compute="_printed_prices",
-        comodel_name='account.invoice.tax',
-        string='VAT Taxes'
-    )
-    vat_discriminated = fields.Boolean(
-        'Discriminate VAT?',
-        compute="get_vat_discriminated",
-        help="Discriminate VAT on Invoices?",
-    )
-    available_journal_document_class_ids = fields.Many2many(
-        'account.journal.afip_document_class',
-        compute='_get_available_journal_document_class',
-        string='Available Journal Document Classes',
-    )
-    supplier_invoice_number = fields.Char(
-        copy=False,
-    )
-    journal_document_class_id = fields.Many2one(
-        'account.journal.afip_document_class',
-        'Documents Type',
-        readonly=True,
-        states={'draft': [('readonly', False)]}
-    )
-    afip_document_class_id = fields.Many2one(
-        'afip.document_class',
-        related='journal_document_class_id.afip_document_class_id',
-        string='Document Type',
-        copy=False,
-        readonly=True,
-        store=True,
-    )
-    afip_document_number = fields.Char(
-        string='Document Number',
-        copy=False,
-        readonly=True,
-    )
-    responsability_id = fields.Many2one(
-        'afip.responsability',
-        string='Responsability',
-        readonly=True,
-        copy=False,
-    )
-    formated_vat = fields.Char(
-        string='Responsability',
-        related='commercial_partner_id.formated_vat',
-    )
-    document_number = fields.Char(
-        compute='_get_document_number',
-        string='Document Number',
-        readonly=True,
-    )
-    next_invoice_number = fields.Integer(
-        related='journal_document_class_id.sequence_id.number_next_actual',
-        string='Next Document Number',
-        readonly=True
-    )
-    use_documents = fields.Boolean(
-        related='journal_id.use_documents',
-        string='Use Documents?',
-        readonly=True
-    )
-    use_argentinian_localization = fields.Boolean(
-        related='company_id.use_argentinian_localization',
-        string='Use Argentinian Localization?',
-        readonly=True,
-    )
+    @api.one
+    @api.depends('afip_document_number', 'number')
+    def _get_invoice_number(self):
+        """ Funcion que calcula numero de punto de venta y numero de factura
+        a partir del document number. Es utilizado principalmente por el modulo
+        de vat ledger citi
+        """
+        # TODO mejorar estp y almacenar punto de venta y numero de factura por separado
+        # de hecho con esto hacer mas facil la carga de los comprobantes de compra
+        str_number = self.afip_document_number or self.number or False
+        if str_number:
+            try:
+                splited_number = str_number.split('-')
+                invoice_number = int(splited_number.pop())
+                point_of_sale = int(splited_number.pop())
+            except:
+                raise Warning(_(
+                    'Could not get invoice number and point of sale for invoice id %i') % (
+                        self.id))
+            self.invoice_number = invoice_number
+            self.point_of_sale = point_of_sale
 
     _sql_constraints = [
         ('number_supplier_invoice_number',
@@ -355,7 +336,30 @@ class account_invoice(models.Model):
                     _('Supplier Invoice Number must be unique per Supplier and Company!'))
 
     @api.multi
+    def check_argentinian_invoice_taxes(self):
+        # only check for argentinian localization companies
+        argentinian_invoices = self.filtered('use_argentinian_localization')
+        if not argentinian_invoices:
+            return True
+
+        # check invoice tax has code
+        without_tax_code = self.env['account.invoice.tax'].search([
+            ('invoice_id', 'in', argentinian_invoices.ids),
+            ('tax_code_id', '=', False),
+            ])
+        if without_tax_code:
+            raise Warning(_("You are using argentinian localization and there are some invoices with taxes that don't have tax code, tax code is required to generate this report. Invoies ids: %s" % without_tax_code.ids))
+
+        # check codes has argentinian tax attributes configured
+        tax_codes = argentinian_invoices.mapped('tax_line.tax_code_id')
+        unconfigured_tax_codes = tax_codes.filtered(
+            lambda r: not r.type or not r.tax or not r.application)
+        if unconfigured_tax_codes:
+            raise Warning(_("You are using argentinian localization and there are some tax codes that are not configured. Tax codes ids: %s" % unconfigured_tax_codes.ids))
+
+    @api.multi
     def action_number(self):
+        self.check_argentinian_invoice_taxes()
         obj_sequence = self.env['ir.sequence']
 
         # We write document_number field with next invoice number by
@@ -370,8 +374,7 @@ class account_invoice(models.Model):
             if obj_inv.journal_document_class_id and not obj_inv.afip_document_number:
                 if invtype in ('out_invoice', 'out_refund'):
                     if not obj_inv.journal_document_class_id.sequence_id:
-                        raise osv.except_osv(_('Error!'), _(
-                            'Please define sequence on the journal related documents to this invoice.'))
+                        raise Warning(_('Error!. Please define sequence on the journal related documents to this invoice.'))
                     afip_document_number = obj_sequence.next_by_id(
                         obj_inv.journal_document_class_id.sequence_id.id)
                 elif invtype in ('in_invoice', 'in_refund'):

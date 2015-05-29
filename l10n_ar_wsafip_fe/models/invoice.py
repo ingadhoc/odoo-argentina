@@ -1,69 +1,15 @@
 # -*- coding: utf-8 -*-
-from openerp import fields, models, api, _
-from openerp.osv import osv
-from openerp.osv.orm import browse_null
-import re
 import logging
-from openerp.exceptions import Warning
 from pyi25 import PyI25
+from openerp import fields, models, api, _
+from openerp.exceptions import Warning
 from cStringIO import StringIO as StringIO
 _logger = logging.getLogger(__name__)
-
-# Number Filter
-re_number = re.compile(r'\d{8}')
-
-# Functions to list parents names.
-
-
-def _get_parents(child, parents=[]):
-    if child and not isinstance(child, browse_null):
-        return parents + [child.name] + _get_parents(child.parent_id)
-    else:
-        return parents
 
 
 class invoice(models.Model):
     _inherit = "account.invoice"
 
-    @api.one
-    @api.depends(
-        'invoice_line',
-        'invoice_line.product_id',
-        'invoice_line.product_id.type',
-        'journal_document_class_id.afip_connection_id',
-    )
-    def _get_concept(self):
-        afip_concept = False
-        # If document has no connection then it is not electronic
-        if self.journal_document_class_id.afip_connection_id:
-            product_types = set(
-                [line.product_id.type for line in self.invoice_line if line.product_id])
-            consumible = set(['consu', 'product'])
-            service = set(['service'])
-            mixed = set(['consu', 'service', 'product'])
-            if product_types.issubset(mixed):
-                afip_concept = '3'
-            if product_types.issubset(service):
-                afip_concept = '2'
-            if product_types.issubset(consumible):
-                afip_concept = '1'
-        self.afip_concept = afip_concept
-
-    afip_concept = fields.Selection(
-        compute='_get_concept',
-        selection=[('1', 'Consumible'),
-                   ('2', 'Service'),
-                   ('3', 'Mixed')],
-        string="AFIP concept",
-        )
-    invoice_number = fields.Integer(
-        compute='_get_invoice_number',
-        string="Invoice Number",
-        )
-    point_of_sale = fields.Integer(
-        compute='_get_invoice_number',
-        string="Point Of Sale",
-        )
 # TODO ver si implementamos el afip result
     # afip_result = fields.Selection(
     #     [('', 'No CAE'), ('A', 'Accepted'),
@@ -73,12 +19,6 @@ class invoice(models.Model):
     #     copy=False,
     #     help='This state is asigned by the AFIP. If * No CAE * state mean you\
     #     have no generate this invoice by ')
-    afip_service_start = fields.Date(
-        string='Service Start Date'
-        )
-    afip_service_end = fields.Date(
-        string='Service End Date'
-        )
     afip_batch_number = fields.Integer(
         copy=False,
         string='Batch Number',
@@ -109,30 +49,6 @@ class invoice(models.Model):
         compute='_get_barcode',
         string='AFIP Barcode Image'
         )
-
-    @api.one
-    @api.depends('afip_document_number', 'number')
-    def _get_invoice_number(self):
-        """ Funcion que calcula numero de punto de venta y numero de factura
-        a partir del document number. Es utilizado principalmente por el modulo
-        de vat ledger citi
-        """
-        # TODO mejorar estp y almacenar punto de venta y numero de factura por separado
-        # de hecho con esto hacer mas facil la carga de los comprobantes de compra
-        if self.afip_document_number:
-            str_number = self.afip_document_number
-        else:
-            str_number = self.number
-        try:
-            splited_number = str_number.split('-')
-            invoice_number = int(splited_number.pop())
-            point_of_sale = int(splited_number.pop())
-        except:
-            raise Warning(_(
-                'Could not get invoice number and point of sale for invoice %s') % (
-                    str_number))
-        self.invoice_number = invoice_number
-        self.point_of_sale = point_of_sale
 
     @api.one
     @api.depends('afip_cae')
@@ -186,78 +102,35 @@ class invoice(models.Model):
         return str(digito)
 
     @api.multi
+    def get_related_invoices_data(self):
+        """
+        List related invoice information to fill CbtesAsoc.
+        # TODO mejorar y buscar la relacion por un m2o y no por origin
+        """
+        res = {}
+        for invoice in self:
+            rel_invoices_data = []
+            rel_invoices = self.search([
+                ('number', '=', self.origin),
+                ('state', 'not in',
+                    ['draft', 'proforma', 'proforma2', 'cancel'])])
+            for rel_inv in rel_invoices:
+                res.append({
+                    'Tipo': rel_inv.afip_document_class_id.afip_code,
+                    'PtoVta': rel_inv.point_of_sale,
+                    'Nro': rel_inv.invoice_number,
+                })
+            res[invoice.id] = rel_invoices_data
+        return res
+
+    @api.multi
     def action_cancel(self):
         for inv in self:
             if self.afip_cae:
-                raise osv.except_orm(
-                    _('Error!'),
-                    _('You can not cancel an electronic invoice (has CAE assigned).\
+                raise Warning(
+                    _('Error! You can not cancel an electronic invoice (has CAE assigned).\
                     You should do a credit note instead.'))
         return super(invoice, self).action_cancel()
-
-    @api.one
-    def get_related_invoices(self):
-        """
-        List related invoice information to fill CbtesAsoc
-        """
-        res = []
-        rel_invoices = self.search([
-            ('number', '=', self.origin),
-            ('state', 'not in',
-                ['draft', 'proforma', 'proforma2', 'cancel'])])
-        for rel_inv in rel_invoices:
-            journal = rel_inv.journal_id
-            afip_document_number = rel_inv.afip_document_number.split('-')
-            try:
-                afip_document_number = int(afip_document_number[1])
-            except:
-                raise Warning(_('Error getting related document number'))
-            res.append({
-                'Tipo': rel_inv.afip_document_class_id.afip_code,
-                'PtoVta': journal.point_of_sale,
-                'Nro': afip_document_number,
-            })
-        return res
-
-    @api.one
-    def get_taxes(self):
-        res = []
-        for tax in self.tax_line:
-            if tax.tax_code_id:
-                if tax.tax_code_id.parent_id.name == 'IVA':
-                    continue
-                else:
-                    res.append({
-                        'Id': tax.tax_code_id.parent_afip_code,
-                        'Desc': tax.tax_code_id.name,
-                        'BaseImp': tax.base_amount,
-                        'Alic': (tax.tax_amount / tax.base_amount),
-                        'Importe': tax.tax_amount,
-                    })
-            else:
-                raise Warning(_('TAX without tax-code!\
-                     Please, check if you set tax code for invoice or \
-                     refund on tax %s.') % tax.name)
-        return res
-
-    @api.one
-    def get_vat(self):
-        res = []
-        for tax in self.tax_line:
-            if tax.tax_code_id:
-                if tax.tax_code_id.parent_id.name != 'IVA':
-                    continue
-                else:
-                    res.append({
-                        'Id': tax.tax_code_id.parent_afip_code,
-                        'BaseImp': tax.base_amount,
-                        'Importe': tax.tax_amount,
-                    })
-            else:
-                raise Warning(_('TAX without tax-code!\
-                     Please, check if you set tax code for invoice or \
-                     refund on tax %s.') % tax.name)
-        return res
 
     @api.multi
     def action_number(self):
@@ -322,12 +195,22 @@ class invoice(models.Model):
                 'FchServHasta': _f_date(inv.afip_service_end) if inv.afip_concept != '1' else None,
                 'FchVtoPago': _f_date(inv.date_due) if inv.afip_concept != '1' else None,
                 'MonId': inv.currency_id.afip_code,
+                # TODO agregar la cotizacion en un campo de la factura y utilizar ese para hacer el asiento
                 'MonCotiz': inv.currency_id.compute(
                     1.,
                     inv.company_id.currency_id),
-                'CbtesAsoc': {'CbteAsoc': inv.get_related_invoices()[0]},
-                'Tributos': {'Tributo': inv.get_taxes()[0]},
-                'Iva': {'AlicIva': inv.get_vat()[0]},
+                'CbtesAsoc': {'CbteAsoc': inv.get_related_invoices_data()},
+                'Tributos': {
+                    'Tributo': [{
+                        'Id': x.tax_code_id.afip_code,
+                        'Desc': x.tax_code_id.name,
+                        'BaseImp': x.base_amount,
+                        'Importe': x.tax_amount} for x in self.vat_tax_ids]},
+                'Iva': {
+                    'AlicIva': [{
+                        'Id': x.tax_code_id.afip_code,
+                        'BaseImp': x.base_amount,
+                        'Importe': x.tax_amount} for x in self.vat_tax_ids]},
                 # TODO implementar los optionals
                 'Opcionales': {},
             }.iteritems() if v is not None)
@@ -347,7 +230,7 @@ class invoice(models.Model):
                         [u'(%s) %s\n' % e for e in v['Errores']] +
                         [u'(%s) %s\n' % e for e in v['Observaciones']]
                     )
-                    raise osv.except_osv(_(u'AFIP Validation Error'), msg)
-
+                    raise Warning(_('AFIP Validation Error. %s' % msg))
         return True
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

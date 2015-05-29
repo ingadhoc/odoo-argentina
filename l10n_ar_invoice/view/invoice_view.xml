@@ -64,6 +64,9 @@
 
                 <field name="fiscal_position" position="after">
                     <field name="reference"/>
+                    <field name='afip_concept' invisible="1"/>
+                    <field name='afip_service_start' attrs="{'invisible':[('afip_concept','not in',['2','3'])],'required':[('afip_concept','in',['2','3'])]}"/>
+                    <field name='afip_service_end' attrs="{'invisible':[('afip_concept','not in',['2','3'])],'required':[('afip_concept','in',['2','3'])]}"/>
                 </field>
                 <xpath expr="//page[@string='Other Info']//field[@name='name']" position="attributes">
                     <attribute name="invisible">1</attribute>

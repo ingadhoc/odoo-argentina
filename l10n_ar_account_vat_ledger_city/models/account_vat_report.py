@@ -99,9 +99,18 @@ class account_vat_ledger(models.Model):
         # TODO agregar validaciones para los que se presentan sin numero de documento para operaciones menores a 1000 segun doc especificacion regimen de...
             return '99'
 
+    @api.model
     def get_partner_document_number(self, partner):
         # TODO agregar validaciones para los que se presentan sin numero de documento para operaciones menores a 1000 segun doc especificacion regimen de...
         return (partner.document_number or '').rjust(20, '0')
+
+    @api.model
+    def get_point_of_sale(self, invoice):
+        if invoice.afip_document_class_id.afip_code in [033, 99, 331, 332]:
+            point_of_sale = 0
+        else:
+            point_of_sale = invoice.point_of_sale
+        return "{:0>5d}".format(point_of_sale)
 
     @api.one
     def get_REGINFO_CV_CABECERA(self):
@@ -192,8 +201,7 @@ class account_vat_ledger(models.Model):
                 "{:0>3d}".format(inv.afip_document_class_id.afip_code),
 
                 # Campo 3: Punto de Venta
-                # TODO implementar Para los comprobantes correspondientes a los códigos '033', '099', '331' y '332', el presente campo deberá completarse con ceros.
-                "{:0>5d}".format(inv.point_of_sale),
+                self.get_point_of_sale(inv),
 
                 # Campo 4: Número de Comprobante
                 # TODO agregar estos casos de uso
@@ -334,7 +342,7 @@ class account_vat_ledger(models.Model):
                     "{:0>3d}".format(inv.afip_document_class_id.afip_code),
 
                     # Campo 2: Punto de Venta
-                    "{:0>5d}".format(inv.point_of_sale),
+                    self.get_point_of_sale(inv),
 
                     # Campo 3: Número de Comprobante
                     "{:0>20d}".format(inv.invoice_number),

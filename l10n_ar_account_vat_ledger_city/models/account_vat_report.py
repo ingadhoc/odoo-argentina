@@ -187,7 +187,7 @@ class account_vat_ledger(models.Model):
 
         # TODO esta verificacion podria ir a la hora de crear facturas pero solo sin son facturas desde un RI
         if self.type == 'sale':
-            for invoice in self:
+            for invoice in self.invoice_ids:
                 if not invoice.vat_tax_ids:
                     raise Warning(_(
                         "Invoice id %i don't have any VAT tax." % invoice.id))

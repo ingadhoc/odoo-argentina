@@ -199,13 +199,13 @@ class invoice(models.Model):
                 'MonCotiz': inv.currency_id.compute(
                     1.,
                     inv.company_id.currency_id),
-                'CbtesAsoc': {'CbteAsoc': inv.get_related_invoices_data()},
+                'CbtesAsoc': {'CbteAsoc': inv.get_related_invoices_data()[inv.id]},
                 'Tributos': {
                     'Tributo': [{
                         'Id': x.tax_code_id.afip_code,
                         'Desc': x.tax_code_id.name,
                         'BaseImp': x.base_amount,
-                        'Importe': x.tax_amount} for x in self.vat_tax_ids]},
+                        'Importe': x.tax_amount} for x in self.not_vat_tax_ids]},
                 'Iva': {
                     'AlicIva': [{
                         'Id': x.tax_code_id.afip_code,

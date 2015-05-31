@@ -179,6 +179,18 @@ class account_vat_ledger(models.Model):
     def get_REGINFO_CV_CBTE(self):
         res = []
         self.invoice_ids.check_argentinian_invoice_taxes()
+        if self.type == 'purchase':
+            partners = self.invoice_ids.mapped('commercial_partner_id').filtered(
+                lambda r: r.document_type_id.afip_code in (False, 99) or not r.document_number)
+            if partners:
+                raise Warning(_("On purchase citi, partner document is mandatory and partner document type must be different from 99. Partners %s") % partners.ids)
+
+        # TODO esta verificacion podria ir a la hora de crear facturas pero solo sin son facturas desde un RI
+        if self.type == 'sale':
+            for invoice in self:
+                if not invoice.vat_tax_ids:
+                    raise Warning(_(
+                        "Invoice id %i don't have any VAT tax." % invoice.id))
 
         for inv in self.invoice_ids:
             if inv.exempt_amount and inv.exempt_amount != 0.0:
@@ -226,13 +238,15 @@ class account_vat_ledger(models.Model):
                 self.get_partner_document_number(inv.commercial_partner_id),
 
                 # Campo 8: Apellido y Nombre del comprador.
-                inv.commercial_partner_id.name.ljust(30, ' ')[:30],
+                inv.commercial_partner_id.name.encode(
+                    'ascii', 'ignore').ljust(30, ' ')[:30],
 
                 # Campo 9: Importe Total de la Operación.
                 self.format_amount(inv.amount_total),
 
                 # Campo 10: Importe total de conceptos que no integran el precio neto gravado
-                self.format_amount(inv.amount_untaxed),
+                # TODO implementar
+                self.format_amount(0),
                 ]
 
             if self.type == 'sale':
@@ -342,7 +356,7 @@ class account_vat_ledger(models.Model):
                     self.format_amount(0),
                     ]
             res.append(''.join(row))
-        self.REGINFO_CV_CBTE = '\n'.join(res)
+        self.REGINFO_CV_CBTE = '\r\n'.join(res)
 
     @api.one
     def get_REGINFO_CV_ALICUOTAS(self):
@@ -389,4 +403,4 @@ class account_vat_ledger(models.Model):
                         self.format_amount(tax.tax_amount),
                     ]
                 res.append(''.join(row))
-        self.REGINFO_CV_ALICUOTAS = '\n'.join(res)
+        self.REGINFO_CV_ALICUOTAS = '\r\n'.join(res)

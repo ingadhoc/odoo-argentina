@@ -115,7 +115,7 @@ class invoice(models.Model):
                 ('state', 'not in',
                     ['draft', 'proforma', 'proforma2', 'cancel'])])
             for rel_inv in rel_invoices:
-                res.append({
+                rel_invoices_data.append({
                     'Tipo': rel_inv.afip_document_class_id.afip_code,
                     'PtoVta': rel_inv.point_of_sale,
                     'Nro': rel_inv.invoice_number,

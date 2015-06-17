@@ -232,7 +232,7 @@ class account_invoice(models.Model):
         # TODO mejorar estp y almacenar punto de venta y numero de factura por separado
         # de hecho con esto hacer mas facil la carga de los comprobantes de compra
         str_number = self.afip_document_number or self.number or False
-        if str_number:
+        if str_number and self.state not in ['draft', 'proforma', 'proforma2', 'cancel']:
             try:
                 splited_number = str_number.split('-')
                 invoice_number = int(splited_number.pop())

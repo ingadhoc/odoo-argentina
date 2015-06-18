@@ -51,6 +51,7 @@ Facturación y Documentos AFIP - Argentina
      'view/company_view.xml',
      'view/country_view.xml',
      'view/afip_menuitem.xml',
+     'view/fiscal_position_view.xml',
      'view/afip_document_letter_view.xml',
      'view/afip_concept_type_view.xml',
      'view/afip_optional_type_view.xml',

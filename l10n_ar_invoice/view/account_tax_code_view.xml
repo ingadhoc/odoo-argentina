@@ -10,6 +10,7 @@
                     <field name="type"/>
                     <field name="tax"/>
                     <field name="application"/>
+                    <field name="afip_code"/>
                 </field>
             </field>
         </record>

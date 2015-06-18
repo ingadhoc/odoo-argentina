@@ -3,6 +3,12 @@ from openerp import fields, api, models, _
 from openerp.exceptions import Warning
 
 
+class account_fiscal_position(models.Model):
+    _inherit = 'account.fiscal.position'
+
+    afip_code = fields.Char('AFIP Code')
+
+
 class afip_tax_code(models.Model):
     _inherit = 'account.tax.code'
 

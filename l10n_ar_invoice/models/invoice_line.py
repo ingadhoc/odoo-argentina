@@ -38,7 +38,8 @@ class account_invoice_line(models.Model):
 
         # VAT taxes
         vat_taxes = self.invoice_line_tax_id.filtered(
-            lambda r: r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
+            lambda r: r.amount and r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
+            # agregamos el r.amount para que no tenga en cuenta los "exentos"
         vat_taxes_amounts = vat_taxes.compute_all(
             price, 1,
             product=self.product_id,
@@ -55,11 +56,15 @@ class account_invoice_line(models.Model):
         not_vat_taxes_amount = not_vat_taxes_amounts[
             'total_included'] - not_vat_taxes_amounts['total']
 
-        exempt_amount = 0.0
-        # TODO implementar excempt amount
-        # probablemente lo sacamos de aca y queda solo en invoice
-        # if not vat_taxes:
-            # exempt_amount = taxes['total_included']
+        # Exempt VAT taxes (no gravados, 0 y exentos)
+        # TODO validar que los excempt ammount sean todos estos o solo algunos
+        exempt_vat_taxes = self.invoice_line_tax_id.filtered(
+            lambda r: not r.amount and r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
+        exempt_vat_taxes_amounts = exempt_vat_taxes.compute_all(
+            price, 1,
+            product=self.product_id,
+            partner=self.invoice_id.partner_id)
+        exempt_amount = exempt_vat_taxes and exempt_vat_taxes_amounts['total'] or False
 
         self.vat_amount = vat_taxes_amount * self.quantity
         self.other_taxes_amount = not_vat_taxes_amount * self.quantity

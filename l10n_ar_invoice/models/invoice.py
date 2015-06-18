@@ -157,6 +157,13 @@ class account_invoice(models.Model):
 
     @api.one
     def _get_taxes_and_prices(self):
+        """ TODO, tal vez estos valores deban salir de la tabla de impuestos y
+        y no del analisis de las lineas, usamos las lineas porque las lineas
+        deben imprimir o no el monto con iva incluido o no, pero igualmente
+        parece mas prolijo que todo esto empiece a venir de la tabla de
+        impuestos. Dejariamos solo lo de las lineas para un tema de impresion
+        que es algo mas simple y no incide en ningun lugar"""
+
         other_taxes_amount = sum(
             self.invoice_line.mapped('other_taxes_amount'))
         exempt_amount = sum(
@@ -356,6 +363,21 @@ class account_invoice(models.Model):
             lambda r: not r.type or not r.tax or not r.application)
         if unconfigured_tax_codes:
             raise Warning(_("You are using argentinian localization and there are some tax codes that are not configured. Tax codes ids: %s" % unconfigured_tax_codes.ids))
+
+
+        # checks for vat_discriminated invoices (A)
+        # TODO verificar si la factura E por ejemplo, necesitan los mismo chequeos
+        afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
+        for invoice in self:
+            if not invoice.vat_discriminated:
+                continue
+            if invoice.exempt_amount and invoice.fiscal_position.afip_code not in afip_exempt_codes:
+                raise Warning(_("If there you have choose a tax with 0, exempt or untaxed, you must choose a fiscal position with afip code in %s. Invoice id %i" % (
+                    afip_exempt_codes, invoice.id)))
+            # TODO tal vez habria que verificar que cada linea tiene un iva configurado
+            if not invoice.vat_tax_ids:
+                        raise Warning(_(
+                            "Invoice id %i don't have any VAT tax." % invoice.id))
 
     @api.multi
     def action_number(self):

@@ -185,24 +185,7 @@ class account_vat_ledger(models.Model):
             if partners:
                 raise Warning(_("On purchase citi, partner document is mandatory and partner document type must be different from 99. Partners %s") % partners.ids)
 
-        # TODO esta verificacion podria ir a la hora de crear facturas pero solo sin son facturas desde un RI
-        if self.type == 'sale':
-            for invoice in self.invoice_ids:
-                if not invoice.vat_tax_ids:
-                    raise Warning(_(
-                        "Invoice id %i don't have any VAT tax." % invoice.id))
-
         for inv in self.invoice_ids:
-            if inv.exempt_amount and inv.exempt_amount != 0.0:
-                # TODO implementar de acuerdo a
-                # Si la alícuota de IVA  es igual a cero (0) o la operación responde a una operación de Canje se deberá completar de acuerdo con la siguiente codificación:
-                # Z- Exportaciones a la zona franca.
-                # X- Exportaciones al exterior.
-                # E- Operaciones exentas.
-                # N- No gravado.
-                # C- Operaciones de Canje.
-                raise Warning('Excempt operations not implemented yet. Check invoice %s' % inv.document_number)
-
             row = [
                 # Campo 1: Fecha de comprobante
                 fields.Date.from_string(inv.date_invoice).strftime('%Y%m%d'),
@@ -309,9 +292,8 @@ class account_vat_ledger(models.Model):
                 str(len(inv.vat_tax_ids)),
 
                 # Campo 20: Código de operación.
-                # TODO implementar operacionex exentas
                 # WARNING. segun la plantilla es 0 si no es ninguna
-                ' ',
+                inv.exempt_amount and inv.fiscal_position.afip_code or ' ',
                 ]
 
             if self.type == 'sale':

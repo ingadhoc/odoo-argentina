@@ -248,8 +248,8 @@ class account_invoice(models.Model):
                 invoice_number = int(splited_number.pop())
                 point_of_sale = int(splited_number.pop())
             elif "-" not in str_number and len(str_number) == 12:
-                invoice_number = str_number[:4]
-                point_of_sale = str_number[-8:]
+                point_of_sale = str_number[:4]
+                invoice_number = str_number[-8:]
             else:
                 raise Warning(_(
                     'Could not get invoice number and point of sale for invoice id %i') % (

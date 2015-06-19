@@ -106,11 +106,7 @@ class account_vat_ledger(models.Model):
 
     @api.model
     def get_point_of_sale(self, invoice):
-        if invoice.afip_document_class_id.afip_code in [033, 99, 331, 332]:
-            point_of_sale = 0
-        else:
-            point_of_sale = invoice.point_of_sale
-        return "{:0>5d}".format(point_of_sale)
+        return "{:0>5d}".format(invoice.point_of_sale)
 
     @api.one
     def get_REGINFO_CV_CABECERA(self):
@@ -199,7 +195,6 @@ class account_vat_ledger(models.Model):
                 # Campo 4: Número de Comprobante
                 # TODO agregar estos casos de uso
                 # Si se trata de un comprobante de varias hojas, se deberá informar el número de documento de la primera hoja, teniendo en cuenta lo normado en el  artículo 23, inciso a), punto 6., de la Resolución General N° 1.415, sus modificatorias y complementarias.
-                # Para los comprobantes correspondientes a los códigos '033', '331' y '332' el presente campo deberá completarse con el "Código de Operación Electrónica    -COE-".
                 # En el supuesto de registrar de manera agrupada por totales diarios, se deberá consignar el primer número de comprobante del rango a considerar.
                 "{:0>20d}".format(inv.invoice_number)
                 ]

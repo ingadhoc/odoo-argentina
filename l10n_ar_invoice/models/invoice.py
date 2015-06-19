@@ -240,11 +240,14 @@ class account_invoice(models.Model):
         # de hecho con esto hacer mas facil la carga de los comprobantes de compra
         str_number = self.afip_document_number or self.number or False
         if str_number and self.state not in ['draft', 'proforma', 'proforma2', 'cancel']:
-            try:
+            if "-" in str_number and len(str_number) == 13:
                 splited_number = str_number.split('-')
                 invoice_number = int(splited_number.pop())
                 point_of_sale = int(splited_number.pop())
-            except:
+            elif "-" not in str_number and len(str_number) == 12:
+                invoice_number = str_number[:4]
+                point_of_sale = str_number[-8:]
+            else:
                 raise Warning(_(
                     'Could not get invoice number and point of sale for invoice id %i') % (
                         self.id))

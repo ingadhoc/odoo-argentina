@@ -46,6 +46,7 @@ Facturación y Documentos AFIP - Argentina
      'data/country.xml',
      'data/res.currency.csv',
      'data/afip.concept_type.csv',
+     'data/fiscal_position.xml',
      # 'data/decimal_precision_data.xml', probando si no es necesario
      'view/partner_view.xml',
      'view/company_view.xml',

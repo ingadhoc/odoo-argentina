@@ -16,8 +16,8 @@ Facturación y Documentos AFIP - Argentina
  'license': 'AGPL-3',
  'name': 'Facturación y Documentos AFIP - Argentina',
  'demo': [
-     # 'demo/partner_demo.xml',
-     # 'demo/res.company.csv',
+     'demo/partner_demo.xml',
+     'demo/res.company.csv',
      # 'demo/afip.point_of_sale.csv',
      # 'demo/account.account.csv',
      # 'demo/account.journal.csv',

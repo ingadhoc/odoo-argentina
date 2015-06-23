@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="1">
-        <record id="base.main_partner" model="res.partner">
+        <record id="partner_ri" model="res.partner">
             <field name='responsability_id' ref='res_IVARI'/>
+            <field name='vat' ref='AR20111111112'/>
+            <field name='name' ref='AR20111111112'/>
         </record>
-        <record id="base.res_partner_2" model="res.partner">
-            <field name='responsability_id' ref='res_IVARI'/>
-        </record>
-        <record id="base.res_partner_3" model="res.partner">
-            <field name='responsability_id' ref='res_IVARI'/>
-        </record>
-        <record id="base.res_partner_1" model="res.partner">
-            <field name='responsability_id' ref='res_IVARI'/>
+        <record id="partner_mono" model="res.partner">
+            <field name='responsability_id' ref='res_RM'/>
+            <field name='vat' eval='AR20222222223'/>
         </record>
     </data>
 </openerp>

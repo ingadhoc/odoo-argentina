@@ -53,10 +53,11 @@ class tax_settlement(models.Model):
     name = fields.Char(
         'Title',
         compute='_get_name')
-    move_line_ids = fields.Many2many(
-        'account.move.line',
-        string="Move Lines",
-        compute="_get_data")
+    # move_line_ids = fields.Many2many(
+    #     'account.move.line',
+    #     string="Move Lines",
+    #     compute="_get_data"
+    #     )
     # invoice_ids = fields.Many2many(
     #     'account.invoice',
     #     string="Invoices",
@@ -93,6 +94,13 @@ class tax_settlement(models.Model):
         default='posted',
         states={'draft': [('readonly', False)]},
         )
+    tax_settlement_detail_ids = fields.One2many(
+        'account.tax.settlement.detail',
+        'tax_settlement_id',
+        'Detail',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+        )
 
     @api.one
     @api.constrains('company_id', 'journal_id')
@@ -108,19 +116,69 @@ class tax_settlement(models.Model):
             self.period_id.name or self.fiscalyear_id.name)
         self.name = name
 
+    # @api.one
+    # # Sacamos el depends por un error con el cache en esqume multi cia al
+    # # cambiar periodo de una cia hija con usuario distinto a admin
+    # # @api.depends('journal_ids', 'period_id')
+    # def _get_data(self):
+    #     domain = [
+    #         ('tax_code_id', 'child_of', self.journal_id.tax_code_id.id),
+    #         ('move_id.state', '=', self.moves_state),
+    #         ]
+    #     if self.period_id:
+    #         domain.append(('period_id', '=', self.period_id.id))
+    #     else:
+    #         domain.append(
+    #             ('period_id.fiscalyear_id', '=', self.fiscalyear_id.id))
+    #     move_lines = self.env['account.move.line'].search(domain)
+    #     self.move_line_ids = move_lines
+
     @api.one
     # Sacamos el depends por un error con el cache en esqume multi cia al
     # cambiar periodo de una cia hija con usuario distinto a admin
     # @api.depends('journal_ids', 'period_id')
-    def _get_data(self):
-        domain = [
-            ('tax_code_id', 'child_of', self.journal_id.tax_code_id.id),
-            ('move_id.state', '=', self.moves_state),
-            ]
-        if self.period_id:
-            domain.append(('period_id', '=', self.period_id.id))
-        else:
-            domain.append(
-                ('period_id.fiscalyear_id', '=', self.fiscalyear_id.id))
-        move_lines = self.env['account.move.line'].search(domain)
-        self.move_line_ids = move_lines
+    def compute(self):
+        actual_tax_code_ids = [
+            x.tax_code_id.id for x in self.tax_settlement_detail_ids]
+        for tax_code in self.env['tax.code'].search([
+                ('id', 'child_of', self.journal_id.tax_code_id.id),
+                ('id', '!=', actual_tax_code_ids),
+                ]):
+            self.tax_settlement_detail_ids.create({
+                'tax_code_id': tax_code.id,
+                'tax_settlement_id': self.id,
+                })
+        # domain = [
+        #     ('tax_code_id', 'child_of', self.journal_id.tax_code_id.id),
+        #     ('move_id.state', '=', self.moves_state),
+        #     ]
+        # if self.period_id:
+        #     domain.append(('period_id', '=', self.period_id.id))
+        # else:
+        #     domain.append(
+        #         ('period_id.fiscalyear_id', '=', self.fiscalyear_id.id))
+        # move_lines = self.env['account.move.line'].search(domain)
+        # self.move_line_ids = move_lines
+
+
+class tax_settlement_detail(models.Model):
+    _name = 'account.tax.settlement.detail'
+    _description = 'Account Tax Settlement Detail'
+
+    tax_settlement_id = fields.Many2one(
+        'Tax Settlement',
+        required=True,
+        ondelete='cascade',
+        )
+    tax_code_id = fields.Many2many(
+        'account.tax.code',
+        required=True,
+        'Tax Code',
+        )
+    move_line_ids = fields.One2many(
+        'account.move.line',
+        'tax_settlement_detail_id',
+        string="Move Lines",
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+        )

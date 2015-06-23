@@ -149,6 +149,11 @@ class account_journal_afip_document_class(models.Model):
 class account_journal(models.Model):
     _inherit = "account.journal"
 
+    tax_code_id = fields.Many2one(
+        'account.tax.code',
+        'Tax Code',
+        help='Set a tax code if you want to use this journal for tax declaration'
+        )
     journal_document_class_ids = fields.One2many(
         'account.journal.afip_document_class',
         'journal_id',

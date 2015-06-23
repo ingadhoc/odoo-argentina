@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+	<data>
+        <record model='ir.ui.view' id='account_tax_settlement_tree'>
+            <field name='name'>Account Tax Settlement</field> 
+            <field name="model">account.tax.settlement</field>
+            <field name='arch' type='xml'>
+                <tree colors="blue:state == 'draft';gray:state == 'cancel'" string="Tax Settlement">
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="fiscalyear_id"/>
+                    <field name="period_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+		<record model='ir.ui.view' id='account_tax_settlement_form'>
+			<field name='name'>Account Tax Settlement</field> 
+            <field name="model">account.tax.settlement</field>
+			<field name='arch' type='xml'>
+	            <form string="Tax Settlement">
+                    <header>
+                        <!-- <button name="action_print" string="Print" states="draft" type="object" class="oe_highlight"/> -->
+                        <!-- <button name="action_print" string="Print" states="cancel,presented" type="object"/> -->
+                        <button name="action_present" string="Present" states="draft" type="object" class="oe_highlight"/>
+                        <button name="action_cancel" string="Cancel" states="draft,presented" type="object"/>
+                        <button name="action_to_draft" string="To Draft" states="cancel" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,presented"/>
+                    </header>
+                    <sheet>
+                        <group>
+                           <group>
+                                <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                                <field name="journal_id" domain="[('type', '=', 'general'), ('tax_code_id', '!=', False), ('company_id', '=', company_id)]"/>
+                                <field name="fiscalyear_id" domain="[('company_id','=',company_id)]"/>
+                                <field name="period_id" domain="[('fiscalyear_id','=',fiscalyear_id)]"/>
+                            </group>
+                            <group>
+                            </group>
+    	                </group>
+    	                <notebook>
+                            <page string="Move Lines" name="move_lines">
+                                <field name="move_line_ids">
+<!--                                     <tree default_order="date_invoice">
+                                        <field name="state" invisible="1"/>
+                                        <field name="date_invoice"/>
+                                        <field name="document_number"/>
+                                        <field name="commercial_partner_id"/>
+                                        <field name="responsability_id"/>
+                                        <field name="formated_vat"/>
+                                        <field name="amount_untaxed" sum="Total"/>
+                                        <field name="amount_tax" sum="Total"/>
+                                        <field name="amount_total" sum="Total"/>
+                                    </tree> -->
+                                </field>
+                            </page>
+                            <!-- <page string="Summary" name="summary">
+                                <label for="document_class_ids"/>
+                                <field name="document_class_ids" context="{'tax_settlement_id': active_id}">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="amount_untaxed" sum="Total"/>
+                                        <field name="amount_tax" sum="Total"/>
+                                        <field name="amount_total" sum="Total"/>
+                                    </tree>
+                                </field>
+                                <label for="responsability_ids"/>
+                                <field name="responsability_ids" context="{'tax_settlement_id': active_id}">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="amount_untaxed" sum="Total"/>
+                                        <field name="amount_tax" sum="Total"/>
+                                        <field name="amount_total" sum="Total"/>
+                                    </tree>
+                                </field>
+                                <label for="vat_tax_code_ids"/>
+                                <field name="vat_tax_code_ids" context="{'tax_settlement_id': active_id}">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="amount_untaxed" sum="Total"/>
+                                        <field name="amount_tax" sum="Total"/>
+                                    </tree>
+                                </field>
+                                <group>
+                                    <group attrs="{'invisible':[('other_taxes_amount','=',False)]}">
+                                        <label for="other_taxes_base" string="Other Taxes"/>
+                                        <div>
+                                            (<field name="other_taxes_base"  class="oe_inline"/>)
+                                            <field name="other_taxes_amount" class="oe_inline"/>
+                                        </div>
+                                    </group>
+                                </group>
+                            </page> -->
+    	                    <page string="Notes" name="notes">
+    	                        <field name="note"/>
+    	                    </page>
+    	                </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+	            </form>
+			</field>
+		</record>
+
+		<record id="action_account_vat_settlement" model="ir.actions.act_window">
+			<field name="name">Tax Settlement</field>
+			<field name="res_model">account.tax.settlement</field>
+        </record>
+
+        <menuitem id="account_tax_settlement_menu"
+                  name="Tax Settlements"
+                  parent="account.menu_finance_periodical_processing"
+                  action="action_account_vat_settlement"
+                  sequence="40"/>
+                        
+	</data>
+</openerp>

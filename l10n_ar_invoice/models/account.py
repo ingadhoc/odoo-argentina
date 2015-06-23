@@ -246,6 +246,11 @@ class account_journal(models.Model):
             raise Warning(_('The company of the point of sale and of the \
                 journal must be the same!'))
 
+    @api.one
+    @api.constrains('company_id', 'tax_code_id')
+    def check_company(self):
+        if self.company_id != self.tax_code_id.company_id:
+            raise Warning(_('Journal company and journal company must be the same'))
 
 class res_currency(models.Model):
     _inherit = "res.currency"

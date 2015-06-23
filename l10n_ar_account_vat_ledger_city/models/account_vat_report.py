@@ -340,7 +340,7 @@ class account_vat_ledger(models.Model):
     def get_REGINFO_CV_ALICUOTAS(self):
         res = []
         for inv in self.invoice_ids:
-            for tax in inv.vat_tax_idsfiltered(
+            for tax in inv.vat_tax_ids.filtered(
                     lambda r: r.tax_code_id.afip_code in [3, 4, 5, 6, 8, 9]):
                 row = [
                     # Campo 1: Tipo de Comprobante

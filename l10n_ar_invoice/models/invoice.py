@@ -26,15 +26,21 @@ class account_invoice(models.Model):
         digits_compute=dp.get_precision('Account'),
         string='Subtotal'
         )
-    exempt_amount = fields.Float(
+    # TODO reemplazar a vat_exempt_amount
+    vat_untaxed = fields.Float(
         compute="_get_taxes_and_prices",
         digits_compute=dp.get_precision('Account'),
-        string='Exempt Amount'
+        string='VAT Untaxed'
+        )
+    vat_exempt_amount = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits_compute=dp.get_precision('Account'),
+        string='VAT Exempt Amount'
         )
     vat_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits_compute=dp.get_precision('Account'),
-        string='Vat Amount'
+        string='VAT Amount'
         )
     other_taxes_amount = fields.Float(
         compute="_get_taxes_and_prices",
@@ -165,15 +171,25 @@ class account_invoice(models.Model):
         impuestos. Dejariamos solo lo de las lineas para un tema de impresion
         que es algo mas simple y no incide en ningun lugar"""
 
-        other_taxes_amount = sum(
-            self.invoice_line.mapped('other_taxes_amount'))
-        exempt_amount = sum(
-            self.invoice_line.mapped('exempt_amount'))
         vat_taxes = self.tax_line.filtered(
             lambda r: r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
-        not_vat_taxes = self.tax_line - vat_taxes
         vat_amount = sum(
             vat_taxes.mapped('tax_amount'))
+
+        not_vat_taxes = self.tax_line - vat_taxes
+
+        # other_taxes_amount = sum(
+        #     self.invoice_line.mapped('other_taxes_amount'))
+        other_taxes_amount = sum(
+            (self.tax_line - vat_taxes).mapped('tax_amount'))
+
+        # exempt_amount = sum(
+        #     self.invoice_line.mapped('vat_exempt_amount'))
+        vat_exempt_amount = sum(vat_taxes.filtered(
+                lambda r: r.tax_code_id.afip_code == 2).mapped('tax_amount'))
+
+        vat_untaxed = sum(vat_taxes.filtered(
+                lambda r: r.tax_code_id.afip_code == 1).mapped('tax_amount'))
 
         if self.vat_discriminated:
             printed_amount_untaxed = self.amount_untaxed
@@ -189,7 +205,8 @@ class account_invoice(models.Model):
         self.not_vat_tax_ids = not_vat_taxes
         self.vat_amount = vat_amount
         self.other_taxes_amount = other_taxes_amount
-        self.exempt_amount = exempt_amount
+        self.vat_exempt_amount = vat_exempt_amount
+        self.vat_untaxed = vat_untaxed
 
     @api.multi
     def name_get(self):
@@ -379,10 +396,11 @@ class account_invoice(models.Model):
         for invoice in self:
             if not invoice.vat_discriminated:
                 continue
-            if invoice.exempt_amount and invoice.fiscal_position.afip_code not in afip_exempt_codes:
+            if invoice.vat_exempt_amount and invoice.fiscal_position.afip_code not in afip_exempt_codes:
                 raise Warning(_("If there you have choose a tax with 0, exempt or untaxed, you must choose a fiscal position with afip code in %s. Invoice id %i" % (
                     afip_exempt_codes, invoice.id)))
             # TODO tal vez habria que verificar que cada linea tiene un iva configurado
+            # TODO tal vez para monotributistas se le pueda cargar el vat 0 "no corresponde" y mantemeos el criterio de hacerlo obligatorio
             if not invoice.vat_tax_ids:
                         raise Warning(_(
                             "Invoice id %i don't have any VAT tax." % invoice.id))

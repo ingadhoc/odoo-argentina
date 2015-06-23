@@ -64,11 +64,11 @@ class account_invoice_line(models.Model):
             price, 1,
             product=self.product_id,
             partner=self.invoice_id.partner_id)
-        exempt_amount = exempt_vat_taxes and exempt_vat_taxes_amounts['total'] or False
+        vat_exempt_amount = exempt_vat_taxes and exempt_vat_taxes_amounts['total'] or False
 
         self.vat_amount = vat_taxes_amount * self.quantity
         self.other_taxes_amount = not_vat_taxes_amount * self.quantity
-        self.exempt_amount = exempt_amount * self.quantity
+        self.vat_exempt_amount = vat_exempt_amount * self.quantity
 
     printed_price_unit = fields.Float(
         compute="_get_taxes_and_prices",
@@ -95,7 +95,7 @@ class account_invoice_line(models.Model):
         digits_compute=dp.get_precision('Account'),
         string='Other Taxes Amount',
         )
-    exempt_amount = fields.Float(
+    vat_exempt_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits_compute=dp.get_precision('Account'),
         string='Exempt Amount',

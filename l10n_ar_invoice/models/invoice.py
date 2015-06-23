@@ -186,10 +186,10 @@ class account_invoice(models.Model):
         # exempt_amount = sum(
         #     self.invoice_line.mapped('vat_exempt_amount'))
         vat_exempt_amount = sum(vat_taxes.filtered(
-                lambda r: r.tax_code_id.afip_code == 2).mapped('tax_amount'))
+                lambda r: r.tax_code_id.afip_code == 2).mapped('base_amount'))
 
         vat_untaxed = sum(vat_taxes.filtered(
-                lambda r: r.tax_code_id.afip_code == 1).mapped('tax_amount'))
+                lambda r: r.tax_code_id.afip_code == 1).mapped('base_amount'))
 
         if self.vat_discriminated:
             printed_amount_untaxed = self.amount_untaxed

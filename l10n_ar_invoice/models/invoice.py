@@ -245,7 +245,7 @@ class account_invoice(models.Model):
                 point_of_sale = 0
                 # leave only numbers and convert to integer
                 invoice_number = int(re.sub("[^0-9]", "", str_number))
-            elif "-" in str_number and len(str_number) == 13:
+            elif "-" in str_number:
                 splited_number = str_number.split('-')
                 invoice_number = int(splited_number.pop())
                 point_of_sale = int(splited_number.pop())

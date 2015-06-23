@@ -262,6 +262,10 @@ class account_invoice(models.Model):
                 point_of_sale = 0
                 # leave only numbers and convert to integer
                 invoice_number = int(re.sub("[^0-9]", "", str_number))
+            # despachos de importacion
+            elif self.afip_document_class_id.afip_code == 66:
+                point_of_sale = 0
+                invoice_number = 0
             elif "-" in str_number:
                 splited_number = str_number.split('-')
                 invoice_number = int(splited_number.pop())

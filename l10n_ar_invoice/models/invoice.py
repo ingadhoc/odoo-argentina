@@ -2,6 +2,7 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import except_orm, Warning
 import openerp.addons.decimal_precision as dp
+import re
 
 
 class account_invoice(models.Model):
@@ -242,14 +243,15 @@ class account_invoice(models.Model):
         if str_number and self.state not in ['draft', 'proforma', 'proforma2', 'cancel']:
             if self.afip_document_class_id.afip_code in [33, 99, 331, 332]:
                 point_of_sale = 0
-                invoice_number = str_number
+                # leave only numbers and convert to integer
+                invoice_number = int(re.sub("[^0-9]", "", str_number))
             elif "-" in str_number and len(str_number) == 13:
                 splited_number = str_number.split('-')
                 invoice_number = int(splited_number.pop())
                 point_of_sale = int(splited_number.pop())
             elif "-" not in str_number and len(str_number) == 12:
-                point_of_sale = str_number[:4]
-                invoice_number = str_number[-8:]
+                point_of_sale = int(re.sub("[^0-9]", "", str_number[:4]))
+                invoice_number = int(re.sub("[^0-9]", "", str_number[-8:]))
             else:
                 raise Warning(_(
                     'Could not get invoice number and point of sale for invoice id %i') % (

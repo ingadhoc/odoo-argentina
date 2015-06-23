@@ -289,7 +289,8 @@ class account_vat_ledger(models.Model):
 
                 # Campo 20: Código de operación.
                 # WARNING. segun la plantilla es 0 si no es ninguna
-                inv.vat_exempt_amount and inv.fiscal_position.afip_code or ' ',
+                # TODO ver que no se informe un codigo si no correpsonde, tal vez da error
+                inv.fiscal_position.afip_code or ' ',
                 ]
 
             if self.type == 'sale':

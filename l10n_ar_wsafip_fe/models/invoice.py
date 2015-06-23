@@ -188,7 +188,7 @@ class invoice(models.Model):
                 # TODO: Averiguar como calcular el Importe Neto no Gravado
                 'ImpTotConc': 0,
                 'ImpNeto': inv.amount_untaxed,
-                'ImpOpEx': inv.exempt_amount,
+                'ImpOpEx': inv.vat_exempt_amount,
                 'ImpIVA': inv.vat_amount,
                 'ImpTrib': inv.other_taxes_amount,
                 'FchServDesde': _f_date(inv.afip_service_start) if inv.afip_concept != '1' else None,

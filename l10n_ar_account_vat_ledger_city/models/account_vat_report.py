@@ -205,8 +205,11 @@ class account_vat_ledger(models.Model):
                 row.append("{:0>20d}".format(inv.invoice_number))
             else:
                 # Campo 5: Despacho de importación
-                # TODO agregar despacho de importacion en algun lugar
-                row.append(str('').rjust(16, ' '))
+                if inv.afip_document_class_id.afip_code == 66:
+                    row.append((inv.afip_document_number or inv.number or '').rjust(
+                        16, '0'))
+                else:
+                    row.append(''.rjust(16, ' '))
 
             row += [
                 # Campo 6: Código de documento del comprador. 
@@ -223,8 +226,7 @@ class account_vat_ledger(models.Model):
                 self.format_amount(inv.amount_total),
 
                 # Campo 10: Importe total de conceptos que no integran el precio neto gravado
-                # TODO implementar
-                self.format_amount(0),
+                self.format_amount(inv.vat_untaxed),
                 ]
 
             if self.type == 'sale':
@@ -234,12 +236,12 @@ class account_vat_ledger(models.Model):
                     self.format_amount(0),
 
                     # Campo 12: Importe de operaciones exentas
-                    self.format_amount(inv.exempt_amount),
+                    self.format_amount(inv.vat_exempt_amount),
                     ]
             else:
                 row += [
                     # Campo 11: Importe de operaciones exentas
-                    self.format_amount(inv.exempt_amount),
+                    self.format_amount(inv.vat_exempt_amount),
 
                     # Campo 12: Importe de percepciones o pagos a cuenta del Impuesto al Valor Agregado
                     self.format_amount(
@@ -284,11 +286,14 @@ class account_vat_ledger(models.Model):
                     padding=10, decimals=6),
 
                 # Campo 19: Cantidad de alícuotas de IVA
-                str(len(inv.vat_tax_ids)),
+                # only vat taxes with codes 3, 4, 5, 6, 8, 9
+                str(len(inv.vat_tax_ids.filtered(
+                    lambda r: r.tax_code_id.afip_code in [3, 4, 5, 6, 8, 9]))),
 
                 # Campo 20: Código de operación.
                 # WARNING. segun la plantilla es 0 si no es ninguna
-                inv.exempt_amount and inv.fiscal_position.afip_code or ' ',
+                # TODO ver que no se informe un codigo si no correpsonde, tal vez da error
+                inv.fiscal_position.afip_code or ' ',
                 ]
 
             if self.type == 'sale':
@@ -339,7 +344,8 @@ class account_vat_ledger(models.Model):
     def get_REGINFO_CV_ALICUOTAS(self):
         res = []
         for inv in self.invoice_ids:
-            for tax in inv.vat_tax_ids:
+            for tax in inv.vat_tax_ids.filtered(
+                    lambda r: r.tax_code_id.afip_code in [3, 4, 5, 6, 8, 9]):
                 row = [
                     # Campo 1: Tipo de Comprobante
                     "{:0>3d}".format(inv.afip_document_class_id.afip_code),

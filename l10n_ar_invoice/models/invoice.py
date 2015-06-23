@@ -2,6 +2,7 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import except_orm, Warning
 import openerp.addons.decimal_precision as dp
+import re
 
 
 class account_invoice(models.Model):
@@ -25,15 +26,21 @@ class account_invoice(models.Model):
         digits_compute=dp.get_precision('Account'),
         string='Subtotal'
         )
-    exempt_amount = fields.Float(
+    # TODO reemplazar a vat_exempt_amount
+    vat_untaxed = fields.Float(
         compute="_get_taxes_and_prices",
         digits_compute=dp.get_precision('Account'),
-        string='Exempt Amount'
+        string='VAT Untaxed'
+        )
+    vat_exempt_amount = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits_compute=dp.get_precision('Account'),
+        string='VAT Exempt Amount'
         )
     vat_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits_compute=dp.get_precision('Account'),
-        string='Vat Amount'
+        string='VAT Amount'
         )
     other_taxes_amount = fields.Float(
         compute="_get_taxes_and_prices",
@@ -164,15 +171,25 @@ class account_invoice(models.Model):
         impuestos. Dejariamos solo lo de las lineas para un tema de impresion
         que es algo mas simple y no incide en ningun lugar"""
 
-        other_taxes_amount = sum(
-            self.invoice_line.mapped('other_taxes_amount'))
-        exempt_amount = sum(
-            self.invoice_line.mapped('exempt_amount'))
         vat_taxes = self.tax_line.filtered(
             lambda r: r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
-        not_vat_taxes = self.tax_line - vat_taxes
         vat_amount = sum(
             vat_taxes.mapped('tax_amount'))
+
+        not_vat_taxes = self.tax_line - vat_taxes
+
+        # other_taxes_amount = sum(
+        #     self.invoice_line.mapped('other_taxes_amount'))
+        other_taxes_amount = sum(
+            (self.tax_line - vat_taxes).mapped('tax_amount'))
+
+        # exempt_amount = sum(
+        #     self.invoice_line.mapped('vat_exempt_amount'))
+        vat_exempt_amount = sum(vat_taxes.filtered(
+                lambda r: r.tax_code_id.afip_code == 2).mapped('base_amount'))
+
+        vat_untaxed = sum(vat_taxes.filtered(
+                lambda r: r.tax_code_id.afip_code == 1).mapped('base_amount'))
 
         if self.vat_discriminated:
             printed_amount_untaxed = self.amount_untaxed
@@ -188,7 +205,8 @@ class account_invoice(models.Model):
         self.not_vat_tax_ids = not_vat_taxes
         self.vat_amount = vat_amount
         self.other_taxes_amount = other_taxes_amount
-        self.exempt_amount = exempt_amount
+        self.vat_exempt_amount = vat_exempt_amount
+        self.vat_untaxed = vat_untaxed
 
     @api.multi
     def name_get(self):
@@ -242,14 +260,19 @@ class account_invoice(models.Model):
         if str_number and self.state not in ['draft', 'proforma', 'proforma2', 'cancel']:
             if self.afip_document_class_id.afip_code in [33, 99, 331, 332]:
                 point_of_sale = 0
-                invoice_number = str_number
-            elif "-" in str_number and len(str_number) == 13:
+                # leave only numbers and convert to integer
+                invoice_number = int(re.sub("[^0-9]", "", str_number))
+            # despachos de importacion
+            elif self.afip_document_class_id.afip_code == 66:
+                point_of_sale = 0
+                invoice_number = 0
+            elif "-" in str_number:
                 splited_number = str_number.split('-')
                 invoice_number = int(splited_number.pop())
                 point_of_sale = int(splited_number.pop())
             elif "-" not in str_number and len(str_number) == 12:
-                point_of_sale = str_number[:4]
-                invoice_number = str_number[-8:]
+                point_of_sale = int(re.sub("[^0-9]", "", str_number[:4]))
+                invoice_number = int(re.sub("[^0-9]", "", str_number[-8:]))
             else:
                 raise Warning(_(
                     'Could not get invoice number and point of sale for invoice id %i') % (
@@ -377,10 +400,11 @@ class account_invoice(models.Model):
         for invoice in self:
             if not invoice.vat_discriminated:
                 continue
-            if invoice.exempt_amount and invoice.fiscal_position.afip_code not in afip_exempt_codes:
+            if invoice.vat_exempt_amount and invoice.fiscal_position.afip_code not in afip_exempt_codes:
                 raise Warning(_("If there you have choose a tax with 0, exempt or untaxed, you must choose a fiscal position with afip code in %s. Invoice id %i" % (
                     afip_exempt_codes, invoice.id)))
             # TODO tal vez habria que verificar que cada linea tiene un iva configurado
+            # TODO tal vez para monotributistas se le pueda cargar el vat 0 "no corresponde" y mantemeos el criterio de hacerlo obligatorio
             if not invoice.vat_tax_ids:
                         raise Warning(_(
                             "Invoice id %i don't have any VAT tax." % invoice.id))

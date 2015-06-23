@@ -206,7 +206,8 @@ class account_vat_ledger(models.Model):
             else:
                 # Campo 5: Despacho de importación
                 if inv.afip_document_class_id.afip_code == 66:
-                    row.append(str('').rjust(16, self.number))
+                    row.append(str('').rjust(
+                        16, inv.afip_document_number or inv.number or ' '))
                 else:
                     row.append(str('').rjust(16, ' '))
 

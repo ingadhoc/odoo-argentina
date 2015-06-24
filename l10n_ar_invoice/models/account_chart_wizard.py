@@ -72,13 +72,15 @@ class wizard_multi_charts_accounts(models.TransientModel):
             ('name', '=', sale_tax_template.name)], limit=1)
         if sale_tax:
             tax_vals['taxes_id'] = [(4, sale_tax.id)]
+
         purchase_tax_template = self.env['account.tax.template'].browse(
             purchase_tax_id)
         purchase_tax = self.env['account.tax'].search([
             ('company_id', '=', company_id),
             ('name', '=', purchase_tax_template.name)], limit=1)
-        if sale_tax:
-            tax_vals['purchase_taxes_id'] = [(4, purchase_tax.id)]
+        if purchase_tax:
+            tax_vals['supplier_taxes_id'] = [(4, purchase_tax.id)]
+
         for product in self.env['product.product'].search([]):
             product.write(tax_vals)
         return True

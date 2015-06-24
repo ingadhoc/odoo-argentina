@@ -17,6 +17,10 @@ Facturación y Documentos AFIP - Argentina
  'name': 'Facturación y Documentos AFIP - Argentina',
  'demo': [
      'demo/company_demo.xml',
+     'demo/partner_demo.xml',
+     # TODO tal vez sea mejor estos dos ejecutarlos con una accion ya que al hacer un init dan error porque ya existen movimientos
+     'demo/fiscal_year_ri_demo.xml',
+     'demo/fiscal_year_mono_demo.xml',
      # 'demo/res.company.csv',
      # 'demo/afip.point_of_sale.csv',
      # 'demo/account.account.csv',

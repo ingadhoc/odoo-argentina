@@ -19,6 +19,24 @@
             <value eval="ref('l10n_ar_chart_generic.ri_tax_vat_21_compras')"/>
         </function>
 
+        <!-- Chart for Monotributo -->
+        <function model="wizard.multi.charts.accounts" name="configure_chart">
+            <!-- company_id = -->
+            <value eval="ref('l10n_ar_invoice.company_mono')"/>
 
+            <!-- currency_id = -->
+            <value eval="ref('base.ARS')"/>
+
+            <!-- chart_template_id = -->
+            <value eval="ref('l10n_ar_chart_generic.mt_l10nAR_chart_template')"/>
+
+            <!-- sale_tax = -->
+            <value eval="False"/>
+            <!-- <value eval="ref('l10n_ar_chart_generic.ri_tax_vat_21_ventas')"/> -->
+
+            <!-- purchase_tax = -->
+            <value eval="False"/>
+            <!-- <value eval="ref('l10n_ar_chart_generic.ri_tax_vat_21_compras')"/> -->
+        </function>
     </data>
 </openerp>

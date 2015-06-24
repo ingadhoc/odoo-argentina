@@ -9,6 +9,87 @@ class account_fiscal_position(models.Model):
     afip_code = fields.Char('AFIP Code')
 
 
+class afip_tax_code_template(models.Model):
+    _inherit = 'account.tax.code.template'
+
+    afip_code = fields.Integer('AFIP Code')
+    type = fields.Selection([
+        ('tax', 'TAX'),
+        ('perception', 'Perception'),
+        ('withholding', 'Withholding'),
+        ('other', 'Other'),
+        ('view', 'View'),
+        ])
+    tax = fields.Selection([
+        ('vat', 'VAT'),
+        ('profits', 'Profits'),
+        ('gross_income', 'Gross Income'),
+        ('other', 'Other')],
+        )
+    application = fields.Selection([
+        ('national_taxes', 'National Taxes'),
+        ('provincial_taxes', 'Provincial Taxes'),
+        ('municipal_taxes', 'Municipal Taxes'),
+        ('internal_taxes', 'Internal Taxes'),
+        ('others', 'Others')],
+        help='Other Taxes According AFIP',
+        )
+
+    @api.multi
+    def get_tax_code_vals(
+            self, tax_code_root_id, company, tax_code_template_ref):
+        """
+        Inheritable funciton to set vals for a new tax code form a
+        tax code template
+        """
+        self.ensure_one()
+        vals = {
+            'name': (
+                tax_code_root_id == self.id) and company.name or self.name,
+            'code': self.code,
+            'info': self.info,
+            'parent_id': self.parent_id and ((self.parent_id.id in tax_code_template_ref) and tax_code_template_ref[self.parent_id.id]) or False,
+            'company_id': company.id,
+            'sign': self.sign,
+            'sequence': self.sequence,
+            'afip_code': self.afip_code,
+            'type': self.type,
+            'tax': self.tax,
+            'application': self.application,
+        }
+        return vals
+
+    def generate_tax_code(self, cr, uid, tax_code_root_id, company_id, context=None):
+        '''
+        We overwrite the original function to allow vals being inheritable
+        This function generates the tax codes from the templates of tax code that are children of the given one passed
+        in argument. Then it returns a dictionary with the mappping between the templates and the real objects.
+
+        :param tax_code_root_id: id of the root of all the tax code templates to process
+        :param company_id: id of the company the wizard is running for
+        :returns: dictionary with the mappping between the templates and the real objects.
+        :rtype: dict
+        '''
+        obj_tax_code_template = self.pool.get('account.tax.code.template')
+        obj_tax_code = self.pool.get('account.tax.code')
+        tax_code_template_ref = {}
+        company = self.pool.get('res.company').browse(cr, uid, company_id, context=context)
+
+        #find all the children of the tax_code_root_id
+        children_tax_code_template = tax_code_root_id and obj_tax_code_template.search(cr, uid, [('parent_id','child_of',[tax_code_root_id])], order='id') or []
+        for tax_code_template in obj_tax_code_template.browse(cr, uid, children_tax_code_template, context=context):
+            vals = tax_code_template.get_tax_code_vals(
+                tax_code_root_id, company, tax_code_template_ref)
+            #check if this tax code already exists
+            rec_list = obj_tax_code.search(cr, uid, [('name', '=', vals['name']),('code', '=', vals['code']),('company_id', '=', vals['company_id'])], context=context)
+            if not rec_list:
+                #if not yet, create it
+                new_tax_code = obj_tax_code.create(cr, uid, vals)
+                #recording the new tax code to do the mapping
+                tax_code_template_ref[tax_code_template.id] = new_tax_code
+        return tax_code_template_ref
+
+
 class afip_tax_code(models.Model):
     _inherit = 'account.tax.code'
 
@@ -17,8 +98,9 @@ class afip_tax_code(models.Model):
         ('tax', 'TAX'),
         ('perception', 'Perception'),
         ('withholding', 'Withholding'),
-        ('other', 'Other')],
-        )
+        ('other', 'Other'),
+        ('view', 'View'),
+        ])
     tax = fields.Selection([
         ('vat', 'VAT'),
         ('profits', 'Profits'),
@@ -128,18 +210,19 @@ class account_journal_afip_document_class(models.Model):
     afip_document_class_id = fields.Many2one(
         'afip.document_class',
         'Document Type',
-        required=True
+        required=True,
+        ondelete='cascade',
         )
     sequence_id = fields.Many2one(
         'ir.sequence',
         'Entry Sequence',
-        required=False,
         help="This field contains the information related to the numbering of the documents entries of this document type."
         )
     journal_id = fields.Many2one(
         'account.journal',
         'Journal',
-        required=True
+        required=True,
+        ondelete='cascade',
         )
     sequence = fields.Integer(
         'Sequence',
@@ -174,6 +257,7 @@ class account_journal(models.Model):
         [('own_sequence', 'Own Sequence'),
             ('same_sequence', 'Same Invoice Sequence')],
         string='Document Sequence Type',
+        default='own_sequence',
         help="Use own sequence or invoice sequence on Debit and Credit Notes?"
         )
 

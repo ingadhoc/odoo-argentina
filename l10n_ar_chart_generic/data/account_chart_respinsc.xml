@@ -174,6 +174,14 @@
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
         </record>
 
+        <record model="account.account.template" id="ri_a_cuenta_impuestos_ganancias">
+            <field name="type">other</field>
+            <field name="code">1141030</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Pago a cuenta impuestos a las ganancias</field>
+            <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
+        </record>
+
         <record model="account.account.template" id="ri_creditos_impuestos_iva">
             <field name="type">view</field>
             <field name="code">1142</field>
@@ -566,17 +574,9 @@
             <field name="parent_id" ref="ri_deudas_fiscales"/>
         </record>
 
-        <record model="account.account.template" id="ri_retencion_ganancias_a_pagar">
-            <field name="type">other</field>
-            <field name="code">2120050</field>
-            <field name="user_type" ref="account.data_account_type_payable"/>
-            <field name="name">Retención ganancias a pagar</field>
-            <field name="parent_id" ref="ri_deudas_fiscales"/>
-        </record>
-
         <record model="account.account.template" id="ri_autonomos_a_pagar">
             <field name="type">other</field>
-            <field name="code">2120060</field>
+            <field name="code">2120050</field>
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Autonomos a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
@@ -584,7 +584,7 @@
 
         <record model="account.account.template" id="ri_retenciones_varias_a_pagar">
             <field name="type">other</field>
-            <field name="code">2120070</field>
+            <field name="code">2120060</field>
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Retenciones varias a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
@@ -592,9 +592,41 @@
 
         <record model="account.account.template" id="ri_drei_a_pagar">
             <field name="type">other</field>
-            <field name="code">2120080</field>
+            <field name="code">2120070</field>
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">DREI a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_retencion_ganancias_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2120080</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Retención ganancias a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_retencion_iva_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2120090</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Retención IVA a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_percepcion_ganancias_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2120100</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Percepción Ganancias a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+        </record>
+
+        <record model="account.account.template" id="ri_percepcion_iva_a_pagar">
+            <field name="type">other</field>
+            <field name="code">2120110</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Percepción IVA a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
         </record>
 
@@ -1424,7 +1456,7 @@
         <record id="ri_tax_code_chart_root" model="account.tax.code.template">
             <field name="name">Plan de Impuestos de Argentina para Responsables Inscriptos</field>
             <field name="info">Raíz de la estructura de impuestos de la Argentina. Incluye IVA e Ingresos Brutos para Capital Federal, Buenos Aires, Córdoba y Santa Fé</field>
-	    <field name="code">IVARI</field>
+        <field name="code">IVARI</field>
             <field name="parent_id" eval="False"/>
         </record>
 
@@ -1433,6 +1465,8 @@
             <field name="code">01</field>
             <field name="sign">1</field>
             <field name="parent_id" ref="ri_tax_code_chart_root"/>
+            <field name="type">view</field>
+            <field name="application">national_taxes</field>
         </record>
 
                 <record model="account.tax.code.template" id="ri_tax_code_iva">
@@ -1440,69 +1474,264 @@
                     <field name="code">010030</field>
                     <field name="sign">1</field>
                     <field name="parent_id" ref="ri_impuestos_nacionales"/>
+                    <field name="tax">vat</field>
+                    <field name="type">view</field>
+                    <field name="application">national_taxes</field>
                 </record>
-	
-						<record model="account.tax.code.template" id="ri_tax_code_iva_venta0">
-							<field name="code">01003000:V</field>
-							<field name="name">IVA Ventas 0%</field>
-							<field name="sign">1</field>
-							<field name="parent_id" ref="ri_tax_code_iva"/>
-						</record>
+    
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_venta_no_gravado">
+                            <field name="code">01003001:V</field>
+                            <field name="name">IVA Ventas No Gravado</field>
+                            <field name="sign">1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="1"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                        </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iva_compras0">
-							<field name="code">01003000:C</field>
-							<field name="name">IVA Compra 0%</field>
-							<field name="sign">-1</field>
-							<field name="parent_id" ref="ri_tax_code_iva"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_compras_no_gravado">
+                            <field name="code">01003001:C</field>
+                            <field name="name">IVA Compra No Gravado</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="1"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                        </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iva_venta10">
-							<field name="code">01003004:V</field>
-							<field name="name">IVA Ventas 10.5%</field>
-							<field name="sign">1</field>
-							<field name="parent_id" ref="ri_tax_code_iva"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_venta_exento">
+                            <field name="code">01003002:V</field>
+                            <field name="name">IVA Ventas Exento</field>
+                            <field name="sign">1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="2"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                        </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iva_compras10">
-							<field name="code">01003004:C</field>
-							<field name="name">IVA Compras 10.5%</field>
-							<field name="sign">-1</field>
-							<field name="parent_id" ref="ri_tax_code_iva"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_compras_exento">
+                            <field name="code">01003002:C</field>
+                            <field name="name">IVA Compra Exento</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="2"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                        </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iva_venta21">
-							<field name="code">01003005:V</field>
-							<field name="name">IVA Ventas 21%</field>
-							<field name="sign">1</field>
-							<field name="parent_id" ref="ri_tax_code_iva"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_venta0">
+                            <field name="code">01003003:V</field>
+                            <field name="name">IVA Ventas 0%</field>
+                            <field name="sign">1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="3"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                        </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iva_compras21">
-							<field name="code">01003005:C</field>
-							<field name="name">IVA Compras 21%</field>
-							<field name="sign">-1</field>
-							<field name="parent_id" ref="ri_tax_code_iva"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_compras0">
+                            <field name="code">01003003:C</field>
+                            <field name="name">IVA Compra 0%</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="3"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                        </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iva_venta27">
-							<field name="code">01003006:V</field>
-							<field name="name">IVA Ventas 27%</field>
-							<field name="sign">1</field>
-							<field name="parent_id" ref="ri_tax_code_iva"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_venta10">
+                            <field name="code">01003004:V</field>
+                            <field name="name">IVA Ventas 10.5%</field>
+                            <field name="sign">1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="4"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                        </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iva_compras27">
-							<field name="code">01003006:C</field>
-							<field name="name">IVA Compras 27%</field>
-							<field name="sign">-1</field>
-							<field name="parent_id" ref="ri_tax_code_iva"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_compras10">
+                            <field name="code">01003004:C</field>
+                            <field name="name">IVA Compras 10.5%</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="4"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_venta21">
+                            <field name="code">01003005:V</field>
+                            <field name="name">IVA Ventas 21%</field>
+                            <field name="sign">1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="5"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_compras21">
+                            <field name="code">01003005:C</field>
+                            <field name="name">IVA Compras 21%</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="5"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_venta27">
+                            <field name="code">01003006:V</field>
+                            <field name="name">IVA Ventas 27%</field>
+                            <field name="sign">1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="6"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_compras27">
+                            <field name="code">01003006:C</field>
+                            <field name="name">IVA Compras 27%</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="6"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_compras_adicional">
+                            <!-- <field name="code">01003006:C</field> -->
+                            <field name="name">IVA Compras Adicional</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_venta_percepcion">
+                            <!-- <field name="code">01003006:V</field> -->
+                            <field name="name">Percepción IVA Aplicada</field>
+                            <field name="sign">1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="6"/>
+                            <field name="tax">vat</field>
+                            <field name="type">perception</field>
+                            <field name="application">national_taxes</field>
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_compras_percepcion">
+                            <!-- <field name="code">01003006:C</field> -->
+                            <field name="name">Percepción IVA sufrida</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="6"/>
+                            <field name="tax">vat</field>
+                            <field name="type">perception</field>
+                            <field name="application">national_taxes</field>
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_venta_retencion">
+                            <!-- <field name="code">01003006:V</field> -->
+                            <field name="name">Retención IVA Aplicada</field>
+                            <field name="sign">1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="6"/>
+                            <field name="tax">vat</field>
+                            <field name="type">withholding</field>
+                            <field name="application">national_taxes</field>
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iva_compras_retencion">
+                            <!-- <field name="code">01003006:C</field> -->
+                            <field name="name">Retención IVA Sufrida</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iva"/>
+                            <field name="afip_code" eval="6"/>
+                            <field name="tax">vat</field>
+                            <field name="type">withholding</field>
+                            <field name="application">national_taxes</field>
+                        </record>
+
+                <record model="account.tax.code.template" id="ri_tax_code_ganancias_vista">
+                    <field name="name">Ganancias</field>
+                    <field name="code">010030</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_impuestos_nacionales"/>
+                    <field name="tax">profits</field>
+                    <field name="type">view</field>
+                    <field name="application">national_taxes</field>
+                </record>
+
+                    <record model="account.tax.code.template" id="ri_tax_code_ganancias">
+                        <field name="name">Ganancias</field>
+                        <field name="code">010030001</field>
+                        <field name="sign">1</field>
+                        <field name="parent_id" ref="ri_tax_code_ganancias_vista"/>
+                        <field name="tax">profits</field>
+                        <field name="type">tax</field>
+                        <field name="application">national_taxes</field>
+                    </record>
+
+                    <record model="account.tax.code.template" id="ri_tax_code_ganancias_per_aplicada">
+                        <field name="name">Percepción de Ganancias Aplicada</field>
+                        <field name="code">010030002</field>
+                        <field name="sign">1</field>
+                        <field name="parent_id" ref="ri_tax_code_ganancias_vista"/>
+                        <field name="tax">profits</field>
+                        <field name="type">perception</field>
+                        <field name="application">national_taxes</field>
+                    </record>
+
+                    <record model="account.tax.code.template" id="ri_tax_code_ganancias_per_sufrida">
+                        <field name="name">Percepción de Ganancias Sufrida</field>
+                        <field name="code">010030003</field>
+                        <field name="sign">-1</field>
+                        <field name="parent_id" ref="ri_tax_code_ganancias_vista"/>
+                        <field name="tax">profits</field>
+                        <field name="type">perception</field>
+                        <field name="application">national_taxes</field>
+                    </record>
+
+                    <record model="account.tax.code.template" id="ri_tax_code_ganancias_ret_aplicada">
+                        <field name="name">Retención de Ganancias Aplicada</field>
+                        <field name="code">010030004</field>
+                        <field name="sign">1</field>
+                        <field name="parent_id" ref="ri_tax_code_ganancias_vista"/>
+                        <field name="tax">profits</field>
+                        <field name="type">withholding</field>
+                        <field name="application">national_taxes</field>
+                    </record>
+
+                    <record model="account.tax.code.template" id="ri_tax_code_ganancias_ret_sufrida">
+                        <field name="name">Retención de Ganancias Sufrida</field>
+                        <field name="code">010030005</field>
+                        <field name="sign">-1</field>
+                        <field name="parent_id" ref="ri_tax_code_ganancias_vista"/>
+                        <field name="tax">profits</field>
+                        <field name="type">withholding</field>
+                        <field name="application">national_taxes</field>
+                    </record>
 
         <record model="account.tax.code.template" id="ri_tax_code_impuestos_provinciales">
             <field name="name">IMPUESTOS PROVINCIALES</field>
             <field name="code">02</field>
             <field name="sign">1</field>
             <field name="parent_id" ref="ri_tax_code_chart_root"/>
+            <field name="type">view</field>
+            <field name="application">provincial_taxes</field>
         </record>
 
                 <record model="account.tax.code.template" id="ri_tax_code_iibb_cf">
@@ -1510,6 +1739,9 @@
                     <field name="name">IIBB Capital Federal</field>
                     <field name="sign">1</field>
                     <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <field name="tax">gross_income</field>
+                    <field name="type">view</field>
+                    <field name="application">provincial_taxes</field>
                 </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_cf_percepcion">
@@ -1517,6 +1749,9 @@
                             <field name="name">Percepción IIBB Capital Federal</field>
                             <field name="sign">-1</field>
                             <field name="parent_id" ref="ri_tax_code_iibb_cf"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_cf_retencion">
@@ -1524,6 +1759,9 @@
                             <field name="name">Retención IIBB Capital Federal</field>
                             <field name="sign">-1</field>
                             <field name="parent_id" ref="ri_tax_code_iibb_cf"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_cf_facturado">
@@ -1531,6 +1769,9 @@
                             <field name="name">Facturado IIBB Capital Federal</field>
                             <field name="sign">0.02</field>
                             <field name="parent_id" ref="ri_tax_code_iibb_cf"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
                         </record>
 
                 <record model="account.tax.code.template" id="ri_tax_code_iibb_ba">
@@ -1540,26 +1781,35 @@
                     <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
                 </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iibb_ba_percepcion">
-							<field name="code">022429:P</field>
-							<field name="name">Percepción IIBB Prov. Buenos Aires</field>
-							<field name="sign">-1</field>
-							<field name="parent_id" ref="ri_tax_code_iibb_ba"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ba_percepcion">
+                            <field name="code">022429:P</field>
+                            <field name="name">Percepción IIBB Prov. Buenos Aires</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ba"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                        </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iibb_ba_retencion">
-							<field name="code">022429:R</field>
-							<field name="name">Retención IIBB Prov. Buenos Aires</field>
-							<field name="sign">-1</field>
-							<field name="parent_id" ref="ri_tax_code_iibb_ba"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ba_retencion">
+                            <field name="code">022429:R</field>
+                            <field name="name">Retención IIBB Prov. Buenos Aires</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ba"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                        </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iibb_ba_facturado">
-							<field name="code">022429:F</field>
-							<field name="name">Facturado IIBB Prov. Buenos Aires</field>
-							<field name="sign">0.02</field>
-							<field name="parent_id" ref="ri_tax_code_iibb_ba"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ba_facturado">
+                            <field name="code">022429:F</field>
+                            <field name="name">Facturado IIBB Prov. Buenos Aires</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ba"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                        </record>
 
                 <record model="account.tax.code.template" id="ri_tax_code_iibb_co">
                     <field name="code">022452</field>
@@ -1568,26 +1818,35 @@
                     <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
                 </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iibb_co_percepcion">
-							<field name="code">022452:P</field>
-							<field name="name">Percepción IIBB Prov. Córdoba</field>
-							<field name="sign">-1</field>
-							<field name="parent_id" ref="ri_tax_code_iibb_co"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_co_percepcion">
+                            <field name="code">022452:P</field>
+                            <field name="name">Percepción IIBB Prov. Córdoba</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_co"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                        </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iibb_co_retencion">
-							<field name="code">022452:R</field>
-							<field name="name">Retención IIBB Prov. Córdoba</field>
-							<field name="sign">-1</field>
-							<field name="parent_id" ref="ri_tax_code_iibb_co"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_co_retencion">
+                            <field name="code">022452:R</field>
+                            <field name="name">Retención IIBB Prov. Córdoba</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_co"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                        </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iibb_co_facturado">
-							<field name="code">022452:F</field>
-							<field name="name">Facturado IIBB Prov. Córdoba</field>
-							<field name="sign">0.02</field>
-							<field name="parent_id" ref="ri_tax_code_iibb_co"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_co_facturado">
+                            <field name="code">022452:F</field>
+                            <field name="name">Facturado IIBB Prov. Córdoba</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_co"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                        </record>
 
                 <record model="account.tax.code.template" id="ri_tax_code_iibb_sf">
                     <field name="code">029998</field>
@@ -1596,26 +1855,35 @@
                     <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
                 </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iibb_sf_percepcion">
-							<field name="code">029998:P</field>
-							<field name="name">Percepción IIBB Prov. Santa Fé</field>
-							<field name="sign">-1</field>
-							<field name="parent_id" ref="ri_tax_code_iibb_sf"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sf_percepcion">
+                            <field name="code">029998:P</field>
+                            <field name="name">Percepción IIBB Prov. Santa Fé</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sf"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                        </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iibb_sf_retencion">
-							<field name="code">029998:R</field>
-							<field name="name">Retención IIBB Prov. Santa Fé</field>
-							<field name="sign">-1</field>
-							<field name="parent_id" ref="ri_tax_code_iibb_sf"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sf_retencion">
+                            <field name="code">029998:R</field>
+                            <field name="name">Retención IIBB Prov. Santa Fé</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sf"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                        </record>
 
-						<record model="account.tax.code.template" id="ri_tax_code_iibb_sf_facturado">
-							<field name="code">029998:F</field>
-							<field name="name">Facturado IIBB Prov. Santa Fé</field>
-							<field name="sign">0.02</field>
-							<field name="parent_id" ref="ri_tax_code_iibb_sf"/>
-						</record>
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sf_facturado">
+                            <field name="code">029998:F</field>
+                            <field name="name">Facturado IIBB Prov. Santa Fé</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sf"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                        </record>
 
 #
 # Chart Template
@@ -1637,11 +1905,63 @@
 #
 # IVA
 #
+        <record id="ri_tax_vat_no_gravado_ventas" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">IVA No Gravado</field>
+            <field name="name">IVA Ventas No Gravado</field>
+            <field name="sequence">2</field>
+            <field name="type">none</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_venta_no_gravado"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta_no_gravado"/>
+            <field name="account_collected_id" ref="ri_iva_a_pagar"/>
+            <field name="account_paid_id" ref="ri_iva_a_pagar"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+        <record id="ri_tax_vat_no_gravado_compras" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">IVA No Gravado</field>
+            <field name="name">IVA Compras No Gravado</field>
+            <field name="sequence">2</field>
+            <field name="type">none</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_compras_no_gravado"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras_no_gravado"/>
+            <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_vat_exento_ventas" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">IVA Exento</field>
+            <field name="name">IVA Ventas Exento</field>
+            <field name="sequence">2</field>
+            <field name="type">none</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_venta_exento"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta_exento"/>
+            <field name="account_collected_id" ref="ri_iva_a_pagar"/>
+            <field name="account_paid_id" ref="ri_iva_a_pagar"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+        <record id="ri_tax_vat_exento_compras" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="description">IVA Exento</field>
+            <field name="name">IVA Compras Exento</field>
+            <field name="sequence">2</field>
+            <field name="type">none</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_compras_exento"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras_exento"/>
+            <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
         <record id="ri_tax_vat_0_ventas" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">01003000:V</field>
-            <field name="description">IVA Ventas 0%</field>
-	    <field name="sequence">2</field>
+            <field name="description">IVA 0%</field>
+            <field name="name">IVA Ventas 0%</field>
+            <field name="sequence">2</field>
             <field eval="0.0" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_venta0"/>
@@ -1653,9 +1973,9 @@
 
         <record id="ri_tax_vat_0_compras" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">01003000:C</field>
-            <field name="description">IVA Compras 0%</field>
-	    <field name="sequence">2</field>
+            <field name="description">IVA 0%</field>
+            <field name="name">IVA Compras 0%</field>
+            <field name="sequence">2</field>
             <field eval="0.0" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_compras0"/>
@@ -1667,9 +1987,9 @@
 
         <record id="ri_tax_vat_10_ventas" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">01003004:V</field>
-            <field name="description">IVA Ventas 10.5%</field>
-	    <field name="sequence">2</field>
+            <field name="description">IVA 10.0%</field>
+            <field name="name">IVA Ventas 10.5%</field>
+            <field name="sequence">2</field>
             <field eval="0.105" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_venta10"/>
@@ -1681,9 +2001,9 @@
 
         <record id="ri_tax_vat_10_compras" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">01003004:C</field>
-            <field name="description">IVA Compras 10.5%</field>
-	    <field name="sequence">2</field>
+            <field name="description">IVA 10.0%</field>
+            <field name="name">IVA Compras 10.5%</field>
+            <field name="sequence">2</field>
             <field eval="0.105" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_compras10"/>
@@ -1695,9 +2015,9 @@
 
         <record id="ri_tax_vat_21_ventas" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">IVA Ventas 21%</field>
-	    <field name="sequence">1</field>
-            <field name="name">01003005:V</field>
+            <field name="name">IVA Ventas 21%</field>
+            <field name="sequence">1</field>
+            <field name="description">IVA 21%</field>
             <field eval="0.21" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_venta21"/>
@@ -1709,9 +2029,9 @@
 
         <record id="ri_tax_vat_21_compras" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">IVA Compras 21%</field>
-	    <field name="sequence">1</field>
-            <field name="name">01003005:C</field>
+            <field name="name">IVA Compras 21%</field>
+            <field name="sequence">1</field>
+            <field name="description">IVA 21%</field>
             <field eval="0.21" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_compras21"/>
@@ -1723,9 +2043,9 @@
 
         <record id="ri_tax_vat_27_ventas" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">IVA Ventas 27%</field>
-	    <field name="sequence">3</field>
-            <field name="name">01003006:V</field>
+            <field name="name">IVA Ventas 27%</field>
+            <field name="sequence">3</field>
+            <field name="description">IVA 27%</field>
             <field eval="0.27" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_venta27"/>
@@ -1737,15 +2057,67 @@
 
         <record id="ri_tax_vat_27_compras" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">IVA Compras 27%</field>
-	    <field name="sequence">3</field>
-            <field name="name">01003006:C</field>
+            <field name="name">IVA Compras 27%</field>
+            <field name="sequence">3</field>
+            <field name="description">IVA 27%</field>
             <field eval="0.27" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_compras27"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras27"/>
             <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
             <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_vat_percepcion_ventas" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IVA Aplicada</field>
+            <field name="sequence">4</field>
+            <field name="description">Perc IVA A</field>
+            <field name="type">none</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_venta_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iva_a_pagar"/>
+            <field name="account_paid_id" ref="ri_percepcion_iva_a_pagar"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+        <record id="ri_tax_vat_percepcion_compras" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IVA Sufrida</field>
+            <field name="sequence">4</field>
+            <field name="description">Perc IVA S</field>
+            <field name="type">none</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_compras_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras_percepcion"/>
+            <field name="account_collected_id" ref="ri_iva_percepcion"/>
+            <field name="account_paid_id" ref="ri_iva_percepcion"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_ganancias_percepcion_ventas" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción Ganancias Aplicada</field>
+            <field name="sequence">4</field>
+            <field name="description">Perc Ganancias A</field>
+            <field name="type">none</field>
+            <field name="tax_code_id" ref="ri_tax_code_ganancias_per_aplicada"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_ganancias_per_aplicada"/>
+            <field name="account_collected_id" ref="ri_percepcion_ganancias_a_pagar"/>
+            <field name="account_paid_id" ref="ri_percepcion_ganancias_a_pagar"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+        <record id="ri_tax_ganancias_percepcion_compras" model="account.tax.template">
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción Ganancias Sufrida</field>
+            <field name="sequence">4</field>
+            <field name="description">Perc Ganancias S</field>
+            <field name="type">none</field>
+            <field name="tax_code_id" ref="ri_tax_code_ganancias_per_sufrida"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_ganancias_per_sufrida"/>
+            <field name="account_collected_id" ref="ri_a_cuenta_impuestos_ganancias"/>
+            <field name="account_paid_id" ref="ri_a_cuenta_impuestos_ganancias"/>
             <field name="type_tax_use">purchase</field>
         </record>
 
@@ -1756,9 +2128,9 @@
 # CABA
         <record id="ri_tax_iibb_cf_percepcion" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">Percepción de Ingresos Brutos CABA</field>
-	    <field name="sequence">100</field>
-            <field name="name">029999:P</field>
+            <field name="name">Percepción de Ingresos Brutos CABA</field>
+            <field name="sequence">100</field>
+            <field name="description">Perc IIBB CABA</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_cf_percepcion"/>
@@ -1770,9 +2142,9 @@
 
         <record id="ri_tax_iibb_cf_retencion" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">Retención de Ingresos Brutos CABA</field>
-	    <field name="sequence">100</field>
-            <field name="name">029999:R</field>
+            <field name="name">Ret IIBB CABA</field>
+            <field name="sequence">100</field>
+            <field name="description">029999:R</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_cf_retencion"/>
@@ -1784,9 +2156,9 @@
 
         <record id="ri_tax_iibb_cf_facturado" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">Facturación de Ingresos Brutos CABA</field>
-	    <field name="sequence">100</field>
-            <field name="name">029999:F</field>
+            <field name="name">Fac IIBB CABA</field>
+            <field name="sequence">100</field>
+            <field name="description">029999:F</field>
             <field eval="0.00" name="amount"/>
             <field name="type">fixed</field>
             <field name="base_code_id" ref="ri_tax_code_iibb_cf_facturado"/>
@@ -1800,9 +2172,9 @@
 
         <record id="ri_tax_iibb_ba_percepcion" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">Percepción de Ingresos Brutos Prov. Buenos Aires</field>
-	    <field name="sequence">100</field>
-            <field name="name">022429:P</field>
+            <field name="name">Perc IIBB BS AS</field>
+            <field name="sequence">100</field>
+            <field name="description">022429:P</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_ba_percepcion"/>
@@ -1814,9 +2186,9 @@
 
         <record id="ri_tax_iibb_ba_retencion" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">Retención de Ingresos Brutos Prov. Buenos Aires</field>
-	    <field name="sequence">100</field>
-            <field name="name">022429:R</field>
+            <field name="name">Ret IIBB BS AS</field>
+            <field name="sequence">100</field>
+            <field name="description">022429:R</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_ba_retencion"/>
@@ -1828,9 +2200,9 @@
 
         <record id="ri_tax_iibb_ba_facturado" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">Facturación Ingresos Brutos Prov. Buenos Aires</field>
-	    <field name="sequence">100</field>
-            <field name="name">022429:F</field>
+            <field name="name">Fac IIBB BS AS</field>
+            <field name="sequence">100</field>
+            <field name="description">022429:F</field>
             <field eval="0" name="amount"/>
             <field name="type">fixed</field>
             <field name="base_code_id" ref="ri_tax_code_iibb_ba_facturado"/>
@@ -1844,9 +2216,9 @@
 
         <record id="ri_tax_iibb_co_percepcion" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">Percepción de Ingresos Brutos Prov. Córdoba</field>
-	    <field name="sequence">100</field>
-            <field name="name">022452:P</field>
+            <field name="name">Per IIBB Cordoba</field>
+            <field name="sequence">100</field>
+            <field name="description">022452:P</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_co_percepcion"/>
@@ -1858,9 +2230,9 @@
 
         <record id="ri_tax_iibb_co_retencion" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">Retención de Ingresos Brutos Prov. Córdoba</field>
-	    <field name="sequence">100</field>
-            <field name="name">022452:R</field>
+            <field name="name">Ret IIBB Cordoba</field>
+            <field name="sequence">100</field>
+            <field name="description">022452:R</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_co_retencion"/>
@@ -1872,9 +2244,9 @@
 
         <record id="ri_tax_iibb_co_facturado" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">Facturación Ingresos Brutos Prov. Córdoba</field>
-	    <field name="sequence">100</field>
-            <field name="name">022452:F</field>
+            <field name="name">Fac IIBB Cordoba</field>
+            <field name="sequence">100</field>
+            <field name="description">022452:F</field>
             <field eval="0" name="amount"/>
             <field name="type">fixed</field>
             <field name="base_code_id" ref="ri_tax_code_iibb_co_facturado"/>
@@ -1888,9 +2260,9 @@
 
         <record id="ri_tax_iibb_sf_percepcion" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">Percepción de Ingresos Brutos Prov. Santa Fé</field>
-	    <field name="sequence">100</field>
-            <field name="name">029998:P</field>
+            <field name="name">Per IIBB Santa Fé</field>
+            <field name="sequence">100</field>
+            <field name="description">029998:P</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_sf_percepcion"/>
@@ -1902,9 +2274,9 @@
 
         <record id="ri_tax_iibb_sf_retencion" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">Retención de Ingresos Brutos Prov. Santa Fé</field>
-	    <field name="sequence">100</field>
-            <field name="name">029998:R</field>
+            <field name="name">Ret IIBB Santa Fé</field>
+            <field name="sequence">100</field>
+            <field name="description">Ret. IIBB Santa Fe</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_sf_retencion"/>
@@ -1916,9 +2288,9 @@
 
         <record id="ri_tax_iibb_sf_facturado" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">Facturación Ingresos Brutos Prov. Santa Fé</field>
-	    <field name="sequence">100</field>
-            <field name="name">029998:F</field>
+            <field name="name">Fac IIBB Santa Fé</field>
+            <field name="sequence">100</field>
+            <field name="description">Fac. IIBB Santa Fe</field>
             <field eval="0" name="amount"/>
             <field name="type">fixed</field>
             <field name="base_code_id" ref="ri_tax_code_iibb_sf_facturado"/>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+    <!-- Partners -->
+        <!-- ASUSTeK - Supplier -->
+        <record id="base.res_partner_1" model="res.partner">
+            <field name='responsability_id' ref='res_IVARI'/>
+            <field name='vat'>AR30222222229</field>
+            <field name='document_type_id' ref="dt_CUIT"/>
+            <field name='document_number'>30222222229</field>
+        </record>
+        <!-- Agrolait - Customer -->
+        <record id="base.res_partner_2" model="res.partner">
+            <field name='responsability_id' ref='res_IVARI'/>
+            <field name='vat'>AR30111111118</field>
+            <field name='document_type_id' ref="dt_CUIT"/>
+            <field name='document_number'>30111111118</field>
+        </record>
+    </data>
+</openerp>

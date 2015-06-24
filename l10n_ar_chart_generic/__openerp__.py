@@ -38,7 +38,8 @@ Incluye:
         'l10n_ar_invoice',
     ],
     'demo': [
-        'demo/demo_data.xml',
+        'demo/demo_chart_data.xml',
+        'demo/demo_invoice_data.xml',
     ],
     'test': [],
     'data': [

@@ -18,10 +18,12 @@ Tax Settlement
     ],
     'data': [
         'views/account_tax_settlement_view.xml',
+        'views/account_tax_settlement_detail_view.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [
+        'demo/demo_data.xml',
     ],
     'test': [
     ],

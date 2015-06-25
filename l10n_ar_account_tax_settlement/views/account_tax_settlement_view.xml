@@ -40,7 +40,7 @@
     	                </group>
     	                <notebook>
                             <page string="Move Lines" name="move_lines">
-                                <button name="compute" type="object" string="Compute">
+                                <button name="compute" type="object" string="Compute"/>
                                 <field name="tax_settlement_detail_ids">
                                 <!-- <field name="move_line_ids"> -->
 <!--                                     <tree default_order="date_invoice">

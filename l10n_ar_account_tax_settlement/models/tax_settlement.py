@@ -1,9 +1,32 @@
 # -*- coding: utf-8 -*-
 from openerp import fields, api, models, _
 from openerp.exceptions import Warning
+import time
 
 
-class tax_settlement(models.Model):
+class account_tax_settlement_detail(models.Model):
+    _name = 'account.tax.settlement.detail'
+    _description = 'Account Tax Settlement Detail'
+
+    tax_settlement_id = fields.Many2one(
+        'account.tax.settlement',
+        'Tax Settlement',
+        required=True,
+        ondelete='cascade',
+        )
+    tax_code_id = fields.Many2one(
+        'account.tax.code',
+        'Tax Code',
+        required=True,
+        )
+    move_line_ids = fields.One2many(
+        'account.move.line',
+        'tax_settlement_detail_id',
+        string="Move Lines",
+        )
+
+
+class account_tax_settlement(models.Model):
     _name = 'account.tax.settlement'
     _description = 'Account Tax Settlement'
     _inherit = ['mail.thread']
@@ -140,11 +163,18 @@ class tax_settlement(models.Model):
     def compute(self):
         actual_tax_code_ids = [
             x.tax_code_id.id for x in self.tax_settlement_detail_ids]
-        for tax_code in self.env['tax.code'].search([
+        for tax_code in self.env['account.tax.code'].search([
                 ('id', 'child_of', self.journal_id.tax_code_id.id),
-                ('id', '!=', actual_tax_code_ids),
+                ('id', 'not in', actual_tax_code_ids),
                 ]):
-            self.tax_settlement_detail_ids.create({
+            print 'self.id', self.id
+            print 'self.id', {
+            # self.tax_settlement_detail_ids.create({
+                'tax_code_id': tax_code.id,
+                'tax_settlement_id': self.id,
+                }
+            self.env['account.tax.settlement.detail'].create({
+            # self.tax_settlement_detail_ids.create({
                 'tax_code_id': tax_code.id,
                 'tax_settlement_id': self.id,
                 })
@@ -160,25 +190,29 @@ class tax_settlement(models.Model):
         # move_lines = self.env['account.move.line'].search(domain)
         # self.move_line_ids = move_lines
 
+    @api.onchange('company_id')
+    def change_company(self):
+        now = time.strftime('%Y-%m-%d')
+        company_id = self.company_id.id
+        domain = [('company_id', '=', company_id),
+                  ('date_start', '<', now), ('date_stop', '>', now)]
+        fiscalyears = self.env['account.fiscalyear'].search(domain, limit=1)
+        self.fiscalyear_id = fiscalyears
 
-class tax_settlement_detail(models.Model):
-    _name = 'account.tax.settlement.detail'
-    _description = 'Account Tax Settlement Detail'
-
-    tax_settlement_id = fields.Many2one(
-        'Tax Settlement',
-        required=True,
-        ondelete='cascade',
-        )
-    tax_code_id = fields.Many2many(
-        'account.tax.code',
-        required=True,
-        'Tax Code',
-        )
-    move_line_ids = fields.One2many(
-        'account.move.line',
-        'tax_settlement_detail_id',
-        string="Move Lines",
-        readonly=True,
-        states={'draft': [('readonly', False)]},
-        )
+    @api.onchange('fiscalyear_id')
+    def change_fiscalyear(self):
+        tax_settlement = self.search(
+            [('company_id', '=', self.company_id.id),
+             ('fiscalyear_id', '=', self.fiscalyear_id.id)],
+            order='period_id desc', limit=1)
+        if tax_settlement:
+            next_period = self.env['account.period'].search(
+                [('company_id', '=', self.company_id.id),
+                 ('fiscalyear_id', '=', self.fiscalyear_id.id),
+                 ('date_start', '>', tax_settlement.period_id.date_start),
+                 ], limit=1)
+        else:
+            next_period = self.env['account.period'].search(
+                [('company_id', '=', self.company_id.id),
+                 ('fiscalyear_id', '=', self.fiscalyear_id.id)], limit=1)
+        self.period_id = next_period

@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+        <record model='ir.ui.view' id='account_tax_settlement_detail_tree'>
+            <field name='name'>Account Tax Settlement Detail</field> 
+            <field name="model">account.tax.settlement.detail</field>
+            <field name='arch' type='xml'>
+                <tree string="Account Tax Settlement Detail">
+                    <field name="tax_code_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='account_tax_settlement_detail_form'>
+            <field name='name'>Account Tax Settlement Detail</field> 
+            <field name="model">account.tax.settlement.detail</field>
+            <field name='arch' type='xml'>
+                <form string="Account Tax Settlement Detail">
+                    <sheet>
+                        <group>
+                            <field name="tax_code_id"/>
+                            <field name="move_line_ids"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1635,8 +1635,9 @@
         <record id="ri_tax_code_chart_root" model="account.tax.code.template">
             <field name="name">Plan de Impuestos de Argentina para Responsables Inscriptos</field>
             <field name="info">Raíz de la estructura de impuestos de la Argentina. Incluye IVA e Ingresos Brutos para Capital Federal, Buenos Aires, Córdoba y Santa Fé</field>
-        <field name="code">IVARI</field>
+            <field name="code">IVARI</field>
             <field name="parent_id" eval="False"/>
+            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.tax.code.template" id="ri_impuestos_nacionales">
@@ -1646,6 +1647,7 @@
             <field name="parent_id" ref="ri_tax_code_chart_root"/>
             <field name="type">view</field>
             <field name="application">national_taxes</field>
+            <!-- <field name="company_id" ref=""/> -->
         </record>
 
                 <record model="account.tax.code.template" id="ri_tax_code_iva">
@@ -1656,6 +1658,7 @@
                     <field name="tax">vat</field>
                     <field name="type">view</field>
                     <field name="application">national_taxes</field>
+                    <!-- <field name="company_id" ref=""/> -->
                 </record>
     
                         <record model="account.tax.code.template" id="ri_tax_code_iva_venta_no_gravado">
@@ -1667,6 +1670,7 @@
                             <field name="tax">vat</field>
                             <field name="type">tax</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_compras_no_gravado">
@@ -1678,6 +1682,7 @@
                             <field name="tax">vat</field>
                             <field name="type">tax</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_venta_exento">
@@ -1689,6 +1694,7 @@
                             <field name="tax">vat</field>
                             <field name="type">tax</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_compras_exento">
@@ -1700,6 +1706,7 @@
                             <field name="tax">vat</field>
                             <field name="type">tax</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_venta0">
@@ -1711,6 +1718,7 @@
                             <field name="tax">vat</field>
                             <field name="type">tax</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_compras0">
@@ -1722,6 +1730,7 @@
                             <field name="tax">vat</field>
                             <field name="type">tax</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_venta10">
@@ -1733,6 +1742,7 @@
                             <field name="tax">vat</field>
                             <field name="type">tax</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_compras10">
@@ -1744,6 +1754,7 @@
                             <field name="tax">vat</field>
                             <field name="type">tax</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_venta21">
@@ -1755,6 +1766,7 @@
                             <field name="tax">vat</field>
                             <field name="type">tax</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_compras21">
@@ -1766,6 +1778,7 @@
                             <field name="tax">vat</field>
                             <field name="type">tax</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_venta27">
@@ -1777,6 +1790,7 @@
                             <field name="tax">vat</field>
                             <field name="type">tax</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_compras27">
@@ -1788,6 +1802,7 @@
                             <field name="tax">vat</field>
                             <field name="type">tax</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_compras_adicional">
@@ -1798,6 +1813,7 @@
                             <field name="tax">vat</field>
                             <field name="type">tax</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_venta_percepcion">
@@ -1809,6 +1825,7 @@
                             <field name="tax">vat</field>
                             <field name="type">perception</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_compras_percepcion">
@@ -1820,6 +1837,7 @@
                             <field name="tax">vat</field>
                             <field name="type">perception</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_venta_retencion">
@@ -1831,6 +1849,7 @@
                             <field name="tax">vat</field>
                             <field name="type">withholding</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iva_compras_retencion">
@@ -1842,6 +1861,7 @@
                             <field name="tax">vat</field>
                             <field name="type">withholding</field>
                             <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                 <record model="account.tax.code.template" id="ri_tax_code_ganancias_vista">
@@ -1852,6 +1872,7 @@
                     <field name="tax">profits</field>
                     <field name="type">view</field>
                     <field name="application">national_taxes</field>
+                    <!-- <field name="company_id" ref=""/> -->
                 </record>
 
                     <record model="account.tax.code.template" id="ri_tax_code_ganancias">
@@ -1862,6 +1883,7 @@
                         <field name="tax">profits</field>
                         <field name="type">tax</field>
                         <field name="application">national_taxes</field>
+                        <!-- <field name="company_id" ref=""/> -->
                     </record>
 
                     <record model="account.tax.code.template" id="ri_tax_code_ganancias_per_aplicada">
@@ -1872,6 +1894,7 @@
                         <field name="tax">profits</field>
                         <field name="type">perception</field>
                         <field name="application">national_taxes</field>
+                        <!-- <field name="company_id" ref=""/> -->
                     </record>
 
                     <record model="account.tax.code.template" id="ri_tax_code_ganancias_per_sufrida">
@@ -1882,6 +1905,7 @@
                         <field name="tax">profits</field>
                         <field name="type">perception</field>
                         <field name="application">national_taxes</field>
+                        <!-- <field name="company_id" ref=""/> -->
                     </record>
 
                     <record model="account.tax.code.template" id="ri_tax_code_ganancias_ret_aplicada">
@@ -1892,6 +1916,7 @@
                         <field name="tax">profits</field>
                         <field name="type">withholding</field>
                         <field name="application">national_taxes</field>
+                        <!-- <field name="company_id" ref=""/> -->
                     </record>
 
                     <record model="account.tax.code.template" id="ri_tax_code_ganancias_ret_sufrida">
@@ -1902,6 +1927,7 @@
                         <field name="tax">profits</field>
                         <field name="type">withholding</field>
                         <field name="application">national_taxes</field>
+                        <!-- <field name="company_id" ref=""/> -->
                     </record>
 
         <record model="account.tax.code.template" id="ri_tax_code_impuestos_provinciales">
@@ -1911,6 +1937,7 @@
             <field name="parent_id" ref="ri_tax_code_chart_root"/>
             <field name="type">view</field>
             <field name="application">provincial_taxes</field>
+            <!-- <field name="company_id" ref=""/> -->
         </record>
 
                 <record model="account.tax.code.template" id="ri_tax_code_iibb_cf">
@@ -1921,6 +1948,7 @@
                     <field name="tax">gross_income</field>
                     <field name="type">view</field>
                     <field name="application">provincial_taxes</field>
+                    <!-- <field name="company_id" ref=""/> -->
                 </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_cf_percepcion">
@@ -1931,6 +1959,7 @@
                             <field name="tax">gross_income</field>
                             <field name="type">perception</field>
                             <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_cf_retencion">
@@ -1941,6 +1970,7 @@
                             <field name="tax">gross_income</field>
                             <field name="type">withholding</field>
                             <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_cf_facturado">
@@ -1951,6 +1981,7 @@
                             <field name="tax">gross_income</field>
                             <field name="type">tax</field>
                             <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                 <record model="account.tax.code.template" id="ri_tax_code_iibb_ba">
@@ -1958,6 +1989,7 @@
                     <field name="name">IIBB Prov. Buenos Aires</field>
                     <field name="sign">1</field>
                     <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref=""/> -->
                 </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_ba_percepcion">
@@ -1968,6 +2000,7 @@
                             <field name="tax">gross_income</field>
                             <field name="type">perception</field>
                             <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_ba_retencion">
@@ -1978,6 +2011,7 @@
                             <field name="tax">gross_income</field>
                             <field name="type">withholding</field>
                             <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_ba_facturado">
@@ -1988,6 +2022,7 @@
                             <field name="tax">gross_income</field>
                             <field name="type">tax</field>
                             <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                 <record model="account.tax.code.template" id="ri_tax_code_iibb_co">
@@ -1995,6 +2030,7 @@
                     <field name="name">IIBB Prov. Córdoba</field>
                     <field name="sign">1</field>
                     <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref=""/> -->
                 </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_co_percepcion">
@@ -2005,6 +2041,7 @@
                             <field name="tax">gross_income</field>
                             <field name="type">perception</field>
                             <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_co_retencion">
@@ -2015,6 +2052,7 @@
                             <field name="tax">gross_income</field>
                             <field name="type">withholding</field>
                             <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_co_facturado">
@@ -2025,6 +2063,7 @@
                             <field name="tax">gross_income</field>
                             <field name="type">tax</field>
                             <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                 <record model="account.tax.code.template" id="ri_tax_code_iibb_sf">
@@ -2032,6 +2071,7 @@
                     <field name="name">IIBB Prov. Santa Fé</field>
                     <field name="sign">1</field>
                     <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref=""/> -->
                 </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_sf_percepcion">
@@ -2042,6 +2082,7 @@
                             <field name="tax">gross_income</field>
                             <field name="type">perception</field>
                             <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_sf_retencion">
@@ -2052,6 +2093,7 @@
                             <field name="tax">gross_income</field>
                             <field name="type">withholding</field>
                             <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
                         <record model="account.tax.code.template" id="ri_tax_code_iibb_sf_facturado">
@@ -2062,6 +2104,7 @@
                             <field name="tax">gross_income</field>
                             <field name="type">tax</field>
                             <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref=""/> -->
                         </record>
 
 #

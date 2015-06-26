@@ -24,14 +24,72 @@ class account_tax_settlement_detail(models.Model):
         'tax_settlement_detail_id',
         string="Move Lines",
         )
+    tax_amount = fields.Float(
+        'Amount',
+        compute='get_amounts',
+        )
+
+    @api.one
+    def get_move_lines(self):
+        settlement = self.tax_settlement_id
+        domain = [
+            ('tax_code_id', '=', self.tax_code_id.id),
+            ('move_id.state', '=', settlement.moves_state),
+            ]
+        if settlement.filter == 'filter_period':
+            # TODO revisar como hacer este filtro
+            domain += [
+                ('period_id', '=>', settlement.period_from_id.id),
+                ('period_id', '<', settlement.period_to_id.id)]
+        elif settlement.filter == 'filter_date':
+            domain += [
+                ('date', '=>', settlement.date_from),
+                ('period_id', '<', settlement.date_to)]
+        else:
+            domain.append(
+                ('period_id.fiscalyear_id', '=', settlement.fiscalyear_id.id))
+        move_lines = self.env['account.move.line'].search(domain)
+        self.move_line_ids = move_lines
+
+    @api.one
+    @api.depends('move_line_ids.tax_amount', 'tax_code_id.sign')
+    def get_amounts(self):
+        self.tax_amount = self.tax_code_id.sign * sum(
+            self.move_line_ids.mapped('tax_amount'))
 
 
 class account_tax_settlement(models.Model):
     _name = 'account.tax.settlement'
     _description = 'Account Tax Settlement'
     _inherit = ['mail.thread']
-    _order = 'period_id desc'
+    # _order = 'period_id desc'
 
+    filter = fields.Selection([
+        ('filter_no', 'No Filters'),
+        ('filter_date', 'Date'),
+        ('filter_period', 'Periods')],
+        "Filter by",
+        default='filter_no',
+        required=True
+        )
+    period_from_id = fields.Many2one(
+        'account.period',
+        'Start Period',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+        )
+    period_to_id = fields.Many2one(
+        'account.period',
+        'End Period',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+        )
+    date_from = fields.Date(
+        "Start Date"
+        )
+    date_to = fields.Date(
+        "End Date"
+        )
     company_id = fields.Many2one(
         'res.company', string='Company', required=True,
         readonly=True, states={'draft': [('readonly', False)]},
@@ -45,11 +103,6 @@ class account_tax_settlement(models.Model):
     # type = fields.Selection(
     #     [('sale', 'Sale'), ('purchase', 'Purchase')],
     #     "Type", required=True)
-    period_id = fields.Many2one(
-        'account.period', 'Period', required=True,
-        readonly=True, states={'draft': [('readonly', False)]},
-        help='Keep empty for all periods on fiscal year',
-        )
     journal_id = fields.Many2one(
         'account.journal',
         'Journal',
@@ -58,11 +111,6 @@ class account_tax_settlement(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)]},
         )
-    # journal_ids = fields.Many2many(
-    #     'account.journal', 'account_vat_ledger_journal_rel',
-    #     'vat_ledger_id', 'journal_id', string='Journals', required=True,
-    #     readonly=True, states={'draft': [('readonly', False)]},
-    #     )
     state = fields.Selection([
         ('draft', 'Draft'),
         ('presented', 'Presented'),
@@ -72,43 +120,9 @@ class account_tax_settlement(models.Model):
         default='draft'
         )
     note = fields.Html("Notes")
-# Computed fields
     name = fields.Char(
         'Title',
         compute='_get_name')
-    # move_line_ids = fields.Many2many(
-    #     'account.move.line',
-    #     string="Move Lines",
-    #     compute="_get_data"
-    #     )
-    # invoice_ids = fields.Many2many(
-    #     'account.invoice',
-    #     string="Invoices",
-    #     compute="_get_data")
-    # document_class_ids = fields.Many2many(
-    #     'afip.document_class',
-    #     string="Document Classes",
-    #     compute="_get_data")
-    # vat_tax_code_ids = fields.Many2many(
-    #     'account.tax.code',
-    #     string="VAT Tax Codes",
-    #     compute="_get_data")
-    # other_tax_code_ids = fields.Many2many(
-    #     'account.tax.code',
-    #     string="Other Tax Codes",
-    #     compute="_get_data")
-    # responsability_ids = fields.Many2many(
-    #     'afip.responsability',
-    #     string="Responsabilities",
-    #     compute="_get_data")
-    # other_taxes_base = fields.Float(
-    #     string="Other Taxes Base",
-    #     help="Base Amount for taxes without tax code",
-    #     compute="_get_data")
-    # other_taxes_amount = fields.Float(
-    #     string="Other Taxes Amount",
-    #     help="Amount for taxes without tax code",
-    #     compute="_get_data")
     moves_state = fields.Selection(
         [('draft', 'Unposted'), ('posted', 'Posted')],
         'Moves Status',
@@ -132,63 +146,27 @@ class account_tax_settlement(models.Model):
             raise Warning(_('Tax settlement company and journal company must be the same'))
 
     @api.one
-    @api.depends('period_id', 'fiscalyear_id')
-    # @api.depends('type', 'period_id')
+    # @api.depends('period_id', 'fiscalyear_id')
     def _get_name(self):
+        # TODo arreglar este name
         name = _('Tax Settlment %s') % (
-            self.period_id.name or self.fiscalyear_id.name)
+            self.period_from_id.name or self.fiscalyear_id.name)
         self.name = name
 
-    # @api.one
-    # # Sacamos el depends por un error con el cache en esqume multi cia al
-    # # cambiar periodo de una cia hija con usuario distinto a admin
-    # # @api.depends('journal_ids', 'period_id')
-    # def _get_data(self):
-    #     domain = [
-    #         ('tax_code_id', 'child_of', self.journal_id.tax_code_id.id),
-    #         ('move_id.state', '=', self.moves_state),
-    #         ]
-    #     if self.period_id:
-    #         domain.append(('period_id', '=', self.period_id.id))
-    #     else:
-    #         domain.append(
-    #             ('period_id.fiscalyear_id', '=', self.fiscalyear_id.id))
-    #     move_lines = self.env['account.move.line'].search(domain)
-    #     self.move_line_ids = move_lines
-
     @api.one
-    # Sacamos el depends por un error con el cache en esqume multi cia al
-    # cambiar periodo de una cia hija con usuario distinto a admin
-    # @api.depends('journal_ids', 'period_id')
     def compute(self):
         actual_tax_code_ids = [
             x.tax_code_id.id for x in self.tax_settlement_detail_ids]
         for tax_code in self.env['account.tax.code'].search([
                 ('id', 'child_of', self.journal_id.tax_code_id.id),
                 ('id', 'not in', actual_tax_code_ids),
+                ('type', '!=', 'view'),
                 ]):
-            print 'self.id', self.id
-            print 'self.id', {
-            # self.tax_settlement_detail_ids.create({
-                'tax_code_id': tax_code.id,
-                'tax_settlement_id': self.id,
-                }
-            self.env['account.tax.settlement.detail'].create({
-            # self.tax_settlement_detail_ids.create({
+            self.tax_settlement_detail_ids.create({
                 'tax_code_id': tax_code.id,
                 'tax_settlement_id': self.id,
                 })
-        # domain = [
-        #     ('tax_code_id', 'child_of', self.journal_id.tax_code_id.id),
-        #     ('move_id.state', '=', self.moves_state),
-        #     ]
-        # if self.period_id:
-        #     domain.append(('period_id', '=', self.period_id.id))
-        # else:
-        #     domain.append(
-        #         ('period_id.fiscalyear_id', '=', self.fiscalyear_id.id))
-        # move_lines = self.env['account.move.line'].search(domain)
-        # self.move_line_ids = move_lines
+        self.tax_settlement_detail_ids.get_move_lines()
 
     @api.onchange('company_id')
     def change_company(self):
@@ -199,20 +177,21 @@ class account_tax_settlement(models.Model):
         fiscalyears = self.env['account.fiscalyear'].search(domain, limit=1)
         self.fiscalyear_id = fiscalyears
 
-    @api.onchange('fiscalyear_id')
-    def change_fiscalyear(self):
-        tax_settlement = self.search(
-            [('company_id', '=', self.company_id.id),
-             ('fiscalyear_id', '=', self.fiscalyear_id.id)],
-            order='period_id desc', limit=1)
-        if tax_settlement:
-            next_period = self.env['account.period'].search(
-                [('company_id', '=', self.company_id.id),
-                 ('fiscalyear_id', '=', self.fiscalyear_id.id),
-                 ('date_start', '>', tax_settlement.period_id.date_start),
-                 ], limit=1)
-        else:
-            next_period = self.env['account.period'].search(
-                [('company_id', '=', self.company_id.id),
-                 ('fiscalyear_id', '=', self.fiscalyear_id.id)], limit=1)
-        self.period_id = next_period
+    # @api.onchange('fiscalyear_id')
+    # def change_fiscalyear(self):
+    #     # TODO arreglar este onchange
+    #     tax_settlement = self.search(
+    #         [('company_id', '=', self.company_id.id),
+    #          ('fiscalyear_id', '=', self.fiscalyear_id.id)],
+    #         order='period_id desc', limit=1)
+    #     if tax_settlement:
+    #         next_period = self.env['account.period'].search(
+    #             [('company_id', '=', self.company_id.id),
+    #              ('fiscalyear_id', '=', self.fiscalyear_id.id),
+    #              ('date_start', '>', tax_settlement.period_id.date_start),
+    #              ], limit=1)
+    #     else:
+    #         next_period = self.env['account.period'].search(
+    #             [('company_id', '=', self.company_id.id),
+    #              ('fiscalyear_id', '=', self.fiscalyear_id.id)], limit=1)
+    #     self.period_id = next_period

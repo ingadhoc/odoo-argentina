@@ -7,6 +7,7 @@
             <field name='arch' type='xml'>
                 <tree string="Account Tax Settlement Detail">
                     <field name="tax_code_id"/>
+                    <field name="tax_amount" sum="Total"/>
                 </tree>
             </field>
         </record>
@@ -16,6 +17,9 @@
             <field name="model">account.tax.settlement.detail</field>
             <field name='arch' type='xml'>
                 <form string="Account Tax Settlement Detail">
+                    <header>
+                        <button name="get_move_lines" type="object" string="Compute"/>
+                    </header>
                     <sheet>
                         <group>
                             <field name="tax_code_id"/>

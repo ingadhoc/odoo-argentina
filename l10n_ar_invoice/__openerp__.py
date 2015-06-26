@@ -12,8 +12,8 @@ Facturación y Documentos AFIP - Argentina
 =========================================
 Para actualizar el plan de cuentas de datos demo:
 -------------------------------------------------
+* borrar la parte de account.chart
 * reemplazar ".template" por nada
-* borrar la primer parte del template
 * reemplazar <!-- <field name="company_id" ref=""/> --> por <field name="company_id" ref="company_ri"/>
 * reemplazar <field name="chart_template_id" ref="ri_l10nAR_chart_template"/> por <field name="company_id" ref="company_ri"/>
 
@@ -24,21 +24,15 @@ Para actualizar el plan de cuentas de datos demo:
  'license': 'AGPL-3',
  'name': 'Facturación y Documentos AFIP - Argentina',
  'demo': [
+     'demo/partner_demo.xml',
      'demo/company_demo.xml',
+     # TODO tal vez sea mejor estos dos ejecutarlos con una accion ya que al hacer un init dan error porque ya existen movimientos
+     'demo/fiscal_year_mono_demo.xml',
+     'demo/fiscal_year_ri_demo.xml',
      'demo/account_chart_respinsc.xml',
      'demo/account_demo.xml',
      'demo/ri_purchase_invoice_demo.xml',
      'demo/ri_sale_invoice_demo.xml',
-     'demo/partner_demo.xml',
-     # TODO tal vez sea mejor estos dos ejecutarlos con una accion ya que al hacer un init dan error porque ya existen movimientos
-     'demo/fiscal_year_ri_demo.xml',
-     'demo/fiscal_year_mono_demo.xml',
-     # 'demo/res.company.csv',
-     # 'demo/afip.point_of_sale.csv',
-     # 'demo/account.account.csv',
-     # 'demo/account.journal.csv',
-     # 'demo/account.invoice.csv',
-     # 'demo/account.invoice.line.csv',
     ],
  'test': [
           # test cases should be re-writed

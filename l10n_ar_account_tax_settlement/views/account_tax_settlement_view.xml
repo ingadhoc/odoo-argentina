@@ -8,7 +8,7 @@
                 <tree colors="blue:state == 'draft';gray:state == 'cancel'" string="Tax Settlement">
                     <field name="company_id" groups="base.group_multi_company"/>
                     <field name="fiscalyear_id"/>
-                    <field name="period_id"/>
+                    <!-- <field name="period_id"/> -->
                     <field name="state"/>
                 </tree>
             </field>
@@ -33,7 +33,17 @@
                                 <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                                 <field name="journal_id" domain="[('type', '=', 'general'), ('tax_code_id', '!=', False), ('company_id', '=', company_id)]"/>
                                 <field name="fiscalyear_id" domain="[('company_id','=',company_id)]"/>
-                                <field name="period_id" domain="[('fiscalyear_id','=',fiscalyear_id)]"/>
+                                <field name="filter"/>
+                                <label for="date_from" string="Dates" attrs="{'invisible':[('filter', '!=', 'filter_date')]}"/>
+                                <div attrs="{'invisible':[('filter', '!=', 'filter_date')]}" name="date_from">
+                                    <field name="date_from" attrs="{'required':[('filter', '=', 'filter_date')]}" class="oe_inline"/>-
+                                    <field name="date_to" attrs="{'required':[('filter', '=', 'filter_date')]}" class="oe_inline"/>
+                                </div>
+                                <label for="period_from_id" string="Periods" attrs="{'invisible':[('filter', '!=', 'filter_period')]}"/>
+                                <div attrs="{'invisible':[('filter', '!=', 'filter_period')]}" name="period_range">
+                                    <field name="period_from_id" attrs="{'required':[('filter', '=', 'filter_period')]}" class="oe_inline" domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>-
+                                    <field name="period_to_id" attrs="{'required':[('filter', '=', 'filter_period')]}" class="oe_inline" domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>
+                                </div>
                             </group>
                             <group>
                             </group>

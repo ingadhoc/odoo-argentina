@@ -6,7 +6,7 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="code">LIVA</field>
             <field name="type">general</field>
-            <field name="tax_code_id" search="[('company_id.name','ilike','Responsable Inscripto'),('name','=','IVA')]"/>
+            <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iva"/>
             <!-- <field name="sequence_id" ref="sequence_miscellaneous_journal"/> -->
             <!-- <field name="analytic_journal_id" ref="sit"/> -->
             <!-- <field name="user_id" ref="base.user_root"/> -->
@@ -17,8 +17,6 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="journal_id" ref="journal_vat_settlement"/>
             <field name="fiscalyear_id" ref="l10n_ar_invoice.data_fiscalyear_ri"/>
-            <!-- TODO completar con un periodo del mes actual -->
-            <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
         </record>
     </data>
 </openerp>

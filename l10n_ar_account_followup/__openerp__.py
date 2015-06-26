@@ -2,8 +2,8 @@
 {
     "name": "Adjust Account Follow UP for Argentinian Localization",
     "version": "1.0",
-    'author':  'Ingeniería ADHOC',
-    'website': 'www.ingadhoc.com',
+    'author':  'ADHOC SA',
+    'website': 'www.adhoc.com.ar',
     "category": "Accounting",
     "description": """
 Adjust Account Follow UP for Argentinian Localization

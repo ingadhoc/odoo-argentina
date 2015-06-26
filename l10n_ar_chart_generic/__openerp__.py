@@ -41,7 +41,6 @@ Incluye:
     ],
     'test': [],
     'data': [
-        'data/account_types.xml',
         'data/account_chart_respinsc.xml',
         'data/account_chart_monotrib.xml',
         # 'data/account_chart_coop.xml',

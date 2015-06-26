@@ -5,12 +5,12 @@
         <!-- With IVA 21 -->
         <record id="demo_ri_sale_invoice_0" model="account.invoice">
             <field name="payment_term" ref="account.account_payment_term"/>
-            <field name="journal_id" search="[('company_id.name','ilike','Responsable Inscripto'),('type','=','sale')]"/>
+            <field name="journal_id" ref="sales_journal"/>
             <field name="currency_id" ref="base.ARS"/>
             <field name="user_id" ref="base.user_demo"/>
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">out_invoice</field>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','1120010')]"/>
+            <field name="account_id" ref="ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-01'"/>
             <field name="partner_id" ref="base.res_partner_2"/>
         </record>
@@ -18,8 +18,8 @@
             <field name="invoice_id" ref="demo_ri_sale_invoice_0"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="15.0" />
-            <field name="invoice_line_tax_id" search="[('company_id.name','ilike','Responsable Inscripto'),('name','=','IVA Ventas 21%')]"/>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','4110010')]"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_21_ventas'))]"/>
+            <field name="account_id" ref="ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Toner Cartridge</field>
@@ -28,8 +28,8 @@
             <field name="invoice_id" ref="demo_ri_sale_invoice_0"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="4.8"/>
-            <field name="invoice_line_tax_id" search="[('company_id.name','ilike','Responsable Inscripto'),('name','=','IVA Ventas 21%')]"/>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','4110010')]"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_21_ventas'))]"/>
+            <field name="account_id" ref="ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_43"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Zed+ Antivirus</field>
@@ -39,12 +39,12 @@
         <!-- With IVA 21 and no gravado -->
         <record id="demo_ri_sale_invoice_1" model="account.invoice">
             <field name="payment_term" ref="account.account_payment_term"/>
-            <field name="journal_id" search="[('company_id.name','ilike','Responsable Inscripto'),('type','=','sale')]"/>
+            <field name="journal_id" ref="sales_journal"/>
             <field name="currency_id" ref="base.ARS"/>
             <field name="user_id" ref="base.user_demo"/>
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">out_invoice</field>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','1120010')]"/>
+            <field name="account_id" ref="ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-02'"/>
             <field name="partner_id" ref="base.res_partner_12"/>
             <field name="fiscal_position" ref="l10n_ar_invoice.fiscal_position_no_gravado"/>
@@ -53,8 +53,8 @@
             <field name="invoice_id" ref="demo_ri_sale_invoice_1"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="10.0" />
-            <field name="invoice_line_tax_id" search="[('company_id.name','ilike','Responsable Inscripto'),('name','=','IVA Ventas 21%')]"/>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','4110010')]"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_21_ventas'))]"/>
+            <field name="account_id" ref="ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Toner Cartridge</field>
@@ -63,8 +63,8 @@
             <field name="invoice_id" ref="demo_ri_sale_invoice_1"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="4.0"/>
-            <field name="invoice_line_tax_id" search="[('company_id.name','ilike','Responsable Inscripto'),('name','=','IVA Ventas No Gravado')]"/>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','4110010')]"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_no_gravado_ventas'))]"/>
+            <field name="account_id" ref="ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_43"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Zed+ Antivirus</field>
@@ -73,11 +73,11 @@
 
         <!-- A monotributista -->
         <record id="demo_ri_sale_invoice_2" model="account.invoice">
-            <field name="journal_id" search="[('company_id.name','ilike','Responsable Inscripto'),('type','=','sale')]"/>
+            <field name="journal_id" ref="sales_journal"/>
             <field name="user_id" ref="base.user_demo"/>
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">out_invoice</field> 
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','1120010')]"/>
+            <field name="account_id" ref="ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-07'"/>
             <field name="partner_id" ref="l10n_ar_invoice.partner_mono"/>
         </record>
@@ -85,7 +85,7 @@
             <field name="invoice_id" ref="demo_ri_sale_invoice_2"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="20.0" />
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','4110010')]"/>
+            <field name="account_id" ref="ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Toner Cartridge</field>
@@ -95,11 +95,11 @@
         <!-- A RI con percepcion IVA e iva 27 -->
         <record id="demo_ri_sale_invoice_3" model="account.invoice">
             <!-- <field name="payment_term" ref="account.account_payment_term"/> -->
-            <field name="journal_id" search="[('company_id.name','ilike','Responsable Inscripto'),('type','=','sale')]"/>
+            <field name="journal_id" ref="sales_journal"/>
             <field name="user_id" ref="base.user_demo"/>
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">out_invoice</field> 
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','1120010')]"/>
+            <field name="account_id" ref="ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-12'"/>
             <field name="partner_id" ref="base.res_partner_13"/>
         </record>
@@ -107,20 +107,19 @@
             <field name="invoice_id" ref="demo_ri_sale_invoice_3"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="20.0" />
-            <field name="invoice_line_tax_id" search="[('company_id.name','ilike','Responsable Inscripto'),('name','=','IVA Ventas 27%')]"/>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','4110010')]"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_27_ventas'))]"/>
+            <field name="account_id" ref="ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Toner Cartridge</field>
         </record>
         <record id="demo_ri_sale_invoice_3_tax_line" model="account.invoice.tax">
             <field name="invoice_id" ref="demo_ri_sale_invoice_3"/>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','1142020')]"/>
             <!-- <field name="base_amount" eval="20" /> -->
             <!-- <field name="base_code_id" ref=""/> -->
             <field name="name">Percepcion IVA</field>
-            <field name="tax_code_id" search="[('company_id.name','ilike','Responsable Inscripto'),('name','=','Percepción IVA sufrida')]"/>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','4110010')]"/>
+            <field name="tax_code_id" ref="ri_tax_code_iva_compras_percepcion"/>
+            <field name="account_id" ref="ri_iva_percepcion"/>
             <field name="amount" eval="5"/>
             <field name="tax_amount" eval="5"/>
         </record>
@@ -129,11 +128,11 @@
 
         <!-- A RI con percepcion Ganacias e iva 21 -->
         <record id="demo_ri_sale_invoice_4" model="account.invoice">
-            <field name="journal_id" search="[('company_id.name','ilike','Responsable Inscripto'),('type','=','sale')]"/>
+            <field name="journal_id" ref="sales_journal"/>
             <field name="user_id" ref="base.user_demo"/>
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">out_invoice</field> 
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','1120010')]"/>
+            <field name="account_id" ref="ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-15'"/>
             <field name="partner_id" ref="base.res_partner_12"/>
         </record>
@@ -141,19 +140,19 @@
             <field name="invoice_id" ref="demo_ri_sale_invoice_4"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="35.0" />
-            <field name="invoice_line_tax_id" search="[('company_id.name','ilike','Responsable Inscripto'),('name','=','IVA Ventas 10.5%')]"/>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','4110010')]"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_10_ventas'))]"/>
+            <field name="account_id" ref="ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="2.0" />
             <field name="name">Toner Cartridge</field>
         </record>
         <record id="demo_ri_sale_invoice_4_tax_line" model="account.invoice.tax">
             <field name="invoice_id" ref="demo_ri_sale_invoice_4"/>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','1141030')]"/>
+            <field name="account_id" ref="ri_a_cuenta_impuestos_ganancias"/>
+            <field name="tax_code_id" ref="ri_tax_code_ganancias_per_sufrida"/>
             <!-- <field name="base_amount" eval="20" /> -->
             <!-- <field name="base_code_id" ref=""/> -->
             <field name="name">Percepcion Ganacias</field>
-            <field name="tax_code_id" search="[('company_id.name','ilike','Responsable Inscripto'),('name','=','Percepción de Ganancias Sufrida')]"/>
             <field name="amount" eval="7"/>
             <field name="tax_amount" eval="7"/>
         </record>
@@ -164,12 +163,12 @@
         <!-- With IVA 21 -->
         <record id="demo_ri_refund_0" model="account.invoice">
             <field name="payment_term" ref="account.account_payment_term"/>
-            <field name="journal_id" search="[('company_id.name','ilike','Responsable Inscripto'),('type','=','sale_refund')]"/>
+            <field name="journal_id" ref="refund_sales_journal"/>
             <field name="currency_id" ref="base.ARS"/>
             <field name="user_id" ref="base.user_demo"/>
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">out_refund</field>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','1120010')]"/>
+            <field name="account_id" ref="ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-05'"/>
             <field name="partner_id" ref="base.res_partner_2"/>
         </record>
@@ -177,8 +176,8 @@
             <field name="invoice_id" ref="demo_ri_refund_0"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="15.0" />
-            <field name="invoice_line_tax_id" search="[('company_id.name','ilike','Responsable Inscripto'),('name','=','IVA Ventas 21%')]"/>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','4110010')]"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_21_ventas'))]"/>
+            <field name="account_id" ref="ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Toner Cartridge</field>
@@ -187,8 +186,8 @@
             <field name="invoice_id" ref="demo_ri_refund_0"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="4.8"/>
-            <field name="invoice_line_tax_id" search="[('company_id.name','ilike','Responsable Inscripto'),('name','=','IVA Ventas 21%')]"/>
-            <field name="account_id" search="[('company_id.name','ilike','Responsable Inscripto'),('code','=','4110010')]"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_21_ventas'))]"/>
+            <field name="account_id" ref="ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_43"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Zed+ Antivirus</field>

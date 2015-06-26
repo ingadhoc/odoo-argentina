@@ -4,14 +4,13 @@
 
 #
 # Chart of Accounts
-# Ponemos company comentado en cada linea para poder hacer un replace y usarlo en l10n_Ar_invoice como dato demo
+#
         <record model="account.account.template" id="ri_a_root">
             <field name="type">view</field>
             <field name="code">0</field>
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">Plan de Cuentas</field>
             <field name="parent_id" eval="False" />
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_activo">
@@ -20,7 +19,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">ACTIVO</field>
             <field name="parent_id" ref="ri_a_root"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_activo_corriente">
@@ -29,7 +27,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">ACTIVO CORRIENTE</field>
             <field name="parent_id" ref="ri_activo"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_disponibilidades">
@@ -38,7 +35,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">DISPONIBILIDADES</field>
             <field name="parent_id" ref="ri_activo_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_caja">
@@ -47,7 +43,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">CAJAS</field>
             <field name="parent_id" ref="ri_disponibilidades"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>        
 
         <record model="account.account.template" id="ri_caja_pesos">
@@ -56,7 +51,6 @@
             <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Caja pesos</field>
             <field name="parent_id" ref="ri_caja"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_caja_monex">
@@ -65,7 +59,6 @@
             <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Caja Monex</field>
             <field name="parent_id" ref="ri_caja"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_fondo_fijo">
@@ -74,7 +67,6 @@
             <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Fondo fijo</field>
             <field name="parent_id" ref="ri_caja"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_valores">
@@ -83,7 +75,6 @@
             <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Valores en cartera</field>
             <field name="parent_id" ref="ri_caja"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_bancos">
@@ -92,7 +83,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">BANCOS</field>
             <field name="parent_id" ref="ri_disponibilidades"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>        
 
         <record model="account.account.template" id="ri_banco_1">
@@ -101,7 +91,6 @@
             <field name="user_type" ref="account.data_account_type_bank"/>
             <field name="name">Banco x cuenta corriente xxxxx</field>
             <field name="parent_id" ref="ri_bancos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>  
 
         <record model="account.account.template" id="ri__tarjetas_de_credito_cobrar">
@@ -110,7 +99,6 @@
             <field name="user_type" ref="account.data_account_type_bank"/>
             <field name="name">Tarjetas de crédito a cobrar xxxxx</field>
             <field name="parent_id" ref="ri_bancos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_creditos_comerciales">
@@ -119,7 +107,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">CRÉDITOS COMERCIALES</field>
             <field name="parent_id" ref="ri_activo_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_deudores_por_ventas">
@@ -129,9 +116,7 @@
             <field name="name">Deudores por ventas</field>
             <field name="parent_id" ref="ri_creditos_comerciales"/>
             <field name="reconcile" eval="True"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
-
 
         <record model="account.account.template" id="ri_deudores_morosos">
             <field name="type">receivable</field>
@@ -139,7 +124,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Deudores morosos</field>
             <field name="parent_id" ref="ri_creditos_comerciales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_otros_creditos">
@@ -148,7 +132,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">OTROS CRÉDITOS</field>
             <field name="parent_id" ref="ri_activo_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_deudores_varios">
@@ -157,7 +140,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Deudores varios</field>
             <field name="parent_id" ref="ri_otros_creditos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_creditos_impuestos">
@@ -166,7 +148,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">CRÉDITOS POR IMPUESTOS</field>
             <field name="parent_id" ref="ri_activo_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_creditos_impuestos_ganancias">
@@ -175,7 +156,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GANANCIAS</field>
             <field name="parent_id" ref="ri_creditos_impuestos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_retencion_impuestos_ganancias">
@@ -184,7 +164,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retención impuestos a las ganancias</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_anticipo_impuestos_ganancias">
@@ -193,7 +172,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Anticipo impuestos a las ganancias</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_a_cuenta_impuestos_ganancias">
@@ -202,7 +180,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Pago a cuenta impuestos a las ganancias</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_creditos_impuestos_iva">
@@ -211,7 +188,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">IVA</field>
             <field name="parent_id" ref="ri_creditos_impuestos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>        
 
         <record model="account.account.template" id="ri_iva_credito_fiscal">
@@ -220,7 +196,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">IVA crédito fiscal</field>
             <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_iva_percepcion">
@@ -229,7 +204,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones IVA</field>
             <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_iva_retencion">
@@ -238,7 +212,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retención IVA</field>
             <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_creditos_iibb">
@@ -247,7 +220,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS BRUTOS</field>
             <field name="parent_id" ref="ri_creditos_impuestos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_creditos_iibb_cf">
@@ -256,7 +228,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS BRUTOS CAPITAL FEDERAL</field>
             <field name="parent_id" ref="ri_creditos_iibb"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_percepcion_iibb_cf">
@@ -265,7 +236,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones ingresos brutos capital federal</field>
             <field name="parent_id" ref="ri_creditos_iibb_cf"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_retencion_iibb_cf">
@@ -274,7 +244,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retención ingresos brutos capital federal</field>
             <field name="parent_id" ref="ri_creditos_iibb_cf"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_creditos_iibb_ba">
@@ -283,7 +252,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS BRUTOS PROV. BUENOS AIRES</field>
             <field name="parent_id" ref="ri_creditos_iibb"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_percepcion_iibb_ba">
@@ -292,7 +260,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones ingresos brutos p. buenos aires</field>
             <field name="parent_id" ref="ri_creditos_iibb_ba"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_retencion_iibb_ba">
@@ -301,7 +268,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retención ingresos brutos p. buenos aires</field>
             <field name="parent_id" ref="ri_creditos_iibb_ba"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_creditos_iibb_co">
@@ -310,7 +276,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS BRUTOS PROV. CORDOBA</field>
             <field name="parent_id" ref="ri_creditos_iibb"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_percepcion_iibb_co">
@@ -319,7 +284,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones ingresos brutos p. córdoba</field>
             <field name="parent_id" ref="ri_creditos_iibb_co"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_retencion_iibb_co">
@@ -328,7 +292,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retención ingresos brutos p. córdoba</field>
             <field name="parent_id" ref="ri_creditos_iibb_co"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_creditos_iibb_sf">
@@ -337,7 +300,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS BRUTOS PROV. SANTA FÉ</field>
             <field name="parent_id" ref="ri_creditos_iibb"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_percepcion_iibb_sf">
@@ -346,7 +308,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones ingresos brutos p. santa fé</field>
             <field name="parent_id" ref="ri_creditos_iibb_sf"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_retencion_iibb_sf">
@@ -355,7 +316,6 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retención ingresos brutos p. santa fé</field>
             <field name="parent_id" ref="ri_creditos_iibb_sf"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_bienes_de_cambio">
@@ -364,7 +324,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">BIENES DE CAMBIO</field>
             <field name="parent_id" ref="ri_activo_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_mercaderia">
@@ -373,7 +332,6 @@
             <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Mercaderia</field>
             <field name="parent_id" ref="ri_bienes_de_cambio"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_activo_no_corriente">
@@ -382,7 +340,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">ACTIVO NO CORRIENTE</field>
             <field name="parent_id" ref="ri_activo"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_bienes_de_uso">
@@ -391,7 +348,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">BIENES DE USO</field>
             <field name="parent_id" ref="ri_activo_no_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_bienes_de_uso_2">
@@ -400,7 +356,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">BIENES DE USO</field>
             <field name="parent_id" ref="ri_bienes_de_uso"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>        
 
         <record model="account.account.template" id="ri_maq_y_equipos">
@@ -409,7 +364,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">Maquinarias y equipos</field>
             <field name="parent_id" ref="ri_bienes_de_uso_2"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_instalaciones">
@@ -418,7 +372,6 @@
             <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Instalaciones</field>
             <field name="parent_id" ref="ri_bienes_de_uso_2"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_muebles_y_utiles">
@@ -427,7 +380,6 @@
             <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Muebles y útiles</field>
             <field name="parent_id" ref="ri_bienes_de_uso_2"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_rodados">
@@ -436,7 +388,6 @@
             <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Rodados</field>
             <field name="parent_id" ref="ri_bienes_de_uso_2"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_amortizacion_acumulada_bs_uso">
@@ -445,7 +396,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">AMORTIZACIONES ACUMULADAS BIENES DE USO</field>
             <field name="parent_id" ref="ri_bienes_de_uso"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_amortizacion_acumulada_maq_y_equipos">
@@ -454,7 +404,6 @@
             <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Amortización acumulada maquinarias y equipos</field>
             <field name="parent_id" ref="ri_amortizacion_acumulada_bs_uso"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_amortizacion_acumulada_instalaciones">
@@ -463,7 +412,6 @@
             <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Amortización acumulada instalaciones</field>
             <field name="parent_id" ref="ri_amortizacion_acumulada_bs_uso"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_amortizacion_acumulada_muebles_utiles">
@@ -472,7 +420,6 @@
             <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Amortización acumulada muebles y útiles</field>
             <field name="parent_id" ref="ri_amortizacion_acumulada_bs_uso"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_amortizacion_acumulada_rodados">
@@ -481,7 +428,6 @@
             <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Amortización rodados</field>
             <field name="parent_id" ref="ri_amortizacion_acumulada_bs_uso"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_intangibles">
@@ -490,7 +436,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INTANGIBLES</field>
             <field name="parent_id" ref="ri_activo_no_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_software">
@@ -499,7 +444,6 @@
             <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Software</field>
             <field name="parent_id" ref="ri_intangibles"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_gastos_de_construccion">
@@ -508,7 +452,6 @@
             <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Gastos de construccion</field>
             <field name="parent_id" ref="ri_intangibles"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record> 
         
         <record model="account.account.template" id="ri_pasivo">
@@ -517,7 +460,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">PASIVO</field>
             <field name="parent_id" ref="ri_a_root"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_pasivo_corriente">
@@ -526,7 +468,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">PASIVO CORRIENTE</field>
             <field name="parent_id" ref="ri_pasivo"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_deudas_sociales">
@@ -535,7 +476,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">DEUDAS SOCIALES</field>
             <field name="parent_id" ref="ri_pasivo_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_sueldos_a_pagar">
@@ -544,7 +484,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Sueldos a pagar</field>
             <field name="parent_id" ref="ri_deudas_sociales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_cargas_sociales_a_pagar">
@@ -553,7 +492,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Cargas sociales a pagar</field>
             <field name="parent_id" ref="ri_deudas_sociales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_provision_sac_a_pagar">
@@ -562,7 +500,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Prevision SAC a pagar</field>
             <field name="parent_id" ref="ri_deudas_sociales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_provision_sac_cargas_sociales">
@@ -571,7 +508,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Prevision cargas sociales a pagar</field>
             <field name="parent_id" ref="ri_deudas_sociales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_comisiones_a_pagar">
@@ -580,7 +516,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Comisiones a pagar</field>
             <field name="parent_id" ref="ri_deudas_sociales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>        
 
         <record model="account.account.template" id="ri_beneficios_al_personal">
@@ -589,7 +524,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Beneficios al personal</field>
             <field name="parent_id" ref="ri_deudas_sociales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_prevision_despidos">
@@ -598,7 +532,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Previsión Despidos</field>
             <field name="parent_id" ref="ri_deudas_sociales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_deudas_fiscales">
@@ -607,7 +540,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">DEUDAS FISCALES</field>
             <field name="parent_id" ref="ri_pasivo_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_iibb_a_pagar">
@@ -616,7 +548,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Ingresos brutos a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_iva_debito_fiscal">
@@ -625,7 +556,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">IVA débito fiscal</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_iva_a_pagar">
@@ -634,7 +564,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">IVA saldo a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_impuesto_ganancias_a_pagar">
@@ -643,7 +572,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Impuesto a las ganancias a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_autonomos_a_pagar">
@@ -652,7 +580,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Autonomos a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_retenciones_varias_a_pagar">
@@ -661,7 +588,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Retenciones varias a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_drei_a_pagar">
@@ -670,7 +596,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">DREI a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_retencion_ganancias_a_pagar">
@@ -679,7 +604,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Retención ganancias a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_retencion_iva_a_pagar">
@@ -688,7 +612,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Retención IVA a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_percepcion_ganancias_a_pagar">
@@ -697,7 +620,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Percepción Ganancias a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_percepcion_iva_a_pagar">
@@ -706,7 +628,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Percepción IVA a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_deudas_comerciales">
@@ -715,7 +636,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">DEUDAS COMERCIALES</field>
             <field name="parent_id" ref="ri_pasivo_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_comunes">
@@ -724,7 +644,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">COMUNES</field>
             <field name="parent_id" ref="ri_deudas_comerciales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_pago_proveedores">
@@ -734,7 +653,6 @@
             <field name="name">Proveedores</field>
             <field name="parent_id" ref="ri_comunes"/>
             <field name="reconcile" eval="True"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_alquileres_a_pagar">
@@ -743,7 +661,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Alquileres a pagar</field>
             <field name="parent_id" ref="ri_comunes"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_pago_acreedores">
@@ -752,7 +669,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Acreedores varios</field>
             <field name="parent_id" ref="ri_comunes"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>        
 
         <record model="account.account.template" id="ri_documentadas">
@@ -761,7 +677,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">DOCUMENTADAS</field>
             <field name="parent_id" ref="ri_deudas_comerciales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_cheques_diferidos">
@@ -770,7 +685,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Cheques diferidos</field>
             <field name="parent_id" ref="ri_documentadas"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_otras_deudas_documentadas">
@@ -779,7 +693,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Otras deudas documentadas</field>
             <field name="parent_id" ref="ri_documentadas"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_bancarias">
@@ -788,7 +701,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">BANCARIAS</field>
             <field name="parent_id" ref="ri_pasivo_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_tarjeta_de_credito_pagar">
@@ -797,7 +709,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Tarjeta de crédito a pagar xxxxx</field>
             <field name="parent_id" ref="ri_bancarias"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_prestamos">
@@ -806,7 +717,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Prestamos</field>
             <field name="parent_id" ref="ri_bancarias"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_giro_en_descubierto">
@@ -815,7 +725,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Giro en descubierto</field>
             <field name="parent_id" ref="ri_bancarias"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_provisiones_varias">
@@ -824,7 +733,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">PREVISIONES VARIAS</field>
             <field name="parent_id" ref="ri_pasivo_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_provision_gastos">
@@ -833,7 +741,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Prevision gastos</field>
             <field name="parent_id" ref="ri_provisiones_varias"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_cuentas_particulares">
@@ -842,7 +749,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">CUENTAS PARTICULARES</field>
             <field name="parent_id" ref="ri_pasivo_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_cta_particular_socio_x">
@@ -851,7 +757,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Cta particular socio x</field>
             <field name="parent_id" ref="ri_cuentas_particulares"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_pasivo_no_corriente">
@@ -860,7 +765,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">PASIVO NO CORRIENTE</field>
             <field name="parent_id" ref="ri_pasivo"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_deudas_comerciales_largo_plazo">
@@ -869,7 +773,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">DEUDAS COMERCIALES A LARGO PLAZO</field>
             <field name="parent_id" ref="ri_pasivo_no_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_proveedores_largo_plazo">
@@ -878,7 +781,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Deudas proveedores a largo plazo</field>
             <field name="parent_id" ref="ri_deudas_comerciales_largo_plazo"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_otras_deudas">
@@ -887,7 +789,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">OTRAS DEUDAS</field>
             <field name="parent_id" ref="ri_pasivo_no_corriente"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_seguros_a_pagar">
@@ -896,7 +797,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Seguros a pagar</field>
             <field name="parent_id" ref="ri_otras_deudas"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_gastos_a_pagar">
@@ -905,7 +805,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Gastos a pagar</field>
             <field name="parent_id" ref="ri_otras_deudas"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_deudas_misc">
@@ -914,7 +813,6 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Deudas misc</field>
             <field name="parent_id" ref="ri_otras_deudas"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_patrimonio_neto">
@@ -923,7 +821,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">PATRIMONIO NETO</field>
             <field name="parent_id" ref="ri_a_root"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_aportes_de_los_propietarios">
@@ -932,7 +829,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">APORTES DE LOS PROPIETARIOS</field>
             <field name="parent_id" ref="ri_patrimonio_neto"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_capital_social">
@@ -941,7 +837,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">CAPITAL SOCIAL</field>
             <field name="parent_id" ref="ri_aportes_de_los_propietarios"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_capital">
@@ -950,7 +845,6 @@
             <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Capital susctipto</field>
             <field name="parent_id" ref="ri_capital_social"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_ajustes_de_capital">
@@ -959,7 +853,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">AJUSTES DE CAPITAL</field>
             <field name="parent_id" ref="ri_aportes_de_los_propietarios"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_ajustes_de_capital_2">
@@ -968,7 +861,6 @@
             <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Capital susctipto</field>
             <field name="parent_id" ref="ri_ajustes_de_capital"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_aportes_no_capitalizados">
@@ -977,7 +869,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">APORTES NO CAPITALIZADOS</field>
             <field name="parent_id" ref="ri_aportes_de_los_propietarios"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_aportes_no_capitalizados_2">
@@ -986,7 +877,6 @@
             <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Aportes no capitalizados</field>
             <field name="parent_id" ref="ri_aportes_no_capitalizados"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_ganancias_reservadas">
@@ -995,7 +885,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GANANCIAS RESERVADAS</field>
             <field name="parent_id" ref="ri_patrimonio_neto"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>   
 
         <record model="account.account.template" id="ri_reserva_legal">
@@ -1004,7 +893,6 @@
             <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Reserva legal</field>
             <field name="parent_id" ref="ri_ganancias_reservadas"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>             
 
         <record model="account.account.template" id="ri_reserva_legal">
@@ -1013,7 +901,6 @@
             <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Reserva estatuitaria</field>
             <field name="parent_id" ref="ri_ganancias_reservadas"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>             
 
         <record model="account.account.template" id="ri_reserva_legal">
@@ -1022,7 +909,6 @@
             <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Reserva futuras inversiones</field>
             <field name="parent_id" ref="ri_ganancias_reservadas"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>             
 
         <record model="account.account.template" id="ri_resultados">
@@ -1031,7 +917,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">RESULTADOS</field>
             <field name="parent_id" ref="ri_patrimonio_neto"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>   
 
         <record model="account.account.template" id="ri_resultado_del_ejercicio">
@@ -1040,7 +925,6 @@
             <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Resultado del ejercicio</field>
             <field name="parent_id" ref="ri_resultados"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_resultado_del_ejercicio">
@@ -1049,7 +933,6 @@
             <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Resultado acumlados</field>
             <field name="parent_id" ref="ri_resultados"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_resultados_no_asignados">
@@ -1058,7 +941,6 @@
             <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Ajuste resultados ejercicios anteriores</field>
             <field name="parent_id" ref="ri_resultados"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id='ri_ingresos'>
@@ -1067,7 +949,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS</field>
             <field name="parent_id" ref="ri_a_root"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_ingresos_operativos">
@@ -1076,7 +957,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS OPERATIVOS</field>
             <field name="parent_id" ref="ri_ingresos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_ventas">
@@ -1085,7 +965,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS POR VENTAS</field>
             <field name="parent_id" ref="ri_ingresos_operativos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_venta_de_mercaderia">
@@ -1094,7 +973,6 @@
             <field name="user_type" ref="account.data_account_type_income"/>
             <field name="name">Venta de mercaderia</field>
             <field name="parent_id" ref="ri_ventas"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_venta_de_servicios_misc">
@@ -1103,7 +981,6 @@
             <field name="user_type" ref="account.data_account_type_income"/>
             <field name="name">Venta servicios misc</field>
             <field name="parent_id" ref="ri_ventas"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_otros_ingresos">
@@ -1112,7 +989,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">OTROS INGRESOS</field>
             <field name="parent_id" ref="ri_ingresos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_ingresos_financieros">
@@ -1121,7 +997,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS FINANCIEROS</field>
             <field name="parent_id" ref="ri_otros_ingresos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_resultado_invesiones_financieras">
@@ -1130,7 +1005,6 @@
             <field name="user_type" ref="account.data_account_type_income"/>
             <field name="name">Resultado de inversiones financieras</field>
             <field name="parent_id" ref="ri_ingresos_financieros"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_resultado_invesiones_financieras">
@@ -1139,7 +1013,6 @@
             <field name="user_type" ref="account.data_account_type_income"/>
             <field name="name">Intereses ganados</field>
             <field name="parent_id" ref="ri_ingresos_financieros"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_diferencias_de_cambio">
@@ -1148,7 +1021,6 @@
             <field name="user_type" ref="account.data_account_type_income"/>
             <field name="name">Diferencias de cambio</field>
             <field name="parent_id" ref="ri_ingresos_financieros"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_otros_ingresos_2">
@@ -1157,7 +1029,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">OTROS INGRESOS</field>
             <field name="parent_id" ref="ri_otros_ingresos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_resultado_venta_bienes_de_uso">
@@ -1166,7 +1037,6 @@
             <field name="user_type" ref="account.data_account_type_income"/>
             <field name="name">Resultado venta bienes de uso</field>
             <field name="parent_id" ref="ri_otros_ingresos_2"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_ajuste_por_redondeo">
@@ -1175,7 +1045,6 @@
             <field name="user_type" ref="account.data_account_type_income"/>
             <field name="name">Ajuste por redondeo</field>
             <field name="parent_id" ref="ri_otros_ingresos_2"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_descuentos_obtenidos">
@@ -1184,7 +1053,6 @@
             <field name="user_type" ref="account.data_account_type_income"/>
             <field name="name">Descuentos obtenidos</field>
             <field name="parent_id" ref="ri_otros_ingresos_2"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_recupero_de_gastos">
@@ -1193,7 +1061,6 @@
             <field name="user_type" ref="account.data_account_type_income"/>
             <field name="name">Recupero de gastos</field>
             <field name="parent_id" ref="ri_otros_ingresos_2"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_gastos">
@@ -1202,7 +1069,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS</field>
             <field name="parent_id" ref="ri_a_root"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_gastos_operativos">
@@ -1211,7 +1077,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS OPERATIVOS</field>
             <field name="parent_id" ref="ri_gastos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_gastos_de_produccion">
@@ -1220,7 +1085,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS DE PRODUCCION</field>
             <field name="parent_id" ref="ri_gastos_operativos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_haberes_produccion">
@@ -1229,7 +1093,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Sueldos y SAC operativos</field>
             <field name="parent_id" ref="ri_gastos_de_produccion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_cargas_sociales_produccion">
@@ -1238,7 +1101,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Cargas Sociales</field>
             <field name="parent_id" ref="ri_gastos_de_produccion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_costo_de_mercaderia_vendida">
@@ -1247,7 +1109,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Costo de mercadería vendida</field>
             <field name="parent_id" ref="ri_gastos_de_produccion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_materiales">
@@ -1256,7 +1117,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Materiales</field>
             <field name="parent_id" ref="ri_gastos_de_produccion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_gastos_operativos_generales">
@@ -1265,7 +1125,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Gastos varios produccion</field>
             <field name="parent_id" ref="ri_gastos_de_produccion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_alquileres_produccion">
@@ -1274,7 +1133,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Alquileres produccion</field>
             <field name="parent_id" ref="ri_gastos_de_produccion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_servicios_agua_luz_etc_produccion">
@@ -1283,7 +1141,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Servicios de luz, agua, etc. produccion</field>
             <field name="parent_id" ref="ri_gastos_de_produccion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>        
 
         <record model="account.account.template" id="ri_gastos_comerciales">
@@ -1292,7 +1149,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS COMERCIALES</field>
             <field name="parent_id" ref="ri_gastos_operativos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_haberes_comerciales">
@@ -1301,7 +1157,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Sueldos y SAC comerciales</field>
             <field name="parent_id" ref="ri_gastos_comerciales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_cargas_sociales_comerciales">
@@ -1310,7 +1165,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Cargas sociales comerciales</field>
             <field name="parent_id" ref="ri_gastos_comerciales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_comisiones_comerciales">
@@ -1319,7 +1173,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Comisiones</field>
             <field name="parent_id" ref="ri_gastos_comerciales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_publicidad">
@@ -1328,7 +1181,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Publicidad</field>
             <field name="parent_id" ref="ri_gastos_comerciales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_movilidad_y_viaticos_comerciales">
@@ -1337,7 +1189,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Movilidad y viáticos comerciales</field>
             <field name="parent_id" ref="ri_gastos_comerciales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_gastos_de_eventos_comerciales">
@@ -1346,7 +1197,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Gastos de eventos comerciales</field>
             <field name="parent_id" ref="ri_gastos_comerciales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_gastos_varios_comerciales">
@@ -1355,7 +1205,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Gastos varios comerciales</field>
             <field name="parent_id" ref="ri_gastos_comerciales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_alquileres_comerciales">
@@ -1364,7 +1213,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Alquileres comerciales</field>
             <field name="parent_id" ref="ri_gastos_comerciales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_servicios_agua_luz_etc_comerciales">
@@ -1373,7 +1221,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Servicios de luz, agua, etc. comerciales</field>
             <field name="parent_id" ref="ri_gastos_comerciales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>        
 
         <record model="account.account.template" id="ri_gastos_de_administracion">
@@ -1382,7 +1229,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS DE ADMINISTRACION</field>
             <field name="parent_id" ref="ri_gastos_operativos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_haberes_administrativos">
@@ -1391,7 +1237,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Sueldos y SAC administrativos</field>
             <field name="parent_id" ref="ri_gastos_de_administracion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_cargas_sociales_administrativas">
@@ -1400,7 +1245,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Cargas sociales administrativas</field>
             <field name="parent_id" ref="ri_gastos_de_administracion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_honorarios_administrativas">
@@ -1409,7 +1253,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Honorarios profesionales administracion</field>
             <field name="parent_id" ref="ri_gastos_de_administracion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_gastos_varios_administrativas">
@@ -1418,7 +1261,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Gastos varios administracion</field>
             <field name="parent_id" ref="ri_gastos_de_administracion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>        
 
         <record model="account.account.template" id="ri_alquileres_administrativas">
@@ -1427,7 +1269,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Alquileres administracion</field>
             <field name="parent_id" ref="ri_gastos_de_administracion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_servicios_agua_luz_etc">
@@ -1436,7 +1277,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Servicios de luz, agua, etc. administracion</field>
             <field name="parent_id" ref="ri_gastos_de_administracion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_mantenimiento_y_limpieza">
@@ -1445,7 +1285,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Mantenimiento y limpieza adminsitracion</field>
             <field name="parent_id" ref="ri_gastos_de_administracion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_articulos_libreria">
@@ -1454,7 +1293,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Artículos librería administracion</field>
             <field name="parent_id" ref="ri_gastos_de_administracion"/>            
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_cadeteria_y_correo">
@@ -1463,7 +1301,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Cadetería y correo adminsitracion</field>
             <field name="parent_id" ref="ri_gastos_de_administracion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_seguros">
@@ -1472,7 +1309,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Seguros adminsitracion</field>
             <field name="parent_id" ref="ri_gastos_de_administracion"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_gastos_fiscales">
@@ -1481,7 +1317,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS FISCALES</field>
             <field name="parent_id" ref="ri_gastos_operativos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_impuestos_iibb_cf">
@@ -1490,7 +1325,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Impuestos ingresos brutos CABA</field>
             <field name="parent_id" ref="ri_gastos_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_impuestos_iibb_ba">
@@ -1499,7 +1333,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Impuestos ingresos brutos Prov. Bs. As.</field>
             <field name="parent_id" ref="ri_gastos_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_impuestos_iibb_co">
@@ -1508,7 +1341,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Impuestos ingresos brutos Prov. Córdoba</field>
             <field name="parent_id" ref="ri_gastos_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_impuestos_iibb_sf">
@@ -1517,7 +1349,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Impuestos ingresos brutos Prov. Santa Fé</field>
             <field name="parent_id" ref="ri_gastos_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_impuestos_a_las_ganancias">
@@ -1526,7 +1357,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Impuestos a las ganancias</field>
             <field name="parent_id" ref="ri_gastos_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_impuestos_transacciones_bancarias">
@@ -1535,7 +1365,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Impuestos a los créditos bancarios</field>
             <field name="parent_id" ref="ri_gastos_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_impuestos_transacciones_bancarias">
@@ -1544,7 +1373,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Impuestos a los débitos bancarios</field>
             <field name="parent_id" ref="ri_gastos_fiscales"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_otros_gastos">
@@ -1553,7 +1381,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">OTROS GASTOS </field>
             <field name="parent_id" ref="ri_gastos_operativos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_intereses_y_recargos">
@@ -1562,7 +1389,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Intereses y recargos</field>
             <field name="parent_id" ref="ri_otros_gastos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_gastos_no_operativos">
@@ -1571,7 +1397,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS NO OPERATIVOS</field>
             <field name="parent_id" ref="ri_gastos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_amortizaciones">
@@ -1580,7 +1405,6 @@
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">AMORTIZACIONES</field>
             <field name="parent_id" ref="ri_gastos_no_operativos"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_amortizaciones_equipos_computacion">
@@ -1589,7 +1413,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Amortizaciones maquinaria y equipos</field>
             <field name="parent_id" ref="ri_amortizaciones"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_amortizaciones_instalaciones">
@@ -1598,7 +1421,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Amortizaciones instalaciones</field>
             <field name="parent_id" ref="ri_amortizaciones"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_amortizacion_muebles_y_utiles">
@@ -1607,7 +1429,6 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Amortizacion muebles y útiles</field>
             <field name="parent_id" ref="ri_amortizaciones"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
 
         <record model="account.account.template" id="ri_amortizacion_rodados">
@@ -1616,8 +1437,8 @@
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Amortizacion rodados</field>
             <field name="parent_id" ref="ri_amortizaciones"/>
-            <!-- <field name="company_id" ref=""/> -->
         </record>
+
 
 #
 # Tax Code Templates
@@ -2063,22 +1884,6 @@
                             <field name="type">tax</field>
                             <field name="application">provincial_taxes</field>
                         </record>
-
-#
-# Chart Template
-#
-        <record id="ri_l10nAR_chart_template" model="account.chart.template">
-            <field name="name">Plan Contable Genérico de Argentina para Responsables Inscriptos</field>
-            <field name="account_root_id" ref="ri_a_root"/>
-            <field name="code_digits">7</field>
-            <field name="tax_code_root_id" ref="ri_tax_code_chart_root"/>
-            <field name="bank_account_view_id" ref="ri_bancos"/>
-            <field name="property_account_receivable" ref="ri_deudores_por_ventas"/>
-            <field name="property_account_payable" ref="ri_pago_proveedores"/>
-            <field name="property_account_expense_categ" ref="ri_mercaderia"/>
-            <field name="property_account_income_categ" ref="ri_venta_de_mercaderia"/>
-        </record>
-
 
 #
 # Tax Template

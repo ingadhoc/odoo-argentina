@@ -23,7 +23,8 @@ Tax Settlement
         'security/ir.model.access.csv',
     ],
     'demo': [
-        'demo/demo_data.xml',
+        # No podemos usar estos datos demo porque este modulo no depende del chart of account
+        # 'demo/demo_data.xml',
     ],
     'test': [
     ],

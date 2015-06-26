@@ -1913,8 +1913,8 @@
             <field name="type">none</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_venta_no_gravado"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta_no_gravado"/>
-            <field name="account_collected_id" ref="ri_iva_a_pagar"/>
-            <field name="account_paid_id" ref="ri_iva_a_pagar"/>
+            <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">sale</field>
         </record>
 
@@ -1939,8 +1939,8 @@
             <field name="type">none</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_venta_exento"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta_exento"/>
-            <field name="account_collected_id" ref="ri_iva_a_pagar"/>
-            <field name="account_paid_id" ref="ri_iva_a_pagar"/>
+            <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">sale</field>
         </record>
 
@@ -1966,8 +1966,8 @@
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_venta0"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta0"/>
-            <field name="account_collected_id" ref="ri_iva_a_pagar"/>
-            <field name="account_paid_id" ref="ri_iva_a_pagar"/>
+            <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">sale</field>
         </record>
 
@@ -1994,8 +1994,8 @@
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_venta10"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta10"/>
-            <field name="account_collected_id" ref="ri_iva_a_pagar"/>
-            <field name="account_paid_id" ref="ri_iva_a_pagar"/>
+            <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">sale</field>
         </record>
 
@@ -2022,8 +2022,8 @@
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_venta21"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta21"/>
-            <field name="account_collected_id" ref="ri_iva_a_pagar"/>
-            <field name="account_paid_id" ref="ri_iva_a_pagar"/>
+            <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">sale</field>
         </record>
 
@@ -2050,8 +2050,8 @@
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_venta27"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta27"/>
-            <field name="account_collected_id" ref="ri_iva_a_pagar"/>
-            <field name="account_paid_id" ref="ri_iva_a_pagar"/>
+            <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">sale</field>
         </record>
 

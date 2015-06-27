@@ -23,7 +23,7 @@
                     <sheet>
                         <group>
                             <field name="tax_code_id"/>
-                            <field name="move_line_ids"/>
+                            <field name="move_line_ids" context="{'search_default_posted': 1}" widget="many2many" domain="[('tax_code_id','=',tax_code_id), ('tax_settlement_detail_id','=',False)]"/>
                         </group>
                     </sheet>
                 </form>

@@ -34,17 +34,23 @@ class account_tax_settlement_detail(models.Model):
         settlement = self.tax_settlement_id
         domain = [
             ('tax_code_id', '=', self.tax_code_id.id),
-            ('move_id.state', '=', settlement.moves_state),
+            ('tax_settlement_detail_id', '=', False),
             ]
+        self.move_line_ids = False
+
+        if settlement.moves_state == 'posted':
+            domain.append(('move_id.state', '=', settlement.moves_state))
+
         if settlement.filter == 'filter_period':
             # TODO revisar como hacer este filtro
             domain += [
-                ('period_id', '=>', settlement.period_from_id.id),
-                ('period_id', '<', settlement.period_to_id.id)]
+                ('period_id', 'in', settlement.period_ids.ids)]
         elif settlement.filter == 'filter_date':
             domain += [
-                ('date', '=>', settlement.date_from),
-                ('period_id', '<', settlement.date_to)]
+                ('move_id.date', '>=', settlement.date_from),
+                # ('date', '=>', fields.Date.from_string(settlement.date_from)),
+                ('move_id.date', '<', settlement.date_to)]
+                # ('date', '<', fields.Date.from_string(settlement.date_to))]
         else:
             domain.append(
                 ('period_id.fiscalyear_id', '=', settlement.fiscalyear_id.id))
@@ -72,18 +78,26 @@ class account_tax_settlement(models.Model):
         default='filter_no',
         required=True
         )
-    period_from_id = fields.Many2one(
+    period_ids = fields.Many2many(
         'account.period',
-        'Start Period',
+        'account_tax_settlement_period_rel',
+        'settlement_id', 'period_id',
+        'Periods',
         readonly=True,
         states={'draft': [('readonly', False)]},
         )
-    period_to_id = fields.Many2one(
-        'account.period',
-        'End Period',
-        readonly=True,
-        states={'draft': [('readonly', False)]},
-        )
+    # period_from_id = fields.Many2one(
+    #     'account.period',
+    #     'Start Period',
+    #     readonly=True,
+    #     states={'draft': [('readonly', False)]},
+    #     )
+    # period_to_id = fields.Many2one(
+    #     'account.period',
+    #     'End Period',
+    #     readonly=True,
+    #     states={'draft': [('readonly', False)]},
+    #     )
     date_from = fields.Date(
         "Start Date"
         )
@@ -124,7 +138,7 @@ class account_tax_settlement(models.Model):
         'Title',
         compute='_get_name')
     moves_state = fields.Selection(
-        [('draft', 'Unposted'), ('posted', 'Posted')],
+        [('posted', 'Posted Entries'), ('all', 'All Entries')],
         'Moves Status',
         required=True,
         readonly=True,
@@ -146,11 +160,14 @@ class account_tax_settlement(models.Model):
             raise Warning(_('Tax settlement company and journal company must be the same'))
 
     @api.one
-    # @api.depends('period_id', 'fiscalyear_id')
     def _get_name(self):
-        # TODo arreglar este name
-        name = _('Tax Settlment %s') % (
-            self.period_from_id.name or self.fiscalyear_id.name)
+        if self.filter == 'filter_period' and self.period_ids:
+            filter_name = ', '.join(self.period_ids.mapped('name'))
+        elif self.filter == 'filter_date' and self.date_from and self.date_to:
+            filter_name = "%s - %s" % (self.date_from, self.date_to)
+        else:
+            filter_name = self.fiscalyear_id.name
+        name = _('Tax Settlment %s') % (filter_name)
         self.name = name
 
     @api.one

@@ -26,6 +26,12 @@
         Account Journal
         -->
 
+        <record id="point_of_sale_1" model="afip.point_of_sale">
+            <field name="name">Punto de ventas 0001 (Pre impresos)</field>
+            <field name="number" eval="1"/>
+            <field name="company_id" ref="company_ri"/>
+        </record>
+
         <record id="sales_journal" model="account.journal">
             <field name="name">Factura Ventas 0001</field>
             <field name="code">FAV01</field>
@@ -34,8 +40,10 @@
             <field name="default_credit_account_id" ref="ri_venta_de_mercaderia"/>
             <field name="default_debit_account_id" ref="ri_venta_de_mercaderia"/>
             <!-- <field name="analytic_journal_id" ref="cose_journal_sale"/> -->
+            <field name="use_documents" eval="True"/>
             <field name="user_id" ref="base.user_root"/>
             <field name="company_id" ref="company_ri"/>
+            <field name="point_of_sale_id" ref="point_of_sale_1"/>
         </record>
         <record id="refund_sales_journal" model="account.journal">
             <field name="name">Nota de Crédito Ventas 0001</field>
@@ -45,8 +53,10 @@
             <field name="default_credit_account_id" ref="ri_venta_de_mercaderia"/>
             <field name="default_debit_account_id" ref="ri_venta_de_mercaderia"/>
             <!-- <field name="analytic_journal_id" ref="cose_journal_sale"/> -->
+            <field name="use_documents" eval="True"/>
             <field name="user_id" ref="base.user_root"/>
             <field name="company_id" ref="company_ri"/>
+            <field name="point_of_sale_id" ref="point_of_sale_1"/>
         </record>
 
         <record id="expenses_journal" model="account.journal">
@@ -57,6 +67,7 @@
             <field name="default_debit_account_id" ref="ri_mercaderia"/>
             <field name="default_credit_account_id" ref="ri_mercaderia"/>
             <!-- <field name="analytic_journal_id" ref="exp"/> -->
+            <field name="use_documents" eval="True"/>
             <field name="user_id" ref="base.user_root"/>
             <field name="company_id" ref="company_ri"/>
         </record>
@@ -68,6 +79,7 @@
             <field name="default_debit_account_id" ref="ri_mercaderia"/>
             <field name="default_credit_account_id" ref="ri_mercaderia"/>
             <!-- <field name="analytic_journal_id" ref="exp"/> -->
+            <field name="use_documents" eval="True"/>
             <field name="user_id" ref="base.user_root"/>
             <field name="company_id" ref="company_ri"/>
         </record>

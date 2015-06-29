@@ -6,9 +6,10 @@
             <field name="model">account.tax.settlement</field>
             <field name='arch' type='xml'>
                 <tree colors="blue:state == 'draft';gray:state == 'cancel'" string="Tax Settlement">
-                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="journal_id"/>
                     <field name="fiscalyear_id"/>
                     <!-- <field name="period_id"/> -->
+                    <field name="company_id" groups="base.group_multi_company"/>
                     <field name="state"/>
                 </tree>
             </field>

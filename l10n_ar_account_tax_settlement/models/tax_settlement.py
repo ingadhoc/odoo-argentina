@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp import fields, api, models, _
 from openerp.exceptions import Warning
+import openerp.addons.decimal_precision as dp
 import time
 
 
@@ -25,8 +26,19 @@ class account_tax_settlement_detail(models.Model):
         string="Move Lines",
         )
     tax_amount = fields.Float(
-        'Amount',
+        'Tax Amount',
         compute='get_amounts',
+        digits_compute=dp.get_precision('Account'),
+        )
+    debit_amount = fields.Float(
+        'Debit Amount',
+        compute='get_amounts',
+        digits_compute=dp.get_precision('Account'),
+        )
+    credit_amount = fields.Float(
+        'Credit Amount',
+        compute='get_amounts',
+        digits_compute=dp.get_precision('Account'),
         )
 
     @api.one
@@ -62,6 +74,42 @@ class account_tax_settlement_detail(models.Model):
     def get_amounts(self):
         self.tax_amount = self.tax_code_id.sign * sum(
             self.move_line_ids.mapped('tax_amount'))
+        self.credit_amount = sum(
+            self.move_line_ids.mapped('credit'))
+        self.debit_amount = sum(
+            self.move_line_ids.mapped('debit'))
+
+    @api.multi
+    def prepare_line_values(self):
+        self.ensure_one()
+        res = []
+        grouped_lines = self.move_line_ids.read_group(
+            domain=[('id', 'in', self.move_line_ids.ids)],
+            fields=['id', 'debit', 'credit', 'tax_amount', 'account_id'],
+            groupby=['account_id'],
+            )
+
+        for line in grouped_lines:
+            if not line['tax_amount'] and line['debit'] == line['credit']:
+                continue
+
+            debit = 0.0
+            credit = 0.0
+            if line['credit'] > line['debit']:
+                debit = line['credit'] - line['debit']
+            else:
+                credit = line['debit'] - line['credit']
+
+            vals = {
+                'name': 'asdasd',
+                'debit': debit,
+                'credit': credit,
+                'account_id': line['account_id'][0],
+                'tax_code_id': self.tax_code_id.id,
+                'tax_amount': -1.0 * line['tax_amount'],
+            }
+            res.append(vals)
+        return res
 
 
 class account_tax_settlement(models.Model):
@@ -70,6 +118,125 @@ class account_tax_settlement(models.Model):
     _inherit = ['mail.thread']
     # _order = 'period_id desc'
 
+    balance_amount = fields.Float(
+        'Balance Amount',
+        compute='_get_balance',
+        digits_compute=dp.get_precision('Account'),
+        )
+    balance_tax_amount = fields.Float(
+        'Balance Tax Amount',
+        compute='_get_balance',
+        digits_compute=dp.get_precision('Account'),
+        )
+    balance_account_id = fields.Many2one(
+        'account.account',
+        'Balance Account',
+        compute='_get_balance',
+        digits_compute=dp.get_precision('Account'),
+        )
+
+    @api.one
+    @api.depends('tax_settlement_detail_ids')
+    def _get_balance(self):
+        credit_amount = sum(
+            self.tax_settlement_detail_ids.mapped('credit_amount'))
+        debit_amount = sum(
+            self.tax_settlement_detail_ids.mapped('debit_amount'))
+        balance_tax_amount = sum(
+            self.tax_settlement_detail_ids.mapped('tax_amount'))
+        balance_amount = credit_amount - debit_amount
+        if balance_amount >= 0:
+            balance_account = self.journal_id.default_credit_account_id
+        else:
+            balance_account = self.journal_id.default_debit_account_id
+        self.balance_amount = balance_amount
+        self.balance_account_id = balance_account.id
+        self.balance_tax_amount = balance_tax_amount
+
+    @api.multi
+    def action_present(self):
+        self.create_move()
+
+    @api.one
+    def action_cancel(self):
+        move = self.move_id
+        self.move_id = False
+        move.unlink()
+        self.state = 'cancel'
+
+    @api.multi
+    def action_to_draft(self):
+        self.write({'state': 'draft'})
+        return True
+
+    @api.multi
+    def get_final_line_vals(self):
+        res = {}
+        for line in self:
+            debit = 0.0
+            credit = 0.0
+            balance_amount = self.balance_amount
+            if balance_amount < 0:
+                debit = balance_amount
+            else:
+                credit = balance_amount
+            vals = {
+                'name': 'asdasd',
+                'debit': debit,
+                'credit': credit,
+                'account_id': self.balance_account_id.id,
+                # TODO
+                # 'tax_code_id': self.tax_code_id.id,
+                # 'tax_amount': -1.0 * line['tax_amount'],
+            }
+            res[self.id] = vals
+        return res
+
+    @api.one
+    def create_move(self):
+        if not self.period_id or not self.date:
+            raise Warning('not implemented! you must configure date and period')
+
+        move_lines_vals = []
+        debit = 0.0
+        credit = 0.0
+        for tax in self:
+            for tax in self.tax_settlement_detail_ids:
+                for line_vals in tax.prepare_line_values():
+                    credit += line_vals['credit']
+                    debit += line_vals['debit']
+                    move_lines_vals.append((0, 0, line_vals))
+                    # self.move_id.line_id.create(line_vals)
+        move_lines_vals.append(
+            (0, 0, self.get_final_line_vals()[self.id]))
+        move_vals = {
+            'ref': 'asdasda',
+            'period_id': self.period_id.id,
+            'date': self.date,
+            # 'ref': inv.reference or inv.name,
+            'line_id': move_lines_vals,
+            'journal_id': self.journal_id.id,
+            # 'date': inv.date_invoice,
+            # 'narration': inv.comment,
+            'company_id': self.company_id.id,
+            }
+        move = self.move_id.create(move_vals)
+        self.write({
+            'move_id': move.id,
+            'state': 'presented',
+            })
+
+    move_line_ids = fields.One2many(
+        related='move_id.line_id',
+        )
+    move_id = fields.Many2one(
+        'account.move',
+        string='Journal Entry',
+        readonly=True,
+        ondelete='restrict',
+        copy=False,
+        help="Link to the automatically generated Journal Items."
+        )
     filter = fields.Selection([
         ('filter_no', 'No Filters'),
         ('filter_date', 'Date'),
@@ -77,6 +244,14 @@ class account_tax_settlement(models.Model):
         "Filter by",
         default='filter_no',
         required=True
+        )
+    date = fields.Date(
+        'Date',
+        help='Date to be used on created move',
+        )
+    period_id = fields.Many2one(
+        'account.period',
+        help='Period to be used on created move',
         )
     period_ids = fields.Many2many(
         'account.period',

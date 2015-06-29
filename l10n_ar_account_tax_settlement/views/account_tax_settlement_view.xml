@@ -35,6 +35,8 @@
                                 <field name="journal_id" domain="[('type', '=', 'general'), ('tax_code_id', '!=', False), ('company_id', '=', company_id)]"/>
                                 <field name="fiscalyear_id" domain="[('company_id','=',company_id)]"/>
                                 <field name="moves_state"/>
+                                <field name="date"/>
+                                <field name="period_id"/>
                             </group>
                             <group>
                                 <field name="filter"/>
@@ -44,6 +46,9 @@
                                     <field name="date_to" attrs="{'required':[('filter', '=', 'filter_date')]}" class="oe_inline"/>
                                 </div>
                                 <field name="period_ids" widget="many2many_tags" attrs="{'required':[('filter', '=', 'filter_period')],'invisible':[('filter', '!=', 'filter_period')]}" class="oe_inline" domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>
+                                <field name="balance_amount"/>
+                                <field name="balance_tax_amount"/>
+                                <field name="balance_account_id"/>
                                 <!-- <label for="period_from_id" string="Periods" attrs="{'invisible':[('filter', '!=', 'filter_period')]}"/> -->
                                 <!-- <div attrs="{'invisible':[('filter', '!=', 'filter_period')]}" name="period_range">
                                     <field name="period_from_id" attrs="{'required':[('filter', '=', 'filter_period')]}" class="oe_inline" domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>-
@@ -69,6 +74,25 @@
                                         <field name="amount_tax" sum="Total"/>
                                         <field name="amount_total" sum="Total"/>
                                     </tree> -->
+                                </field>
+                            </page>
+                            <page string="asdasd">
+                                <group>
+                                    <field name="move_id"/>
+                                </group>
+                                <field name="move_line_ids">
+                                    <tree colors="blue:state == 'draft';black:state == 'posted'" editable="top" string="Journal Items">
+                                        <field name="name"/>
+                                        <field name="partner_id" domain="['|', ('parent_id', '=', False), ('is_company', '=', True)]" on_change="onchange_partner_id(False, partner_id, account_id, debit, credit, parent.date, parent.journal_id, context)"/>
+                                        <field name="account_id" domain="[('journal_id','=',parent.journal_id),('company_id', '=', parent.company_id)]"/>
+                                        <field name="date_maturity"/>
+                                        <field name="debit" sum="Total Debit"/>
+                                        <field name="credit" sum="Total Credit"/>
+                                        <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                                        <field name="tax_code_id"/>
+                                        <field name="tax_amount" sum="Total Tax"/>
+                                        <field name="state" invisible="1"/>
+                                    </tree>
                                 </field>
                             </page>
                             <!-- <page string="Summary" name="summary">

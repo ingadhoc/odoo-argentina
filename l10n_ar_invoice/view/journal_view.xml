@@ -20,7 +20,6 @@
             <field name="arch" type="xml">
                 <field name="type" position="after">
                     <field name="use_documents" attrs="{'invisible': [('type','not in',['purchase','sale','purchase_refund','sale_refund'])]}"/>
-                    <field name="tax_code_id" attrs="{'invisible': [('type','!=','general')]}"/>
                 </field>
                     
                 <notebook position="inside">

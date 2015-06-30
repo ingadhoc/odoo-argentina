@@ -17,8 +17,9 @@ Tax Settlement
         'l10n_ar_invoice',
     ],
     'data': [
-        'views/account_tax_settlement_view.xml',
+        'views/account_journal_view.xml',
         'views/account_tax_settlement_detail_view.xml',
+        'views/account_tax_settlement_view.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
     ],

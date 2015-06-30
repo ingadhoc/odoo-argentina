@@ -101,7 +101,7 @@ class account_tax_settlement_detail(models.Model):
                 credit = line['debit'] - line['credit']
 
             vals = {
-                'name': 'asdasd',
+                'name': self.tax_settlement_id.name,
                 'debit': debit,
                 'credit': credit,
                 'account_id': line['account_id'][0],
@@ -118,6 +118,10 @@ class account_tax_settlement(models.Model):
     _inherit = ['mail.thread']
     # _order = 'period_id desc'
 
+    tax_codes_count = fields.Float(
+        '# Tax Codes',
+        compute='_get_tax_codes_count',
+        )
     balance_amount = fields.Float(
         'Balance Amount',
         compute='_get_balance',
@@ -134,100 +138,15 @@ class account_tax_settlement(models.Model):
         compute='_get_balance',
         digits_compute=dp.get_precision('Account'),
         )
-
-    @api.one
-    @api.depends('tax_settlement_detail_ids')
-    def _get_balance(self):
-        credit_amount = sum(
-            self.tax_settlement_detail_ids.mapped('credit_amount'))
-        debit_amount = sum(
-            self.tax_settlement_detail_ids.mapped('debit_amount'))
-        balance_tax_amount = sum(
-            self.tax_settlement_detail_ids.mapped('tax_amount'))
-        balance_amount = credit_amount - debit_amount
-        if balance_amount >= 0:
-            balance_account = self.journal_id.default_credit_account_id
-        else:
-            balance_account = self.journal_id.default_debit_account_id
-        self.balance_amount = balance_amount
-        self.balance_account_id = balance_account.id
-        self.balance_tax_amount = balance_tax_amount
-
-    @api.multi
-    def action_present(self):
-        self.create_move()
-
-    @api.one
-    def action_cancel(self):
-        move = self.move_id
-        self.move_id = False
-        move.unlink()
-        self.state = 'cancel'
-
-    @api.multi
-    def action_to_draft(self):
-        self.write({'state': 'draft'})
-        return True
-
-    @api.multi
-    def get_final_line_vals(self):
-        res = {}
-        for line in self:
-            debit = 0.0
-            credit = 0.0
-            balance_amount = self.balance_amount
-            if balance_amount < 0:
-                debit = balance_amount
-            else:
-                credit = balance_amount
-            vals = {
-                'name': 'asdasd',
-                'debit': debit,
-                'credit': credit,
-                'account_id': self.balance_account_id.id,
-                # TODO
-                # 'tax_code_id': self.tax_code_id.id,
-                # 'tax_amount': -1.0 * line['tax_amount'],
-            }
-            res[self.id] = vals
-        return res
-
-    @api.one
-    def create_move(self):
-        if not self.period_id or not self.date:
-            raise Warning('not implemented! you must configure date and period')
-
-        move_lines_vals = []
-        debit = 0.0
-        credit = 0.0
-        for tax in self:
-            for tax in self.tax_settlement_detail_ids:
-                for line_vals in tax.prepare_line_values():
-                    credit += line_vals['credit']
-                    debit += line_vals['debit']
-                    move_lines_vals.append((0, 0, line_vals))
-                    # self.move_id.line_id.create(line_vals)
-        move_lines_vals.append(
-            (0, 0, self.get_final_line_vals()[self.id]))
-        move_vals = {
-            'ref': 'asdasda',
-            'period_id': self.period_id.id,
-            'date': self.date,
-            # 'ref': inv.reference or inv.name,
-            'line_id': move_lines_vals,
-            'journal_id': self.journal_id.id,
-            # 'date': inv.date_invoice,
-            # 'narration': inv.comment,
-            'company_id': self.company_id.id,
-            }
-        move = self.move_id.create(move_vals)
-        self.write({
-            'move_id': move.id,
-            'state': 'presented',
-            })
-
+    balance_tax_code_id = fields.Many2one(
+        'account.tax.code',
+        'Balance Tax Code',
+        compute='_get_balance',
+        digits_compute=dp.get_precision('Account'),
+        )
     move_line_ids = fields.One2many(
         related='move_id.line_id',
+        readonly=True,
         )
     move_id = fields.Many2one(
         'account.move',
@@ -243,15 +162,21 @@ class account_tax_settlement(models.Model):
         ('filter_period', 'Periods')],
         "Filter by",
         default='filter_no',
-        required=True
+        required=True,
+        readonly=True,
+        states={'draft': [('readonly', False)]},
         )
     date = fields.Date(
         'Date',
         help='Date to be used on created move',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
         )
     period_id = fields.Many2one(
         'account.period',
         help='Period to be used on created move',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
         )
     period_ids = fields.Many2many(
         'account.period',
@@ -261,23 +186,15 @@ class account_tax_settlement(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)]},
         )
-    # period_from_id = fields.Many2one(
-    #     'account.period',
-    #     'Start Period',
-    #     readonly=True,
-    #     states={'draft': [('readonly', False)]},
-    #     )
-    # period_to_id = fields.Many2one(
-    #     'account.period',
-    #     'End Period',
-    #     readonly=True,
-    #     states={'draft': [('readonly', False)]},
-    #     )
     date_from = fields.Date(
-        "Start Date"
+        "Start Date",
+        readonly=True,
+        states={'draft': [('readonly', False)]},
         )
     date_to = fields.Date(
-        "End Date"
+        "End Date",
+        readonly=True,
+        states={'draft': [('readonly', False)]},
         )
     company_id = fields.Many2one(
         'res.company', string='Company', required=True,
@@ -327,6 +244,104 @@ class account_tax_settlement(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)]},
         )
+
+    @api.one
+    @api.depends('tax_settlement_detail_ids')
+    def _get_tax_codes_count(self):
+        self.tax_codes_count = len(self.tax_settlement_detail_ids)
+
+    @api.one
+    @api.depends('tax_settlement_detail_ids')
+    def _get_balance(self):
+        credit_amount = sum(
+            self.tax_settlement_detail_ids.mapped('credit_amount'))
+        debit_amount = sum(
+            self.tax_settlement_detail_ids.mapped('debit_amount'))
+        balance_tax_amount = sum(
+            self.tax_settlement_detail_ids.mapped('tax_amount'))
+        balance_amount = credit_amount - debit_amount
+        if balance_amount >= 0:
+            balance_account = self.journal_id.default_credit_account_id
+            balance_tax_code = self.journal_id.default_credit_tax_code_id
+        else:
+            balance_account = self.journal_id.default_debit_account_id
+            balance_tax_code = self.journal_id.default_debit_tax_code_id
+        self.balance_amount = balance_amount
+        self.balance_account_id = balance_account.id
+        self.balance_tax_code_id = balance_tax_code.id
+        self.balance_tax_amount = balance_tax_amount
+
+    @api.multi
+    def action_present(self):
+        self.create_move()
+
+    @api.one
+    def action_cancel(self):
+        move = self.move_id
+        self.move_id = False
+        move.unlink()
+        self.state = 'cancel'
+
+    @api.multi
+    def action_to_draft(self):
+        self.write({'state': 'draft'})
+        return True
+
+    @api.multi
+    def get_final_line_vals(self):
+        res = {}
+        for line in self:
+            debit = 0.0
+            credit = 0.0
+            balance_amount = self.balance_amount
+            if balance_amount < 0:
+                debit = balance_amount
+            else:
+                credit = balance_amount
+            vals = {
+                'name': self.name,
+                'debit': debit,
+                'credit': credit,
+                'account_id': self.balance_account_id.id,
+                'tax_code_id': self.balance_tax_code_id.id,
+                'tax_amount': self.balance_tax_amount,
+            }
+            res[self.id] = vals
+        return res
+
+    @api.one
+    def create_move(self):
+        if not self.period_id or not self.date:
+            raise Warning('not implemented! you must configure date and period')
+
+        if not self.journal_id.sequence_id:
+            raise Warning(_('Please define a sequence on the journal.'))
+        name = self.journal_id.sequence_id._next()
+        move_lines_vals = []
+        debit = 0.0
+        credit = 0.0
+        for tax in self:
+            for tax in self.tax_settlement_detail_ids:
+                for line_vals in tax.prepare_line_values():
+                    credit += line_vals['credit']
+                    debit += line_vals['debit']
+                    move_lines_vals.append((0, 0, line_vals))
+        move_lines_vals.append(
+            (0, 0, self.get_final_line_vals()[self.id]))
+        move_vals = {
+            'ref': self.name,
+            'name': name,
+            'period_id': self.period_id.id,
+            'date': self.date,
+            'line_id': move_lines_vals,
+            'journal_id': self.journal_id.id,
+            'company_id': self.company_id.id,
+            }
+        move = self.move_id.create(move_vals)
+        self.write({
+            'move_id': move.id,
+            'state': 'presented',
+            })
 
     @api.one
     @api.constrains('company_id', 'journal_id')

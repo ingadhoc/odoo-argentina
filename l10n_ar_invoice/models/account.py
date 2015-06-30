@@ -232,11 +232,6 @@ class account_journal_afip_document_class(models.Model):
 class account_journal(models.Model):
     _inherit = "account.journal"
 
-    tax_code_id = fields.Many2one(
-        'account.tax.code',
-        'Tax Code',
-        help='Set a tax code if you want to use this journal for tax declaration'
-        )
     journal_document_class_ids = fields.One2many(
         'account.journal.afip_document_class',
         'journal_id',
@@ -329,13 +324,6 @@ class account_journal(models.Model):
         if self.point_of_sale_id and self.point_of_sale_id.company_id != self.company_id:
             raise Warning(_('The company of the point of sale and of the \
                 journal must be the same!'))
-
-    @api.one
-    @api.constrains('company_id', 'tax_code_id')
-    def check_company(self):
-        if self.tax_code_id and self.company_id != self.tax_code_id.company_id:
-            raise Warning(_(
-                'Journal company and journal company must be the same'))
 
 
 class res_currency(models.Model):

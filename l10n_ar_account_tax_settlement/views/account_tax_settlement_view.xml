@@ -21,24 +21,23 @@
 			<field name='arch' type='xml'>
 	            <form string="Tax Settlement">
                     <header>
-                        <!-- <button name="action_print" string="Print" states="draft" type="object" class="oe_highlight"/> -->
-                        <!-- <button name="action_print" string="Print" states="cancel,presented" type="object"/> -->
                         <button name="action_present" string="Present" states="draft" type="object" class="oe_highlight"/>
                         <button name="action_cancel" string="Cancel" states="draft,presented" type="object"/>
                         <button name="action_to_draft" string="To Draft" states="cancel" type="object"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,presented"/>
                     </header>
                     <sheet>
+                        <div class="oe_right oe_button_box" name="buttons">
+                            <button type="action" class="oe_stat_button" id="invoice_button" icon="fa-pencil-square-o" name="%(action_account_vat_settlement_detail)d">
+                                <field name="tax_codes_count" widget="statinfo"/>
+                            </button>
+                        </div>
                         <group>
-                           <group>
+                           <group string="Filters">
                                 <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                                 <field name="journal_id" domain="[('type', '=', 'general'), ('tax_code_id', '!=', False), ('company_id', '=', company_id)]"/>
                                 <field name="fiscalyear_id" domain="[('company_id','=',company_id)]"/>
                                 <field name="moves_state"/>
-                                <field name="date"/>
-                                <field name="period_id"/>
-                            </group>
-                            <group>
                                 <field name="filter"/>
                                 <label for="date_from" string="Dates" attrs="{'invisible':[('filter', '!=', 'filter_date')]}"/>
                                 <div attrs="{'invisible':[('filter', '!=', 'filter_date')]}" name="date_from">
@@ -46,37 +45,24 @@
                                     <field name="date_to" attrs="{'required':[('filter', '=', 'filter_date')]}" class="oe_inline"/>
                                 </div>
                                 <field name="period_ids" widget="many2many_tags" attrs="{'required':[('filter', '=', 'filter_period')],'invisible':[('filter', '!=', 'filter_period')]}" class="oe_inline" domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>
+                            </group>
+                            <group string="Move Data">
+                                <field name="date"/>
+                                <field name="period_id"/>
                                 <field name="balance_amount"/>
-                                <field name="balance_tax_amount"/>
                                 <field name="balance_account_id"/>
-                                <!-- <label for="period_from_id" string="Periods" attrs="{'invisible':[('filter', '!=', 'filter_period')]}"/> -->
-                                <!-- <div attrs="{'invisible':[('filter', '!=', 'filter_period')]}" name="period_range">
-                                    <field name="period_from_id" attrs="{'required':[('filter', '=', 'filter_period')]}" class="oe_inline" domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>-
-                                    <field name="period_to_id" attrs="{'required':[('filter', '=', 'filter_period')]}" class="oe_inline" domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>
-                                </div> -->
+                                <field name="balance_tax_amount"/>
+                                <field name="balance_tax_code_id"/>
                             </group>
                             <group>
                             </group>
     	                </group>
     	                <notebook>
-                            <page string="Move Lines" name="move_lines">
-                                <button name="compute" type="object" string="Compute"/>
-                                <field name="tax_settlement_detail_ids">
-                                <!-- <field name="move_line_ids"> -->
-<!--                                     <tree default_order="date_invoice">
-                                        <field name="state" invisible="1"/>
-                                        <field name="date_invoice"/>
-                                        <field name="document_number"/>
-                                        <field name="commercial_partner_id"/>
-                                        <field name="responsability_id"/>
-                                        <field name="formated_vat"/>
-                                        <field name="amount_untaxed" sum="Total"/>
-                                        <field name="amount_tax" sum="Total"/>
-                                        <field name="amount_total" sum="Total"/>
-                                    </tree> -->
-                                </field>
+                            <page string="Tax Code Lines" name="tax_code_lines">
+                                <button name="compute" type="object" string="Compute" states="draft"/>
+                                <field name="tax_settlement_detail_ids"/>
                             </page>
-                            <page string="asdasd">
+                            <page string="Journal Items" states="presented">
                                 <group>
                                     <field name="move_id"/>
                                 </group>
@@ -95,43 +81,6 @@
                                     </tree>
                                 </field>
                             </page>
-                            <!-- <page string="Summary" name="summary">
-                                <label for="document_class_ids"/>
-                                <field name="document_class_ids" context="{'tax_settlement_id': active_id}">
-                                    <tree>
-                                        <field name="name"/>
-                                        <field name="amount_untaxed" sum="Total"/>
-                                        <field name="amount_tax" sum="Total"/>
-                                        <field name="amount_total" sum="Total"/>
-                                    </tree>
-                                </field>
-                                <label for="responsability_ids"/>
-                                <field name="responsability_ids" context="{'tax_settlement_id': active_id}">
-                                    <tree>
-                                        <field name="name"/>
-                                        <field name="amount_untaxed" sum="Total"/>
-                                        <field name="amount_tax" sum="Total"/>
-                                        <field name="amount_total" sum="Total"/>
-                                    </tree>
-                                </field>
-                                <label for="vat_tax_code_ids"/>
-                                <field name="vat_tax_code_ids" context="{'tax_settlement_id': active_id}">
-                                    <tree>
-                                        <field name="name"/>
-                                        <field name="amount_untaxed" sum="Total"/>
-                                        <field name="amount_tax" sum="Total"/>
-                                    </tree>
-                                </field>
-                                <group>
-                                    <group attrs="{'invisible':[('other_taxes_amount','=',False)]}">
-                                        <label for="other_taxes_base" string="Other Taxes"/>
-                                        <div>
-                                            (<field name="other_taxes_base"  class="oe_inline"/>)
-                                            <field name="other_taxes_amount" class="oe_inline"/>
-                                        </div>
-                                    </group>
-                                </group>
-                            </page> -->
     	                    <page string="Notes" name="notes">
     	                        <field name="note"/>
     	                    </page>

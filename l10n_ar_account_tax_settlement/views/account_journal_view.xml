@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_journal_form" model="ir.ui.view">
+            <field name="model">account.journal</field>
+            <field name="name">account.journal.form</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <field name="default_credit_account_id" position="after">
+                    <field name="default_credit_tax_code_id" attrs="{'invisible': [('tax_code_id','=',False)]}"/>
+                </field>
+                <field name="default_debit_account_id" position="after">
+                    <field name="default_debit_tax_code_id" attrs="{'invisible': [('tax_code_id','=',False)]}"/>
+                </field>
+                <field name="type" position="after">
+                    <field name="tax_code_id" attrs="{'invisible': [('type','!=','general')]}"/>
+                </field>                
+            </field>
+        </record>
+
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
+     -->

@@ -22,14 +22,35 @@
                     <header>
                         <button name="get_move_lines" type="object" string="Compute"/>
                     </header>
-                    <sheet>
-                        <group>
+                    <group>
+                        <field name="tax_code_id"/>
+                    </group>
+                    <field name="move_line_ids" context="{'search_default_posted': 1}" widget="many2many" domain="[('tax_code_id','=',tax_code_id), ('tax_settlement_detail_id','=',False)]">
+                        <tree colors="blue:state == 'draft';black:state == 'posted'" string="Journal Items">
+                            <field name="journal_id"/>
+                            <field name="period_id"/>
+                            <field name="date"/>
+                            <field name="name"/>
+                            <field name="ref"/>
+                            <field name="partner_id"/>
+                            <field name="account_id"/>
+                            <field name="move_id"/>
+                            <field name="debit" sum="Total Debit"/>
+                            <field name="credit" sum="Total Credit"/>
+                            <field name="date_maturity"/>
+                            <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
                             <field name="tax_code_id"/>
-                        </group>
-                        <field name="move_line_ids" context="{'search_default_posted': 1}" widget="many2many" domain="[('tax_code_id','=',tax_code_id), ('tax_settlement_detail_id','=',False)]"/>
-                    </sheet>
+                            <field name="tax_amount" sum="Total Tax"/>
+                            <field name="state" invisible="1"/>
+                        </tree>
+                    </field>
                 </form>
             </field>
+        </record>
+        <record id="action_account_vat_settlement_detail" model="ir.actions.act_window">
+            <field name="name">Tax Settlement Detail</field>
+            <field name="res_model">account.tax.settlement.detail</field>
+            <field name="domain">[('tax_settlement_id','=',active_id)]</field>
         </record>
     </data>
 </openerp>

@@ -17,7 +17,8 @@ class wsafip_server(models.Model):
         'Name',
         required=True,
         )
-    code = fields.Char(
+    code = fields.Selection(
+        [('wsaa', 'Autentificación y Autorización')],
         'Code',
         required=True,
         )

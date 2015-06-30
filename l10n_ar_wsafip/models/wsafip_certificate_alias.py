@@ -97,6 +97,12 @@ class wsafip_certificate_alias(models.Model):
         help='* The \'Draft\' state is used when a user is creating a new pair key. Warning: everybody can see the key.\
         \n* The \'Confirmed\' state is used when the key is completed with public or private key.\
         \n* The \'Canceled\' state is used when the key is not more used. You cant use this key again.')
+    type = fields.Selection(
+        [('production', 'Production'), ('homologation', 'Homologation')],
+        'Type',
+        required=True,
+        default='production',
+        )
 
     @api.onchange('company')
     def change_company_name(self):

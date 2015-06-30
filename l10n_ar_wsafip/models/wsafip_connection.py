@@ -33,30 +33,43 @@ _intmax = 2147483647
 class wsafip_connection(models.Model):
 
     _name = "wsafip.connection"
+    _description = "AFIP WS Connection"
 
     name = fields.Char(
         'Name',
-        required=True
+        required=True,
+        readonly=True,
+        states={'disconnected': [('readonly', False)]},
         )
     partner_id = fields.Many2one(
         'res.partner',
         'Partner',
         required=True,
+        readonly=True,
+        states={'disconnected': [('readonly', False)]},
         )
     server_id = fields.Many2one(
         'wsafip.server',
         'Service Server',
         required=True,
+        domain=[('code', '!=', 'wsaa')],
+        readonly=True,
+        states={'disconnected': [('readonly', False)]},
         )
     logging_id = fields.Many2one(
         'wsafip.server',
         'Authorization Server',
         required=True,
+        domain=[('code', '=', 'wsaa')],
+        readonly=True,
+        states={'disconnected': [('readonly', False)]},
         )
     certificate_id = fields.Many2one(
         'wsafip.certificate',
         'Certificate',
-        domain=[('state', '=', 'confirmed')]
+        domain=[('state', '=', 'confirmed')],
+        readonly=True,
+        states={'disconnected': [('readonly', False)]},
         )
     uniqueid = fields.Integer(
         'Unique ID',
@@ -64,7 +77,7 @@ class wsafip_connection(models.Model):
         )
     token = fields.Text(
         'Token',
-        readonly=True
+        readonly=True,
         )
     sign = fields.Text(
         'Sign',
@@ -92,7 +105,7 @@ class wsafip_connection(models.Model):
     batch_sequence_id = fields.Many2one(
         'ir.sequence',
         'Batch Sequence',
-        readonly=False
+        readonly=False,
         )
 
     @api.one
@@ -183,6 +196,16 @@ class wsafip_connection(models.Model):
             'Sign': self.sign.encode('ascii'),
             'Cuit': self.partner_id.document_number,
         }
+
+    @api.multi
+    def do_disconnect(self):
+        self.write({
+            'sign': False,
+            'token': False,
+            'uniqueid': False,
+            'generationtime': False,
+            'expirationtime': False,
+            })
 
     @api.multi
     def do_login(self):

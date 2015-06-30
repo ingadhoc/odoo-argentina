@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp.osv import osv
 from openerp.tools.translate import _
+from openerp import fields
 from suds.client import Client
 from suds import WebFault
 import logging
@@ -54,9 +55,14 @@ def _update(pool, cr, uid, model_name, remote_list, can_create=True, domain=[]):
 
     return True
 
+
 class wsafip_server(osv.osv):
     _name = "wsafip.server"
     _inherit = "wsafip.server"
+
+    code = fields.Selection(
+        selection_add=[('wsfe', 'Web Service de Factura Electrónica')]
+        )
 
     """
     Ref: https://www.afip.gob.ar/fe/documentos/manual_desarrollador_COMPG_v2.pdf

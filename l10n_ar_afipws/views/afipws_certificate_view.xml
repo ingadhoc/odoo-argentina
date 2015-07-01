@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_afipws_certificate_form" model="ir.ui.view">
+            <field name="name">afipws.certificate.form</field>
+            <field name="model">afipws.certificate</field>
+            <field name="arch" type="xml">
+                <form string="AFIP Certificates">
+                    <header>
+                        <button name="action_request"
+                            type="object"
+                            states="draft"
+                            string="Request"
+                            />
+                        <button name="%(action_upload_certificate)d"
+                            type="action"
+                            states="waiting"
+                            string="Upload Certificate"
+                            />
+                        <button name="action_confirm"
+                            type="object"
+                            states="waiting"
+                            string="Confirm"
+                            />
+                        <button name="action_to_draft"
+                            type="object"
+                            states="cancel"
+                            string="To Draft"
+                            />
+                        <button name="action_cancel"
+                            type="object"
+                            states="draft,waiting,confirmed"
+                            string="Cancel"
+                            />
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet string="AFIP Certificates">
+                        <group>
+                            <field name="csr"/>
+                            <field name="request_filename" invisible="1"/>
+                            <field name="request_file" filename="request_filename"/>
+                            <field name="crt"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_afipws_certificate_tree" model="ir.ui.view">
+            <field name="name">afipws.certificate.tree</field>
+            <field name="model">afipws.certificate</field>
+            <field name="arch" type="xml">
+                <tree string="AFIP Certificates">
+                    <field name="create_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>

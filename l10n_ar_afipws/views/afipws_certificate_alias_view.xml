@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_afipws_certificate_alias_form" model="ir.ui.view">
+            <field name="name">afipws.certificate_alias.form</field>
+            <field name="model">afipws.certificate_alias</field>
+            <field name="arch" type="xml">
+                <form string="AFIP Certificates">
+                    <header>
+                        <button name="action_confirm"
+                            type="object"
+                            states="draft"
+                            string="Confirm"
+                            class="oe_highlight"
+                            help="Confirm and generate Key"
+                            />
+                        <button name="action_create_certificate_request"
+                            type="object"
+                            states="confirmed"
+                            class="oe_highlight"
+                            string="Create Certificate Request"
+                            />
+                        <button name="action_cancel"
+                            type="object"
+                            states="draft,confirmed"
+                            string="Cancel"
+                            />
+                        <button name="action_to_draft"
+                            type="object"
+                            states="cancel"
+                            string="To Draft"
+                            />
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet string="AFIP Certificates">
+                        <group>
+                            <field name="type"/>
+                            <field name="service_type"/>
+                            <field name="service_provider_cuit" attrs="{'invisible':[('service_type','!=','outsourced')],'required':[('service_type','=','outsourced')]}"/>
+                            <field name="company_id"/>
+                            <field name="company_cuit" attrs="{'invisible':[('service_type','!=','in_house')],'required':[('service_type','=','in_house')]}"/>
+                            <field name="common_name"/>
+                            <field name="country_id"/>
+                            <field name="state_id"/>
+                            <field name="city"/>
+                        </group>
+                        <notebook>
+                            <page string="Ceritificates">
+                                <field name="certificate_ids"/>
+                            </page>
+                            <page string="Key">
+                                <field name="key"/>
+                            </page>
+                        </notebook  >
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_afipws_certificate_alias_filter" model="ir.ui.view">
+            <field name="name">afipws.certificate_alias.filter</field>
+            <field name="model">afipws.certificate_alias</field>
+            <field name="arch" type="xml">
+                <search string="AFIP Certificates">
+                    <field name="type"/>
+                    <field name="common_name"/>
+                    <field name="company_id"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_afipws_certificate_alias_tree" model="ir.ui.view">
+            <field name="name">afipws.certificate_alias.tree</field>
+            <field name="model">afipws.certificate_alias</field>
+            <field name="arch" type="xml">
+                <tree string="AFIP Certificates">
+                    <field name="type"/>
+                    <field name="common_name"/>
+                    <field name="company_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_afipws_certificate_alias">
+            <field name="name">AFIP Certificate</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">afipws.certificate_alias</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Certificates" action="act_afipws_certificate_alias" id="menu_action_afipws_certificate_alias" parent="menu_afipws"/>
+
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4 -->

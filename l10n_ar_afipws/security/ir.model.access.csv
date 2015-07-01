@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_afipws_connection_manager,afipws.connection.manager,model_afipws_connection,base.group_user,1,1,1,1
+access_afipws_connection_user,afipws.connection.user,model_afipws_connection,,1,0,0,0
+access_afipws_certificate_alias_manager,afipws.certificate.alias.manager,model_afipws_certificate_alias,base.group_system,1,1,1,1
+access_afipws_certificate_alias_user,afipws.certificate.alias.user,model_afipws_certificate_alias,,1,0,0,0
+access_afipws_certificate_manager,afipws.certificate.manager,model_afipws_certificate,base.group_system,1,1,1,1
+access_afipws_certificate_user,afipws.certificate.user,model_afipws_certificate,,1,0,0,0

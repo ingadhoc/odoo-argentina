@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <!-- Generate request -->
+        <record id="view_wsafip_fe_config" model="ir.ui.view">
+            <field name="name">l10n_ar_wsafip_fe.config.form</field>
+            <field name="model">l10n_ar_wsafip_fe.config</field>
+            <field name="inherit_id" ref="base.res_config_installer"/>
+            <field name="arch" type="xml">
+                <form position="attributes">
+                    <attribute name="string">AFIP Web service Configuration - Request Generation</attribute>
+                </form>
+                <separator string="title" position="replace">
+                    <group>
+                        <field name="company_id" widget="selection"/>
+                        <field name="wsfe_certificate_id" widget="selection"/>
+                        <field name="wsfe_for_homologation"/>
+                        <field name="wsfe_point_of_sale_id" domain="[('company_id','=',company_id)]"/>
+                    </group>
+                </separator>
+            </field>
+        </record>
+
+        <record id="action_wsafip_fe_config" model="ir.actions.act_window">
+            <field name="name">Electronic Invoice Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">l10n_ar_wsafip_fe.config</field>
+            <field name="view_id" ref="view_wsafip_fe_config"/>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="wsafip_fe_config_todo" model="ir.actions.todo">
+            <field name="name">AFIP Electronic Invoice Web service Configuration - Setting POS</field>
+            <field name="action_id" ref="action_wsafip_fe_config"/>
+            <field name="sequence">40</field>
+            <field name="type">automatic</field>
+        </record>
+
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4: -->

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_company_inherit_form">
+            <field name="name">res.company.form.inherit</field>
+            <field name="inherit_id" ref="l10n_ar_afipws.view_company_inherit_form"/>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <button string="Aliases" position="after">
+                    <button name="wsfe_get_status" type="object" string="test"/>
+                </button>
+            </field>
+        </record>
+
+    </data>
+</openerp>

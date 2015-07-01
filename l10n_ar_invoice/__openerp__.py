@@ -24,6 +24,7 @@ Para actualizar el plan de cuentas de datos demo:
  'license': 'AGPL-3',
  'name': 'Facturación y Documentos AFIP - Argentina',
  'demo': [
+     'demo/res_country_state_demo.xml',
      'demo/partner_demo.xml',
      'demo/company_demo.xml',
      # TODO tal vez sea mejor estos dos ejecutarlos con una accion ya que al hacer un init dan error porque ya existen movimientos

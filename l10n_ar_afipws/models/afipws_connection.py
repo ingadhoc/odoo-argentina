@@ -96,8 +96,39 @@ class afipws_connection(models.Model):
                 'This method is for %s connections and you call it from an %s connection') % (
                 afip_ws, self.afip_ws))
 
-    @api.one
+    @api.multi
+    def connect(self):
+        """
+        Method to be called
+        """
+        self.ensure_one()
+        ws = self._connect(self.afip_ws)
+        if not ws:
+            raise Warning(_('AFIP Webservice %s not implemented yet' % (
+                self.afip_ws)))
+        # TODO implementar cache y proxy
+        # create the proxy and get the configuration system parameters:
+        # cfg = self.pool.get('ir.config_parameter')
+        # cache = cfg.get_param(cr, uid, 'pyafipws.cache', context=context)
+        # proxy = cfg.get_param(cr, uid, 'pyafipws.proxy', context=context)
+        wsdl = self.afip_ws_url+'?WSDL'
+        # connect to the webservice and call to the test method
+        ws.Conectar("", wsdl or "", "")
+        ws.Cuit = self.company_id.partner_id.document_number
+        ws.Token = self.token.encode('ascii')
+        ws.Sign = self.sign.encode('ascii')
+        return ws
+
+    @api.model
+    def _connect(self, afip_ws):
+        """
+        Method to be inherited
+        """
+        return False
+
+    @api.multi
     def get_auth(self):
+        self.ensure_one()
         if self.company_id.partner_id.document_type_id.name != 'CUIT':
             raise Warning(
                 _('Company Partner without CUIT! Please setup document type as CUIT in partner.'))

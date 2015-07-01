@@ -34,7 +34,6 @@ CP5CN91/bRNKRbbSiocjpZnj5hCwvKRt5nw5VQmoddNnIPdTiZ9+qq+7WTkYAiBH
 
         <record id="certificate_ri_1" model="afipws.certificate">
             <field name="alias_id" ref="certificate_alias_ri"/>
-            <field name="common_name">AFIP WS homologation - Responsable Inscripto SA</field>
             <field name="state">confirmed</field>
             <field name="csr">-----BEGIN CERTIFICATE REQUEST-----
 MIIB+DCCAWECAQAwgbcxCzAJBgNVBAYTAkFSMREwDwYDVQQIEwhTYW50YSBGZTEQ

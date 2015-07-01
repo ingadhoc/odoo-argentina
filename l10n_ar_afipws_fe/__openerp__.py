@@ -3,7 +3,10 @@
     'author': 'odoo - Team de Localización Argentina',
     'category': 'Localization/Argentina',
     'demo': [],
-    'depends': ['l10n_ar_afipws'],
+    'depends': [
+        'l10n_ar_afipws',
+        'web_ir_actions_act_window_message',
+        ],
     'description': """
 API y GUI para acceder a las Web Services de Factura Electrónica de la AFIP
 ===========================================================================
@@ -22,6 +25,7 @@ TODO analizar que hacemos con la clase afip error, a ver si la aprovechamos en a
         'views/journal_afip_document_class_view.xml',
         'views/wsfe_error_view.xml',
         'views/res_company_view.xml',
+        'views/afip_point_of_sale_view.xml',
         'data/afip.wsfe_error.csv',
         'security/ir.model.access.csv',
         # 'views/afipws_fe_config_view.xml',

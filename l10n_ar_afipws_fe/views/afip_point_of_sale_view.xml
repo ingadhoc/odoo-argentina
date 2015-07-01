@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_afip_point_of_sale_form" model="ir.ui.view">
+            <field name="name">afip.point_of_sale.form</field>
+            <field name="model">afip.point_of_sale</field>
+            <field name="inherit_id" ref="l10n_ar_invoice.view_afip_point_of_sale_form"/>
+            <field name="arch" type="xml">
+                <header>
+                    <button name="test_pyafipws_point_of_sales" string="asda" type="object" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
+                    <button name="test_pyafipws_dummy" string="asdasasa" type="object" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
+                </header>
+                <field name="number" position="before">
+                    <field name="afip_ws"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
+     -->

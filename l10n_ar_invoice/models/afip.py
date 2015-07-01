@@ -7,27 +7,67 @@ class afip_point_of_sale(models.Model):
     _name = 'afip.point_of_sale'
     _description = 'Afip Point Of Sale'
 
-    @api.one
-    @api.depends('number')
-    def _get_code(self):
-        code = False
-        if self.number:
-            # TODO rellenar el number a cuatro
-            code = str(self.number)
-        self.code = code
+    # @api.one
+    # @api.depends('number')
+    # def _get_code(self):
+    #     code = False
+    #     if self.number:
+    #         # TODO rellenar el number a cuatro
+    #         code = str(self.number)
+    #     self.code = code
+
     name = fields.Char(
         'Name', required=True)
     number = fields.Integer(
         'Number', required=True)
-    code = fields.Char(
-        'Code', compute="_get_code")
+    # code = fields.Char(
+    #     'Code', compute="_get_code")
     company_id = fields.Many2one(
         'res.company', 'Company', required=True,
         default=lambda self: self.env['res.company']._company_default_get(
             'afip.point_of_sale'),)
+    journal_ids = fields.One2many(
+        'account.journal',
+        'point_of_sale_id',
+        'Journals',
+        readonly=True,
+        )
+    document_sequence_type = fields.Selection(
+        [('own_sequence', 'Own Sequence'),
+            ('same_sequence', 'Same Invoice Sequence')],
+        string='Document Sequence Type',
+        default='own_sequence',
+        required=True,
+        help="Use own sequence or invoice sequence on Debit and Credit Notes?"
+        )
 
     _sql_constraints = [('number_unique', 'unique(number, company_id)',
                          'Number Must be Unique per Company!'), ]
+
+    @api.one
+    def generate_journals(self):
+        # TODO falta implementar la same sequence o
+        if self.journal_ids:
+            raise Warning(
+                'You can only generate journals when there are no journals already')
+        # create sale jouranl
+        vals = {
+            'name': "Facturas %s" % self.name,
+            'code': "FAV%02i" % self.number,
+            'type': 'sale',
+            'point_of_sale_id': self.id,
+            'company_id': self.company_id.id,
+            'use_documents': True,
+        }
+        self.journal_ids.create(vals)
+
+        # create sale refund jouranl
+        vals.update({
+            'name': "NC %s" % self.name,
+            'code': "NCV%02i" % self.number,
+            'type': 'sale_refund',
+        })
+        self.journal_ids.create(vals)
 
 
 class afip_document_class(models.Model):

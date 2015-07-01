@@ -7,12 +7,17 @@
             <field name="model">afip.point_of_sale</field>
             <field name="arch" type="xml">
                 <form string="AFIP Point Of Sale">
-                    <group>
-                        <field name="name"/>
-                        <field name='number'/>
-                        <field name='company_id'/>
-                        <field name='code'/>
-                    </group>
+                    <header>
+                        <button name="generate_journals" type="object" string="Generate Journals"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name" placeholder="For eg. 'Electrónica' o 'Manual Rosario'"/>
+                            <field name='number'/>
+                            <field name='company_id'/>
+                            <field name='journal_ids'/>
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -24,8 +29,8 @@
                 <tree string="AFIP Point Of Sale">
                     <field name="name"/>
                     <field name='number'/>
-                    <field name='company_id'/>                 
-                    <field name='code'/>
+                    <field name="document_sequence_type"/>
+                    <field name='company_id'/>
                 </tree>
             </field>
         </record>

@@ -248,13 +248,6 @@ class account_journal(models.Model):
     use_documents = fields.Boolean(
         'Use Documents?'
         )
-    document_sequence_type = fields.Selection(
-        [('own_sequence', 'Own Sequence'),
-            ('same_sequence', 'Same Invoice Sequence')],
-        string='Document Sequence Type',
-        default='own_sequence',
-        help="Use own sequence or invoice sequence on Debit and Credit Notes?"
-        )
 
     @api.one
     @api.constrains(
@@ -295,7 +288,7 @@ class account_journal(models.Model):
             if self.type in ['sale', 'sale_refund']:
                 # Si es nota de debito nota de credito y same sequence, no creamos la secuencia, buscamos una que exista
                 if document_class.document_type in [
-                        'debit_note', 'credit_note'] and self.document_sequence_type == 'same_sequence':
+                        'debit_note', 'credit_note'] and self.point_of_sale_id.document_sequence_type == 'same_sequence':
                     journal_documents = self.journal_document_class_ids.search(
                         [('afip_document_class_id.document_letter_id', '=', document_class.document_letter_id.id),
                          ('journal_id.point_of_sale', '=', self.point_of_sale)])

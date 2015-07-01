@@ -40,12 +40,14 @@
     <!-- Companies -->
         <record id="company_ri" model="res.company">
             <field name='parent_id' ref='base.main_company'/>
+            <field name='currency_id' ref='base.ARS'/>
             <field name='partner_id' ref='partner_ri'/>
             <field name='name'>Responsable Inscripto SA</field>
             <field name="use_argentinian_localization" eval="True"/>
         </record>
         <record id="company_mono" model="res.company">
             <field name='parent_id' ref='base.main_company'/>
+            <field name='currency_id' ref='base.ARS'/>
             <field name='partner_id' ref='partner_mono'/>
             <field name="use_argentinian_localization" eval="True"/>
             <field name='name'>Monotributista</field>

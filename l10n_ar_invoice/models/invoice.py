@@ -407,9 +407,9 @@ class account_invoice(models.Model):
                     afip_exempt_codes, invoice.id)))
             # TODO tal vez habria que verificar que cada linea tiene un iva configurado
             # TODO tal vez para monotributistas se le pueda cargar el vat 0 "no corresponde" y mantemeos el criterio de hacerlo obligatorio
-            if not invoice.vat_tax_ids:
-                        raise Warning(_(
-                            "Invoice id %i don't have any VAT tax." % invoice.id))
+            # if not invoice.vat_tax_ids:
+            #             raise Warning(_(
+            #                 "Invoice id %i don't have any VAT tax." % invoice.id))
 
     @api.multi
     def action_number(self):

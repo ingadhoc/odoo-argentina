@@ -4,6 +4,7 @@
     'category': 'Localization/Argentina',
     'demo': [
         'demo/certificate_demo.xml',
+        'demo/parameter_demo.xml',
     ],
     'depends': [
         'base',
@@ -12,6 +13,16 @@
     'description': """
 Configuración y API para acceder a las Web Services de la AFIP
 ==============================================================
+
+Homologation / production:
+--------------------------
+First it search for a paramter "afip.ws.env.type" if exists and:
+* is production --> production
+* is homologation --> homologation
+Else
+Search for 'server_mode' parameter on conf file. If that parameter is:
+* 'test' or 'develop' -->  homologation
+* other or no parameter -->  production
 
 Incluye:
 --------

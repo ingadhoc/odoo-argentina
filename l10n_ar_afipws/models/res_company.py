@@ -10,6 +10,8 @@ import suds
 from M2Crypto.X509 import X509Error
 import logging
 from openerp.exceptions import Warning
+import openerp.tools as tools
+import os
 
 _logger = logging.getLogger(__name__)
 
@@ -47,27 +49,81 @@ class res_company(models.Model):
     @api.model
     def _get_environment_type(self):
         """
-        Function to be inherited in order to define homologation/production
-        environment
+        Function to define homologation/production environment
+        First it search for a paramter "afip.ws.env.type" if exists and:
+        * is production --> production
+        * is homologation --> homologation
+        Else
+        Search for 'server_mode' parameter on conf file. If that parameter is:
+        * 'test' or 'develop' -->  homologation
+        * other or no parameter -->  production
         """
-        # TODO implementar leer en las keys y devolver homo o prod
-        # TODO tmb la posibilidad de leer keys almacenadas como parametros o globales, para tener las nuestras y que anden para testear a todos los clientes
-        return 'homologation'
+        parameter_env_type = self.env[
+            'ir.config_parameter'].get_param('afip.ws.env.type')
+        if parameter_env_type == 'production':
+            environment_type = 'production'
+        elif parameter_env_type == 'homologation':
+            environment_type = 'homologation'
+        else:
+            if tools.config.get('server_mode') in ('test', 'develop'):
+                environment_type = 'homologation'
+            else:
+                environment_type = 'production'
+        _logger.info(
+            'Running arg electronic invoice on %s mode' % environment_type)
+        return environment_type
 
     @api.multi
-    def _get_certificate(self, environment_type):
-        self.ensure_one()
+    def get_key_and_certificate(self, environment_type):
+        """
+        Funcion que busca para el environment_type definido,
+        una clave y un certificado en los siguientes lugares y segun estas
+        prioridades:
+        * en el conf del server de odoo
+        * en registros de esta misma clase
+        """
+        self.ensure_one
+        pkey = False
+        cert = False
+        msg = False
         certificate = self.env['afipws.certificate'].search([
             ('alias_id.company_id', '=', self.id),
             ('alias_id.type', '=', environment_type),
             ('state', '=', 'confirmed'),
             ], limit=1)
-        if not certificate:
-            raise Warning(_(
-                'Not confirmed certificate for %s on company %s') % (
-                    environment_type, self.name))
-
-        return certificate
+        if certificate:
+            pkey = certificate.alias_id.key
+            cert = certificate.crt
+            _logger.info('Using DB certificates')
+        # not certificate on bd, we search on odo conf file
+        else:
+            msg = _('Not confirmed certificate for %s on company %s') % (
+                environment_type, self.name)
+            pkey_path = False
+            cert_path = False
+            if environment_type == 'production':
+                pkey_path = tools.config.get('afip_prod_pkey_file')
+                cert_path = tools.config.get('afip_prod_cert_file')
+            else:
+                pkey_path = tools.config.get('afip_homo_pkey_file')
+                cert_path = tools.config.get('afip_homo_cert_file')
+            if pkey_path and cert_path:
+                try:
+                    if os.path.isfile(pkey_path) and os.path.isfile(cert_path):
+                        with open(pkey_path, "r") as pkey_file:
+                            pkey = pkey_file.read()
+                        with open(cert_path, "r") as cert_file:
+                            cert = cert_file.read()
+                    msg = 'Could not find %s or %s files' % (
+                        pkey_path, cert_path)
+                except:
+                    msg = 'Could not read %s or %s files' % (
+                        pkey_path, cert_path)
+                else:
+                    _logger.info('Using odoo conf certificates')
+        if not pkey or not cert:
+            raise Warning(msg)
+        return (pkey, cert)
 
     @api.multi
     def get_connection(self, afip_ws):
@@ -106,8 +162,8 @@ class res_company(models.Model):
             expirationtime=expirationtime,
             service=afip_ws
         )
-
-        msg = self._get_certificate(environment_type).smime(msg)
+        pkey, cert = self.get_key_and_certificate(environment_type)
+        msg = self.env['afipws.certificate'].smime(msg, pkey, cert)
         head, body, end = msg.split('\n\n')
 
         try:
@@ -120,7 +176,6 @@ class res_company(models.Model):
             raise Warning(
                 _('AFIP Web Service unvailable. Check your access to internet or contact to your system administrator.'))
 
-        print 'response', response
         T = ET.fromstring(response)
 
         auth_data = {

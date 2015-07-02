@@ -134,18 +134,17 @@ class afipws_certificate(models.Model):
             certificate = None
         return certificate
 
-    @api.multi
-    def smime(self, message):
+    @api.model
+    def smime(self, message, pkey, cert):
         """
         Sign message in SMIME format.
         TODO migrate this method to not require M2Crypto
         """
-        self.ensure_one()
         res = False
         if True:
             smime = SMIME.SMIME()
-            ks = BIO.MemoryBuffer(self.alias_id.key.encode('ascii'))
-            cs = BIO.MemoryBuffer(self.crt.encode('ascii'))
+            ks = BIO.MemoryBuffer(pkey.encode('ascii'))
+            cs = BIO.MemoryBuffer(cert.encode('ascii'))
             bf = BIO.MemoryBuffer(str(message))
             out = BIO.MemoryBuffer()
             try:

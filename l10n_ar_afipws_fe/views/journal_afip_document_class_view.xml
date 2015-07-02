@@ -7,8 +7,8 @@
             <field name="inherit_id" ref="l10n_ar_invoice.view_journal_afip_document_class_tree"/>
             <field name="arch" type="xml">
                 <tree>
-                    <button name="update_afip_data" icon="gtk-refresh" string="Update Number of Invoices Generated" type="object"/>
                     <button name="get_pyafipws_last_invoice" string="Get Last Invoice" type="object"/>
+                    <button name="%(action_afip_ws_consult_wizard)d" string="Get Document Remote Data" type="action"/>
                 </tree>
             </field>
         </record>
@@ -20,6 +20,7 @@
             <field name="arch" type="xml">
                 <header>
                     <button name="get_pyafipws_last_invoice" string="Get Last Invoice" type="object"/>
+                    <button name="%(action_afip_ws_consult_wizard)d" string="Get Document Remote Data" type="action"/>
                 </header>
             </field>
         </record>

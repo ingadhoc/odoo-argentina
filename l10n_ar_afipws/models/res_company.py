@@ -120,6 +120,7 @@ class res_company(models.Model):
             raise Warning(
                 _('AFIP Web Service unvailable. Check your access to internet or contact to your system administrator.'))
 
+        print 'response', response
         T = ET.fromstring(response)
 
         auth_data = {

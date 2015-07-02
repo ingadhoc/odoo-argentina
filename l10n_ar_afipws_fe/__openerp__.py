@@ -21,6 +21,7 @@ TODO analizar que hacemos con la clase afip error, a ver si la aprovechamos en a
      # 'demo/account.invoice.csv',
     ],
     'data': [
+        'wizard/afip_ws_consult_wizard_view.xml',
         'views/invoice_view.xml',
         'views/journal_afip_document_class_view.xml',
         'views/wsfe_error_view.xml',

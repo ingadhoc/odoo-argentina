@@ -22,5 +22,6 @@
 # import query_invoices
 # import validate_invoices
 # import config
+import afip_ws_consult_wizard
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

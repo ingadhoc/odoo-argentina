@@ -246,13 +246,9 @@ class account_journal(models.Model):
         'Documents Classes',
         )
     point_of_sale_id = fields.Many2one(
-        'afip.point_of_sale', 'Point of sale'
+        'afip.point_of_sale',
+        'Point of sale',
         help='On use documents and sales journals is mandatory, con purchase journal is optional and only used to easily manage journals'
-        )
-    point_of_sale = fields.Integer(
-        related='point_of_sale_id.number',
-        string='Point of sale',
-        readonly=True
         )
     use_documents = fields.Boolean(
         'Use Documents?'

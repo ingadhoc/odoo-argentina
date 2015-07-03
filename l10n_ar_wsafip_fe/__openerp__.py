@@ -9,7 +9,7 @@ API y GUI para acceder a las Web Services de Factura Electrónica de la AFIP
 """,
     'installable': True,
     'license': 'AGPL-3',
-    'name': 'Argentina - Web Services de Factura Electrónica del AFIP',
+    'name': 'WSAFIP FE (DEPRECIADO)',
     'test': ['test/test_key.yml',
              'test/partners.yml',
              'test/products.yml',

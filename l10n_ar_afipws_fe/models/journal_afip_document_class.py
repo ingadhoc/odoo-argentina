@@ -78,6 +78,15 @@ class account_journal_afip_document_class(models.Model):
         else:
             return(_('AFIP WS %s not implemented') % afip_ws)
         msg = " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])
+
+        next_ws = int(last) + 1
+        next_local = self.sequence_id.number_next_actual
+        if next_ws != next_local:
+            msg = _(
+                'ERROR! Local (%i) and remote (%i) next number mismatch!\n') % (
+                next_local, next_ws) + msg
+        else:
+            msg = _('OK! Local and remote next number match!') + msg
         title = _('Last Invoice %s\n' % last)
         return {'msg': (title + msg), 'result': last}
 

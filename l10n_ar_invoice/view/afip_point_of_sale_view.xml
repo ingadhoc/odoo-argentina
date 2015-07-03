@@ -8,7 +8,8 @@
             <field name="arch" type="xml">
                 <form string="AFIP Point Of Sale">
                     <header>
-                        <button name="generate_journals" type="object" string="Generate Journals"/>
+                        <button name="generate_sale_journals" type="object" string="Generate Sale Journals"/>
+                        <button name="generate_purchase_journals" type="object" string="Generate Purchase Journals"/>
                     </header>
                     <sheet>
                         <group>

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from openerp import fields, models, api, _
 from openerp.exceptions import Warning
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class afip_point_of_sale(models.Model):
@@ -46,29 +48,52 @@ class afip_point_of_sale(models.Model):
                          'Number Must be Unique per Company!'), ]
 
     @api.one
-    def generate_journals(self):
-        # TODO falta implementar la same sequence o
-        if self.journal_ids:
-            raise Warning(
-                'You can only generate journals when there are no journals already')
-        # create sale jouranl
+    def generate_purchase_journals(self):
+        actual_types = self.journal_ids.mapped('type')
         vals = {
-            'name': "Facturas %s" % self.name,
+            'name': "Facturas Compra %s" % self.name,
+            'code': "FAC%02i" % self.number,
+            'type': 'purchase',
+            'point_of_sale_id': self.id,
+            'company_id': self.company_id.id,
+            'use_documents': True,
+        }
+        if 'purchase' not in actual_types:
+            _logger.info('Creating purchase journal with vals %s' % str(vals))
+            self.journal_ids.create(vals)
+
+        if 'purchase_refund' not in actual_types:
+            _logger.info('Creating purchase_refund journal with vals %s' % str(vals))
+            vals.update({
+                'name': "NC Compra %s" % self.name,
+                'code': "NCC%02i" % self.number,
+                'type': 'purchase_refund',
+            })
+            self.journal_ids.create(vals)
+
+    @api.one
+    def generate_sale_journals(self):
+        actual_types = self.journal_ids.mapped('type')
+        vals = {
+            'name': "Facturas Vta %s" % self.name,
             'code': "FAV%02i" % self.number,
             'type': 'sale',
             'point_of_sale_id': self.id,
             'company_id': self.company_id.id,
             'use_documents': True,
         }
-        self.journal_ids.create(vals)
+        if 'sale' not in actual_types:
+            _logger.info('Creating sale journal with vals %s' % str(vals))
+            self.journal_ids.create(vals)
 
-        # create sale refund jouranl
-        vals.update({
-            'name': "NC %s" % self.name,
-            'code': "NCV%02i" % self.number,
-            'type': 'sale_refund',
-        })
-        self.journal_ids.create(vals)
+        if 'sale_refund' not in actual_types:
+            _logger.info('Creating sale_refund journal with vals %s' % str(vals))
+            vals.update({
+                'name': "NC Vta %s" % self.name,
+                'code': "NCV%02i" % self.number,
+                'type': 'sale_refund',
+            })
+            self.journal_ids.create(vals)
 
 
 class afip_document_class(models.Model):

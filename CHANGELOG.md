@@ -1,5 +1,12 @@
 ### Odoo-Argentina
 
+#### WISHLIST
+* Eliminar dependencias de odoo-argentina (pyopenssl, etc)
+* Probar generar pkey, cert. request y demás usando pyafipws (limpiar modulos afipws y afipws_fe). Ejemplo en https://code.google.com/p/pyafipws/wiki/FacturaElectronicaPython
+* separar partner en l10n_..invoice (mods en base vat o en otro lugar tipo l10n_ar_partner) para que si quiereo cuit y cosas asi no requiera instalar account
+* Ver si simplificamos el manejo de documentos y el vat
+* mejorar la parte de certificado, el campo state por ahí no neesario en el alias. A su vez tal ves el "outsorced" no es mas necesario, siempre se genera para la compania, tal vez no hacemos los dos m2o si no que agregamos todo a la clase res.company y listo
+
 #### CHANGELOG
 ##### 8.0.1 to 8.0.2
 * Se depreciaron l10n_ar_wsafip y l10n_ar_wsafip_fe
@@ -7,10 +14,34 @@
 * Estos nuevos modulos utilizan el proyecto pyafipws
 * Se mejoraron los datos demo
 
-###### UPGRADE 8.0 to 8.0.1
+###### UPGRADE 8.0.1 to 8.0.2
+En intancia test (solo interesane para ADHOC):
+- pull odoo-support
+- pull de odoo argentina en 8.0.2
+- cambiar docker a 8.0.3 - create update
+- probar acceder
+
+###### NOTAS VARIAS
+PARA PROBAR EN DOCKER
+sudo docker run -ti -p 127.0.0.1:8069:8069 -u root --link db:db --name odoo-fe adhoc/odoo-adhoc:8.0.2 /bin/bash
+runuser -u odoo openerp-server -- -c /etc/odoo/openerp-server.conf --logfile=False
+git clone https://github.com/ingadhoc/odoo-argentina -b 8.0.2
+git clone https://github.com/oca/web -b 8.0
+runuser -u odoo openerp-server -- -c /etc/odoo/openerp-server.conf --logfile=False --addons-path=/usr/lib/python2.7/dist-packages/openerp/addons,/odoo-argentina,/web -s
+runuser -u odoo openerp-server -- -c /etc/odoo/openerp-server.conf --logfile=False
+
+PARA PROBAR EN VIRTUALENV
+sudo apt-get install python-dev swig python-virtualenv mercurial python-pip libssl-dev
+hg clone https://code.google.com/p/pyafipws
+cd pyafipws
+(con ambiente activado)
+pip install -r requirements.txt
+python setup.py install
+
+En instancia de produccion
 - pull odoo-support (solo interesante para ADHOC)
 - cambiar docker a 8.0.3 - create update
-- pull de odoo argentina en 8.0.2 (primero en test luego en prod)
+- pull de odoo argentina en 8.0.2
 - reiniciar instacia 
 - actualizar listado de modulos 
 - idealmente sacar a todas las cuentas contables que tengan "type check" (no hace falta en el plan de cuentas template)

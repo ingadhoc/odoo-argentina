@@ -15,7 +15,7 @@ Argentinian Like Electronic Invoice Aeroo Report
     ],
     'depends': [
         'report_extended_account',
-        'l10n_ar_wsafip_fe',
+        'l10n_ar_afipws_fe',
         'l10n_ar_aeroo_base',
     ],
     'data': [

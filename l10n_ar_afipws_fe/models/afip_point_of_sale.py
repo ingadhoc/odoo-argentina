@@ -55,3 +55,19 @@ class afip_point_of_sale(models.Model):
             'title': _('Enabled Point Of Sales on AFIP'),
             'message': msg,
             }
+
+    @api.multi
+    def get_pyafipws_cuit_document_classes(self):
+        self.ensure_one()
+        afip_ws = self.afip_ws
+        if not afip_ws:
+            raise Warning(_('No AFIP WS selected'))
+        ws = self.company_id.get_connection(afip_ws).connect()
+        ret = ws.FEParamGetTiposCbte(sep=" ")
+        msg = (_(" %s %s") % (
+            '. '.join(ret), " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
+        return {
+            'type': 'ir.actions.act_window.message',
+            'title': _('Authorized Document Clases on AFIP'),
+            'message': msg,
+            }

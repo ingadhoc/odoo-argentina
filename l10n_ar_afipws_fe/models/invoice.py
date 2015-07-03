@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-import logging
 from pyi25 import PyI25
 from openerp import fields, models, api, _
 from openerp.exceptions import Warning
 from cStringIO import StringIO as StringIO
 from pyafipws.soap import SoapFault
+import logging
 import sys
 import traceback
 _logger = logging.getLogger(__name__)
@@ -38,13 +38,16 @@ class invoice(models.Model):
         string='AFIP Barcode Image'
         )
     afip_message = fields.Text(
-        string='AFIP Message'
+        string='AFIP Message',
+        copy=False,
         )
     afip_xml_request = fields.Text(
         string='AFIP XML Request',
+        copy=False,
         )
     afip_xml_response = fields.Text(
-        string='AFIP XML Response'
+        string='AFIP XML Response',
+        copy=False,
         )
     afip_result = fields.Selection([
         ('', 'n/a'),
@@ -53,6 +56,7 @@ class invoice(models.Model):
         ('O', 'Observado')],
         'Resultado',
         readonly=True,
+        copy=False,
         help="AFIP request result")
 
     @api.one
@@ -62,10 +66,11 @@ class invoice(models.Model):
         if self.afip_cae:
             cae_due = ''.join(
                 [c for c in str(self.afip_cae_due or '') if c.isdigit()])
-            barcode = ''.join([str(self.company_id.partner_id.vat[2:]),
-                               "%02d" % int(self.afip_document_class_id.afip_code),
-                               "%04d" % int(self.journal_id.point_of_sale),
-                               str(self.afip_cae), cae_due])
+            barcode = ''.join(
+                [str(self.company_id.partner_id.vat[2:]),
+                    "%02d" % int(self.afip_document_class_id.afip_code),
+                    "%04d" % int(self.journal_id.point_of_sale),
+                    str(self.afip_cae), cae_due])
             barcode = barcode + self.verification_digit_modulo10(barcode)
         self.afip_barcode = barcode
 
@@ -138,108 +143,20 @@ class invoice(models.Model):
         return super(invoice, self).action_cancel()
 
     @api.multi
+    # def invoice_validate(self):
     def action_number(self):
+        """
+        We would prefere use invoice_validate or call request cae after
+        action_number so that CAE is requested at the last part but raise error
+        can not fall back the sequence next number.
+        We want to add a inv._cr.commit() after sucesfuul cae request because
+        we dont want to loose cae data because of a raise error on next steps
+        but it doesn work as expected
+        """
         self.do_pyafipws_request_cae()
-        # self.action_retrieve_cae()
+        # self._cr.commit()
         res = super(invoice, self).action_number()
         return res
-
-    @api.multi
-    def action_retrieve_cae(self):
-        """
-        Contact to the AFIP to get a CAE number.
-        """
-        conn_obj = self.env['afipws.connection']
-
-        Servers = {}
-        Requests = {}
-        Inv2id = {}
-        for inv in self:
-            journal = inv.journal_id
-            document_class = inv.afip_document_class_id
-            conn = inv.journal_document_class_id.afip_connection_id
-
-            # Ignore invoices with cae
-            if inv.afip_cae and inv.afip_cae_due:
-                continue
-
-            # Only process if set to connect to afip
-            if not conn:
-                continue
-
-            # Ignore invoice if connection server is not type WSFE.
-            if conn.server_id.code != 'wsfe':
-                continue
-
-            Servers[conn.id] = conn.server_id.id
-
-            # Take the last number of the "number".
-            invoice_number = inv.next_invoice_number
-
-            _f_date = lambda d: d and d.replace('-', '')
-
-            # Build request dictionary
-            if conn.id not in Requests:
-                Requests[conn.id] = {}
-            Requests[conn.id][inv.id] = dict((k, v) for k, v in {
-                'CbteTipo': document_class.afip_code,
-                'PtoVta': journal.point_of_sale,
-                'Concepto': inv.afip_concept,
-                'DocTipo': inv.commercial_partner_id.document_type_id.afip_code or '99',
-                'DocNro': int(inv.commercial_partner_id.document_type_id.afip_code is not None and inv.commercial_partner_id.document_number),
-                'CbteDesde': invoice_number,
-                'CbteHasta': invoice_number,
-                'CbteFch': _f_date(inv.date_invoice),
-                'ImpTotal': inv.amount_total,
-                # TODO: Averiguar como calcular el Importe Neto no Gravado
-                'ImpTotConc': 0,
-                'ImpNeto': inv.amount_untaxed,
-                'ImpOpEx': inv.vat_exempt_amount,
-                'ImpIVA': inv.vat_amount,
-                'ImpTrib': inv.other_taxes_amount,
-                'FchServDesde': _f_date(inv.afip_service_start) if inv.afip_concept != '1' else None,
-                'FchServHasta': _f_date(inv.afip_service_end) if inv.afip_concept != '1' else None,
-                'FchVtoPago': _f_date(inv.date_due) if inv.afip_concept != '1' else None,
-                'MonId': inv.currency_id.afip_code,
-                # TODO agregar la cotizacion en un campo de la factura y utilizar ese para hacer el asiento
-                'MonCotiz': inv.currency_id.compute(
-                    1.,
-                    inv.company_id.currency_id),
-                'CbtesAsoc': {'CbteAsoc': inv.get_related_invoices_data()[inv.id]},
-                'Tributos': {
-                    'Tributo': [{
-                        'Id': x.tax_code_id.afip_code,
-                        'Desc': x.tax_code_id.name,
-                        'BaseImp': x.base_amount,
-                        'Importe': x.tax_amount} for x in self.not_vat_tax_ids]},
-                'Iva': {
-                    'AlicIva': [{
-                        'Id': x.tax_code_id.afip_code,
-                        'BaseImp': x.base_amount,
-                        'Importe': x.tax_amount} for x in self.vat_tax_ids]},
-                # TODO implementar los optionals
-                'Opcionales': {},
-            }.iteritems() if v is not None)
-            Inv2id[invoice_number] = inv.id
-        for c_id, req in Requests.iteritems():
-            res = conn_obj.browse(c_id).server_id.wsfe_get_cae(c_id, req)
-            for k, v in res.iteritems():
-                if 'CAE' in v:
-                    self.browse(Inv2id[k]).write({
-                        'afip_cae': v['CAE'],
-                        'afip_cae_due': v['CAEFchVto'],
-                        'afip_request': v['Request'],
-                        'afip_response': v['Response'],
-                    })
-                else:
-                    # Muestra un mensaje de error por la factura con error.
-                    # Se cancelan todas las facturas del batch!
-                    msg = 'Factura %s:\n' % k + '\n'.join(
-                        [u'(%s) %s\n' % e for e in v['Errores']] +
-                        [u'(%s) %s\n' % e for e in v['Observaciones']]
-                    )
-                    raise Warning(_('AFIP Validation Error. %s' % msg))
-        return True
 
     @api.multi
     def do_pyafipws_request_cae(self):
@@ -284,10 +201,11 @@ class invoice(models.Model):
                         ws_next_invoice_number,
                         next_invoice_number)))
 
-            partner_doc_code = inv.commercial_partner_id.document_type_id.afip_code
+            commercial_partner = inv.commercial_partner_id
+            partner_doc_code = commercial_partner.document_type_id.afip_code
             tipo_doc = partner_doc_code or '99'
             nro_doc = partner_doc_code and int(
-                inv.commercial_partner_id.document_number) or "0"
+                commercial_partner.document_number) or "0"
             cbt_desde = cbt_hasta = next_invoice_number
             concepto = inv.afip_concept
 
@@ -295,7 +213,7 @@ class invoice(models.Model):
             if afip_ws != 'wsmtxca':
                 fecha_cbte = fecha_cbte.replace("-", "")
 
-            # due and billing dates only for concept "services" 
+            # due and billing dates only for concept "services"
             if int(concepto) != 1:
                 fecha_venc_pago = inv.date_due
                 fecha_serv_desde = inv.afip_service_start
@@ -318,7 +236,6 @@ class invoice(models.Model):
             moneda_id = inv.currency_id.afip_code
             moneda_ctz = str(inv.currency_id.compute(
                 1., inv.company_id.currency_id))
-
 
             # # foreign trade data: export permit, country code, etc.:
             # if invoice.pyafipws_incoterms:
@@ -367,13 +284,6 @@ class invoice(models.Model):
             #     iso_code = invoice.address_invoice_id.country_id.code.lower()
             #     pais_dst_cmp = AFIP_COUNTRY_CODE_MAP[iso_code]
 
-            print '1231231', (concepto, tipo_doc, nro_doc, doc_afip_code, pos_number,
-                    cbt_desde, cbt_hasta, imp_total, imp_tot_conc, imp_neto,
-                    imp_iva,
-                    imp_trib, imp_op_ex, fecha_cbte, fecha_venc_pago,
-                    fecha_serv_desde, fecha_serv_hasta,
-                    moneda_id, moneda_ctz)
-
             # create the invoice internally in the helper
             if afip_ws == 'wsfe':
                 ws.CrearFactura(
@@ -403,17 +313,29 @@ class invoice(models.Model):
             #         obs_generales, forma_pago, incoterms, 
             #         idioma_cbte, incoterms_ds)
             for vat in self.vat_tax_ids:
+                _logger.info('Adding VAT %s' % vat.tax_code_id.name)
                 ws.AgregarIva(
                     vat.tax_code_id.afip_code,
                     "%.2f" % abs(vat.base_amount),
                     "%.2f" % abs(vat.tax_amount),
                     )
             for tax in self.not_vat_tax_ids:
+                _logger.info('Adding TAX %s' % tax.tax_code_id.name)
                 ws.AgregarTributo(
                     tax.tax_code_id.afip_code,
                     tax.tax_code_id.name,
                     "%.2f" % abs(vat.base_amount),
                     "%.2f" % abs(vat.tax_amount),
+                    )
+
+            # TODO tal vez en realidad solo hay que hacerlo para notas de
+            # credito o determinados doc, ver pyafipws
+            CbteAsoc = inv.get_related_invoices_data()[inv.id]
+            if CbteAsoc: 
+                ws.AgregarCmpAsoc(
+                    CbteAsoc['Tipo'],
+                    CbteAsoc['PtoVta'],
+                    CbteAsoc['Nro'],
                     )
 
             # analize line items - invoice detail
@@ -455,9 +377,9 @@ class invoice(models.Model):
                 elif afip_ws == 'wsmtxca':
                     ws.AutorizarComprobante()
                     vto = ws.Vencimiento
-                # elif afip_ws == 'wsfex':
-                #     ws.Authorize(invoice.id)
-                #     vto = ws.FchVencCAE
+                elif afip_ws == 'wsfex':
+                    ws.Authorize(invoice.id)
+                    vto = ws.FchVencCAE
             except SoapFault as fault:
                 msg = 'Falla SOAP %s: %s' % (
                     fault.faultcode, fault.faultstring)
@@ -474,9 +396,14 @@ class invoice(models.Model):
                         sys.exc_value)[0]
             if msg:
                 raise Warning(_('AFIP Validation Error. %s' % msg))
+
             msg = u"\n".join([ws.Obs or "", ws.ErrMsg or ""])
+            if not ws.CAE:
+                raise Warning(_('AFIP Validation Error. %s' % msg))
             # TODO ver que algunso campos no tienen sentido porque solo se
             # escribe aca si no hay errores
+            _logger.info('CAE solicitado con exito. CAE: %s. Resultado %s' %(
+                ws.CAE, ws.Resultado))
             inv.write({
                 'afip_cae': ws.CAE,
                 'afip_cae_due': vto,

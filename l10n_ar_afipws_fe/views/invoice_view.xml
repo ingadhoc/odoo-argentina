@@ -19,8 +19,8 @@
                             <field name='afip_cae_due'/>
                             <field name='afip_result'/>
                             <field name='afip_message'/>
-                            <field name='afip_xml_request'/>
-                            <field name='afip_xml_response'/>
+                            <field name='afip_xml_request' invisible="1"/>
+                            <field name='afip_xml_response' invisible="1"/>
                         </group>
                     </page>
                 </notebook>

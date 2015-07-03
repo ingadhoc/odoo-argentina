@@ -8,8 +8,9 @@
             <field name="inherit_id" ref="l10n_ar_invoice.view_afip_point_of_sale_form"/>
             <field name="arch" type="xml">
                 <header>
-                    <button name="test_pyafipws_point_of_sales" string="asda" type="object" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
-                    <button name="test_pyafipws_dummy" string="asdasasa" type="object" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
+                    <button name="test_pyafipws_dummy" string="Dummy Test" help="Dummy test to check connection to selected webservice" type="object" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
+                    <button name="test_pyafipws_point_of_sales" string="Get Points Of Sale" help="Get Enable Point of Sales for this webservice" type="object" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
+                    <button name="get_pyafipws_cuit_document_classes" string="Get Document Classes" help="Get valid document classes for this webservice" type="object" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
                 </header>
                 <field name="number" position="before">
                     <field name="afip_ws"/>

@@ -165,6 +165,9 @@ class afipws_certificate_alias(models.Model):
 
     @api.multi
     def action_create_certificate_request(self):
+        """
+        TODO agregar descripcion y ver si usamos pyafipsw para generar esto
+        """
         for record in self:
             req = crypto.X509Req()
             req.get_subject().C = self.country_id.code.encode(

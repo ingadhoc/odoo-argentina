@@ -125,33 +125,4 @@ class afipws_connection(models.Model):
         Method to be inherited
         """
         return False
-
-    @api.multi
-    def get_auth(self):
-        self.ensure_one()
-        if self.company_id.partner_id.document_type_id.name != 'CUIT':
-            raise Warning(
-                _('Company Partner without CUIT! Please setup document type as CUIT in partner.'))
-        return {
-            'Token': self.token.encode('ascii'),
-            'Sign': self.sign.encode('ascii'),
-            'Cuit': self.company_id.partner_id.document_number,
-        }
-
-    # @api.multi
-    # def do_login(self):
-    #     self.ensure_one()
-    #     try:
-    #         self.login()
-    #     except X509Error, m:
-    #         raise Warning(
-    #             _('Certificate Error. This is what we get:\n%s') % m)
-    #     except suds.WebFault, e:
-    #         raise Warning(
-    #             _('Error doing login. This is what we get:\n%s') % e.message)
-    #     except Exception, e:
-    #         raise Warning(
-    #             _('Unknown Error. This is what we get:\n%s') % e)
-    #     return True
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

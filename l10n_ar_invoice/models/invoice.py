@@ -3,6 +3,8 @@ from openerp import models, fields, api, _
 from openerp.exceptions import except_orm, Warning
 import openerp.addons.decimal_precision as dp
 import re
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class account_invoice(models.Model):
@@ -374,6 +376,7 @@ class account_invoice(models.Model):
     @api.multi
     def check_argentinian_invoice_taxes(self):
         # only check for argentinian localization companies
+        _logger.info('Running checks related to argentinian documents')
         argentinian_invoices = self.filtered('use_argentinian_localization')
         if not argentinian_invoices:
             return True
@@ -419,6 +422,7 @@ class account_invoice(models.Model):
         # We write document_number field with next invoice number by
         # document type
         for obj_inv in self:
+            _logger.info('Setting argentinian invoice and move data')
             invtype = obj_inv.type
             # if we have a journal_document_class_id is beacuse we are in a
             # company that use this function

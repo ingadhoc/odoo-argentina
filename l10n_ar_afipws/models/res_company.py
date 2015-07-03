@@ -6,8 +6,6 @@ from dateutil.parser import parse as dateparse
 from random import randint
 from suds.client import Client
 import xml.etree.ElementTree as ET
-import suds
-from M2Crypto.X509 import X509Error
 import logging
 from openerp.exceptions import Warning
 import openerp.tools as tools
@@ -146,6 +144,7 @@ class res_company(models.Model):
         """
         This function should be called from get_connection. Not to be used
         directyl
+        TODO ver si podemos usar metodos de pyafipws para esto
         """
         self.ensure_one()
         login_url = self.env['afipws.connection'].get_afip_login_url(
@@ -173,8 +172,10 @@ class res_company(models.Model):
             raise Warning(
                 _('Could not connect. This is the what we received: %s' % e))
         except:
-            raise Warning(
-                _('AFIP Web Service unvailable. Check your access to internet or contact to your system administrator.'))
+            raise Warning(_(
+                'AFIP Web Service unvailable.'
+                'Check your access to internet or contact to your\
+system administrator.'))
 
         T = ET.fromstring(response)
 

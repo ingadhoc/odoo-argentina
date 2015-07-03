@@ -139,6 +139,8 @@ class afipws_certificate(models.Model):
         """
         Sign message in SMIME format.
         TODO migrate this method to not require M2Crypto
+        TODO ver si directamente usamos pyafipws para esto y para genera
+        certificados
         """
         res = False
         if True:

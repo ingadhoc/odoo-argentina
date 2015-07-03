@@ -7,21 +7,10 @@ class afip_point_of_sale(models.Model):
     _name = 'afip.point_of_sale'
     _description = 'Afip Point Of Sale'
 
-    # @api.one
-    # @api.depends('number')
-    # def _get_code(self):
-    #     code = False
-    #     if self.number:
-    #         # TODO rellenar el number a cuatro
-    #         code = str(self.number)
-    #     self.code = code
-
     name = fields.Char(
         'Name', required=True)
     number = fields.Integer(
         'Number', required=True)
-    # code = fields.Char(
-    #     'Code', compute="_get_code")
     company_id = fields.Many2one(
         'res.company', 'Company', required=True,
         default=lambda self: self.env['res.company']._company_default_get(
@@ -30,7 +19,6 @@ class afip_point_of_sale(models.Model):
         'account.journal',
         'point_of_sale_id',
         'Journals',
-        readonly=True,
         )
     document_sequence_type = fields.Selection(
         [('own_sequence', 'Own Sequence'),
@@ -40,6 +28,19 @@ class afip_point_of_sale(models.Model):
         required=True,
         help="Use own sequence or invoice sequence on Debit and Credit Notes?"
         )
+    journal_document_class_ids = fields.One2many(
+        'account.journal.afip_document_class',
+        compute='get_journal_document_class_ids',
+        string='Documents Classes',
+        )
+
+    @api.one
+    @api.depends('journal_ids.journal_document_class_ids')
+    def get_journal_document_class_ids(self):
+        journal_document_class_ids = self.env[
+            'account.journal.afip_document_class'].search([
+                ('journal_id.point_of_sale_id', '=', self.id)])
+        self.journal_document_class_ids = journal_document_class_ids
 
     _sql_constraints = [('number_unique', 'unique(number, company_id)',
                          'Number Must be Unique per Company!'), ]

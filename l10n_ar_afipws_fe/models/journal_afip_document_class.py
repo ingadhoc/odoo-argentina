@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, api, _
+from openerp import models, api, fields, _
 from openerp.exceptions import Warning
 import logging
 
@@ -8,6 +8,11 @@ _logger = logging.getLogger(__name__)
 
 class account_journal_afip_document_class(models.Model):
     _inherit = "account.journal.afip_document_class"
+
+    afip_ws = fields.Selection(
+        related='point_of_sale_id.afip_ws',
+        redaonly=True,
+        )
 
     @api.multi
     def get_pyafipws_consult_invoice(self, document_number):
@@ -26,7 +31,7 @@ class account_journal_afip_document_class(models.Model):
         else:
             raise Warning(_('AFIP WS %s not implemented') % afip_ws)
         msg = ''
-        title = _('Last Invoice %s' % res)
+        title = _('Last Invoice %s\n' % res)
 
         attributes = [
             'FechaCbte', 'CbteNro', 'PuntoVenta',
@@ -44,11 +49,7 @@ class account_journal_afip_document_class(models.Model):
         # import xml.etree.ElementTree as ET
         # T = ET.fromstring(ws.XmlResponse)
         _logger.info('%s\n%s' % (title, msg))
-        return {
-            'type': 'ir.actions.act_window.message',
-            'title': title,
-            'message': msg,
-            }
+        raise Warning(title + msg)
 
     @api.multi
     def get_pyafipws_last_invoice(self):
@@ -73,17 +74,7 @@ class account_journal_afip_document_class(models.Model):
         else:
             raise Warning(_('AFIP WS %s not implemented') % afip_ws)
         msg = " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])
-        return {
-            'type': 'ir.actions.act_window.message',
-            'title': _('Last Invoice %s' % last),
-            'message': msg,
-            }
-
-    @api.one
-    def update_afip_data(self):
-        self.get_afip_items_generated()
-        self._get_afip_state()
-        self.afip_connection_id.server_id.wsfe_update_tax(
-            self.afip_connection_id.id)
+        title = _('Last Invoice %s\n' % last)
+        raise Warning(title + msg)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

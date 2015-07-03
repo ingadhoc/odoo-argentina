@@ -5,7 +5,6 @@
     'demo': [],
     'depends': [
         'l10n_ar_afipws',
-        'web_ir_actions_act_window_message',
         ],
     'description': """
 API y GUI para acceder a las Web Services de Factura Electrónica de la AFIP

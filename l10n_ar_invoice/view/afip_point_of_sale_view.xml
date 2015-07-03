@@ -15,8 +15,15 @@
                             <field name="name" placeholder="For eg. 'Electrónica' o 'Manual Rosario'"/>
                             <field name='number'/>
                             <field name='company_id'/>
-                            <field name='journal_ids'/>
                         </group>
+                        <notebook>
+                            <page string='Journals' name=''>
+                                <field name='journal_ids'/>
+                            </page>
+                            <page string='Documents Classes' name='Documents Classes'>
+                                <field name='journal_document_class_ids'/>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>

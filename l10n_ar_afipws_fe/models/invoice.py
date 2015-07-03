@@ -331,7 +331,7 @@ class invoice(models.Model):
             # TODO tal vez en realidad solo hay que hacerlo para notas de
             # credito o determinados doc, ver pyafipws
             CbteAsoc = inv.get_related_invoices_data()[inv.id]
-            if CbteAsoc: 
+            if CbteAsoc:
                 ws.AgregarCmpAsoc(
                     CbteAsoc['Tipo'],
                     CbteAsoc['PtoVta'],

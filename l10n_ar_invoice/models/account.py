@@ -224,8 +224,16 @@ class account_journal_afip_document_class(models.Model):
         required=True,
         ondelete='cascade',
         )
+    journal_type = fields.Selection(
+        related='journal_id.type',
+        readonly=True,
+        )
     sequence = fields.Integer(
         'Sequence',
+        )
+    point_of_sale_id = fields.Many2one(
+        related='journal_id.point_of_sale_id',
+        redaonly=True,
         )
 
 
@@ -235,7 +243,7 @@ class account_journal(models.Model):
     journal_document_class_ids = fields.One2many(
         'account.journal.afip_document_class',
         'journal_id',
-        'Documents Class',
+        'Documents Classes',
         )
     point_of_sale_id = fields.Many2one(
         'afip.point_of_sale', 'Point of sale'

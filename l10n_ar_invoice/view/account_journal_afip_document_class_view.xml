@@ -5,10 +5,11 @@
             <field name="name">Journal Afip Documents Tree</field>
             <field name="model">account.journal.afip_document_class</field>
             <field name="arch" type="xml">
-                <tree string="Journal AFIP Documents" editable="bottom">
+                <tree string="Journal AFIP Documents">
                     <field name="sequence" widget="handle"/>
                     <field name="afip_document_class_id"/>
-                    <field name='sequence_id' required="context.get('journal_type',False)in('sale','sale_refund')" invisible="context.get('journal_type',False)not in['sale','sale_refund']"/>
+                    <field name="sequence_id" attrs="{'invisible':[('journal_type','not in', ['sale','sale_refund'])],'required':[('journal_type','in', ['sale','sale_refund'])]}" required="True"/>
+                    <field name="journal_type" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -20,12 +21,12 @@
                     <header>
                     </header>
                     <sheet>
+                        <field name="journal_type" invisible="1"/>
                         <group>
                             <group>
-                                <field name="sequence"/>
                                 <field name="journal_id"/>
                                 <field name="afip_document_class_id"/>
-                                <field name="sequence_id" required="True"/>
+                                <field name="sequence_id" attrs="{'invisible':[('journal_type','not in', ['sale','sale_refund'])],'required':[('journal_type','in', ['sale','sale_refund'])]}" required="True"/>
                             </group>
                         </group>
                     </sheet>

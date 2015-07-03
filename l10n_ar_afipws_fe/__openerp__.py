@@ -25,7 +25,6 @@ TODO analizar que hacemos con la clase afip error, a ver si la aprovechamos en a
         'views/invoice_view.xml',
         'views/journal_afip_document_class_view.xml',
         'views/wsfe_error_view.xml',
-        'views/res_company_view.xml',
         'views/afip_point_of_sale_view.xml',
         'data/afip.wsfe_error.csv',
         'security/ir.model.access.csv',

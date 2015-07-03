@@ -10,8 +10,8 @@ class afip_point_of_sale(models.Model):
 
     afip_ws = fields.Selection([
         ('wsfe', 'Mercado interno -sin detalle- RG2485 (WSFEv1)'),
-        ('wsfex', 'Exportación -con detalle- RG2758 (WSFEXv1)'),
         ('wsmtxca', 'Mercado interno -con detalle- RG2904 (WSMTXCA)'),
+        ('wsfex', 'Exportación -con detalle- RG2758 (WSFEXv1)'),
         ('wsbfe', 'Bono Fiscal -con detalle- RG2557 (WSMTXCA)'),
         ],
         'AFIP WS',
@@ -47,7 +47,10 @@ class afip_point_of_sale(models.Model):
         if not afip_ws:
             raise Warning(_('No AFIP WS selected'))
         ws = self.company_id.get_connection(afip_ws).connect()
-        ret = ws.ParamGetPtosVenta(sep=" ")
+        if afip_ws == 'wsfex':
+            ret = ws.GetParamPtosVenta()
+        else:
+            ret = ws.ParamGetPtosVenta(sep=" ")
         msg = (_(" %s %s") % (
             '. '.join(ret), " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
         return {
@@ -63,7 +66,10 @@ class afip_point_of_sale(models.Model):
         if not afip_ws:
             raise Warning(_('No AFIP WS selected'))
         ws = self.company_id.get_connection(afip_ws).connect()
-        ret = ws.FEParamGetTiposCbte(sep=" ")
+        if afip_ws == 'wsfex':
+            ret = ws.GetParamPtosVenta(sep=" ")
+        else:
+            ret = ws.ParamGetTiposCbte(sep=" ")
         msg = (_(" %s %s") % (
             '. '.join(ret), " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
         return {

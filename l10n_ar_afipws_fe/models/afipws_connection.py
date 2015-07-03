@@ -14,8 +14,8 @@ class afipws_connection(models.Model):
     afip_ws = fields.Selection(
         selection_add=[
             ('wsfe', 'Mercado interno -sin detalle- RG2485 (WSFEv1)'),
-            ('wsfex', 'Exportación -con detalle- RG2758 (WSFEXv1)'),
             ('wsmtxca', 'Mercado interno -con detalle- RG2904 (WSMTXCA)'),
+            ('wsfex', 'Exportación -con detalle- RG2758 (WSFEXv1)'),
             ('wsbfe', 'Bono Fiscal -con detalle- RG2557 (WSMTXCA)'),
         ])
 

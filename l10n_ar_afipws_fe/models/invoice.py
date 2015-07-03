@@ -69,7 +69,7 @@ class invoice(models.Model):
             barcode = ''.join(
                 [str(self.company_id.partner_id.vat[2:]),
                     "%02d" % int(self.afip_document_class_id.afip_code),
-                    "%04d" % int(self.journal_id.point_of_sale),
+                    "%04d" % int(self.journal_id.point_of_sale_id.number),
                     str(self.afip_cae), cae_due])
             barcode = barcode + self.verification_digit_modulo10(barcode)
         self.afip_barcode = barcode

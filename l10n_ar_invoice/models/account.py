@@ -296,13 +296,13 @@ class account_journal(models.Model):
                         'debit_note', 'credit_note'] and self.point_of_sale_id.document_sequence_type == 'same_sequence':
                     journal_documents = self.journal_document_class_ids.search(
                         [('afip_document_class_id.document_letter_id', '=', document_class.document_letter_id.id),
-                         ('journal_id.point_of_sale', '=', self.point_of_sale)])
+                         ('journal_id.point_of_sale_id', '=', self.point_of_sale_id.id)])
                     sequence_id = journal_documents and journal_documents[0].sequence_id.id or False
                 else:
                     sequence_id = self.env['ir.sequence'].create({
                         'name': self.name + ' - ' + document_class.name,
                         'padding': 8,
-                        'prefix': "%04i-" % (self.point_of_sale),
+                        'prefix': "%04i-" % (self.point_of_sale_id.number),
                         'company_id': self.company_id.id,
                     }).id
             self.journal_document_class_ids.create({

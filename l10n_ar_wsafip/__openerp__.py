@@ -31,7 +31,7 @@ publicarlas en los repositorios públicos.
     'external_dependencies': {'python': ['suds', 'M2Crypto']},
     'installable': True,
     'license': 'AGPL-3',
-    'name': 'Argentina - Base para los Web Services del AFIP (DEPRECIADO)',
+    'name': 'Argentina - Base para los Web Services del AFIP',
     'test': [
     # TODO actualizar los test
         # 'test/test_key.yml',

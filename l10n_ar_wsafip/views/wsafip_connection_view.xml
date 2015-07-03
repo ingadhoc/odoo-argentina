@@ -7,8 +7,7 @@
             <field name="arch" type="xml">
                 <form string="AFIP Connector">
                     <header>
-                        <button name="do_login" string="Login" type="object" states="disconnected,invalid"/>
-                        <button name="do_disconnect" string="Disconnect" type="object" states="connected"/>
+                        <button colspan="2" name="do_login" string="Login" type="object" states="disconnected,invalid"/>
                         <field name="state" widget="statusbar"
                             statusbar_colors='{}'
                             />
@@ -17,8 +16,8 @@
                         <group>
                             <field name="name"/>
                             <field name="partner_id"/>
-                            <field name="logging_id"/>
                             <field name="server_id"/>
+                            <field name="logging_id"/>
                             <field name="certificate_id"/>
                             <field name="batch_sequence_id"/>
                             <field name="uniqueid"/>
@@ -49,7 +48,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Connections" action="act_wsafip_auth" id="menu_action_wsafip_auth" parent="menu_wsafip"/>
+        <menuitem name="Sessions" action="act_wsafip_auth" id="menu_action_wsafip_auth" parent="menu_wsafip"/>
 
     </data>
 </openerp>

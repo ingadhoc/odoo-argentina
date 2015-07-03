@@ -35,7 +35,6 @@
                     </header>
                     <sheet string="AFIP Certificates">
                         <group>
-                            <field name="type"/>
                             <field name="service_type"/>
                             <field name="service_provider_cuit" attrs="{'invisible':[('service_type','!=','outsourced')],'required':[('service_type','=','outsourced')]}"/>
                             <field name="company_id"/>
@@ -64,7 +63,6 @@
             <field name="model">wsafip.certificate_alias</field>
             <field name="arch" type="xml">
                 <tree string="AFIP Certificates">
-                    <field name="type"/>
                     <field name="common_name"/>
                     <field name="company"/>
                     <field name="state"/>

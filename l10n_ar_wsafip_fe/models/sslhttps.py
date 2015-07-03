@@ -20,16 +20,16 @@
 ##############################################################################
 
 import urllib2 as u2
+import urllib as u
 import socket
 import httplib
 import ssl
 import logging
-from suds.transport.http import HttpTransport
+from suds.transport.http import HttpTransport, Reply, TransportError
 
 logging.getLogger(__name__).setLevel(logging.DEBUG)
 
 _logger = logging.getLogger(__name__)
-
 
 class HTTPSConnection(httplib.HTTPConnection):
         "This class allows communication via SSL."
@@ -41,11 +41,9 @@ class HTTPSConnection(httplib.HTTPConnection):
                      source_address=None, ssl_version=ssl.PROTOCOL_TLSv1):
             # Fix error for python 2.6
             try:
-                super(HTTPSConnection, self).__init__(
-                    host, port, strict, timeout, source_address)
+                super(HTTPSConnectionSSLVersion, self).__init__(host, port, strict, timeout, source_address)
             except:
-                httplib.HTTPConnection.__init__(
-                    self, host, port, strict, timeout)
+                httplib.HTTPConnection.__init__(self, host, port, strict, timeout)
             self.key_file = key_file
             self.cert_file = cert_file
             self.ssl_version = ssl_version
@@ -54,19 +52,14 @@ class HTTPSConnection(httplib.HTTPConnection):
             "Connect to a host on a given (SSL) port."
             # Fix error for python 2.6
             try:
-                sock = socket.create_connection(
-                    (self.host, self.port),
-                    self.timeout, self.source_address)
+                sock = socket.create_connection((self.host, self.port),
+                                            self.timeout, self.source_address)
             except:
-                sock = socket.create_connection(
-                    (self.host, self.port), self.timeout)
+                sock = socket.create_connection((self.host, self.port), self.timeout)
             if self._tunnel_host:
                 self.sock = sock
                 self._tunnel()
-            self.sock = ssl.wrap_socket(
-                sock, self.key_file, self.cert_file,
-                ssl_version=self.ssl_version)
-
+            self.sock = ssl.wrap_socket(sock, self.key_file, self.cert_file, ssl_version=self.ssl_version)
 
 class HTTPS(httplib.HTTP):
     """Compatibility with 1.5 httplib interface
@@ -85,15 +78,13 @@ class HTTPS(httplib.HTTP):
         # urf. compensate for bad input.
         if port == 0:
             port = None
-        self._setup(self._connection_class(
-            host, port, key_file,
-            cert_file, strict, ssl_version=ssl_version))
+        self._setup(self._connection_class(host, port, key_file,
+                                           cert_file, strict, ssl_version=ssl_version))
 
         # we never actually use these for anything, but we keep them
         # here for compatibility with post-1.5.2 CVS.
         self.key_file = key_file
         self.cert_file = cert_file
-
 
 class HTTPSHandler(u2.HTTPSHandler):
 
@@ -101,7 +92,6 @@ class HTTPSHandler(u2.HTTPSHandler):
         return self.do_open(HTTPSConnection, req)
 
     https_request = u2.AbstractHTTPHandler.do_request_
-
 
 class HttpsTransport(HttpTransport):
     def __init__(self, *args, **kwargs):

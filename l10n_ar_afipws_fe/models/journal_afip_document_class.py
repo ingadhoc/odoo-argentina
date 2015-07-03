@@ -34,12 +34,13 @@ class account_journal_afip_document_class(models.Model):
             'ImpTotal', 'ImpNeto', 'ImptoLiq', 'ImpOpEx', 'ImpTrib',
             'EmisionTipo', 'CAE', 'CAEA', 'XmlResponse']
 
+        # TODO ver como hacer para que tome los enter en los mensajes
         for pu_attrin in attributes:
-            msg += "<p>%s: %s\n\n</p>" % (
+            msg += "%s: %s\n" % (
                 pu_attrin, str(getattr(ws, pu_attrin)))
-
         msg += " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])
-        # TODO parsear este response
+        # TODO parsear este response. buscar este metodo que puede ayudar
+        # b = ws.ObtenerTagXml("CAE")
         # import xml.etree.ElementTree as ET
         # T = ET.fromstring(ws.XmlResponse)
         _logger.info('%s\n%s' % (title, msg))

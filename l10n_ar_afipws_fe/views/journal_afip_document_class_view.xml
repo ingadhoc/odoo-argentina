@@ -21,7 +21,7 @@
             <field name="arch" type="xml">
                 <header>
                     <field name="afip_ws" invisible="1"/>
-                    <button name="get_pyafipws_last_invoice" string="Get Last Invoice" type="object" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
+                    <button name="action_get_pyafipws_last_invoice" string="Get Last Invoice" type="object" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
                     <button name="%(action_afip_ws_consult_wizard)d" string="Get Document Remote Data" type="action" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
                 </header>
             </field>

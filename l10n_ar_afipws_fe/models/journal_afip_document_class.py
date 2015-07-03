@@ -52,16 +52,20 @@ class account_journal_afip_document_class(models.Model):
         raise Warning(title + msg)
 
     @api.multi
+    def action_get_pyafipws_last_invoice(self):
+        self.ensure_one()
+        raise Warning(self.get_pyafipws_last_invoice()['msg'])
+
+    @api.multi
     def get_pyafipws_last_invoice(self):
         self.ensure_one()
         document_class = self.afip_document_class_id.afip_code
         point_of_sale = self.journal_id.point_of_sale_id
         company = point_of_sale.company_id
         afip_ws = point_of_sale.afip_ws
-        self.ensure_one()
 
         if not afip_ws:
-            raise Warning(_('No AFIP WS selected on point of sale %s') % (
+            return (_('No AFIP WS selected on point of sale %s') % (
                 point_of_sale.name))
         ws = company.get_connection(afip_ws).connect()
         # call the webservice method to get the last invoice at AFIP:
@@ -72,9 +76,9 @@ class account_journal_afip_document_class(models.Model):
             last = ws.GetLastCMP(
                 document_class, point_of_sale.number)
         else:
-            raise Warning(_('AFIP WS %s not implemented') % afip_ws)
+            return(_('AFIP WS %s not implemented') % afip_ws)
         msg = " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])
         title = _('Last Invoice %s\n' % last)
-        raise Warning(title + msg)
+        return {'msg': (title + msg), 'result': last}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

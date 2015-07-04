@@ -126,6 +126,8 @@ class res_company(models.Model):
     @api.multi
     def get_connection(self, afip_ws):
         self.ensure_one()
+        _logger.info('Getting connection for company %s and ws %s' % (
+            self.name, afip_ws))
         now = fields.Datetime.now()
         environment_type = self._get_environment_type()
 
@@ -147,6 +149,8 @@ class res_company(models.Model):
         TODO ver si podemos usar metodos de pyafipws para esto
         """
         self.ensure_one()
+        _logger.info('Creating connection for company %s, environment type %s and ws %s' %(
+            self.name, environment_type, afip_ws))
         login_url = self.env['afipws.connection'].get_afip_login_url(
             environment_type)
 

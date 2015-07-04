@@ -38,7 +38,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Responsabilities" action="act_afip_responsability" id="menu_action_afip_responsability" parent="menu_afip_config"/>
+        <menuitem name="Responsabilities" action="act_afip_responsability" id="menu_action_afip_responsability" sequence="30" parent="menu_afip_config"/>
 
     </data>
 </openerp>

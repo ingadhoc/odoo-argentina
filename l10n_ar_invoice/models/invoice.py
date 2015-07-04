@@ -83,6 +83,12 @@ class account_invoice(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)]}
         )
+    afip_incoterm_id = fields.Many2one(
+        'afip.incoterm',
+        'Incoterm',
+        readonly=True,
+        states={'draft': [('readonly', False)]}
+        )
     afip_document_class_id = fields.Many2one(
         'afip.document_class',
         related='journal_document_class_id.afip_document_class_id',
@@ -128,9 +134,12 @@ class account_invoice(models.Model):
         )
     afip_concept = fields.Selection(
         compute='_get_concept',
-        selection=[('1', 'Consumible'),
-                   ('2', 'Service'),
-                   ('3', 'Mixed')],
+        store=True,
+        selection=[('1', 'Producto / Exportación definitiva de bienes'),
+                   ('2', 'Servicios'),
+                   ('3', 'Productos y Servicios'),
+                   ('4', '4-Otros (exportación)'),
+                   ],
         string="AFIP concept",
         )
     afip_service_start = fields.Date(
@@ -149,8 +158,8 @@ class account_invoice(models.Model):
     )
     def _get_concept(self):
         afip_concept = False
-        # If document has no connection then it is not electronic
         if self.use_argentinian_localization:
+            # exportaciones
             product_types = set(
                 [line.product_id.type for line in self.invoice_line if line.product_id])
             consumible = set(['consu', 'product'])
@@ -162,6 +171,11 @@ class account_invoice(models.Model):
                 afip_concept = '2'
             if product_types.issubset(consumible):
                 afip_concept = '1'
+            if self.afip_document_class_id.afip_code in [19, 20, 21]:
+                # TODO verificar esto, como par expo no existe 3 y existe 4
+                # (otros), considermaos que un mixto seria el otros
+                if afip_concept == '3':
+                    afip_concept = '4'
         self.afip_concept = afip_concept
 
     @api.one

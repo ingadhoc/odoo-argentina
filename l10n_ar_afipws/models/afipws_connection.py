@@ -84,7 +84,8 @@ class afipws_connection(models.Model):
         """
         Function to be inherited on each module that add a new webservice
         """
-        self.ensure_one()
+        _logger.info('Getting URL for afip ws %s on %s' % (
+            afip_ws, environment_type))
         return False
 
     @api.multi
@@ -102,7 +103,10 @@ class afipws_connection(models.Model):
         Method to be called
         """
         self.ensure_one()
-        ws = self._connect(self.afip_ws)
+        _logger.info(
+            'Getting connection to ws %s from libraries on connection id %s' % (
+                self.afip_ws, self.id))
+        ws = self._get_ws(self.afip_ws)
         if not ws:
             raise Warning(_('AFIP Webservice %s not implemented yet' % (
                 self.afip_ws)))
@@ -117,12 +121,16 @@ class afipws_connection(models.Model):
         ws.Cuit = self.company_id.partner_id.document_number
         ws.Token = self.token.encode('ascii')
         ws.Sign = self.sign.encode('ascii')
+        _logger.info(
+            'Connection getted with url "%s", cuit "%s"' % (
+                wsdl, ws.Cuit))
         return ws
 
     @api.model
-    def _connect(self, afip_ws):
+    def _get_ws(self, afip_ws):
         """
         Method to be inherited
         """
+        _logger.info('Getting ws %s from libraries ' % afip_ws)
         return False
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

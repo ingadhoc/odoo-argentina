@@ -51,7 +51,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Point Of Sales" action="act_afip_point_of_sale" id="menu_action_afip_point_of_sale" parent="menu_afip_config"/>
+        <menuitem name="Point Of Sales" action="act_afip_point_of_sale" id="menu_action_afip_point_of_sale" sequence="10" parent="menu_afip_config"/>
 
     </data>
 </openerp>

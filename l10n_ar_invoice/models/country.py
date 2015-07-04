@@ -1,14 +1,20 @@
 # -*- coding: utf-8 -*-
-from openerp.osv import fields, osv
+from openerp import fields, models
 
 
-class afip_country(osv.osv):
+class afip_country(models.Model):
     _inherit = 'res.country'
 
-    _columns = {
-        'cuit_fisica': fields.char('CUIT persona fisica', size=11),
-        'cuit_juridica': fields.char('CUIT persona juridica', size=11),
-        'cuit_otro': fields.char('CUIT otro', size=11),
-    }
+    afip_code = fields.Char(
+        'Afip Code', size=3
+        )
+    cuit_fisica = fields.Char(
+        'CUIT persona fisica', size=11
+        )
+    cuit_juridica = fields.Char(
+        'CUIT persona juridica', size=11
+        )
+    cuit_otro = fields.Char(
+        'CUIT otro', size=11)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

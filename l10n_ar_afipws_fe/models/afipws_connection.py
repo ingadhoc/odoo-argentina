@@ -20,15 +20,14 @@ class afipws_connection(models.Model):
         ])
 
     @api.model
-    def _connect(self, afip_ws):
+    def _get_ws(self, afip_ws):
         """
         Method to be inherited
         """
-        ws = super(afipws_connection, self)._connect(afip_ws)
+        ws = super(afipws_connection, self)._get_ws(afip_ws)
         if afip_ws == 'wsfe':
             from pyafipws.wsfev1 import WSFEv1
             ws = WSFEv1()
-            ws.LanzarExcepciones = True
         elif afip_ws == "wsfex":
             from pyafipws.wsfexv1 import WSFEXv1
             ws = WSFEXv1()

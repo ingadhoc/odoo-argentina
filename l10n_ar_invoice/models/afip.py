@@ -5,6 +5,16 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
+class afip_incoterm(models.Model):
+    _name = 'afip.incoterm'
+    _description = 'Afip Incoterm'
+
+    afip_code = fields.Char(
+        'Code', required=True)
+    name = fields.Char(
+        'Name', required=True)
+
+
 class afip_point_of_sale(models.Model):
     _name = 'afip.point_of_sale'
     _description = 'Afip Point Of Sale'
@@ -181,24 +191,6 @@ class afip_document_type(models.Model):
     active = fields.Boolean(
         'Active', default=True)
 
-
-class afip_concept_type(models.Model):
-    _name = 'afip.concept_type'
-    _description = 'AFIP concept types'
-
-    name = fields.Char(
-        'Name', size=120, required=True)
-    afip_code = fields.Integer(
-        'AFIP Code', required=True)
-    active = fields.Boolean(
-        'Active', default=True)
-    product_types = fields.Char(
-        'Product types',
-        help='Translate this product types to this AFIP concept.\
-        Types must be a subset of adjust,\
-        consu and service separated by commas.',
-        required=True)
-
     @api.one
     @api.constrains('product_types')
     def _check_product_types(self):
@@ -207,19 +199,3 @@ class afip_concept_type(models.Model):
             if not types.issubset(['adjust', 'consu', 'service']):
                 raise Warning(_('You provided an invalid list of product types.\
                 Must been separated by commas'))
-
-
-class afip_optional_type(models.Model):
-    _name = 'afip.optional_type'
-    _description = 'AFIP optional types'
-
-    name = fields.Char(
-        'Name', size=120, required=True)
-    afip_code = fields.Integer(
-        'AFIP Code', required=True)
-    apply_rule = fields.Char(
-        'Apply rule')
-    value_computation = fields.Char(
-        'Value computation')
-    active = fields.Boolean(
-        'Active', default=True)

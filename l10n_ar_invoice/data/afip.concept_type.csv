@@ -1,4 +1,0 @@
-"id","afip_code","active","product_types","name"
-"afip_concept_type_consumible","1","True","consu","Consumible"
-"afip_concept_type_servicio","2","True","service","Servicio"
-"afip_concept_type_mixto","3","True","consu,service","Mixto"

@@ -6,7 +6,7 @@
             <field name="name">afip.document_type.form</field>
             <field name="model">afip.document_type</field>
             <field name="arch" type="xml">
-                <form string="AFIP Document type">
+                <form string="AFIP Partner Document type">
                     <group>
                         <field name="name"/>
                         <field name='code'/>
@@ -21,7 +21,7 @@
             <field name="name">afip.document_type.tree</field>
             <field name="model">afip.document_type</field>
             <field name="arch" type="xml">
-                <tree string="AFIP Document type">
+                <tree string="AFIP Partner Document type">
                     <field name="name"/>
                     <field name="code"/>
                     <field name="afip_code"/>
@@ -31,14 +31,14 @@
         </record>
 
         <record model="ir.actions.act_window" id="act_afip_document_type">
-            <field name="name">AFIP Document type</field>
+            <field name="name">AFIP Partner Document type</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">afip.document_type</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Document Types" action="act_afip_document_type" id="menu_action_afip_document_type" parent="menu_afip_config"/>
+        <menuitem name="Partner Document Types" action="act_afip_document_type" id="menu_action_afip_document_type" sequence="80" parent="menu_afip_config"/>
 
     </data>
 </openerp>

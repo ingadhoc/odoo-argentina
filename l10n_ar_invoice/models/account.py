@@ -254,6 +254,17 @@ class account_journal(models.Model):
         'Use Documents?'
         )
 
+    @api.multi
+    def get_journal_letter(self):
+        """Function to be inherited by afip ws fe"""
+        self.ensure_one()
+        responsability = self.company_id.responsability_id
+        if self.type in ['sale', 'sale_refund']:
+            letters = responsability.issued_letter_ids
+        elif self.type in ['purchase', 'purchase_refund']:
+            letters = responsability.received_letter_ids
+        return letters
+
     @api.one
     @api.constrains(
         'point_of_sale_id',
@@ -267,11 +278,7 @@ class account_journal(models.Model):
         if not self.use_documents:
             return True
 
-        responsability = self.company_id.responsability_id
-        if self.type in ['sale', 'sale_refund']:
-            letter_ids = [x.id for x in responsability.issued_letter_ids]
-        elif self.type in ['purchase', 'purchase_refund']:
-            letter_ids = [x.id for x in responsability.received_letter_ids]
+        letters = self.get_journal_letter()
 
         if self.type in ['purchase', 'sale']:
             document_types = ['invoice', 'debit_note']
@@ -279,16 +286,13 @@ class account_journal(models.Model):
             document_types = ['credit_note']
 
         document_classes = self.env['afip.document_class'].search(
-            [('document_letter_id', 'in', letter_ids),
+            [('document_letter_id', 'in', letters.ids),
              ('document_type', 'in', document_types)])
-
-        created_document_class_ids = [
-            x.afip_document_class_id.id for x in self.journal_document_class_ids]
 
         sequence = 10
         for document_class in document_classes:
             sequence_id = False
-            if document_class.id in created_document_class_ids:
+            if document_class.id in self.journal_document_class_ids.ids:
                 continue
             if self.type in ['sale', 'sale_refund']:
                 # Si es nota de debito nota de credito y same sequence, no creamos la secuencia, buscamos una que exista

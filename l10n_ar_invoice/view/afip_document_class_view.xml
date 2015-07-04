@@ -45,7 +45,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Document Classes" action="act_afip_document_class" id="menu_action_afip_document_class" parent="menu_afip_config"/>
+        <menuitem name="Document Classes" action="act_afip_document_class" id="menu_action_afip_document_class" sequence="50" parent="menu_afip_config"/>
 
     </data>
 </openerp>

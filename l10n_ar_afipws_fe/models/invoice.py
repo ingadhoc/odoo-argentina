@@ -172,6 +172,8 @@ class invoice(models.Model):
                 continue
 
             # get the electronic invoice type, point of sale and afip_ws:
+            commercial_partner = inv.commercial_partner_id
+            country = commercial_partner.country_id
             journal = inv.journal_id
             point_of_sale = journal.point_of_sale_id
             pos_number = point_of_sale.number
@@ -189,6 +191,20 @@ class invoice(models.Model):
             elif afip_ws == 'wsfex':
                 ws_invoice_number = ws.GetLastCMP(
                     doc_afip_code, pos_number)
+                if not country:
+                    raise Warning(_(
+                        'For WS "%s" country is required on partner' % (
+                            afip_ws)))
+                elif not country.code:
+                    raise Warning(_(
+                        'For WS "%s" country code is mandatory'
+                        'Country: %s' % (
+                            afip_ws, country.name)))
+                elif not country.afip_code:
+                    raise Warning(_(
+                        'For WS "%s" country afip code is mandatory'
+                        'Country: %s' % (
+                            afip_ws, country.name)))
 
             ws_next_invoice_number = int(ws_invoice_number) + 1
             # verify that the invoice is the next one to be registered in AFIP
@@ -201,13 +217,12 @@ class invoice(models.Model):
                         ws_next_invoice_number,
                         next_invoice_number)))
 
-            commercial_partner = inv.commercial_partner_id
             partner_doc_code = commercial_partner.document_type_id.afip_code
             tipo_doc = partner_doc_code or '99'
             nro_doc = partner_doc_code and int(
                 commercial_partner.document_number) or "0"
-            cbt_desde = cbt_hasta = next_invoice_number
-            concepto = inv.afip_concept
+            cbt_desde = cbt_hasta = cbte_nro = next_invoice_number
+            concepto = tipo_expo = int(inv.afip_concept)
 
             fecha_cbte = inv.date_invoice
             if afip_ws != 'wsmtxca':
@@ -238,51 +253,51 @@ class invoice(models.Model):
                 1., inv.company_id.currency_id))
 
             # # foreign trade data: export permit, country code, etc.:
-            # if invoice.pyafipws_incoterms:
-            #     incoterms = invoice.pyafipws_incoterms.code
-            #     incoterms_ds = invoice.pyafipws_incoterms.name
-            # else:
-            #     incoterms = incoterms_ds = None
-            # if int(doc_afip_code) == 19 and tipo_expo == 1:
-            #     permiso_existente =  "N" or "S"     # not used now
-            # else:
-            #     permiso_existente = ""
+            if inv.afip_incoterm_id:
+                incoterms = inv.afip_incoterm_id.afip_code
+                incoterms_ds = inv.afip_incoterm_id.name
+            else:
+                incoterms = incoterms_ds = None
+            if int(doc_afip_code) == 19 and tipo_expo == 1:
+                permiso_existente = "N" or "S"     # not used now
+            else:
+                permiso_existente = ""
             obs_generales = inv.comment
-            # if invoice.payment_term:
-            #     forma_pago = invoice.payment_term.name
-            #     obs_comerciales = invoice.payment_term.name
-            # else:
-            #     forma_pago = obs_comerciales = None
-            # idioma_cbte = 1     # invoice language: spanish / español
+            if inv.payment_term:
+                forma_pago = inv.payment_term.name
+                obs_comerciales = inv.payment_term.name
+            else:
+                forma_pago = obs_comerciales = None
+            idioma_cbte = 1     # invoice language: spanish / español
 
-            # # customer data (foreign trade):
-            # nombre_cliente = invoice.partner_id.name
-            # if invoice.partner_id.vat:
-            #     if invoice.partner_id.vat.startswith("AR"):
-            #         # use the Argentina AFIP's global CUIT for the country:
-            #         cuit_pais_cliente = invoice.partner_id.vat[2:]
-            #         id_impositivo = None
-            #     else:
-            #         # use the VAT number directly
-            #         id_impositivo = invoice.partner_id.vat[2:] 
-            #         # TODO: the prefix could be used to map the customer country
-            #         cuit_pais_cliente = None
-            # else:
-            #     cuit_pais_cliente = id_impositivo = None
-            # if invoice.address_invoice_id:
-            #     domicilio_cliente = " - ".join([
-            #                         invoice.address_invoice_id.name or '',
-            #                         invoice.address_invoice_id.street or '',
-            #                         invoice.address_invoice_id.street2 or '',
-            #                         invoice.address_invoice_id.zip or '',
-            #                         invoice.address_invoice_id.city or '',
-            #                         ])
-            # else:
-            #     domicilio_cliente = ""
-            # if invoice.address_invoice_id.country_id:
-            #     # map ISO country code to AFIP destination country code:
-            #     iso_code = invoice.address_invoice_id.country_id.code.lower()
-            #     pais_dst_cmp = AFIP_COUNTRY_CODE_MAP[iso_code]
+            # customer data (foreign trade):
+            nombre_cliente = commercial_partner.name
+            # TODO tomar el pais de la direccion y entonces usar cuit o sacar
+            # el cuit pais de mas abajo, que salte un warning si no tiene dir
+            # If argentinian and cuit, then use cuit
+            if country.code == 'AR' and tipo_doc == 80 and nro_doc:
+                id_impositivo = nro_doc
+                cuit_pais_cliente = None
+            # If not argentinian and vat, use vat
+            elif country.code != 'AR' and commercial_partner.vat:
+                id_impositivo = commercial_partner.vat[2:]
+                cuit_pais_cliente = None
+            # else use cuit pais cliente
+            else:
+                id_impositivo = None
+                if commercial_partner.is_company:
+                    cuit_pais_cliente = country.cuit_juridica
+                else:
+                    cuit_pais_cliente = country.cuit_fisica
+
+            domicilio_cliente = " - ".join([
+                                commercial_partner.name or '',
+                                commercial_partner.street or '',
+                                commercial_partner.street2 or '',
+                                commercial_partner.zip or '',
+                                commercial_partner.city or '',
+                                ])
+            pais_dst_cmp = commercial_partner.country_id.afip_code
 
             # create the invoice internally in the helper
             if afip_ws == 'wsfe':
@@ -304,14 +319,15 @@ class invoice(models.Model):
                     moneda_id, moneda_ctz,
                     obs_generales   # difference with wsfe
                     )
-            # TODO implementar este
-            # elif afip_ws == 'wsfex':
-            #     ws.CrearFactura(doc_afip_code, pos_number, cbte_nro, fecha_cbte,
-            #         imp_total, tipo_expo, permiso_existente, pais_dst_cmp, 
-            #         nombre_cliente, cuit_pais_cliente, domicilio_cliente,
-            #         id_impositivo, moneda_id, moneda_ctz, obs_comerciales, 
-            #         obs_generales, forma_pago, incoterms, 
-            #         idioma_cbte, incoterms_ds)
+            elif afip_ws == 'wsfex':
+                ws.CrearFactura(
+                    doc_afip_code, pos_number, cbte_nro, fecha_cbte,
+                    imp_total, tipo_expo, permiso_existente, pais_dst_cmp,
+                    nombre_cliente, cuit_pais_cliente, domicilio_cliente,
+                    id_impositivo, moneda_id, moneda_ctz, obs_comerciales,
+                    obs_generales, forma_pago, incoterms,
+                    idioma_cbte, incoterms_ds
+                    )
             for vat in self.vat_tax_ids:
                 _logger.info('Adding VAT %s' % vat.tax_code_id.name)
                 ws.AgregarIva(
@@ -342,7 +358,7 @@ class invoice(models.Model):
             # TODO implementar y mejorar aca
             if afip_ws == 'wsmtxca':
                 raise Warning(_('AFIP WS %s not implemented yet') % afip_ws)
-            # for line in invoice.invoice_line:
+            # for line in inv.invoice_line:
             #     codigo = line.product_id.code
             #     u_mtx = 1   # TODO: get it from uom?
             #     cod_mtx = line.product_id.ean13
@@ -378,7 +394,7 @@ class invoice(models.Model):
                     ws.AutorizarComprobante()
                     vto = ws.Vencimiento
                 elif afip_ws == 'wsfex':
-                    ws.Authorize(invoice.id)
+                    ws.Authorize(inv.id)
                     vto = ws.FchVencCAE
             except SoapFault as fault:
                 msg = 'Falla SOAP %s: %s' % (
@@ -402,7 +418,7 @@ class invoice(models.Model):
                 raise Warning(_('AFIP Validation Error. %s' % msg))
             # TODO ver que algunso campos no tienen sentido porque solo se
             # escribe aca si no hay errores
-            _logger.info('CAE solicitado con exito. CAE: %s. Resultado %s' %(
+            _logger.info('CAE solicitado con exito. CAE: %s. Resultado %s' % (
                 ws.CAE, ws.Resultado))
             inv.write({
                 'afip_cae': ws.CAE,

@@ -1,0 +1,15 @@
+id,afip_code,name
+incoterm_exw,EXW,Ex Works
+incoterm_fca,FCA,Free Carrier
+incoterm_fas,FAS,Free Alongside Ship
+incoterm_fob,FOB,Free On Board
+incoterm_cfr,CFR,Cost and Freight
+incoterm_cif,CIF,"Cost, Insurance and Freight"
+incoterm_cpt,CPT,Carriage Paid To
+incoterm_cip,CIP,Carriage and Insurance Paid To
+incoterm_daf,DAF,Delivered At Frontier
+incoterm_des,DES,Delivered Ex Ship
+incoterm_deq,DEQ,Delivered Ex Quay
+incoterm_ddu,DDU,Delivered Duty Unpaid
+incoterm_ddp,DDP,Delivered Duty Paid
+incoterm_dap,DAP,Delivered At Port

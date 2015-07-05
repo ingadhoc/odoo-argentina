@@ -14,6 +14,7 @@
                     <button name="get_pyafipws_cuit_document_classes" string="Get Document Classes" help="Get valid document classes for this webservice" type="object" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
                     <button name="get_pyafipws_currencies" string="Get Currencies" help="Get valid currencies classes for this webservice" type="object" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
                     <button name="check_document_local_remote_number" string="Check Remote/Local Numbers" help="Check documents local next number against remote Numbers" type="object" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
+                    <button name="%(action_afip_ws_currency_rate_wizard)d" string="Get Currency Rate" type="action" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
                 </header>
                 <field name="number" position="before">
                     <field name="afip_ws"/>

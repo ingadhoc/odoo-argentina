@@ -180,12 +180,8 @@ class account_invoice(models.Model):
 
     @api.one
     def _get_taxes_and_prices(self):
-        """ TODO, tal vez estos valores deban salir de la tabla de impuestos y
-        y no del analisis de las lineas, usamos las lineas porque las lineas
-        deben imprimir o no el monto con iva incluido o no, pero igualmente
-        parece mas prolijo que todo esto empiece a venir de la tabla de
-        impuestos. Dejariamos solo lo de las lineas para un tema de impresion
-        que es algo mas simple y no incide en ningun lugar"""
+        """
+        """
 
         vat_taxes = self.tax_line.filtered(
             lambda r: r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
@@ -194,13 +190,9 @@ class account_invoice(models.Model):
 
         not_vat_taxes = self.tax_line - vat_taxes
 
-        # other_taxes_amount = sum(
-        #     self.invoice_line.mapped('other_taxes_amount'))
         other_taxes_amount = sum(
             (self.tax_line - vat_taxes).mapped('tax_amount'))
 
-        # exempt_amount = sum(
-        #     self.invoice_line.mapped('vat_exempt_amount'))
         vat_exempt_amount = sum(vat_taxes.filtered(
                 lambda r: r.tax_code_id.afip_code == 2).mapped('base_amount'))
 

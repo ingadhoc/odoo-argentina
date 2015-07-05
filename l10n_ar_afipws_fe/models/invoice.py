@@ -270,10 +270,8 @@ class invoice(models.Model):
                 forma_pago = obs_comerciales = None
             idioma_cbte = 1     # invoice language: spanish / español
 
-            # customer data (foreign trade):
+            ## customer data (foreign trade):
             nombre_cliente = commercial_partner.name
-            # TODO tomar el pais de la direccion y entonces usar cuit o sacar
-            # el cuit pais de mas abajo, que salte un warning si no tiene dir
             # If argentinian and cuit, then use cuit
             if country.code == 'AR' and tipo_doc == 80 and nro_doc:
                 id_impositivo = nro_doc
@@ -355,33 +353,38 @@ class invoice(models.Model):
                     )
 
             # analize line items - invoice detail
-            # TODO implementar y mejorar aca
-            if afip_ws == 'wsmtxca':
-                raise Warning(_('AFIP WS %s not implemented yet') % afip_ws)
-            # for line in inv.invoice_line:
-            #     codigo = line.product_id.code
-            #     u_mtx = 1   # TODO: get it from uom?
-            #     cod_mtx = line.product_id.ean13
-            #     ds = line.name
-            #     qty = line.quantity
-            #     umed = 7    # TODO: line.uos_id...?
-            #     precio = line.price_unit
-            #     importe = line.price_subtotal
-            #     bonif = line.discount or None
-            #     if line.invoice_line_tax_id:
-            #         iva_id = 5  # TODO: line.tax_code_id?
-            #         imp_iva = importe * line.invoice_line_tax_id[0].amount
-            #     else:
-            #         iva_id = 1
-            #         imp_iva = 0
-            #     if afip_ws == 'wsmtxca':
-            #         ws.AgregarItem(
-            #             u_mtx, cod_mtx, codigo, ds, qty, umed,
-            #             precio, bonif, iva_id, imp_iva, importe+imp_iva)
-            #     elif afip_ws == 'wsfex':
-            #         ws.AgregarItem(
-            #             codigo, ds, qty, umed, precio, importe,
-            #             bonif)
+            # wsfe do not require detail
+            if afip_ws != 'wsfe':
+                for line in inv.invoice_line:
+                    codigo = line.product_id.code
+                    # unidad de referencia del producto si se comercializa
+                    # en una unidad distinta a la de consumo
+                    cod_mtx = line.uos_id.afip_code
+                    ds = line.name
+                    qty = line.quantity
+                    umed = line.uos_id.afip_code
+                    precio = line.price_unit
+                    importe = line.price_subtotal
+                    bonif = line.discount or None
+                    if afip_ws == 'wsmtxca':
+                        u_mtx = line.product_id.uom_id.afip_code or line.uos_id.afip_code
+                        if self.invoice_id.type in ('out_invoice', 'in_invoice'):
+                            iva_id = line.vat_tax_ids.tax_code_id.afip_code
+                        else:
+                            iva_id = line.vat_tax_ids.ref_tax_code_id.afip_code
+                        vat_taxes_amounts = line.vat_tax_ids.compute_all(
+                                    line.price_unit, line.quantity,
+                                    product=self.product_id,
+                                    partner=self.invoice_id.partner_id)
+                        imp_iva = vat_taxes_amounts[
+                            'total_included'] - vat_taxes_amounts['total']
+                        ws.AgregarItem(
+                            u_mtx, cod_mtx, codigo, ds, qty, umed,
+                            precio, bonif, iva_id, imp_iva, importe+imp_iva)
+                    elif afip_ws == 'wsfex':
+                        ws.AgregarItem(
+                            codigo, ds, qty, umed, precio, importe,
+                            bonif)
 
             # Request the authorization! (call the AFIP webservice method)
             vto = None
@@ -414,7 +417,7 @@ class invoice(models.Model):
                 raise Warning(_('AFIP Validation Error. %s' % msg))
 
             msg = u"\n".join([ws.Obs or "", ws.ErrMsg or ""])
-            if not ws.CAE:
+            if not ws.CAE or ws.Resultado != 'A':
                 raise Warning(_('AFIP Validation Error. %s' % msg))
             # TODO ver que algunso campos no tienen sentido porque solo se
             # escribe aca si no hay errores

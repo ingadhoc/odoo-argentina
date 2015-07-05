@@ -28,26 +28,36 @@ class account_journal_afip_document_class(models.Model):
         if afip_ws in ("wsfe", "wsmtxca"):
             res = ws.CompConsultar(
                 document_class, point_of_sale.number, document_number)
+            attributes = [
+                'FechaCbte', 'CbteNro', 'PuntoVenta',
+                'Vencimiento', 'ImpTotal', 'Resultado', 'CbtDesde', 'CbtHasta',
+                'ImpTotal', 'ImpNeto', 'ImptoLiq', 'ImpOpEx', 'ImpTrib',
+                'EmisionTipo', 'CAE', 'CAEA', 'XmlResponse']
+        elif afip_ws == 'wsfex':
+            res = ws.GetCMP(
+                document_class, point_of_sale.number, document_number)
+            attributes = [
+                'PuntoVenta', 'CbteNro', 'FechaCbte', 'ImpTotal', 'CAE',
+                'Vencimiento', 'FchVencCAE', 'Resultado', 'XmlResponse']
         else:
             raise Warning(_('AFIP WS %s not implemented') % afip_ws)
         msg = ''
         title = _('Last Invoice %s\n' % res)
 
-        attributes = [
-            'FechaCbte', 'CbteNro', 'PuntoVenta',
-            'Vencimiento', 'ImpTotal', 'Resultado', 'CbtDesde', 'CbtHasta',
-            'ImpTotal', 'ImpNeto', 'ImptoLiq', 'ImpOpEx', 'ImpTrib',
-            'EmisionTipo', 'CAE', 'CAEA', 'XmlResponse']
-
         # TODO ver como hacer para que tome los enter en los mensajes
         for pu_attrin in attributes:
             msg += "%s: %s\n" % (
-                pu_attrin, str(getattr(ws, pu_attrin)))
-        msg += " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])
+                pu_attrin, str(getattr(ws, pu_attrin)).decode("utf8"))
+
+        msg += " - ".join([
+            ws.Excepcion,
+            ws.ErrMsg,
+            ws.Obs])
         # TODO parsear este response. buscar este metodo que puede ayudar
         # b = ws.ObtenerTagXml("CAE")
         # import xml.etree.ElementTree as ET
         # T = ET.fromstring(ws.XmlResponse)
+
         _logger.info('%s\n%s' % (title, msg))
         raise Warning(title + msg)
 

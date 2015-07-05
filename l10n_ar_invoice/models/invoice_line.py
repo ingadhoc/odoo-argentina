@@ -37,9 +37,12 @@ class account_invoice_line(models.Model):
         self.printed_price_subtotal = printed_price_subtotal
 
         # VAT taxes
-        vat_taxes = self.invoice_line_tax_id.filtered(
-            lambda r: r.amount and r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
-            # agregamos el r.amount para que no tenga en cuenta los "exentos"
+        if self.type in ('out_invoice', 'in_invoice'):
+            vat_taxes = self.invoice_line_tax_id.filtered(
+                lambda r: r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
+        else:   # refunds
+            vat_taxes = self.invoice_line_tax_id.filtered(
+                lambda r: r.ref_tax_code_id.type == 'tax' and r.ref_tax_code_id.tax == 'vat')
         vat_taxes_amounts = vat_taxes.compute_all(
             price, 1,
             product=self.product_id,
@@ -58,18 +61,28 @@ class account_invoice_line(models.Model):
 
         # Exempt VAT taxes (no gravados, 0 y exentos)
         # TODO validar que los excempt ammount sean todos estos o solo algunos
-        exempt_vat_taxes = self.invoice_line_tax_id.filtered(
-            lambda r: not r.amount and r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
+        if self.type in ('out_invoice', 'in_invoice'):
+            exempt_vat_taxes = self.invoice_line_tax_id.filtered(
+                lambda r: not r.amount and r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
+        else:   # refunds
+            exempt_vat_taxes = self.invoice_line_tax_id.filtered(
+                lambda r: not r.amount and r.ref_tax_code_id.type == 'tax' and r.ref_tax_code_id.tax == 'vat')
         exempt_vat_taxes_amounts = exempt_vat_taxes.compute_all(
             price, 1,
             product=self.product_id,
             partner=self.invoice_id.partner_id)
         vat_exempt_amount = exempt_vat_taxes and exempt_vat_taxes_amounts['total'] or False
 
+        self.vat_tax_ids = vat_taxes
         self.vat_amount = vat_taxes_amount * self.quantity
         self.other_taxes_amount = not_vat_taxes_amount * self.quantity
         self.vat_exempt_amount = vat_exempt_amount * self.quantity
 
+    vat_tax_ids = fields.One2many(
+        compute="_get_taxes_and_prices",
+        comodel_name='account.invoice.tax',
+        string='VAT Taxes'
+        )
     printed_price_unit = fields.Float(
         compute="_get_taxes_and_prices",
         digits_compute=dp.get_precision('Account'),

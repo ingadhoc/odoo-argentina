@@ -82,13 +82,12 @@ class afip_point_of_sale(models.Model):
             raise Warning(_('No AFIP WS selected'))
         ws = self.company_id.get_connection(afip_ws).connect()
         if afip_ws == 'wsfex':
-            ret = ws.GetParamPtosVenta(sep=" ")
+            ret = ws.GetParamTipoCbte(sep=",")
         else:
-            ret = ws.ParamGetTiposCbte(sep=" ")
-        msg = (_(" %s %s") % (
-            '. '.join(ret), " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
-        title = _('Authorized Document Clases on AFIP\n')
-        raise Warning(title + msg)
+            ret = ws.ParamGetTiposCbte(sep=",")
+        msg = (_("Authorized Document Clases on AFIP\n%s\n. \nObservations: %s") % (
+            '\n '.join(ret), ".\n".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
+        raise Warning(msg)
 
     @api.multi
     def get_pyafipws_currencies(self):
@@ -98,14 +97,12 @@ class afip_point_of_sale(models.Model):
             raise Warning(_('No AFIP WS selected'))
         ws = self.company_id.get_connection(afip_ws).connect()
         if afip_ws == 'wsfex':
-            raise Warning('Not implemented yet')
-            # ret = ws.GetParamPtosVenta(sep=" ")
+            ret = ws.GetParamMon(sep=",")
         else:
-            ret = ws.ParamGetTiposMonedas(sep=" ")
-        msg = (_(" %s %s") % (
-            '. '.join(ret), " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
-        title = _('Authorized Currencies on AFIP\n')
-        raise Warning(title + msg)
+            ret = ws.ParamGetTiposMonedas(sep=",")
+        msg = (_("Authorized Currencies on AFIP%s\n. \nObservations: %s") % (
+            '\n '.join(ret), ".\n".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
+        raise Warning(msg)
 
     @api.multi
     def action_get_connection(self):
@@ -114,3 +111,18 @@ class afip_point_of_sale(models.Model):
         if not afip_ws:
             raise Warning(_('No AFIP WS selected'))
         self.company_id.get_connection(afip_ws).connect()
+
+    @api.multi
+    def get_pyafipws_currency_rate(self, currency):
+        self.ensure_one()
+        afip_ws = self.afip_ws
+        if not afip_ws:
+            raise Warning(_('No AFIP WS selected'))
+        ws = self.company_id.get_connection(afip_ws).connect()
+        if afip_ws == 'wsfex':
+            ret = ws.GetParamCtz(currency.afip_code)
+        else:
+            ret = ws.ParamGetCotizacion(currency.afip_code)
+        msg = (_("Currency rate for %s: %s.\nObservations: %s") % (
+            currency.name, ret, ".\n".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
+        raise Warning(msg)

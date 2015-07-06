@@ -85,6 +85,7 @@
             <field name="invoice_id" ref="demo_ri_sale_invoice_2"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="20.0" />
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_21_ventas'))]"/>
             <field name="account_id" ref="ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="1.0" />

@@ -57,7 +57,8 @@ class invoice(models.Model):
         'Resultado',
         readonly=True,
         copy=False,
-        help="AFIP request result")
+        help="AFIP request result"
+        )
 
     @api.one
     @api.depends('afip_cae')

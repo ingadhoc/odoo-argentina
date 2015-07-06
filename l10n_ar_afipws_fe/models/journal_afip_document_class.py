@@ -26,7 +26,7 @@ class account_journal_afip_document_class(models.Model):
                 point_of_sale.name))
         ws = company.get_connection(afip_ws).connect()
         if afip_ws in ("wsfe", "wsmtxca"):
-            res = ws.CompConsultar(
+            ws.CompConsultar(
                 document_class, point_of_sale.number, document_number)
             attributes = [
                 'FechaCbte', 'CbteNro', 'PuntoVenta',
@@ -34,7 +34,7 @@ class account_journal_afip_document_class(models.Model):
                 'ImpTotal', 'ImpNeto', 'ImptoLiq', 'ImpOpEx', 'ImpTrib',
                 'EmisionTipo', 'CAE', 'CAEA', 'XmlResponse']
         elif afip_ws == 'wsfex':
-            res = ws.GetCMP(
+            ws.GetCMP(
                 document_class, point_of_sale.number, document_number)
             attributes = [
                 'PuntoVenta', 'CbteNro', 'FechaCbte', 'ImpTotal', 'CAE',
@@ -42,7 +42,7 @@ class account_journal_afip_document_class(models.Model):
         else:
             raise Warning(_('AFIP WS %s not implemented') % afip_ws)
         msg = ''
-        title = _('Last Invoice %s\n' % res)
+        title = _('Invoice number %s\n' % document_number)
 
         # TODO ver como hacer para que tome los enter en los mensajes
         for pu_attrin in attributes:

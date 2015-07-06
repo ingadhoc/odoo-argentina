@@ -416,7 +416,7 @@ class account_invoice(models.Model):
             if not invoice.vat_discriminated:
                 continue
             special_vat_taxes = invoice.tax_line.filtered(
-                            lambda r: r.tax_code_id.afip_code in [1, 2, 3] or r.ref_tax_code_id.afip_code in [1, 2, 3])
+                            lambda r: r.tax_code_id.afip_code in [1, 2, 3])
             if special_vat_taxes and invoice.fiscal_position.afip_code not in afip_exempt_codes:
                 raise Warning(_("If there you have choose a tax with 0, exempt or untaxed, you must choose a fiscal position with afip code in %s. Invoice id %i" % (
                     afip_exempt_codes, invoice.id)))

@@ -37,7 +37,7 @@ class account_invoice_line(models.Model):
         self.printed_price_subtotal = printed_price_subtotal
 
         # VAT taxes
-        if self.type in ('out_invoice', 'in_invoice'):
+        if self.invoice_id.type in ('out_invoice', 'in_invoice'):
             vat_taxes = self.invoice_line_tax_id.filtered(
                 lambda r: r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
         else:   # refunds
@@ -61,7 +61,7 @@ class account_invoice_line(models.Model):
 
         # Exempt VAT taxes (no gravados, 0 y exentos)
         # TODO validar que los excempt ammount sean todos estos o solo algunos
-        if self.type in ('out_invoice', 'in_invoice'):
+        if self.invoice_id.type in ('out_invoice', 'in_invoice'):
             exempt_vat_taxes = self.invoice_line_tax_id.filtered(
                 lambda r: not r.amount and r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
         else:   # refunds
@@ -80,7 +80,7 @@ class account_invoice_line(models.Model):
 
     vat_tax_ids = fields.One2many(
         compute="_get_taxes_and_prices",
-        comodel_name='account.invoice.tax',
+        comodel_name='account.tax',
         string='VAT Taxes'
         )
     printed_price_unit = fields.Float(

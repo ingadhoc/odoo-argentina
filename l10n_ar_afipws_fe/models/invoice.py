@@ -327,6 +327,13 @@ class invoice(models.Model):
                     obs_generales, forma_pago, incoterms,
                     idioma_cbte, incoterms_ds
                     )
+
+            # TODO ver si en realidad tenemos que usar un vat pero no lo
+            # subimos
+            if self.tax_line and afip_ws == 'wsfex':
+                raise Warning(_(
+                    'You can not use taxes on AFIP WS %s') % afip_ws)
+
             for vat in self.vat_tax_ids:
                 _logger.info('Adding VAT %s' % vat.tax_code_id.name)
                 ws.AgregarIva(

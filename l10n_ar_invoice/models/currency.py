@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
-from openerp.osv import fields, osv
+from openerp import fields, models
 
 
-class res_currency(osv.osv):
+class res_currency(models.Model):
     _inherit = "res.currency"
-    _description = "Currency"
-
-    _columns = {
-        'afip_code': fields.char('AFIP Code', size=4, readonly=True),
-        'afip_desc': fields.char('AFIP Description', size=250, readonly=True),
-        'afip_dt_from': fields.date('AFIP Valid from', readonly=True),
-    }
+    afip_code = fields.Char(
+        'AFIP Code', size=4
+        )

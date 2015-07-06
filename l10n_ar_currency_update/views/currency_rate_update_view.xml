@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="currency_rate_update_form" model="ir.ui.view">
+            <field name="name">currency.rate.update.service.form</field>
+            <field name="model">currency.rate.update.service</field>
+            <field name="inherit_id" ref="currency_rate_update.currency_rate_update_form"/>
+            <field name="arch" type="xml">
+                <field name="max_delta_days" position="after">
+                    <label for="rate_perc" string="New Rate =" attrs="{'invisible':[('service','!=','afip_ws')]}"/>
+                    <div attrs="{'invisible':[('service','!=','afip_ws')]}">
+                        <label string="Base Rate" class="oe_inline"/>
+                        <label string="* ( 1 + " class="oe_inline"/>
+                        <field name="rate_perc" class="oe_inline"/>
+                        <label string=" ) + " class="oe_inline"/>
+                        <field name="rate_surcharge" class="oe_inline"/>
+                    </div>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

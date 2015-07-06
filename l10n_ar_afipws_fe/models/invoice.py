@@ -249,8 +249,9 @@ class invoice(models.Model):
             imp_trib = str("%.2f" % abs(inv.other_taxes_amount))
             imp_op_ex = str("%.2f" % abs(inv.vat_exempt_amount))
             moneda_id = inv.currency_id.afip_code
-            moneda_ctz = str(inv.currency_id.compute(
-                1., inv.company_id.currency_id))
+            moneda_ctz = inv.currency_rate
+            # moneda_ctz = str(inv.company_id.currency_id.compute(
+                # 1., inv.currency_id))
 
             # # foreign trade data: export permit, country code, etc.:
             if inv.afip_incoterm_id:

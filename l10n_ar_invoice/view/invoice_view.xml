@@ -62,6 +62,10 @@
                     <field name="responsability_id" states="open,paid"/>
                 </xpath>
 
+                <field name="currency_id" position="after">
+                    <field name="currency_rate"/>
+                </field>
+
                 <field name="fiscal_position" position="after">
                     <field name="reference"/>
                     <field name='afip_concept' attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)],'readonly':['|',('state','!=','draft'),('afip_document_number','!=',False)]}" invisible="0"/>

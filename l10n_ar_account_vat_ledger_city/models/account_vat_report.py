@@ -280,7 +280,7 @@ class account_vat_ledger(models.Model):
 
                 # Campo 18: Tipo de Cambio
                 self.format_amount(
-                    inv.currency_id.with_context(
+                    inv.currency_rate or inv.currency_id.with_context(
                         date=inv.date_invoice).compute(
                             1., inv.company_id.currency_id),
                     padding=10, decimals=6),

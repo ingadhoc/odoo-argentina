@@ -122,7 +122,9 @@ class afip_point_of_sale(models.Model):
         if afip_ws == 'wsfex':
             ret = ws.GetParamCtz(currency.afip_code)
         else:
-            ret = ws.ParamGetCotizacion(currency.afip_code)
+            raise Warning('Not implemented yet')
+            # TODO fix this method gives an error
+            # ret = ws.ParamGetCotizacion(currency.afip_code)
         msg = (_("Currency rate for %s: %s.\nObservations: %s") % (
             currency.name, ret, ".\n".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
         raise Warning(msg)

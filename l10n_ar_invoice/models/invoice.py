@@ -10,6 +10,13 @@ _logger = logging.getLogger(__name__)
 class account_invoice(models.Model):
     _inherit = "account.invoice"
 
+    currency_rate = fields.Float(
+        string='Currency Rate',
+        copy=False,
+        digits=(16, 4),
+        # TODO make it editable, we hace to change move create method
+        readonly=True,
+        )
     invoice_number = fields.Integer(
         compute='_get_invoice_number',
         string="Invoice Number",
@@ -421,6 +428,17 @@ class account_invoice(models.Model):
                             "Invoice id %i don't have any VAT tax." % invoice.id))
 
     @api.multi
+    def action_move_create(self):
+        """
+        We add currency rate on move creation so it can be used by electronic
+        invoice later on action_number
+        """
+        for inv in self:
+            inv.currency_rate = inv.company_id.currency_id.compute(
+                    1., inv.currency_id)
+        return super(account_invoice, self).action_move_create()
+
+    @api.multi
     def action_number(self):
         self.check_argentinian_invoice_taxes()
         obj_sequence = self.env['ir.sequence']
@@ -434,7 +452,11 @@ class account_invoice(models.Model):
             # company that use this function
             # also if it has a reference number we use it (for example when
             # cancelling for modification)
-            inv_vals = {'responsability_id': self.partner_id.commercial_partner_id.responsability_id.id}
+            inv_vals = {
+                'responsability_id': self.partner_id.commercial_partner_id.responsability_id.id,
+                # 'currency_rate': obj_inv.company_id.currency_id.compute(
+                    # 1., obj_inv.currency_id)
+                }
             if obj_inv.journal_document_class_id and not obj_inv.afip_document_number:
                 if invtype in ('out_invoice', 'out_refund'):
                     if not obj_inv.journal_document_class_id.sequence_id:

@@ -326,10 +326,3 @@ class account_journal(models.Model):
         if self.point_of_sale_id and self.point_of_sale_id.company_id != self.company_id:
             raise Warning(_('The company of the point of sale and of the \
                 journal must be the same!'))
-
-
-class res_currency(models.Model):
-    _inherit = "res.currency"
-    afip_code = fields.Char(
-        'AFIP Code', size=4
-        )

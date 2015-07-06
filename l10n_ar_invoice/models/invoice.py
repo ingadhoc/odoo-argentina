@@ -297,7 +297,7 @@ class account_invoice(models.Model):
 
     _sql_constraints = [
         ('number_supplier_invoice_number',
-            'unique(supplier_invoice_number, partner_id, company_id)',
+            'unique(supplier_invoice_number, type, partner_id, company_id)',
          'Supplier Invoice Number must be unique per Supplier and Company!'),
     ]
 

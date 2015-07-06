@@ -15,6 +15,7 @@
                 </field>
                 <field name="type" position="after">
                     <field name="tax_code_id" attrs="{'invisible': [('type','!=','general')]}"/>
+                    <field name="partner_id" attrs="{'invisible': [('tax_code_id','=',False)],'required': [('tax_code_id','!=',False)]}"/>
                 </field>                
             </field>
         </record>

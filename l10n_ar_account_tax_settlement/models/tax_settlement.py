@@ -21,6 +21,7 @@ class account_tax_settlement_detail(models.Model):
         required=True,
         )
     move_line_ids = fields.One2many(
+        # TODO hacerlo m2m y verificar que a la hora de generar el asiento no se haya usado ya
         'account.move.line',
         'tax_settlement_detail_id',
         string="Move Lines",
@@ -46,23 +47,23 @@ class account_tax_settlement_detail(models.Model):
         settlement = self.tax_settlement_id
         domain = [
             ('tax_code_id', '=', self.tax_code_id.id),
-            ('tax_settlement_detail_id', '=', False),
+            # unreconciled entries
+            ('reconcile_id', '=', False),
+            # only accounts that can reconcile
+            ('account_id.reconcile', '=', True),
             ]
         self.move_line_ids = False
 
-        if settlement.moves_state == 'posted':
+        if settlement.moves_state != 'all':
             domain.append(('move_id.state', '=', settlement.moves_state))
 
         if settlement.filter == 'filter_period':
-            # TODO revisar como hacer este filtro
             domain += [
                 ('period_id', 'in', settlement.period_ids.ids)]
         elif settlement.filter == 'filter_date':
             domain += [
                 ('move_id.date', '>=', settlement.date_from),
-                # ('date', '=>', fields.Date.from_string(settlement.date_from)),
                 ('move_id.date', '<', settlement.date_to)]
-                # ('date', '<', fields.Date.from_string(settlement.date_to))]
         else:
             domain.append(
                 ('period_id.fiscalyear_id', '=', settlement.fiscalyear_id.id))
@@ -225,7 +226,9 @@ class account_tax_settlement(models.Model):
         required=True,
         default='draft'
         )
-    note = fields.Html("Notes")
+    note = fields.Html(
+        'Notes'
+        )
     name = fields.Char(
         'Title',
         compute='_get_name')
@@ -260,7 +263,7 @@ class account_tax_settlement(models.Model):
         balance_tax_amount = sum(
             self.tax_settlement_detail_ids.mapped('tax_amount'))
         balance_amount = credit_amount - debit_amount
-        if balance_amount >= 0:
+        if balance_amount <= 0:
             balance_account = self.journal_id.default_credit_account_id
             balance_tax_code = self.journal_id.default_credit_tax_code_id
         else:
@@ -278,6 +281,19 @@ class account_tax_settlement(models.Model):
     @api.one
     def action_cancel(self):
         move = self.move_id
+
+        # unreconcile
+        self.refresh()
+        reconcile_reads = self.env['account.move.line'].read_group(
+            domain=[
+                ('id', 'in', self.move_line_ids.ids),
+                ('reconcile_id', '!=', False)],
+            fields=['id', 'reconcile_id'],
+            groupby=['reconcile_id'])
+        for line in reconcile_reads:
+            self.env['account.move.reconcile'].browse(
+                line['reconcile_id'][0]).unlink()
+
         self.move_id = False
         move.unlink()
         self.state = 'cancel'
@@ -290,6 +306,12 @@ class account_tax_settlement(models.Model):
     @api.multi
     def get_final_line_vals(self):
         res = {}
+        if not self.journal_id.partner_id:
+            raise Warning(_(
+                'No Partner configured on journal'))
+        if not self.balance_account_id:
+            raise Warning(_(
+                'No Balance account configured on journal'))
         for line in self:
             debit = 0.0
             credit = 0.0
@@ -299,6 +321,7 @@ class account_tax_settlement(models.Model):
             else:
                 credit = balance_amount
             vals = {
+                'partner_id': self.journal_id.partner_id.id,
                 'name': self.name,
                 'debit': debit,
                 'credit': credit,
@@ -317,7 +340,17 @@ class account_tax_settlement(models.Model):
         if not self.journal_id.sequence_id:
             raise Warning(_('Please define a sequence on the journal.'))
         name = self.journal_id.sequence_id._next()
-        move_lines_vals = []
+        move_line_env = self.env['account.move.line']
+        move_vals = {
+            'ref': self.name,
+            'name': name,
+            'period_id': self.period_id.id,
+            'date': self.date,
+            'journal_id': self.journal_id.id,
+            'company_id': self.company_id.id,
+            }
+        move = self.move_id.create(move_vals)
+        created_move_line_ids = []
         debit = 0.0
         credit = 0.0
         for tax in self:
@@ -325,19 +358,27 @@ class account_tax_settlement(models.Model):
                 for line_vals in tax.prepare_line_values():
                     credit += line_vals['credit']
                     debit += line_vals['debit']
-                    move_lines_vals.append((0, 0, line_vals))
-        move_lines_vals.append(
-            (0, 0, self.get_final_line_vals()[self.id]))
-        move_vals = {
-            'ref': self.name,
-            'name': name,
-            'period_id': self.period_id.id,
-            'date': self.date,
-            'line_id': move_lines_vals,
-            'journal_id': self.journal_id.id,
-            'company_id': self.company_id.id,
-            }
-        move = self.move_id.create(move_vals)
+                    line_vals['move_id'] = move.id
+                    created_move_line_ids.append(
+                        move_line_env.create(line_vals).id)
+
+        final_line_vals = self.get_final_line_vals()[self.id]
+        final_line_vals['move_id'] = move.id
+        move_line_env.create(final_line_vals)
+        to_reconcile_move_lines = move_line_env.browse(
+            created_move_line_ids) + self.mapped(
+            'tax_settlement_detail_ids.move_line_ids')
+        grouped_lines = to_reconcile_move_lines.read_group(
+            domain=[('id', 'in', to_reconcile_move_lines.ids)],
+            fields=['id', 'account_id'],
+            groupby=['account_id'],
+            )
+
+        for line in grouped_lines:
+            account_id = line['account_id'][0]
+            to_reconcile_move_lines.filtered(
+                lambda r: r.account_id.id == account_id).reconcile_partial()
+
         self.write({
             'move_id': move.id,
             'state': 'presented',

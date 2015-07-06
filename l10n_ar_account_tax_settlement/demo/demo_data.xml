@@ -6,7 +6,12 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="code">LIVA</field>
             <field name="type">general</field>
+            <field name="partner_id" ref="l10n_ar_chart_generic.partner_afip"/>
             <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iva"/>
+            <field name="default_credit_tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iva_saldo_a_favor"/>
+            <!-- <field name="default_debit_tax_code_id" ref="l10n_ar_invoice.ri_iva_a_pagar"/> -->
+            <field name="default_debit_account_id" ref="l10n_ar_invoice.ri_iva_a_pagar"/>
+            <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_iva_saldo_a_favor"/>
             <!-- <field name="sequence_id" ref="sequence_miscellaneous_journal"/> -->
             <!-- <field name="analytic_journal_id" ref="sit"/> -->
             <!-- <field name="user_id" ref="base.user_root"/> -->

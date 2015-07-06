@@ -62,9 +62,9 @@
                     <field name="responsability_id" states="open,paid"/>
                 </xpath>
 
-                <field name="currency_id" position="after">
+                <div groups="base.group_multi_currency" position="after">
                     <field name="currency_rate"/>
-                </field>
+                </div>
 
                 <field name="fiscal_position" position="after">
                     <field name="reference"/>

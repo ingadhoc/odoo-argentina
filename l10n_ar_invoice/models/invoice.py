@@ -434,8 +434,8 @@ class account_invoice(models.Model):
         invoice later on action_number
         """
         for inv in self:
-            inv.currency_rate = inv.company_id.currency_id.compute(
-                    1., inv.currency_id)
+            inv.currency_rate = inv.currency_id.compute(
+                    1., inv.company_id.currency_id)
         return super(account_invoice, self).action_move_create()
 
     @api.multi

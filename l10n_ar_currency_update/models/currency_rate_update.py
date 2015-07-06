@@ -15,7 +15,9 @@ _intervalTypes = {
     'months': lambda interval: relativedelta(months=interval),
 }
 
-AFIP_WS_supported_currency_array = ['USD', 'EUR']
+# TODO completar con todas las monedas soportadas
+AFIP_WS_supported_currency_array = [
+    'USD', 'EUR', 'AUD', 'CAD', 'GBP', 'JPY', 'MXN', 'UYU', 'VEF']
 
 supported_currecies['afip_ws'] = AFIP_WS_supported_currency_array
 
@@ -68,6 +70,9 @@ class Currency_rate_update_service(models.Model):
                 raise Warning(_('There is no base currency set!'))
             if main_currency.rate != 1:
                 raise Warning(_('Base currency rate should be 1.00!'))
+            # TODO implementar poder usar otras monedas como base
+            if main_currency.name != 'ARS':
+                raise Warning(_('For AFIP WS base currency must be ARS!'))
             note = self.note or ''
             try:
                 rate_name = \
@@ -78,8 +83,9 @@ class Currency_rate_update_service(models.Model):
                         continue
                     rate, msg = self.get_pyafipws_currency_rate(curr)
                     if rate:
-                        rate = float(rate) * (1.0+(self.rate_perc or 0.0))
+                        rate = rate * (1.0+(self.rate_perc or 0.0))
                         rate += self.rate_surcharge or 0.0
+                        rate = 1.0 / rate
                         vals = {
                             'currency_id': curr.id,
                             'rate': rate,
@@ -142,4 +148,4 @@ class Currency_rate_update_service(models.Model):
             # TODO fix this method gives an error
             # ret = ws.ParamGetCotizacion(currency.afip_code)
         msg = ([ws.Excepcion, ws.ErrMsg, ws.Obs])
-        return (rate, msg)
+        return (float(rate), msg)

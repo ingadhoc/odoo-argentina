@@ -29,12 +29,11 @@ En instancia de produccion
 - actualizar listado de modulos 
 - idealmente sacar a todas las cuentas contables que tengan "type check" (no hace falta en el plan de cuentas template)
 - hacer backup de la pkey y cert
-- desinstalar wsafip
-- reiniciar instancia
 - actualizar l10n_ar_invoice (para que ande bien export haría falta hacer un -i o hacer una cargamanual de los csv de uom, currency y countries)
 - cargar pkey y cert nuevos (o utilizar los del server y asignar en afip)
 - instalar afipws_fe
 - instalar server_mode_fetchmail (solo interesante para ADHOC)
+- desinstalar wsafip
 - ir a puntos de venta y setear electronica al que corresponda
 - Si da un error probar borrar la afip session 
 

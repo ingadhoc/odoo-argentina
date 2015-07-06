@@ -21,6 +21,23 @@ En intancia test (solo interesane para ADHOC):
 - cambiar docker a 8.0.3 - create update
 - probar acceder
 
+En instancia de produccion
+- pull odoo-support (solo interesante para ADHOC)
+- cambiar docker a 8.0.3 - create update
+- pull de odoo argentina en 8.0.2
+- reiniciar instacia 
+- actualizar listado de modulos 
+- idealmente sacar a todas las cuentas contables que tengan "type check" (no hace falta en el plan de cuentas template)
+- hacer backup de la pkey y cert
+- desinstalar wsafip
+- reiniciar instancia
+- actualizar l10n_ar_invoice (para que ande bien export haría falta hacer un -i o hacer una cargamanual de los csv de uom, currency y countries)
+- cargar pkey y cert nuevos (o utilizar los del server y asignar en afip)
+- instalar afipws_fe
+- instalar server_mode_fetchmail (solo interesante para ADHOC)
+- ir a puntos de venta y setear electronica al que corresponda
+- Si da un error probar borrar la afip session 
+
 ###### NOTAS VARIAS
 PARA PROBAR EN DOCKER
 sudo docker run -ti -p 127.0.0.1:8069:8069 -u root --link db:db --name odoo-fe adhoc/odoo-adhoc:8.0.2 /bin/bash
@@ -37,23 +54,6 @@ cd pyafipws
 (con ambiente activado)
 pip install -r requirements.txt
 python setup.py install
-
-En instancia de produccion
-- pull odoo-support (solo interesante para ADHOC)
-- cambiar docker a 8.0.3 - create update
-- pull de odoo argentina en 8.0.2
-- reiniciar instacia 
-- actualizar listado de modulos 
-- idealmente sacar a todas las cuentas contables que tengan "type check" (no hace falta en el plan de cuentas template)
-- hacer backup de la pkey y cert
-- desinstalar wsafip
-- reiniciar instancia
-- actualizar l10n_ar_invoice
-- cargar pkey y cert nuevos (o utilizar los del server y asignar en afip)
-- instalar afipws_fe
-- instalar server_mode_fetchmail (solo interesante para ADHOC)
-- ir a puntos de venta y setear electronica al que corresponda
-- Si da un error probar borrar la afip session 
 
 ##### 8.0 to 8.0.1
 * Las modificación más fuerte tiene que ver con algunos campos que se agregaron a códigos de impuestos (tipo de impuesto, donde aplica, etc). Si lago da error lo más probable es que tenga que ver con esto.

@@ -2029,7 +2029,7 @@
                         <field name="name">Percepción de Ganancias Aplicada</field>
                         <!-- <field name="code">010030002</field> -->
                         <field name="sign">1</field>
-                        <field name="parent_id" ref="ri_tax_code_ganancias_ret_aplicada"/>
+                        <field name="parent_id" ref="ri_tax_code_ret_per_ganancias_aplicada"/>
                         <field name="tax">profits</field>
                         <field name="type">perception</field>
                         <field name="application">national_taxes</field>
@@ -2040,7 +2040,7 @@
                         <field name="name">Ret/Perc Ganancias a Favor</field>
                         <!-- <field name="code">010030002</field> -->
                         <field name="sign">-1</field>
-                        <field name="parent_id" ref="ri_tax_code_ganancias_ret_aplicada"/>
+                        <field name="parent_id" ref="ri_tax_code_ret_per_ganancias_aplicada"/>
                         <field name="tax">profits</field>
                         <field name="type">other</field>
                         <field name="application">national_taxes</field>

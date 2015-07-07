@@ -400,31 +400,38 @@ class account_invoice(models.Model):
             ('tax_code_id', '=', False),
             ])
         if without_tax_code:
-            raise Warning(_("You are using argentinian localization and there are some invoices with taxes that don't have tax code, tax code is required to generate this report. Invoies ids: %s" % without_tax_code.ids))
+            raise Warning(_(
+                "You are using argentinian localization and there are some invoices with taxes that don't have tax code, tax code is required to generate this report. Invoies ids: %s" % without_tax_code.ids))
 
         # check codes has argentinian tax attributes configured
         tax_codes = argentinian_invoices.mapped('tax_line.tax_code_id')
         unconfigured_tax_codes = tax_codes.filtered(
             lambda r: not r.type or not r.tax or not r.application)
         if unconfigured_tax_codes:
-            raise Warning(_("You are using argentinian localization and there are some tax codes that are not configured. Tax codes ids: %s" % unconfigured_tax_codes.ids))
+            raise Warning(_(
+                "You are using argentinian localization and there are some tax codes that are not configured. Tax codes ids: %s" % unconfigured_tax_codes.ids))
 
-        # checks for vat_discriminated invoices (A)
-        # TODO verificar si la factura E por ejemplo, necesitan los mismo chequeos
-        afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
-        for invoice in self:
-            if not invoice.vat_discriminated:
-                continue
-            special_vat_taxes = invoice.tax_line.filtered(
-                            lambda r: r.tax_code_id.afip_code in [1, 2, 3])
-            if special_vat_taxes and invoice.fiscal_position.afip_code not in afip_exempt_codes:
-                raise Warning(_("If there you have choose a tax with 0, exempt or untaxed, you must choose a fiscal position with afip code in %s. Invoice id %i" % (
-                    afip_exempt_codes, invoice.id)))
-            # TODO tal vez habria que verificar que cada linea tiene un iva configurado
-            # TODO tal vez para monotributistas se le pueda cargar el vat 0 "no corresponde" y mantemeos el criterio de hacerlo obligatorio
+        # Check invoice requiring vat
+        # TODO tal vez habria que verificar que cada linea tiene un iva configurado
+        invoices_with_vat = self.search([(
+            'id', 'in', argentinian_invoices.ids),
+            ('type', 'in', ['out_invoice', 'out_refund']),
+            ('company_id.partner_id.responsability_id.vat_tax_required_on_sales_invoices',
+                '=', True)])
+        for invoice in invoices_with_vat:
             if not invoice.vat_tax_ids:
-                        raise Warning(_(
-                            "Invoice id %i don't have any VAT tax." % invoice.id))
+                raise Warning(_(
+                    "Invoice id %i don't have any VAT tax." % invoice.id))
+
+        # Check except vat invoice
+        afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
+        for invoice in argentinian_invoices:
+            special_vat_taxes = invoice.tax_line.filtered(
+                lambda r: r.tax_code_id.afip_code in [1, 2, 3])
+            if special_vat_taxes and invoice.fiscal_position.afip_code not in afip_exempt_codes:
+                raise Warning(_(
+                    "If there you have choose a tax with 0, exempt or untaxed, you must choose a fiscal position with afip code in %s. Invoice id %i" % (
+                        afip_exempt_codes, invoice.id)))
 
     @api.multi
     def action_move_create(self):

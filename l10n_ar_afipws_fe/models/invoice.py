@@ -331,25 +331,22 @@ class invoice(models.Model):
 
             # TODO ver si en realidad tenemos que usar un vat pero no lo
             # subimos
-            if self.tax_line and afip_ws == 'wsfex':
-                raise Warning(_(
-                    'You can not use taxes on AFIP WS %s') % afip_ws)
-
-            for vat in self.vat_tax_ids:
-                _logger.info('Adding VAT %s' % vat.tax_code_id.name)
-                ws.AgregarIva(
-                    vat.tax_code_id.afip_code,
-                    "%.2f" % abs(vat.base_amount),
-                    "%.2f" % abs(vat.tax_amount),
-                    )
-            for tax in self.not_vat_tax_ids:
-                _logger.info('Adding TAX %s' % tax.tax_code_id.name)
-                ws.AgregarTributo(
-                    tax.tax_code_id.afip_code,
-                    tax.tax_code_id.name,
-                    "%.2f" % abs(tax.base_amount),
-                    "%.2f" % abs(tax.tax_amount),
-                    )
+            if afip_ws != 'wsfex':
+                for vat in self.vat_tax_ids:
+                    _logger.info('Adding VAT %s' % vat.tax_code_id.name)
+                    ws.AgregarIva(
+                        vat.tax_code_id.afip_code,
+                        "%.2f" % abs(vat.base_amount),
+                        "%.2f" % abs(vat.tax_amount),
+                        )
+                for tax in self.not_vat_tax_ids:
+                    _logger.info('Adding TAX %s' % tax.tax_code_id.name)
+                    ws.AgregarTributo(
+                        tax.tax_code_id.afip_code,
+                        tax.tax_code_id.name,
+                        "%.2f" % abs(tax.base_amount),
+                        "%.2f" % abs(tax.tax_amount),
+                        )
 
             # TODO tal vez en realidad solo hay que hacerlo para notas de
             # credito o determinados doc, ver pyafipws

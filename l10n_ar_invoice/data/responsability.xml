@@ -5,11 +5,13 @@
             <field name='code'>1</field>
             <field name='name'>IVA Responsable Inscripto</field>
             <field name='active' eval="True"/>
+            <field name='vat_tax_required_on_sales_invoices' eval="True"/>
         </record>
         <record model='afip.responsability' id='res_IVARIFM'>
             <field name='code'>1FM</field>
             <field name='name'>IVA Responsable Inscripto Factura M</field>
             <field name='active' eval="True"/>
+            <field name='vat_tax_required_on_sales_invoices' eval="True"/>
         </record>
         <record model='afip.responsability' id='res_IVARNI'>
             <field name='code'>2</field>
@@ -60,6 +62,7 @@
             <field name='code'>11</field>
             <field name='name'>IVA Responsable Inscripto – Agente de Percepción</field>
             <field name='active' eval="True"/>
+            <field name='vat_tax_required_on_sales_invoices' eval="True"/>
         </record>
         <record model='afip.responsability' id='res_EVENTUAL'>
             <field name='code'>12</field>

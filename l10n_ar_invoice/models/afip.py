@@ -173,6 +173,10 @@ class afip_responsability(models.Model):
     received_letter_ids = fields.Many2many(
         'afip.document_letter', 'afip_doc_letter_receptor_rel',
         'responsability_id', 'letter_id', 'Received Document Letters')
+    vat_tax_required_on_sales_invoices = fields.Boolean(
+        'VAT Tax Required on Sales Invoices?',
+        help='If True, then a vay tax is mandatory on each sale invoice for companies of this responsability',
+        )
 
     _sql_constraints = [('name', 'unique(name)', 'Name must be unique!'),
                         ('code', 'unique(code)', 'Code must be unique!')]

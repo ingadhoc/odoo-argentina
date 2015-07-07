@@ -141,7 +141,7 @@ class account_invoice(models.Model):
         )
     afip_concept = fields.Selection(
         compute='_get_concept',
-        store=True,
+        # store=True,
         selection=[('1', 'Producto / Exportación definitiva de bienes'),
                    ('2', 'Servicios'),
                    ('3', 'Productos y Servicios'),

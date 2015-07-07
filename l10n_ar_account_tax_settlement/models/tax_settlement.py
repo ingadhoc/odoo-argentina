@@ -123,13 +123,13 @@ class account_tax_settlement(models.Model):
         '# Tax Codes',
         compute='_get_tax_codes_count',
         )
-    balance_amount = fields.Float(
-        'Balance Amount',
+    account_balance_amount = fields.Float(
+        'Account Balance Amount',
         compute='_get_balance',
         digits_compute=dp.get_precision('Account'),
         )
-    balance_tax_amount = fields.Float(
-        'Balance Tax Amount',
+    tax_code_balance_amount = fields.Float(
+        'Tax Balance Amount',
         compute='_get_balance',
         digits_compute=dp.get_precision('Account'),
         )
@@ -260,19 +260,19 @@ class account_tax_settlement(models.Model):
             self.tax_settlement_detail_ids.mapped('credit_amount'))
         debit_amount = sum(
             self.tax_settlement_detail_ids.mapped('debit_amount'))
-        balance_tax_amount = sum(
+        tax_code_balance_amount = sum(
             self.tax_settlement_detail_ids.mapped('tax_amount'))
-        balance_amount = credit_amount - debit_amount
-        if balance_amount <= 0:
+        account_balance_amount = credit_amount - debit_amount
+        if account_balance_amount <= 0:
             balance_account = self.journal_id.default_credit_account_id
             balance_tax_code = self.journal_id.default_credit_tax_code_id
         else:
             balance_account = self.journal_id.default_debit_account_id
             balance_tax_code = self.journal_id.default_debit_tax_code_id
-        self.balance_amount = balance_amount
+        self.account_balance_amount = account_balance_amount
         self.balance_account_id = balance_account.id
         self.balance_tax_code_id = balance_tax_code.id
-        self.balance_tax_amount = balance_tax_amount
+        self.tax_code_balance_amount = tax_code_balance_amount
 
     @api.multi
     def action_present(self):
@@ -313,13 +313,15 @@ class account_tax_settlement(models.Model):
             raise Warning(_(
                 'No Balance account configured on journal'))
         for line in self:
-            debit = 0.0
-            credit = 0.0
-            balance_amount = self.balance_amount
-            if balance_amount < 0:
-                debit = balance_amount
+            account_balance_amount = self.account_balance_amount
+            if account_balance_amount < 0:
+                credit = 0.0
+                debit = -1. * account_balance_amount
+                tax_code_balance_amount = -1. * self.tax_code_balance_amount
             else:
-                credit = balance_amount
+                credit = account_balance_amount
+                debit = 0.0
+                tax_code_balance_amount = self.tax_code_balance_amount
             vals = {
                 'partner_id': self.journal_id.partner_id.id,
                 'name': self.name,
@@ -327,16 +329,23 @@ class account_tax_settlement(models.Model):
                 'credit': credit,
                 'account_id': self.balance_account_id.id,
                 'tax_code_id': self.balance_tax_code_id.id,
-                'tax_amount': self.balance_tax_amount,
+                'tax_amount': tax_code_balance_amount,
             }
             res[self.id] = vals
         return res
 
     @api.one
     def create_move(self):
-        if not self.period_id or not self.date:
-            raise Warning('not implemented! you must configure date and period')
+        if not self.date:
+            self.date = fields.Date.context_today(self)
 
+        period = self.period_id
+        if not self.period_id:
+            period = period.with_context(company_id=self.company_id.id).find(
+                self.date)[:1]
+
+        if self.tax_code_balance_amount != self.account_balance_amount:
+            raise Warning(_('Account Balance and Tax Balance must be equal.'))
         if not self.journal_id.sequence_id:
             raise Warning(_('Please define a sequence on the journal.'))
         name = self.journal_id.sequence_id._next()
@@ -344,7 +353,7 @@ class account_tax_settlement(models.Model):
         move_vals = {
             'ref': self.name,
             'name': name,
-            'period_id': self.period_id.id,
+            'period_id': period.id,
             'date': self.date,
             'journal_id': self.journal_id.id,
             'company_id': self.company_id.id,
@@ -382,6 +391,7 @@ class account_tax_settlement(models.Model):
         self.write({
             'move_id': move.id,
             'state': 'presented',
+            'period_id': period.id,
             })
 
     @api.one

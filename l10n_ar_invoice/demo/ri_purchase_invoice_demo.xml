@@ -13,7 +13,7 @@
             <field name="type">in_invoice</field>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-01'"/>
             <field name="partner_id" ref="base.res_partner_12"/>
-            <field name="partner_id" ref="base.ARS"/>
+            <field name="currency_id" ref="base.ARS"/>
             <field name="supplier_invoice_number">0002-00000282</field>
         </record>
          <record id="demo_ri_pur_invoice_0_line_rpanrearpanelshe0" model="account.invoice.line">
@@ -50,7 +50,7 @@
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-02'"/>
             <field name="partner_id" ref="base.res_partner_1"/>
             <field name="fiscal_position" ref="l10n_ar_invoice.fiscal_position_no_gravado"/>
-            <field name="partner_id" ref="base.ARS"/>
+            <field name="currency_id" ref="base.ARS"/>
             <field name="supplier_invoice_number">0002-00002151</field>
         </record>
          <record id="demo_ri_pur_invoice_1_line_rpanrearpanelshe0" model="account.invoice.line">
@@ -84,7 +84,7 @@
             <field name="type">in_invoice</field> 
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-07'"/>
             <field name="partner_id" ref="l10n_ar_invoice.partner_mono"/>
-            <field name="partner_id" ref="base.ARS"/>
+            <field name="currency_id" ref="base.ARS"/>
             <field name="supplier_invoice_number">0001-00001123</field>
         </record>
          <record id="demo_ri_pur_invoice_2_line_rpanrearpanelshe0" model="account.invoice.line">
@@ -108,7 +108,7 @@
             <field name="type">in_invoice</field> 
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-12'"/>
             <field name="partner_id" ref="base.res_partner_12"/>
-            <field name="partner_id" ref="base.ARS"/>
+            <field name="currency_id" ref="base.ARS"/>
             <field name="supplier_invoice_number">0001-00000343</field>
         </record>
          <record id="demo_ri_pur_invoice_3_line_rpanrearpanelshe0" model="account.invoice.line">
@@ -143,7 +143,7 @@
             <field name="type">in_invoice</field> 
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-15'"/>
             <field name="partner_id" ref="base.res_partner_13"/>
-            <field name="partner_id" ref="base.ARS"/>
+            <field name="currency_id" ref="base.ARS"/>
             <field name="supplier_invoice_number">0001-00000353</field>
         </record>
          <record id="demo_ri_pur_invoice_4_line_rpanrearpanelshe0" model="account.invoice.line">
@@ -179,7 +179,7 @@
             <field name="type">in_refund</field> 
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-15'"/>
             <field name="partner_id" ref="base.res_partner_12"/>
-            <field name="partner_id" ref="base.ARS"/>
+            <field name="currency_id" ref="base.ARS"/>
             <field name="supplier_invoice_number">0001-00000123</field>
         </record>
          <record id="demo_ri_pur_refund_4_line_rpanrearpanelshe0" model="account.invoice.line">

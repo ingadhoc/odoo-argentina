@@ -49,9 +49,9 @@
                             <group string="Move Data">
                                 <field name="date"/>
                                 <field name="period_id"/>
-                                <field name="balance_amount"/>
+                                <field name="account_balance_amount"/>
                                 <field name="balance_account_id"/>
-                                <field name="balance_tax_amount"/>
+                                <field name="tax_code_balance_amount"/>
                                 <field name="balance_tax_code_id"/>
                             </group>
                             <group>

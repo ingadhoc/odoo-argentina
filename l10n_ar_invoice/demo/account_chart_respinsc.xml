@@ -210,7 +210,7 @@
 
         <record model="account.account" id="ri_a_cuenta_impuestos_ganancias_a_favor">
             <field name="type">other</field>
-            <field name="code">1141030</field>
+            <field name="code">1141040</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Impuesto a las Ganancias a favor</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>

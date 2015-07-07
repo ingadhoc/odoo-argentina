@@ -12,7 +12,7 @@
             <field name="type">out_invoice</field>
             <field name="account_id" ref="ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-01'"/>
-            <field name="partner_id" ref="base.ARS"/>
+            <field name="currency_id" ref="base.ARS"/>
             <field name="partner_id" ref="base.res_partner_2"/>
         </record>
          <record id="demo_ri_sale_invoice_0_line_rpanrearpanelshe0" model="account.invoice.line">
@@ -48,7 +48,7 @@
             <field name="account_id" ref="ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-02'"/>
             <field name="partner_id" ref="base.res_partner_12"/>
-            <field name="partner_id" ref="base.ARS"/>
+            <field name="currency_id" ref="base.ARS"/>
             <field name="fiscal_position" ref="l10n_ar_invoice.fiscal_position_no_gravado"/>
         </record>
          <record id="demo_ri_sale_invoice_1_line_rpanrearpanelshe0" model="account.invoice.line">
@@ -82,7 +82,7 @@
             <field name="account_id" ref="ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-07'"/>
             <field name="partner_id" ref="l10n_ar_invoice.partner_mono"/>
-            <field name="partner_id" ref="base.ARS"/>
+            <field name="currency_id" ref="base.ARS"/>
         </record>
          <record id="demo_ri_sale_invoice_2_line_rpanrearpanelshe0" model="account.invoice.line">
             <field name="invoice_id" ref="demo_ri_sale_invoice_2"/>
@@ -106,7 +106,7 @@
             <field name="account_id" ref="ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-12'"/>
             <field name="partner_id" ref="base.res_partner_13"/>
-            <field name="partner_id" ref="base.ARS"/>
+            <field name="currency_id" ref="base.ARS"/>
         </record>
          <record id="demo_ri_sale_invoice_3_line_rpanrearpanelshe0" model="account.invoice.line">
             <field name="invoice_id" ref="demo_ri_sale_invoice_3"/>
@@ -140,7 +140,7 @@
             <field name="account_id" ref="ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-15'"/>
             <field name="partner_id" ref="base.res_partner_12"/>
-            <field name="partner_id" ref="base.ARS"/>
+            <field name="currency_id" ref="base.ARS"/>
         </record>
          <record id="demo_ri_sale_invoice_4_line_rpanrearpanelshe0" model="account.invoice.line">
             <field name="invoice_id" ref="demo_ri_sale_invoice_4"/>
@@ -177,7 +177,7 @@
             <field name="account_id" ref="ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-05'"/>
             <field name="partner_id" ref="base.res_partner_2"/>
-            <field name="partner_id" ref="base.ARS"/>
+            <field name="currency_id" ref="base.ARS"/>
         </record>
          <record id="demo_ri_refund_0_line_rpanrearpanelshe0" model="account.invoice.line">
             <field name="invoice_id" ref="demo_ri_refund_0"/>

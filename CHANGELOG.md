@@ -14,6 +14,9 @@
 * Estos nuevos modulos utilizan el proyecto pyafipws
 * Se mejoraron los datos demo
 
+###### UPGRADE 8.0 to 8.0.2
+Idem 8.0.1 + Configurar atributos de codigos de impuestos
+
 ###### UPGRADE 8.0.1 to 8.0.2
 En intancia test (solo interesane para ADHOC):
 - pull odoo-support
@@ -22,20 +25,21 @@ En intancia test (solo interesane para ADHOC):
 - probar acceder
 
 En instancia de produccion
+- cambiar las cuentas contables que tengan "type check" por "Efectivo" (no hace falta en el plan de cuentas template)
 - pull odoo-support (solo interesante para ADHOC)
-- cambiar docker a 8.0.3 - create update
+- cambiar docker a 8.0.3
 - pull de odoo argentina en 8.0.2
-- reiniciar instacia 
-- actualizar listado de modulos 
-- idealmente sacar a todas las cuentas contables que tengan "type check" (no hace falta en el plan de cuentas template)
+- create/update instancia
+- update a l10n_ar_invoice (esto dispara update de l10n_ar_wsafip_fe tmb)
 - hacer backup de la pkey y cert
+- desinstalar l10n_ar_wsafip_fe
+- reiniciar instacia 
+- actualizar listado de modulos
 - actualizar l10n_ar_invoice (para que ande bien export haría falta hacer un -i o hacer una cargamanual de los csv de uom, currency y countries)
 - cargar pkey y cert nuevos (o utilizar los del server y asignar en afip)
 - instalar afipws_fe
 - instalar server_mode_fetchmail (solo interesante para ADHOC)
-- desinstalar wsafip
 - ir a puntos de venta y setear electronica al que corresponda
-- Si da un error probar borrar la afip session 
 
 ###### NOTAS VARIAS
 PARA PROBAR EN DOCKER

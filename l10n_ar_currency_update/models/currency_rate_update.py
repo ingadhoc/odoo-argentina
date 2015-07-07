@@ -81,7 +81,9 @@ class Currency_rate_update_service(models.Model):
                 for curr in self.currency_to_update:
                     if curr.id == main_currency.id:
                         continue
-                    rate, msg = self.get_pyafipws_currency_rate(curr)
+                    rate, msg = curr.get_pyafipws_currency_rate(
+                        company=self.company_id,
+                        )
                     if rate:
                         rate = rate * (1.0+(self.rate_perc or 0.0))
                         rate += self.rate_surcharge or 0.0
@@ -129,23 +131,3 @@ class Currency_rate_update_service(models.Model):
             return self.refres_currency_with_afip_ws()
         else:
             return super(Currency_rate_update_service, self).refresh_currency()
-
-    @api.multi
-    def get_pyafipws_currency_rate(self, currency, afip_ws='wsfex'):
-        self.ensure_one()
-        if not afip_ws:
-            raise Warning(_('No AFIP WS selected'))
-        ws = self.company_id.get_connection(afip_ws).connect()
-        rate = False
-        if not currency.afip_code:
-            raise Warning(_(
-                'Afip Code is mandatory for AFIP WS currency rate update'
-                'Currency: %s') % currency.name)
-        if afip_ws == 'wsfex':
-            rate = ws.GetParamCtz(currency.afip_code)
-        else:
-            raise Warning('Not implemented yet')
-            # TODO fix this method gives an error
-            # ret = ws.ParamGetCotizacion(currency.afip_code)
-        msg = ([ws.Excepcion, ws.ErrMsg, ws.Obs])
-        return (float(rate), msg)

@@ -34,6 +34,7 @@ API y GUI para acceder a las Web Services de Factura Electrónica de la AFIP
         'wizard/validate_invoices_view.xml',
         'wizard/res_config_view.xml',
     ],
-    'version': '2.7.244',
+    'version': '8.0.3.0',
+    # 'version': '8.0.2.0',
  }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

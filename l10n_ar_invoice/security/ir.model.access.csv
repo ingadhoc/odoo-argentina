@@ -11,3 +11,5 @@ access_journal_afip_document_class_manager,journal_afip_document_class.manager,m
 access_journal_afip_document_class_user,journal_afip_document_class.user,model_account_journal_afip_document_class,,1,0,0,0
 access_afip_point_of_sale.manager,afip.point_of_sale.manager,model_afip_point_of_sale,account.group_account_manager,1,1,1,1
 access_afip_point_of_sale.user,afip.point_of_sale.user,model_afip_point_of_sale,,1,0,0,0
+access_afip_incoterm.manager,afip.incoterm.manager,model_afip_incoterm,account.group_account_manager,1,1,1,1
+access_afip_incoterm.user,afip.incoterm.user,model_afip_incoterm,,1,0,0,0

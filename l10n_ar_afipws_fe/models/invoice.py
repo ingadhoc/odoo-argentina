@@ -331,25 +331,22 @@ class invoice(models.Model):
 
             # TODO ver si en realidad tenemos que usar un vat pero no lo
             # subimos
-            if self.tax_line and afip_ws == 'wsfex':
-                raise Warning(_(
-                    'You can not use taxes on AFIP WS %s') % afip_ws)
-
-            for vat in self.vat_tax_ids:
-                _logger.info('Adding VAT %s' % vat.tax_code_id.name)
-                ws.AgregarIva(
-                    vat.tax_code_id.afip_code,
-                    "%.2f" % abs(vat.base_amount),
-                    "%.2f" % abs(vat.tax_amount),
-                    )
-            for tax in self.not_vat_tax_ids:
-                _logger.info('Adding TAX %s' % tax.tax_code_id.name)
-                ws.AgregarTributo(
-                    tax.tax_code_id.afip_code,
-                    tax.tax_code_id.name,
-                    "%.2f" % abs(tax.base_amount),
-                    "%.2f" % abs(tax.tax_amount),
-                    )
+            if afip_ws != 'wsfex':
+                for vat in self.vat_tax_ids:
+                    _logger.info('Adding VAT %s' % vat.tax_code_id.name)
+                    ws.AgregarIva(
+                        vat.tax_code_id.afip_code,
+                        "%.2f" % abs(vat.base_amount),
+                        "%.2f" % abs(vat.tax_amount),
+                        )
+                for tax in self.not_vat_tax_ids:
+                    _logger.info('Adding TAX %s' % tax.tax_code_id.name)
+                    ws.AgregarTributo(
+                        tax.tax_code_id.afip_code,
+                        tax.tax_code_id.name,
+                        "%.2f" % abs(tax.base_amount),
+                        "%.2f" % abs(tax.tax_amount),
+                        )
 
             # TODO tal vez en realidad solo hay que hacerlo para notas de
             # credito o determinados doc, ver pyafipws
@@ -368,6 +365,9 @@ class invoice(models.Model):
                     codigo = line.product_id.code
                     # unidad de referencia del producto si se comercializa
                     # en una unidad distinta a la de consumo
+                    if not line.uos_id.afip_code:
+                        raise Warning(_('Not afip code con producto UOM %s' % (
+                            line.uos_id.name)))
                     cod_mtx = line.uos_id.afip_code
                     ds = line.name
                     qty = line.quantity
@@ -376,6 +376,9 @@ class invoice(models.Model):
                     importe = line.price_subtotal
                     bonif = line.discount or None
                     if afip_ws == 'wsmtxca':
+                        if not line.product_id.uom_id.afip_code:
+                            raise Warning(_('Not afip code con producto UOM %s' % (
+                                line.product_id.uom_id.name)))
                         u_mtx = line.product_id.uom_id.afip_code or line.uos_id.afip_code
                         if self.invoice_id.type in ('out_invoice', 'in_invoice'):
                             iva_id = line.vat_tax_ids.tax_code_id.afip_code

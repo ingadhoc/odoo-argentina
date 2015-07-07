@@ -89,7 +89,7 @@ class account_journal_afip_document_class(models.Model):
             return(_('AFIP WS %s not implemented') % afip_ws)
         msg = " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])
 
-        next_ws = int(last) + 1
+        next_ws = int(last or 0) + 1
         next_local = self.sequence_id.number_next_actual
         if next_ws != next_local:
             msg = _(

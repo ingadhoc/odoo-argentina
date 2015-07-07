@@ -33,6 +33,7 @@ En instancia de produccion
 - cargar pkey y cert nuevos (o utilizar los del server y asignar en afip)
 - instalar afipws_fe
 - instalar server_mode_fetchmail (solo interesante para ADHOC)
+- Hacer backup de pkey y cert!
 - desinstalar wsafip
 - ir a puntos de venta y setear electronica al que corresponda
 - Si da un error probar borrar la afip session 

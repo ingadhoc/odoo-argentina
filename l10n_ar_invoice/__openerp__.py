@@ -60,6 +60,7 @@ Para actualizar el plan de cuentas de datos demo:
      'data/fiscal_position.xml',
      'data/res.country.csv',
      'data/product.uom.csv',
+     'data/res_partner.xml',
      # 'data/decimal_precision_data.xml', probando si no es necesario
      'view/partner_view.xml',
      'view/company_view.xml',

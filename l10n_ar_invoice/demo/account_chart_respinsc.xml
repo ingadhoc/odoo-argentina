@@ -185,6 +185,7 @@
             <field name="name">Retención impuestos a las ganancias</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
             <field name="company_id" ref="company_ri"/>
+            <field name="reconcile" eval="True"/>
         </record>
 
         <record model="account.account" id="ri_anticipo_impuestos_ganancias">
@@ -194,14 +195,26 @@
             <field name="name">Anticipo impuestos a las ganancias</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
             <field name="company_id" ref="company_ri"/>
+            <field name="reconcile" eval="True"/>
         </record>
 
         <record model="account.account" id="ri_a_cuenta_impuestos_ganancias">
             <field name="type">other</field>
             <field name="code">1141030</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
-            <field name="name">Pago a cuenta impuestos a las ganancias</field>
+            <field name="name">Percepción de Ganancias Sufrida</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
+            <field name="reconcile" eval="True"/>
+            <field name="company_id" ref="company_ri"/>
+        </record>
+
+        <record model="account.account" id="ri_a_cuenta_impuestos_ganancias_a_favor">
+            <field name="type">other</field>
+            <field name="code">1141030</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Impuesto a las Ganancias a favor</field>
+            <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
+            <field name="reconcile" eval="True"/>
             <field name="company_id" ref="company_ri"/>
         </record>
 
@@ -1961,7 +1974,7 @@
 
                 <record model="account.tax.code" id="ri_tax_code_ganancias_vista">
                     <field name="name">Ganancias</field>
-                    <field name="code">010030</field>
+                    <!-- <field name="code">010030</field> -->
                     <field name="sign">1</field>
                     <field name="parent_id" ref="ri_impuestos_nacionales"/>
                     <field name="tax">profits</field>
@@ -1972,7 +1985,7 @@
 
                     <record model="account.tax.code" id="ri_tax_code_ganancias">
                         <field name="name">Ganancias</field>
-                        <field name="code">010030001</field>
+                        <!-- <field name="code">010030001</field> -->
                         <field name="sign">1</field>
                         <field name="parent_id" ref="ri_tax_code_ganancias_vista"/>
                         <field name="tax">profits</field>
@@ -1983,7 +1996,7 @@
 
                     <record model="account.tax.code" id="ri_tax_code_ganancias_per_sufrida">
                         <field name="name">Percepción de Ganancias Sufrida</field>
-                        <field name="code">010030003</field>
+                        <!-- <field name="code">010030003</field> -->
                         <field name="sign">-1</field>
                         <field name="parent_id" ref="ri_tax_code_ganancias_vista"/>
                         <field name="tax">profits</field>
@@ -1994,11 +2007,22 @@
 
                     <record model="account.tax.code" id="ri_tax_code_ganancias_ret_sufrida">
                         <field name="name">Retención de Ganancias Sufrida</field>
-                        <field name="code">010030005</field>
+                        <!-- <field name="code">010030005</field> -->
                         <field name="sign">-1</field>
                         <field name="parent_id" ref="ri_tax_code_ganancias_vista"/>
                         <field name="tax">profits</field>
                         <field name="type">withholding</field>
+                        <field name="application">national_taxes</field>
+                        <field name="company_id" ref="company_ri"/>
+                    </record>
+
+                    <record model="account.tax.code" id="ri_tax_code_imp_ganancias_a_favor">
+                        <!-- <field name="code">01003006:C</field> -->
+                        <field name="name">Impuesto a las Ganancias a favor</field>
+                        <field name="sign">-1</field>
+                        <field name="parent_id" ref="ri_tax_code_ganancias_vista"/>
+                        <field name="tax">profits</field>
+                        <field name="type">other</field>
                         <field name="application">national_taxes</field>
                         <field name="company_id" ref="company_ri"/>
                     </record>

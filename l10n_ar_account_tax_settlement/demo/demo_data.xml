@@ -7,7 +7,7 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="code">LIVA</field>
             <field name="type">general</field>
-            <field name="partner_id" ref="l10n_ar_chart_generic.partner_afip"/>
+            <field name="partner_id" ref="l10n_ar_invoice.partner_afip"/>
             <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iva"/>
             <field name="default_credit_tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iva_saldo_a_favor"/>
             <!-- <field name="default_debit_tax_code_id" ref="l10n_ar_invoice.ri_iva_a_pagar"/> -->
@@ -19,6 +19,7 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="journal_id" ref="journal_vat_settlement"/>
             <field name="fiscalyear_id" ref="l10n_ar_invoice.data_fiscalyear_ri"/>
+            <field name="moves_state">all</field>
         </record>
 
         <!-- liquidacion de ganacias -->
@@ -27,18 +28,19 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="code">LGAN</field>
             <field name="type">general</field>
-            <field name="partner_id" ref="l10n_ar_chart_generic.partner_afip"/>
-            <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_ganancias"/>
-            <!-- <field name="default_credit_tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iva_saldo_a_favor"/> -->
+            <field name="partner_id" ref="l10n_ar_invoice.partner_afip"/>
+            <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_ganancias_vista"/>
+            <field name="default_credit_tax_code_id" ref="l10n_ar_invoice.ri_tax_code_imp_ganancias_a_favor"/>
             <!-- <field name="default_debit_tax_code_id" ref="l10n_ar_invoice.ri_iva_a_pagar"/> -->
             <field name="default_debit_account_id" ref="l10n_ar_invoice.ri_impuesto_ganancias_a_pagar"/>
-            <!-- <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_iva_saldo_a_favor"/> -->
+            <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_a_cuenta_impuestos_ganancias_a_favor"/>
         </record>
 
         <record id="proffit_settlement" model="account.tax.settlement">
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="journal_id" ref="journal_proffit_settlement"/>
             <field name="fiscalyear_id" ref="l10n_ar_invoice.data_fiscalyear_ri"/>
+            <field name="moves_state">all</field>
         </record>
 
         <!-- ret/per de ganacias -->
@@ -47,7 +49,7 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="code">LRPG</field>
             <field name="type">general</field>
-            <field name="partner_id" ref="l10n_ar_chart_generic.partner_afip"/>
+            <field name="partner_id" ref="l10n_ar_invoice.partner_afip"/>
             <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_ret_per_ganancias_aplicada"/>
             <field name="default_credit_tax_code_id" ref="l10n_ar_invoice.ri_tax_code_ganancias_per_ret_a_favor"/>
             <!-- <field name="default_debit_tax_code_id" ref="l10n_ar_invoice.ri_iva_a_pagar"/> -->
@@ -59,6 +61,7 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="journal_id" ref="journal_ret_per_proffit_settlement"/>
             <field name="fiscalyear_id" ref="l10n_ar_invoice.data_fiscalyear_ri"/>
+            <field name="moves_state">all</field>
         </record>
 
         <!-- ret/per de iva -->
@@ -67,7 +70,7 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="code">LRPI</field>
             <field name="type">general</field>
-            <field name="partner_id" ref="l10n_ar_chart_generic.partner_afip"/>
+            <field name="partner_id" ref="l10n_ar_invoice.partner_afip"/>
             <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_ret_per_iva_aplicada"/>
             <field name="default_credit_tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iva_ret_perc_a_favor"/>
             <!-- <field name="default_debit_tax_code_id" ref="l10n_ar_invoice.ri_iva_a_pagar"/> -->
@@ -79,6 +82,7 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="journal_id" ref="journal_ret_per_iva_settlement"/>
             <field name="fiscalyear_id" ref="l10n_ar_invoice.data_fiscalyear_ri"/>
+            <field name="moves_state">all</field>
         </record>
     </data>
 </openerp>

@@ -365,6 +365,9 @@ class invoice(models.Model):
                     codigo = line.product_id.code
                     # unidad de referencia del producto si se comercializa
                     # en una unidad distinta a la de consumo
+                    if not line.uos_id.afip_code:
+                        raise Warning(_('Not afip code con producto UOM %s' % (
+                            line.uos_id.name)))
                     cod_mtx = line.uos_id.afip_code
                     ds = line.name
                     qty = line.quantity
@@ -373,6 +376,9 @@ class invoice(models.Model):
                     importe = line.price_subtotal
                     bonif = line.discount or None
                     if afip_ws == 'wsmtxca':
+                        if not line.product_id.uom_id.afip_code:
+                            raise Warning(_('Not afip code con producto UOM %s' % (
+                                line.product_id.uom_id.name)))
                         u_mtx = line.product_id.uom_id.afip_code or line.uos_id.afip_code
                         if self.invoice_id.type in ('out_invoice', 'in_invoice'):
                             iva_id = line.vat_tax_ids.tax_code_id.afip_code

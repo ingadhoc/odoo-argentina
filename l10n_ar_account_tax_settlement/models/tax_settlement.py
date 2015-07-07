@@ -91,8 +91,10 @@ class account_tax_settlement_detail(models.Model):
             )
 
         for line in grouped_lines:
-            if not line['tax_amount'] and line['debit'] == line['credit']:
-                continue
+            # we create all moves, no matter amount = 0, to make posible
+            # unreconciliation form this settlement
+            # if not line['tax_amount'] and line['debit'] == line['credit']:
+            #     continue
 
             debit = 0.0
             credit = 0.0
@@ -344,7 +346,8 @@ class account_tax_settlement(models.Model):
             period = period.with_context(company_id=self.company_id.id).find(
                 self.date)[:1]
 
-        if self.tax_code_balance_amount != self.account_balance_amount:
+        # TODO improove here, direct comparison didnt work
+        if abs(self.tax_code_balance_amount - self.account_balance_amount) >= 0.001:
             raise Warning(_('Account Balance and Tax Balance must be equal.'))
         if not self.journal_id.sequence_id:
             raise Warning(_('Please define a sequence on the journal.'))

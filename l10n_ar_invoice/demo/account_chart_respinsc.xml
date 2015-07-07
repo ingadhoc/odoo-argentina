@@ -182,7 +182,7 @@
             <field name="type">other</field>
             <field name="code">1141010</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
-            <field name="name">Retención impuestos a las ganancias</field>
+            <field name="name">Retención impuestos a las ganancias Sufrida</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
             <field name="company_id" ref="company_ri"/>
             <field name="reconcile" eval="True"/>
@@ -202,7 +202,7 @@
             <field name="type">other</field>
             <field name="code">1141030</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
-            <field name="name">Percepción de Ganancias Sufrida</field>
+            <field name="name">Percepción Impuesto a las Ganancias Sufrida</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
             <field name="reconcile" eval="True"/>
             <field name="company_id" ref="company_ri"/>
@@ -213,6 +213,16 @@
             <field name="code">1141040</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Impuesto a las Ganancias a favor</field>
+            <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
+            <field name="reconcile" eval="True"/>
+            <field name="company_id" ref="company_ri"/>
+        </record>
+
+        <record model="account.account" id="ri_a_cuenta_impuestos_ret_perc_ganancias_a_favor">
+            <field name="type">other</field>
+            <field name="code">1141050</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Ret/Perc Ganancias a favor</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
             <field name="reconcile" eval="True"/>
             <field name="company_id" ref="company_ri"/>
@@ -264,6 +274,16 @@
             <field name="name">IVA saldo a favor</field>
             <field name="reconcile" eval="True"/>
             <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
+            <field name="company_id" ref="company_ri"/>
+        </record>
+
+        <record model="account.account" id="ri_a_cuenta_impuestos_ret_perc_iva_a_favor">
+            <field name="type">other</field>
+            <field name="code">1142050</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Ret/Perc IVA a favor</field>
+            <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
+            <field name="reconcile" eval="True"/>
             <field name="company_id" ref="company_ri"/>
         </record>
 

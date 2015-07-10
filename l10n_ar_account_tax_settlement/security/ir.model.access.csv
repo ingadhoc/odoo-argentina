@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_account_tax_settlement_accountant,account_tax_settlement_accountant,model_account_tax_settlement,account.group_account_user,1,1,1,1
-access_account_tax_settlement_detail_accountant,account_tax_settlement_detail_accountant,model_account_tax_settlement_detail,account.group_account_user,1,1,1,1

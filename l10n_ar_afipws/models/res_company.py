@@ -136,6 +136,7 @@ class res_company(models.Model):
             ('generationtime', '<=', now),
             ('expirationtime', '>', now),
             ('afip_ws', '=', afip_ws),
+            ('company_id', '=', self.id),
             ], limit=1)
         if not connection:
             connection = self._create_connection(afip_ws, environment_type)

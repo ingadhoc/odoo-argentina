@@ -2282,9 +2282,9 @@
             <field name="tax_code_id" ref="ri_tax_code_iva_venta_no_gravado"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta_no_gravado"/>
             <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
-            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
             <field name="type_tax_use">sale</field>
-            <field name="ref_tax_sign" eval="-1"/>
+            <!-- <field name="ref_tax_sign" eval="1"/> -->
         </record>
 
         <record id="ri_tax_vat_no_gravado_compras" model="account.tax">
@@ -2296,9 +2296,9 @@
             <field name="tax_code_id" ref="ri_tax_code_iva_compras_no_gravado"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras_no_gravado"/>
             <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
-            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">purchase</field>
-            <field name="ref_tax_sign" eval="-1"/>
+            <!-- <field name="ref_tax_sign" eval="1"/> -->
         </record>
 
         <record id="ri_tax_vat_exento_ventas" model="account.tax">
@@ -2310,9 +2310,9 @@
             <field name="tax_code_id" ref="ri_tax_code_iva_venta_exento"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta_exento"/>
             <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
-            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
             <field name="type_tax_use">sale</field>
-            <field name="ref_tax_sign" eval="-1"/>
+            <!-- <field name="ref_tax_sign" eval="1"/> -->
         </record>
 
         <record id="ri_tax_vat_exento_compras" model="account.tax">
@@ -2324,9 +2324,9 @@
             <field name="tax_code_id" ref="ri_tax_code_iva_compras_exento"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras_exento"/>
             <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
-            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">purchase</field>
-            <field name="ref_tax_sign" eval="-1"/>
+            <!-- <field name="ref_tax_sign" eval="1"/> -->
         </record>
 
         <record id="ri_tax_vat_0_ventas" model="account.tax">
@@ -2339,9 +2339,9 @@
             <field name="tax_code_id" ref="ri_tax_code_iva_venta0"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta0"/>
             <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
-            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
             <field name="type_tax_use">sale</field>
-            <field name="ref_tax_sign" eval="-1"/>
+            <!-- <field name="ref_tax_sign" eval="1"/> -->
         </record>
 
         <record id="ri_tax_vat_0_compras" model="account.tax">
@@ -2354,9 +2354,9 @@
             <field name="tax_code_id" ref="ri_tax_code_iva_compras0"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras0"/>
             <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
-            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">purchase</field>
-            <field name="ref_tax_sign" eval="-1"/>
+            <!-- <field name="ref_tax_sign" eval="1"/> -->
         </record>
 
         <record id="ri_tax_vat_10_ventas" model="account.tax">
@@ -2369,9 +2369,9 @@
             <field name="tax_code_id" ref="ri_tax_code_iva_venta10"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta10"/>
             <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
-            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
             <field name="type_tax_use">sale</field>
-            <field name="ref_tax_sign" eval="-1"/>
+            <!-- <field name="ref_tax_sign" eval="1"/> -->
         </record>
 
         <record id="ri_tax_vat_10_compras" model="account.tax">
@@ -2384,9 +2384,9 @@
             <field name="tax_code_id" ref="ri_tax_code_iva_compras10"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras10"/>
             <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
-            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">purchase</field>
-            <field name="ref_tax_sign" eval="-1"/>
+            <!-- <field name="ref_tax_sign" eval="1"/> -->
         </record>
 
         <record id="ri_tax_vat_21_ventas" model="account.tax">
@@ -2399,9 +2399,9 @@
             <field name="tax_code_id" ref="ri_tax_code_iva_venta21"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta21"/>
             <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
-            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
+            <field name="account_paid_id" ref="va_credito_fiscal"/>
             <field name="type_tax_use">sale</field>
-            <field name="ref_tax_sign" eval="-1"/>
+            <!-- <field name="ref_tax_sign" eval="1"/> -->
         </record>
 
         <record id="ri_tax_vat_21_compras" model="account.tax">
@@ -2414,9 +2414,9 @@
             <field name="tax_code_id" ref="ri_tax_code_iva_compras21"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras21"/>
             <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
-            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iri_iva_debito_fiscal"/>
             <field name="type_tax_use">purchase</field>
-            <field name="ref_tax_sign" eval="-1"/>
+            <!-- <field name="ref_tax_sign" eval="1"/> -->
         </record>
 
         <record id="ri_tax_vat_27_ventas" model="account.tax">
@@ -2429,9 +2429,9 @@
             <field name="tax_code_id" ref="ri_tax_code_iva_venta27"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_venta27"/>
             <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
-            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
             <field name="type_tax_use">sale</field>
-            <field name="ref_tax_sign" eval="-1"/>
+            <!-- <field name="ref_tax_sign" eval="1"/> -->
         </record>
 
         <record id="ri_tax_vat_27_compras" model="account.tax">
@@ -2444,9 +2444,9 @@
             <field name="tax_code_id" ref="ri_tax_code_iva_compras27"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras27"/>
             <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
-            <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
+            <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">purchase</field>
-            <field name="ref_tax_sign" eval="-1"/>
+            <!-- <field name="ref_tax_sign" eval="1"/> -->
         </record>
 
         <record id="ri_tax_vat_percepcion_ventas" model="account.tax">

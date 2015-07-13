@@ -59,9 +59,10 @@ class afip_point_of_sale(models.Model):
 
     @api.one
     def generate_purchase_journals(self):
+        name = "(%s)" % (self.name)
         actual_types = self.journal_ids.mapped('type')
         vals = {
-            'name': "Facturas Compra %s" % self.name,
+            'name': "FA Compras %s" % name,
             'code': "FAC%02i" % self.number,
             'type': 'purchase',
             'point_of_sale_id': self.id,
@@ -73,9 +74,10 @@ class afip_point_of_sale(models.Model):
             self.journal_ids.create(vals)
 
         if 'purchase_refund' not in actual_types:
-            _logger.info('Creating purchase_refund journal with vals %s' % str(vals))
+            _logger.info('Creating purchase_refund journal with vals %s' % str(
+                vals))
             vals.update({
-                'name': "NC Compra %s" % self.name,
+                'name': "NC Compras %s" % name,
                 'code': "NCC%02i" % self.number,
                 'type': 'purchase_refund',
             })
@@ -84,8 +86,9 @@ class afip_point_of_sale(models.Model):
     @api.one
     def generate_sale_journals(self):
         actual_types = self.journal_ids.mapped('type')
+        name = "%04i (%s)" % (self.number, self.name)
         vals = {
-            'name': "Facturas Vta %s" % self.name,
+            'name': "FA Ventas %s" % name,
             'code': "FAV%02i" % self.number,
             'type': 'sale',
             'point_of_sale_id': self.id,
@@ -97,9 +100,10 @@ class afip_point_of_sale(models.Model):
             self.journal_ids.create(vals)
 
         if 'sale_refund' not in actual_types:
-            _logger.info('Creating sale_refund journal with vals %s' % str(vals))
+            _logger.info('Creating sale_refund journal with vals %s' % str(
+                vals))
             vals.update({
-                'name': "NC Vta %s" % self.name,
+                'name': "NC Ventas %s" % name,
                 'code': "NCV%02i" % self.number,
                 'type': 'sale_refund',
             })

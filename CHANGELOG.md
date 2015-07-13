@@ -30,15 +30,14 @@ En instancia de produccion
 - cambiar docker a 8.0.3
 - pull de odoo argentina en 8.0.2
 - create/update instancia
-- update a l10n_ar_invoice (esto dispara update de l10n_ar_wsafip_fe tmb)
+- update a l10n_ar_invoice (esto dispara update de l10n_ar_wsafip_fe tmb) (para que ande bien export haría falta hacer un -i o hacer una cargamanual de los csv de uom, currency y countries)
 - hacer backup de la pkey y cert
-- desinstalar l10n_ar_wsafip_fe
+- desinstalar l10n_ar_wsafip
 - reiniciar instacia 
 - actualizar listado de modulos
-- actualizar l10n_ar_invoice (para que ande bien export haría falta hacer un -i o hacer una cargamanual de los csv de uom, currency y countries)
-- cargar pkey y cert nuevos (o utilizar los del server y asignar en afip)
 - instalar afipws_fe
 - instalar server_mode_fetchmail (solo interesante para ADHOC)
+- cargar pkey y cert nuevos (o utilizar los del server y asignar en afip)
 - ir a puntos de venta y setear electronica al que corresponda
 
 ###### NOTAS VARIAS

@@ -22,12 +22,14 @@ class invoice(models.Model):
         copy=False,
         string='CAE number',
         readonly=True,
-        size=24
+        size=24,
+        states={'draft': [('readonly', False)]},
         )
     afip_cae_due = fields.Date(
         copy=False,
         readonly=True,
         string='CAE due Date',
+        states={'draft': [('readonly', False)]},
         )
     afip_barcode = fields.Char(
         compute='_get_barcode',
@@ -56,6 +58,7 @@ class invoice(models.Model):
         ('O', 'Observado')],
         'Resultado',
         readonly=True,
+        states={'draft': [('readonly', False)]},
         copy=False,
         help="AFIP request result"
         )

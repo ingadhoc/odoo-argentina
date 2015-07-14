@@ -59,18 +59,29 @@
             <field name="company_id" ref="company_ri"/>
         </record>
 
-        <record model="account.account" id="ri_caja_monex">
+        <record model="account.account" id="ri_caja_usd">
             <field name="type">liquidity</field>
             <field name="code">1111020</field>
             <field name="user_type" ref="account.data_account_type_cash"/>
-            <field name="name">Caja Monex</field>
+            <field name="name">Caja USD</field>
             <field name="parent_id" ref="ri_caja"/>
             <field name="company_id" ref="company_ri"/>
+            <field name="currency_id" ref="base.USD"/>
+        </record>
+
+        <record model="account.account" id="ri_caja_eur">
+            <field name="type">liquidity</field>
+            <field name="code">1111030</field>
+            <field name="user_type" ref="account.data_account_type_cash"/>
+            <field name="name">Caja EUR</field>
+            <field name="parent_id" ref="ri_caja"/>
+            <field name="company_id" ref="company_ri"/>
+            <field name="currency_id" ref="base.EUR"/>
         </record>
 
         <record model="account.account" id="ri_fondo_fijo">
             <field name="type">liquidity</field>
-            <field name="code">1111030</field>
+            <field name="code">1111040</field>
             <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Fondo fijo</field>
             <field name="parent_id" ref="ri_caja"/>
@@ -79,7 +90,7 @@
 
         <record model="account.account" id="ri_valores">
             <field name="type">liquidity</field>
-            <field name="code">1111040</field>
+            <field name="code">1111050</field>
             <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Valores en cartera</field>
             <field name="parent_id" ref="ri_caja"/>

@@ -12,7 +12,7 @@
 ##### 8.0.2 to 8.0.3
 NOTA: para migrar de branch anteriores al 8.0.2 primero migrar a la 8.0.2
 
-##### UPGRADE 8.0.1 to 8.0.2
+##### 8.0.1 to 8.0.2
 En intancia test (solo interesane para ADHOC):
 - pull odoo-support
 - pull de odoo argentina en 8.0.2
@@ -35,7 +35,7 @@ En instancia de produccion
 - cargar pkey y cert nuevos (o utilizar los del server y asignar en afip)
 - ir a puntos de venta y setear electronica al que corresponda
 
-##### UPGRADE 8.0 to 8.0.1
+##### 8.0 to 8.0.1
 - Actualziar l10n_ar_invoice
 - Configurar atributos de codigos de impuestos
 
@@ -63,7 +63,7 @@ En instancia de produccion
     * Cada uno de los errores indica en que línea está ocurriendo. Dicho numero de linea se corresponde con el orden de las facturas que se ven en el libro iva
 
 
-###### NOTAS VARIAS
+#### NOTAS VARIAS
 PARA PROBAR EN DOCKER
 sudo docker run -ti -p 127.0.0.1:8069:8069 -u root --link db:db --name odoo-fe adhoc/odoo-adhoc:8.0.2 /bin/bash
 runuser -u odoo openerp-server -- -c /etc/odoo/openerp-server.conf --logfile=False

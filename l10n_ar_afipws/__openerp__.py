@@ -1,15 +1,32 @@
 # -*- coding: utf-8 -*-
-{'active': False,
-    'author': 'OpenERP - Team de Localización Argentina',
+##############################################################################
+#
+#    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
+#    All Rights Reserved.
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+{
+    'name': 'Argentina - Base para los Web Services del AFIP',
+    'version': '1.0',
     'category': 'Localization/Argentina',
-    'demo': [
-        'demo/certificate_demo.xml',
-        'demo/parameter_demo.xml',
-    ],
-    'depends': [
-        'base',
-        'l10n_ar_invoice',  # this dependency is becaouse of CUIT request and some config menus
-        ],
+    'sequence': 14,
+    'author':  'ADHOC SA',
+    'website': 'www.adhoc.com.ar',
+    'license': 'AGPL-3',
+    'summary': '',
     'description': """
 Configuración y API para acceder a las Web Services de la AFIP
 ==============================================================
@@ -41,12 +58,14 @@ certificado al archivo test_key.yml.
 Tenga en cuenta que estas claves son personales y pueden traer conflicto
 publicarlas en los repositorios públicos.
 """,
-    'external_dependencies': {'python': ['suds', 'M2Crypto']},
-    'installable': True,
-    'license': 'AGPL-3',
-    'name': 'Argentina - Base para los Web Services del AFIP',
-    'test': [
-    ],
+    'depends': [
+        'base',
+        # this dependency is becaouse of CUIT request and some config menus
+        'l10n_ar_invoice',
+        ],
+    'external_dependencies': {
+        'python': ['suds', 'M2Crypto']
+    },
     'data': [
         'data/afipws_sequence.xml',
         'wizard/upload_certificate_view.xml',
@@ -57,6 +76,15 @@ publicarlas en los repositorios públicos.
         'views/res_company_view.xml',
         'wizard/config_view.xml',
         'security/ir.model.access.csv',
-    ],
-    'version': '2.7.244', }
+        ],
+    'demo': [
+        'demo/certificate_demo.xml',
+        'demo/parameter_demo.xml',
+        ],
+    'test': [
+        ],
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+    }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

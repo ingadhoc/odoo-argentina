@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from openerp import fields, models, api, _
-# from suds.client import Client
-# from suds import WebFault
-# from sslhttps import HttpsTransport
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in module root
+# directory
+##############################################################################
+from openerp import fields, models, api
 import logging
 
 _logger = logging.getLogger(__name__)

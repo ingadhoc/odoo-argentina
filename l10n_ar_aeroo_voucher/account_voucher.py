@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 from openerp import models
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in module root
+# directory
+##############################################################################
 
 
 class account_voucher(models.Model):

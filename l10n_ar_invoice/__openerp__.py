@@ -82,7 +82,6 @@ Para actualizar el plan de cuentas de datos demo:
      'view/account_move_line_view.xml',
      'view/currency_view.xml',
      'view/afip_incoterm_view.xml',
-     'wizard/config_view.xml',
      'invoice_template.xml',
      'security/ir.model.access.csv',
      'security/l10n_ar_invoice_security.xml',

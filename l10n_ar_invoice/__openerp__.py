@@ -46,6 +46,8 @@ Para actualizar el plan de cuentas de datos demo:
     },
     'data': [
           'security/l10n_ar_invoice_security.xml',
+          'data/data_account_type.xml',
+          'data/account_financial_report_data.xml',
           'data/responsability.xml',
           'data/afip.incoterm.csv',
           'data/afip.document_letter.csv',
@@ -92,8 +94,8 @@ Para actualizar el plan de cuentas de datos demo:
           'demo/fiscal_year_ri_demo.xml',
           'demo/account_chart_respinsc.xml',
           'demo/account_demo.xml',
-          'demo/ri_purchase_invoice_demo.xml',
-          'demo/ri_sale_invoice_demo.xml',
+          # 'demo/ri_purchase_invoice_demo.xml',
+          # 'demo/ri_sale_invoice_demo.xml',
     ],
     'test': [
     ],

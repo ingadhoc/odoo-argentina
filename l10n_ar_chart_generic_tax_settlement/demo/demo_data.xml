@@ -90,7 +90,7 @@
             <field name="default_credit_tax_code_id" ref="l10n_ar_invoice.ri_tax_code_ganancias_per_ret_a_favor"/>
             <!-- <field name="default_debit_tax_code_id" ref="l10n_ar_invoice.ri_iva_a_pagar"/> -->
             <field name="default_debit_account_id" ref="l10n_ar_invoice.ri_retencion_ganancias_a_pagar"/>
-            <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_a_cuenta_impuestos_ret_perc_ganancias_a_favor"/>
+            <!-- <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_a_cuenta_impuestos_ret_perc_ganancias_a_favor"/> -->
         </record>
 
         <record id="proffit_ret_per_settlement" model="account.tax.settlement">
@@ -111,7 +111,7 @@
             <field name="default_credit_tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iva_ret_perc_a_favor"/>
             <!-- <field name="default_debit_tax_code_id" ref="l10n_ar_invoice.ri_iva_a_pagar"/> -->
             <field name="default_debit_account_id" ref="l10n_ar_invoice.ri_retencion_iva_a_pagar"/>
-            <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_a_cuenta_impuestos_ret_perc_iva_a_favor"/>
+            <!-- <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_a_cuenta_impuestos_ret_perc_iva_a_favor"/> -->
         </record>
 
         <record id="iva_ret_per_settlement" model="account.tax.settlement">

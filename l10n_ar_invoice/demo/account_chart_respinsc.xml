@@ -188,24 +188,24 @@
             <field name="reconcile" eval="True"/>
         </record>
 
-        <record model="account.account" id="ri_anticipo_impuestos_ganancias">
-            <field name="type">other</field>
-            <field name="code">1141020</field>
-            <field name="user_type" ref="account.data_account_type_receivable"/>
-            <field name="name">Anticipo impuestos a las ganancias</field>
-            <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
-            <field name="company_id" ref="company_ri"/>
-            <field name="reconcile" eval="True"/>
-        </record>
-
         <record model="account.account" id="ri_a_cuenta_impuestos_ganancias">
             <field name="type">other</field>
-            <field name="code">1141030</field>
+            <field name="code">1141020</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepción Impuesto a las Ganancias Sufrida</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
             <field name="reconcile" eval="True"/>
             <field name="company_id" ref="company_ri"/>
+        </record>
+
+        <record model="account.account" id="ri_anticipo_impuestos_ganancias">
+            <field name="type">other</field>
+            <field name="code">1141030</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Anticipo impuestos a las ganancias</field>
+            <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
+            <field name="company_id" ref="company_ri"/>
+            <field name="reconcile" eval="True"/>
         </record>
 
         <record model="account.account" id="ri_a_cuenta_impuestos_ganancias_a_favor">
@@ -218,7 +218,7 @@
             <field name="company_id" ref="company_ri"/>
         </record>
 
-        <record model="account.account" id="ri_a_cuenta_impuestos_ret_perc_ganancias_a_favor">
+<!--         <record model="account.account" id="ri_a_cuenta_impuestos_ret_perc_ganancias_a_favor">
             <field name="type">other</field>
             <field name="code">1141050</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
@@ -226,7 +226,7 @@
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
             <field name="reconcile" eval="True"/>
             <field name="company_id" ref="company_ri"/>
-        </record>
+        </record> -->
 
         <record model="account.account" id="ri_creditos_impuestos_iva">
             <field name="type">view</field>
@@ -237,11 +237,11 @@
             <field name="company_id" ref="company_ri"/>
         </record>        
 
-        <record model="account.account" id="ri_iva_credito_fiscal">
+        <record model="account.account" id="ri_iva_retencion">
             <field name="type">other</field>
             <field name="code">1142010</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
-            <field name="name">IVA crédito fiscal</field>
+            <field name="name">Retención IVA Sufrida</field>
             <field name="reconcile" eval="True"/>
             <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
             <field name="company_id" ref="company_ri"/>
@@ -257,11 +257,11 @@
             <field name="company_id" ref="company_ri"/>
         </record>
 
-        <record model="account.account" id="ri_iva_retencion">
+        <record model="account.account" id="ri_iva_credito_fiscal">
             <field name="type">other</field>
             <field name="code">1142030</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
-            <field name="name">Retención IVA Sufrida</field>
+            <field name="name">IVA crédito fiscal</field>
             <field name="reconcile" eval="True"/>
             <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
             <field name="company_id" ref="company_ri"/>
@@ -277,7 +277,7 @@
             <field name="company_id" ref="company_ri"/>
         </record>
 
-        <record model="account.account" id="ri_a_cuenta_impuestos_ret_perc_iva_a_favor">
+<!--         <record model="account.account" id="ri_a_cuenta_impuestos_ret_perc_iva_a_favor">
             <field name="type">other</field>
             <field name="code">1142050</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
@@ -285,15 +285,15 @@
             <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
             <field name="reconcile" eval="True"/>
             <field name="company_id" ref="company_ri"/>
-        </record>
+        </record> -->
 
         <record model="account.account" id="ri_saldo_libre_disponibilidad">
             <field name="type">payable</field>
-            <field name="code">1142060</field>
+            <field name="code">1140010</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Saldo Libre Disponibilidad</field>
             <field name="reconcile" eval="True"/>
-            <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
+            <field name="parent_id" ref="ri_creditos_impuestos"/>
             <field name="company_id" ref="company_ri"/>
         </record>
 
@@ -674,68 +674,9 @@
             <field name="company_id" ref="company_ri"/>
         </record>
 
-        <record model="account.account" id="ri_ret_per_aplicada">
-            <field name="type">view</field>
-            <field name="code">2121</field>
-            <field name="user_type" ref="account.data_account_type_view"/>
-            <field name="name">RETENCIONES Y PERCEPCIONES APLICADAS</field>
-            <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <field name="company_id" ref="company_ri"/>
-        </record>
-
-        <record model="account.account" id="ri_retencion_ganancias_aplicada">
-            <field name="type">other</field>
-            <field name="code">2121010</field>
-            <field name="user_type" ref="account.data_account_type_payable"/>
-            <field name="name">Retención ganancias aplicada </field>
-            <field name="parent_id" ref="ri_ret_per_aplicada"/>
-            <field name="reconcile" eval="True"/>
-            <field name="company_id" ref="company_ri"/>
-        </record>
-
-        <record model="account.account" id="ri_percepcion_ganancias_aplicada">
-            <field name="type">other</field>
-            <field name="code">2121020</field>
-            <field name="user_type" ref="account.data_account_type_payable"/>
-            <field name="name">Percepción ganancias aplicada </field>
-            <field name="parent_id" ref="ri_ret_per_aplicada"/>
-            <field name="reconcile" eval="True"/>
-            <field name="company_id" ref="company_ri"/>
-        </record>
-
-        <record model="account.account" id="ri_retencion_iva_aplicada">
-            <field name="type">other</field>
-            <field name="code">2121030</field>
-            <field name="user_type" ref="account.data_account_type_payable"/>
-            <field name="name">Retención IVA aplicada</field>
-            <field name="parent_id" ref="ri_ret_per_aplicada"/>
-            <field name="reconcile" eval="True"/>
-            <field name="company_id" ref="company_ri"/>
-        </record>
-
-        <record model="account.account" id="ri_percepcion_iva_aplicada">
-            <field name="type">other</field>
-            <field name="code">2121040</field>
-            <field name="user_type" ref="account.data_account_type_payable"/>
-            <field name="name">Percepción IVA aplicada</field>
-            <field name="parent_id" ref="ri_ret_per_aplicada"/>
-            <field name="reconcile" eval="True"/>
-            <field name="company_id" ref="company_ri"/>
-        </record>
-
-        <record model="account.account" id="ri_iibb_a_pagar">
-            <field name="type">payable</field>
-            <field name="code">2120010</field>
-            <field name="user_type" ref="account.data_account_type_payable"/>
-            <field name="name">Ingresos brutos a pagar</field>
-            <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <field name="reconcile" eval="True"/>
-            <field name="company_id" ref="company_ri"/>
-        </record>
-
         <record model="account.account" id="ri_iva_debito_fiscal">
             <field name="type">other</field>
-            <field name="code">2120020</field>
+            <field name="code">2120010</field>
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">IVA débito fiscal</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
@@ -745,7 +686,7 @@
 
         <record model="account.account" id="ri_iva_a_pagar">
             <field name="type">payable</field>
-            <field name="code">2120030</field>
+            <field name="code">2120020</field>
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">IVA saldo a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
@@ -755,7 +696,7 @@
 
         <record model="account.account" id="ri_impuesto_ganancias_a_pagar">
             <field name="type">payable</field>
-            <field name="code">2120040</field>
+            <field name="code">2120030</field>
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Impuesto a las ganancias a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
@@ -765,7 +706,7 @@
 
         <record model="account.account" id="ri_autonomos_a_pagar">
             <field name="type">payable</field>
-            <field name="code">2120050</field>
+            <field name="code">2120040</field>
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Autonomos a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
@@ -773,29 +714,9 @@
             <field name="company_id" ref="company_ri"/>
         </record>
 
-        <record model="account.account" id="ri_retenciones_varias_a_pagar">
-            <field name="type">payable</field>
-            <field name="code">2120060</field>
-            <field name="user_type" ref="account.data_account_type_payable"/>
-            <field name="name">Retenciones varias a pagar</field>
-            <field name="reconcile" eval="True"/>
-            <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <field name="company_id" ref="company_ri"/>
-        </record>
-
-        <record model="account.account" id="ri_drei_a_pagar">
-            <field name="type">payable</field>
-            <field name="code">2120070</field>
-            <field name="user_type" ref="account.data_account_type_payable"/>
-            <field name="name">DREI a pagar</field>
-            <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <field name="reconcile" eval="True"/>
-            <field name="company_id" ref="company_ri"/>
-        </record>
-
         <record model="account.account" id="ri_retencion_ganancias_a_pagar">
             <field name="type">payable</field>
-            <field name="code">2120080</field>
+            <field name="code">2120050</field>
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Retención/Percepción ganancias a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
@@ -805,13 +726,82 @@
 
         <record model="account.account" id="ri_retencion_iva_a_pagar">
             <field name="type">payable</field>
-            <field name="code">2120090</field>
+            <field name="code">2120060</field>
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Retención/Percepción IVA a pagar</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
             <field name="reconcile" eval="True"/>
             <field name="company_id" ref="company_ri"/>
         </record>
+
+        <record model="account.account" id="ri_iibb_a_pagar">
+            <field name="type">payable</field>
+            <field name="code">2120070</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">Ingresos brutos a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+            <field name="reconcile" eval="True"/>
+            <field name="company_id" ref="company_ri"/>
+        </record>
+
+        <record model="account.account" id="ri_drei_a_pagar">
+            <field name="type">payable</field>
+            <field name="code">2120080</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">DREI a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+            <field name="reconcile" eval="True"/>
+            <field name="company_id" ref="company_ri"/>
+        </record>
+
+        <record model="account.account" id="ri_ret_per_aplicada">
+            <field name="type">view</field>
+            <field name="code">2121</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">RETENCIONES Y PERCEPCIONES APLICADAS</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+            <field name="company_id" ref="company_ri"/>
+        </record>
+
+            <record model="account.account" id="ri_retencion_ganancias_aplicada">
+                <field name="type">other</field>
+                <field name="code">2121010</field>
+                <field name="user_type" ref="account.data_account_type_payable"/>
+                <field name="name">Retención ganancias aplicada </field>
+                <field name="parent_id" ref="ri_ret_per_aplicada"/>
+                <field name="reconcile" eval="True"/>
+                <field name="company_id" ref="company_ri"/>
+            </record>
+
+            <record model="account.account" id="ri_percepcion_ganancias_aplicada">
+                <field name="type">other</field>
+                <field name="code">2121020</field>
+                <field name="user_type" ref="account.data_account_type_payable"/>
+                <field name="name">Percepción ganancias aplicada </field>
+                <field name="parent_id" ref="ri_ret_per_aplicada"/>
+                <field name="reconcile" eval="True"/>
+                <field name="company_id" ref="company_ri"/>
+            </record>
+
+            <record model="account.account" id="ri_retencion_iva_aplicada">
+                <field name="type">other</field>
+                <field name="code">2121030</field>
+                <field name="user_type" ref="account.data_account_type_payable"/>
+                <field name="name">Retención IVA aplicada</field>
+                <field name="parent_id" ref="ri_ret_per_aplicada"/>
+                <field name="reconcile" eval="True"/>
+                <field name="company_id" ref="company_ri"/>
+            </record>
+
+            <record model="account.account" id="ri_percepcion_iva_aplicada">
+                <field name="type">other</field>
+                <field name="code">2121040</field>
+                <field name="user_type" ref="account.data_account_type_payable"/>
+                <field name="name">Percepción IVA aplicada</field>
+                <field name="parent_id" ref="ri_ret_per_aplicada"/>
+                <field name="reconcile" eval="True"/>
+                <field name="company_id" ref="company_ri"/>
+            </record>
 
         <record model="account.account" id="ri_deudas_comerciales">
             <field name="type">view</field>

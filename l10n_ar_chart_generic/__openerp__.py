@@ -20,7 +20,6 @@
 ##############################################################################
 {
     'name': 'Argentina - Plan Contable General',
-    'version': '2.7.155',
     'author':   'OpenERP - Team de Localización Argentina',
     'category': 'Localization/Account Charts',
     'website':  'https://launchpad.net/~openerp-l10n-ar-localization',
@@ -46,6 +45,7 @@ Incluye:
         # 'data/account_chart_coop.xml',
     ],
     'installable': True,
+    'version': '8.0.2.0',
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

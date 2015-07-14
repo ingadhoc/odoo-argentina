@@ -86,5 +86,5 @@ Para actualizar el plan de cuentas de datos demo:
      'security/ir.model.access.csv',
      'security/l10n_ar_invoice_security.xml',
  ],
- 'version': '2.7.243',
+ 'version': '8.0.3.0',
  }

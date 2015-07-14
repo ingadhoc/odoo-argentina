@@ -8,6 +8,19 @@
 * mejorar la parte de certificado, el campo state por ahí no neesario en el alias. A su vez tal ves el "outsorced" no es mas necesario, siempre se genera para la compania, tal vez no hacemos los dos m2o si no que agregamos todo a la clase res.company y listo
 
 #### CHANGELOG
+##### 8.0.2 to 8.0.3
+* Se depreciaron l10n_ar_wsafip y l10n_ar_wsafip_fe
+* En su reemplazo se van a utilizar l10n_ar_afipws y l10n_ar_afipws_fe
+* Estos nuevos modulos utilizan el proyecto pyafipws
+* Se mejoraron los datos demo
+
+###### UPGRADE 8.0.2 to 8.0.3
+NOTA: para migrar de branch anteriores al 8.0.2 primero migrar a la 8.0.2
+* actualizar lista de módulos
+* Actualizar l10n_ar_base,l10n_ar_invoice
+
+
+#### CHANGELOG
 ##### 8.0.1 to 8.0.2
 * Se depreciaron l10n_ar_wsafip y l10n_ar_wsafip_fe
 * En su reemplazo se van a utilizar l10n_ar_afipws y l10n_ar_afipws_fe

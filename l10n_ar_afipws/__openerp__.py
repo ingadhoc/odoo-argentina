@@ -74,7 +74,7 @@ publicarlas en los repositorios públicos.
         'views/afipws_certificate_alias_view.xml',
         'views/afipws_connection_view.xml',
         'views/res_company_view.xml',
-        'wizard/config_view.xml',
+        # 'wizard/config_view.xml',
         'security/ir.model.access.csv',
         ],
     'demo': [

@@ -2327,6 +2327,7 @@
 #
         <record id="ri_tax_vat_no_gravado_ventas" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="description">IVA No Gravado</field>
             <field name="name">IVA Ventas No Gravado</field>
             <field name="sequence">2</field>
@@ -2341,6 +2342,7 @@
 
         <record id="ri_tax_vat_no_gravado_compras" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="description">IVA No Gravado</field>
             <field name="name">IVA Compras No Gravado</field>
             <field name="sequence">2</field>
@@ -2355,6 +2357,7 @@
 
         <record id="ri_tax_vat_exento_ventas" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="description">IVA Exento</field>
             <field name="name">IVA Ventas Exento</field>
             <field name="sequence">2</field>
@@ -2369,6 +2372,7 @@
 
         <record id="ri_tax_vat_exento_compras" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="description">IVA Exento</field>
             <field name="name">IVA Compras Exento</field>
             <field name="sequence">2</field>
@@ -2383,6 +2387,7 @@
 
         <record id="ri_tax_vat_0_ventas" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="description">IVA 0%</field>
             <field name="name">IVA Ventas 0%</field>
             <field name="sequence">2</field>
@@ -2398,6 +2403,7 @@
 
         <record id="ri_tax_vat_0_compras" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="description">IVA 0%</field>
             <field name="name">IVA Compras 0%</field>
             <field name="sequence">2</field>
@@ -2413,6 +2419,7 @@
 
         <record id="ri_tax_vat_10_ventas" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="description">IVA 10.0%</field>
             <field name="name">IVA Ventas 10.5%</field>
             <field name="sequence">2</field>
@@ -2428,6 +2435,7 @@
 
         <record id="ri_tax_vat_10_compras" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="description">IVA 10.0%</field>
             <field name="name">IVA Compras 10.5%</field>
             <field name="sequence">2</field>
@@ -2443,6 +2451,7 @@
 
         <record id="ri_tax_vat_21_ventas" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">IVA Ventas 21%</field>
             <field name="sequence">1</field>
             <field name="description">IVA 21%</field>
@@ -2458,6 +2467,7 @@
 
         <record id="ri_tax_vat_21_compras" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">IVA Compras 21%</field>
             <field name="sequence">1</field>
             <field name="description">IVA 21%</field>
@@ -2473,6 +2483,7 @@
 
         <record id="ri_tax_vat_27_ventas" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">IVA Ventas 27%</field>
             <field name="sequence">3</field>
             <field name="description">IVA 27%</field>
@@ -2488,6 +2499,7 @@
 
         <record id="ri_tax_vat_27_compras" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">IVA Compras 27%</field>
             <field name="sequence">3</field>
             <field name="description">IVA 27%</field>
@@ -2503,6 +2515,7 @@
 
         <record id="ri_tax_vat_percepcion_ventas" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Percepción IVA Aplicada</field>
             <field name="sequence">4</field>
             <field name="description">Perc IVA A</field>
@@ -2517,6 +2530,7 @@
 
         <record id="ri_tax_vat_percepcion_compras" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Percepción IVA Sufrida</field>
             <field name="sequence">4</field>
             <field name="description">Perc IVA S</field>
@@ -2531,6 +2545,7 @@
 
         <record id="ri_tax_ganancias_percepcion_ventas" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Percepción Ganancias Aplicada</field>
             <field name="sequence">4</field>
             <field name="description">Perc Ganancias A</field>
@@ -2545,6 +2560,7 @@
 
         <record id="ri_tax_ganancias_percepcion_compras" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Percepción Ganancias Sufrida</field>
             <field name="sequence">4</field>
             <field name="description">Perc Ganancias S</field>
@@ -2564,6 +2580,7 @@
 # CABA
         <record id="ri_tax_iibb_cf_percepcion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Percepción de Ingresos Brutos CABA</field>
             <field name="sequence">100</field>
             <field name="description">Perc IIBB CABA</field>
@@ -2579,6 +2596,7 @@
 
         <record id="ri_tax_iibb_cf_retencion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Ret IIBB CABA</field>
             <field name="sequence">100</field>
             <field name="description">029999:R</field>
@@ -2594,6 +2612,7 @@
 
         <record id="ri_tax_iibb_cf_facturado" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Fac IIBB CABA</field>
             <field name="sequence">100</field>
             <field name="description">029999:F</field>
@@ -2611,6 +2630,7 @@
 
         <record id="ri_tax_iibb_ba_percepcion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Perc IIBB BS AS</field>
             <field name="sequence">100</field>
             <field name="description">022429:P</field>
@@ -2626,6 +2646,7 @@
 
         <record id="ri_tax_iibb_ba_retencion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Ret IIBB BS AS</field>
             <field name="sequence">100</field>
             <field name="description">022429:R</field>
@@ -2641,6 +2662,7 @@
 
         <record id="ri_tax_iibb_ba_facturado" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Fac IIBB BS AS</field>
             <field name="sequence">100</field>
             <field name="description">022429:F</field>
@@ -2658,6 +2680,7 @@
 
         <record id="ri_tax_iibb_co_percepcion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Per IIBB Cordoba</field>
             <field name="sequence">100</field>
             <field name="description">022452:P</field>
@@ -2673,6 +2696,7 @@
 
         <record id="ri_tax_iibb_co_retencion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Ret IIBB Cordoba</field>
             <field name="sequence">100</field>
             <field name="description">022452:R</field>
@@ -2688,6 +2712,7 @@
 
         <record id="ri_tax_iibb_co_facturado" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Fac IIBB Cordoba</field>
             <field name="sequence">100</field>
             <field name="description">022452:F</field>
@@ -2705,6 +2730,7 @@
 
         <record id="ri_tax_iibb_sf_percepcion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Per IIBB Santa Fé</field>
             <field name="sequence">100</field>
             <field name="description">029998:P</field>
@@ -2720,6 +2746,7 @@
 
         <record id="ri_tax_iibb_sf_retencion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Ret IIBB Santa Fé</field>
             <field name="sequence">100</field>
             <field name="description">Ret. IIBB Santa Fe</field>
@@ -2735,6 +2762,7 @@
 
         <record id="ri_tax_iibb_sf_facturado" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Fac IIBB Santa Fé</field>
             <field name="sequence">100</field>
             <field name="description">Fac. IIBB Santa Fe</field>

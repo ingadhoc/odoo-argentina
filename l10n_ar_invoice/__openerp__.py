@@ -35,7 +35,7 @@ Para actualizar el plan de cuentas de datos demo:
 * borrar la parte de account.chart
 * reemplazar ".template" por nada
 * reemplazar <!-- <field name="company_id" ref=""/> --> por <field name="company_id" ref="company_ri"/>
-* reemplazar <field name="chart_template_id" ref="ri_l10nAR_chart_template"/> por <field name="company_id" ref="company_ri"/>
+* reemplazar <field name="chart_template_id" ref="ri_l10nAR_chart_template"/> por <!-- <field name="chart_template_id" ref="ri_l10nAR_chart_template"/> -->
 """,
     'depends': [
           'account',

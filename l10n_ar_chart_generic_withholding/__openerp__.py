@@ -25,7 +25,7 @@ Retenciones para Plan Contable General Argentino
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'application': False,
 }

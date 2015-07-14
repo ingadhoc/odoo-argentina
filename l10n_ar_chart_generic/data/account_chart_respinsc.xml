@@ -2113,7 +2113,7 @@
         <record id="ri_l10nAR_chart_template" model="account.chart.template">
             <field name="name">Plan Contable Genérico de Argentina para Responsables Inscriptos</field>
             <field name="account_root_id" ref="ri_a_root"/>
-            <field name="code_digits">7</field>
+            <field name="code_digits">13</field>
             <field name="tax_code_root_id" ref="ri_tax_code_chart_root"/>
             <field name="bank_account_view_id" ref="ri_bancos"/>
             <field name="property_account_receivable" ref="ri_deudores_por_ventas"/>

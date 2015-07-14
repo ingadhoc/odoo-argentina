@@ -5,9 +5,9 @@
         <!-- TODO hacer en ingles y cargar traducciones -->
 
         <!-- mos existentes -->
-        <record model="account.account.type" id="account.account_type_cash_equity">
+<!--         <record model="account.account.type" id="account.account_type_cash_equity">
           <field name="name">Vita de Patrimonio</field>
-        </record>
+        </record> -->
         <record model="account.account.type" id="account.data_account_type_receivable">
           <field name="name">A cobrar (corriente)</field>
         </record>

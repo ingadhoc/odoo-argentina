@@ -287,6 +287,16 @@
             <field name="company_id" ref="company_ri"/>
         </record>
 
+        <record model="account.account" id="ri_saldo_libre_disponibilidad">
+            <field name="type">payable</field>
+            <field name="code">1142060</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="name">Saldo Libre Disponibilidad</field>
+            <field name="reconcile" eval="True"/>
+            <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
+            <field name="company_id" ref="company_ri"/>
+        </record>
+
         <record model="account.account" id="ri_creditos_iibb">
             <field name="type">view</field>
             <field name="code">1143</field>
@@ -1910,30 +1920,6 @@
                             <field name="company_id" ref="company_ri"/>
                         </record>
 
-                        <record model="account.tax.code" id="ri_tax_code_iva_compras_percepcion">
-                            <!-- <field name="code">01003006:C</field> -->
-                            <field name="name">Percepción IVA sufrida</field>
-                            <field name="sign">-1</field>
-                            <field name="parent_id" ref="ri_tax_code_iva"/>
-                            <field name="afip_code" eval="6"/>
-                            <field name="tax">vat</field>
-                            <field name="type">perception</field>
-                            <field name="application">national_taxes</field>
-                            <field name="company_id" ref="company_ri"/>
-                        </record>
-
-                        <record model="account.tax.code" id="ri_tax_code_iva_compras_retencion">
-                            <!-- <field name="code">01003006:C</field> -->
-                            <field name="name">Retención IVA Sufrida</field>
-                            <field name="sign">-1</field>
-                            <field name="parent_id" ref="ri_tax_code_iva"/>
-                            <field name="afip_code" eval="6"/>
-                            <field name="tax">vat</field>
-                            <field name="type">withholding</field>
-                            <field name="application">national_taxes</field>
-                            <field name="company_id" ref="company_ri"/>
-                        </record>
-
                         <record model="account.tax.code" id="ri_tax_code_iva_saldo_a_favor">
                             <!-- <field name="code">01003006:C</field> -->
                             <field name="name">IVA Saldo a Favor</field>
@@ -1945,9 +1931,44 @@
                             <field name="company_id" ref="company_ri"/>
                         </record>
 
+                <record model="account.tax.code" id="ri_tax_code_ret_per_iva_sufrida">
+                    <field name="name">IVA Ret/Perc Sufridas</field>
+                    <!-- <field name="code">010040</field> -->
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_impuestos_nacionales"/>
+                    <field name="tax">vat</field>
+                    <field name="type">view</field>
+                    <field name="application">national_taxes</field>
+                    <field name="company_id" ref="company_ri"/>
+                </record>
+
+                        <record model="account.tax.code" id="ri_tax_code_iva_compras_percepcion">
+                            <!-- <field name="code">01003006:C</field> -->
+                            <field name="name">Percepción IVA sufrida</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_ret_per_iva_sufrida"/>
+                            <field name="afip_code" eval="6"/>
+                            <field name="tax">vat</field>
+                            <field name="type">perception</field>
+                            <field name="application">national_taxes</field>
+                            <field name="company_id" ref="company_ri"/>
+                        </record>
+
+                        <record model="account.tax.code" id="ri_tax_code_iva_compras_retencion">
+                            <!-- <field name="code">01003006:C</field> -->
+                            <field name="name">Retención IVA Sufrida</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_ret_per_iva_sufrida"/>
+                            <field name="afip_code" eval="6"/>
+                            <field name="tax">vat</field>
+                            <field name="type">withholding</field>
+                            <field name="application">national_taxes</field>
+                            <field name="company_id" ref="company_ri"/>
+                        </record>
+
                 <record model="account.tax.code" id="ri_tax_code_ret_per_iva_aplicada">
                     <field name="name">IVA Ret/Perc Aplicadas</field>
-                    <field name="code">010040</field>
+                    <!-- <field name="code">010040</field> -->
                     <field name="sign">1</field>
                     <field name="parent_id" ref="ri_impuestos_nacionales"/>
                     <field name="tax">vat</field>
@@ -2014,11 +2035,33 @@
                         <field name="company_id" ref="company_ri"/>
                     </record>
 
+                    <record model="account.tax.code" id="ri_tax_code_imp_ganancias_a_favor">
+                        <!-- <field name="code">01003006:C</field> -->
+                        <field name="name">Impuesto a las Ganancias a favor</field>
+                        <field name="sign">-1</field>
+                        <field name="parent_id" ref="ri_tax_code_ganancias_vista"/>
+                        <field name="tax">profits</field>
+                        <field name="type">other</field>
+                        <field name="application">national_taxes</field>
+                        <field name="company_id" ref="company_ri"/>
+                    </record>
+
+                <record model="account.tax.code" id="ri_tax_code_ret_per_ganancias_sufrida">
+                    <field name="name">Ganacias Ret/Perc Sufridas</field>
+                    <!-- <field name="code">010040</field> -->
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_impuestos_nacionales"/>
+                    <field name="tax">profits</field>
+                    <field name="type">view</field>
+                    <field name="application">national_taxes</field>
+                    <field name="company_id" ref="company_ri"/>
+                </record>
+
                     <record model="account.tax.code" id="ri_tax_code_ganancias_per_sufrida">
                         <field name="name">Percepción de Ganancias Sufrida</field>
                         <!-- <field name="code">010030003</field> -->
                         <field name="sign">-1</field>
-                        <field name="parent_id" ref="ri_tax_code_ganancias_vista"/>
+                        <field name="parent_id" ref="ri_tax_code_ret_per_ganancias_sufrida"/>
                         <field name="tax">profits</field>
                         <field name="type">perception</field>
                         <field name="application">national_taxes</field>
@@ -2029,20 +2072,9 @@
                         <field name="name">Retención de Ganancias Sufrida</field>
                         <!-- <field name="code">010030005</field> -->
                         <field name="sign">-1</field>
-                        <field name="parent_id" ref="ri_tax_code_ganancias_vista"/>
+                        <field name="parent_id" ref="ri_tax_code_ret_per_ganancias_sufrida"/>
                         <field name="tax">profits</field>
                         <field name="type">withholding</field>
-                        <field name="application">national_taxes</field>
-                        <field name="company_id" ref="company_ri"/>
-                    </record>
-
-                    <record model="account.tax.code" id="ri_tax_code_imp_ganancias_a_favor">
-                        <!-- <field name="code">01003006:C</field> -->
-                        <field name="name">Impuesto a las Ganancias a favor</field>
-                        <field name="sign">-1</field>
-                        <field name="parent_id" ref="ri_tax_code_ganancias_vista"/>
-                        <field name="tax">profits</field>
-                        <field name="type">other</field>
                         <field name="application">national_taxes</field>
                         <field name="company_id" ref="company_ri"/>
                     </record>
@@ -2284,7 +2316,7 @@
             <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
             <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
             <field name="type_tax_use">sale</field>
-            <!-- <field name="ref_tax_sign" eval="1"/> -->
+            <field name="ref_tax_sign" eval="-1"/>
         </record>
 
         <record id="ri_tax_vat_no_gravado_compras" model="account.tax">
@@ -2298,7 +2330,7 @@
             <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
             <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">purchase</field>
-            <!-- <field name="ref_tax_sign" eval="1"/> -->
+            <field name="ref_tax_sign" eval="-1"/>
         </record>
 
         <record id="ri_tax_vat_exento_ventas" model="account.tax">
@@ -2312,7 +2344,7 @@
             <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
             <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
             <field name="type_tax_use">sale</field>
-            <!-- <field name="ref_tax_sign" eval="1"/> -->
+            <field name="ref_tax_sign" eval="-1"/>
         </record>
 
         <record id="ri_tax_vat_exento_compras" model="account.tax">
@@ -2326,7 +2358,7 @@
             <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
             <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">purchase</field>
-            <!-- <field name="ref_tax_sign" eval="1"/> -->
+            <field name="ref_tax_sign" eval="-1"/>
         </record>
 
         <record id="ri_tax_vat_0_ventas" model="account.tax">
@@ -2341,7 +2373,7 @@
             <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
             <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
             <field name="type_tax_use">sale</field>
-            <!-- <field name="ref_tax_sign" eval="1"/> -->
+            <field name="ref_tax_sign" eval="-1"/>
         </record>
 
         <record id="ri_tax_vat_0_compras" model="account.tax">
@@ -2356,7 +2388,7 @@
             <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
             <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">purchase</field>
-            <!-- <field name="ref_tax_sign" eval="1"/> -->
+            <field name="ref_tax_sign" eval="-1"/>
         </record>
 
         <record id="ri_tax_vat_10_ventas" model="account.tax">
@@ -2371,7 +2403,7 @@
             <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
             <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
             <field name="type_tax_use">sale</field>
-            <!-- <field name="ref_tax_sign" eval="1"/> -->
+            <field name="ref_tax_sign" eval="-1"/>
         </record>
 
         <record id="ri_tax_vat_10_compras" model="account.tax">
@@ -2386,7 +2418,7 @@
             <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
             <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">purchase</field>
-            <!-- <field name="ref_tax_sign" eval="1"/> -->
+            <field name="ref_tax_sign" eval="-1"/>
         </record>
 
         <record id="ri_tax_vat_21_ventas" model="account.tax">
@@ -2401,7 +2433,7 @@
             <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
             <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
             <field name="type_tax_use">sale</field>
-            <!-- <field name="ref_tax_sign" eval="1"/> -->
+            <field name="ref_tax_sign" eval="-1"/>
         </record>
 
         <record id="ri_tax_vat_21_compras" model="account.tax">
@@ -2416,7 +2448,7 @@
             <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
             <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">purchase</field>
-            <!-- <field name="ref_tax_sign" eval="1"/> -->
+            <field name="ref_tax_sign" eval="-1"/>
         </record>
 
         <record id="ri_tax_vat_27_ventas" model="account.tax">
@@ -2431,7 +2463,7 @@
             <field name="account_collected_id" ref="ri_iva_debito_fiscal"/>
             <field name="account_paid_id" ref="ri_iva_credito_fiscal"/>
             <field name="type_tax_use">sale</field>
-            <!-- <field name="ref_tax_sign" eval="1"/> -->
+            <field name="ref_tax_sign" eval="-1"/>
         </record>
 
         <record id="ri_tax_vat_27_compras" model="account.tax">
@@ -2446,7 +2478,7 @@
             <field name="account_collected_id" ref="ri_iva_credito_fiscal"/>
             <field name="account_paid_id" ref="ri_iva_debito_fiscal"/>
             <field name="type_tax_use">purchase</field>
-            <!-- <field name="ref_tax_sign" eval="1"/> -->
+            <field name="ref_tax_sign" eval="-1"/>
         </record>
 
         <record id="ri_tax_vat_percepcion_ventas" model="account.tax">

@@ -42,9 +42,9 @@ class argentinian_base_configuration(models.TransientModel):
     module_account_accountant = fields.Boolean(
         'Manage Financial and Analytic Accounting.',
         help="""Installs the account_accountant module. """)
-    module_l10n_ar_wsafip_fe = fields.Boolean(
+    module_l10n_ar_afipws_fe = fields.Boolean(
         'Use Electronic Invoicing.',
-        help="""Installs the l10n_ar_wsafip_fe module. """)
+        help="""Installs the l10n_ar_afipws_fe module. """)
     module_l10n_ar_account_vat_ledger = fields.Boolean(
         'Add Account VAT Ledger models and report.',
         help="""Installs the l10n_ar_account_vat_ledger module. """)

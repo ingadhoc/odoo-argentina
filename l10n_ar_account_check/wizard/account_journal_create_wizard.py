@@ -8,7 +8,7 @@ from openerp.exceptions import Warning
 
 
 class account_journal_create_wizard(models.TransientModel):
-    _name = 'account.journal.create.wizard'
+    _inherit = 'account.journal.create.wizard'
 
     type = fields.Selection(
         selection_add=[

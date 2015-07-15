@@ -4,4 +4,3 @@
 # directory
 ##############################################################################
 import account_journal_create_wizard
-import wizard_multi_charts_accounts

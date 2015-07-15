@@ -60,8 +60,9 @@ class account_journal_create_wizard(models.TransientModel):
         # ('purchase_refund','Purchase Refund'),
         ('cash', 'Cash'),
         ('bank', 'Bank'),
-        ('issue_check', 'Issue Check'),
-        ('third_check', 'Third Check'),
+        # we move this to l10n_ar_account_check
+        # ('issue_check', 'Issue Check'),
+        # ('third_check', 'Third Check'),
         # ('general', 'General'),
         # ('situation', 'Opening/Closing Situation')
         ],
@@ -108,21 +109,22 @@ class account_journal_create_wizard(models.TransientModel):
         domain = [
             ('company_id', '=', self.company_id.id),
             ]
-        if self.type == 'issue_check':
-            domain.append(('check_type', '=', 'issue'))
-            vals['check_type'] = 'issue'
-            vals['validate_only_checks'] = True
-            code = _('CHP')
-            name = _('Cheques Propios')
-            journal_type = 'bank'
-        elif self.type == 'third_check':
-            vals['validate_only_checks'] = True
-            vals['check_type'] = 'third'
-            domain.append(('check_type', '=', 'third'))
-            code = _('CHT')
-            name = _('Cheques Terceros')
-            journal_type = 'bank'
-        elif self.type == 'bank':
+        # we move this to l10n_ar_account_check
+        # if self.type == 'issue_check':
+        #     domain.append(('check_type', '=', 'issue'))
+        #     vals['check_type'] = 'issue'
+        #     vals['validate_only_checks'] = True
+        #     code = _('CHP')
+        #     name = _('Cheques Propios')
+        #     journal_type = 'bank'
+        # elif self.type == 'third_check':
+        #     vals['validate_only_checks'] = True
+        #     vals['check_type'] = 'third'
+        #     domain.append(('check_type', '=', 'third'))
+        #     code = _('CHT')
+        #     name = _('Cheques Terceros')
+        #     journal_type = 'bank'
+        if self.type == 'bank':
             code = _('BAN')
             name = _('Banco')
             journal_type = 'bank'
@@ -243,78 +245,3 @@ class account_journal_create_wizard(models.TransientModel):
             'company_id': self.company_id.id,
         }
         return vals
-
-        # Get the default accounts
-        # default_account = False
-
-        # TODO ver si queremos implementarlo, por ahora devolvemos False
-        # return default_account
-        # if journal_type in ('sale', 'sale_refund'):
-        #     default_account = self.env['ir.property'].get(
-        #         'property_account_income_categ', 'product.category')
-        # elif journal_type in ('purchase', 'purchase_refund'):
-        #     default_account = self.env['ir.property'].get(
-        #         'property_account_expense_categ', 'product.category')
-        # return default_account and default_account.id or False
-
-
-    # funcion de partner bank
-        # ids = obj_acc.search(cr, uid, [('type','=','liquidity'), ('company_id', '=', bank.company_id.id), ('parent_id', '!=', False)], context=context)
-        # # No liquidity account exists, no template available
-        # if not ids: continue
-
-        # ref_acc_bank = obj_acc.browse(cr, uid, ids[0], context=context).parent_id
-        # while True:
-        #     new_code = str(ref_acc_bank.code.ljust(dig-len(str(current_num)), '0')) + str(current_num)
-        #     ids = obj_acc.search(cr, uid, [('code', '=', new_code), ('company_id', '=', bank.company_id.id)])
-        #     if not ids:
-        #         break
-        #     current_num += 1
-        # name = self._prepare_name(bank)
-        # acc = {
-        #     'name': name,
-        #     'code': new_code,
-        #     'type': 'liquidity',
-        #     'user_type': ref_acc_bank.user_type.id,
-        #     'reconcile': False,
-        #     'parent_id': ref_acc_bank.id,
-        #     'company_id': bank.company_id.id,
-        # }
-        # acc_bank_id  = obj_acc.create(cr,uid,acc,context=context)
-
-        # jour_obj = self.pool.get('account.journal')
-        # new_code = 1
-        # while True:
-        #     code = _('BNK')+str(new_code)
-        #     ids = jour_obj.search(cr, uid, [('code','=',code)], context=context)
-        #     if not ids:
-        #         break
-        #     new_code += 1
-
-        # #create the bank journal
-        # vals_journal = {
-        #     'name': name,
-        #     'code': code,
-        #     'type': 'bank',
-        #     'company_id': bank.company_id.id,
-        #     'analytic_journal_id': False,
-        #     'default_credit_account_id': acc_bank_id,
-        #     'default_debit_account_id': acc_bank_id,
-        # }
-        # journal_id = jour_obj.create(cr, uid, vals_journal, context=context)
-
-        # self.write(cr, uid, [bank.id], {'journal_id': journal_id}, context=context)
-
-    # @api.model
-    # def _prepare_journal(self, journal_type):
-    #     # TODO implementar analytic
-    #     self.ensure_one
-    #     vals = {
-    #         'type': journal_type,
-    #         'name': journal_names[journal_type],
-    #         'code': journal_codes[journal_type],
-    #         'company_id': company_id,
-    #         # 'analytic_journal_id': _get_analytic_journal(journal_type),
-    #         'default_credit_account_id': _get_default_account(journal_type, 'credit'),
-    #         'default_debit_account_id': _get_default_account(journal_type, 'debit'),
-    #     }

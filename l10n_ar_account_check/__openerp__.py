@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {
-    "name": "Argentinian Journal Config",
+    "name": "Argentinian Account Check Integration",
     'version': '1.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
@@ -28,8 +28,8 @@
     'license': 'AGPL-3',
     'summary': '',
     "description": """
-XXXX
-========================
+Argentinian Account Check Integration
+=====================================
     """,
     "depends": [
         "account_check",
@@ -38,8 +38,6 @@ XXXX
     'external_dependencies': {
     },
     "data": [
-        'wizard/account_journal_create_wizard_view.xml',
-        'views/company_view.xml',
     ],
     'demo': [
     ],

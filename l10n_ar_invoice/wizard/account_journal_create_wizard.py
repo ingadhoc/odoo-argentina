@@ -109,21 +109,10 @@ class account_journal_create_wizard(models.TransientModel):
         domain = [
             ('company_id', '=', self.company_id.id),
             ]
-        # we move this to l10n_ar_account_check
-        # if self.type == 'issue_check':
-        #     domain.append(('check_type', '=', 'issue'))
-        #     vals['check_type'] = 'issue'
-        #     vals['validate_only_checks'] = True
-        #     code = _('CHP')
-        #     name = _('Cheques Propios')
-        #     journal_type = 'bank'
-        # elif self.type == 'third_check':
-        #     vals['validate_only_checks'] = True
-        #     vals['check_type'] = 'third'
-        #     domain.append(('check_type', '=', 'third'))
-        #     code = _('CHT')
-        #     name = _('Cheques Terceros')
-        #     journal_type = 'bank'
+
+        journal_type = False
+        name = ''
+        code = ''
         if self.type == 'bank':
             code = _('BAN')
             name = _('Banco')

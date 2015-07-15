@@ -40,8 +40,26 @@ class account_journal_create_wizard(models.TransientModel):
                 ('company_id', '=', self.company_id.id)]
             journals = self.env['account.journal'].search(domain)
             next_number = len(journals) + 1
+
+            if self.currency_id:
+                name = '%s %s' % (name, self.currency_id.name)
+
+            account_name = name
             if self.name_sufix:
                 name = '%s (%s)' % (name, self.name_sufix)
+                account_name = '%s %s' % (account_name, self.name_sufix)
+
+            # if none, we create one and use for debit credit
+            if not self.default_debit_account_id and not self.default_credit_account_id:
+                account = self.env['account.account'].create(
+                    self._get_account_vals(account_name))
+                self.default_credit_account_id = self.default_debit_account_id = account.id
+            # if not debit, we use credit
+            elif not self.default_credit_account_id:
+                self.default_credit_account_id = self.default_debit_account_id
+            # if not credit, we use debit
+            elif not self.default_debit_account_id:
+                self.default_debit_account_id = self.default_credit_account_id
 
             vals.update({
                 'type': journal_type,

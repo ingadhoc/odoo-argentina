@@ -72,7 +72,7 @@ class afip_point_of_sale(models.Model):
         )
 
     @api.one
-    @api.depends('type', 'sufix', 'prefix')
+    @api.depends('type', 'sufix', 'prefix', 'number')
     def get_name(self):
         # TODO mejorar esto y que tome el lable traducido del selection
         if self.type == 'manual':
@@ -87,6 +87,7 @@ class afip_point_of_sale(models.Model):
             name = '%s %s' % (self.prefix, name)
         if self.sufix:
             name = '%s %s' % (name, self.sufix)
+        name = '%04d - %s' % (self.number, name)
         self.name = name
 
     @api.one

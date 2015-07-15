@@ -23,6 +23,7 @@ class account_journal_create_wizard(models.TransientModel):
         )
     group_invoice_lines = fields.Boolean(
         'Group Invoice Lines',
+        default=True,
         help="If this box is checked, the system will try to group the accounting lines when generating them from invoices.",
         )
     update_posted = fields.Boolean(
@@ -74,12 +75,12 @@ class account_journal_create_wizard(models.TransientModel):
         'Currency'
         )
     default_credit_account_id = fields.Many2one(
-        relation='account.account',
+        'account.account',
         string="Default Credit Account",
         help="If not configured for bank/cash journals it will be created"
         )
     default_debit_account_id = fields.Many2one(
-        relation='account.account',
+        'account.account',
         string="Default Debit Account",
         help="If not configured for bank/cash journals it will be created"
         )
@@ -99,9 +100,12 @@ class account_journal_create_wizard(models.TransientModel):
         else:
             self.use_documents = self.company_id.use_argentinian_localization
 
-    @api.onchange('point_of_sale_id')
+    @api.onchange('point_of_sale_id', 'type')
     def change_point_of_sale(self):
-        self.name_sufix = self.point_of_sale_id.name
+        if self.type == 'sale':
+            self.name_sufix = self.point_of_sale_id.name
+        else:
+            self.name_sufix = False
 
     @api.multi
     def _get_vals(self, invoice_subtype=False):
@@ -149,12 +153,18 @@ class account_journal_create_wizard(models.TransientModel):
             vals['group_invoice_lines'] = self.group_invoice_lines
 
         journals = self.env['account.journal'].search(domain)
-        next_number = len(journals) + 1
+        if self.point_of_sale_id and self.type == 'sale':
+            next_number = self.point_of_sale_id.number
+        else:
+            next_number = len(journals) + 1
+
+        if self.currency_id:
+            name = '%s %s' % (name, self.currency_id.name)
 
         account_name = name
         if self.name_sufix:
             name = '%s (%s)' % (name, self.name_sufix)
-            account_name = '%s %s' % (name, self.name_sufix)
+            account_name = '%s %s' % (account_name, self.name_sufix)
 
         if journal_type in ('bank', 'cash'):
             # if none, we create one and use for debit credit
@@ -176,7 +186,7 @@ class account_journal_create_wizard(models.TransientModel):
             'company_id': self.company_id.id,
             'allow_date': self.allow_date,
             'update_posted': self.update_posted,
-            'currency_id': self.currency_id.id,
+            'currency': self.currency_id.id,
             # TODO ver si queremos implementar analytic journal
             # 'analytic_journal_id': _get_analytic_journal(journal_type),
             'default_credit_account_id': self.default_credit_account_id.id,
@@ -231,6 +241,7 @@ class account_journal_create_wizard(models.TransientModel):
             'user_type': ref_acc_bank.user_type.id,
             'reconcile': False,
             'parent_id': ref_acc_bank.id,
+            'currency_id': self.currency_id.id,
             'company_id': self.company_id.id,
         }
         return vals

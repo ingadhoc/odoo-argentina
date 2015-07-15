@@ -17,7 +17,7 @@
                     <button name="%(action_afip_ws_currency_rate_wizard)d" string="Get Currency Rate" type="action" attrs="{'invisible':[('afip_ws', '=', False)]}"/>
                 </header>
                 <field name="number" position="before">
-                    <field name="afip_ws"/>
+                    <field name="afip_ws" attrs="{'invisible':[('type', '!=', 'electronic')], 'required':[('type', '=', 'electronic')]}"/>
                 </field>
             </field>
         </record>

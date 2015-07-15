@@ -12,42 +12,54 @@ class wizard_multi_charts_accounts(models.TransientModel):
     _inherit = 'wizard.multi.charts.accounts'
 
     @api.model
-    def _prepare_all_journals(
+    def generate_journals(
             self, chart_template_id, acc_template_ref, company_id):
         """
-        Inherit this function in order to add use document and other
-        configuration if company use argentinian localization
+        Overwrite this function so that no journal is created on chart
+        installation
         """
-        journal_data = super(
-            wizard_multi_charts_accounts, self)._prepare_all_journals(
-            chart_template_id, acc_template_ref, company_id)
+        return True
 
-        mt_chart_id = self.env['ir.model.data'].xmlid_to_res_id(
-            'l10n_ar_chart_generic.mt_l10nAR_chart_template')
-        ri_chart_id = self.env['ir.model.data'].xmlid_to_res_id(
-            'l10n_ar_chart_generic.ri_l10nAR_chart_template')
+    @api.model
+    def _create_bank_journals_from_o2m(
+            self, obj_wizard, company_id, acc_template_ref):
+        """
+        Overwrite this function so that no journal is created on chart
+        installation
+        """
+        return True
 
-        # if argentinian chart, we set use_argentinian_localization for company
-        company = self.env['res.company'].browse(company_id)
-        if chart_template_id in [mt_chart_id, ri_chart_id]:
-            self.use_argentinian_localization = True
-        if company.use_argentinian_localization:
-            point_of_sale = self.env['afip.point_of_sale'].search([
-                ('number', '=', 1),
-                ('company_id', '=', company_id),
-                ], limit=1)
-            if not point_of_sale:
-                point_of_sale = point_of_sale.create({
-                    'name': 'Punto de venta 1',
-                    'number': 1,
-                    'company_id': company_id,
-                    })
-            for vals_journal in journal_data:
-                if vals_journal['type'] in [
-                        'sale', 'sale_refund', 'purchase', 'purchase_refund']:
-                    vals_journal['use_documents'] = True
-                    vals_journal['point_of_sale_id'] = point_of_sale.id
-        return journal_data
+    # @api.model
+    # def _prepare_all_journals(
+    #         self, chart_template_id, acc_template_ref, company_id):
+    #     """
+    #     Inherit this function in order to add use document and other
+    #     configuration if company use argentinian localization
+    #     """
+    #     journal_data = super(
+    #         wizard_multi_charts_accounts, self)._prepare_all_journals(
+    #         chart_template_id, acc_template_ref, company_id)
+
+    #     # if argentinian chart, we set use_argentinian_localization for company
+    #     company = self.env['res.company'].browse(company_id)
+
+    #     if company.use_argentinian_localization:
+    #         point_of_sale = self.env['afip.point_of_sale'].search([
+    #             ('number', '=', 1),
+    #             ('company_id', '=', company_id),
+    #             ], limit=1)
+    #         if not point_of_sale:
+    #             point_of_sale = point_of_sale.create({
+    #                 'name': 'Punto de venta 1',
+    #                 'number': 1,
+    #                 'company_id': company_id,
+    #                 })
+    #         for vals_journal in journal_data:
+    #             if vals_journal['type'] in [
+    #                     'sale', 'sale_refund', 'purchase', 'purchase_refund']:
+    #                 vals_journal['use_documents'] = True
+    #                 vals_journal['point_of_sale_id'] = point_of_sale.id
+    #     return journal_data
 
     @api.model
     def configure_chart(

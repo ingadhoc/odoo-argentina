@@ -8,18 +8,18 @@
             <field name="arch" type="xml">
                 <form string="AFIP Point Of Sale">
                     <header>
-                        <button name="generate_sale_journals" type="object" string="Generate Sale Journals"/>
-                        <button name="generate_purchase_journals" type="object" string="Generate Purchase Journals"/>
                     </header>
                     <sheet>
                         <group>
-                            <field name="name" placeholder="For eg. 'Electrónica' o 'Manual Rosario'"/>
+                            <field name='type'/>
+                            <field name="prefix" placeholder="For eg. 'Rosario'"/>
+                            <field name="sufix" placeholder="For eg. 'Expo'"/>
                             <field name='number'/>
                             <field name='company_id'/>
                         </group>
                         <notebook>
                             <page string='Journals' name=''>
-                                <field name='journal_ids'/>
+                                <field name='journal_ids' context="{'tree_view_ref':'l10n_ar_invoice.view_account_journal_tree'}"/>
                             </page>
                             <page string='Documents Classes' name='Documents Classes'>
                                 <field name='journal_document_class_ids'/>

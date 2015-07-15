@@ -23,14 +23,35 @@ class afip_point_of_sale(models.Model):
     _name = 'afip.point_of_sale'
     _description = 'Afip Point Of Sale'
 
+    prefix = fields.Char(
+        'Prefix'
+        )
+    sufix = fields.Char(
+        'Sufix'
+        )
+    type = fields.Selection([
+        ('manual', 'Manual'),
+        ('preprinted', 'Preprinted'),
+        ('online', 'Online'),
+        # Agregados por otro modulo
+        # ('electronic', 'Electronic'),
+        # ('fiscal_printer', 'Fiscal Printer'),
+        ],
+        'Type',
+        default='manual',
+        required=True,
+        )
     name = fields.Char(
-        'Name', required=True)
+        compute='get_name',
+        )
     number = fields.Integer(
-        'Number', required=True)
+        'Number', required=True
+        )
     company_id = fields.Many2one(
         'res.company', 'Company', required=True,
         default=lambda self: self.env['res.company']._company_default_get(
-            'afip.point_of_sale'),)
+            'afip.point_of_sale')
+        )
     journal_ids = fields.One2many(
         'account.journal',
         'point_of_sale_id',
@@ -51,6 +72,24 @@ class afip_point_of_sale(models.Model):
         )
 
     @api.one
+    @api.depends('type', 'sufix', 'prefix')
+    def get_name(self):
+        # TODO mejorar esto y que tome el lable traducido del selection
+        if self.type == 'manual':
+            name = 'Manual'
+        elif self.type == 'preprinted':
+            name = 'Preimpresa'
+        elif self.type == 'online':
+            name = 'Online'
+        elif self.type == 'electronic':
+            name = 'Electronica'
+        if self.prefix:
+            name = '%s %s' % (self.prefix, name)
+        if self.sufix:
+            name = '%s %s' % (name, self.sufix)
+        self.name = name
+
+    @api.one
     @api.depends('journal_ids.journal_document_class_ids')
     def get_journal_document_class_ids(self):
         journal_document_class_ids = self.env[
@@ -60,58 +99,6 @@ class afip_point_of_sale(models.Model):
 
     _sql_constraints = [('number_unique', 'unique(number, company_id)',
                          'Number Must be Unique per Company!'), ]
-
-    @api.one
-    def generate_purchase_journals(self):
-        name = "(%s)" % (self.name)
-        actual_types = self.journal_ids.mapped('type')
-        vals = {
-            'name': "FA Compras %s" % name,
-            'code': "FAC%02i" % self.number,
-            'type': 'purchase',
-            'point_of_sale_id': self.id,
-            'company_id': self.company_id.id,
-            'use_documents': True,
-        }
-        if 'purchase' not in actual_types:
-            _logger.info('Creating purchase journal with vals %s' % str(vals))
-            self.journal_ids.create(vals)
-
-        if 'purchase_refund' not in actual_types:
-            _logger.info('Creating purchase_refund journal with vals %s' % str(
-                vals))
-            vals.update({
-                'name': "NC Compras %s" % name,
-                'code': "NCC%02i" % self.number,
-                'type': 'purchase_refund',
-            })
-            self.journal_ids.create(vals)
-
-    @api.one
-    def generate_sale_journals(self):
-        actual_types = self.journal_ids.mapped('type')
-        name = "%04i (%s)" % (self.number, self.name)
-        vals = {
-            'name': "FA Ventas %s" % name,
-            'code': "FAV%02i" % self.number,
-            'type': 'sale',
-            'point_of_sale_id': self.id,
-            'company_id': self.company_id.id,
-            'use_documents': True,
-        }
-        if 'sale' not in actual_types:
-            _logger.info('Creating sale journal with vals %s' % str(vals))
-            self.journal_ids.create(vals)
-
-        if 'sale_refund' not in actual_types:
-            _logger.info('Creating sale_refund journal with vals %s' % str(
-                vals))
-            vals.update({
-                'name': "NC Ventas %s" % name,
-                'code': "NCV%02i" % self.number,
-                'type': 'sale_refund',
-            })
-            self.journal_ids.create(vals)
 
 
 class afip_document_class(models.Model):

@@ -258,6 +258,13 @@ class account_journal(models.Model):
         'Use Documents?'
         )
 
+    @api.onchange('company_id', 'type')
+    def change_company(self):
+        if self.type != 'sale':
+            self.use_documents = False
+        else:
+            self.use_documents = self.company_id.use_argentinian_localization
+
     @api.multi
     def get_journal_letter(self):
         """Function to be inherited by afip ws fe"""

@@ -3,5 +3,4 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-import account_journal_create_wizard
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+import company

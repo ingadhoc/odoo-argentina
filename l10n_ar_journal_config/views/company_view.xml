@@ -3,18 +3,9 @@
     <data>
         <record model="ir.ui.view" id="view_company_inherit_form">
             <field name="name">res.company.form.inherit</field>
-            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="inherit_id" ref="sale.view_company_inherit_form2"/>
             <field name="model">res.company</field>
             <field name="arch" type="xml">
-                <field name="vat" position="after">
-                    <field name="responsability_id" widget="selection"/>
-                    <field name="iibb"/>
-                    <field name="start_date"/>
-                </field>
-                 <group name="account_grp">
-                    <field name="use_argentinian_localization"/>
-                    <field name="invoice_vat_discrimination_default"/>
-                </group>
                  <notebook>
                     <page string="Journals">
                         <group col="1">

@@ -32,3 +32,13 @@ class res_company(models.Model):
             * If No Discriminate Default, if no match found it won't discriminate by default\
             * If Discriminate Default, if no match found it would discriminate by default\
             ")
+    point_of_sale_ids = fields.One2many(
+        'afip.point_of_sale',
+        'company_id',
+        'AFIP Point of Sales',
+        )
+    journal_ids = fields.One2many(
+        'account.journal',
+        'company_id',
+        'Journals'
+        )

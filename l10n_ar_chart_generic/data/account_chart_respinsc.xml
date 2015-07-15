@@ -42,89 +42,108 @@
             <!-- <field name="company_id" ref="company_ri"/> -->
         </record>
 
-        <record model="account.account.template" id="ri_caja">
+<!--         <record model="account.account.template" id="ri_caja">
             <field name="type">view</field>
             <field name="code">1.1.01.01.000</field>
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">CAJAS</field>
             <field name="parent_id" ref="ri_disponibilidades"/>
+            <field name="company_id" ref="company_ri"/>
+        </record>    -->
+
+        <record model="account.account.template" id="ri_caja_y_bancos">
+            <field name="type">view</field>
+            <field name="code">1.1.01.01.000</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">CAJA Y BANCOS</field>
+            <field name="parent_id" ref="ri_disponibilidades"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
         </record>        
 
-        <record model="account.account.template" id="ri_caja_pesos">
+<!--         <record model="account.account.template" id="ri_caja_pesos">
             <field name="type">liquidity</field>
             <field name="code">1.1.01.01.010</field>
             <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Caja pesos</field>
             <field name="parent_id" ref="ri_caja"/>
-            <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>
+            <field name="company_id" ref="company_ri"/>
+        </record> -->
 
-        <record model="account.account.template" id="ri_caja_usd">
+<!--         <record model="account.account.template" id="ri_caja_usd">
             <field name="type">liquidity</field>
             <field name="code">1.1.01.01.020</field>
             <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Caja USD</field>
             <field name="parent_id" ref="ri_caja"/>
-            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="company_id" ref="company_ri"/>
             <field name="currency_id" ref="base.USD"/>
-        </record>
+        </record> -->
 
-        <record model="account.account.template" id="ri_caja_eur">
+<!--         <record model="account.account.template" id="ri_caja_eur">
             <field name="type">liquidity</field>
             <field name="code">1.1.01.01.030</field>
             <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Caja EUR</field>
             <field name="parent_id" ref="ri_caja"/>
-            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="company_id" ref="company_ri"/>
             <field name="currency_id" ref="base.EUR"/>
-        </record>
+        </record> -->
 
-        <record model="account.account.template" id="ri_fondo_fijo">
+<!--         <record model="account.account.template" id="ri_caja_eur">
             <field name="type">liquidity</field>
-            <field name="code">1.1.01.01.040</field>
+            <field name="code">1.1.01.01.030</field>
             <field name="user_type" ref="account.data_account_type_cash"/>
-            <field name="name">Fondo fijo</field>
-            <field name="parent_id" ref="ri_caja"/>
+            <field name="name">Caja EUR</field>
+            <field name="parent_id" ref="ri_caja_y_bancos"/>
+            <field name="company_id" ref="company_ri"/>
+            <field name="currency_id" ref="base.EUR"/>
+        </record> -->
+
+        <record model="account.account.template" id="ri_fondofijo">
+            <field name="type">liquidity</field>
+            <field name="code">1.1.01.01.010</field>
+            <field name="user_type" ref="account.data_account_type_cash"/>
+            <field name="name">Fondo Fijo</field>
+            <field name="parent_id" ref="ri_caja_y_bancos"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
         </record>
 
-        <record model="account.account.template" id="ri_valores">
+<!--         <record model="account.account.template" id="ri_valores">
             <field name="type">liquidity</field>
             <field name="code">1.1.01.01.050</field>
             <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Valores en cartera</field>
             <field name="parent_id" ref="ri_caja"/>
-            <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>
+            <field name="company_id" ref="company_ri"/>
+        </record> -->
 
-        <record model="account.account.template" id="ri_bancos">
+<!--         <record model="account.account.template" id="ri_bancos">
             <field name="type">view</field>
             <field name="code">1.1.01.02.000</field>
             <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">BANCOS</field>
             <field name="parent_id" ref="ri_disponibilidades"/>
-            <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>        
+            <field name="company_id" ref="company_ri"/>
+        </record>   -->      
 
         <!-- SOLO PARA DEMO -->
-        <record model="account.account.template" id="ri_banco_1">
+<!--         <record model="account.account.template" id="ri_banco_1">
             <field name="type">liquidity</field>
             <field name="code">1.1.01.02.010</field>
             <field name="user_type" ref="account.data_account_type_bank"/>
             <field name="name">Banco x cuenta corriente xxxxx</field>
             <field name="parent_id" ref="ri_bancos"/>
-            <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>  
+            <field name="company_id" ref="company_ri"/>
+        </record>   -->
 
-        <record model="account.account.template" id="ri__tarjetas_de_credito_cobrar">
+<!--         <record model="account.account.template" id="ri__tarjetas_de_credito_cobrar">
             <field name="type">liquidity</field>
             <field name="code">1.1.01.02.020</field>
             <field name="user_type" ref="account.data_account_type_bank"/>
             <field name="name">Tarjetas de crédito a cobrar xxxxx</field>
             <field name="parent_id" ref="ri_bancos"/>
-            <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>
+            <field name="company_id" ref="company_ri"/>
+        </record> -->
 
         <record model="account.account.template" id="ri_creditos_comerciales">
             <field name="type">view</field>
@@ -2312,7 +2331,8 @@
             <field name="account_root_id" ref="ri_a_root"/>
             <field name="code_digits">13</field>
             <field name="tax_code_root_id" ref="ri_tax_code_chart_root"/>
-            <field name="bank_account_view_id" ref="ri_bancos"/>
+            <field name="bank_account_view_id" ref="ri_caja_y_bancos"/>
+            <!-- <field name="bank_account_view_id" ref="ri_bancos"/> -->
             <field name="property_account_receivable" ref="ri_deudores_por_ventas"/>
             <field name="property_account_payable" ref="ri_pago_proveedores"/>
             <field name="property_account_expense_categ" ref="ri_mercaderia"/>

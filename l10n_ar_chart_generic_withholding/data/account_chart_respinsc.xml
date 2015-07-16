@@ -11,8 +11,8 @@
             <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
             <field name="description">Ret IVA A</field>
             <field name="name">Retención IVA Aplicada</field>
-            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iva_venta_retencion"/>
-            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iva_venta_retencion"/>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_retencion_iva_aplicada"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_retencion_iva_aplicada"/>
             <field name="account_id" ref="l10n_ar_chart_generic.ri_retencion_iva_a_pagar"/>
             <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_retencion_iva_a_pagar"/>
             <field name="type_tax_use">payment</field>

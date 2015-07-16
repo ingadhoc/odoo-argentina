@@ -95,8 +95,8 @@ Para actualizar el plan de cuentas de datos demo:
           'demo/fiscal_year_ri_demo.xml',
           'demo/account_chart_respinsc.xml',
           'demo/account_demo.xml',
-          # 'demo/ri_purchase_invoice_demo.xml',
-          # 'demo/ri_sale_invoice_demo.xml',
+          'demo/ri_purchase_invoice_demo.xml',
+          'demo/ri_sale_invoice_demo.xml',
     ],
     'test': [
     ],

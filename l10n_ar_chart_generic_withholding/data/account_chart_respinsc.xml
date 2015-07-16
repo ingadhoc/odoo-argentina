@@ -7,7 +7,7 @@
 #
 # IVA
 #
-        <record id="ri_retencion_iva_aplicada" model="account.tax.withholding.template">
+        <record id="ri_with_ret_iva_aplicada" model="account.tax.withholding.template">
             <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
             <field name="description">Ret IVA A</field>
             <field name="name">Retención IVA Aplicada</field>
@@ -18,7 +18,7 @@
             <field name="type_tax_use">payment</field>
         </record>
 
-        <record id="ri_retencion_iva_sufrida" model="account.tax.withholding.template">
+        <record id="ri_with_ret_iva_sufrida" model="account.tax.withholding.template">
             <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
             <field name="description">Ret IVA S</field>
             <field name="name">Retención IVA Sufrida</field>
@@ -29,7 +29,7 @@
             <field name="type_tax_use">receipt</field>
         </record>
 
-        <record id="ri_retencion_ganancias_aplicada" model="account.tax.withholding.template">
+        <record id="ri_with_ret_ganancias_aplicada" model="account.tax.withholding.template">
             <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
             <field name="description">Ret Ganancias A</field>
             <field name="name">Retención Ganancias Aplicada</field>
@@ -40,7 +40,7 @@
             <field name="type_tax_use">payment</field>
         </record>
 
-        <record id="ri_retencion_ganancias_sufrida" model="account.tax.withholding.template">
+        <record id="ri_with_ret_ganancias_sufrida" model="account.tax.withholding.template">
             <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
             <field name="description">Ret Ganancias S</field>
             <field name="name">Retención Ganancias Sufrida</field>

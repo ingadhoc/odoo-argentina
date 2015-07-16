@@ -16,7 +16,7 @@
             <field name="partner_id" ref="base.res_partner_12"/>
         </record>
         <record id="demo_ri_pay_voucher_0_withh_1" model="account.voucher.withholding">
-            <field name="tax_withholding_id" ref="ri_retencion_iva_aplicada"/>
+            <field name="tax_withholding_id" ref="ri_with_ret_iva_aplicada"/>
             <field name="name">12312312312</field>
             <field name="voucher_id" ref="demo_ri_pay_voucher_0"/>
             <field name="amount" eval="10.0"/>
@@ -38,7 +38,7 @@
             <field name="partner_id" ref="base.res_partner_1"/>
         </record>
         <record id="demo_ri_pay_voucher_1_withh_1" model="account.voucher.withholding">
-            <field name="tax_withholding_id" ref="ri_retencion_ganancias_aplicada"/>
+            <field name="tax_withholding_id" ref="ri_with_ret_ganancias_aplicada"/>
             <field name="name">0001234567</field>
             <field name="voucher_id" ref="demo_ri_pay_voucher_1"/>
             <field name="amount" eval="8.0"/>
@@ -61,7 +61,7 @@
             <field name="partner_id" ref="base.res_partner_13"/>
         </record>
         <record id="demo_ri_rec_voucher_0_withh_1" model="account.voucher.withholding">
-            <field name="tax_withholding_id" ref="ri_retencion_iva_sufrida"/>
+            <field name="tax_withholding_id" ref="ri_with_ret_iva_sufrida"/>
             <field name="name">00000000012</field>
             <field name="voucher_id" ref="demo_ri_rec_voucher_0"/>
             <field name="amount" eval="15.0"/>
@@ -81,7 +81,7 @@
             <field name="partner_id" ref="base.res_partner_2"/>
         </record>
         <record id="demo_ri_rec_voucher_1_withh_1" model="account.voucher.withholding">
-            <field name="tax_withholding_id" ref="ri_retencion_ganancias_sufrida"/>
+            <field name="tax_withholding_id" ref="ri_with_ret_ganancias_sufrida"/>
             <field name="name">00000000012</field>
             <field name="voucher_id" ref="demo_ri_rec_voucher_1"/>
             <field name="amount" eval="12.5"/>

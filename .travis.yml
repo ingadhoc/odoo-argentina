@@ -7,6 +7,9 @@ addons:
       - libcups2-dev
       - python-dev
       - python-lxml
+      - python-genshi
+      - python-cairo
+      - python-cups
       # for FE
       - swig
       - libffi-dev

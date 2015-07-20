@@ -190,12 +190,3 @@ class afip_document_type(models.Model):
         'AFIP Code', required=True)
     active = fields.Boolean(
         'Active', default=True)
-
-    @api.one
-    @api.constrains('product_types')
-    def _check_product_types(self):
-        if self.product_types:
-            types = set(self.product_types.split(','))
-            if not types.issubset(['adjust', 'consu', 'service']):
-                raise Warning(_('You provided an invalid list of product types.\
-                Must been separated by commas'))

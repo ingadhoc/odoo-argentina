@@ -6,6 +6,7 @@ addons:
       # aeroo
       - libcups2-dev
       - python-dev
+      - python-lxml
       # for FE
       - swig
       - libffi-dev

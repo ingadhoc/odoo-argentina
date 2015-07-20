@@ -3,6 +3,7 @@ addons:
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
+      # for FE
       - swig
       - libffi-dev
       - libssl-dev
@@ -35,6 +36,7 @@ install:
 
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - pip install -r requirements.txt
+  - pip install -r requirements2.txt
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
 

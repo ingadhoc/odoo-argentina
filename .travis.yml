@@ -1,0 +1,39 @@
+addons:
+  apt:
+    packages:
+      - expect-dev  # provides unbuffer utility
+      - python-lxml # because pip installation is slow
+
+language: python
+
+# new options suggested by Alexandre Fayolle
+sudo: false
+cache: pip
+
+python:
+  - "2.7"
+
+env:
+  - VERSION="8.0" LINT_CHECK="1"
+  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
+
+virtualenv:
+  system_site_packages: true
+
+install:
+  # aeroo reports
+  - git clone https://github.com/aeroo/aeroo_reports.git ${HOME}/aeroo_reports
+
+  # odoo addons adhoc
+  - git clone https://github.com/ingadhoc/odoo-addons.git ${HOME}/odoo-addons
+
+  - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
+  - pip install -r requirements.txt
+  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - travis_install_nightly
+
+script:
+  - travis_run_tests
+
+after_success:
+  coveralls

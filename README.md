@@ -1,11 +1,11 @@
-### Odoo-Argentina
+[![Build Status](https://travis-ci.org/ingadhoc/odoo-argentina.svg?branch=8.0)](https://travis-ci.org/ingadhoc/odoo-argentina)
+[![Coverage Status](https://coveralls.io/repos/ingadhoc/odoo-argentina/badge.png?branch=8.0)](https://coveralls.io/r/ingadhoc/odoo-argentina?branch=8.0)
 
-[![Build Status](https://travis-ci.org/ingadhoc/odoo-argentina.svg?branch=master)](https://travis-ci.org/ingadhoc/odoo-argentina) [![Coverage Status](https://coveralls.io/repos/ingadhoc/odoo-argentina/badge.png)](https://coveralls.io/r/ingadhoc/odoo-argentina)
+# Odoo-Argentina
 
 Un Repositorio de la localización argentina.
 
-
-#### Localizaciones Modelos
+## Localizaciones Modelos
 
 - **[Brazil](https://github.com/openerpbrasil/l10n_br_core)** - fuente de conceptos avanzados sobre impuestos
 - [Colombia](https://github.com/odoo-colombia/odoo-colombia) - De quien hemos tomado todo este contenido e ideas para organizarnos. Gracias!
@@ -17,7 +17,7 @@ Un Repositorio de la localización argentina.
 - *[agrégalo](https://github.com/ingadhoc/odoo-argentina/edit/master/README.md)* que piensas que falta!
 
 
-#### Relevantes recursos addicionales, non-code
+## Relevantes recursos addicionales, non-code
 Github esta reservado al codigo, los documentos de soporte o de trabajo residen en otros lugares.
 
 - [Modelo ER para un motor de impuestos flexible](https://www.draw.io/?#G0B9cHHbqndJcAcjRPdzZUWVdNc3M)
@@ -31,7 +31,7 @@ Github esta reservado al codigo, los documentos de soporte o de trabajo residen 
 - [Introduccion para desarollo de modulos](http://www.youtube.com/watch?v=0GUxV85DDm4&feature=share&t=5h47m38s)
 - *[agrégalo](https://github.com/ingadhoc/odoo-argentina/edit/master/README.md)* que piensas que falta!
 
-#### Recursos adicionales optionales
+## Recursos adicionales optionales
 - *[agrégalo](https://github.com/odoo-colombia/odoo-colombia/edit/master/README.md)* que piensas que falta!
 
 Ojala que soporta python pronto: [![Code Climate](https://codeclimate.com/github/ingadhoc/odoo-argentina.png)](https://codeclimate.com/github/ingadhoc/odoo-argentina)

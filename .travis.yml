@@ -10,6 +10,12 @@ addons:
       - python-genshi
       - python-cairo
       - python-cups
+      - debhelper
+      - autotools-dev
+      - cups-ppdc
+      - libcups2-dev
+      - cups
+      - imagemagick
       # for FE
       - swig
       - libffi-dev

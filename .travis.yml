@@ -7,8 +7,8 @@ addons:
 language: python
 
 # new options suggested by Alexandre Fayolle
-# sudo: false
-# cache: pip
+sudo: false
+cache: pip
 
 python:
   - '2.7'

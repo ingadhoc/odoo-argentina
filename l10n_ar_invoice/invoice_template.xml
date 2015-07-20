@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <delete id="account.email_template_edi_invoice" model="email.template"/>
+        <!-- <delete id="account.email_template_edi_invoice" model="email.template"/> -->
     <record id="email_template_edi_invoice" model="email.template">
             <field name="name">Invoice - Send by Email</field>
             <field name="email_from">${(object.user_id.email or object.company_id.email or 'noreply@localhost')|safe}</field>

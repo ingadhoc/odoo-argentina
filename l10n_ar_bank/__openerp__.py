@@ -28,7 +28,7 @@
     'installable': True,
     'license': 'AGPL-3',
     'name': 'Banks of Argentina',
-    'test': ['test/l10n_ar_banks_wizard.yml'],
+    # 'test': ['test/l10n_ar_banks_wizard.yml'],
     'data': [   'data/res_bank.xml',
                       'l10n_ar_bank.xml',
                       'l10n_ar_bank_menu.xml',

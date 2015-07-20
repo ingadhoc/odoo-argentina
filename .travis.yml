@@ -18,14 +18,18 @@ python:
 # for aeroo
 # we make this way becasue we could not get it work in other way, we need cups
 before_install:
+# aeroo
 - sudo apt-get update -qq
 - sudo apt-get install -qq debhelper autotools-dev cups-ppdc libcups2-dev cups imagemagick
   ghostscript
 - pip install httplib2 pycups==1.9.68
-- sudo apt-get install -qq swig libffi-dev libssl-dev python-m2crypto python-httplib2
+
+# FE
+- sudo apt-get install -qq python-dev swig libffi-dev libssl-dev python-m2crypto python-httplib2
 - pip install -r requirements.txt
 - pip install pyafipws
 # - pip install -r requirements2.txt
+
 env:
   # TODO enable lint check
   - VERSION="8.0" LINT_CHECK="0"

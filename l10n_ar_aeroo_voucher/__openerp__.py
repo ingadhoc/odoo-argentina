@@ -49,7 +49,7 @@ Utilice este modulo en vez de l10n_ar_aeroo_receipt si prefiere no utilizar el m
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

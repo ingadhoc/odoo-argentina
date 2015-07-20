@@ -3,6 +3,8 @@ addons:
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
+      # aeroo
+      - libcups2-dev
       # for FE
       - swig
       - libffi-dev

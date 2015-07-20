@@ -27,6 +27,7 @@ before_install:
 # FE
 - sudo apt-get install -qq python-dev swig libffi-dev libssl-dev python-m2crypto python-httplib2
 - pip install -r requirements.txt
+- pip install PIL --allow-external PIL --allow-unverified PIL
 - pip install pyafipws
 # - pip install -r requirements2.txt
 

@@ -3,6 +3,6 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-import wizard
-import account_followup_print
-import account_followup
+from . import wizard
+from . import account_followup_print
+from . import account_followup

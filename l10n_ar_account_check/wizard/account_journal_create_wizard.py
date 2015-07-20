@@ -4,7 +4,6 @@
 # directory
 ##############################################################################
 from openerp import fields, api, models, _
-from openerp.exceptions import Warning
 
 
 class account_journal_create_wizard(models.TransientModel):
@@ -50,10 +49,12 @@ class account_journal_create_wizard(models.TransientModel):
                 account_name = '%s %s' % (account_name, self.name_sufix)
 
             # if none, we create one and use for debit credit
-            if not self.default_debit_account_id and not self.default_credit_account_id:
+            if not self.default_debit_account_id and not (
+                    self.default_credit_account_id):
                 account = self.env['account.account'].create(
                     self._get_account_vals(account_name))
-                self.default_credit_account_id = self.default_debit_account_id = account.id
+                self.default_credit_account_id = account.id
+                self.default_debit_account_id = account.id
             # if not debit, we use credit
             elif not self.default_credit_account_id:
                 self.default_credit_account_id = self.default_debit_account_id

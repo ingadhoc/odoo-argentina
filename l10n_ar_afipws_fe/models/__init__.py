@@ -3,13 +3,13 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-import wsfe_error
-import invoice
-import journal_afip_document_class
-import afipws_connection
-import afip_point_of_sale
-import journal
-import product_uom
-import res_currency
+from . import wsfe_error
+from . import invoice
+from . import journal_afip_document_class
+from . import afipws_connection
+from . import afip_point_of_sale
+from . import journal
+from . import product_uom
+from . import res_currency
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

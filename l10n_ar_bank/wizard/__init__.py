@@ -21,8 +21,8 @@
 ##############################################################################
 
 """
-Import operations model 347 engine wizards
+from . import operations model 347 engine wizards
 """
 __author__ = "López Ignacio M. (www.dinamotion.com.ar) - lopezignacio@gmail.com"
 
-import wiz_l10n_ar_bank
+from . import wiz_l10n_ar_bank

@@ -3,4 +3,4 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-import account_company_select
+from . import account_company_select

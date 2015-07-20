@@ -24,7 +24,8 @@ before_install:
 - pip install httplib2 pycups==1.9.68
 - sudo apt-get install -qq swig libffi-dev libssl-dev python-m2crypto python-httplib2
 - pip install -r requirements.txt
-- pip install -r requirements2.txt
+- pip install pyafipws
+# - pip install -r requirements2.txt
 env:
   # TODO enable lint check
   - VERSION="8.0" LINT_CHECK="0"

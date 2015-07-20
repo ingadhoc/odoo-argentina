@@ -25,7 +25,7 @@ before_install:
 - pip install httplib2 pycups==1.9.68
 
 # FE
-- sudo apt-get install -qq python-dev swig libffi-dev libssl-dev python-m2crypto python-httplib2
+- sudo apt-get install -qq mercurial python-dev swig libffi-dev libssl-dev python-m2crypto python-httplib2
 - pip install -r requirements.txt
 - pip install Pillow
 - pip install pyafipws

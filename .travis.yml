@@ -4,11 +4,11 @@ addons:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
       # for FE
-      - swig
-      - libffi-dev
-      - libssl-dev
-      - python-m2crypto
-      - python-httplib2
+      # - swig
+      # - libffi-dev
+      # - libssl-dev
+      # - python-m2crypto
+      # - python-httplib2
 
 language: python
 
@@ -22,7 +22,9 @@ before_install:
 - sudo apt-get install -qq debhelper autotools-dev cups-ppdc libcups2-dev cups imagemagick
   ghostscript
 - pip install httplib2 pycups==1.9.68
-
+- sudo apt-get install -qq swig libffi-dev libssl-dev python-m2crypto python-httplib2
+- pip install -r requirements.txt
+- pip install -r requirements2.txt
 env:
   # TODO enable lint check
   - VERSION="8.0" LINT_CHECK="0"
@@ -42,8 +44,6 @@ install:
   - git clone https://github.com/OCA/account-financial-tools.git ${HOME}/account-financial-tools
 
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
-  - pip install -r requirements.txt
-  - pip install -r requirements2.txt
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
 

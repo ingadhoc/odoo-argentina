@@ -38,6 +38,9 @@ install:
   # odoo addons adhoc
   - git clone https://github.com/ingadhoc/odoo-addons.git ${HOME}/odoo-addons
 
+  # oca account-financial-tools
+  - git clone https://github.com/OCA/account-financial-tools.git ${HOME}/account-financial-tools
+
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - pip install -r requirements.txt
   - pip install -r requirements2.txt

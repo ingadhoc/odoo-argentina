@@ -5,6 +5,7 @@ addons:
       - python-lxml # because pip installation is slow
       # aeroo
       - libcups2-dev
+      - python-dev
       # for FE
       - swig
       - libffi-dev

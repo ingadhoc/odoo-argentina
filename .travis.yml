@@ -25,9 +25,7 @@ before_install:
 # FE
 - sudo apt-get install -qq mercurial python-dev swig libffi-dev libssl-dev python-m2crypto python-httplib2
 - pip install -r requirements.txt
-- pip install Pillow
-- pip install pyafipws
-# - pip install -r requirements2.txt
+- pip install -r requirements2.txt
 
 env:
   # TODO enable lint check

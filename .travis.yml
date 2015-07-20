@@ -30,6 +30,7 @@ virtualenv:
 install:
   # aeroo reports
   - git clone https://github.com/aeroo/aeroo_reports.git ${HOME}/aeroo_reports
+  - pip install -r git+https://github.com/aeroo/aeroolib.git@master pycups==1.9.68
 
   # odoo addons adhoc
   - git clone https://github.com/ingadhoc/odoo-addons.git ${HOME}/odoo-addons

@@ -3,29 +3,36 @@ addons:
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
-      # aeroo
-      - libcups2-dev
-      - python-dev
-      # for FE
-      - swig
-      - libffi-dev
-      - libssl-dev
-      - python-m2crypto
-      - python-httplib2
 
 language: python
 
 # new options suggested by Alexandre Fayolle
-sudo: false
-cache: pip
+# sudo: false
+# cache: pip
 
 python:
-  - "2.7"
+  - '2.7'
+
+# for aeroo
+# we make this way becasue we could not get it work in other way, we need cups
+before_install:
+# aeroo
+- sudo apt-get update -qq
+- sudo apt-get install -qq debhelper autotools-dev cups-ppdc libcups2-dev cups imagemagick
+  ghostscript
+- pip install httplib2 pycups==1.9.68
+
+# FE
+- sudo apt-get install -qq mercurial python-dev swig libffi-dev libssl-dev python-m2crypto python-httplib2
+- pip install -r requirements.txt
+- pip install Pillow
+- pip install pyafipws
+# - pip install -r requirements2.txt
 
 env:
   # TODO enable lint check
   - VERSION="8.0" LINT_CHECK="0"
-  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
+  # - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
 
 virtualenv:
   system_site_packages: true
@@ -33,14 +40,15 @@ virtualenv:
 install:
   # aeroo reports
   - git clone https://github.com/aeroo/aeroo_reports.git ${HOME}/aeroo_reports
-  - pip install git+https://github.com/aeroo/aeroolib.git@master pycups==1.9.68
+  - pip install git+https://github.com/aeroo/aeroolib.git@master
 
   # odoo addons adhoc
   - git clone https://github.com/ingadhoc/odoo-addons.git ${HOME}/odoo-addons
 
+  # oca account-financial-tools
+  - git clone https://github.com/OCA/account-financial-tools.git ${HOME}/account-financial-tools
+
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
-  - pip install -r requirements.txt
-  - pip install -r requirements2.txt
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
 

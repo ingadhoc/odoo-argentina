@@ -3,6 +3,14 @@ addons:
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
+      # FE
+      # - mercurial
+      - python-dev
+      - swig
+      - libffi-dev
+      - libssl-dev
+      - python-m2crypto
+      - python-httplib2
 
 language: python
 
@@ -14,20 +22,6 @@ cache: pip
 python:
   - '2.7'
 
-# for aeroo
-# we make this way becasue we could not get it work in other way, we need cups
-before_install:
-# aeroo
-- sudo apt-get update -qq
-- sudo apt-get install -qq debhelper autotools-dev cups-ppdc libcups2-dev cups imagemagick
-  ghostscript
-- pip install httplib2 pycups==1.9.68
-
-# FE
-- sudo apt-get install -qq mercurial python-dev swig libffi-dev libssl-dev python-m2crypto python-httplib2
-- pip install -r requirements.txt
-- pip install -r requirements2.txt
-
 env:
   # TODO enable lint check
   - VERSION="8.0" LINT_CHECK="0"
@@ -38,8 +32,11 @@ virtualenv:
 
 install:
   # aeroo reports
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq libcups2-dev
   - git clone https://github.com/aeroo/aeroo_reports.git ${HOME}/aeroo_reports
   - pip install git+https://github.com/aeroo/aeroolib.git@master
+  - pip install httplib2 pycups==1.9.68
 
   # odoo addons adhoc
   - git clone https://github.com/ingadhoc/odoo-addons.git ${HOME}/odoo-addons
@@ -47,6 +44,8 @@ install:
   # oca account-financial-tools
   - git clone https://github.com/OCA/account-financial-tools.git ${HOME}/account-financial-tools
 
+  - pip install -r requirements.txt
+  - pip install -r requirements2.txt
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly

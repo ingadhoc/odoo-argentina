@@ -1,1 +1,1 @@
--e hg+https://code.google.com/p/pyafipws/#egg=pyafipws
+pyafipws

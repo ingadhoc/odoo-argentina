@@ -3,4 +3,4 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-import l10n_ar_bank_cbu
+from . import l10n_ar_bank_cbu

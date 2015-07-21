@@ -30,7 +30,8 @@
     'description': """
 Argentinian Like Voucher Aeroo Report
 =====================================
-Utilice este modulo en vez de l10n_ar_aeroo_receipt si prefiere no utilizar el modulo account_voucher_receipt.
+Utilice este modulo en vez de l10n_ar_aeroo_receipt si prefiere no utilizar el
+modulo account_voucher_receipt.
     """,
     'depends': [
         'report_extended_voucher',
@@ -49,7 +50,7 @@ Utilice este modulo en vez de l10n_ar_aeroo_receipt si prefiere no utilizar el m
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

@@ -19,7 +19,7 @@
         <!-- Agrolait - Customer -->
         <record id="base.res_partner_2" model="res.partner">
             <field name='responsability_id' ref='res_IVARI'/>
-            <field name='vat'>AR30111111118</field>
+            <field name='vat'>AR30777777773</field>
             <field name='document_type_id' ref="dt_CUIT"/>
             <field name='document_number'>30111111118</field>
         </record>

@@ -1,0 +1,20 @@
+# Config file .coveragerc
+
+[report]
+include =
+    */ingadhoc/odoo-argentina/*
+
+omit =
+    */scenario/*
+    */scenarios/*
+    */test/*
+    */tests/*
+    *__init__.py
+    *__openerp__.py
+
+# Regexes for lines to exclude from consideration
+exclude_lines =
+    # Have to re-enable the standard pragma
+    pragma: no cover
+    # Don't complain about null context checking
+    if context is None:

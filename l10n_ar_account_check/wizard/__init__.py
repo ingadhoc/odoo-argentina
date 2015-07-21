@@ -3,4 +3,4 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-import account_journal_create_wizard
+from . import account_journal_create_wizard

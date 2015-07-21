@@ -62,9 +62,6 @@ class account_vat_ledger(models.Model):
         help='Se deberá indicar si la presentación es Original (00) o Rectificativa y su orden'
         )
 
-    _sql_constraints = [('number_unique', 'unique(number, company_id)',
-                         'Number Must be Unique per Company!')]
-
     @api.model
     def format_amount(self, amount, padding=15, decimals=2):
         if amount < 0:

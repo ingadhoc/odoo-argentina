@@ -4,7 +4,7 @@
 
         <record model='res.bank' id='00005'>
             <field name='name'>Abn  Amro Bank N. V.</field>
-            <field name='code'>ABNAMRO</field>
+            <field name='bic'>ABNAMRO</field>
             <field name='active'>1</field>
             <field name='street'>Victoria Ocampo 360</field>
             <field name='street2'>piso pb</field>
@@ -18,7 +18,7 @@
         </record>
         <record model='res.bank' id='00295'>
             <field name='name'>American Express Bank Ltd. Sociedad Anon</field>
-            <field name='code'>AEXP</field>
+            <field name='bic'>AEXP</field>
             <field name='active'>1</field>
             <field name='street'>Arenales 707</field>
             <field name='street2'></field>
@@ -33,7 +33,7 @@
         </record>
         <record model='res.bank' id='00340'>
             <field name='name'>Bacs Banco De Credito Y Securitizacion S</field>
-            <field name='code'>BACS</field>
+            <field name='bic'>BACS</field>
             <field name='active'>1</field>
             <field name='street'>Bartolomé Mitre 430</field>
             <field name='street2'>piso 8a</field>
@@ -48,7 +48,7 @@
         </record>
         <record model='res.bank' id='00147'>
             <field name='name'>Banco B.I. Creditanstalt Sociedad Anonim</field>
-            <field name='code'>BICREDITANSTALT</field>
+            <field name='bic'>BICREDITANSTALT</field>
             <field name='active'>1</field>
             <field name='street'>Bouchard 547</field>
             <field name='street2'></field>
@@ -63,7 +63,7 @@
         </record>
         <record model='res.bank' id='00336'>
             <field name='name'>Banco Bradesco Argentina S.A.</field>
-            <field name='code'>ARNET</field>
+            <field name='bic'>ARNET</field>
             <field name='active'>1</field>
             <field name='street'>25 de Mayo 555</field>
             <field name='street2'></field>
@@ -78,7 +78,7 @@
         </record>
         <record model='res.bank' id='00331'>
             <field name='name'>Banco Cetelem Argentina S.A.</field>
-            <field name='code'>CETELEM</field>
+            <field name='bic'>CETELEM</field>
             <field name='active'>1</field>
             <field name='street'>Av Del Libertador Gral. San Martin 767</field>
             <field name='street2'>piso 1</field>
@@ -93,7 +93,7 @@
         </record>
         <record model='res.bank' id='00319'>
             <field name='name'>Banco Cmf S.A.</field>
-            <field name='code'>CMFB</field>
+            <field name='bic'>CMFB</field>
             <field name='active'>1</field>
             <field name='street'>Macacha Güemes 150</field>
             <field name='street2'></field>
@@ -108,7 +108,7 @@
         </record>
         <record model='res.bank' id='00389'>
             <field name='name'>Banco Columbia S.A.</field>
-            <field name='code'>COLUMBIA</field>
+            <field name='bic'>COLUMBIA</field>
             <field name='active'>1</field>
             <field name='street'>Tte. Gral. Juan Domingo Perón 350</field>
             <field name='street2'></field>
@@ -122,7 +122,7 @@
         </record>
         <record model='res.bank' id='00299'>
             <field name='name'>Banco Comafi Sociedad Anonima</field>
-            <field name='code'>COMAFI</field>
+            <field name='bic'>COMAFI</field>
             <field name='active'>1</field>
             <field name='street'>Av Pres. Roque Sáenz Pena 660</field>
             <field name='street2'></field>
@@ -137,7 +137,7 @@
         </record>
         <record model='res.bank' id='00191'>
             <field name='name'>Banco Credicoop Cooperativo Limitado</field>
-            <field name='code'>BANCOCREDICOOP</field>
+            <field name='bic'>BANCOCREDICOOP</field>
             <field name='active'>1</field>
             <field name='street'>Reconquista 452</field>
             <field name='street2'></field>
@@ -152,7 +152,7 @@
         </record>
         <record model='res.bank' id='00094'>
             <field name='name'>Banco De Corrientes S.A.</field>
-            <field name='code'>BCOCTES</field>
+            <field name='bic'>BCOCTES</field>
             <field name='active'>1</field>
             <field name='street'>9 de Julio 1099</field>
             <field name='street2'></field>
@@ -167,7 +167,7 @@
         </record>
         <record model='res.bank' id='00315'>
             <field name='name'>Banco De Formosa S.A.</field>
-            <field name='code'>FORMOSA</field>
+            <field name='bic'>FORMOSA</field>
             <field name='active'>1</field>
             <field name='street'>25 de Mayo 102</field>
             <field name='street2'></field>
@@ -181,7 +181,7 @@
         </record>
         <record model='res.bank' id='00007'>
             <field name='name'>Banco De Galicia Y Buenos Aires S.A.</field>
-            <field name='code'>BANCOGALICIA</field>
+            <field name='bic'>BANCOGALICIA</field>
             <field name='active'>1</field>
             <field name='street'>Tte. Gral. Juan Domingo Perón 415</field>
             <field name='street2'></field>
@@ -196,7 +196,7 @@
         </record>
         <record model='res.bank' id='00300'>
             <field name='name'>Banco De Inversion Y Comercio Exterior S</field>
-            <field name='code'>BICE</field>
+            <field name='bic'>BICE</field>
             <field name='active'>1</field>
             <field name='street'>25 de Mayo 526</field>
             <field name='street2'></field>
@@ -211,7 +211,7 @@
         </record>
         <record model='res.bank' id='00029'>
             <field name='name'>Banco De La Ciudad De Buenos Aires</field>
-            <field name='code'>BANCOCIUDAD</field>
+            <field name='bic'>BANCOCIUDAD</field>
             <field name='active'>1</field>
             <field name='street'>Florida 302</field>
             <field name='street2'></field>
@@ -226,7 +226,7 @@
         </record>
         <record model='res.bank' id='00011'>
             <field name='name'>Banco De La Nacion Argentina</field>
-            <field name='code'>BNA</field>
+            <field name='bic'>BNA</field>
             <field name='active'>1</field>
             <field name='street'>Bartolomé Mitre 326</field>
             <field name='street2'></field>
@@ -241,7 +241,7 @@
         </record>
         <record model='res.bank' id='00093'>
             <field name='name'>Banco De La Pampa Sociedad De Economмa M</field>
-            <field name='code'>BLP</field>
+            <field name='bic'>BLP</field>
             <field name='active'>1</field>
             <field name='street'>Pellegrini 255</field>
             <field name='street2'></field>
@@ -255,7 +255,7 @@
         </record>
         <record model='res.bank' id='00014'>
             <field name='name'>Banco De La Provincia De Buenos Aires</field>
-            <field name='code'>BAPROPAGOS</field>
+            <field name='bic'>BAPROPAGOS</field>
             <field name='active'>1</field>
             <field name='street'>av. 7 ing. luis monteverde 726</field>
             <field name='street2'></field>
@@ -269,7 +269,7 @@
         </record>
         <record model='res.bank' id='00020'>
             <field name='name'>Banco De La Provincia De Cordoba S.A.</field>
-            <field name='code'>BANCOR</field>
+            <field name='bic'>BANCOR</field>
             <field name='active'>1</field>
             <field name='street'>San Jerónimo 166</field>
             <field name='street2'></field>
@@ -284,7 +284,7 @@
         </record>
         <record model='res.bank' id='00269'>
             <field name='name'>Banco De La Republica Oriental Del Urugu</field>
-            <field name='code'>BROUBSAS</field>
+            <field name='bic'>BROUBSAS</field>
             <field name='active'>1</field>
             <field name='street'>Esmeralda 111</field>
             <field name='street2'></field>
@@ -299,7 +299,7 @@
         </record>
         <record model='res.bank' id='00045'>
             <field name='name'>Banco De San Juan S.A.</field>
-            <field name='code'>BANCOSANJUAN</field>
+            <field name='bic'>BANCOSANJUAN</field>
             <field name='active'>1</field>
             <field name='street'>Av José Ignacio de La Roza Oeste 85</field>
             <field name='street2'></field>
@@ -314,7 +314,7 @@
         </record>
         <record model='res.bank' id='00086'>
             <field name='name'>Banco De Santa Cruz S.A.</field>
-            <field name='code'>BANCOSANTACRUZ</field>
+            <field name='bic'>BANCOSANTACRUZ</field>
             <field name='active'>1</field>
             <field name='street'>av. julio a. roca 812</field>
             <field name='street2'></field>
@@ -329,7 +329,7 @@
         </record>
         <record model='res.bank' id='00321'>
             <field name='name'>Banco De Santiago Del Estero S.A.</field>
-            <field name='code'>ARNET</field>
+            <field name='bic'>ARNET</field>
             <field name='active'>1</field>
             <field name='street'>Av Belgrano Norte 529</field>
             <field name='street2'></field>
@@ -344,7 +344,7 @@
         </record>
         <record model='res.bank' id='00332'>
             <field name='name'>Banco De Servicios Financieros S.A.</field>
-            <field name='code'>CETELEM</field>
+            <field name='bic'>CETELEM</field>
             <field name='active'>1</field>
             <field name='street'>Cuyo 3367</field>
             <field name='street2'></field>
@@ -359,7 +359,7 @@
         </record>
         <record model='res.bank' id='00338'>
             <field name='name'>Banco De Servicios Y Transacciones S.A.</field>
-            <field name='code'>BANCOST</field>
+            <field name='bic'>BANCOST</field>
             <field name='active'>1</field>
             <field name='street'>Corrientes Ave 1174</field>
             <field name='street2'>piso 3</field>
@@ -374,7 +374,7 @@
         </record>
         <record model='res.bank' id='00198'>
             <field name='name'>Banco De Valores S.A.</field>
-            <field name='code'>BANVAL</field>
+            <field name='bic'>BANVAL</field>
             <field name='active'>1</field>
             <field name='street'>Sarmiento 310</field>
             <field name='street2'></field>
@@ -389,7 +389,7 @@
         </record>
         <record model='res.bank' id='00083'>
             <field name='name'>Banco Del Chubut S.A.</field>
-            <field name='code'>CHUBUTBANK</field>
+            <field name='bic'>CHUBUTBANK</field>
             <field name='active'>1</field>
             <field name='street'>Rivadavia 615</field>
             <field name='street2'></field>
@@ -404,7 +404,7 @@
         </record>
         <record model='res.bank' id='00310'>
             <field name='name'>Banco Del Sol S.A.</field>
-            <field name='code'>BANCODELSOL</field>
+            <field name='bic'>BANCODELSOL</field>
             <field name='active'>1</field>
             <field name='street'>Av 51 607</field>
             <field name='street2'></field>
@@ -419,7 +419,7 @@
         </record>
         <record model='res.bank' id='00060'>
             <field name='name'>Banco Del Tucuman S.A.</field>
-            <field name='code'>BANCODELTUCUMAN</field>
+            <field name='bic'>BANCODELTUCUMAN</field>
             <field name='active'>1</field>
             <field name='street'>San Martin 721</field>
             <field name='street2'></field>
@@ -434,7 +434,7 @@
         </record>
         <record model='res.bank' id='00046'>
             <field name='name'>Banco Do Brasil S.A.</field>
-            <field name='code'>BB</field>
+            <field name='bic'>BB</field>
             <field name='active'>1</field>
             <field name='street'>San Martin 323</field>
             <field name='street2'>piso 2</field>
@@ -449,7 +449,7 @@
         </record>
         <record model='res.bank' id='00303'>
             <field name='name'>Banco Finansur S.A.</field>
-            <field name='code'>BANCOFINANSUR</field>
+            <field name='bic'>BANCOFINANSUR</field>
             <field name='active'>1</field>
             <field name='street'>Sarmiento 700</field>
             <field name='street2'></field>
@@ -464,7 +464,7 @@
         </record>
         <record model='res.bank' id='00044'>
             <field name='name'>Banco Hipotecario S.A.</field>
-            <field name='code'>HIPOTECARIO</field>
+            <field name='bic'>HIPOTECARIO</field>
             <field name='active'>1</field>
             <field name='street'>Reconquista 101</field>
             <field name='street2'></field>
@@ -478,7 +478,7 @@
         </record>
         <record model='res.bank' id='00322'>
             <field name='name'>Banco Industrial S.A.</field>
-            <field name='code'>BANCOINDUSTRIAL</field>
+            <field name='bic'>BANCOINDUSTRIAL</field>
             <field name='active'>1</field>
             <field name='street'>Sarmiento 530</field>
             <field name='street2'></field>
@@ -492,7 +492,7 @@
         </record>
         <record model='res.bank' id='00259'>
             <field name='name'>Banco Itau Argentina S.A.</field>
-            <field name='code'>ITAU</field>
+            <field name='bic'>ITAU</field>
             <field name='active'>1</field>
             <field name='street'>Cerrito 740</field>
             <field name='street2'>piso 19</field>
@@ -505,7 +505,7 @@
         </record>
         <record model='res.bank' id='00305'>
             <field name='name'>Banco Julio Sociedad Anonima</field>
-            <field name='code'>BANCOJULIO</field>
+            <field name='bic'>BANCOJULIO</field>
             <field name='active'>1</field>
             <field name='street'>Ituzaingó 169</field>
             <field name='street2'>piso pb</field>
@@ -520,7 +520,7 @@
         </record>
         <record model='res.bank' id='00285'>
             <field name='name'>Banco Macro S.A.</field>
-            <field name='code'>MACRO</field>
+            <field name='bic'>MACRO</field>
             <field name='active'>1</field>
             <field name='street'>Sarmiento 447</field>
             <field name='street2'>piso 7</field>
@@ -534,7 +534,7 @@
         </record>
         <record model='res.bank' id='00254'>
             <field name='name'>Banco Mariva S.A.</field>
-            <field name='code'>MARIVA</field>
+            <field name='bic'>MARIVA</field>
             <field name='active'>1</field>
             <field name='street'>Sarmiento 500</field>
             <field name='street2'></field>
@@ -549,7 +549,7 @@
         </record>
         <record model='res.bank' id='00341'>
             <field name='name'>Banco Masventas S.A.</field>
-            <field name='code'>BANCOMASVENTAS</field>
+            <field name='bic'>BANCOMASVENTAS</field>
             <field name='active'>1</field>
             <field name='street'>España 610</field>
             <field name='street2'></field>
@@ -564,7 +564,7 @@
         </record>
         <record model='res.bank' id='00281'>
             <field name='name'>Banco Meridian S.A.</field>
-            <field name='code'>BANCOMERIDIAN</field>
+            <field name='bic'>BANCOMERIDIAN</field>
             <field name='active'>1</field>
             <field name='street'>Florida 200</field>
             <field name='street2'></field>
@@ -578,7 +578,7 @@
         </record>
         <record model='res.bank' id='00065'>
             <field name='name'>Banco Municipal De Rosario</field>
-            <field name='code'>BMROS</field>
+            <field name='bic'>BMROS</field>
             <field name='active'>1</field>
             <field name='street'>Av San Martin 724</field>
             <field name='street2'></field>
@@ -593,7 +593,7 @@
         </record>
         <record model='res.bank' id='00034'>
             <field name='name'>Banco Patagonia S.A.</field>
-            <field name='code'>BANCOPATAGONIA</field>
+            <field name='bic'>BANCOPATAGONIA</field>
             <field name='active'>1</field>
             <field name='street'>Tte. Gral. Juan Domingo Perón 500</field>
             <field name='street2'></field>
@@ -608,7 +608,7 @@
         </record>
         <record model='res.bank' id='00301'>
             <field name='name'>Banco Piano S.A.</field>
-            <field name='code'>PIANO</field>
+            <field name='bic'>PIANO</field>
             <field name='active'>1</field>
             <field name='street'>San Martin 345</field>
             <field name='street2'></field>
@@ -623,7 +623,7 @@
         </record>
         <record model='res.bank' id='00306'>
             <field name='name'>Banco Privado De Inversiones Sociedad An</field>
-            <field name='code'>BANCOPRIVADO</field>
+            <field name='bic'>BANCOPRIVADO</field>
             <field name='active'>1</field>
             <field name='street'>Leandro Alem Ave 1110</field>
             <field name='street2'>piso pb</field>
@@ -638,7 +638,7 @@
         </record>
         <record model='res.bank' id='00268'>
             <field name='name'>Banco Provincia De Tierra Del Fuego</field>
-            <field name='code'>BANCOTDF</field>
+            <field name='bic'>BANCOTDF</field>
             <field name='active'>1</field>
             <field name='street'>maipu esq. brig. juan m.de rosas </field>
             <field name='street2'></field>
@@ -653,7 +653,7 @@
         </record>
         <record model='res.bank' id='00097'>
             <field name='name'>Banco Provincia Del Neuquén Sociedad Anс</field>
-            <field name='code'>BPN</field>
+            <field name='bic'>BPN</field>
             <field name='active'>1</field>
             <field name='street'>Av Argentina 41</field>
             <field name='street2'></field>
@@ -668,7 +668,7 @@
         </record>
         <record model='res.bank' id='00079'>
             <field name='name'>Banco Regional De Cuyo S.A.</field>
-            <field name='code'>BANCOREGIONAL</field>
+            <field name='bic'>BANCOREGIONAL</field>
             <field name='active'>1</field>
             <field name='street'>Av San Martin 841</field>
             <field name='street2'></field>
@@ -683,7 +683,7 @@
         </record>
         <record model='res.bank' id='00247'>
             <field name='name'>Banco Roela S.A.</field>
-            <field name='code'>BANCOROELA</field>
+            <field name='bic'>BANCOROELA</field>
             <field name='active'>1</field>
             <field name='street'>Rosario de Santa Fe 275</field>
             <field name='street2'></field>
@@ -698,7 +698,7 @@
         </record>
         <record model='res.bank' id='00277'>
             <field name='name'>Banco Saenz S.A.</field>
-            <field name='code'>SAENZSA</field>
+            <field name='bic'>SAENZSA</field>
             <field name='active'>1</field>
             <field name='street'>Esmeralda 83</field>
             <field name='street2'></field>
@@ -713,7 +713,7 @@
         </record>
         <record model='res.bank' id='00072'>
             <field name='name'>Banco Santander Rio S.A.</field>
-            <field name='code'>SANTANDERRIO</field>
+            <field name='bic'>SANTANDERRIO</field>
             <field name='active'>1</field>
             <field name='street'>calle 8 esq. calle 50</field>
             <field name='street2'></field>
@@ -728,7 +728,7 @@
         </record>
         <record model='res.bank' id='00027'>
             <field name='name'>Banco Supervielle S.A.</field>
-            <field name='code'>SUPERVIELLE</field>
+            <field name='bic'>SUPERVIELLE</field>
             <field name='active'>1</field>
             <field name='street'>Reconquista 330</field>
             <field name='street2'></field>
@@ -743,7 +743,7 @@
         </record>
         <record model='res.bank' id='00262'>
             <field name='name'>Bank Of America, National Association</field>
-            <field name='code'>BANKOFAMERICA</field>
+            <field name='bic'>BANKOFAMERICA</field>
             <field name='active'>1</field>
             <field name='street'>Carlos M. Della Paolera 265</field>
             <field name='street2'>piso 10</field>
@@ -757,7 +757,7 @@
         </record>
         <record model='res.bank' id='00017'>
             <field name='name'>Bbva Banco Frances S.A.</field>
-            <field name='code'>BANCOFRANCES</field>
+            <field name='bic'>BANCOFRANCES</field>
             <field name='active'>1</field>
             <field name='street'>Reconquista 199</field>
             <field name='street2'></field>
@@ -771,7 +771,7 @@
         </record>
         <record model='res.bank' id='00266'>
             <field name='name'>Bnp Paribas</field>
-            <field name='code'>BNPPARIBAS</field>
+            <field name='bic'>BNPPARIBAS</field>
             <field name='active'>1</field>
             <field name='street'>Bouchard 547</field>
             <field name='street2'>piso 26</field>
@@ -785,7 +785,7 @@
         </record>
         <record model='res.bank' id='65203'>
             <field name='name'>Caja De Credito "Cuenca" Cooperativa Lim</field>
-            <field name='code'>CCCUENCA</field>
+            <field name='bic'>CCCUENCA</field>
             <field name='active'>1</field>
             <field name='street'>99 C. M. Cuenca 456</field>
             <field name='street2'></field>
@@ -800,7 +800,7 @@
         </record>
         <record model='res.bank' id='64085'>
             <field name='name'>Caja De Credito Cooperativa La Capital D</field>
-            <field name='code'>LACAPITALDELPLATA</field>
+            <field name='bic'>LACAPITALDELPLATA</field>
             <field name='active'>1</field>
             <field name='street'>25 de Mayo 522</field>
             <field name='street2'></field>
@@ -814,7 +814,7 @@
         </record>
         <record model='res.bank' id='00016'>
             <field name='name'>Citibank N.A.</field>
-            <field name='code'>CITIBANK</field>
+            <field name='bic'>CITIBANK</field>
             <field name='active'>1</field>
             <field name='street'>Bartolomé Mitre 502</field>
             <field name='street2'></field>
@@ -827,7 +827,7 @@
         </record>
         <record model='res.bank' id='44077'>
             <field name='name'>Compañía Financiera Argentina S.A.</field>
-            <field name='code'>CFA</field>
+            <field name='bic'>CFA</field>
             <field name='active'>1</field>
             <field name='street'>Florida 238</field>
             <field name='street2'></field>
@@ -841,7 +841,7 @@
         </record>
         <record model='res.bank' id='00325'>
             <field name='name'>Deutsche Bank S.A.</field>
-            <field name='code'>DB</field>
+            <field name='bic'>DB</field>
             <field name='active'>1</field>
             <field name='street'>Tucumán 1</field>
             <field name='street2'></field>
@@ -856,7 +856,7 @@
         </record>
         <record model='res.bank' id='44092'>
             <field name='name'>Fiat Credito Compañía Financiera S.A.</field>
-            <field name='code'>FIATFINANCIERA</field>
+            <field name='bic'>FIATFINANCIERA</field>
             <field name='active'>1</field>
             <field name='street'>Balcarce 548</field>
             <field name='street2'></field>
@@ -871,7 +871,7 @@
         </record>
         <record model='res.bank' id='44059'>
             <field name='name'>Ford Credit Compañía Financiera S.A.</field>
-            <field name='code'>FORDMAIL</field>
+            <field name='bic'>FORDMAIL</field>
             <field name='active'>1</field>
             <field name='street'>Henry Ford 3295</field>
             <field name='street2'></field>
@@ -886,7 +886,7 @@
         </record>
         <record model='res.bank' id='44090'>
             <field name='name'>Ge Compañía Financiera S.A.</field>
-            <field name='code'>GE</field>
+            <field name='bic'>GE</field>
             <field name='active'>1</field>
             <field name='street'>Ing. Enrique Butty 240</field>
             <field name='street2'>piso 11</field>
@@ -900,7 +900,7 @@
         </record>
         <record model='res.bank' id='44093'>
             <field name='name'>Gmac Compañía Financiera S.A.</field>
-            <field name='code'>GM</field>
+            <field name='bic'>GM</field>
             <field name='active'>1</field>
             <field name='street'>Madero 942</field>
             <field name='street2'></field>
@@ -915,7 +915,7 @@
         </record>
         <record model='res.bank' id='00150'>
             <field name='name'>Hsbc Bank Argentina S.A.</field>
-            <field name='code'>HSBC</field>
+            <field name='bic'>HSBC</field>
             <field name='active'>1</field>
             <field name='street'>Florida 201</field>
             <field name='street2'></field>
@@ -944,7 +944,7 @@
         </record>
 	<record model='res.bank' id='44096'>
             <field name='name'>John Deere Credit Compañía Financiera S.</field>
-            <field name='code'>JOHNDEERE</field>
+            <field name='bic'>JOHNDEERE</field>
             <field name='active'>1</field>
             <field name='street'>j. orsetti 481</field>
             <field name='street2'></field>
@@ -959,7 +959,7 @@
         </record>
         <record model='res.bank' id='00165'>
             <field name='name'>Jpmorgan Chase Bank, National Associatio</field>
-            <field name='code'>JPMORGAN</field>
+            <field name='bic'>JPMORGAN</field>
             <field name='active'>1</field>
             <field name='street'>Av Eduardo Madero 900</field>
             <field name='street2'>piso 23</field>
@@ -974,7 +974,7 @@
         </record>
         <record model='res.bank' id='00312'>
             <field name='name'>Mba Lazard Banco De Inversiones S. A.</field>
-            <field name='code'>MERCHANT</field>
+            <field name='bic'>MERCHANT</field>
             <field name='active'>1</field>
             <field name='street'>Av Alicia Moreau de Justo 140</field>
             <field name='street2'>piso 1</field>
@@ -989,7 +989,7 @@
         </record>
         <record model='res.bank' id='44094'>
             <field name='name'>Mercedes-Benz Compañía Financiera Argent</field>
-            <field name='code'>DAIMLERCHRYSLER</field>
+            <field name='bic'>DAIMLERCHRYSLER</field>
             <field name='active'>1</field>
             <field name='street'>Azucena Villaflor 435</field>
             <field name='street2'></field>
@@ -1004,7 +1004,7 @@
         </record>
         <record model='res.bank' id='44068'>
             <field name='name'>Metropolis Compañía Financiera S.A.</field>
-            <field name='code'>METROPOLISCF</field>
+            <field name='bic'>METROPOLISCF</field>
             <field name='active'>1</field>
             <field name='street'>Sarmiento 356</field>
             <field name='street2'></field>
@@ -1019,7 +1019,7 @@
         </record>
         <record model='res.bank' id='45056'>
             <field name='name'>Montemar Compañía Financiera S.A.</field>
-            <field name='code'>MONTEMARCIAFIN</field>
+            <field name='bic'>MONTEMARCIAFIN</field>
             <field name='active'>1</field>
             <field name='street'>Av San Martin 1152</field>
             <field name='street2'></field>
@@ -1034,7 +1034,7 @@
         </record>
         <record model='res.bank' id='45072'>
             <field name='name'>Multifinanzas Compañía Financiera S.A.</field>
-            <field name='code'>SINECTIS</field>
+            <field name='bic'>SINECTIS</field>
             <field name='active'>1</field>
             <field name='street'>Sarmiento 448</field>
             <field name='street2'></field>
@@ -1049,7 +1049,7 @@
         </record>
         <record model='res.bank' id='00386'>
             <field name='name'>Nuevo Banco De Entre Rмos S.A.</field>
-            <field name='code'>NUEVOBERSA</field>
+            <field name='bic'>NUEVOBERSA</field>
             <field name='active'>1</field>
             <field name='street'>Monte Caseros 128</field>
             <field name='street2'></field>
@@ -1064,7 +1064,7 @@
         </record>
         <record model='res.bank' id='00309'>
             <field name='name'>Nuevo Banco De La Rioja Sociedad Anonima</field>
-            <field name='code'>NBLR</field>
+            <field name='bic'>NBLR</field>
             <field name='active'>1</field>
             <field name='street'>Rivadavia 702</field>
             <field name='street2'></field>
@@ -1079,7 +1079,7 @@
         </record>
         <record model='res.bank' id='00330'>
             <field name='name'>Nuevo Banco De Santa Fe Sociedad Anonima</field>
-            <field name='code'>BANCOBSF</field>
+            <field name='bic'>BANCOBSF</field>
             <field name='active'>1</field>
             <field name='street'>25 de Mayo 2499</field>
             <field name='street2'></field>
@@ -1094,7 +1094,7 @@
         </record>
         <record model='res.bank' id='00311'>
             <field name='name'>Nuevo Banco Del Chaco S. A.</field>
-            <field name='code'>NBCH</field>
+            <field name='bic'>NBCH</field>
             <field name='active'>1</field>
             <field name='street'>Güemes 102</field>
             <field name='street2'></field>
@@ -1109,7 +1109,7 @@
         </record>
         <record model='res.bank' id='44098'>
             <field name='name'>Psa Finance Argentina Compañía Financiera</field>
-            <field name='code'>PSA</field>
+            <field name='bic'>PSA</field>
             <field name='active'>1</field>
             <field name='street'>Sarmiento 746</field>
             <field name='street2'>piso 3</field>
@@ -1123,7 +1123,7 @@
         </record>
         <record model='res.bank' id='00339'>
             <field name='name'>Rci Banque</field>
-            <field name='code'>RCI</field>
+            <field name='bic'>RCI</field>
             <field name='active'>1</field>
             <field name='street'>fray justo santa maria de oro 1744</field>
             <field name='street2'></field>
@@ -1137,7 +1137,7 @@
         </record>
         <record model='res.bank' id='44095'>
             <field name='name'>Rombo Compañía Financiera S.A.</field>
-            <field name='code'>ROMBO</field>
+            <field name='bic'>ROMBO</field>
             <field name='active'>1</field>
             <field name='street'>fray justo santa maria de oro 1744</field>
             <field name='street2'></field>
@@ -1151,7 +1151,7 @@
         </record>
         <record model='res.bank' id='00015'>
             <field name='name'>Standard Bank Argentina S.A.</field>
-            <field name='code'>STANDARDBANK</field>
+            <field name='bic'>STANDARDBANK</field>
             <field name='active'>1</field>
             <field name='street'>Cecilia Grierson 355</field>
             <field name='street2'></field>
@@ -1165,7 +1165,7 @@
         </record>
         <record model='res.bank' id='00018'>
             <field name='name'>The Bank Of Tokyo-Mitsubishi Ufj, Ltd.</field>
-            <field name='code'>MUFG</field>
+            <field name='bic'>MUFG</field>
             <field name='active'>1</field>
             <field name='street'>Corrientes Ave 420</field>
             <field name='street2'>piso 2</field>
@@ -1180,7 +1180,7 @@
         </record>
         <record model='res.bank' id='44099'>
             <field name='name'>Toyota Compañía Financiera De Argentina</field>
-            <field name='code'>TOYOTACFA</field>
+            <field name='bic'>TOYOTACFA</field>
             <field name='active'>1</field>
             <field name='street'>Moreno 877</field>
             <field name='street2'></field>
@@ -1195,7 +1195,7 @@
         </record>
         <record model='res.bank' id='44088'>
             <field name='name'>Volkswagen Credit Compañia Financiera S.</field>
-            <field name='code'>VWFS</field>
+            <field name='bic'>VWFS</field>
             <field name='active'>1</field>
             <field name='street'>delcasse esq. henry ford </field>
             <field name='street2'></field>

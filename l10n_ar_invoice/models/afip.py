@@ -111,8 +111,6 @@ class afip_document_class(models.Model):
     doc_code_prefix = fields.Char(
         'Document Code Prefix', help="Prefix for Documents Codes on Invoices \
         and Account Moves. For eg. 'FA ' will build 'FA 0001-0000001' Document Number")
-    code_template = fields.Char(
-        'Code Template for Journal')
     afip_code = fields.Integer(
         'AFIP Code', required=True)
     document_letter_id = fields.Many2one(

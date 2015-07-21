@@ -15,6 +15,14 @@
             <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_iva_saldo_a_favor"/>
         </record>
 
+
+        <record id="vat_settlement" model="account.tax.settlement">
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="journal_id" ref="journal_vat_settlement"/>
+            <field name="fiscalyear_id" ref="l10n_ar_invoice.data_fiscalyear_ri"/>
+            <field name="moves_state">all</field>
+        </record>
+
         <!-- liquidacion de iva -->
         <record id="journal_ret_per_iva_sufrida_settlement" model="account.journal">
             <field name="name">Liquidacion Ret/Perc IVA Sufridas</field>

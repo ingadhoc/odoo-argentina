@@ -11,14 +11,30 @@ _logger = logging.getLogger(__name__)
 class wizard_multi_charts_accounts(models.TransientModel):
     _inherit = 'wizard.multi.charts.accounts'
 
+    # @api.model
+    # def generate_journals(
+    #         self, chart_template_id, acc_template_ref, company_id):
+    #     """
+    #     Overwrite this function so that no journal is created on chart
+    #     installation
+    #     """
+    #     return True
+
     @api.model
-    def generate_journals(
+    def _prepare_all_journals(
             self, chart_template_id, acc_template_ref, company_id):
         """
-        Overwrite this function so that no journal is created on chart
-        installation
+        Inherit this function so that we dont create sale and purchase journals
         """
-        return True
+        journal_data = super(
+            wizard_multi_charts_accounts, self)._prepare_all_journals(
+            chart_template_id, acc_template_ref, company_id)
+
+        # remove sale and purchase journals data
+        new_journal_data = [
+            journal for journal in journal_data if journal['type'] not in [
+                'sale', 'purchase', 'sale_refund', 'purchase_refund']]
+        return new_journal_data
 
     @api.model
     def _create_bank_journals_from_o2m(

@@ -291,14 +291,25 @@ class account_journal(models.Model):
 
         letters = self.get_journal_letter()
 
+        other_purchase_doc_types = ['in_document', 'ticket']
+
         if self.type in ['purchase', 'sale']:
             document_types = ['invoice', 'debit_note']
+            # for purchase we add other documents with letter
+            if self.type == 'purchase':
+                document_types += other_purchase_doc_types
         elif self.type in ['purchase_refund', 'sale_refund']:
             document_types = ['credit_note']
 
-        document_classes = self.env['afip.document_class'].search(
-            [('document_letter_id', 'in', letters.ids),
-             ('document_type', 'in', document_types)])
+        document_classes = self.env['afip.document_class'].search([
+            ('document_type', 'in', document_types),
+            ('document_letter_id', 'in', letters.ids)])
+
+        # for purchases we add in_documents and ticket whitout letters
+        if self.type == 'purchase':
+            document_classes += self.env['afip.document_class'].search([
+                ('document_type', 'in', other_purchase_doc_types),
+                ('document_letter_id', '=', False)])
 
         sequence = 10
         for document_class in document_classes:

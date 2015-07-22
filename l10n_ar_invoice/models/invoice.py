@@ -324,18 +324,21 @@ class account_invoice(models.Model):
                 # corremos con sudo porque da errores con usuario portal en algunos casos
                 letter_ids = self.sudo().get_valid_document_letters(
                     self.partner_id.id, operation_type, self.company_id.id)
+
                 domain = [
                     ('journal_id', '=', self.journal_id.id),
-                    '|', ('afip_document_class_id.document_letter_id',
-                          'in', letter_ids),
-                    ('afip_document_class_id.document_letter_id', '=', False)]
+                    ('afip_document_class_id.document_letter_id',
+                        'in', letter_ids),
+                    ]
 
                 # If document_type in context we try to serch specific document
                 document_type = self._context.get('document_type', False)
                 if document_type:
                     document_classes = self.env[
                         'account.journal.afip_document_class'].search(
-                        domain + [('afip_document_class_id.document_type', '=', document_type)])
+                        domain + [
+                            ('afip_document_class_id.document_type',
+                                '=', document_type)])
                     if document_classes.ids:
                         document_class_id = document_classes.ids[0]
 
@@ -347,6 +350,23 @@ class account_invoice(models.Model):
                 # If not specific document type found, we choose another one
                 if not document_class_id and document_class_ids:
                     document_class_id = document_class_ids[0]
+
+        if invoice_type == 'in_invoice':
+            other_afip_document_classes = (
+                self.commercial_partner_id.other_afip_document_class_ids)
+
+            domain = [
+                ('journal_id', '=', self.journal_id.id),
+                ('afip_document_class_id',
+                    'in', other_afip_document_classes.ids),
+                ]
+            other_document_classes = self.env[
+                'account.journal.afip_document_class'].search(domain)
+
+            document_class_ids += other_document_classes.ids
+            if other_document_classes:
+                document_class_id = other_document_classes[0].id
+
         self.available_journal_document_class_ids = document_class_ids
         self.journal_document_class_id = document_class_id
 

@@ -111,8 +111,6 @@ class afip_document_class(models.Model):
     doc_code_prefix = fields.Char(
         'Document Code Prefix', help="Prefix for Documents Codes on Invoices \
         and Account Moves. For eg. 'FA ' will build 'FA 0001-0000001' Document Number")
-    code_template = fields.Char(
-        'Code Template for Journal')
     afip_code = fields.Integer(
         'AFIP Code', required=True)
     document_letter_id = fields.Many2one(
@@ -120,9 +118,15 @@ class afip_document_class(models.Model):
     report_name = fields.Char(
         'Name on Reports',
         help='Name that will be printed in reports, for example "CREDIT NOTE"')
-    document_type = fields.Selection(
-        [('invoice', 'Invoices'), ('credit_note', 'Credit Notes'),
-         ('debit_note', 'Debit Notes'), ('other_document', 'Other Documents')],
+    document_type = fields.Selection([
+        ('invoice', 'Invoices'),
+        ('credit_note', 'Credit Notes'),
+        ('debit_note', 'Debit Notes'),
+        ('receipt', 'Receipt'),
+        ('ticket', 'Ticket'),
+        ('in_document', 'In Document'),
+        ('other_document', 'Other Documents')
+        ],
         string='Document Type',
         help='It defines some behaviours on automatic journal selection and\
         in menus where it is shown.')

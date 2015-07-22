@@ -18,6 +18,15 @@ class res_partner(models.Model):
         'Document number', size=64,)
     iibb = fields.Char('Gross Income', size=64)
     start_date = fields.Date('Start-up Date')
+    other_afip_document_class_ids = fields.Many2many(
+        'afip.document_class',
+        'res_partner_afip_doc_class_rel',
+        'partner_id', 'document_class_id',
+        string='Other AFIP Documents',
+        domain=[('document_type', '=', 'in_document')],
+        help='Set here if this partner can issue other documents further\
+        than invoices, credit notes and debit notes'
+        )
 
     @api.onchange('document_number', 'document_type_id')
     def onchange_document(self):

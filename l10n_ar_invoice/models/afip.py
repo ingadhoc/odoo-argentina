@@ -112,7 +112,7 @@ class afip_document_class(models.Model):
         'Document Code Prefix', help="Prefix for Documents Codes on Invoices \
         and Account Moves. For eg. 'FA ' will build 'FA 0001-0000001' Document Number")
     afip_code = fields.Integer(
-        'AFIP Code', required=True)
+        'AFIP Code')
     document_letter_id = fields.Many2one(
         'afip.document_letter', 'Document Letter')
     report_name = fields.Char(

@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in module root
+# directory
+##############################################################################
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning
 
 
 class account_voucher(models.Model):
@@ -13,14 +18,9 @@ class account_voucher(models.Model):
             [('type', '=', self._context.get('type', False))])
         return receiptbook_ids and receiptbook_ids[0] or False
 
-    # document_reference = fields.Char(
-    #     compute='_get_document_number',
-    #     string='Document Number',
-    #     readonly=True,
-    #     )
     document_number = fields.Char(
         string='Document Number',
-        copy=False,
+        related='move_id.document_number',
         readonly=True,
         )
     manual_prefix = fields.Char(
@@ -63,32 +63,31 @@ class account_voucher(models.Model):
         ('name_uniq', 'unique(document_number, receiptbook_id)',
             'Document number must be unique per receiptbook!')]
 
-    # def post_receipt(self, cr, uid, ids, context=None):
-    #     res = super(account_voucher_receipt, self).post_receipt(
-    #         cr, uid, ids, context)
-    #     for receipt in self.browse(cr, uid, ids, context=context):
-    #         for voucher in receipt.voucher_ids:
-    #             voucher.move_id.write({
-    #                 'afip_document_number': receipt.name,
-    #                 'document_class_id': receipt.receiptbook_id.afip_document_class_id and receipt.receiptbook_id.afip_document_class_id.id or False,
-    #             })
-    #     return res
+    @api.multi
+    def proforma_voucher(self):
+        res = super(account_voucher, self).proforma_voucher()
+        sequences = self.env['ir.sequence']
+        for voucher in self:
+            if voucher.force_number:
+                document_number = voucher.force_number
+            elif voucher.receiptbook_id.sequence_type == 'automatic':
+                document_number = sequences.next_by_id(
+                    voucher.receiptbook_id.sequence_id.id)
+            elif voucher.receiptbook_id.sequence_type == 'manual':
+                document_number = voucher.manual_prefix + (
+                    '%%0%sd' % voucher.receiptbook_id.padding % voucher.manual_sufix)
+            voucher.move_id.write({
+                'afip_document_number': document_number,
+                'document_class_id': self.receiptbook_id.document_class_id.id
+            })
+        return res
 
-    # @api.multi
-    # def cancel_voucher(self):
-    #     ''' Mofication of cancel voucher so it cancels the receipts when
-    #     voucher is cancelled'''
-
-    #     res = super(account_voucher, self).cancel_voucher()
-    #     for voucher in self:
-    #         if voucher.receipt_id and voucher.receipt_id.state != 'draft':
-    #             voucher.receipt_id.cancel_receipt()
-    #     return res
-
-    # @api.multi
-    # def action_cancel_draft(self):
-    #     res = super(account_voucher, self).action_cancel_draft()
-    #     for voucher in self:
-    #         if voucher.receipt_id:
-    #             voucher.receipt_id.action_cancel_draft()
-    #     return res
+    @api.one
+    @api.constrains('receiptbook_id', 'company_id')
+    def _check_company_id(self):
+        """
+        Check receiptbook_id and voucher company
+        """
+        if self.receiptbook_id.company_id != self.company_id:
+            raise Warning(_('The company of the receiptbook and of the \
+                voucher must be the same!'))

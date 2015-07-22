@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-from openerp import fields, models
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in module root
+# directory
+##############################################################################
+from openerp import models, fields
 
 
 class account_voucher_receiptbook(models.Model):
@@ -57,7 +61,7 @@ class account_voucher_receiptbook(models.Model):
         )
     active = fields.Boolean(
         'Active',
-        defualt=True,
+        default=True,
         )
     document_class_id = fields.Many2one(
         'afip.document_class',

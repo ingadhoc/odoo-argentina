@@ -3,20 +3,44 @@
     <data noupdate="1">
     <!-- RI Payment Vouchers -->
         <!-- With ret IVA -->
+        <record id="demo_ri_pay_voucher_0" model="account.voucher">
+            <field name="journal_id" ref="l10n_ar_invoice.bank_journal"/>
+            <!-- TODO ver que elija el periodo de la fecha -->
+            <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">payment</field>
+            <!-- <field name="net_amount" eval="100.0"/> -->
+            <field name="amount" eval="100.0"/>
+            <field name="account_id" ref="l10n_ar_invoice.ri_banco_1"/>
+            <field name="date" eval="time.strftime('%Y-%m')+'-20'"/>
+            <field name="partner_id" ref="base.res_partner_12"/>
+        </record>
         <record id="demo_ri_pay_voucher_0_withh_1" model="account.voucher.withholding">
             <field name="tax_withholding_id" ref="ri_with_ret_iva_aplicada"/>
             <field name="name">12312312312</field>
-            <field name="voucher_id" ref="l10n_ar_account_voucher.demo_ri_pay_voucher_0"/>
+            <field name="voucher_id" ref="demo_ri_pay_voucher_0"/>
             <field name="amount" eval="10.0"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-20'"/>
         </record>
         <workflow action="proforma_voucher" model="account.voucher" ref="demo_ri_pay_voucher_0"/>
 
         <!-- With ret Ganancias -->
+        <record id="demo_ri_pay_voucher_1" model="account.voucher">
+            <field name="journal_id" ref="l10n_ar_invoice.bank_journal"/>
+            <!-- TODO ver que elija el periodo de la fecha -->
+            <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">payment</field>
+            <!-- <field name="net_amount" eval="100.0"/> -->
+            <field name="amount" eval="90.5"/>
+            <field name="account_id" ref="l10n_ar_invoice.ri_banco_1"/>
+            <field name="date" eval="time.strftime('%Y-%m')+'-20'"/>
+            <field name="partner_id" ref="base.res_partner_1"/>
+        </record>
         <record id="demo_ri_pay_voucher_1_withh_1" model="account.voucher.withholding">
             <field name="tax_withholding_id" ref="ri_with_ret_ganancias_aplicada"/>
             <field name="name">0001234567</field>
-            <field name="voucher_id" ref="l10n_ar_account_voucher.demo_ri_pay_voucher_1"/>
+            <field name="voucher_id" ref="demo_ri_pay_voucher_1"/>
             <field name="amount" eval="8.0"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-22'"/>
         </record>
@@ -25,20 +49,41 @@
 
     <!-- RI Receipt Vouchers -->
         <!-- With ret IVA -->
+        <record id="demo_ri_rec_voucher_0" model="account.voucher">
+            <field name="journal_id" ref="l10n_ar_invoice.bank_journal"/>
+            <!-- TODO ver que elija el periodo de la fecha -->
+            <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">receipt</field>
+            <field name="amount" eval="150.0"/>
+            <field name="account_id" ref="l10n_ar_invoice.ri_banco_1"/>
+            <field name="date" eval="time.strftime('%Y-%m')+'-20'"/>
+            <field name="partner_id" ref="base.res_partner_13"/>
+        </record>
         <record id="demo_ri_rec_voucher_0_withh_1" model="account.voucher.withholding">
             <field name="tax_withholding_id" ref="ri_with_ret_iva_sufrida"/>
             <field name="name">00000000012</field>
-            <field name="voucher_id" ref="l10n_ar_account_voucher.demo_ri_rec_voucher_0"/>
+            <field name="voucher_id" ref="demo_ri_rec_voucher_0"/>
             <field name="amount" eval="15.0"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-20'"/>
         </record>
         <workflow action="proforma_voucher" model="account.voucher" ref="demo_ri_rec_voucher_0"/>
 
-        <!-- reg ganacias sufirda  -->
+        <record id="demo_ri_rec_voucher_1" model="account.voucher">
+            <field name="journal_id" ref="l10n_ar_invoice.bank_journal"/>
+            <!-- TODO ver que elija el periodo de la fecha -->
+            <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">receipt</field>
+            <field name="amount" eval="150.0"/>
+            <field name="account_id" ref="l10n_ar_invoice.ri_banco_1"/>
+            <field name="date" eval="time.strftime('%Y-%m')+'-23'"/>
+            <field name="partner_id" ref="base.res_partner_2"/>
+        </record>
         <record id="demo_ri_rec_voucher_1_withh_1" model="account.voucher.withholding">
             <field name="tax_withholding_id" ref="ri_with_ret_ganancias_sufrida"/>
             <field name="name">00000000012</field>
-            <field name="voucher_id" ref="l10n_ar_account_voucher.demo_ri_rec_voucher_1"/>
+            <field name="voucher_id" ref="demo_ri_rec_voucher_1"/>
             <field name="amount" eval="12.5"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-23'"/>
         </record>

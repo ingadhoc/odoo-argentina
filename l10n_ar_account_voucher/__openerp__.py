@@ -45,7 +45,6 @@ Aregentinian Receipts and Payment Orders
         'data/receipt_data.xml',
     ],
     'demo': [
-        'demo/demo_data.xml',
     ],
     'test': [
     ],

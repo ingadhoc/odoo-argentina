@@ -23,10 +23,11 @@
             <field name="arch" type="xml">
                 <form>
                     <field name="receiptbook_sequence_type" invisible="1"/>
+                    <field name="use_argentinian_localization" invisible="1"/>
                 </form>
                 <field name="date" position="before">
                     <field name="document_number" attrs="{'invisible':[('state','=','draft')]}"/>
-                    <field name="receiptbook_id" domain="[('type','=',type)]"/>
+                    <field name="receiptbook_id" attrs="{'required':[('use_argentinian_localization','=',True)]}" domain="[('type','=',type)]"/>
                     <field name="manual_prefix" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','manual'),('state','!=','draft')]}"/>
                     <field name="manual_sufix" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','manual'),('state','!=','draft')],'required':[('receiptbook_sequence_type','=','manual')]}"/>
                     <field name="next_receipt_number" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','automatic'),('state','!=','draft')]}"/>

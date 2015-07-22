@@ -44,7 +44,6 @@ class account_voucher(models.Model):
         'account.voucher.receiptbook',
         'ReceiptBook',
         readonly=True,
-        required=True,
         states={'draft': [('readonly', False)]},
         default=_get_receiptbook,
         )
@@ -58,6 +57,11 @@ class account_voucher(models.Model):
         string='Receiptbook Sequence Type',
         readonly=True
         )
+    use_argentinian_localization = fields.Boolean(
+        related='company_id.use_argentinian_localization',
+        string='Use Argentinian Localization?',
+        readonly=True,
+        )
 
     _sql_constraints = [
         ('name_uniq', 'unique(document_number, receiptbook_id)',
@@ -68,6 +72,8 @@ class account_voucher(models.Model):
         res = super(account_voucher, self).proforma_voucher()
         sequences = self.env['ir.sequence']
         for voucher in self:
+            if not self.receiptbook_id:
+                continue
             if voucher.force_number:
                 document_number = voucher.force_number
             elif voucher.receiptbook_id.sequence_type == 'automatic':

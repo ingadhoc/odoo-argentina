@@ -50,7 +50,7 @@ modulo account_voucher_receipt.
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

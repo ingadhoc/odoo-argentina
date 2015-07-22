@@ -33,8 +33,6 @@ Retenciones para Plan Contable General Argentino
 """,
     'depends': [
         'l10n_ar_chart_generic',
-        # TODO estrcitamente no es necesario este modulo de aca abajo pero por los datos demo por ahora si, hay que mejorarlo
-        'l10n_ar_account_voucher',
         'account_voucher_withholding',
     ],
     'external_dependencies': {

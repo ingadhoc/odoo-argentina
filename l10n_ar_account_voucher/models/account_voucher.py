@@ -11,13 +11,6 @@ class account_voucher(models.Model):
 
     _inherit = "account.voucher"
 
-    @api.model
-    def _get_receiptbook(self):
-        receiptbook_ids = self.env[
-            'account.voucher.receiptbook'].search(
-            [('type', '=', self._context.get('type', False))])
-        return receiptbook_ids and receiptbook_ids[0] or False
-
     document_number = fields.Char(
         string='Document Number',
         related='move_id.document_number',
@@ -45,7 +38,6 @@ class account_voucher(models.Model):
         'ReceiptBook',
         readonly=True,
         states={'draft': [('readonly', False)]},
-        default=_get_receiptbook,
         )
     next_receipt_number = fields.Integer(
         related='receiptbook_id.sequence_id.number_next_actual',
@@ -66,6 +58,14 @@ class account_voucher(models.Model):
     _sql_constraints = [
         ('name_uniq', 'unique(document_number, receiptbook_id)',
             'Document number must be unique per receiptbook!')]
+
+# TODO habilitar y chequear que no rompa con nadie
+    # @api.onchange('company_id')
+    # def _get_receiptbook(self):
+    #     receiptbook_ids = self.env[
+    #         'account.voucher.receiptbook'].search(
+    #         [('type', '=', self._context.get('type', False))])
+    #     return receiptbook_ids and receiptbook_ids[0] or False
 
     @api.multi
     def proforma_voucher(self):
@@ -94,6 +94,7 @@ class account_voucher(models.Model):
         """
         Check receiptbook_id and voucher company
         """
-        if self.receiptbook_id.company_id != self.company_id:
+        if (self.receiptbook_id and
+                self.receiptbook_id.company_id != self.company_id):
             raise Warning(_('The company of the receiptbook and of the \
                 voucher must be the same!'))

@@ -120,16 +120,27 @@ class afip_document_class(models.Model):
         help='Name that will be printed in reports, for example "CREDIT NOTE"')
     document_type = fields.Selection([
         ('invoice', 'Invoices'),
-        ('credit_note', 'Credit Notes'),
         ('debit_note', 'Debit Notes'),
-        ('receipt', 'Receipt'),
+        ('credit_note', 'Credit Notes'),
         ('ticket', 'Ticket'),
+        ('receipt_invoice', 'Receipt Invoice'),
         ('in_document', 'In Document'),
-        ('other_document', 'Other Documents')
         ],
         string='Document Type',
-        help='It defines some behaviours on automatic journal selection and\
-        in menus where it is shown.')
+        help='It defines some behaviours on different places:\
+        * invoice: used on sale and purchase journals. Auto selected if not\
+        debit_note specified on context.\
+        * debit_note: used on sale and purchase journals but with lower\
+        priority than invoices.\
+        * credit_note: used on sale_refund and purchase_refund journals.\
+        * ticket: automatically loaded for purchase journals but only loaded\
+        on sales journals if point_of_sale is fiscal_printer\
+        * receipt_invoice: mean to be used as invoices but not automatically\
+        loaded because it is not usually used\
+        * ticket: automatically loaded for purchase journals but not loaded\
+        on sales journals. Also can be selected on partners, to be available\
+        it must be selected on partner.\
+        ')
     active = fields.Boolean(
         'Active', default=True)
 

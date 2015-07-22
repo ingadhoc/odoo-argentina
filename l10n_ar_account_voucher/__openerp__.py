@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {
-    'name': 'Argentinian Like Voucher Aeroo Report',
+    'name': 'Aregentinian Receipts and Payment Orders',
     'version': '1.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
@@ -28,30 +28,28 @@
     'license': 'AGPL-3',
     'summary': '',
     'description': """
-Argentinian Like Voucher Aeroo Report
-=====================================
-Utilice este modulo en vez de l10n_ar_aeroo_receipt si prefiere no utilizar el
-modulo account_voucher_receipt.
+Aregentinian Receipts and Payment Orders
+========================================
     """,
     'depends': [
-        'report_extended_voucher',
-        'account_check',
-        'account_voucher_withholding',
-        'l10n_ar_aeroo_base',
-        'l10n_ar_account_voucher',
+        'l10n_ar_invoice',
+        'account_voucher',
     ],
     'external_dependencies': {
     },
     'data': [
-        'receipt_report.xml',
-        'voucher_template.xml',
+        'security/account_voucher_receipt_security.xml',
+        'security/ir.model.access.csv',
+        'views/account_voucher_view.xml',
+        'views/account_voucher_receiptbook_view.xml',
+        'data/receipt_data.xml',
     ],
     'demo': [
     ],
     'test': [
     ],
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
     'application': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

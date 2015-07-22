@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<!-- Tree Recibos (Customer and vendor)-->
+		<record id="voucher_receipts_form_inherit_view" model="ir.ui.view">
+			<field name="name">receipts.voucher.inherit.view</field>
+			<field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_voucher_tree"/>
+			<field name="arch" type="xml"> 
+                <tree>
+                    <field name="document_number"/>
+                </tree>
+			</field>
+	    </record>	
+
+
+        <!-- Customer Receipt Form  -->
+        <record id="view_vendor_receipt_form" model="ir.ui.view">
+            <field name="name">account.voucher.form.receipts.pay.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="document_number"/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Supplier Receipt Form  -->
+        <record id="view_vendor_payment_form" model="ir.ui.view">
+            <field name="name">account.voucher.form.receipts.pay.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="document_number"/>
+                </form>                
+            </field>
+        </record>
+
+
+        <!-- Search vies -->
+        <record id="view_voucher_filter_customer_pay" model="ir.ui.view">
+            <field name="name">receipt.voucher.customer.inherit.select</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_customer_pay"/>
+            <field name="arch" type="xml">
+                <xpath expr="/search/field[@name='date']" position="after">
+                    <field name="receiptbook_id" string="Receiptbook" />
+                </xpath>
+            </field>
+        </record>   
+          
+        <record id="view_voucher_filter_vendor_pay" model="ir.ui.view">
+            <field name="name">voucher.filter.vendor.proof.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_vendor_pay"/>
+            <field name="arch" type="xml">
+                <xpath expr="/search/field[@name='date']" position="after">
+                    <field name="receiptbook_id" string="Receiptbook" />
+                </xpath>
+            </field>
+        </record>            
+    </data>
+</openerp>

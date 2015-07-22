@@ -1,0 +1,349 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* account_voucher_receipt
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 8.0alpha1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-22 14:02+0000\n"
+"PO-Revision-Date: 2014-05-22 11:29-0300\n"
+"Last-Translator: javier <jd@ingadhoc.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: account_voucher_receipt
+#: model:ir.model,name:account_voucher_receipt.model_account_voucher_receipt
+msgid "Account Voucher Receipt"
+msgstr "Recibo de Pago"
+
+#. module: account_voucher_receipt
+#: model:ir.model,name:account_voucher_receipt.model_account_voucher_receiptbook
+msgid "Account Voucher Receiptbook"
+msgstr "Talonario de Recibo"
+
+#. module: account_voucher_receipt
+#: model:ir.model,name:account_voucher_receipt.model_account_voucher
+msgid "Accounting Voucher"
+msgstr "Voucher de contabilidad"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receiptbook,active:0
+msgid "Active"
+msgstr "Activo"
+
+#. module: account_voucher_receipt
+#: view:account.voucher.receipt:0
+msgid "Add Payment"
+msgstr "Agregar Pago"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+msgid "Are you sure to unreconcile and cancel this record ?"
+msgstr "¿Está seguro de romper la conciliación y cancelar este registro?"
+
+#. module: account_voucher_receipt
+#: selection:account.voucher.receiptbook,sequence_type:0
+msgid "Automatic"
+msgstr "Automatico"
+
+#. module: account_voucher_receipt
+#: selection:account.voucher.receipt,state:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+#: view:account.voucher.receipt:0
+msgid "Cancel Receipt"
+msgstr "Cancelar Recibo"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+msgid "Cancel Voucher"
+msgstr "Cancelar Voucher"
+
+#. module: account_voucher_receipt
+#: code:addons/account_voucher_receipt/account_voucher_receipt.py:78
+#, python-format
+msgid "Cannot delete a posted receipt."
+msgstr "No se puede borrar un recibo publicado."
+
+#. module: account_voucher_receipt
+#: code:addons/account_voucher_receipt/account_voucher_receipt.py:80
+#, python-format
+msgid "Cannot delete a receipt that has vouchers."
+msgstr "No se puede borrar un recibo que tiene pagos."
+
+#. module: account_voucher_receipt
+#: code:addons/account_voucher_receipt/account_voucher_receipt.py:87
+#, python-format
+msgid "Cannot post a receipt that has no voucher(s)."
+msgstr "No se puede publicar un recibo que no tiene pago(s)."
+
+#. module: account_voucher_receipt
+#: code:addons/account_voucher_receipt/account_voucher_receipt.py:90
+#, python-format
+msgid "Cannot post a receipt that has voucher(s) on draft or cancelled state."
+msgstr "No se puede publicar un recibo que tiene pagos en borrador o en estado cancelado."
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,company_id:0
+#: field:account.voucher.receiptbook,company_id:0
+msgid "Company"
+msgstr "Compañía"
+
+#. module: account_voucher_receipt
+#: view:account.voucher.receipt:0
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: account_voucher_receipt
+#: model:ir.actions.act_window,name:account_voucher_receipt.receipts_list_action
+#: model:ir.ui.menu,name:account_voucher_receipt.receipt_menu
+msgid "Customer Receipts"
+msgstr "Recibos de Cliente"
+
+#. module: account_voucher_receipt
+#: selection:account.voucher.receipt,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receiptbook,sequence_id:0
+msgid "Entry Sequence"
+msgstr "Secuencia de entrada"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,force_number:0
+msgid "Force Number"
+msgstr "Forzar Número"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,has_vouchers:0
+msgid "Has Vouchers?"
+msgstr "Tiene Pagos?"
+
+#. module: account_voucher_receipt
+#: code:addons/account_voucher_receipt/account_voucher_receipt.py:78
+#: code:addons/account_voucher_receipt/account_voucher_receipt.py:80
+#: code:addons/account_voucher_receipt/account_voucher_receipt.py:87
+#: code:addons/account_voucher_receipt/account_voucher_receipt.py:90
+#, python-format
+msgid "Invalid Action!"
+msgstr "Acción inválida!"
+
+#. module: account_voucher_receipt
+#: selection:account.voucher.receiptbook,sequence_type:0
+msgid "Manual"
+msgstr "Manual"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receiptbook,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,next_receipt_number:0
+msgid "Next Receipt Number"
+msgstr "Próximo Número de Recibo"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,partner_id:0
+msgid "Partner"
+msgstr "Partner"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+msgid "Pay"
+msgstr "Pagar"
+
+#. module: account_voucher_receipt
+#: selection:account.voucher.receipt,type:0
+#: selection:account.voucher.receiptbook,type:0
+msgid "Payment"
+msgstr "Pago"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+msgid "Payment Voucher"
+msgstr "Comprobante de Pago"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+msgid "Payments with Payment Voucher"
+msgstr "Pagos con Comprobantes de Pagos"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+msgid "Payments with Receipts"
+msgstr "Pagos con Recibos"
+
+#. module: account_voucher_receipt
+#: view:account.voucher.receipt:0
+msgid "Post"
+msgstr "Publicar"
+
+#. module: account_voucher_receipt
+#: selection:account.voucher.receipt,state:0
+msgid "Posted"
+msgstr "Publicado"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,manual_prefix:0
+#: field:account.voucher.receiptbook,manual_prefix:0
+msgid "Prefix"
+msgstr "Prefijo"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+#: field:account.voucher,receipt_id:0
+#: selection:account.voucher.receipt,type:0
+#: selection:account.voucher.receiptbook,type:0
+#: code:addons/account_voucher_receipt/account_voucher.py:73
+#, python-format
+msgid "Receipt"
+msgstr "Recibos"
+
+#. module: account_voucher_receipt
+#: view:account.voucher.receiptbook:0
+msgid "Receipt Books"
+msgstr "Talonarios de Recibos"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,date:0
+msgid "Receipt Date"
+msgstr "Fecha de Recibo"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,name:0
+msgid "Receipt Number"
+msgstr "Número de Recibo"
+
+#. module: account_voucher_receipt
+#: field:account.voucher,receipt_state:0
+msgid "Receipt State"
+msgstr "Estado de Recibo"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,receiptbook_id:0
+msgid "ReceiptBook"
+msgstr "Talonario de Recibos"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,receiptbook_sequence_type:0
+msgid "Receiptbook Sequence Type"
+msgstr "Tipo de Secuencia de Talonario de Recibos"
+
+#. module: account_voucher_receipt
+#: model:ir.actions.act_window,name:account_voucher_receipt.action_receipt_receiptbook_form
+#: model:ir.ui.menu,name:account_voucher_receipt.menu_action_receipt_receiptbook_form
+msgid "Receiptbooks"
+msgstr "Talonarios de Recibos"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+#: view:account.voucher.receipt:0
+msgid "Receipts"
+msgstr "Recibos"
+
+#. module: account_voucher_receipt
+#: view:account.voucher.receipt:0
+msgid "Receipts List"
+msgstr "Lista de Recibos"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receiptbook,sequence_type:0
+msgid "Sequence Type"
+msgstr "Tipo de Secuencia"
+
+#. module: account_voucher_receipt
+#: view:account.voucher.receipt:0
+msgid "Set to Draft"
+msgstr "Pasar a Borrador"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,state:0
+msgid "State"
+msgstr "Estado"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,manual_sufix:0
+msgid "Sufix"
+msgstr "Sufijo"
+
+#. module: account_voucher_receipt
+#: view:account.voucher.receipt:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: account_voucher_receipt
+#: model:ir.actions.act_window,name:account_voucher_receipt.payment_list_action
+#: model:ir.ui.menu,name:account_voucher_receipt.payment_menu
+msgid "Supplier Receipts"
+msgstr "Recibos de Proveedor"
+
+#. module: account_voucher_receipt
+#: sql_constraint:account.voucher.receipt:0
+msgid "The Receipt Number must be unique!"
+msgstr "El Número de Recibo debe ser único!"
+
+#. module: account_voucher_receipt
+#: help:account.voucher.receiptbook,sequence_id:0
+msgid "This field contains the information related to the numbering of the receipt entries of this receiptbook."
+msgstr "Este campo contiene la información relacionada a la numeración de los recibos de este talonario."
+
+#. module: account_voucher_receipt
+#: view:account.voucher.receipt:0
+msgid "Total Amount"
+msgstr "Monto Total"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,type:0
+#: field:account.voucher.receiptbook,type:0
+msgid "Type"
+msgstr "Tipo"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+msgid "Unreconcile"
+msgstr "Romper conciliación"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+msgid "Validate and Close Receipt"
+msgstr "Validar y Cerrar Recibo"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+msgid "Validate and New Payment"
+msgstr "Validar y Nuevo Pago"
+
+#. module: account_voucher_receipt
+#: view:account.voucher.receipt:0
+msgid "Voucher Entries"
+msgstr "Entradas de Pago"
+
+#. module: account_voucher_receipt
+#: field:account.voucher.receipt,voucher_ids:0
+msgid "Vouchers Lines"
+msgstr "Lista de Pagos"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+msgid "context.get('from_receipt',False)"
+msgstr "context.get('from_receipt',False)"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+msgid "or"
+msgstr "o"
+
+#. module: account_voucher_receipt
+#: view:account.voucher:0
+msgid "{'readonly':[('receipt_id','!=',False)]}"
+msgstr "{'readonly':[('receipt_id','!=',False)]}"
+

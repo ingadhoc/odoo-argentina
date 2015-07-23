@@ -39,7 +39,8 @@ install:
   - pip install git+https://github.com/aeroo/aeroolib.git@master pycups==1.9.68
 
   # odoo addons adhoc
-  - git clone https://github.com/ingadhoc/odoo-addons.git ${HOME}/odoo-addons
+  # TODO change to 8.0 when ready
+  - git clone https://github.com/ingadhoc/odoo-addons.git -b 8.0.x ${HOME}/odoo-addons
 
   # oca account-financial-tools
   - git clone https://github.com/OCA/account-financial-tools.git ${HOME}/account-financial-tools

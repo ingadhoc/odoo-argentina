@@ -413,6 +413,7 @@ class account_invoice(models.Model):
     @api.multi
     def check_argentinian_invoice_taxes(self):
         # only check for argentinian localization companies
+        print 'self.ids', self.ids
         _logger.info('Running checks related to argentinian documents')
         argentinian_invoices = self.filtered('use_argentinian_localization')
         if not argentinian_invoices:
@@ -423,9 +424,13 @@ class account_invoice(models.Model):
             ('invoice_id', 'in', argentinian_invoices.ids),
             ('tax_code_id', '=', False),
             ])
+        print 'without_tax_code', without_tax_code
         if without_tax_code:
             raise Warning(_(
-                "You are using argentinian localization and there are some invoices with taxes that don't have tax code, tax code is required to generate this report. Invoies ids: %s" % without_tax_code.ids))
+                "You are using argentinian localization and there are some "
+                "invoices with taxes that don't have tax code, tax code is "
+                "required to generate this report. Invoies ids: %s" % (
+                    without_tax_code.mapped('invoice_id.id'))))
 
         # check codes has argentinian tax attributes configured
         tax_codes = argentinian_invoices.mapped('tax_line.tax_code_id')

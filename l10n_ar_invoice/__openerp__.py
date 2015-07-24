@@ -60,6 +60,7 @@ Para actualizar el plan de cuentas de datos demo:
           'data/product.uom.csv',
           'data/res_partner.xml',
           'data/res_currency.xml',
+          'data/account_payment_term.xml',
           # 'data/decimal_precision_data.xml', probando si no es necesario
           'wizard/account_journal_create_wizard_view.xml',
           'view/partner_view.xml',

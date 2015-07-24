@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="True">
+    <!-- TODO perhups make a wizard that helps you changing base currency -->
+        <record model='res.currency.rate' id='rate_ars_1'>
+            <field name='rate' eval='1.0'/>
+            <field name='currency_id' ref='base.ARS'/>
+        </record>
+
+        <record model='res.currency' id='base.ARS'>
+            <field name='base' eval='True'/>
+        </record> 
+    </data>
+</openerp>
+ 

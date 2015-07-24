@@ -278,26 +278,26 @@ class account_invoice(models.Model):
         str_number = self.afip_document_number or self.number or False
         if str_number and self.state not in ['draft', 'proforma', 'proforma2', 'cancel']:
             if self.afip_document_class_id.afip_code in [33, 99, 331, 332]:
-                point_of_sale = 0
+                point_of_sale = '0'
                 # leave only numbers and convert to integer
-                invoice_number = int(re.sub("[^0-9]", "", str_number))
+                invoice_number = str_number
             # despachos de importacion
             elif self.afip_document_class_id.afip_code == 66:
-                point_of_sale = 0
-                invoice_number = 0
+                point_of_sale = '0'
+                invoice_number = '0'
             elif "-" in str_number:
                 splited_number = str_number.split('-')
-                invoice_number = int(splited_number.pop())
-                point_of_sale = int(splited_number.pop())
+                invoice_number = splited_number.pop()
+                point_of_sale = splited_number.pop()
             elif "-" not in str_number and len(str_number) == 12:
-                point_of_sale = int(re.sub("[^0-9]", "", str_number[:4]))
-                invoice_number = int(re.sub("[^0-9]", "", str_number[-8:]))
+                point_of_sale = str_number[:4]
+                invoice_number = str_number[-8:]
             else:
                 raise Warning(_(
                     'Could not get invoice number and point of sale for invoice id %i') % (
                         self.id))
-            self.invoice_number = invoice_number
-            self.point_of_sale = point_of_sale
+            self.invoice_number = int(re.sub("[^0-9]", "", invoice_number))
+            self.point_of_sale = int(re.sub("[^0-9]", "", point_of_sale))
 
     _sql_constraints = [
         ('number_supplier_invoice_number',

@@ -438,10 +438,13 @@ class account_invoice(models.Model):
             lambda r: not r.type or not r.tax or not r.application)
         if unconfigured_tax_codes:
             raise Warning(_(
-                "You are using argentinian localization and there are some tax codes that are not configured. Tax codes ids: %s" % unconfigured_tax_codes.ids))
+                "You are using argentinian localization and there are some tax"
+                " codes that are not configured. Tax codes ids: %s" % (
+                    unconfigured_tax_codes.ids)))
 
         # Check invoice requiring vat
-        # TODO tal vez habria que verificar que cada linea tiene un iva configurado
+        # TODO tal vez habria que verificar que cada linea tiene un iva
+        # configurado
         invoices_with_vat = self.search([(
             'id', 'in', argentinian_invoices.ids),
             ('type', 'in', ['out_invoice', 'out_refund']),
@@ -457,9 +460,14 @@ class account_invoice(models.Model):
         for invoice in argentinian_invoices:
             special_vat_taxes = invoice.tax_line.filtered(
                 lambda r: r.tax_code_id.afip_code in [1, 2, 3])
-            if special_vat_taxes and invoice.fiscal_position.afip_code not in afip_exempt_codes:
+            if (
+                        special_vat_taxes
+                        and invoice.fiscal_position.afip_code
+                        not in afip_exempt_codes):
                 raise Warning(_(
-                    "If there you have choose a tax with 0, exempt or untaxed, you must choose a fiscal position with afip code in %s. Invoice id %i" % (
+                    "If there you have choose a tax with 0, exempt or untaxed,"
+                    " you must choose a fiscal position with afip code in %s. "
+                    "Invoice id %i" % (
                         afip_exempt_codes, invoice.id)))
 
     @api.multi

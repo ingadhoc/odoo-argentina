@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Argentina - Facturación y documentos AFIP",
-    'version': '3.0',
+    'version': '3.1',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author':  'ADHOC SA',
@@ -39,7 +39,6 @@ Para actualizar el plan de cuentas de datos demo:
 """,
     'depends': [
           'account',
-          'l10n_ar_base',
           'l10n_ar_base_vat',
         ],
     'external_dependencies': {

@@ -496,6 +496,17 @@ class account_invoice(models.Model):
                         invoice.amount_untaxed,
                         invoice.vat_base_amount)))
 
+        # check purchase invoices that can't have vat
+        purchase_invoices_without = self.search([(
+            'id', 'in', argentinian_invoices.ids),
+            ('type', 'in', ['in_invoice', 'in_refund']),
+            ('afip_document_class_id.document_letter_id.vat_discriminated',
+                '=', False)])
+        for invoice in purchase_invoices_without:
+            if invoice.vat_tax_ids:
+                raise Warning(_(
+                    "Invoice ID %i shouldn't have any vat tax" % invoice.id))
+
         # Check except vat invoice
         afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
         for invoice in argentinian_invoices:

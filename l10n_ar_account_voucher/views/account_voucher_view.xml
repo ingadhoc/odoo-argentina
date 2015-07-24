@@ -8,9 +8,9 @@
 			<field name="model">account.voucher</field>
 			<field name="inherit_id" ref="account_voucher.view_voucher_tree"/>
 			<field name="arch" type="xml"> 
-                <tree>
+                <field name="number" position="replace">
                     <field name="document_number"/>
-                </tree>
+                </field>
 			</field>
 	    </record>	
 

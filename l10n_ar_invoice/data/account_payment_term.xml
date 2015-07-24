@@ -54,12 +54,12 @@
         <record id='payment_term_0_30_60_line2' model='account.payment.term.line'>
             <field name='value'>procent</field>
             <field name='value_amount' eval='0.3333'/>
-            <field name='days' eval='60'/>
+            <field name='days' eval='30'/>
             <field name='payment_id' ref='payment_term_0_30_60'/>
         </record> 
         <record id='payment_term_0_30_60_line3' model='account.payment.term.line'>
             <field name='value'>balance</field>
-            <field name='days' eval='90'/>
+            <field name='days' eval='60'/>
             <field name='payment_id' ref='payment_term_0_30_60'/>
         </record> 
 

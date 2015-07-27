@@ -311,11 +311,13 @@ class account_journal(models.Model):
                 ('document_type', 'in', other_purchase_doc_types),
                 ('document_letter_id', '=', False)])
 
+        # take out documents that already exists
+        document_classes = document_classes - self.mapped(
+                    'journal_document_class_ids.afip_document_class_id')
+
         sequence = 10
         for document_class in document_classes:
             sequence_id = False
-            if document_class.id in self.journal_document_class_ids.ids:
-                continue
             if self.type in ['sale', 'sale_refund']:
                 # Si es nota de debito nota de credito y same sequence, no creamos la secuencia, buscamos una que exista
                 if document_class.document_type in [

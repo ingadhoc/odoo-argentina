@@ -15,6 +15,7 @@ class account_voucher(models.Model):
         string='Document Number',
         related='move_id.document_number',
         readonly=True,
+        store=True,
         )
     manual_prefix = fields.Char(
         related='receiptbook_id.manual_prefix',

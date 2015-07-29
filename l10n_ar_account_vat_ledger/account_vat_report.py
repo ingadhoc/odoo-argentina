@@ -71,14 +71,6 @@ class account_vat_ledger(models.Model):
         'afip.responsability',
         string="Responsabilities",
         compute="_get_data")
-    other_taxes_base = fields.Float(
-        string="Other Taxes Base",
-        help="Base Amount for taxes without tax code",
-        compute="_get_data")
-    other_taxes_amount = fields.Float(
-        string="Other Taxes Amount",
-        help="Amount for taxes without tax code",
-        compute="_get_data")
 
     @api.one
     # Sacamos el depends por un error con el cache en esqume multi cia al
@@ -111,9 +103,6 @@ class account_vat_ledger(models.Model):
             ('invoice_id', 'in', invoices.ids),
             ('tax_code_id', '=', False)
             ]
-        other_taxes = self.env['account.invoice.tax'].search(taxes_domain)
-        self.other_taxes_base = sum([x.base for x in other_taxes])
-        self.other_taxes_amount = sum([x.amount for x in other_taxes])
 
         self.vat_tax_code_ids = invoices.mapped(
             'vat_tax_ids.tax_code_id')

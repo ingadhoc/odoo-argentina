@@ -115,32 +115,10 @@ class account_vat_ledger(models.Model):
         self.other_taxes_base = sum([x.base for x in other_taxes])
         self.other_taxes_amount = sum([x.amount for x in other_taxes])
 
-        # Get vat tax codes
-        vat_taxes_domain = [
-            ('invoice_id', 'in', invoices.ids),
-            ('tax_code_id', '!=', False),
-            ('tax_code_id.parent_id.name', '=', 'IVA'),
-            ]
-        self.tax_code_ids = self.env['account.tax.code']
-        vat_group_taxes = self.env['account.invoice.tax'].read_group(
-            vat_taxes_domain, ['id', 'tax_code_id'], ['tax_code_id'])
-        vat_tax_code_ids = [
-            x['tax_code_id'][0] for x in vat_group_taxes]
-        self.vat_tax_code_ids = vat_tax_code_ids
-
-        # Get other tax codes
-        other_taxes_domain = [
-            ('invoice_id', 'in', invoices.ids),
-            ('tax_code_id', '!=', False),
-            '|', ('tax_code_id.parent_id.name', '!=', 'IVA'),
-            ('tax_code_id.parent_id', '=', False),
-            ]
-        self.other_tax_code_ids = self.env['account.tax.code']
-        other_group_taxes = self.env['account.invoice.tax'].read_group(
-            other_taxes_domain, ['id', 'tax_code_id'], ['tax_code_id'])
-        other_tax_code_ids = [
-            x['tax_code_id'][0] for x in other_group_taxes]
-        self.other_tax_code_ids = other_tax_code_ids
+        self.vat_tax_code_ids = invoices.mapped(
+            'vat_tax_ids.tax_code_id')
+        self.other_tax_code_ids = invoices.mapped(
+            'not_vat_tax_ids.tax_code_id')
 
     @api.one
     @api.depends('type', 'period_id')

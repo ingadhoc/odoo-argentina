@@ -7,6 +7,8 @@ from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
 
 
+# TODO mejorar y usar los signos de tax codes para todo (o signo del impuesto)
+# en vez de evaluar NC y demas
 class afip_document_class(models.Model):
     _inherit = 'afip.document_class'
 

@@ -4,6 +4,7 @@
 # directory
 ##############################################################################
 from openerp import models, fields, api
+import openerp.addons.decimal_precision as dp
 
 
 class afip_document_class(models.Model):
@@ -11,12 +12,21 @@ class afip_document_class(models.Model):
 
     amount_untaxed = fields.Float(
         string='Untaxed',
+        digits_compute=dp.get_precision('Account'),
         compute='_get_amounts',)
-    amount_tax = fields.Float(
-        string='Tax',
-        compute='_get_amounts',)
+    other_taxes_amount = fields.Float(
+        compute="_get_amounts",
+        digits_compute=dp.get_precision('Account'),
+        string='Other Taxes Amount'
+        )
+    vat_amount = fields.Float(
+        compute="_get_amounts",
+        digits_compute=dp.get_precision('Account'),
+        string='VAT Amount'
+        )
     amount_total = fields.Float(
         string='Total',
+        digits_compute=dp.get_precision('Account'),
         compute='_get_amounts',)
 
     @api.one
@@ -24,15 +34,18 @@ class afip_document_class(models.Model):
         """
         """
         amount_untaxed = False
-        amount_tax = False
+        other_taxes_amount = False
+        vat_amount = False
         amount_total = False
         vat_ledger_id = self._context.get('vat_ledger_id', False)
         if vat_ledger_id:
             vat_ledger = self.env['account.vat.ledger'].browse(vat_ledger_id)
-            (amount_untaxed, amount_tax, amount_total) = self.get_amounts(
+            (amount_untaxed, vat_amount,
+                other_taxes_amount, amount_total) = self.get_amounts(
                 vat_ledger)
         self.amount_untaxed = amount_untaxed
-        self.amount_tax = amount_tax
+        self.vat_amount = vat_amount
+        self.other_taxes_amount = other_taxes_amount
         self.amount_total = amount_total
 
     @api.model
@@ -45,13 +58,15 @@ class afip_document_class(models.Model):
         ]
         invoices = self.env['account.invoice'].search(domain)
         amount_untaxed = sum([x.amount_untaxed for x in invoices])
-        amount_tax = sum([x.amount_tax for x in invoices])
+        vat_amount = sum([x.vat_amount for x in invoices])
+        other_taxes_amount = sum([x.other_taxes_amount for x in invoices])
         amount_total = sum([x.amount_total for x in invoices])
         if self.document_type == 'credit_note':
             amount_untaxed = -amount_untaxed
-            amount_tax = -amount_tax
+            vat_amount = -vat_amount
+            other_taxes_amount = -other_taxes_amount
             amount_total = -amount_total
-        return (amount_untaxed, amount_tax, amount_total)
+        return (amount_untaxed, vat_amount, other_taxes_amount, amount_total)
 
 
 class account_tax_code(models.Model):
@@ -89,7 +104,6 @@ class account_tax_code(models.Model):
         taxes_domain = [
             ('invoice_id', 'in', vat_ledger.invoice_ids.ids),
             ('tax_code_id.id', '=', self.id)]
-            # ('tax_code_id.parent_id.name', '=', 'IVA')]
         if journal_type:
             taxes_domain.append(
                 ('invoice_id.journal_id.type', 'in', journal_type))

@@ -33,13 +33,16 @@ Argentinian Account Check Integration
     """,
     "depends": [
         "account_check",
-        "l10n_ar_invoice",
+        "l10n_ar_account_voucher",
     ],
     'external_dependencies': {
     },
     "data": [
     ],
     'demo': [
+        'data/journal_demo.xml',
+        'data/ri_voucher_demo.xml',
+        'data/checks_demo.xml',
     ],
     'test': [
     ],

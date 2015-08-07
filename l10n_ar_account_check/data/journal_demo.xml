@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!-- Journals -->
+        <record id="cheques_propios" model="account.journal">
+            <field name="name">Cheques Propios</field>
+            <field name="payment_subtype">issue_check</field>
+            <field name="code">CHP01</field>
+            <field name="type">bank</field>
+            <field name="default_debit_account_id" ref="l10n_ar_invoice.ri_cheques_diferidos"/>
+            <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_cheques_diferidos"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+        </record>
+
+        <record id="cheques_terceros" model="account.journal">
+            <field name="name">Cheques de Terceros</field>
+            <field name="payment_subtype">third_check</field>
+            <field name="code">CHT01</field>
+            <field name="type">bank</field>
+            <field name="default_debit_account_id" ref="l10n_ar_invoice.ri_valores"/>
+            <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_valores"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+        </record>
+
+        <!-- Checkbook -->
+        <record id="chequera_cheques_propios" model="account.checkbook">
+            <field name="name">Cheques Propios Banco 1</field>
+            <field name="debit_journal_id" ref="l10n_ar_invoice.bank_journal"/>
+            <field name="journal_id" ref="cheques_propios"/>
+            <field name="range_from" eval="1"/>
+            <field name="range_to" eval="100"/>
+        </record>
+    </data>
+</openerp>

@@ -96,11 +96,12 @@
         </record>
         <workflow action="proforma_voucher" model="account.voucher" ref="demo_ri_rec_voucher_2"/>
         <!-- cancel voucher -->
-        <function
+        <!-- para poder cancelar se necesita el diario marcado como para -->
+<!--         <function
             eval="([ref('demo_ri_rec_voucher_2')])"
             id="cancel_demo_ri_rec_voucher_2"
             model="account.voucher"
-            name="cancel_voucher"/>  
+            name="cancel_voucher"/>   -->
 
     <!-- RI Payment Vouchers -->
         <!-- With issue checks -->
@@ -160,11 +161,12 @@
             <field name="third_handed_voucher_id" ref="demo_ri_pay_voucher_2"/>
         </record>
         <workflow action="proforma_voucher" model="account.voucher" ref="demo_ri_pay_voucher_2"/>
-        <function
+        <!-- para poder cancelar se necesita el diario marcado como para -->
+<!--         <function
             eval="([ref('demo_ri_pay_voucher_2')])"
             id="cancel_demo_ri_pay_voucher_2"
             model="account.voucher"
-            name="cancel_voucher"/>  
+            name="cancel_voucher"/>   -->
 
         <!-- With third check to reject -->
         <record id="demo_ri_pay_voucher_3" model="account.voucher">

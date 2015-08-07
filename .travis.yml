@@ -23,7 +23,7 @@ python:
 
 env:
   # - VERSION="8.0" LINT_CHECK="1"
-  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
+  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0" EXCLUDE="l10n_ar_aeroo_einvoice,l10n_ar_currency_update"
 
 virtualenv:
   system_site_packages: true

@@ -27,7 +27,7 @@ NOTAS PARA MEJORAR Y TRADUCIR:
         'sale_view.xml',
         'report/invoice_report_view.xml',
         'res_company_view.xml',
-        'res_config_view.xml',
+        # 'res_config_view.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [

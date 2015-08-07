@@ -39,21 +39,29 @@ class account_invoice(models.Model):
         digits_compute=dp.get_precision('Account'),
         string='Subtotal'
         )
-    # TODO reemplazar a vat_exempt_amount
+    # no gravado en iva
     vat_untaxed = fields.Float(
         compute="_get_taxes_and_prices",
         digits_compute=dp.get_precision('Account'),
         string='VAT Untaxed'
         )
+    # exento en iva
     vat_exempt_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits_compute=dp.get_precision('Account'),
         string='VAT Exempt Amount'
         )
+    # von iva
     vat_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits_compute=dp.get_precision('Account'),
         string='VAT Amount'
+        )
+    # von iva
+    vat_base_amount = fields.Float(
+        compute="_get_taxes_and_prices",
+        digits_compute=dp.get_precision('Account'),
+        string='VAT Base Amount'
         )
     other_taxes_amount = fields.Float(
         compute="_get_taxes_and_prices",
@@ -198,6 +206,8 @@ class account_invoice(models.Model):
             lambda r: r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
         vat_amount = sum(
             vat_taxes.mapped('tax_amount'))
+        vat_base_amount = sum(
+            vat_taxes.mapped('base_amount'))
 
         not_vat_taxes = self.tax_line - vat_taxes
 
@@ -226,6 +236,7 @@ class account_invoice(models.Model):
         self.other_taxes_amount = other_taxes_amount
         self.vat_exempt_amount = vat_exempt_amount
         self.vat_untaxed = vat_untaxed
+        self.vat_base_amount = vat_base_amount
 
     @api.multi
     def name_get(self):
@@ -278,26 +289,26 @@ class account_invoice(models.Model):
         str_number = self.afip_document_number or self.number or False
         if str_number and self.state not in ['draft', 'proforma', 'proforma2', 'cancel']:
             if self.afip_document_class_id.afip_code in [33, 99, 331, 332]:
-                point_of_sale = 0
+                point_of_sale = '0'
                 # leave only numbers and convert to integer
-                invoice_number = int(re.sub("[^0-9]", "", str_number))
+                invoice_number = str_number
             # despachos de importacion
             elif self.afip_document_class_id.afip_code == 66:
-                point_of_sale = 0
-                invoice_number = 0
+                point_of_sale = '0'
+                invoice_number = '0'
             elif "-" in str_number:
                 splited_number = str_number.split('-')
-                invoice_number = int(splited_number.pop())
-                point_of_sale = int(splited_number.pop())
+                invoice_number = splited_number.pop()
+                point_of_sale = splited_number.pop()
             elif "-" not in str_number and len(str_number) == 12:
-                point_of_sale = int(re.sub("[^0-9]", "", str_number[:4]))
-                invoice_number = int(re.sub("[^0-9]", "", str_number[-8:]))
+                point_of_sale = str_number[:4]
+                invoice_number = str_number[-8:]
             else:
                 raise Warning(_(
                     'Could not get invoice number and point of sale for invoice id %i') % (
                         self.id))
-            self.invoice_number = invoice_number
-            self.point_of_sale = point_of_sale
+            self.invoice_number = int(re.sub("[^0-9]", "", invoice_number))
+            self.point_of_sale = int(re.sub("[^0-9]", "", point_of_sale))
 
     _sql_constraints = [
         ('number_supplier_invoice_number',
@@ -407,11 +418,16 @@ class account_invoice(models.Model):
                       ('id', '!=', self.id)]
             invoice_ids = self.search(domain)
             if invoice_ids:
-                raise Warning(
-                    _('Supplier Invoice Number must be unique per Supplier and Company!'))
+                raise Warning(_(
+                    'Supplier Invoice Number must be unique per Supplier'
+                    ' and Company!'))
 
     @api.multi
     def check_argentinian_invoice_taxes(self):
+        """
+        We make theis function to be used as a constraint but also to be called
+        from other models like vat citi
+        """
         # only check for argentinian localization companies
         _logger.info('Running checks related to argentinian documents')
         argentinian_invoices = self.filtered('use_argentinian_localization')
@@ -425,7 +441,10 @@ class account_invoice(models.Model):
             ])
         if without_tax_code:
             raise Warning(_(
-                "You are using argentinian localization and there are some invoices with taxes that don't have tax code, tax code is required to generate this report. Invoies ids: %s" % without_tax_code.ids))
+                "You are using argentinian localization and there are some "
+                "invoices with taxes that don't have tax code, tax code is "
+                "required to generate this report. Invoies ids: %s" % (
+                    without_tax_code.mapped('invoice_id.id'))))
 
         # check codes has argentinian tax attributes configured
         tax_codes = argentinian_invoices.mapped('tax_line.tax_code_id')
@@ -433,28 +452,74 @@ class account_invoice(models.Model):
             lambda r: not r.type or not r.tax or not r.application)
         if unconfigured_tax_codes:
             raise Warning(_(
-                "You are using argentinian localization and there are some tax codes that are not configured. Tax codes ids: %s" % unconfigured_tax_codes.ids))
+                "You are using argentinian localization and there are some tax"
+                " codes that are not configured. Tax codes ids: %s" % (
+                    unconfigured_tax_codes.ids)))
+
+        # Check invoice with amount
+        invoices_without_amount = self.search([
+            ('id', 'in', argentinian_invoices.ids),
+            ('amount_total', '=', 0.0)])
+        if invoices_without_amount:
+            raise Warning(_('Invoices ids %s amount is cero!') % (
+                invoices_without_amount.ids))
 
         # Check invoice requiring vat
-        # TODO tal vez habria que verificar que cada linea tiene un iva configurado
-        invoices_with_vat = self.search([(
+
+        # out invoice must have vat if are argentinian and from a company with
+        # responsability that requires vat
+        sale_invoices_with_vat = self.search([(
             'id', 'in', argentinian_invoices.ids),
             ('type', 'in', ['out_invoice', 'out_refund']),
             ('company_id.partner_id.responsability_id.vat_tax_required_on_sales_invoices',
                 '=', True)])
+
+        # purchase invoice must have vat if document class letter has vat
+        # discriminated
+        purchase_invoices_with_vat = self.search([(
+            'id', 'in', argentinian_invoices.ids),
+            ('type', 'in', ['in_invoice', 'in_refund']),
+            ('afip_document_class_id.document_letter_id.vat_discriminated',
+                '=', True)])
+
+        invoices_with_vat = (
+            sale_invoices_with_vat + purchase_invoices_with_vat)
+
         for invoice in invoices_with_vat:
-            if not invoice.vat_tax_ids:
+            # we check vat base amount is equal to amount untaxed
+            if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.001:
                 raise Warning(_(
-                    "Invoice id %i don't have any VAT tax." % invoice.id))
+                    "Invoice ID: %i\n"
+                    "Invoice subtotal (%.2f) is different from invoice base"
+                    " vat amount (%.2f)" % (
+                        invoice.id,
+                        invoice.amount_untaxed,
+                        invoice.vat_base_amount)))
+
+        # check purchase invoices that can't have vat
+        purchase_invoices_without = self.search([(
+            'id', 'in', argentinian_invoices.ids),
+            ('type', 'in', ['in_invoice', 'in_refund']),
+            ('afip_document_class_id.document_letter_id.vat_discriminated',
+                '=', False)])
+        for invoice in purchase_invoices_without:
+            if invoice.vat_tax_ids:
+                raise Warning(_(
+                    "Invoice ID %i shouldn't have any vat tax" % invoice.id))
 
         # Check except vat invoice
         afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
         for invoice in argentinian_invoices:
             special_vat_taxes = invoice.tax_line.filtered(
                 lambda r: r.tax_code_id.afip_code in [1, 2, 3])
-            if special_vat_taxes and invoice.fiscal_position.afip_code not in afip_exempt_codes:
+            if (
+                        special_vat_taxes
+                        and invoice.fiscal_position.afip_code
+                        not in afip_exempt_codes):
                 raise Warning(_(
-                    "If there you have choose a tax with 0, exempt or untaxed, you must choose a fiscal position with afip code in %s. Invoice id %i" % (
+                    "If there you have choose a tax with 0, exempt or untaxed,"
+                    " you must choose a fiscal position with afip code in %s. "
+                    "Invoice id %i" % (
                         afip_exempt_codes, invoice.id)))
 
     @api.multi

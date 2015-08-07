@@ -69,7 +69,7 @@ class account_vat_ledger(models.Model):
         else:
             template = "{:0>%dd}" % (padding)
         return template.format(
-            int(round(amount, decimals) * 10**decimals))
+            int(round(amount * 10**decimals,decimals)))
 
     @api.one
     @api.depends(

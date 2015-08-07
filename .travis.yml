@@ -28,7 +28,8 @@ env:
   # TODO HABILITAR AMBOS
   # - LINT_CHECK="1"
   # - TRANSIFEX="1"
-  - TESTS="1" ODOO_REPO="odoo/odoo"
+  - TESTS="1" ODOO_REPO="odoo/odoo" EXCLUDE="l10n_ar_invoice"
+  - TESTS="1" ODOO_REPO="odoo/odoo" INCLUDE="l10n_ar_invoice"
   # UN TEST U OTRO
   - TESTS="1.0" ODOO_REPO="odoo/odoo" UNIT_TEST="1"
   # PARA BORRAR

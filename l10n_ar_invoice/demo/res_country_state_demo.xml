@@ -17,7 +17,7 @@
  along with this program. If not, see <http://www.gnu.org/licenses/>.
 -->
 <openerp>
-    <data noupdate="True">
+    <data>
 
         <record model="res.country.state" id="demo_CBA">
             <field name="name">Ciudad Autónoma de Buenos Aires</field>

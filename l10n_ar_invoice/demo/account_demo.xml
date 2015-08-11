@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data>
 
         <!-- Properties -->
         <record forcecreate="True" id="property_account_receivable" model="ir.property">

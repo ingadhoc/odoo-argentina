@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data>
         <!-- liquidacion de iva -->
         <record id="journal_vat_settlement" model="account.journal">
             <field name="name">Liquidacion IVA</field>

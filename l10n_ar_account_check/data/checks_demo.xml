@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data>
         <!-- TODO modificar wizard de cheques para que tengan una funcion que pueda ser llamada simplemente y haga estos cambios de estado -->
     <!-- issue checks -->
         <!-- to debit -->

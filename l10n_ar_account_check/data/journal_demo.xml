@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data>
         <!-- Journals -->
         <record id="cheques_propios" model="account.journal">
             <field name="name">Cheques Propios</field>

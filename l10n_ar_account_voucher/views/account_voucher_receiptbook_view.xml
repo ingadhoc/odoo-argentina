@@ -39,6 +39,7 @@
                         <group>
                             <field name="name"/>
                             <field name="type"/>
+                            <field name="sequence"/>
                             <field name="sequence_type"/>
                             <field name="padding" attrs="{'invisible':[('sequence_type','!=','manual')],'required':[('sequence_type','=','manual')]}"/>
                             <field name="manual_prefix" attrs="{'invisible':[('sequence_type','!=','manual')],'required':[('sequence_type','=','manual')]}"/>

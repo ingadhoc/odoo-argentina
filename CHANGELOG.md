@@ -11,13 +11,12 @@
 #### UPGRADE
 ##### 8.0 to 8.0 after august 2015
 on august 2015 we release several modifications on receipts and other modules, to update both odoo-addons and odoo-argentina follow moreless this steps:
-
-0 Update both repositories (odoo-addons and odoo-argentina)
-1 update module list on odoo interface
-2 Update checks module `-i account_voucher_payline,account_journal_payment_subtype -u account_check --without-demo=all -d [database_name]`
-3 Update receipts: `-u l10n_ar_invoice -i l10n_ar_aeroo_voucher --without-demo=all -d [database_name]`
-4 desintall depreciated modules `account_bank_voucher` and `account_voucher_receipt`
-5 optionally install this new modules: `-i account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement --without-demo=all -d [database_name]`
+* Update both repositories (odoo-addons and odoo-argentina)
+* update module list on odoo interface
+* Update checks module `-i account_voucher_payline,account_journal_payment_subtype -u account_check --without-demo=all -d [database_name]`
+* Update receipts: `-u l10n_ar_invoice -i l10n_ar_aeroo_voucher --without-demo=all -d [database_name]`
+* desintall depreciated modules `account_bank_voucher` and `account_voucher_receipt`
+* optionally install this new modules: `-i account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement --without-demo=all -d [database_name]`
 
 We have depreciated account_voucher_receipt, for those using argentinian localization may like to see odoo-argentina repo and update installing l10n_ar_account_voucher (see odoo-argentina changelog)
 

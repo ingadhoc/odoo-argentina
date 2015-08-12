@@ -52,10 +52,8 @@
                 </form>
             </field>
         </record>
-        
 
-
-        <record id="action_receipt_receiptbook_form" model="ir.actions.act_window">
+        <record id="action_receiptbook_form" model="ir.actions.act_window">
             <field name="name">Receiptbooks</field>
             <field name="res_model">account.voucher.receiptbook</field>
             <field name="view_type">form</field>
@@ -63,7 +61,7 @@
             <field name="search_view_id" ref="view_receipt_receiptbook_search"/>
         </record>
         
-       <menuitem action="action_receipt_receiptbook_form" id="menu_action_receipt_receiptbook_form" parent="account.menu_configuration_misc" sequence="100"/>
+       <menuitem action="action_receiptbook_form" id="action_receiptbook_form" parent="account.menu_configuration_misc" sequence="99"/>
  
     </data>
 </openerp>        

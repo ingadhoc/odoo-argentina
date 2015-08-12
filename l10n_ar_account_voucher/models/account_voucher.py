@@ -5,6 +5,8 @@
 ##############################################################################
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class account_voucher(models.Model):

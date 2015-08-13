@@ -13,10 +13,20 @@
 on august 2015 we release several modifications on receipts and other modules, to update both odoo-addons and odoo-argentina follow moreless this steps:
 * Update both repositories (odoo-addons and odoo-argentina)
 * update module list on odoo interface
-* Update checks module `-i account_voucher_payline,account_journal_payment_subtype -u account_check --without-demo=all -d [database_name]`
-* Update receipts: `-u l10n_ar_invoice -i l10n_ar_aeroo_voucher --without-demo=all -d [database_name]`
+* Update checks and receipts module `-u account_check,l10n_ar_invoice -i account_voucher_payline,account_journal_payment_subtype,l10n_ar_aeroo_voucher --without-demo=all -d [database_name]`
 * desintall depreciated modules `account_bank_voucher` and `account_voucher_receipt`
 * optionally install this new modules: `-i account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement --without-demo=all -d [database_name]`
+
+NOTAS INTERNAS:
+Pasos con infra:
+* actualizamos repos odoo-addons y odoo-argentina
+* verificamos imagen en 8.0 (si es otro server hacer pull)
+* hacemos un restart (si ya estaba en 8.0) o create/update (si lo cambiamos)
+* entramos y actualizamos lista de modulos
+* matamos servicio, levantamos a mano y corremos
+* `runuser -u odoo openerp-server -- -c /etc/odoo/openerp-server.conf --logfile=False --load=web,web_kanban,database_tools,server_mode -u account_check,l10n_ar_invoice -i account_voucher_payline,account_journal_payment_subtype,l10n_ar_aeroo_voucher,account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement --workers=0 --without-demo=all -d [database_name] `
+* Luego limpiamos bd (purge modules, models, etc)
+* bajamos servicio y leventamos desde infra
 
 We have depreciated account_voucher_receipt, for those using argentinian localization may like to see odoo-argentina repo and update installing l10n_ar_account_voucher (see odoo-argentina changelog)
 

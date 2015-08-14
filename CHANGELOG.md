@@ -21,6 +21,7 @@ on august 2015 we release several modifications on receipts and other modules, t
 We have depreciated account_voucher_receipt, for those using argentinian localization may like to see odoo-argentina repo and update installing l10n_ar_account_voucher (see odoo-argentina changelog)
 
 ##### 8.0.2 to 8.0.3
+actualizar l10n_ar_base
 NOTA: para migrar de branch anteriores al 8.0.2 primero migrar a la 8.0.2
 
 ##### 8.0.1 to 8.0.2

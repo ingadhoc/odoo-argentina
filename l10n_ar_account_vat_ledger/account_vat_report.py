@@ -89,7 +89,7 @@ class account_vat_ledger(models.Model):
             invoices_domain,
             ['id', 'afip_document_class_id'], ['afip_document_class_id'])
         document_class_ids = [
-            x['afip_document_class_id'][0] for x in group_invoices if x['afip_document_class_id']]
+            x['afip_document_class_id'][0] for x in group_invoices if x and x['afip_document_class_id']]
         self.document_class_ids = document_class_ids
 
         # Get invoices

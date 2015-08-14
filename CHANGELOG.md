@@ -15,7 +15,7 @@ on august 2015 we release several modifications on receipts and other modules, t
 * update module list on odoo interface
 * Update checks and receipts module `-u account_check,l10n_ar_invoice -i account_voucher_payline,account_journal_payment_subtype,l10n_ar_aeroo_voucher --without-demo=all -d [database_name]`
 * desintall depreciated modules `account_bank_voucher` and `account_voucher_receipt`
-* optionally install this new modules: `-i account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement --without-demo=all -d [database_name]`
+* optionally install this new modules: `-i account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement,account_statement_move_import,account_statement_disable_invoice_import --without-demo=all -d [database_name]`
 
 NOTAS INTERNAS:
 Pasos con infra:
@@ -31,6 +31,7 @@ Pasos con infra:
 We have depreciated account_voucher_receipt, for those using argentinian localization may like to see odoo-argentina repo and update installing l10n_ar_account_voucher (see odoo-argentina changelog)
 
 ##### 8.0.2 to 8.0.3
+actualizar l10n_ar_base
 NOTA: para migrar de branch anteriores al 8.0.2 primero migrar a la 8.0.2
 
 ##### 8.0.1 to 8.0.2

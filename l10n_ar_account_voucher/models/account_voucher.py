@@ -63,14 +63,19 @@ class account_voucher(models.Model):
             'Document number must be unique per receiptbook!')]
 
     @api.onchange('company_id')
+    def _change_company(self):
+        self.receiptbook_id = self._get_receiptbook()
+
+    @api.multi
     def _get_receiptbook(self):
+        self.ensure_one()
         receiptbook = self.env[
             'account.voucher.receiptbook'].search([
                 ('type', '=', self._context.get(
                     'type', self._context.get('default_type', False))),
                 ('company_id', '=', self.company_id.id),
                 ], limit=1)
-        self.receiptbook_id = receiptbook
+        return receiptbook
 
     @api.multi
     def proforma_voucher(self):

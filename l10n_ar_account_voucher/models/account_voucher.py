@@ -66,7 +66,8 @@ class account_voucher(models.Model):
     def _get_receiptbook(self):
         receiptbook = self.env[
             'account.voucher.receiptbook'].search([
-                ('type', '=', self._context.get('type', False)),
+                ('type', '=', self._context.get(
+                    'type', self._context.get('default_type', False))),
                 ('company_id', '=', self.company_id.id),
                 ], limit=1)
         self.receiptbook_id = receiptbook

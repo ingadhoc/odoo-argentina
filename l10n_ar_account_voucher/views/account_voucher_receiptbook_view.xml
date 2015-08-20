@@ -37,16 +37,20 @@
                 <form string="Receipt Books" version="7.0"> 
                     <sheet string="Receipt Books">
                         <group>
-                            <field name="name"/>
-                            <field name="type"/>
-                            <field name="sequence"/>
-                            <field name="sequence_type"/>
-                            <field name="padding" attrs="{'invisible':[('sequence_type','!=','manual')],'required':[('sequence_type','=','manual')]}"/>
-                            <field name="manual_prefix" attrs="{'invisible':[('sequence_type','!=','manual')],'required':[('sequence_type','=','manual')]}"/>
-                            <field name="sequence_id" attrs="{'invisible':[('sequence_type','!=','automatic')],'required':[('sequence_type','=','automatic')]}" context="{'default_name':name}"/>
-                            <field name="document_class_id"/>
-                            <field name="active"/>
-                            <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                            <group>
+                                <field name="name"/>
+                                <field name="type"/>
+                                <field name="sequence"/>
+                                <field name="sequence_type"/>
+                                <field name="padding" attrs="{'invisible':[('sequence_type','!=','manual')],'required':[('sequence_type','=','manual')]}"/>
+                                <field name="manual_prefix" attrs="{'invisible':[('sequence_type','!=','manual')],'required':[('sequence_type','=','manual')]}"/>
+                            </group>
+                            <group>
+                                <field name="sequence_id" attrs="{'invisible':[('sequence_type','!=','automatic')],'required':[('sequence_type','=','automatic')]}" context="{'default_name':name}"/>
+                                <field name="document_class_id"/>
+                                <field name="active"/>
+                                <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                            </group>
                         </group>
                     </sheet>
                 </form>
@@ -61,7 +65,7 @@
             <field name="search_view_id" ref="view_receipt_receiptbook_search"/>
         </record>
         
-       <menuitem action="action_receiptbook_form" id="action_receiptbook_form" parent="account.menu_configuration_misc" sequence="99"/>
+       <menuitem action="action_receiptbook_form" id="menu_receiptbook_form" parent="account.menu_configuration_misc" sequence="99"/>
  
     </data>
 </openerp>        

@@ -35,20 +35,17 @@ class afip_document_class(models.Model):
     def _get_amounts(self):
         """
         """
-        amount_untaxed = False
-        other_taxes_amount = False
-        vat_amount = False
-        amount_total = False
         vat_ledger_id = self._context.get('vat_ledger_id', False)
         if vat_ledger_id:
             vat_ledger = self.env['account.vat.ledger'].browse(vat_ledger_id)
-            (amount_untaxed, vat_amount,
-                other_taxes_amount, amount_total) = self.get_amounts(
-                vat_ledger)
-        self.amount_untaxed = amount_untaxed
-        self.vat_amount = vat_amount
-        self.other_taxes_amount = other_taxes_amount
-        self.amount_total = amount_total
+            (
+                amount_untaxed, vat_amount,
+                other_taxes_amount, amount_total
+                ) = self.get_amounts(vat_ledger)
+            self.amount_untaxed = amount_untaxed
+            self.vat_amount = vat_amount
+            self.other_taxes_amount = other_taxes_amount
+            self.amount_total = amount_total
 
     @api.model
     def get_amounts(self, vat_ledger):

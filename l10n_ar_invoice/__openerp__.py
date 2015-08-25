@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Argentina - Facturación y documentos AFIP",
-    'version': '3.1',
+    'version': '8.0.0.1.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author':  'ADHOC SA',

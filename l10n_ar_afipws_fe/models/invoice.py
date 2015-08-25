@@ -123,23 +123,13 @@ class invoice(models.Model):
     def get_related_invoices_data(self):
         """
         List related invoice information to fill CbtesAsoc.
-        # TODO mejorar y buscar la relacion por un m2o y no por origin
         """
-        res = {}
-        for invoice in self:
-            rel_invoices_data = []
-            rel_invoices = self.search([
-                ('number', '=', self.origin),
-                ('state', 'not in',
-                    ['draft', 'proforma', 'proforma2', 'cancel'])])
-            for rel_inv in rel_invoices:
-                rel_invoices_data.append({
-                    'Tipo': rel_inv.afip_document_class_id.afip_code,
-                    'PtoVta': rel_inv.point_of_sale,
-                    'Nro': rel_inv.invoice_number,
-                })
-            res[invoice.id] = rel_invoices_data
-        return res
+        self.ensure_one()
+        rel_invoices = self.search([
+            ('number', '=', self.origin),
+            ('state', 'not in',
+                ['draft', 'proforma', 'proforma2', 'cancel'])])
+        return rel_invoices
 
     @api.multi
     def action_cancel(self):
@@ -355,14 +345,12 @@ class invoice(models.Model):
                         "%.2f" % abs(tax.tax_amount),
                         )
 
-            # TODO tal vez en realidad solo hay que hacerlo para notas de
-            # credito o determinados doc, ver pyafipws
-            CbteAsoc = inv.get_related_invoices_data()[inv.id]
+            CbteAsoc = inv.get_related_invoices_data()
             if CbteAsoc:
                 ws.AgregarCmpAsoc(
-                    CbteAsoc['Tipo'],
-                    CbteAsoc['PtoVta'],
-                    CbteAsoc['Nro'],
+                    CbteAsoc.afip_document_class_id.afip_code,
+                    CbteAsoc.point_of_sale,
+                    CbteAsoc.invoice_number,
                     )
 
             # analize line items - invoice detail

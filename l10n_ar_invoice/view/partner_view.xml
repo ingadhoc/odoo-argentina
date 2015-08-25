@@ -7,6 +7,11 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="account.view_partner_property_form"/>
             <field name="arch" type="xml">
+                <field name="ref" position="replace">
+                    </field>
+                <field name="category_id" position="before">
+                    <field name="ref"/>
+                </field>
                 <field name="website" position="after">
                     <label for="document_number"/>
                     <div class="address_format">

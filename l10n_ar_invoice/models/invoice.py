@@ -100,6 +100,7 @@ class account_invoice(models.Model):
         'account.journal.afip_document_class',
         'Documents Type',
         readonly=True,
+        ondelete='restrict',
         states={'draft': [('readonly', False)]}
         )
     afip_incoterm_id = fields.Many2one(

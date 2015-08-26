@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from dateutil.parser import parse as dateparse
 from random import randint
 from suds.client import Client
+from suds import WebFault
 import xml.etree.ElementTree as ET
 import logging
 from openerp.exceptions import Warning
@@ -177,6 +178,12 @@ class res_company(models.Model):
         try:
             client = Client(login_url + '?WSDL')
             response = client.service.loginCms(in0=body)
+        except WebFault as e:
+            raise Warning(_(
+                'Could not connect. This is the what we received: %s.\n'
+                'If error is realted to datetime unsynchronized you can try'
+                ' running "sudo ntpdate ntp.ubuntu.com" on the server.' % (
+                    e[0])))
         except Exception, e:
             raise Warning(
                 _('Could not connect. This is the what we received: %s' % e))

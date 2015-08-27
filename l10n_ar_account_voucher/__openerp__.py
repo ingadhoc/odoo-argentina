@@ -19,8 +19,8 @@
 #
 ##############################################################################
 {
-    'name': 'Voucher Receipts and Invoice Integration',
-    'version': '8.0.1.0.0',
+    'name': 'Aregentinian Receipts and Payment Orders',
+    'version': '8.0.1.1.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author':  'ADHOC SA',
@@ -28,20 +28,24 @@
     'license': 'AGPL-3',
     'summary': '',
     'description': """
-Receipt
-=======
-TODO
+Aregentinian Receipts and Payment Orders
+========================================
     """,
     'depends': [
-        'account_voucher_receipt',
         'l10n_ar_invoice',
+        'account_voucher',
     ],
     'external_dependencies': {
     },
     'data': [
-        'views/receiptbook_view.xml',
+        'security/account_voucher_receipt_security.xml',
+        'security/ir.model.access.csv',
+        'views/account_voucher_view.xml',
+        'views/account_voucher_receiptbook_view.xml',
+        'data/receipt_data.xml',
     ],
     'demo': [
+        'data/receipt_demo.xml',
     ],
     'test': [
     ],
@@ -49,3 +53,4 @@ TODO
     'auto_install': True,
     'application': False,
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

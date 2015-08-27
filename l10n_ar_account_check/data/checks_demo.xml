@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- TODO modificar wizard de cheques para que tengan una funcion que pueda ser llamada simplemente y haga estos cambios de estado -->
+    <!-- issue checks -->
+        <!-- to debit -->
+        <record id="demo_ri_pay_voucher_1_issue_check_1" model="account.check">
+        </record>
+        <!-- to reject -->
+        <record id="demo_ri_pay_voucher_1_issue_check_2" model="account.check">
+        </record>
+
+    <!-- third checks -->
+        <!-- to reject delivered-->
+        <record id="demo_ri_rec_voucher_1_issue_check_2" model="account.check">
+        </record>
+
+        <!-- to deposit -->
+        <record id="demo_ri_rec_voucher_1_issue_check_4" model="account.check">
+        </record>
+
+        <!-- to deposit and reject-->
+        <record id="demo_ri_rec_voucher_1_issue_check_5" model="account.check">
+        </record>
+
+    </data>
+</openerp>

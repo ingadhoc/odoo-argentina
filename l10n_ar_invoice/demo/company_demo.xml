@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data>
     <!-- Partners for companies -->
         <record id="partner_ri" model="res.partner">
             <field name='responsability_id' ref='res_IVARI'/>

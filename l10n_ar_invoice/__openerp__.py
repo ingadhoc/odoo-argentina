@@ -97,13 +97,13 @@ Para actualizar el plan de cuentas de datos demo:
           'demo/fiscal_year_ri_demo.xml',
           'demo/account_chart_respinsc.xml',
           'demo/account_demo.xml',
-          # 'demo/ri_purchase_invoice_demo.xml',
-          # 'demo/ri_sale_invoice_demo.xml',
+          'demo/ri_purchase_invoice_demo.xml',
+          'demo/ri_sale_invoice_demo.xml',
     ],
     'test': [
     ],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
     'application': False,
  }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

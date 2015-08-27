@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_receipt_receiptbook_search" model="ir.ui.view">
+            <field name="name">account.voucher.receiptbook.search</field>
+            <field name="model">account.voucher.receiptbook</field>
+            <field name="arch" type="xml">
+                <search string="Receipt Books">
+                    <field name="name"/>
+                    <field name="sequence_type"/>
+                    <field name="type"/>
+                    <field name="document_class_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_receipt_receiptbook_tree" model="ir.ui.view">
+            <field name="name">account.voucher.receiptbook.tree</field>
+            <field name="model">account.voucher.receiptbook</field>
+            <field name="arch" type="xml">
+                <tree string="Receipt Books">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="sequence_type"/>
+                    <field name="type"/>
+                    <field name="sequence_id"/>
+                    <field name="document_class_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_receipt_receiptbook_form" model="ir.ui.view">
+            <field name="name">account.voucher.receiptbook.form</field>
+            <field name="model">account.voucher.receiptbook</field>
+            <field name="arch" type="xml">
+                <form string="Receipt Books" version="7.0"> 
+                    <sheet string="Receipt Books">
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="type"/>
+                                <field name="sequence_type"/>
+                                <field name="padding" attrs="{'invisible':[('sequence_type','!=','manual')],'required':[('sequence_type','=','manual')]}"/>
+                                <field name="manual_prefix" attrs="{'invisible':[('sequence_type','!=','manual')],'required':[('sequence_type','=','manual')]}"/>
+                            </group>
+                            <group>
+                                <field name="sequence_id" attrs="{'invisible':[('sequence_type','!=','automatic')],'required':[('sequence_type','=','automatic')]}" context="{'default_name':name}"/>
+                                <field name="document_class_id"/>
+                                <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                                <field name="sequence"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_receiptbook_form" model="ir.actions.act_window">
+            <field name="name">Receiptbooks</field>
+            <field name="res_model">account.voucher.receiptbook</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_receipt_receiptbook_search"/>
+        </record>
+        
+       <menuitem action="action_receiptbook_form" id="menu_receiptbook_form" parent="account.menu_configuration_misc" sequence="99"/>
+ 
+    </data>
+</openerp>        

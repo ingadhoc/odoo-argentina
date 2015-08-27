@@ -2,18 +2,18 @@ id,afip_code,name,document_letter_id/id,report_name,document_type,doc_code_prefi
 dc_a_f,1,FACTURAS A,dl_a,FACTURA,invoice,FA-A 
 dc_a_nd,2,NOTAS DE DEBITO A,dl_a,NOTA DE DEBITO,debit_note,ND-A 
 dc_a_nc,3,NOTAS DE CREDITO A,dl_a,NOTA DE CREDITO,credit_note,NC-A 
-dc_a_r,4,RECIBOS A,dl_a,,receipt,REC 
+dc_a_r,4,RECIBOS A,dl_a,RECIBO,receipt_invoice,RE-A 
 dc_a_nvc,5,NOTAS DE VENTA AL CONTADO A,dl_a,,,
 dc_b_f,6,FACTURAS B,dl_b,FACTURA,invoice,FA-B 
 dc_b_nd,7,NOTAS DE DEBITO B,dl_b,NOTA DE DEBITO,debit_note,ND-B 
 dc_b_nc,8,NOTAS DE CREDITO B,dl_b,NOTA DE CREDITO,credit_note,NC-B 
-dc_b_r,9,RECIBOS B,dl_b,,receipt,REC 
+dc_b_r,9,RECIBOS B,dl_b,,receipt_invoice,RE-B 
 dc_b_nvc,10,NOTAS DE VENTA AL CONTADO B,dl_b,,,
 dc_c_f,11,FACTURAS C,dl_c,FACTURA,invoice,FA-C 
 dc_c_nd,12,NOTAS DE DEBITO C,dl_c,NOTA DE DEBITO,debit_note,ND-C 
 dc_c_nc,13,NOTAS DE CREDITO C,dl_c,NOTA DE CREDITO,credit_note,NC-C 
 dc_aduana,14,DOCUMENTO ADUANERO,,,,
-dc_c_r,15,RECIBOS C,dl_c,,receipt,REC 
+dc_c_r,15,RECIBOS C,dl_c,RECIBO,receipt_invoice,RE-C 
 dc_c_nvc,16,NOTAS DE VENTA AL CONTADO C,dl_c,,,
 dc_e_f,19,FACTURAS DE EXPORTACION,dl_e,FACTURA,invoice,FA-E 
 dc_e_nd,20,NOTAS DE DEBITO POR OPERACIONES CON EL EXTERIOR,dl_e,NOTA DE DEBITO,debit_note,ND-E 
@@ -34,7 +34,7 @@ dc_a_rf,50,RECIBO FACTURA A  REGIMEN DE FACTURA DE CREDITO,dl_a,,,
 dc_m_f,51,FACTURAS M,dl_m,FACTURA,invoice,FA-M 
 dc_m_nd,52,NOTAS DE DEBITO M,dl_m,NOTA DE DEBITO,debit_note,ND-C 
 dc_m_nc,53,NOTAS DE CREDITO M,dl_m,NOTA DE CREDITO,credit_note,NC-C 
-dc_m_r,54,RECIBOS M,dl_m,,receipt,REC 
+dc_m_r,54,RECIBOS M,dl_m,RECIBO,receipt_invoice,RE-M 
 dc_m_nvc,55,NOTAS DE VENTA AL CONTADO M,dl_m,,,
 dc_m_rg1415,56,COMPROBANTES M DEL ANEXO I  APARTADO A  INC F   R G  N  1415,dl_m,,,
 dc_m_o_rg1415,57,OTROS COMPROBANTES M QUE CUMPLAN CON LA R G  N  1415,dl_m,,,
@@ -76,3 +76,6 @@ dc_aa_dj_pos,101,AJUSTE ANUAL PROVENIENTE DE LA  D J  DEL IVA  POSITIVO,,,,
 dc_aa_dj_neg,102,AJUSTE ANUAL PROVENIENTE DE LA  D J  DEL IVA  NEGATIVO,,,,
 dc_na,103,NOTA DE ASIGNACION,,,,
 dc_nca,104,NOTA DE CREDITO DE ASIGNACION,,,,
+dc_recibo_x,,RECIBOS X,dl_x,RECIBO,,RE-X 
+dc_remito_x,,REMITOS X,dl_x,REMITO,,RM-X 
+dc_orden_pago_x,,ORDEN DE PAGO X,dl_x,ORDEN DE PAGO,,OP-X 

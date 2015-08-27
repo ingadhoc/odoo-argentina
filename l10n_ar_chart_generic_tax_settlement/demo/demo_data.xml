@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data>
         <!-- liquidacion de iva -->
         <record id="journal_vat_settlement" model="account.journal">
             <field name="name">Liquidacion IVA</field>
@@ -13,6 +13,14 @@
             <!-- <field name="default_debit_tax_code_id" ref="l10n_ar_invoice.ri_iva_a_pagar"/> -->
             <field name="default_debit_account_id" ref="l10n_ar_invoice.ri_iva_a_pagar"/>
             <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_iva_saldo_a_favor"/>
+        </record>
+
+
+        <record id="vat_settlement" model="account.tax.settlement">
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="journal_id" ref="journal_vat_settlement"/>
+            <field name="fiscalyear_id" ref="l10n_ar_invoice.data_fiscalyear_ri"/>
+            <field name="moves_state">all</field>
         </record>
 
         <!-- liquidacion de iva -->

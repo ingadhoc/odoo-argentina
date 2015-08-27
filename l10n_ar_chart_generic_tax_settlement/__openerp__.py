@@ -46,8 +46,8 @@ TODO implementar cambios como los hace l10n_ar_chart_generic_withholding
     ],
     'test': [
     ],
-    'installable': False,
-    'auto_install': False,
+    'installable': True,
+    'auto_install': True,
     'application': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

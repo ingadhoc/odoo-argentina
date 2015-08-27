@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data>
     <!-- Partners -->
         <!-- ASUSTeK - Supplier -->
         <record id="base.res_partner_1" model="res.partner">

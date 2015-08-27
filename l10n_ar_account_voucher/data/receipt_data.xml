@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!--
+        Receiptbook Sequence
+        -->         
+        <record id="sequence_customer_receipt_1" model="ir.sequence">
+            <field name="name">Customer Receipt 0001</field>
+            <field eval="8" name="padding"/>
+            <field name="prefix">0001-</field>
+        </record>            
+
+        <record id="sequence_supplier_receipt_1" model="ir.sequence">
+            <field name="name">Supplier Receipt 0001</field>
+            <field eval="8" name="padding"/>
+            <field name="prefix">0001-</field>
+        </record>      
+
+        <!--
+        Account Voucher Receiptbook
+        -->
+
+        <record id="customer_receiptbook_1" model="account.voucher.receiptbook">
+            <field name="name">Customer Receipt 0001</field>
+            <field name="type">receipt</field>
+            <field name="sequence_type">automatic</field>
+            <field name="sequence_id" ref="sequence_customer_receipt_1"/>
+            <field name="document_class_id" ref="l10n_ar_invoice.dc_recibo_x"/>
+            <field name="manual_prefix"></field>
+            <field name="sequence" eval="10"/>
+        </record>
+
+        <record id="supplier_receiptbook_1" model="account.voucher.receiptbook">
+            <field name="name">Supplier Receipt 0001</field>
+            <field name="type">payment</field>
+            <field name="sequence_type">automatic</field>
+            <field name="sequence_id" ref="sequence_supplier_receipt_1"/>
+            <field name="document_class_id" ref="l10n_ar_invoice.dc_recibo_x"/>
+            <field name="manual_prefix"></field>
+            <field name="sequence" eval="10"/>
+        </record>
+
+        <record id="customer_receiptbook_2" model="account.voucher.receiptbook">
+            <field name="name">Customer Manual Receipt 0002</field>
+            <field name="type">receipt</field>
+            <field name="sequence_type">manual</field>
+            <field name="document_class_id" ref="l10n_ar_invoice.dc_recibo_x"/>
+            <field name="sequence_id" ref=""/>
+            <field name="manual_prefix">0002-</field>
+            <field eval="8" name="padding"/>            
+            <field name="sequence" eval="20"/>
+        </record>
+
+        <record id="supplier_receiptbook_2" model="account.voucher.receiptbook">
+            <field name="name">Supplier Manual Receipt 0002</field>
+            <field name="type">payment</field>
+            <field name="sequence_type">manual</field>
+            <field name="sequence_id" ref=""/>
+            <field name="document_class_id" ref="l10n_ar_invoice.dc_recibo_x"/>
+            <field name="manual_prefix">0002-</field>
+            <field eval="8" name="padding"/>  
+            <field name="sequence" eval="20"/>
+        </record>
+
+    </data>
+</openerp>

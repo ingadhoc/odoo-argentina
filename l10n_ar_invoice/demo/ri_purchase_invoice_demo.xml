@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data>
     <!-- RI Purchase invoices -->
         <!-- With IVA 21 -->
         <record id="demo_ri_pur_invoice_0" model="account.invoice">

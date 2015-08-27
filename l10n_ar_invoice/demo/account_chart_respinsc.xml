@@ -207,7 +207,7 @@
             <field name="name">Retención impuestos a las ganancias Sufrida</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
             <field name="company_id" ref="company_ri"/>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
         </record>
 
         <record model="account.account" id="ri_a_cuenta_impuestos_ganancias">
@@ -216,7 +216,7 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepción Impuesto a las Ganancias Sufrida</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="company_id" ref="company_ri"/>
         </record>
 
@@ -227,7 +227,7 @@
             <field name="name">Anticipo impuestos a las ganancias</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
             <field name="company_id" ref="company_ri"/>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
         </record>
 
         <record model="account.account" id="ri_a_cuenta_impuestos_ganancias_a_favor">
@@ -236,7 +236,7 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Impuesto a las Ganancias a favor</field>
             <field name="parent_id" ref="ri_creditos_impuestos_ganancias"/>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="company_id" ref="company_ri"/>
         </record>
 
@@ -264,7 +264,7 @@
             <field name="code">1.1.04.02.010</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retención IVA Sufrida</field>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
             <field name="company_id" ref="company_ri"/>
         </record>
@@ -274,7 +274,7 @@
             <field name="code">1.1.04.02.020</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones IVA Sufrida</field>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
             <field name="company_id" ref="company_ri"/>
         </record>
@@ -284,7 +284,7 @@
             <field name="code">1.1.04.02.030</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">IVA crédito fiscal</field>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
             <field name="company_id" ref="company_ri"/>
         </record>
@@ -294,7 +294,7 @@
             <field name="code">1.1.04.02.040</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">IVA saldo a favor</field>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="parent_id" ref="ri_creditos_impuestos_iva"/>
             <field name="company_id" ref="company_ri"/>
         </record>
@@ -332,7 +332,7 @@
             <field name="code">1.1.04.03.010</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones ingresos brutos capital federal</field>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="parent_id" ref="ri_creditos_iibb_cf"/>
             <field name="company_id" ref="company_ri"/>
         </record>
@@ -342,7 +342,7 @@
             <field name="code">1.1.04.03.020</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retención ingresos brutos capital federal</field>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="parent_id" ref="ri_creditos_iibb_cf"/>
             <field name="company_id" ref="company_ri"/>
         </record>
@@ -361,7 +361,7 @@
             <field name="code">1.1.04.04.010</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones ingresos brutos p. buenos aires</field>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="parent_id" ref="ri_creditos_iibb_ba"/>
             <field name="company_id" ref="company_ri"/>
         </record>
@@ -371,7 +371,7 @@
             <field name="code">1.1.04.04.020</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retención ingresos brutos p. buenos aires</field>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="parent_id" ref="ri_creditos_iibb_ba"/>
             <field name="company_id" ref="company_ri"/>
         </record>
@@ -391,7 +391,7 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones ingresos brutos p. córdoba</field>
             <field name="parent_id" ref="ri_creditos_iibb_co"/>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="company_id" ref="company_ri"/>
         </record>
 
@@ -401,7 +401,7 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retención ingresos brutos p. córdoba</field>
             <field name="parent_id" ref="ri_creditos_iibb_co"/>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="company_id" ref="company_ri"/>
         </record>
 
@@ -420,7 +420,7 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones ingresos brutos p. santa fé</field>
             <field name="parent_id" ref="ri_creditos_iibb_sf"/>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="company_id" ref="company_ri"/>
         </record>
 
@@ -430,7 +430,7 @@
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retención ingresos brutos p. santa fé</field>
             <field name="parent_id" ref="ri_creditos_iibb_sf"/>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="company_id" ref="company_ri"/>
         </record>
 
@@ -692,7 +692,7 @@
             <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">IVA débito fiscal</field>
             <field name="parent_id" ref="ri_deudas_fiscales"/>
-            <field name="reconcile" eval="True"/>
+            <field name="reconcile" eval="False"/>
             <field name="company_id" ref="company_ri"/>
         </record>
 
@@ -781,7 +781,7 @@
                 <field name="user_type" ref="account.data_account_type_payable"/>
                 <field name="name">Retención ganancias aplicada </field>
                 <field name="parent_id" ref="ri_ret_per_aplicada"/>
-                <field name="reconcile" eval="True"/>
+                <field name="reconcile" eval="False"/>
                 <field name="company_id" ref="company_ri"/>
             </record>
 
@@ -791,7 +791,7 @@
                 <field name="user_type" ref="account.data_account_type_payable"/>
                 <field name="name">Percepción ganancias aplicada </field>
                 <field name="parent_id" ref="ri_ret_per_aplicada"/>
-                <field name="reconcile" eval="True"/>
+                <field name="reconcile" eval="False"/>
                 <field name="company_id" ref="company_ri"/>
             </record>
 
@@ -801,7 +801,7 @@
                 <field name="user_type" ref="account.data_account_type_payable"/>
                 <field name="name">Retención IVA aplicada</field>
                 <field name="parent_id" ref="ri_ret_per_aplicada"/>
-                <field name="reconcile" eval="True"/>
+                <field name="reconcile" eval="False"/>
                 <field name="company_id" ref="company_ri"/>
             </record>
 
@@ -811,7 +811,7 @@
                 <field name="user_type" ref="account.data_account_type_payable"/>
                 <field name="name">Percepción IVA aplicada</field>
                 <field name="parent_id" ref="ri_ret_per_aplicada"/>
-                <field name="reconcile" eval="True"/>
+                <field name="reconcile" eval="False"/>
                 <field name="company_id" ref="company_ri"/>
             </record>
 
@@ -2395,7 +2395,7 @@
 
         <record id="ri_tax_vat_10_ventas" model="account.tax">
             <field name="company_id" ref="company_ri"/>
-            <field name="description">IVA 10.0%</field>
+            <field name="description">IVA 10.5%</field>
             <field name="name">IVA Ventas 10.5%</field>
             <field name="sequence">2</field>
             <field eval="0.105" name="amount"/>
@@ -2410,7 +2410,7 @@
 
         <record id="ri_tax_vat_10_compras" model="account.tax">
             <field name="company_id" ref="company_ri"/>
-            <field name="description">IVA 10.0%</field>
+            <field name="description">IVA 10.5%</field>
             <field name="name">IVA Compras 10.5%</field>
             <field name="sequence">2</field>
             <field eval="0.105" name="amount"/>

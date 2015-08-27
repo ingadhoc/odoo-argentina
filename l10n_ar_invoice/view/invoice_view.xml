@@ -45,6 +45,11 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
+                <!-- add document number on paymentrs tree view -->
+                <xpath expr="//tree[@string='Payments']//field[@name='move_id']" position="after">
+                    <field name="document_number"/>
+                </xpath>
+
                 <button string="Refund Invoice" position="before">
                     <button name="invoice_print" string="Print Invoice" type="object" attrs="{'invisible':[('state', '!=', 'paid')]}" groups="base.group_user"/>
                 </button>
@@ -106,6 +111,11 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
+                <!-- add document number on paymentrs tree view -->
+                <xpath expr="//tree[@string='Payments']//field[@name='move_id']" position="after">
+                    <field name="document_number"/>
+                </xpath>
+
                 <form>
                     <field name="available_journal_document_class_ids" invisible="1"/>
                     <field name="use_documents" invisible="1"/>

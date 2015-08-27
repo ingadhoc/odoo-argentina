@@ -11,6 +11,7 @@
                     <field name="sequence_type"/>
                     <field name="type"/>
                     <field name="document_class_id"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                 </search>
             </field>
         </record>
@@ -26,6 +27,7 @@
                     <field name="type"/>
                     <field name="sequence_id"/>
                     <field name="document_class_id"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                 </tree>
             </field>
         </record>
@@ -42,10 +44,10 @@
                                 <field name="type"/>
                                 <field name="sequence_type"/>
                                 <field name="padding" attrs="{'invisible':[('sequence_type','!=','manual')],'required':[('sequence_type','=','manual')]}"/>
-                                <field name="manual_prefix" attrs="{'invisible':[('sequence_type','!=','manual')],'required':[('sequence_type','=','manual')]}"/>
+                                <field name="manual_prefix"/>
                             </group>
                             <group>
-                                <field name="sequence_id" attrs="{'invisible':[('sequence_type','!=','automatic')],'required':[('sequence_type','=','automatic')]}" context="{'default_name':name}"/>
+                                <field name="sequence_id" attrs="{'invisible':[('sequence_type','!=','automatic')]}" context="{'default_name':name}"/>
                                 <field name="document_class_id"/>
                                 <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                                 <field name="sequence"/>

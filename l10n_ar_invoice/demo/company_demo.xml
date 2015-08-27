@@ -17,6 +17,7 @@
             <field name="email">info@yourcompany.example.com</field>
             <field name="website">www.example.com</field>
             <field name="supplier" eval="True"/>
+            <field name="start_date" eval="time.strftime('%Y-%m')+'-1'"/>
             <field name="image" type="base64" file="base/static/img/main_partner-image.png"/>
         </record>
         <record id="partner_mono" model="res.partner">
@@ -34,10 +35,14 @@
             <field name="email">info@yourcompany.example.com</field>
             <field name="website">www.example.com</field>
             <field name="supplier" eval="True"/>
+            <field name="start_date" eval="time.strftime('%Y-%m')+'-1'"/>
             <field name="image" type="base64" file="base/static/img/main_partner-image.png"/>
         </record>
 
     <!-- Companies -->
+        <record id="base.main_company" model="res.company">
+            <field name="use_argentinian_localization" eval="False"/>
+        </record>
         <record id="company_ri" model="res.company">
             <field name='parent_id' ref='base.main_company'/>
             <field name='currency_id' ref='base.ARS'/>

@@ -31,6 +31,7 @@ class account_voucher(models.Model):
         states={'draft': [('readonly', False)]},
         copy=False
         )
+    # TODO depreciate this field on v9
     force_number = fields.Char(
         'Force Number',
         readonly=True,

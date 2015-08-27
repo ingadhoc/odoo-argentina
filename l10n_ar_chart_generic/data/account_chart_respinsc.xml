@@ -2441,7 +2441,7 @@
         <record id="ri_tax_vat_10_ventas" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">IVA 10.0%</field>
+            <field name="description">IVA 10.5%</field>
             <field name="name">IVA Ventas 10.5%</field>
             <field name="sequence">2</field>
             <field eval="0.105" name="amount"/>
@@ -2457,7 +2457,7 @@
         <record id="ri_tax_vat_10_compras" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="description">IVA 10.0%</field>
+            <field name="description">IVA 10.5%</field>
             <field name="name">IVA Compras 10.5%</field>
             <field name="sequence">2</field>
             <field eval="0.105" name="amount"/>

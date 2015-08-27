@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_partner_bank_form_inherit">
+            <field name="name">res.partner.bank</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="account.view_partner_bank_form_inherit"/>
+            <field name="arch" type="xml">
+                <!-- we make journal mandatory for company banks because we want banks journals to be configured with wizard -->
+                <field name="journal_id" position="attributes">
+                    <attribute name="attrs">{'required': [('company_id','!=', False)]}</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

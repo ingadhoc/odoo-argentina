@@ -9,6 +9,9 @@
                 <field name="name" position="after">
                     <field name="document_number"/>
                 </field>
+                <group string="Group By">
+                    <filter string="Document Class" domain="[]" context="{'group_by':'document_class_id'}"/>
+                </group>
             </field>
         </record>
 
@@ -38,15 +41,5 @@
             </field>
         </record>
 
-        <record id="view_account_move_line_filter" model="ir.ui.view">
-            <field name="name">account.move.line.tree</field>
-            <field name="model">account.move.line</field>
-            <field name="inherit_id" ref="account.view_account_move_line_filter"/>
-            <field name="arch" type="xml">
-                <group string="Group By">
-                    <filter string="Document Class" domain="[]" context="{'group_by':'document_class_id'}"/>
-                </group>
-            </field>
-        </record>
     </data>
 </openerp>

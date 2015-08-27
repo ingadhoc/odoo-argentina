@@ -88,9 +88,15 @@
             <field name="model">account.voucher</field>
             <field name="inherit_id" ref="account_voucher.view_voucher_filter_customer_pay"/>
             <field name="arch" type="xml">
+                <field name="number" position="after">
+                    <field name="reference"/>
+                </field>
                 <xpath expr="/search/field[@name='date']" position="after">
                     <field name="receiptbook_id" string="Receiptbook" />
                 </xpath>
+                <filter string="Journal" position="after">
+                    <filter string="Receiptbook" context="{'group_by':'receiptbook_id'}"/>
+                </filter>
             </field>
         </record>   
           
@@ -99,9 +105,15 @@
             <field name="model">account.voucher</field>
             <field name="inherit_id" ref="account_voucher.view_voucher_filter_vendor_pay"/>
             <field name="arch" type="xml">
+                <field name="number" position="after">
+                    <field name="reference"/>
+                </field>
                 <xpath expr="/search/field[@name='date']" position="after">
                     <field name="receiptbook_id" string="Receiptbook" />
                 </xpath>
+                <filter string="Journal" position="after">
+                    <filter string="Receiptbook" context="{'group_by':'receiptbook_id'}"/>
+                </filter>
             </field>
         </record>            
     </data>

@@ -66,7 +66,7 @@ class account_journal_create_wizard(models.TransientModel):
                 'type': journal_type,
                 'name': name,
                 'validate_only_checks': True,
-                'check_type': payment_subtype,
+                'payment_subtype': payment_subtype,
                 'code': '%s%02d' % (code, next_number),
             })
         return vals

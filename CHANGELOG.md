@@ -28,8 +28,6 @@ Pasos con infra:
 * Luego limpiamos bd (purge modules, models, etc)
 * bajamos servicio y leventamos desde infra
 
-We have depreciated account_voucher_receipt, for those using argentinian localization may like to see odoo-argentina repo and update installing l10n_ar_account_voucher (see odoo-argentina changelog)
-
 ##### 8.0.2 to 8.0.3
 actualizar l10n_ar_base
 NOTA: para migrar de branch anteriores al 8.0.2 primero migrar a la 8.0.2

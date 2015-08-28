@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Aregentinian Receipts and Payment Orders',
-    'version': '8.0.1.1.0',
+    'version': '8.0.1.1.1',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author':  'ADHOC SA',
@@ -42,6 +42,7 @@ Aregentinian Receipts and Payment Orders
         'security/ir.model.access.csv',
         'views/account_voucher_view.xml',
         'views/account_voucher_receiptbook_view.xml',
+        'voucher_mail_data.xml',
         # now we create receips on chart installation if argentinian cia
         # 'data/receipt_data.xml',
     ],

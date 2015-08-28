@@ -29,7 +29,7 @@
             <field name="sequence_type">automatic</field>
             <field name="sequence_id" ref="sequence_customer_receipt_1_ri"/>
             <field name="document_class_id" ref="l10n_ar_invoice.dc_recibo_x"/>
-            <field name="manual_prefix"></field>
+            <field name="manual_prefix">0001-</field>
             <field name="sequence" eval="10"/>
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
         </record>
@@ -40,7 +40,7 @@
             <field name="sequence_type">automatic</field>
             <field name="sequence_id" ref="sequence_supplier_receipt_1_ri"/>
             <field name="document_class_id" ref="l10n_ar_invoice.dc_recibo_x"/>
-            <field name="manual_prefix"></field>
+            <field name="manual_prefix">0001-</field>
             <field name="sequence" eval="10"/>
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
         </record>

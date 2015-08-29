@@ -32,7 +32,7 @@
                     <field name="manual_sufix" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','manual'),('state','!=','draft')],'required':[('receiptbook_sequence_type','=','manual')]}"/>
                     <field name="next_receipt_number" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','automatic'),('state','!=','draft')]}"/>
                     <field name="document_number" attrs="{'invisible':[('state','=','draft')]}"/>
-                    <!-- we disable for now, probably depreciated -->
+                    <!-- we disable for now, probably depreciated, used by sirpeco yet -->
                     <!-- <field name="force_number" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','automatic'),('state','!=','draft')]}"/> -->
                 </field>
             </field>
@@ -54,7 +54,7 @@
                     <field name="manual_sufix" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','manual'),('state','!=','draft')],'required':[('receiptbook_sequence_type','=','manual')]}"/>
                     <field name="next_receipt_number" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','automatic'),('state','!=','draft')]}"/>
                     <field name="document_number" attrs="{'invisible':[('state','=','draft')]}"/>
-                    <!-- we disable for now, probably depreciated -->
+                    <!-- we disable for now, probably depreciated, used by sirpeco yet -->
                     <!-- <field name="force_number" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','automatic'),('state','!=','draft')]}"/> -->
                 </field>
             </field>
@@ -74,7 +74,7 @@
                     <field name="manual_prefix" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','manual'),('state','!=','draft')]}"/>
                     <field name="manual_sufix" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','manual'),('state','!=','draft')],'required':[('receiptbook_sequence_type','=','manual')]}"/>
                     <field name="next_receipt_number" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','automatic'),('state','!=','draft')]}"/>
-                    <!-- we disable for now, probably depreciated -->
+                    <!-- we disable for now, probably depreciated, used by sirpeco yet -->
                     <!-- <field name="force_number" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','automatic'),('state','!=','draft')]}"/> -->
                     <field name="document_number" attrs="{'invisible':[('state','=','draft')]}"/>
                 </field>   

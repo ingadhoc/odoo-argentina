@@ -32,6 +32,7 @@ class account_voucher(models.Model):
         copy=False
         )
     # TODO depreciate this field on v9
+    # be care that sipreco project use it
     force_number = fields.Char(
         'Force Number',
         readonly=True,

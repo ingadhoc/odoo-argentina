@@ -42,7 +42,6 @@ Aregentinian Receipts and Payment Orders
         'security/ir.model.access.csv',
         'views/account_voucher_view.xml',
         'views/account_voucher_receiptbook_view.xml',
-        'voucher_mail_data.xml',
         # now we create receips on chart installation if argentinian cia
         # 'data/receipt_data.xml',
     ],

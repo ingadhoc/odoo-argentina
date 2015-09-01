@@ -1725,6 +1725,24 @@
             <field name="company_id" ref="company_ri"/>
         </record>
 
+        <record model="account.account" id="ri_transitorias">
+            <field name="type">view</field>
+            <field name="code">6.0.00.00.000</field>
+            <field name="user_type" ref="account.data_account_type_view"/>
+            <field name="name">TRANSITORIAS</field>
+            <field name="parent_id" ref="ri_a_root"/>
+            <field name="company_id" ref="company_ri"/>
+        </record>
+
+        <record model="account.account" id="ri_transferencias_internas">
+            <field name="type">other</field>
+            <field name="code">6.0.00.00.010</field>
+            <field name="user_type" ref="l10n_ar_invoice.data_account_type_transitory"/>
+            <field name="name">Transferencias Internas</field>
+            <field name="parent_id" ref="ri_transitorias"/>
+            <field name="company_id" ref="company_ri"/>
+        </record>
+
 #
 # Tax Code Templates
 #

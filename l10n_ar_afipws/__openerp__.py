@@ -59,7 +59,7 @@ Tenga en cuenta que estas claves son personales y pueden traer conflicto
 publicarlas en los repositorios públicos.
 """,
     'depends': [
-        'base',
+        # 'base',
         # this dependency is becaouse of CUIT request and some config menus
         'l10n_ar_invoice',
         ],

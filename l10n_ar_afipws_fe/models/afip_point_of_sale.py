@@ -24,6 +24,17 @@ class afip_point_of_sale(models.Model):
         'AFIP WS',
         )
 
+    @api.constrains('type', 'afip_ws')
+    def check_afip_ws_and_type(self):
+        if self.type != 'electronic' and self.afip_ws:
+            raise Warning(_(
+                'You can only use an AFIP WS if type is "Electronic"'))
+
+    @api.onchange('type')
+    def onchange_type(self):
+        if self.type != 'electronic':
+            self.afip_ws = False
+
     @api.multi
     def check_document_local_remote_number(self):
         msg = ''

@@ -98,7 +98,7 @@ class account_invoice(models.Model):
         )
     journal_document_class_id = fields.Many2one(
         'account.journal.afip_document_class',
-        'Documents Type',
+        'Document Type',
         readonly=True,
         ondelete='restrict',
         states={'draft': [('readonly', False)]}
@@ -431,6 +431,18 @@ class account_invoice(models.Model):
         """
         # only check for argentinian localization companies
         _logger.info('Running checks related to argentinian documents')
+
+        # check invoices has document class but journal require it (we check
+        # all invoices, not only argentinian ones)
+        without_doucument_class = self.filtered(
+            lambda r: (
+                not r.afip_document_class_id and r.journal_id.use_documents))
+        if without_doucument_class:
+            raise Warning(_(
+                'Some invoices have a journal that require a document but not '
+                'document type has been selected.\n'
+                'Invoices ids: %s' % without_doucument_class.ids))
+
         argentinian_invoices = self.filtered('use_argentinian_localization')
         if not argentinian_invoices:
             return True
@@ -475,13 +487,21 @@ class account_invoice(models.Model):
             ('company_id.partner_id.responsability_id.vat_tax_required_on_sales_invoices',
                 '=', True)])
 
+        # check purchase invoice has supplier invoice number
+        purchase_invoices = argentinian_invoices.filtered(
+            lambda r: r.type in ('in_invoice', 'in_refund'))
+        purchase_invoices_without_sup_number = purchase_invoices.filtered(
+            lambda r: (not r.supplier_invoice_number))
+        if purchase_invoices_without_sup_number:
+            raise Warning(_(
+                "Some purchase invoices don't have supplier nunmber.\n"
+                "Invoices ids: %s" % purchase_invoices_without_sup_number.ids))
+
         # purchase invoice must have vat if document class letter has vat
         # discriminated
-        purchase_invoices_with_vat = self.search([(
-            'id', 'in', argentinian_invoices.ids),
-            ('type', 'in', ['in_invoice', 'in_refund']),
-            ('afip_document_class_id.document_letter_id.vat_discriminated',
-                '=', True)])
+        purchase_invoices_with_vat = purchase_invoices.filtered(
+            lambda r: (
+                r.afip_document_class_id.document_letter_id.vat_discriminated))
 
         invoices_with_vat = (
             sale_invoices_with_vat + purchase_invoices_with_vat)
@@ -498,11 +518,9 @@ class account_invoice(models.Model):
                         invoice.vat_base_amount)))
 
         # check purchase invoices that can't have vat
-        purchase_invoices_without = self.search([(
-            'id', 'in', argentinian_invoices.ids),
-            ('type', 'in', ['in_invoice', 'in_refund']),
-            ('afip_document_class_id.document_letter_id.vat_discriminated',
-                '=', False)])
+        purchase_invoices_without = purchase_invoices.filtered(
+            lambda r: (
+                not r.afip_document_class_id.document_letter_id.vat_discriminated))
         for invoice in purchase_invoices_without:
             if invoice.vat_tax_ids:
                 raise Warning(_(

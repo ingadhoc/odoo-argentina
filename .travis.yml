@@ -3,6 +3,7 @@ addons:
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
+      - libcups2-dev # for aeroo
       # FE
       - python-dev
       - swig
@@ -12,10 +13,7 @@ addons:
       - python-httplib2
 
 language: python
-
-# new options suggested by Alexandre Fayolle
-# we need sudo for apt-get install
-# sudo: false
+sudo: false
 cache: pip
 
 python:
@@ -42,11 +40,7 @@ virtualenv:
 
 install:
   # aeroo reports
-  # we install libcups2-dev here because it is not on travis whitelist so it is not installable by addons/apt/packages
-  # you can check if available on https://github.com/travis-ci/apt-package-whitelist/blob/master/ubuntu-precise
   - git clone https://github.com/aeroo/aeroo_reports.git ${HOME}/aeroo_reports
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq libcups2-dev
   - pip install git+https://github.com/aeroo/aeroolib.git@master pycups==1.9.68
 
   # odoo addons adhoc

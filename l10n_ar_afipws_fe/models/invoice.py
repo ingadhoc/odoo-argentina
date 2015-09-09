@@ -37,11 +37,11 @@ class invoice(models.Model):
         )
     afip_barcode = fields.Char(
         compute='_get_barcode',
-        string='AFIP Barcode'
+        string=_('AFIP Barcode')
         )
     afip_barcode_img = fields.Binary(
         compute='_get_barcode',
-        string='AFIP Barcode Image'
+        string=_('AFIP Barcode Image')
         )
     afip_message = fields.Text(
         string='AFIP Message',

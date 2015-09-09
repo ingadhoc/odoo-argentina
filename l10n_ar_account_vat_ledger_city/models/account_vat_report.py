@@ -26,22 +26,22 @@ class account_vat_ledger(models.Model):
         readonly=True,
         )
     vouchers_file = fields.Binary(
-        'Vouchers File',
+        _('Vouchers File'),
         compute='get_files',
         readonly=True
         )
     vouchers_filename = fields.Char(
-        'Vouchers Filename',
+        _('Vouchers Filename'),
         readonly=True,
         compute='get_files',
         )
     aliquots_file = fields.Binary(
-        'Aliquots File',
+        _('Aliquots File'),
         compute='get_files',
         readonly=True
         )
     aliquots_filename = fields.Char(
-        'Aliquots Filename',
+        _('Aliquots Filename'),
         readonly=True,
         compute='get_files',
         )

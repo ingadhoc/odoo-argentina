@@ -51,17 +51,17 @@ class afipws_certificate(models.Model):
         \n* The \'Confirmed\' state is used when a certificate is valid.\
         \n* The \'Canceled\' state is used when the key is not more used. You cant use this key again.')
     request_file = fields.Binary(
-        'Download Signed Certificate Request',
+        _('Download Signed Certificate Request'),
         compute='get_request_file',
         readonly=True
         )
     request_filename = fields.Char(
-        'Filename',
+        _('Filename'),
         readonly=True,
         compute='get_request_file',
         )
     display_name = fields.Char(
-        string='Name',
+        string=_('Name'),
         compute='_compute_display_name',
         )
 

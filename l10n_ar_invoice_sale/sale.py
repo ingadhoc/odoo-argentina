@@ -71,37 +71,37 @@ class sale_order_line(models.Model):
 
     price_unit_with_tax = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Unit Price w/ Taxes'
         )
     printed_price_unit = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Unit Price'
         )
     printed_price_net = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Net Price',
         )
     printed_price_subtotal = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Subtotal',
         )
     vat_amount = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Vat Amount',
         )
     other_taxes_amount = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Other Taxes Amount',
         )
     exempt_amount = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Exempt Amount',
         )
 
@@ -185,27 +185,27 @@ class sale_order(models.Model):
 
     printed_amount_tax = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Tax'
         )
     printed_amount_untaxed = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Subtotal'
         )
     exempt_amount = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Exempt Amount'
         )
     vat_amount = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Vat Amount'
         )
     other_taxes_amount = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Other Taxes Amount'
         )
     printed_tax_ids = fields.One2many(

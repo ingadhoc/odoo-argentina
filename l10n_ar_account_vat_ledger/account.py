@@ -3,7 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields, api
+from openerp import models, fields, api, _
 import openerp.addons.decimal_precision as dp
 
 
@@ -13,22 +13,22 @@ class afip_document_class(models.Model):
     _inherit = 'afip.document_class'
 
     amount_untaxed = fields.Float(
-        string='Untaxed',
-        digits_compute=dp.get_precision('Account'),
+        string=_('Untaxed'),
+        digits=dp.get_precision('Account'),
         compute='_get_amounts',)
     other_taxes_amount = fields.Float(
         compute="_get_amounts",
-        digits_compute=dp.get_precision('Account'),
-        string='Other Taxes Amount'
+        digits=dp.get_precision('Account'),
+        string=_('Other Taxes Amount')
         )
     vat_amount = fields.Float(
         compute="_get_amounts",
-        digits_compute=dp.get_precision('Account'),
-        string='VAT Amount'
+        digits=dp.get_precision('Account'),
+        string=_('VAT Amount')
         )
     amount_total = fields.Float(
-        string='Total',
-        digits_compute=dp.get_precision('Account'),
+        string=_('Total'),
+        digits=dp.get_precision('Account'),
         compute='_get_amounts',)
 
     @api.one

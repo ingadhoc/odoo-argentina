@@ -3,7 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, api
+from openerp import fields, models, api, _
 from OpenSSL import crypto
 import logging
 _logger = logging.getLogger(__name__)
@@ -72,7 +72,7 @@ class afipws_certificate_alias(models.Model):
         required=True,
         )
     cuit = fields.Char(
-        'CUIT',
+        _('CUIT'),
         compute='get_cuit',
         required=True,
         )

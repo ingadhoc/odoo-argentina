@@ -23,75 +23,75 @@ class account_invoice(models.Model):
         )
     invoice_number = fields.Integer(
         compute='_get_invoice_number',
-        string="Invoice Number",
+        string=_("Invoice Number"),
         )
     point_of_sale = fields.Integer(
         compute='_get_invoice_number',
-        string="Point Of Sale",
+        string=_("Point Of Sale"),
         )
     printed_amount_tax = fields.Float(
         compute="_get_taxes_and_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Tax'
+        digits=dp.get_precision('Account'),
+        string=_('Tax')
         )
     printed_amount_untaxed = fields.Float(
         compute="_get_taxes_and_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Subtotal'
+        digits=dp.get_precision('Account'),
+        string=_('Subtotal')
         )
     # no gravado en iva
     vat_untaxed = fields.Float(
         compute="_get_taxes_and_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='VAT Untaxed'
+        digits=dp.get_precision('Account'),
+        string=_('VAT Untaxed')
         )
     # exento en iva
     vat_exempt_amount = fields.Float(
         compute="_get_taxes_and_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='VAT Exempt Amount'
+        digits=dp.get_precision('Account'),
+        string=_('VAT Exempt Amount')
         )
     # von iva
     vat_amount = fields.Float(
         compute="_get_taxes_and_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='VAT Amount'
+        digits=dp.get_precision('Account'),
+        string=_('VAT Amount')
         )
     # von iva
     vat_base_amount = fields.Float(
         compute="_get_taxes_and_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='VAT Base Amount'
+        digits=dp.get_precision('Account'),
+        string=_('VAT Base Amount')
         )
     other_taxes_amount = fields.Float(
         compute="_get_taxes_and_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Other Taxes Amount'
+        digits=dp.get_precision('Account'),
+        string=_('Other Taxes Amount')
         )
     printed_tax_ids = fields.One2many(
         compute="_get_taxes_and_prices",
         comodel_name='account.invoice.tax',
-        string='Tax'
+        string=_('Tax')
         )
     vat_tax_ids = fields.One2many(
         compute="_get_taxes_and_prices",
         comodel_name='account.invoice.tax',
-        string='VAT Taxes'
+        string=_('VAT Taxes')
         )
     not_vat_tax_ids = fields.One2many(
         compute="_get_taxes_and_prices",
         comodel_name='account.invoice.tax',
-        string='Not VAT Taxes'
+        string=_('Not VAT Taxes')
         )
     vat_discriminated = fields.Boolean(
-        'Discriminate VAT?',
+        _('Discriminate VAT?'),
         compute="get_vat_discriminated",
-        help="Discriminate VAT on Invoices?",
+        help=_("Discriminate VAT on Invoices?"),
         )
     available_journal_document_class_ids = fields.Many2many(
         'account.journal.afip_document_class',
         compute='_get_available_journal_document_class',
-        string='Available Journal Document Classes',
+        string=_('Available Journal Document Classes'),
         )
     supplier_invoice_number = fields.Char(
         copy=False,
@@ -134,7 +134,7 @@ class account_invoice(models.Model):
         )
     document_number = fields.Char(
         compute='_get_document_number',
-        string='Document Number',
+        string=_('Document Number'),
         readonly=True,
         )
     next_invoice_number = fields.Integer(

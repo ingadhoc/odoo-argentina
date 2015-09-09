@@ -90,31 +90,31 @@ class account_invoice_line(models.Model):
         )
     printed_price_unit = fields.Float(
         compute="_get_taxes_and_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Unit Price'
         )
     printed_price_net = fields.Float(
         compute="_get_taxes_and_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Net Price',
         )
     printed_price_subtotal = fields.Float(
         compute="_get_taxes_and_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Subtotal',
         )
     vat_amount = fields.Float(
         compute="_get_taxes_and_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Vat Amount',
         )
     other_taxes_amount = fields.Float(
         compute="_get_taxes_and_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Other Taxes Amount',
         )
     vat_exempt_amount = fields.Float(
         compute="_get_taxes_and_prices",
-        digits_compute=dp.get_precision('Account'),
+        digits=dp.get_precision('Account'),
         string='Exempt Amount',
         )

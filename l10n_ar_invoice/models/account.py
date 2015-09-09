@@ -120,7 +120,7 @@ class afip_tax_code(models.Model):
         help='Other Taxes According AFIP',
         )
     application_code = fields.Char(
-        'Application Code',
+        _('Application Code'),
         compute='get_application_code',
         )
 
@@ -173,7 +173,7 @@ class account_move(models.Model):
 
     document_number = fields.Char(
         compute='_get_document_number',
-        string='Document Number',
+        string=_('Document Number'),
         readonly=True,
         store=True
     )

@@ -47,11 +47,11 @@ class afipws_connection(models.Model):
         readonly=False,
         )
     afip_login_url = fields.Char(
-        'AFIP Login URL',
+        _('AFIP Login URL'),
         compute='get_urls',
         )
     afip_ws_url = fields.Char(
-        'AFIP WS URL',
+        _('AFIP WS URL'),
         compute='get_urls',
         )
     type = fields.Selection(

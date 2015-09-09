@@ -1,0 +1,61 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * l10n_ar_currency_update
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: odoo-argentina (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-09 14:17+0000\n"
+"PO-Revision-Date: 2015-09-01 16:34+0000\n"
+"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"Language-Team: English (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_ar_currency_update
+#: view:currency.rate.update.service:l10n_ar_currency_update.currency_rate_update_form
+msgid "Base Rate"
+msgstr "Base Rate"
+
+#. module: l10n_ar_currency_update
+#: code:addons/l10n_ar_currency_update/models/currency_rate_update.py:76
+#, python-format
+msgid "Base currency rate should be 1.00!"
+msgstr "Base currency rate should be 1.00!"
+
+#. module: l10n_ar_currency_update
+#: model:ir.model,name:l10n_ar_currency_update.model_currency_rate_update_service
+msgid "Currency Rate Update"
+msgstr "Currency Rate Update"
+
+#. module: l10n_ar_currency_update
+#: code:addons/l10n_ar_currency_update/models/currency_rate_update.py:79
+#, python-format
+msgid "For AFIP WS base currency must be ARS!"
+msgstr "For AFIP WS base currency must be ARS!"
+
+#. module: l10n_ar_currency_update
+#: view:currency.rate.update.service:l10n_ar_currency_update.currency_rate_update_form
+msgid "New Rate ="
+msgstr "New Rate ="
+
+#. module: l10n_ar_currency_update
+#: field:currency.rate.update.service,rate_perc:0
+msgid "Rate Perc."
+msgstr "Rate Perc."
+
+#. module: l10n_ar_currency_update
+#: field:currency.rate.update.service,rate_surcharge:0
+msgid "Rate Surcharge"
+msgstr "Rate Surcharge"
+
+#. module: l10n_ar_currency_update
+#: code:addons/l10n_ar_currency_update/models/currency_rate_update.py:74
+#, python-format
+msgid "There is no base currency set!"
+msgstr "There is no base currency set!"

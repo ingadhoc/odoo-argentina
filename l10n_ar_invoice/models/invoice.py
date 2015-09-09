@@ -424,14 +424,7 @@ class account_invoice(models.Model):
                     ' and Company!'))
 
     @api.multi
-    def check_argentinian_invoice_taxes(self):
-        """
-        We make theis function to be used as a constraint but also to be called
-        from other models like vat citi
-        """
-        # only check for argentinian localization companies
-        _logger.info('Running checks related to argentinian documents')
-
+    def check_use_documents(self):
         # check invoices has document class but journal require it (we check
         # all invoices, not only argentinian ones)
         without_doucument_class = self.filtered(
@@ -443,7 +436,21 @@ class account_invoice(models.Model):
                 'document type has been selected.\n'
                 'Invoices ids: %s' % without_doucument_class.ids))
 
-        argentinian_invoices = self.filtered('use_argentinian_localization')
+    @api.multi
+    def check_argentinian_invoice_taxes(self):
+        """
+        We make theis function to be used as a constraint but also to be called
+        from other models like vat citi
+        """
+        # only check for argentinian localization companies
+        _logger.info('Running checks related to argentinian documents')
+
+        # we consider argentinian invoices the ones from companies with
+        # use_argentinian_localization and that belongs to a journal with
+        # use_documents
+        argentinian_invoices = self.filtered(
+            lambda r: (
+                r.use_argentinian_localization and r.use_documents))
         if not argentinian_invoices:
             return True
 
@@ -554,6 +561,7 @@ class account_invoice(models.Model):
 
     @api.multi
     def action_number(self):
+        self.check_use_documents()
         self.check_argentinian_invoice_taxes()
         obj_sequence = self.env['ir.sequence']
 

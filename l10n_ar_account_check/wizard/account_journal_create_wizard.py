@@ -11,8 +11,8 @@ class account_journal_create_wizard(models.TransientModel):
 
     type = fields.Selection(
         selection_add=[
-            ('issue_check', 'Issue Check'),
-            ('third_check', 'Third Check'),
+            ('issue_check', _('Issue Check')),
+            ('third_check', _('Third Check')),
             ],
         )
 

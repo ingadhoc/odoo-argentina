@@ -49,27 +49,27 @@ class account_vat_ledger(models.Model):
     note = fields.Html("Notes")
 # Computed fields
     name = fields.Char(
-        'Titile',
+        _('Titile'),
         compute='_get_name')
     invoice_ids = fields.Many2many(
         'account.invoice',
-        string="Invoices",
+        string=_("Invoices"),
         compute="_get_data")
     document_class_ids = fields.Many2many(
         'afip.document_class',
-        string="Document Classes",
+        string=_("Document Classes"),
         compute="_get_data")
     vat_tax_code_ids = fields.Many2many(
         'account.tax.code',
-        string="VAT Tax Codes",
+        string=_("VAT Tax Codes"),
         compute="_get_data")
     other_tax_code_ids = fields.Many2many(
         'account.tax.code',
-        string="Other Tax Codes",
+        string=_("Other Tax Codes"),
         compute="_get_data")
     responsability_ids = fields.Many2many(
         'afip.responsability',
-        string="Responsabilities",
+        string=_("Responsabilities"),
         compute="_get_data")
 
     @api.one

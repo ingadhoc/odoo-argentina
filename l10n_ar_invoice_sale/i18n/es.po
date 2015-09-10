@@ -1,30 +1,21 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_ar_invoice_sale
-#
+# * l10n_ar_invoice_sale
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-30 20:43+0000\n"
-"PO-Revision-Date: 2014-10-30 17:57-0300\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2015-09-09 14:17+0000\n"
+"PO-Revision-Date: 2015-09-01 17:23+0000\n"
+"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 1.5.4\n"
-
-#. module: l10n_ar_invoice_sale
-#: field:argentinian.base.config.settings,module_l10n_ar_account_vat_ledger:0
-msgid "Add Account VAT Ledger models and report."
-msgstr "Add Account VAT Ledger models and report."
-
-#. module: l10n_ar_invoice_sale
-#: field:argentinian.base.config.settings,module_l10n_ar_invoice_sale:0
-msgid "Add availabilty to use VAT included or not on sales"
-msgstr "Agregar posibildiad de usar IVA incluido o no en impuestos"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_ar_invoice_sale
 #: model:ir.model,name:l10n_ar_invoice_sale.model_res_company
@@ -34,61 +25,24 @@ msgstr "Compañías"
 #. module: l10n_ar_invoice_sale
 #: help:res.company,sale_allow_vat_no_discrimination:0
 msgid ""
-"Definie behaviour on sales orders and quoatations reports. Discrimination or "
-"not will depend in partner and company responsability and AFIP letters "
+"Definie behaviour on sales orders and quoatations reports. Discrimination or"
+" not will depend in partner and company responsability and AFIP letters "
 "setup:            * If False, then VAT will be discriminated like always in "
 "odoo            * If No Discriminate Default, if no match found it won't "
 "discriminate by default            * If Discriminate Default, if no match "
 "found it would discriminate by default            "
+msgstr "Defina el compartamiento en los reportes de presupuestos y ordenes de venta. La discriminación o no depende en la reaponsabilidad del partner y la compañía, también de la configuración de las letras AFIP:            * Falso: el IVA se discrimna como siempre en odoo            * Si, No Discriminar por Defecto, si no se encuentra un matchno no se va a discriminar por defecto            * Si, Discriminar por Defecto, si no se encuentra un matchno se va a discriminar por defecto"
+
+#. module: l10n_ar_invoice_sale
+#: view:account.invoice.report:l10n_ar_invoice_sale.view_account_invoice_report_search_inherit
+#: field:account.invoice.report,afip_document_class_id:0
+msgid "Document Type"
 msgstr ""
-"Defina el compartamiento en los reportes de presupuestos y ordenes de venta. "
-"La discriminación o no depende en la reaponsabilidad del partner y la "
-"compañía, también de la configuración de las letras AFIP:            * "
-"Falso: el IVA se discrimna como siempre en odoo            * Si, No "
-"Discriminar por Defecto, si no se encuentra un matchno no se va a "
-"discriminar por defecto            * Si, Discriminar por Defecto, si no se "
-"encuentra un matchno se va a discriminar por defecto"
 
 #. module: l10n_ar_invoice_sale
-#: help:sale.order,vat_discriminated:0
-msgid "Discriminate VAT on Quotations and Sale Orders?"
-msgstr "Discriminar IVA en Presupuesto y Órdenes de Venta"
-
-#. module: l10n_ar_invoice_sale
-#: field:sale.order,vat_discriminated:0
-msgid "Discriminate VAT?"
-msgstr "Discriminar IVA?"
-
-#. module: l10n_ar_invoice_sale
-#: field:sale.order,exempt_amount:0 field:sale.order.line,exempt_amount:0
-msgid "Exempt Amount"
-msgstr "Monto Excento"
-
-#. module: l10n_ar_invoice_sale
-#: help:argentinian.base.config.settings,module_l10n_ar_account_vat_ledger:0
-msgid "Installs the l10n_ar_account_vat_ledger module. "
-msgstr "Installs the l10n_ar_account_vat_ledger module. "
-
-#. module: l10n_ar_invoice_sale
-#: help:argentinian.base.config.settings,module_l10n_ar_invoice_sale:0
-msgid "Installs the l10n_ar_invoice_sale module."
-msgstr "Installs the l10n_ar_invoice_sale module."
-
-#. module: l10n_ar_invoice_sale
-#: field:sale.order.line,printed_price_net:0
-msgid "Net Price"
-msgstr "Precio Neto"
-
-#. module: l10n_ar_invoice_sale
-#: field:sale.order,other_taxes_amount:0
-#: field:sale.order.line,other_taxes_amount:0
-msgid "Other Taxes Amount"
-msgstr "Monto de Otros Impuestos"
-
-#. module: l10n_ar_invoice_sale
-#: field:sale.order.line,price_reduce:0
-msgid "Price Reduce"
-msgstr "Price Reduce"
+#: model:ir.model,name:l10n_ar_invoice_sale.model_account_invoice_report
+msgid "Invoices Statistics"
+msgstr ""
 
 #. module: l10n_ar_invoice_sale
 #: field:res.company,sale_allow_vat_no_discrimination:0
@@ -109,42 +63,6 @@ msgstr "Orden de Ventas"
 #: model:ir.model,name:l10n_ar_invoice_sale.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de Pedido de Ventas"
-
-#. module: l10n_ar_invoice_sale
-#: field:argentinian.base.config.settings,group_price_unit_with_tax:0
-msgid "Show Unit Price w/ Taxes On sale Order Lines"
-msgstr "Show Unit Price w/ Taxes On sale Order Lines"
-
-#. module: l10n_ar_invoice_sale
-#: field:sale.order,printed_amount_untaxed:0
-#: field:sale.order.line,printed_price_subtotal:0
-msgid "Subtotal"
-msgstr "Subtotal"
-
-#. module: l10n_ar_invoice_sale
-#: field:sale.order,printed_amount_tax:0 field:sale.order,printed_tax_ids:0
-msgid "Tax"
-msgstr "Impuesto"
-
-#. module: l10n_ar_invoice_sale
-#: field:sale.order.line,printed_price_unit:0
-msgid "Unit Price"
-msgstr "Precio Unitario"
-
-#. module: l10n_ar_invoice_sale
-#: field:sale.order.line,price_unit_with_tax:0
-msgid "Unit Price w/ Taxes"
-msgstr "Precio Unitario C/ Imp"
-
-#. module: l10n_ar_invoice_sale
-#: field:sale.order,vat_tax_ids:0
-msgid "VAT Taxes"
-msgstr "IVA"
-
-#. module: l10n_ar_invoice_sale
-#: field:sale.order,vat_amount:0 field:sale.order.line,vat_amount:0
-msgid "Vat Amount"
-msgstr "Monto IVA"
 
 #. module: l10n_ar_invoice_sale
 #: selection:res.company,sale_allow_vat_no_discrimination:0

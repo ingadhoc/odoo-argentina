@@ -1,0 +1,29 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * l10n_ar_aeroo_invoice
+# 
+# Translators:
+# Javier Diez <jd@ingadhoc.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: odoo-argentina (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-09 14:18+0000\n"
+"PO-Revision-Date: 2015-09-03 17:41+0000\n"
+"Last-Translator: Javier Diez <jd@ingadhoc.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_ar_aeroo_invoice
+#: model:ir.actions.report.xml,name:l10n_ar_aeroo_invoice.action_aeroo_report_ar_invoice
+msgid "Argentinian Aeroo Invoice"
+msgstr "Factura Argentina de Aeroo"
+
+#. module: l10n_ar_aeroo_invoice
+#: field:ir.actions.report.xml,afip_document_class_ids:0
+msgid "Document Types"
+msgstr "Tipos de documentos"

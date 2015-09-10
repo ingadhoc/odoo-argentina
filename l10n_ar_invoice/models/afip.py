@@ -68,7 +68,7 @@ class afip_point_of_sale(models.Model):
     journal_document_class_ids = fields.One2many(
         'account.journal.afip_document_class',
         compute='get_journal_document_class_ids',
-        string='Documents Classes',
+        string=_('Documents Classes'),
         )
 
     @api.one

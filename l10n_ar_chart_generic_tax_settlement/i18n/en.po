@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * l10n_ar_chart_generic_tax_settlement
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: odoo-argentina (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-09 14:17+0000\n"
+"PO-Revision-Date: 2015-09-01 19:03+0000\n"
+"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"Language-Team: English (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_ar_chart_generic_tax_settlement
+#: model:account.journal,name:l10n_ar_chart_generic_tax_settlement.journal_proffit_settlement
+msgid "Liquidacion Ganancias"
+msgstr "Liquidacion Ganancias"
+
+#. module: l10n_ar_chart_generic_tax_settlement
+#: model:account.journal,name:l10n_ar_chart_generic_tax_settlement.journal_vat_settlement
+msgid "Liquidacion IVA"
+msgstr "Liquidacion IVA"
+
+#. module: l10n_ar_chart_generic_tax_settlement
+#: model:account.journal,name:l10n_ar_chart_generic_tax_settlement.journal_ret_per_proffit_settlement
+msgid "Liquidacion Ret/Perc Ganancias Aplicadas"
+msgstr "Liquidacion Ret/Perc Ganancias Aplicadas"
+
+#. module: l10n_ar_chart_generic_tax_settlement
+#: model:account.journal,name:l10n_ar_chart_generic_tax_settlement.journal_ret_per_ganancias_sufrida_settlement
+msgid "Liquidacion Ret/Perc Ganancias Sufridas"
+msgstr "Liquidacion Ret/Perc Ganancias Sufridas"
+
+#. module: l10n_ar_chart_generic_tax_settlement
+#: model:account.journal,name:l10n_ar_chart_generic_tax_settlement.journal_ret_per_iva_settlement
+msgid "Liquidacion Ret/Perc IVA Aplicadas"
+msgstr "Liquidacion Ret/Perc IVA Aplicadas"
+
+#. module: l10n_ar_chart_generic_tax_settlement
+#: model:account.journal,name:l10n_ar_chart_generic_tax_settlement.journal_ret_per_iva_sufrida_settlement
+msgid "Liquidacion Ret/Perc IVA Sufridas"
+msgstr "Liquidacion Ret/Perc IVA Sufridas"

@@ -1,22 +1,24 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* l10n_ar_bank
-#
+# * l10n_ar_bank
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 8.0alpha1\n"
+"Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-30 12:38+0000\n"
-"PO-Revision-Date: 2014-05-30 12:38+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2015-09-09 14:17+0000\n"
+"PO-Revision-Date: 2015-09-01 17:24+0000\n"
+"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_ar_bank
-#: view:l10nar.banks.wizard:0
+#: view:l10nar.banks.wizard:l10n_ar_bank.l10n_ar_banks_wizard
 msgid "ATTENTION!"
 msgstr "ATENCION!"
 
@@ -40,14 +42,26 @@ msgid "Banks total processed"
 msgstr "Total de Bancos procesados"
 
 #. module: l10n_ar_bank
-#: view:l10nar.banks.wizard:0
+#: view:l10nar.banks.wizard:l10n_ar_bank.l10n_ar_banks_wizard
 msgid "Cancel"
 msgstr "Cancel"
 
 #. module: l10n_ar_bank
-#: view:l10nar.banks.wizard.result:0
+#: view:l10nar.banks.wizard.result:l10n_ar_bank.l10n_ar_banks_wizard_result
 msgid "Close"
 msgstr "Cerrar"
+
+#. module: l10n_ar_bank
+#: field:l10nar.banks.wizard,create_uid:0
+#: field:l10nar.banks.wizard.result,create_uid:0
+msgid "Created by"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: field:l10nar.banks.wizard,create_date:0
+#: field:l10nar.banks.wizard.result,create_date:0
+msgid "Created on"
+msgstr ""
 
 #. module: l10n_ar_bank
 #: code:addons/l10n_ar_bank/wizard/wiz_l10n_ar_bank.py:133
@@ -57,9 +71,26 @@ msgid "Desactivated Banks"
 msgstr "Bancos desactivados"
 
 #. module: l10n_ar_bank
-#: view:l10nar.banks.wizard:0
+#: field:l10nar.banks.wizard,id:0 field:l10nar.banks.wizard.result,id:0
+msgid "ID"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: view:l10nar.banks.wizard:l10n_ar_bank.l10n_ar_banks_wizard
 msgid "In this update the Banks of Argentina"
 msgstr "Está a punto de actualizar los datos de los bancos de Argentina"
+
+#. module: l10n_ar_bank
+#: field:l10nar.banks.wizard,write_uid:0
+#: field:l10nar.banks.wizard.result,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: field:l10nar.banks.wizard,write_date:0
+#: field:l10nar.banks.wizard.result,write_date:0
+msgid "Last Updated on"
+msgstr ""
 
 #. module: l10n_ar_bank
 #: code:addons/l10n_ar_bank/wizard/wiz_l10n_ar_bank.py:132
@@ -69,21 +100,14 @@ msgid "New Banks"
 msgstr "Nuevos Bancos"
 
 #. module: l10n_ar_bank
-#: view:l10nar.banks.wizard.result:0
+#: view:l10nar.banks.wizard.result:l10n_ar_bank.l10n_ar_banks_wizard_result
 msgid "Results of Updates:"
 msgstr "Resultado de la Actualización:"
 
 #. module: l10n_ar_bank
-#: view:l10nar.banks.wizard:0
+#: view:l10nar.banks.wizard:l10n_ar_bank.l10n_ar_banks_wizard
 msgid "Take data and Update"
 msgstr "Tomar datos y Actualizar"
-
-#. module: l10n_ar_bank
-#: code:addons/l10n_ar_bank/l10n_ar_bank.py:29
-#: field:res.bank,update:0
-#, python-format
-msgid "Update"
-msgstr "Actualizado"
 
 #. module: l10n_ar_bank
 #: model:ir.actions.act_window,name:l10n_ar_bank.action_l10n_ar_banks_wizard
@@ -91,15 +115,18 @@ msgid "Update Banks from BCRA"
 msgstr "Actualizador de Bancos desde BCRA"
 
 #. module: l10n_ar_bank
-#: view:l10nar.banks.wizard:0
-#: view:l10nar.banks.wizard.result:0
+#: field:res.bank,update_date:0
+msgid "Update Date"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: view:l10nar.banks.wizard:l10n_ar_bank.l10n_ar_banks_wizard
+#: view:l10nar.banks.wizard.result:l10n_ar_bank.l10n_ar_banks_wizard_result
 msgid "Updater Banks from Central Bank of Argentina"
 msgstr "Actualizador de Bancos desde el Banco Central de la Rep. Argentina"
 
 #. module: l10n_ar_bank
-#: code:addons/l10n_ar_bank/l10n_ar_bank.py:30
 #: field:res.bank,vat:0
-#, python-format
 msgid "VAT"
 msgstr "CUIT"
 
@@ -109,17 +136,6 @@ msgid "Value Added Tax number."
 msgstr "CUIT de la entidad."
 
 #. module: l10n_ar_bank
-#: model:ir.model,name:l10n_ar_bank.model_l10nar_banks_wizard
-msgid "l10nar.banks.wizard"
-msgstr "l10nar.banks.wizard"
-
-#. module: l10n_ar_bank
-#: model:ir.model,name:l10n_ar_bank.model_l10nar_banks_wizard_result
-msgid "l10nar.banks.wizard.result"
-msgstr "l10nar.banks.wizard.result"
-
-#. module: l10n_ar_bank
-#: view:l10nar.banks.wizard:0
+#: view:l10nar.banks.wizard:l10n_ar_bank.l10n_ar_banks_wizard
 msgid "with On-Line data taken from Central Bank of Argentina."
 msgstr "con los datos publicados On-Line en el Banco Central de la Rep. Argentina."
-

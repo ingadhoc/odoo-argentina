@@ -10,7 +10,7 @@
                 <field name="ref" position="replace">
                     </field>
                 <field name="category_id" position="before">
-                    <field name="ref"/>
+                    <field name="ref" placeholder="Reference/Name fantasy"/>
                 </field>
                 <field name="website" position="after">
                     <label for="document_number"/>

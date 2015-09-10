@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 14:18+0000\n"
-"PO-Revision-Date: 2015-09-01 17:24+0000\n"
+"POT-Creation-Date: 2015-09-09 19:52+0000\n"
+"PO-Revision-Date: 2015-09-09 19:52+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -70,6 +70,12 @@ msgid "Date of the last message posted on the record."
 msgstr "Fecha del último mensaje publicado en el registro."
 
 #. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:60
+#, python-format
+msgid "Document Classes"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
 #: selection:account.vat.ledger,state:0
 msgid "Draft"
 msgstr "Borrador"
@@ -108,6 +114,8 @@ msgstr "Si se marca nuevos mensajes requieren su atención."
 
 #. module: l10n_ar_account_vat_ledger
 #: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:56
+#, python-format
 msgid "Invoices"
 msgstr "Facturas"
 
@@ -164,6 +172,18 @@ msgid "Notes"
 msgstr "Notas"
 
 #. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:68
+#, python-format
+msgid "Other Tax Codes"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account.py:22
+#, python-format
+msgid "Other Taxes Amount"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
 #: field:account.vat.ledger,period_id:0
 msgid "Period"
 msgstr "Periodo"
@@ -206,6 +226,12 @@ msgid "Purchases VAT Ledger"
 msgstr "Libro de IVA Compras"
 
 #. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:72
+#, python-format
+msgid "Responsabilities"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
 #: selection:account.vat.ledger,type:0
 msgid "Sale"
 msgstr "Ventas"
@@ -239,6 +265,12 @@ msgid "Tax Code"
 msgstr "Código de impuesto"
 
 #. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:52
+#, python-format
+msgid "Titile"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
 #: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
 msgid "To Draft"
 msgstr "A Borrador"
@@ -257,6 +289,8 @@ msgstr "Para marcar como \"Presentado\" primero debe cargar el archivo en el cam
 
 #. module: l10n_ar_account_vat_ledger
 #: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: code:addons/l10n_ar_account_vat_ledger/account.py:30
+#, python-format
 msgid "Total"
 msgstr "Total"
 
@@ -271,6 +305,18 @@ msgid "Unread Messages"
 msgstr "Mensajes no leídos"
 
 #. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account.py:16
+#, python-format
+msgid "Untaxed"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account.py:27
+#, python-format
+msgid "VAT Amount"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
 #: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
 #: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_tree
 msgid "VAT Ledger"
@@ -280,3 +326,9 @@ msgstr "Libro de IVA"
 #: model:ir.ui.menu,name:l10n_ar_account_vat_ledger.account_vat_ledger_parent_menu
 msgid "VAT Ledgers"
 msgstr "Libros de IVA"
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:64
+#, python-format
+msgid "VAT Tax Codes"
+msgstr ""

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 14:17+0000\n"
-"PO-Revision-Date: 2015-09-01 16:35+0000\n"
+"POT-Creation-Date: 2015-09-09 19:52+0000\n"
+"PO-Revision-Date: 2015-09-09 19:53+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: English (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
@@ -65,6 +65,12 @@ msgid "AFIP Distingish Name / Alias"
 msgstr "AFIP Distingish Name / Alias"
 
 #. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:50
+#, python-format
+msgid "AFIP Login URL"
+msgstr "AFIP Login URL"
+
+#. module: l10n_ar_afipws
 #: view:afipws.connection:l10n_ar_afipws.view_afipws_auth_form
 msgid "AFIP Servers"
 msgstr "AFIP Servers"
@@ -84,6 +90,12 @@ msgstr "AFIP WS - Upload Certificate"
 #: model:ir.model,name:l10n_ar_afipws.model_afipws_connection
 msgid "AFIP WS Connection"
 msgstr "AFIP WS Connection"
+
+#. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:54
+#, python-format
+msgid "AFIP WS URL"
+msgstr "AFIP WS URL"
 
 #. module: l10n_ar_afipws
 #: code:addons/l10n_ar_afipws/models/res_company.py:191
@@ -119,6 +131,12 @@ msgstr "Batch Sequence"
 #: selection:afipws.connection,afip_ws:0
 msgid "Bono Fiscal -con detalle- RG2557 (WSMTXCA)"
 msgstr "Bono Fiscal -con detalle- RG2557 (WSMTXCA)"
+
+#. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/afipws_certificate_alias.py:75
+#, python-format
+msgid "CUIT"
+msgstr "CUIT"
 
 #. module: l10n_ar_afipws
 #: view:afipws.certificate:l10n_ar_afipws.view_afipws_certificate_form
@@ -265,6 +283,12 @@ msgid "Department"
 msgstr "Department"
 
 #. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:54
+#, python-format
+msgid "Download Signed Certificate Request"
+msgstr "Download Signed Certificate Request"
+
+#. module: l10n_ar_afipws
 #: selection:afipws.certificate,state:0
 #: selection:afipws.certificate_alias,state:0
 msgid "Draft"
@@ -287,6 +311,12 @@ msgstr "Expiration Time"
 #: selection:afipws.connection,afip_ws:0
 msgid "Exportación -con detalle- RG2758 (WSFEXv1)"
 msgstr "Exportación -con detalle- RG2758 (WSFEXv1)"
+
+#. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:59
+#, python-format
+msgid "Filename"
+msgstr "Filename"
 
 #. module: l10n_ar_afipws
 #: field:afipws.connection,generationtime:0
@@ -359,6 +389,12 @@ msgstr "Mercado interno -con detalle- RG2904 (WSMTXCA)"
 #: selection:afipws.connection,afip_ws:0
 msgid "Mercado interno -sin detalle- RG2485 (WSFEv1)"
 msgstr "Mercado interno -sin detalle- RG2485 (WSFEv1)"
+
+#. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:64
+#, python-format
+msgid "Name"
+msgstr "Name"
 
 #. module: l10n_ar_afipws
 #: code:addons/l10n_ar_afipws/models/res_company.py:103

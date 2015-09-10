@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 14:18+0000\n"
-"PO-Revision-Date: 2015-09-01 16:35+0000\n"
+"POT-Creation-Date: 2015-09-09 19:52+0000\n"
+"PO-Revision-Date: 2015-09-09 19:53+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: English (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
@@ -27,6 +27,18 @@ msgstr "Account VAT Ledger"
 #, python-format
 msgid "Alicuots_%s_%s.txt"
 msgstr "Alicuots_%s_%s.txt"
+
+#. module: l10n_ar_account_vat_ledger_city
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:39
+#, python-format
+msgid "Aliquots File"
+msgstr "Aliquots File"
+
+#. module: l10n_ar_account_vat_ledger_city
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:44
+#, python-format
+msgid "Aliquots Filename"
+msgstr "Aliquots Filename"
 
 #. module: l10n_ar_account_vat_ledger_city
 #: selection:account.vat.ledger,prorate_type:0
@@ -103,6 +115,18 @@ msgstr "Se deberá indicar si la presentación es Original (00) o Rectificativa 
 #: field:account.vat.ledger,sequence:0
 msgid "Sequence"
 msgstr "Sequence"
+
+#. module: l10n_ar_account_vat_ledger_city
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:29
+#, python-format
+msgid "Vouchers File"
+msgstr "Vouchers File"
+
+#. module: l10n_ar_account_vat_ledger_city
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:34
+#, python-format
+msgid "Vouchers Filename"
+msgstr "Vouchers Filename"
 
 #. module: l10n_ar_account_vat_ledger_city
 #: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:84

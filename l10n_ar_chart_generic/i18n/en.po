@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 14:17+0000\n"
-"PO-Revision-Date: 2015-09-09 14:18+0000\n"
+"POT-Creation-Date: 2015-09-09 19:52+0000\n"
+"PO-Revision-Date: 2015-09-09 19:09+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: English (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
@@ -1025,12 +1025,8 @@ msgid "OTROS CRÉDITOS"
 msgstr "OTROS CRÉDITOS"
 
 #. module: l10n_ar_chart_generic
-#: model:account.account.template,name:l10n_ar_chart_generic.ri_otros_gastos
-msgid "OTROS GASTOS"
-msgstr "OTROS GASTOS"
-
-#. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.mt_otros_gastos
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_otros_gastos
 msgid "OTROS GASTOS "
 msgstr "OTROS GASTOS "
 
@@ -1606,19 +1602,9 @@ msgid "Sueldos y SAC operativos"
 msgstr "Sueldos y SAC operativos"
 
 #. module: l10n_ar_chart_generic
-#: model:account.account.template,name:l10n_ar_chart_generic.ri_transitorias
-msgid "TRANSITORIAS"
-msgstr "TRANSITORIAS"
-
-#. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.ri_tarjeta_de_credito_pagar
 msgid "Tarjeta de crédito a pagar xxxxx"
 msgstr "Tarjeta de crédito a pagar xxxxx"
-
-#. module: l10n_ar_chart_generic
-#: model:account.account.template,name:l10n_ar_chart_generic.ri_transferencias_internas
-msgid "Transferencias Internas"
-msgstr "Transferencias Internas"
 
 #. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.mt_ventas

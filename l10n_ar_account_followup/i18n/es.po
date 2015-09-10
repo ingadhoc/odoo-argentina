@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 14:18+0000\n"
+"POT-Creation-Date: 2015-09-09 19:52+0000\n"
 "PO-Revision-Date: 2015-09-01 17:24+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
@@ -23,14 +23,14 @@ msgid "Account Move line"
 msgstr ""
 
 #. module: l10n_ar_account_followup
-#: code:addons/l10n_ar_account_followup/account_followup.py:175
+#: code:addons/l10n_ar_account_followup/account_followup.py:176
 #: view:website:account_followup.report_followup
 #, python-format
 msgid "Amount"
 msgstr "Monto"
 
 #. module: l10n_ar_account_followup
-#: code:addons/l10n_ar_account_followup/account_followup.py:196
+#: code:addons/l10n_ar_account_followup/account_followup.py:197
 #, python-format
 msgid "Amount due"
 msgstr "Monto Adeudado"
@@ -66,20 +66,20 @@ msgid "Document"
 msgstr "Documento"
 
 #. module: l10n_ar_account_followup
-#: code:addons/l10n_ar_account_followup/account_followup.py:172
+#: code:addons/l10n_ar_account_followup/account_followup.py:173
 #, python-format
 msgid "Document Number"
 msgstr "Número de Document"
 
 #. module: l10n_ar_account_followup
-#: code:addons/l10n_ar_account_followup/account_followup.py:174
+#: code:addons/l10n_ar_account_followup/account_followup.py:175
 #, python-format
 msgid "Due Date"
 msgstr "Fecha de Venc."
 
 #. module: l10n_ar_account_followup
-#: code:addons/l10n_ar_account_followup/account_followup.py:212
-#: code:addons/l10n_ar_account_followup/account_followup.py:218
+#: code:addons/l10n_ar_account_followup/account_followup.py:213
+#: code:addons/l10n_ar_account_followup/account_followup.py:219
 #: code:addons/l10n_ar_account_followup/account_followup_print.py:67
 #, python-format
 msgid "Error!"
@@ -98,7 +98,7 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_account_followup
-#: code:addons/l10n_ar_account_followup/account_followup.py:171
+#: code:addons/l10n_ar_account_followup/account_followup.py:172
 #: view:website:account_followup.report_followup
 #, python-format
 msgid "Invoice Date"
@@ -120,7 +120,7 @@ msgid "Li."
 msgstr "Li."
 
 #. module: l10n_ar_account_followup
-#: code:addons/l10n_ar_account_followup/account_followup.py:176
+#: code:addons/l10n_ar_account_followup/account_followup.py:177
 #, python-format
 msgid "Lit."
 msgstr "Lit."
@@ -146,13 +146,13 @@ msgid "Print overdue payments report independent of follow-up line"
 msgstr ""
 
 #. module: l10n_ar_account_followup
-#: code:addons/l10n_ar_account_followup/account_followup.py:213
+#: code:addons/l10n_ar_account_followup/account_followup.py:214
 #, python-format
 msgid "Printed overdue payments report"
 msgstr ""
 
 #. module: l10n_ar_account_followup
-#: code:addons/l10n_ar_account_followup/account_followup.py:173
+#: code:addons/l10n_ar_account_followup/account_followup.py:174
 #: view:website:account_followup.report_followup
 #, python-format
 msgid "Reference"
@@ -178,7 +178,7 @@ msgid ""
 msgstr "El plan de seguimiento definido para la compañía catual no tiene ninguna acción de seguimiento."
 
 #. module: l10n_ar_account_followup
-#: code:addons/l10n_ar_account_followup/account_followup.py:212
+#: code:addons/l10n_ar_account_followup/account_followup.py:213
 #, python-format
 msgid ""
 "The partner does not have any accounting entries to print in the overdue "
@@ -186,7 +186,7 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_account_followup
-#: code:addons/l10n_ar_account_followup/account_followup.py:218
+#: code:addons/l10n_ar_account_followup/account_followup.py:219
 #, python-format
 msgid "There is no followup plan defined for the current company."
 msgstr ""

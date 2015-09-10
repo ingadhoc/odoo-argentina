@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 14:17+0000\n"
-"PO-Revision-Date: 2015-09-09 14:18+0000\n"
+"POT-Creation-Date: 2015-09-09 19:52+0000\n"
+"PO-Revision-Date: 2015-09-09 19:53+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -411,6 +411,12 @@ msgid "Application"
 msgstr ""
 
 #. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/account.py:123
+#, python-format
+msgid "Application Code"
+msgstr ""
+
+#. module: l10n_ar_invoice
 #: model:account.account,name:l10n_ar_invoice.ri_articulos_libreria
 msgid "Artículos librería administracion"
 msgstr ""
@@ -418,6 +424,12 @@ msgstr ""
 #. module: l10n_ar_invoice
 #: model:account.account,name:l10n_ar_invoice.ri_autonomos_a_pagar
 msgid "Autonomos a pagar"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/invoice.py:94
+#, python-format
+msgid "Available Journal Document Classes"
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -675,7 +687,7 @@ msgid "Company id"
 msgstr "ID de Compañía"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:671
+#: code:addons/l10n_ar_invoice/models/invoice.py:645
 #, python-format
 msgid "Compose Email"
 msgstr ""
@@ -905,6 +917,18 @@ msgid "Discount Amount"
 msgstr "Monto de Descuento"
 
 #. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/invoice.py:89
+#, python-format
+msgid "Discriminate VAT on Invoices?"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/invoice.py:87
+#, python-format
+msgid "Discriminate VAT?"
+msgstr ""
+
+#. module: l10n_ar_invoice
 #: view:account.move.line:l10n_ar_invoice.view_account_move_line_filter
 msgid "Document Class"
 msgstr "Clase de Documento"
@@ -934,6 +958,9 @@ msgstr ""
 #: field:account.move,afip_document_number:0
 #: field:account.move,document_number:0
 #: field:account.move.line,document_number:0
+#: code:addons/l10n_ar_invoice/models/account.py:176
+#: code:addons/l10n_ar_invoice/models/invoice.py:137
+#, python-format
 msgid "Document Number"
 msgstr "Número de Documento"
 
@@ -945,7 +972,6 @@ msgstr ""
 #. module: l10n_ar_invoice
 #: view:account.invoice:l10n_ar_invoice.view_account_invoice_filter
 #: field:account.invoice,afip_document_class_id:0
-#: field:account.invoice,journal_document_class_id:0
 #: field:account.journal.afip_document_class,afip_document_class_id:0
 #: field:account.move,document_class_id:0
 #: field:account.move.line,document_class_id:0
@@ -970,9 +996,16 @@ msgstr "Documentos"
 
 #. module: l10n_ar_invoice
 #: field:account.journal,journal_document_class_ids:0
+#: code:addons/l10n_ar_invoice/models/afip.py:71
 #: view:afip.point_of_sale:l10n_ar_invoice.view_afip_point_of_sale_form
+#, python-format
 msgid "Documents Classes"
 msgstr "Clases de Documentos"
+
+#. module: l10n_ar_invoice
+#: field:account.invoice,journal_document_class_id:0
+msgid "Documents Type"
+msgstr ""
 
 #. module: l10n_ar_invoice
 #: selection:account.invoice.line.report,state:0
@@ -1016,7 +1049,7 @@ msgid "Entry Sequence"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:585
+#: code:addons/l10n_ar_invoice/models/invoice.py:559
 #, python-format
 msgid ""
 "Error!. Please define sequence on the journal related documents to this "
@@ -1484,7 +1517,7 @@ msgid "If not configured for bank/cash journals it will be created"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:548
+#: code:addons/l10n_ar_invoice/models/invoice.py:523
 #, python-format
 msgid ""
 "If there you have choose a tax with 0, exempt or untaxed, you must choose a "
@@ -1594,13 +1627,13 @@ msgid "Invoice Analysis"
 msgstr "Análisis de Factura"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:533
+#: code:addons/l10n_ar_invoice/models/invoice.py:508
 #, python-format
 msgid "Invoice ID %i shouldn't have any vat tax"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:522
+#: code:addons/l10n_ar_invoice/models/invoice.py:495
 #, python-format
 msgid ""
 "Invoice ID: %i\n"
@@ -1611,6 +1644,12 @@ msgstr ""
 #: model:ir.model,name:l10n_ar_invoice.model_account_invoice_line
 msgid "Invoice Line"
 msgstr "Línea de Factura"
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/invoice.py:26
+#, python-format
+msgid "Invoice Number"
+msgstr ""
 
 #. module: l10n_ar_invoice
 #: field:account.invoice.line.report,state:0
@@ -1666,7 +1705,7 @@ msgid "Invoices Statistics"
 msgstr "Estadísticas de Facturas"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:484
+#: code:addons/l10n_ar_invoice/models/invoice.py:465
 #, python-format
 msgid "Invoices ids %s amount is cero!"
 msgstr ""
@@ -1689,17 +1728,8 @@ msgstr ""
 #. module: l10n_ar_invoice
 #: help:afip.document_class,document_type:0
 msgid ""
-"It defines some behaviours on different places:        * invoice: used on "
-"sale and purchase journals. Auto selected if not        debit_note specified"
-" on context.        * debit_note: used on sale and purchase journals but "
-"with lower        priority than invoices.        * credit_note: used on "
-"sale_refund and purchase_refund journals.        * ticket: automatically "
-"loaded for purchase journals but only loaded        on sales journals if "
-"point_of_sale is fiscal_printer        * receipt_invoice: mean to be used as"
-" invoices but not automatically        loaded because it is not usually used"
-"        * ticket: automatically loaded for purchase journals but not loaded"
-"        on sales journals. Also can be selected on partners, to be available"
-"        it must be selected on partner.        "
+"It defines some behaviours on automatic journal selection and        in "
+"menus where it is shown."
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -1851,6 +1881,12 @@ msgid "No gravado"
 msgstr ""
 
 #. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/invoice.py:84
+#, python-format
+msgid "Not VAT Taxes"
+msgstr ""
+
+#. module: l10n_ar_invoice
 #: model:account.journal,name:l10n_ar_invoice.refund_sales_journal
 msgid "Nota de Crédito Ventas 0001"
 msgstr ""
@@ -1936,13 +1972,13 @@ msgid "Operaciones exentas"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:638
+#: code:addons/l10n_ar_invoice/models/invoice.py:612
 #, python-format
 msgid "Operation Type Error"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:639
+#: code:addons/l10n_ar_invoice/models/invoice.py:613
 #, python-format
 msgid "Operation Type Must be \"Sale\" or \"Purchase\""
 msgstr ""
@@ -1960,9 +1996,20 @@ msgid "Other AFIP Documents"
 msgstr "Otros Documentos de AFIP"
 
 #. module: l10n_ar_invoice
+#: selection:afip.document_class,document_type:0
+msgid "Other Documents"
+msgstr ""
+
+#. module: l10n_ar_invoice
 #: help:account.tax.code,application:0
 #: help:account.tax.code.template,application:0
 msgid "Other Taxes According AFIP"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/invoice.py:69
+#, python-format
+msgid "Other Taxes Amount"
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -2167,7 +2214,7 @@ msgid "Plan de Impuestos de Argentina para Responsables Inscriptos"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:643
+#: code:addons/l10n_ar_invoice/models/invoice.py:617
 #, python-format
 msgid ""
 "Please, set your company responsability in the company partner before "
@@ -2176,6 +2223,8 @@ msgstr ""
 
 #. module: l10n_ar_invoice
 #: field:account.journal.create.wizard,point_of_sale_id:0
+#: code:addons/l10n_ar_invoice/models/invoice.py:30
+#, python-format
 msgid "Point Of Sale"
 msgstr "Punto de Venta"
 
@@ -2327,7 +2376,7 @@ msgstr ""
 
 #. module: l10n_ar_invoice
 #: selection:afip.document_class,document_type:0
-msgid "Receipt Invoice"
+msgid "Receipt"
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -2618,22 +2667,6 @@ msgid "Software"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:434
-#, python-format
-msgid ""
-"Some invoices have a journal that require a document but not document type has been selected.\n"
-"Invoices ids: %s"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:503
-#, python-format
-msgid ""
-"Some purchase invoices don't have supplier nunmber.\n"
-"Invoices ids: %s"
-msgstr ""
-
-#. module: l10n_ar_invoice
 #: field:res.partner,start_date:0
 msgid "Start-up Date"
 msgstr ""
@@ -2645,6 +2678,8 @@ msgstr ""
 
 #. module: l10n_ar_invoice
 #: field:account.invoice.line.report,price_subtotal:0
+#: code:addons/l10n_ar_invoice/models/invoice.py:40
+#, python-format
 msgid "Subtotal"
 msgstr ""
 
@@ -2711,11 +2746,6 @@ msgid "TAX"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_transitorias
-msgid "TRANSITORIAS"
-msgstr ""
-
-#. module: l10n_ar_invoice
 #: model:account.account,name:l10n_ar_invoice.ri_tarjeta_de_credito_pagar
 msgid "Tarjeta de crédito a pagar xxxxx"
 msgstr ""
@@ -2727,6 +2757,9 @@ msgstr ""
 
 #. module: l10n_ar_invoice
 #: field:account.tax.code,tax:0 field:account.tax.code.template,tax:0
+#: code:addons/l10n_ar_invoice/models/invoice.py:35
+#: code:addons/l10n_ar_invoice/models/invoice.py:74
+#, python-format
 msgid "Tax"
 msgstr ""
 
@@ -2771,16 +2804,6 @@ msgid "Total"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_transferencias_internas
-msgid "Transferencias Internas"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: model:account.account.type,name:l10n_ar_invoice.data_account_type_transitory
-msgid "Transitory"
-msgstr ""
-
-#. module: l10n_ar_invoice
 #: field:account.invoice.line.report,type:0
 #: field:account.journal.create.wizard,type:0 field:account.tax.code,type:0
 #: field:account.tax.code.template,type:0 field:afip.point_of_sale,type:0
@@ -2815,8 +2838,38 @@ msgid "VAT"
 msgstr ""
 
 #. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/invoice.py:58
+#, python-format
+msgid "VAT Amount"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/invoice.py:64
+#, python-format
+msgid "VAT Base Amount"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/invoice.py:52
+#, python-format
+msgid "VAT Exempt Amount"
+msgstr ""
+
+#. module: l10n_ar_invoice
 #: field:afip.responsability,vat_tax_required_on_sales_invoices:0
 msgid "VAT Tax Required on Sales Invoices?"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/invoice.py:79
+#, python-format
+msgid "VAT Taxes"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/invoice.py:46
+#, python-format
+msgid "VAT Untaxed"
 msgstr ""
 
 #. module: l10n_ar_invoice
@@ -2874,7 +2927,7 @@ msgid "Yes, No Discriminate Default"
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:467
+#: code:addons/l10n_ar_invoice/models/invoice.py:448
 #, python-format
 msgid ""
 "You are using argentinian localization and there are some invoices with "
@@ -2883,7 +2936,7 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:476
+#: code:addons/l10n_ar_invoice/models/invoice.py:457
 #, python-format
 msgid ""
 "You are using argentinian localization and there are some tax codes that are"
@@ -2891,7 +2944,7 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:642
+#: code:addons/l10n_ar_invoice/models/invoice.py:616
 #, python-format
 msgid "Your company has not setted any responsability"
 msgstr ""
@@ -2925,11 +2978,6 @@ msgstr "o"
 #: view:account.invoice:l10n_ar_invoice.view_supplier_invoice_form
 msgid ""
 "{'readonly':['|','|',('state','!=','draft'),('afip_document_number','!=',False),('internal_number','!=',False)]}"
-msgstr ""
-
-#. module: l10n_ar_invoice
-#: view:res.partner.bank:l10n_ar_invoice.view_partner_bank_form_inherit
-msgid "{'required': [('company_id','!=', False)]}"
 msgstr ""
 
 #. module: l10n_ar_invoice

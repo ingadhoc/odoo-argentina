@@ -185,6 +185,8 @@ class account_invoice(models.Model):
             consumible = set(['consu', 'product'])
             service = set(['service'])
             mixed = set(['consu', 'service', 'product'])
+            # default value "product"
+            afip_concept = '1'
             if product_types.issubset(mixed):
                 afip_concept = '3'
             if product_types.issubset(service):

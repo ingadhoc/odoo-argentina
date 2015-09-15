@@ -490,14 +490,14 @@ class account_invoice(models.Model):
 
         for invoice in invoices_with_vat:
             # we check vat base amount is equal to amount untaxed
-            if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.001:
+            if abs(invoice.vat_base_amount/invoice.currency_rate - invoice.amount_untaxed) > 0.001:
                 raise Warning(_(
                     "Invoice ID: %i\n"
                     "Invoice subtotal (%.2f) is different from invoice base"
                     " vat amount (%.2f)" % (
                         invoice.id,
                         invoice.amount_untaxed,
-                        invoice.vat_base_amount)))
+                        invoice.vat_base_amount/invoice.currency_rate)))
 
         # check purchase invoices that can't have vat
         purchase_invoices_without = self.search([(

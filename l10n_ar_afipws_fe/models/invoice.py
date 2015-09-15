@@ -7,11 +7,15 @@ from pyi25 import PyI25
 from openerp import fields, models, api, _
 from openerp.exceptions import Warning
 from cStringIO import StringIO as StringIO
-from pyafipws.soap import SoapFault
 import logging
 import sys
 import traceback
 _logger = logging.getLogger(__name__)
+
+try:
+    from pyafipws.soap import SoapFault
+except ImportError:
+    _logger.debug('Can not `from pyafipws.soap import SoapFault`.')
 
 
 class invoice(models.Model):

@@ -8,8 +8,7 @@ from dateutil.tz import tzlocal
 from datetime import datetime, timedelta
 from dateutil.parser import parse as dateparse
 from random import randint
-from suds.client import Client
-from suds import WebFault
+
 import xml.etree.ElementTree as ET
 import logging
 from openerp.exceptions import Warning
@@ -17,6 +16,16 @@ import openerp.tools as tools
 import os
 
 _logger = logging.getLogger(__name__)
+
+try:
+    from suds import WebFault
+except ImportError:
+    _logger.debug('Can not `from suds import WebFault`.')
+
+try:
+    from suds.client import Client
+except ImportError:
+    _logger.debug('from suds.client import Client`.')
 
 _login_message = """\
 <?xml version="1.0" encoding="UTF-8"?>

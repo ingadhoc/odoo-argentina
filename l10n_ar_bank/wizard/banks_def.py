@@ -22,16 +22,21 @@
 """
 Import from BCRA banks of Argentina
 """
-
-try:
-        import geopy
-except ImportError:
-        print "Please, intall geopy using 'pip install geopy'."
-        
-from BeautifulSoup import BeautifulSoup
 import re
 from geosearch import unify_geo_data, strip_accents
 from cache import urlopen
+import logging
+_logger = logging.getLogger(__name__)
+
+try:
+    import geopy
+except ImportError:
+    _logger.debug('Can not `import geopy`.')
+
+try:
+    from BeautifulSoup import BeautifulSoup
+except ImportError:
+    _logger.debug('Can not `from BeautifulSoup import BeautifulSoup`.')
 
 encoding = 'ISO-8859-1'
 compiled_re = {

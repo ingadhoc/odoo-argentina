@@ -2,8 +2,14 @@
 #!/usr/bin/python
 
 import sys, urllib, hashlib, os, os.path, pickle
-from geopy import geocoders
 from types import GeneratorType
+import logging
+_logger = logging.getLogger(__name__)
+
+try:
+    from geopy import geocoders
+except ImportError:
+    _logger.debug('Can not `from geopy import geocoders`.')
 
 gc = geocoders.Google('ABQIAAAAMWm7ddpoRV3HO0u7NtA_IhRTfPMBNX3pvExQyYBKj7aZZJK5lxQYw0LDgWXedvepzKpGxQKf-kmN3A')
 

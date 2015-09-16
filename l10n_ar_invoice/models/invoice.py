@@ -524,9 +524,11 @@ class account_invoice(models.Model):
                         invoice.amount_untaxed,
                         invoice.vat_base_amount)))
 
-        # check purchase invoices that can't have vat
+        # check purchase invoices that can't have vat. We check only the ones
+        # with document letter because other documents may have or not vat tax
         purchase_invoices_without = purchase_invoices.filtered(
             lambda r: (
+                r.afip_document_class_id.document_letter_id and
                 not r.afip_document_class_id.document_letter_id.vat_discriminated))
         for invoice in purchase_invoices_without:
             if invoice.vat_tax_ids:

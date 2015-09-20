@@ -531,6 +531,7 @@ class account_invoice(models.Model):
         We add currency rate on move creation so it can be used by electronic
         invoice later on action_number
         """
+        self.check_argentinian_invoice_taxes()
         for inv in self:
             inv.currency_rate = inv.currency_id.compute(
                     1., inv.company_id.currency_id)
@@ -538,7 +539,12 @@ class account_invoice(models.Model):
 
     @api.multi
     def action_number(self):
-        self.check_argentinian_invoice_taxes()
+        """
+        A partir de este metodo no debería haber errores porque el modulo de
+        factura electronica ya habria pedido el cae. Lo ideal sería hacer todo
+        esto antes que se pida el cae pero tampoco se pueden volver a atras los
+        conusmos de secuencias. TODO mejorar esa parte
+        """
         obj_sequence = self.env['ir.sequence']
 
         # We write document_number field with next invoice number by

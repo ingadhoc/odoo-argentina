@@ -208,20 +208,20 @@ class account_invoice(models.Model):
         vat_taxes = self.tax_line.filtered(
             lambda r: r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
         vat_amount = sum(
-            vat_taxes.mapped('tax_amount'))
+            vat_taxes.mapped('amount'))
         vat_base_amount = sum(
-            vat_taxes.mapped('base_amount'))
+            vat_taxes.mapped('base'))
 
         not_vat_taxes = self.tax_line - vat_taxes
 
         other_taxes_amount = sum(
-            (self.tax_line - vat_taxes).mapped('tax_amount'))
+            (self.tax_line - vat_taxes).mapped('amount'))
 
         vat_exempt_amount = sum(vat_taxes.filtered(
-                lambda r: r.tax_code_id.afip_code == 2).mapped('base_amount'))
+                lambda r: r.tax_code_id.afip_code == 2).mapped('base'))
 
         vat_untaxed = sum(vat_taxes.filtered(
-                lambda r: r.tax_code_id.afip_code == 1).mapped('base_amount'))
+                lambda r: r.tax_code_id.afip_code == 1).mapped('base'))
 
         if self.vat_discriminated:
             printed_amount_untaxed = self.amount_untaxed

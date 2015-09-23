@@ -11,6 +11,8 @@
             <field name="type">payment</field>
             <!-- <field name="net_amount" eval="100.0"/> -->
             <field name="amount" eval="100.0"/>
+            <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
+            <field name="advance_amount" eval="100.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_banco_1"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-20'"/>
             <field name="partner_id" ref="base.res_partner_12"/>
@@ -33,6 +35,9 @@
             <field name="type">payment</field>
             <!-- <field name="net_amount" eval="100.0"/> -->
             <field name="amount" eval="90.5"/>
+
+            <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
+            <field name="advance_amount" eval="90.5"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_banco_1"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-20'"/>
             <field name="partner_id" ref="base.res_partner_1"/>
@@ -56,6 +61,9 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">receipt</field>
             <field name="amount" eval="150.0"/>
+
+            <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
+            <field name="advance_amount" eval="150.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_banco_1"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-20'"/>
             <field name="partner_id" ref="base.res_partner_13"/>
@@ -76,6 +84,8 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">receipt</field>
             <field name="amount" eval="150.0"/>
+            <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
+            <field name="advance_amount" eval="150.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_banco_1"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-23'"/>
             <field name="partner_id" ref="base.res_partner_2"/>

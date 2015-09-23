@@ -10,6 +10,8 @@
             <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">receipt</field>
+            <!-- we add amount for compatibility with voucher constraint module -->
+            <field name="amount" eval="295.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
             <field name="partner_id" ref="base.res_partner_13"/>
@@ -79,6 +81,8 @@
             <!-- TODO ver que elija el periodo de la fecha -->
             <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
             <field name="type">receipt</field>
+            <!-- we add amount for compatibility with voucher constraint module -->
+            <field name="amount" eval="100.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
             <field name="partner_id" ref="base.res_partner_12"/>
@@ -111,6 +115,8 @@
             <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">payment</field>
+            <!-- we add amount for compatibility with voucher constraint module -->
+            <field name="amount" eval="150.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_cheques_diferidos"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
             <field name="partner_id" ref="base.res_partner_6"/>
@@ -152,6 +158,8 @@
             <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">payment</field>
+            <!-- we add amount for compatibility with voucher constraint module -->
+            <field name="amount" eval="15.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
             <field name="partner_id" ref="base.res_partner_16"/>
@@ -175,6 +183,8 @@
             <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">payment</field>
+            <!-- we add amount for compatibility with voucher constraint module -->
+            <field name="amount" eval="50.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
             <field name="partner_id" ref="base.res_partner_22"/>
@@ -192,6 +202,8 @@
             <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">payment</field>
+            <!-- we add amount for compatibility with voucher constraint module -->
+            <field name="amount" eval="30.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
             <field name="partner_id" ref="base.res_partner_17"/>

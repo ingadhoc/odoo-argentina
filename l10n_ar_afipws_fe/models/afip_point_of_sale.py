@@ -109,7 +109,9 @@ class afip_point_of_sale(models.Model):
 
     @api.multi
     def get_pyafipws_currencies(self):
-        return self.env['res.currency'].get_pyafipws_currencies()
+        self.ensure_one()
+        return self.env['res.currency'].get_pyafipws_currencies(
+            afip_ws=self.afip_ws, company=self.company_id)
 
     @api.multi
     def action_get_connection(self):

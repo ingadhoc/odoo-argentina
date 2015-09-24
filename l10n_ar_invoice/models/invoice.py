@@ -185,6 +185,8 @@ class account_invoice(models.Model):
             consumible = set(['consu', 'product'])
             service = set(['service'])
             mixed = set(['consu', 'service', 'product'])
+            # default value "product"
+            afip_concept = '1'
             if product_types.issubset(mixed):
                 afip_concept = '3'
             if product_types.issubset(service):
@@ -206,20 +208,20 @@ class account_invoice(models.Model):
         vat_taxes = self.tax_line.filtered(
             lambda r: r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
         vat_amount = sum(
-            vat_taxes.mapped('tax_amount'))
+            vat_taxes.mapped('amount'))
         vat_base_amount = sum(
-            vat_taxes.mapped('base_amount'))
+            vat_taxes.mapped('base'))
 
         not_vat_taxes = self.tax_line - vat_taxes
 
         other_taxes_amount = sum(
-            (self.tax_line - vat_taxes).mapped('tax_amount'))
+            (self.tax_line - vat_taxes).mapped('amount'))
 
         vat_exempt_amount = sum(vat_taxes.filtered(
-                lambda r: r.tax_code_id.afip_code == 2).mapped('base_amount'))
+                lambda r: r.tax_code_id.afip_code == 2).mapped('base'))
 
         vat_untaxed = sum(vat_taxes.filtered(
-                lambda r: r.tax_code_id.afip_code == 1).mapped('base_amount'))
+                lambda r: r.tax_code_id.afip_code == 1).mapped('base'))
 
         if self.vat_discriminated:
             printed_amount_untaxed = self.amount_untaxed
@@ -556,6 +558,8 @@ class account_invoice(models.Model):
         We add currency rate on move creation so it can be used by electronic
         invoice later on action_number
         """
+        self.check_use_documents()
+        self.check_argentinian_invoice_taxes()
         for inv in self:
             inv.currency_rate = inv.currency_id.compute(
                     1., inv.company_id.currency_id)
@@ -563,8 +567,12 @@ class account_invoice(models.Model):
 
     @api.multi
     def action_number(self):
-        self.check_use_documents()
-        self.check_argentinian_invoice_taxes()
+        """
+        A partir de este metodo no debería haber errores porque el modulo de
+        factura electronica ya habria pedido el cae. Lo ideal sería hacer todo
+        esto antes que se pida el cae pero tampoco se pueden volver a atras los
+        conusmos de secuencias. TODO mejorar esa parte
+        """
         obj_sequence = self.env['ir.sequence']
 
         # We write document_number field with next invoice number by

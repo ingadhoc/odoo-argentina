@@ -73,8 +73,8 @@
 
                 <field name="fiscal_position" position="after">
                     <field name="reference"/>
-                    <field name='afip_concept' attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)],'readonly':['|',('state','!=','draft'),('afip_document_number','!=',False)]}" invisible="0"/>
                     <field name="afip_incoterm_id"/>
+                    <field name='afip_concept' attrs="{'invisible':[('use_argentinian_localization','=',False)]}"/>
                     <field name='afip_service_start' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])],'required':[('afip_concept','in',['2', '3', '4'])]}"/>
                     <field name='afip_service_end' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])],'required':[('afip_concept','in',['2', '3', '4'])]}"/>
                 </field>

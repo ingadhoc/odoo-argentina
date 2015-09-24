@@ -2,10 +2,16 @@
 #!/usr/bin/python
 
 import re, sys
-from BeautifulSoup import BeautifulSoup
 from strcmp import mostequivalent
 from cache import urlopen, geocode
 import unicodedata
+import logging
+_logger = logging.getLogger(__name__)
+
+try:
+    from BeautifulSoup import BeautifulSoup
+except ImportError:
+    _logger.debug('Can not `from BeautifulSoup import BeautifulSoup`.')
 
 codprov_dict = {
     'argentina': {

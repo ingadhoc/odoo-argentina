@@ -111,7 +111,9 @@ class account_tax_code(models.Model):
                 ('invoice_id.responsability_id', '=', responsability.id))
         invoice_taxes = self.env['account.invoice.tax'].search(
             taxes_domain)
-        amount_untaxed = sum([x.base for x in invoice_taxes])
+        # we use base_amount and tax_amount instad of base and amount because
+        # we want them in local currency
+        amount_untaxed = sum([x.base_amount for x in invoice_taxes])
         amount_tax = sum([x.tax_amount for x in invoice_taxes])
         amount_total = amount_untaxed + amount_tax
         return (amount_untaxed, amount_tax, amount_total)

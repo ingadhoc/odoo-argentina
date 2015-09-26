@@ -35,6 +35,7 @@
             <field name="quantity" eval="1.0" />
             <field name="name">Zed+ Antivirus</field>
         </record>
+        <function model="account.invoice" name="button_reset_taxes" eval="[ref('demo_ri_sale_invoice_0')]"/>
         <workflow action="invoice_open" model="account.invoice" ref="demo_ri_sale_invoice_0"/>
 
         <!-- With IVA 21 and no gravado -->
@@ -71,6 +72,7 @@
             <field name="quantity" eval="1.0" />
             <field name="name">Zed+ Antivirus</field>
         </record>
+        <function model="account.invoice" name="button_reset_taxes" eval="[ref('demo_ri_sale_invoice_1')]"/>
         <workflow action="invoice_open" model="account.invoice" ref="demo_ri_sale_invoice_1"/>
 
         <!-- A monotributista -->
@@ -94,6 +96,7 @@
             <field name="quantity" eval="1.0" />
             <field name="name">Toner Cartridge</field>
         </record>
+        <function model="account.invoice" name="button_reset_taxes" eval="[ref('demo_ri_sale_invoice_2')]"/>
         <workflow action="invoice_open" model="account.invoice" ref="demo_ri_sale_invoice_2"/>
 
         <!-- A RI con percepcion IVA e iva 27 -->

@@ -192,6 +192,13 @@ class account_journal_create_wizard(models.TransientModel):
             'default_credit_account_id': self.default_credit_account_id.id,
             'default_debit_account_id': self.default_debit_account_id.id,
         })
+
+        # check if journal sequence is installed
+        if 'sequence' in journals.fields_get():
+            last_journal = self.env['account.journal'].search(
+                domain, order='sequence desc', limit=1)
+            sequence = last_journal and last_journal.sequence + 10 or 10
+            vals['sequence'] = sequence
         return vals
 
     @api.multi

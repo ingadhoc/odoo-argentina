@@ -2491,8 +2491,8 @@
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">IVA Ventas 21%</field>
-            <field name="sequence">1</field>
             <field name="description">IVA 21%</field>
+            <field name="sequence">1</field>
             <field eval="0.21" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_venta21"/>
@@ -2507,8 +2507,8 @@
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">IVA Compras 21%</field>
-            <field name="sequence">1</field>
             <field name="description">IVA 21%</field>
+            <field name="sequence">1</field>
             <field eval="0.21" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_compras21"/>
@@ -2523,8 +2523,8 @@
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">IVA Ventas 27%</field>
-            <field name="sequence">3</field>
             <field name="description">IVA 27%</field>
+            <field name="sequence">3</field>
             <field eval="0.27" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_venta27"/>
@@ -2539,8 +2539,8 @@
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">IVA Compras 27%</field>
-            <field name="sequence">3</field>
             <field name="description">IVA 27%</field>
+            <field name="sequence">3</field>
             <field eval="0.27" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_compras27"/>
@@ -2555,8 +2555,8 @@
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Percepción IVA Aplicada</field>
-            <field name="sequence">4</field>
             <field name="description">Perc IVA A</field>
+            <field name="sequence">4</field>
             <field name="type">none</field>
             <field name="tax_code_id" ref="ri_tax_code_percepcion_iva_aplicada"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_percepcion_iva_aplicada"/>
@@ -2570,8 +2570,8 @@
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Percepción IVA Sufrida</field>
-            <field name="sequence">4</field>
             <field name="description">Perc IVA S</field>
+            <field name="sequence">4</field>
             <field name="type">none</field>
             <field name="tax_code_id" ref="ri_tax_code_iva_compras_percepcion"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_iva_compras_percepcion"/>
@@ -2585,8 +2585,8 @@
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Percepción Ganancias Aplicada</field>
-            <field name="sequence">4</field>
             <field name="description">Perc Ganancias A</field>
+            <field name="sequence">4</field>
             <field name="type">none</field>
             <field name="tax_code_id" ref="ri_tax_code_ganancias_per_aplicada"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_ganancias_per_aplicada"/>
@@ -2600,8 +2600,8 @@
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Percepción Ganancias Sufrida</field>
-            <field name="sequence">4</field>
             <field name="description">Perc Ganancias S</field>
+            <field name="sequence">4</field>
             <field name="type">none</field>
             <field name="tax_code_id" ref="ri_tax_code_ganancias_per_sufrida"/>
             <field name="ref_tax_code_id" ref="ri_tax_code_ganancias_per_sufrida"/>
@@ -2620,8 +2620,8 @@
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Percepción de Ingresos Brutos CABA</field>
-            <field name="sequence">100</field>
             <field name="description">Perc IIBB CABA</field>
+            <field name="sequence">100</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_cf_percepcion"/>
@@ -2635,9 +2635,9 @@
         <record id="ri_tax_iibb_cf_retencion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Ret IIBB CABA</field>
+            <field name="name">Retención IIBB CABA</field>
+            <field name="description">Ret IIBB CABA</field>
             <field name="sequence">100</field>
-            <field name="description">029999:R</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_cf_retencion"/>
@@ -2651,9 +2651,9 @@
         <record id="ri_tax_iibb_cf_facturado" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Fac IIBB CABA</field>
+            <field name="name">Facturación IIBB CABA</field>
+            <field name="description">Fac IIBB CABA</field>
             <field name="sequence">100</field>
-            <field name="description">029999:F</field>
             <field eval="0.00" name="amount"/>
             <field name="type">fixed</field>
             <field name="base_code_id" ref="ri_tax_code_iibb_cf_facturado"/>
@@ -2669,9 +2669,9 @@
         <record id="ri_tax_iibb_ba_percepcion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Perc IIBB BS AS</field>
+            <field name="name">Percepción IIBB BS AS</field>
+            <field name="description">Perc IIBB BS AS</field>
             <field name="sequence">100</field>
-            <field name="description">022429:P</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_ba_percepcion"/>
@@ -2685,9 +2685,9 @@
         <record id="ri_tax_iibb_ba_retencion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Ret IIBB BS AS</field>
+            <field name="name">Retención IIBB BS AS</field>
+            <field name="description">Ret IIBB BS AS</field>
             <field name="sequence">100</field>
-            <field name="description">022429:R</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_ba_retencion"/>
@@ -2701,9 +2701,9 @@
         <record id="ri_tax_iibb_ba_facturado" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Fac IIBB BS AS</field>
+            <field name="name">Facturación IIBB BS AS</field>
+            <field name="description">Fac IIBB BS AS</field>
             <field name="sequence">100</field>
-            <field name="description">022429:F</field>
             <field eval="0" name="amount"/>
             <field name="type">fixed</field>
             <field name="base_code_id" ref="ri_tax_code_iibb_ba_facturado"/>
@@ -2719,9 +2719,9 @@
         <record id="ri_tax_iibb_co_percepcion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Per IIBB Cordoba</field>
+            <field name="name">Percepción IIBB Cordoba</field>
+            <field name="description">Per IIBB Cordoba</field>
             <field name="sequence">100</field>
-            <field name="description">022452:P</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_co_percepcion"/>
@@ -2735,9 +2735,9 @@
         <record id="ri_tax_iibb_co_retencion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Ret IIBB Cordoba</field>
+            <field name="name">Retención IIBB Cordoba</field>
+            <field name="description">Ret IIBB Cordoba</field>
             <field name="sequence">100</field>
-            <field name="description">022452:R</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_co_retencion"/>
@@ -2751,9 +2751,9 @@
         <record id="ri_tax_iibb_co_facturado" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Fac IIBB Cordoba</field>
+            <field name="name">Facturación IIBB Cordoba</field>
+            <field name="description">Fac IIBB Cordoba</field>
             <field name="sequence">100</field>
-            <field name="description">022452:F</field>
             <field eval="0" name="amount"/>
             <field name="type">fixed</field>
             <field name="base_code_id" ref="ri_tax_code_iibb_co_facturado"/>
@@ -2769,9 +2769,9 @@
         <record id="ri_tax_iibb_sf_percepcion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Per IIBB Santa Fé</field>
+            <field name="name">Percepción IIBB Santa Fé</field>
+            <field name="description">Per IIBB Santa Fé</field>
             <field name="sequence">100</field>
-            <field name="description">029998:P</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_sf_percepcion"/>
@@ -2785,9 +2785,9 @@
         <record id="ri_tax_iibb_sf_retencion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Ret IIBB Santa Fé</field>
-            <field name="sequence">100</field>
+            <field name="name">Retención IIBB Santa Fé</field>
             <field name="description">Ret. IIBB Santa Fe</field>
+            <field name="sequence">100</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
             <field name="tax_code_id" ref="ri_tax_code_iibb_sf_retencion"/>
@@ -2801,9 +2801,9 @@
         <record id="ri_tax_iibb_sf_facturado" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Fac IIBB Santa Fé</field>
+            <field name="name">Facturación IIBB Santa Fé</field>
+            <field name="description">Fac IIBB Santa Fe</field>
             <field name="sequence">100</field>
-            <field name="description">Fac. IIBB Santa Fe</field>
             <field eval="0" name="amount"/>
             <field name="type">fixed</field>
             <field name="base_code_id" ref="ri_tax_code_iibb_sf_facturado"/>

@@ -19,9 +19,10 @@ class wizard_multi_charts_accounts(models.TransientModel):
             template_id, company_id, code_digits=code_digits,
             obj_wizard=obj_wizard, account_ref=account_ref,
             taxes_ref=taxes_ref, tax_code_ref=tax_code_ref)
-        company = self.env['res.company'].browse(company_id)
-        if company.use_argentinian_localization:
-            self.generate_receiptbooks(template_id, account_ref, company_id)
+        # company = self.env['res.company'].browse(company_id)
+        # generate always, not only for arg. companies
+        # if company.use_argentinian_localization:
+        self.generate_receiptbooks(template_id, account_ref, company_id)
         return res
 
     @api.model

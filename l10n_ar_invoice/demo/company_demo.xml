@@ -18,7 +18,7 @@
             <field name="website">www.example.com</field>
             <field name="supplier" eval="True"/>
             <field name="start_date" eval="time.strftime('%Y-%m')+'-1'"/>
-            <field name="image" type="base64" file="base/static/img/main_partner-image.png"/>
+            <!-- <field name="image" type="base64" file="base/static/img/main_partner-image.png"/> -->
         </record>
         <record id="partner_mono" model="res.partner">
             <field name='responsability_id' ref='res_RM'/>
@@ -36,7 +36,7 @@
             <field name="website">www.example.com</field>
             <field name="supplier" eval="True"/>
             <field name="start_date" eval="time.strftime('%Y-%m')+'-1'"/>
-            <field name="image" type="base64" file="base/static/img/main_partner-image.png"/>
+            <!-- <field name="image" type="base64" file="base/static/img/main_partner-image.png"/> -->
         </record>
 
     <!-- Companies -->
@@ -49,6 +49,7 @@
             <field name='partner_id' ref='partner_ri'/>
             <field name='name'>Responsable Inscripto SA</field>
             <field name="use_argentinian_localization" eval="True"/>
+            <field name="logo" type="base64" file="l10n_ar_invoice/demo/responsable_inscripto.png"/>
         </record>
         <record id="company_mono" model="res.company">
             <field name='parent_id' ref='base.main_company'/>
@@ -56,6 +57,7 @@
             <field name='partner_id' ref='partner_mono'/>
             <field name="use_argentinian_localization" eval="True"/>
             <field name='name'>Monotributista</field>
+            <field name="logo" type="base64" file="l10n_ar_invoice/demo/monotributista.png"/>
         </record>
 
     <!-- Users -->

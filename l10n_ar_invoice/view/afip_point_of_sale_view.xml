@@ -15,6 +15,7 @@
                             <field name="prefix" placeholder="For eg. 'Rosario'"/>
                             <field name="sufix" placeholder="For eg. 'Expo'"/>
                             <field name='number'/>
+                            <field name='document_sequence_type' groups="base.group_no_one"/>
                             <field name='company_id'/>
                         </group>
                         <notebook>
@@ -37,7 +38,7 @@
                 <tree string="AFIP Point Of Sale">
                     <field name="name"/>
                     <field name='number'/>
-                    <field name="document_sequence_type"/>
+                    <field name="document_sequence_type" groups="base.group_no_one"/>
                     <field name='company_id'/>
                 </tree>
             </field>

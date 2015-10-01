@@ -3,7 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields, api
+from openerp import models, fields, api, _
 import openerp.addons.decimal_precision as dp
 
 
@@ -13,7 +13,7 @@ class account_voucher_line(models.Model):
     signed_amount = fields.Float(
         digits=dp.get_precision('Account'),
         compute='_get_signed_amount',
-        string='Signed Amount',
+        string=_('Signed Amount'),
         )
 
     @api.one

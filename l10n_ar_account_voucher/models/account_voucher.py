@@ -14,7 +14,7 @@ class account_voucher(models.Model):
     _inherit = "account.voucher"
 
     document_number = fields.Char(
-        string='Document Number',
+        string=_('Document Number'),
         related='move_id.document_number',
         readonly=True,
         store=True,

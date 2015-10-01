@@ -3,7 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models
+from openerp import fields, models, _
 from openerp import tools
 
 
@@ -37,9 +37,9 @@ class account_invoice_line_report(models.Model):
     ], 'Invoice State', readonly=True)
     date_invoice = fields.Date('Date Invoice', readonly=True)
     date_invoice_from = fields.Date(
-        compute=lambda *a, **k: {}, method=True, string="Date Invoice from")
+        compute=lambda *a, **k: {}, method=True, string=_("Date Invoice from"))
     date_invoice_to = fields.Date(
-        compute=lambda *a, **k: {}, method=True, string="Date Invoice to")
+        compute=lambda *a, **k: {}, method=True, string=_("Date Invoice to"))
     amount_total = fields.Float(
         'Invoice Total', readonly=True, group_operator="sum")
     ean13 = fields.Char('EAN13', size=13, help='Barcode', readonly=True)

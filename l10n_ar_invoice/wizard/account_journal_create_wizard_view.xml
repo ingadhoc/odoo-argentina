@@ -19,6 +19,8 @@
                             <field name="default_credit_account_id" domain="[('type', '!=', 'view'), ('company_id', '=', company_id)]"/>
                             <field name="default_debit_account_id" domain="[('type', '!=', 'view'), ('company_id', '=', company_id)]"/>
                             <field name="group_invoice_lines" attrs="{'invisible':[('type', 'not in', ['sale', 'purchase'])]}"/>
+                            <field name="parent_account_id" attrs="{'invisible':[('default_credit_account_id', '!=', False), ('default_debit_account_id', '!=', False)]}"/>
+                            <field name="account_user_type_id" attrs="{'invisible':[('default_credit_account_id', '!=', False), ('default_debit_account_id', '!=', False)], 'required': [('parent_account_id', '!=', False)]}"/>
                             <field name="update_posted"/>
                             <field name="allow_date"/>
                             <field name="company_id"/>

@@ -24,17 +24,24 @@ class account_journal_create_wizard(models.TransientModel):
     group_invoice_lines = fields.Boolean(
         'Group Invoice Lines',
         default=True,
-        help="If this box is checked, the system will try to group the accounting lines when generating them from invoices.",
+        help=(
+            "If this box is checked, the system will try to group the "
+            "accounting lines when generating them from invoices.",)
         )
     update_posted = fields.Boolean(
         'Allow Cancelling',
         default=True,
-        help="Check this box if you want to allow the cancellation the entries related to this journals or of the invoice related to this journals"
+        help=(
+            "Check this box if you want to allow the cancellation the entries "
+            "related to this journals or of the invoice related to this "
+            "journals")
         )
     allow_date = fields.Boolean(
         'Date in Period',
         default=True,
-        help='If checked, the entry won\'t be created if the entry date is not included into the selected period'
+        help=(
+            "If checked, the entry won\'t be created if the entry date is not "
+            "included into the selected period")
         )
     invoice_subtype = fields.Selection([
         ('only_invoice', 'Only Invoice'),
@@ -73,6 +80,20 @@ class account_journal_create_wizard(models.TransientModel):
     currency_id = fields.Many2one(
         'res.currency',
         'Currency'
+        )
+    account_user_type_id = fields.Many2one(
+        'account.account.type',
+        'Account Type',
+        help=(
+            'It will be used for the new account created. If you choose a '
+            'parent account, then you must also select an account type')
+        )
+    parent_account_id = fields.Many2one(
+        'account.account',
+        string="Parent Account",
+        help=(
+            "If you dont choose parent account, then we will search for one of"
+            " type liquidity and use this for type and the parent for parent.")
         )
     default_credit_account_id = fields.Many2one(
         'account.account',
@@ -168,10 +189,14 @@ class account_journal_create_wizard(models.TransientModel):
 
         if journal_type in ('bank', 'cash'):
             # if none, we create one and use for debit credit
-            if not self.default_debit_account_id and not self.default_credit_account_id:
+            if (
+                    not self.default_debit_account_id and
+                    not self.default_credit_account_id
+                    ):
                 account = self.env['account.account'].create(
                     self._get_account_vals(account_name))
-                self.default_credit_account_id = self.default_debit_account_id = account.id
+                self.default_debit_account_id = account.id
+                self.default_credit_account_id = account.id
             # if not debit, we use credit
             elif not self.default_credit_account_id:
                 self.default_credit_account_id = self.default_debit_account_id
@@ -222,20 +247,29 @@ class account_journal_create_wizard(models.TransientModel):
     def _get_account_vals(self, account_name):
         self.ensure_one()
 
-        account = self.env['account.account'].search([
-            ('type', '=', 'liquidity'),
-            ('company_id', '=', self.company_id.id),
-            ('parent_id', '!=', False)], limit=1)
+        parent_account = self.parent_account_id
+        account_user_type = self.account_user_type_id
+        if parent_account and not account_user_type:
+            raise Warning(_(
+                'If you set a parent acount you must also set a user type'))
+        if not parent_account:
+            account = self.env['account.account'].search([
+                ('type', '=', 'liquidity'),
+                ('company_id', '=', self.company_id.id),
+                ('parent_id', '!=', False)], limit=1)
+            parent_account = account.parent_id
+            if not account_user_type:
+                account_user_type = account.user_type
 
         # No liquidity account exists, no template available
-        if not account:
+        if not parent_account:
             raise Warning(_('No Parent Account Found for Bank/Cash Accounts!'))
 
         current_num = 10
-        ref_acc_bank = account.parent_id
+
         while True:
-            new_code = "%s%03d" % (ref_acc_bank.code[:-3], current_num)
-            account = account.search([
+            new_code = "%s%03d" % (parent_account.code[:-3], current_num)
+            account = self.env['account.account'].search([
                 ('code', '=', new_code),
                 ('company_id', '=', self.company_id.id)])
             if not account:
@@ -245,9 +279,9 @@ class account_journal_create_wizard(models.TransientModel):
             'name': account_name,
             'code': new_code,
             'type': 'liquidity',
-            'user_type': ref_acc_bank.user_type.id,
+            'user_type': account_user_type.id,
             'reconcile': False,
-            'parent_id': ref_acc_bank.id,
+            'parent_id': parent_account.id,
             'currency_id': self.currency_id.id,
             'company_id': self.company_id.id,
         }

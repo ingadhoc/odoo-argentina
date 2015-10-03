@@ -257,8 +257,9 @@ class account_journal_create_wizard(models.TransientModel):
                 ('type', '=', 'liquidity'),
                 ('company_id', '=', self.company_id.id),
                 ('parent_id', '!=', False)], limit=1)
-            account_user_type = account.user_type
             parent_account = account.parent_id
+            if not account_user_type:
+                account_user_type = account.user_type
 
         # No liquidity account exists, no template available
         if not parent_account:
@@ -268,7 +269,7 @@ class account_journal_create_wizard(models.TransientModel):
 
         while True:
             new_code = "%s%03d" % (parent_account.code[:-3], current_num)
-            account = account.search([
+            account = self.env['account.account'].search([
                 ('code', '=', new_code),
                 ('company_id', '=', self.company_id.id)])
             if not account:

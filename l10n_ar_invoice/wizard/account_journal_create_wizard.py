@@ -91,6 +91,7 @@ class account_journal_create_wizard(models.TransientModel):
     parent_account_id = fields.Many2one(
         'account.account',
         string="Parent Account",
+        domain="[('type', '=', 'view'), ('company_id', '=', company_id)]",
         help=(
             "If you dont choose parent account, then we will search for one of"
             " type liquidity and use this for type and the parent for parent.")

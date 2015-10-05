@@ -24,24 +24,21 @@ class account_journal_create_wizard(models.TransientModel):
     group_invoice_lines = fields.Boolean(
         'Group Invoice Lines',
         default=True,
-        help=(
-            "If this box is checked, the system will try to group the "
-            "accounting lines when generating them from invoices.",)
+        help="If this box is checked, the system will try to group the "
+        "accounting lines when generating them from invoices.",
         )
     update_posted = fields.Boolean(
         'Allow Cancelling',
         default=True,
-        help=(
-            "Check this box if you want to allow the cancellation the entries "
-            "related to this journals or of the invoice related to this "
-            "journals")
+        help="Check this box if you want to allow the cancellation the "
+        "entries related to this journals or of the invoice related to this "
+        "journals"
         )
     allow_date = fields.Boolean(
         'Date in Period',
         default=True,
-        help=(
-            "If checked, the entry won\'t be created if the entry date is not "
-            "included into the selected period")
+        help="If checked, the entry won\'t be created if the entry date is "
+        "not included into the selected period"
         )
     invoice_subtype = fields.Selection([
         ('only_invoice', 'Only Invoice'),

@@ -24,8 +24,9 @@ Pasos con infra:
 * verificamos imagen en 8.0 (si es otro server hacer pull)
 * hacemos un restart (si ya estaba en 8.0) o create/update (si lo cambiamos)
 * entramos y actualizamos lista de modulos
+* buscamos vistas con "argent" y las borramos
 * matamos servicio, levantamos a mano y corremos
-* `runuser -u odoo openerp-server -- -c /etc/odoo/openerp-server.conf --logfile=False --load=web,web_kanban,database_tools,server_mode -u account_check,l10n_ar_invoice,web_support_client -i account_voucher_payline,account_journal_payment_subtype,l10n_ar_aeroo_voucher,account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement --workers=0 --without-demo=all -d [database_name] `
+* `runuser -u odoo openerp-server -- -c /etc/odoo/openerp-server.conf --logfile=False --load=web,web_kanban,database_tools,server_mode -u account_check,l10n_ar_invoice,web_support_client,l10n_ar_base -i account_voucher_payline,account_journal_payment_subtype,l10n_ar_aeroo_voucher,account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement --workers=0 --without-demo=all -d [database_name] `
 * Luego limpiamos bd (purge modules, models, etc)
 * bajamos servicio y leventamos desde infra
 * desactivamos diarios

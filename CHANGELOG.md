@@ -20,17 +20,18 @@ on august 2015 we release several modifications on receipts and other modules, t
 NOTAS INTERNAS:
 Pasos con infra:
 * backup de bd
-* actualizamos repos odoo-addons y odoo-argentina
+* actualizamos repos odoo-addons, odoo-argentina y odoo support
 * verificamos imagen en 8.0 (si es otro server hacer pull)
 * hacemos un restart (si ya estaba en 8.0) o create/update (si lo cambiamos)
 * entramos y actualizamos lista de modulos
+* buscamos vistas con "argent" y las borramos
 * matamos servicio, levantamos a mano y corremos
-* `runuser -u odoo openerp-server -- -c /etc/odoo/openerp-server.conf --logfile=False --load=web,web_kanban,database_tools,server_mode -u account_check,l10n_ar_invoice -i account_voucher_payline,account_journal_payment_subtype,l10n_ar_aeroo_voucher,account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement --workers=0 --without-demo=all -d [database_name] `
+* `runuser -u odoo openerp-server -- -c /etc/odoo/openerp-server.conf --logfile=False --load=web,web_kanban,database_tools,server_mode -u account_check,l10n_ar_invoice,web_support_client,l10n_ar_base -i account_voucher_payline,account_journal_payment_subtype,l10n_ar_aeroo_voucher,account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement --workers=0 --without-demo=all -d [database_name] `
 * Luego limpiamos bd (purge modules, models, etc)
 * bajamos servicio y leventamos desde infra
 * desactivamos diarios
 * importamos retenciones
-* hacemos copia a instancia de test
+* hacemos copia a instancia de train
 
 ##### 8.0.2 to 8.0.3
 actualizar l10n_ar_base

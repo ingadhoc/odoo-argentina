@@ -32,6 +32,7 @@ Pasos con infra:
 * desactivamos diarios
 * desinstalamos auth_admin_passkey
 * importamos retenciones
+* vamos a los talonarios de recibos y completamos con documento "recibo x" y prefijo
 * hacemos copia a instancia de train
 
 ##### 8.0.2 to 8.0.3

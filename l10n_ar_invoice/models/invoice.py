@@ -589,15 +589,20 @@ class account_invoice(models.Model):
                 # 'currency_rate': obj_inv.company_id.currency_id.compute(
                     # 1., obj_inv.currency_id)
                 }
-            if obj_inv.journal_document_class_id and not obj_inv.afip_document_number:
-                if invtype in ('out_invoice', 'out_refund'):
-                    if not obj_inv.journal_document_class_id.sequence_id:
-                        raise Warning(_('Error!. Please define sequence on the journal related documents to this invoice.'))
-                    afip_document_number = obj_sequence.next_by_id(
-                        obj_inv.journal_document_class_id.sequence_id.id)
-                elif invtype in ('in_invoice', 'in_refund'):
-                    afip_document_number = obj_inv.supplier_invoice_number
-                inv_vals['afip_document_number'] = afip_document_number
+            if obj_inv.journal_document_class_id:
+                if not obj_inv.afip_document_number:
+                    if invtype in ('out_invoice', 'out_refund'):
+                        if not obj_inv.journal_document_class_id.sequence_id:
+                            raise Warning(_('Error!. Please define sequence on the journal related documents to this invoice.'))
+                        afip_document_number = obj_sequence.next_by_id(
+                            obj_inv.journal_document_class_id.sequence_id.id)
+                    elif invtype in ('in_invoice', 'in_refund'):
+                        afip_document_number = obj_inv.supplier_invoice_number
+                    inv_vals['afip_document_number'] = afip_document_number
+                # caso factura cancelada y veulta a validar, tiene
+                # el document number seteado
+                else:
+                    afip_document_number = obj_inv.afip_document_number
                 document_class_id = obj_inv.journal_document_class_id.afip_document_class_id.id
                 obj_inv.move_id.write({
                     'document_class_id': document_class_id,

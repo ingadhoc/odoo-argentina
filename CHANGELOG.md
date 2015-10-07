@@ -20,7 +20,7 @@ on august 2015 we release several modifications on receipts and other modules, t
 NOTAS INTERNAS:
 Pasos con infra:
 * backup de bd
-* actualizamos repos server-tools, odoo-addons, odoo-argentina y odoo support
+* actualizamos repos server-tools, odoo-addons, odoo-argentina y odoo support (en prod borramos odoo argentina y odoo addons para que borre completamente carpetas viejas)
 * verificamos imagen en 8.0 (si es otro server hacer pull)
 * hacemos un restart (si ya estaba en 8.0) o create/update (si lo cambiamos)
 * entramos y actualizamos lista de modulos

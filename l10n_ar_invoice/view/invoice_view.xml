@@ -45,6 +45,9 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
+                <button string="Print" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('sent','=',True), ('state', 'not in', ['open','paid'])]}</attribute>
+                </button>
                 <button string="Print Invoice" position="attributes">
                     <attribute name="attrs">{'invisible':['|',('sent','=',False), ('state', 'not in', ['open','paid'])]}</attribute>
                 </button>

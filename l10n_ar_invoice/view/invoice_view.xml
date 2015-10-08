@@ -49,7 +49,9 @@
                 <xpath expr="//tree[@string='Payments']//field[@name='move_id']" position="after">
                     <field name="document_number"/>
                 </xpath>
-
+                <button string="Print" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('sent','=',True), ('state', 'not in', ['open','paid'])]}</attribute>
+                </button>
                 <button string="Print Invoice" position="attributes">
                     <attribute name="attrs">{'invisible':['|',('sent','=',False), ('state', 'not in', ['open','paid'])]}</attribute>
                 </button>

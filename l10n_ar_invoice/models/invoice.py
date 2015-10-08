@@ -152,6 +152,14 @@ class account_invoice(models.Model):
         string='Use Argentinian Localization?',
         readonly=True,
         )
+    point_of_sale_type = fields.Selection(
+        related='journal_id.point_of_sale_id.type',
+        readonly=True,
+        )
+    # estos campos los agregamos en este modulo pero en realidad los usa FE
+    # pero entendemos que podrian ser necesarios para otros tipos, por ahora
+    # solo lo vamos a hacer requerido si el punto de venta es del tipo
+    # electronico
     afip_concept = fields.Selection(
         compute='_get_concept',
         # store=True,
@@ -178,10 +186,10 @@ class account_invoice(models.Model):
     )
     def _get_concept(self):
         afip_concept = False
-        if self.use_argentinian_localization:
+        if self.point_of_sale_type in ['online', 'electronic']:
             # exportaciones
             product_types = set(
-                [line.product_id.type for line in self.invoice_line if line.product_id])
+                [x.product_id.type for x in self.invoice_line if x.product_id])
             consumible = set(['consu', 'product'])
             service = set(['service'])
             mixed = set(['consu', 'service', 'product'])
@@ -206,7 +214,8 @@ class account_invoice(models.Model):
         """
 
         vat_taxes = self.tax_line.filtered(
-            lambda r: r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat')
+            lambda r: (
+                r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat'))
         vat_amount = sum(
             vat_taxes.mapped('amount'))
         vat_base_amount = sum(

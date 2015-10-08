@@ -72,13 +72,13 @@ class account_tax_code(models.Model):
     _inherit = 'account.tax.code'
 
     amount_untaxed = fields.Float(
-        string='Untaxed',
+        string=_('Untaxed'),
         compute='_get_amounts',)
     amount_tax = fields.Float(
-        string='Tax',
+        string=_('Tax'),
         compute='_get_amounts',)
     amount_total = fields.Float(
-        string='total',
+        string=_('Total'),
         compute='_get_amounts',)
 
     @api.one
@@ -123,13 +123,13 @@ class afip_responsability(models.Model):
     _inherit = 'afip.responsability'
 
     amount_untaxed = fields.Float(
-        string='Untaxed',
+        string=_('Untaxed'),
         compute='_get_amounts',)
     amount_tax = fields.Float(
-        string='Tax',
+        string=_('Tax'),
         compute='_get_amounts',)
     amount_total = fields.Float(
-        string='total',
+        string=_('Total'),
         compute='_get_amounts',)
 
     @api.one

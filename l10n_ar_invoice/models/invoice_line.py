@@ -3,7 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields, api
+from openerp import models, fields, api, _
 import openerp.addons.decimal_precision as dp
 
 
@@ -86,35 +86,35 @@ class account_invoice_line(models.Model):
     vat_tax_ids = fields.One2many(
         compute="_get_taxes_and_prices",
         comodel_name='account.tax',
-        string='VAT Taxes'
+        string=_('VAT Taxes')
         )
     printed_price_unit = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
-        string='Unit Price'
+        string=_('Unit Price')
         )
     printed_price_net = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
-        string='Net Price',
+        string=_('Net Price'),
         )
     printed_price_subtotal = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
-        string='Subtotal',
+        string=_('Subtotal'),
         )
     vat_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
-        string='Vat Amount',
+        string=_('Vat Amount'),
         )
     other_taxes_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
-        string='Other Taxes Amount',
+        string=_('Other Taxes Amount'),
         )
     vat_exempt_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
-        string='Exempt Amount',
+        string=_('Exempt Amount'),
         )

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <!-- RI Receipt Vouchers -->
+        <!-- With 3 third checks -->
+        <record id="demo_ri_rec_voucher_1" model="account.voucher">
+            <field name="journal_id" ref="cheques_terceros"/>
+            <!-- TODO ver que elija el periodo de la fecha -->
+            <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">receipt</field>
+            <!-- we add amount for compatibility with voucher constraint module -->
+            <field name="amount" eval="295.0"/>
+            <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
+            <field name="advance_amount" eval="295.0"/>
+            <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
+            <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="partner_id" ref="base.res_partner_13"/>
+            <field name="receiptbook_id" ref="l10n_ar_account_voucher.customer_receiptbook_1_ri"/>
+        </record>
+        <!-- to deliver and cancel-->
+        <record id="demo_ri_rec_voucher_1_issue_check_1" model="account.check">
+            <field name="number">1</field>
+            <field name="vat">AR30999999995</field>
+            <field name="owner_name">Axelor</field>
+            <field name="amount" eval="15.0"/>
+            <field name="bank_id" ref="base.res_bank_1"/>
+            <field name="voucher_id" ref="demo_ri_rec_voucher_1"/>
+            <field name="issue_date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="payment_date" eval="time.strftime('%Y-%m')+'-1'"/>
+        </record>
+        <!-- to deliver and reject-->
+        <record id="demo_ri_rec_voucher_1_issue_check_2" model="account.check">
+            <field name="number">2</field>
+            <field name="vat">AR30999999995</field>
+            <field name="owner_name">Axelor</field>
+            <field name="amount" eval="50.0"/>
+            <field name="bank_id" ref="base.res_bank_1"/>
+            <field name="voucher_id" ref="demo_ri_rec_voucher_1"/>
+            <field name="issue_date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="payment_date" eval="time.strftime('%Y-%m')+'-28'"/>
+        </record>
+        <!-- to deliver -->
+        <record id="demo_ri_rec_voucher_1_issue_check_3" model="account.check">
+            <field name="number">22</field>
+            <field name="vat">AR20313932975</field>
+            <field name="owner_name">Menuheen Lemon</field>
+            <field name="amount" eval="30.0"/>
+            <field name="bank_id" ref="base.res_bank_1"/>
+            <field name="voucher_id" ref="demo_ri_rec_voucher_1"/>
+            <field name="issue_date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="payment_date" eval="time.strftime('%Y-%m')+'-28'"/>
+        </record>
+        <!-- to deposit -->
+        <record id="demo_ri_rec_voucher_1_issue_check_4" model="account.check">
+            <field name="number">88</field>
+            <field name="vat">AR2032073281</field>
+            <field name="owner_name">Anguila Muzafa</field>
+            <field name="amount" eval="50.0"/>
+            <field name="bank_id" ref="base.res_bank_1"/>
+            <field name="voucher_id" ref="demo_ri_rec_voucher_1"/>
+            <field name="issue_date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="payment_date" eval="time.strftime('%Y-%m')+'-28'"/>
+        </record>
+        <!-- to deposit and reject-->
+        <record id="demo_ri_rec_voucher_1_issue_check_5" model="account.check">
+            <field name="number">99</field>
+            <field name="vat">AR2032073281</field>
+            <field name="owner_name">Anguila Muzafa</field>
+            <field name="amount" eval="150.0"/>
+            <field name="bank_id" ref="base.res_bank_1"/>
+            <field name="voucher_id" ref="demo_ri_rec_voucher_1"/>
+            <field name="issue_date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="payment_date" eval="time.strftime('%Y-%m')+'-1'"/>
+        </record>
+        <workflow action="proforma_voucher" model="account.voucher" ref="demo_ri_rec_voucher_1"/>
+
+        <!-- With 1 third check, to test cancellation -->
+        <record id="demo_ri_rec_voucher_2" model="account.voucher">
+            <field name="journal_id" ref="cheques_terceros"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <!-- TODO ver que elija el periodo de la fecha -->
+            <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
+            <field name="type">receipt</field>
+            <!-- we add amount for compatibility with voucher constraint module -->
+            <field name="amount" eval="100.0"/>
+            <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
+            <field name="advance_amount" eval="100.0"/>
+            <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
+            <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="receiptbook_id" ref="l10n_ar_account_voucher.customer_receiptbook_1_ri"/>
+        </record>
+        <record id="demo_ri_rec_voucher_2_issue_check_1" model="account.check">
+            <field name="number">1</field>
+            <field name="vat">AR30888888884</field>
+            <field name="owner_name">Camptocamp</field>
+            <field name="amount" eval="100.0"/>
+            <field name="bank_id" ref="base.res_bank_1"/>
+            <field name="voucher_id" ref="demo_ri_rec_voucher_2"/>
+            <field name="issue_date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="payment_date" eval="time.strftime('%Y-%m')+'-1'"/>
+        </record>
+        <workflow action="proforma_voucher" model="account.voucher" ref="demo_ri_rec_voucher_2"/>
+        <!-- cancel voucher -->
+        <!-- para poder cancelar se necesita el diario marcado como para -->
+<!--         <function
+            eval="([ref('demo_ri_rec_voucher_2')])"
+            id="cancel_demo_ri_rec_voucher_2"
+            model="account.voucher"
+            name="cancel_voucher"/>   -->
+
+    <!-- RI Payment Vouchers -->
+        <!-- With issue checks -->
+        <record id="demo_ri_pay_voucher_1" model="account.voucher">
+            <field name="journal_id" ref="cheques_propios"/>
+            <!-- TODO ver que elija el periodo de la fecha -->
+            <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">payment</field>
+            <!-- we add amount for compatibility with voucher constraint module -->
+            <field name="amount" eval="150.0"/>
+            <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
+            <field name="advance_amount" eval="150.0"/>
+            <field name="account_id" ref="l10n_ar_invoice.ri_cheques_diferidos"/>
+            <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="partner_id" ref="base.res_partner_6"/>
+            <field name="receiptbook_id" ref="l10n_ar_account_voucher.supplier_receiptbook_1_ri"/>
+        </record>
+        <!-- to debit -->
+        <record id="demo_ri_pay_voucher_1_issue_check_1" model="account.check">
+            <field name="number">1</field>
+            <field name="amount" eval="150.0"/>
+            <field name="checkbook_id" ref="chequera_cheques_propios"/>
+            <field name="voucher_id" ref="demo_ri_pay_voucher_1"/>
+            <field name="issue_date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="payment_date" eval="time.strftime('%Y-%m')+'-1'"/>
+        </record>
+        <!-- to reject -->
+        <record id="demo_ri_pay_voucher_1_issue_check_2" model="account.check">
+            <field name="number">2</field>
+            <field name="amount" eval="150.0"/>
+            <field name="checkbook_id" ref="chequera_cheques_propios"/>
+            <field name="voucher_id" ref="demo_ri_pay_voucher_1"/>
+            <field name="issue_date" eval="time.strftime('%Y-%m')+'-15'"/>
+            <field name="payment_date" eval="time.strftime('%Y-%m')+'-15'"/>
+        </record>
+        <record id="demo_ri_pay_voucher_1_issue_check_3" model="account.check">
+            <field name="number">3</field>
+            <field name="amount" eval="150.0"/>
+            <field name="checkbook_id" ref="chequera_cheques_propios"/>
+            <field name="voucher_id" ref="demo_ri_pay_voucher_1"/>
+            <field name="issue_date" eval="time.strftime('%Y-%m')+'-28'"/>
+            <field name="payment_date" eval="time.strftime('%Y-%m')+'-28'"/>
+        </record>
+        <workflow action="proforma_voucher" model="account.voucher" ref="demo_ri_pay_voucher_1"/>
+
+
+        <!-- With third check to cancel -->
+        <record id="demo_ri_pay_voucher_2" model="account.voucher">
+            <field name="journal_id" ref="cheques_terceros"/>
+            <!-- TODO ver que elija el periodo de la fecha -->
+            <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">payment</field>
+            <!-- we add amount for compatibility with voucher constraint module -->
+            <field name="amount" eval="15.0"/>
+            <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
+            <field name="advance_amount" eval="15.0"/>
+            <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
+            <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="partner_id" ref="base.res_partner_16"/>
+            <field name="receiptbook_id" ref="l10n_ar_account_voucher.supplier_receiptbook_1_ri"/>
+        </record>
+        <record id="demo_ri_rec_voucher_1_issue_check_1" model="account.check">
+            <field name="third_handed_voucher_id" ref="demo_ri_pay_voucher_2"/>
+        </record>
+        <workflow action="proforma_voucher" model="account.voucher" ref="demo_ri_pay_voucher_2"/>
+        <!-- para poder cancelar se necesita el diario marcado como para -->
+<!--         <function
+            eval="([ref('demo_ri_pay_voucher_2')])"
+            id="cancel_demo_ri_pay_voucher_2"
+            model="account.voucher"
+            name="cancel_voucher"/>   -->
+
+        <!-- With third check to reject -->
+        <record id="demo_ri_pay_voucher_3" model="account.voucher">
+            <field name="journal_id" ref="cheques_terceros"/>
+            <!-- TODO ver que elija el periodo de la fecha -->
+            <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">payment</field>
+            <!-- we add amount for compatibility with voucher constraint module -->
+            <field name="amount" eval="50.0"/>
+            <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
+            <field name="advance_amount" eval="50.0"/>
+            <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
+            <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="partner_id" ref="base.res_partner_22"/>
+            <field name="receiptbook_id" ref="l10n_ar_account_voucher.supplier_receiptbook_1_ri"/>
+        </record>
+        <record id="demo_ri_rec_voucher_1_issue_check_2" model="account.check">
+            <field name="third_handed_voucher_id" ref="demo_ri_pay_voucher_3"/>
+        </record>
+        <workflow action="proforma_voucher" model="account.voucher" ref="demo_ri_pay_voucher_3"/>
+
+        <!-- With third check -->
+        <record id="demo_ri_pay_voucher_4" model="account.voucher">
+            <field name="journal_id" ref="cheques_terceros"/>
+            <!-- TODO ver que elija el periodo de la fecha -->
+            <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">payment</field>
+            <!-- we add amount for compatibility with voucher constraint module -->
+            <field name="amount" eval="30.0"/>
+            <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
+            <field name="advance_amount" eval="30.0"/>
+            <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
+            <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="partner_id" ref="base.res_partner_17"/>
+            <field name="receiptbook_id" ref="l10n_ar_account_voucher.supplier_receiptbook_1_ri"/>
+        </record>
+        <record id="demo_ri_rec_voucher_1_issue_check_3" model="account.check">
+            <field name="third_handed_voucher_id" ref="demo_ri_pay_voucher_4"/>
+        </record>
+        <workflow action="proforma_voucher" model="account.voucher" ref="demo_ri_pay_voucher_4"/>
+    </data>
+</openerp>

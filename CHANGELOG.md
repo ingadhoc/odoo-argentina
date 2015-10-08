@@ -8,8 +8,35 @@
 * mejorar la parte de certificado, el campo state por ahí no neesario en el alias. A su vez tal ves el "outsorced" no es mas necesario, siempre se genera para la compania, tal vez no hacemos los dos m2o si no que agregamos todo a la clase res.company y listo
 
 
-#### UPGRADE 8.0.2 to 8.0.3
+#### UPGRADE
+##### 8.0 to 8.0 after august 2015
+on august 2015 we release several modifications on receipts and other modules, to update both odoo-addons and odoo-argentina follow moreless this steps:
+* Update both repositories (odoo-addons and odoo-argentina)
+* update module list on odoo interface
+* Update checks and receipts module `-u account_check,l10n_ar_invoice -i account_voucher_payline,account_journal_payment_subtype,l10n_ar_aeroo_voucher --without-demo=all -d [database_name]`
+* desintall depreciated modules `account_bank_voucher` and `account_voucher_receipt`
+* optionally install this new modules: `-i account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement,account_statement_move_import,account_statement_disable_invoice_import --without-demo=all -d [database_name]`
+
+NOTAS INTERNAS:
+Pasos con infra:
+* backup de bd
+* actualizamos repos server-tools, odoo-addons, odoo-argentina y odoo support (en prod borramos odoo argentina y odoo addons para que borre completamente carpetas viejas)
+* verificamos imagen en 8.0 (si es otro server hacer pull)
+* hacemos un restart (si ya estaba en 8.0) o create/update (si lo cambiamos)
+* entramos y actualizamos lista de modulos
+* buscamos vistas con "argent" y las borramos
+* matamos servicio, levantamos a mano y corremos
+* `runuser -u odoo openerp-server -- -c /etc/odoo/openerp-server.conf --logfile=False --load=web,web_kanban,database_tools,server_mode -u account_check,l10n_ar_invoice,web_support_client,l10n_ar_base,database_cleanup -i account_voucher_payline,account_journal_payment_subtype,l10n_ar_aeroo_voucher,account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement,account_statement_disable_invoice_import,account_statement_move_import,account_journal_active --workers=0 --without-demo=all -d [database_name] `
+* Luego limpiamos bd (purge modules, models, etc)
+* bajamos servicio y leventamos desde infra
+* desactivamos diarios
+* desinstalamos auth_admin_passkey
+* importamos retenciones
+* vamos a los talonarios de recibos y completamos con documento "recibo x" y prefijo
+* hacemos copia a instancia de train
+
 ##### 8.0.2 to 8.0.3
+actualizar l10n_ar_base
 NOTA: para migrar de branch anteriores al 8.0.2 primero migrar a la 8.0.2
 
 ##### 8.0.1 to 8.0.2

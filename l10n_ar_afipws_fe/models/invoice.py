@@ -136,15 +136,6 @@ class invoice(models.Model):
         return rel_invoices
 
     @api.multi
-    def action_cancel(self):
-        for inv in self:
-            if self.afip_cae:
-                raise Warning(
-                    _('Error! You can not cancel an electronic invoice (has CAE assigned).\
-                    You should do a credit note instead.'))
-        return super(invoice, self).action_cancel()
-
-    @api.multi
     # def invoice_validate(self):
     def action_number(self):
         """

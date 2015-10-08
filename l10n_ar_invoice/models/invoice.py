@@ -98,7 +98,7 @@ class account_invoice(models.Model):
         )
     journal_document_class_id = fields.Many2one(
         'account.journal.afip_document_class',
-        'Documents Type',
+        'Document Type',
         readonly=True,
         ondelete='restrict',
         states={'draft': [('readonly', False)]}
@@ -426,6 +426,19 @@ class account_invoice(models.Model):
                     ' and Company!'))
 
     @api.multi
+    def check_use_documents(self):
+        # check invoices has document class but journal require it (we check
+        # all invoices, not only argentinian ones)
+        without_doucument_class = self.filtered(
+            lambda r: (
+                not r.afip_document_class_id and r.journal_id.use_documents))
+        if without_doucument_class:
+            raise Warning(_(
+                'Some invoices have a journal that require a document but not '
+                'document type has been selected.\n'
+                'Invoices ids: %s' % without_doucument_class.ids))
+
+    @api.multi
     def check_argentinian_invoice_taxes(self):
         """
         We make theis function to be used as a constraint but also to be called
@@ -433,7 +446,13 @@ class account_invoice(models.Model):
         """
         # only check for argentinian localization companies
         _logger.info('Running checks related to argentinian documents')
-        argentinian_invoices = self.filtered('use_argentinian_localization')
+
+        # we consider argentinian invoices the ones from companies with
+        # use_argentinian_localization and that belongs to a journal with
+        # use_documents
+        argentinian_invoices = self.filtered(
+            lambda r: (
+                r.use_argentinian_localization and r.use_documents))
         if not argentinian_invoices:
             return True
 
@@ -477,13 +496,21 @@ class account_invoice(models.Model):
             ('company_id.partner_id.responsability_id.vat_tax_required_on_sales_invoices',
                 '=', True)])
 
+        # check purchase invoice has supplier invoice number
+        purchase_invoices = argentinian_invoices.filtered(
+            lambda r: r.type in ('in_invoice', 'in_refund'))
+        purchase_invoices_without_sup_number = purchase_invoices.filtered(
+            lambda r: (not r.supplier_invoice_number))
+        if purchase_invoices_without_sup_number:
+            raise Warning(_(
+                "Some purchase invoices don't have supplier nunmber.\n"
+                "Invoices ids: %s" % purchase_invoices_without_sup_number.ids))
+
         # purchase invoice must have vat if document class letter has vat
         # discriminated
-        purchase_invoices_with_vat = self.search([(
-            'id', 'in', argentinian_invoices.ids),
-            ('type', 'in', ['in_invoice', 'in_refund']),
-            ('afip_document_class_id.document_letter_id.vat_discriminated',
-                '=', True)])
+        purchase_invoices_with_vat = purchase_invoices.filtered(
+            lambda r: (
+                r.afip_document_class_id.document_letter_id.vat_discriminated))
 
         invoices_with_vat = (
             sale_invoices_with_vat + purchase_invoices_with_vat)
@@ -501,12 +528,12 @@ class account_invoice(models.Model):
                         invoice.amount_untaxed,
                         invoice.vat_base_amount)))
 
-        # check purchase invoices that can't have vat
-        purchase_invoices_without = self.search([(
-            'id', 'in', argentinian_invoices.ids),
-            ('type', 'in', ['in_invoice', 'in_refund']),
-            ('afip_document_class_id.document_letter_id.vat_discriminated',
-                '=', False)])
+        # check purchase invoices that can't have vat. We check only the ones
+        # with document letter because other documents may have or not vat tax
+        purchase_invoices_without = purchase_invoices.filtered(
+            lambda r: (
+                r.afip_document_class_id.document_letter_id and
+                not r.afip_document_class_id.document_letter_id.vat_discriminated))
         for invoice in purchase_invoices_without:
             if invoice.vat_tax_ids:
                 raise Warning(_(
@@ -533,6 +560,7 @@ class account_invoice(models.Model):
         We add currency rate on move creation so it can be used by electronic
         invoice later on action_number
         """
+        self.check_use_documents()
         self.check_argentinian_invoice_taxes()
         for inv in self:
             inv.currency_rate = inv.currency_id.compute(
@@ -563,15 +591,20 @@ class account_invoice(models.Model):
                 # 'currency_rate': obj_inv.company_id.currency_id.compute(
                     # 1., obj_inv.currency_id)
                 }
-            if obj_inv.journal_document_class_id and not obj_inv.afip_document_number:
-                if invtype in ('out_invoice', 'out_refund'):
-                    if not obj_inv.journal_document_class_id.sequence_id:
-                        raise Warning(_('Error!. Please define sequence on the journal related documents to this invoice.'))
-                    afip_document_number = obj_sequence.next_by_id(
-                        obj_inv.journal_document_class_id.sequence_id.id)
-                elif invtype in ('in_invoice', 'in_refund'):
-                    afip_document_number = obj_inv.supplier_invoice_number
-                inv_vals['afip_document_number'] = afip_document_number
+            if obj_inv.journal_document_class_id:
+                if not obj_inv.afip_document_number:
+                    if invtype in ('out_invoice', 'out_refund'):
+                        if not obj_inv.journal_document_class_id.sequence_id:
+                            raise Warning(_('Error!. Please define sequence on the journal related documents to this invoice.'))
+                        afip_document_number = obj_sequence.next_by_id(
+                            obj_inv.journal_document_class_id.sequence_id.id)
+                    elif invtype in ('in_invoice', 'in_refund'):
+                        afip_document_number = obj_inv.supplier_invoice_number
+                    inv_vals['afip_document_number'] = afip_document_number
+                # caso factura cancelada y veulta a validar, tiene
+                # el document number seteado
+                else:
+                    afip_document_number = obj_inv.afip_document_number
                 document_class_id = obj_inv.journal_document_class_id.afip_document_class_id.id
                 obj_inv.move_id.write({
                     'document_class_id': document_class_id,

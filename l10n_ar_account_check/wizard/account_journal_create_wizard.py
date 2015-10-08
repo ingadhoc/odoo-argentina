@@ -23,14 +23,14 @@ class account_journal_create_wizard(models.TransientModel):
             invoice_subtype)
         if self.type in ('issue_check', 'third_check'):
             if self.type == 'issue_check':
-                domain = [('check_type', '=', 'issue')]
-                check_type = 'issue'
+                domain = [('payment_subtype', '=', 'issue_check')]
+                payment_subtype = 'issue_check'
                 code = _('CHP')
                 name = _('Cheques Propios')
                 journal_type = 'bank'
             elif self.type == 'third_check':
-                check_type = 'third'
-                domain = [('check_type', '=', 'third')]
+                payment_subtype = 'third_check'
+                domain = [('payment_subtype', '=', 'third_check')]
                 code = _('CHT')
                 name = _('Cheques Terceros')
                 journal_type = 'bank'
@@ -66,7 +66,9 @@ class account_journal_create_wizard(models.TransientModel):
                 'type': journal_type,
                 'name': name,
                 'validate_only_checks': True,
-                'check_type': check_type,
+                'payment_subtype': payment_subtype,
                 'code': '%s%02d' % (code, next_number),
+                'default_credit_account_id': self.default_credit_account_id.id,
+                'default_debit_account_id': self.default_debit_account_id.id,
             })
         return vals

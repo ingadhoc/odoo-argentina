@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Argentina - Facturación y documentos AFIP",
-    'version': '8.0.0.4.1',
+    'version': '8.0.0.5.2',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author':  'ADHOC SA',
@@ -83,6 +83,7 @@ Para actualizar el plan de cuentas de datos demo:
           'view/account_move_line_view.xml',
           'view/currency_view.xml',
           'view/afip_incoterm_view.xml',
+          'view/partner_bank_view.xml',
           'invoice_template.xml',
           'report/invoice_analysis.xml',
           'security/ir.model.access.csv',
@@ -97,13 +98,13 @@ Para actualizar el plan de cuentas de datos demo:
           'demo/fiscal_year_ri_demo.xml',
           'demo/account_chart_respinsc.xml',
           'demo/account_demo.xml',
-          # 'demo/ri_purchase_invoice_demo.xml',
-          # 'demo/ri_sale_invoice_demo.xml',
+          'demo/ri_purchase_invoice_demo.xml',
+          'demo/ri_sale_invoice_demo.xml',
     ],
     'test': [
     ],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
     'application': False,
  }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

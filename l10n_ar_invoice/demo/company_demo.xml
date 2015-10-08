@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data>
     <!-- Partners for companies -->
         <record id="partner_ri" model="res.partner">
             <field name='responsability_id' ref='res_IVARI'/>
@@ -17,7 +17,8 @@
             <field name="email">info@yourcompany.example.com</field>
             <field name="website">www.example.com</field>
             <field name="supplier" eval="True"/>
-            <field name="image" type="base64" file="base/static/img/main_partner-image.png"/>
+            <field name="start_date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <!-- <field name="image" type="base64" file="base/static/img/main_partner-image.png"/> -->
         </record>
         <record id="partner_mono" model="res.partner">
             <field name='responsability_id' ref='res_RM'/>
@@ -34,16 +35,21 @@
             <field name="email">info@yourcompany.example.com</field>
             <field name="website">www.example.com</field>
             <field name="supplier" eval="True"/>
-            <field name="image" type="base64" file="base/static/img/main_partner-image.png"/>
+            <field name="start_date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <!-- <field name="image" type="base64" file="base/static/img/main_partner-image.png"/> -->
         </record>
 
     <!-- Companies -->
+        <record id="base.main_company" model="res.company">
+            <field name="use_argentinian_localization" eval="False"/>
+        </record>
         <record id="company_ri" model="res.company">
             <field name='parent_id' ref='base.main_company'/>
             <field name='currency_id' ref='base.ARS'/>
             <field name='partner_id' ref='partner_ri'/>
             <field name='name'>Responsable Inscripto SA</field>
             <field name="use_argentinian_localization" eval="True"/>
+            <field name="logo" type="base64" file="l10n_ar_invoice/demo/responsable_inscripto.png"/>
         </record>
         <record id="company_mono" model="res.company">
             <field name='parent_id' ref='base.main_company'/>
@@ -51,6 +57,7 @@
             <field name='partner_id' ref='partner_mono'/>
             <field name="use_argentinian_localization" eval="True"/>
             <field name='name'>Monotributista</field>
+            <field name="logo" type="base64" file="l10n_ar_invoice/demo/monotributista.png"/>
         </record>
 
     <!-- Users -->

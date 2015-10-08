@@ -50,10 +50,9 @@
                     <field name="document_number"/>
                 </xpath>
 
-                <button string="Refund Invoice" position="before">
-                    <button name="invoice_print" string="Print Invoice" type="object" attrs="{'invisible':[('state', '!=', 'paid')]}" groups="base.group_user"/>
+                <button string="Print Invoice" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('sent','=',False), ('state', 'not in', ['open','paid'])]}</attribute>
                 </button>
-
                 <form>
                     <field name="available_journal_document_class_ids" invisible="1"/>
                     <field name="use_documents" invisible="1"/>

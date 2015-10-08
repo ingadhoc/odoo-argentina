@@ -35,7 +35,7 @@ env:
   # TODO este test no funciona ya que pre-instala l10n_ar_invoice y al querer
   # hacerle init da error por actualizar periodo con movimientos
   # - TESTS="1" ODOO_REPO="odoo/odoo"
-  - UNIT_TEST="1"
+  - UNIT_TEST="1" ODOO_REPO="odoo/odoo"
 
 virtualenv:
   system_site_packages: true

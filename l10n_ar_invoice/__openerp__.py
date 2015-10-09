@@ -54,7 +54,6 @@ Para actualizar el plan de cuentas de datos demo:
           'data/document_type.xml',
           'data/partner.xml',
           'data/country.xml',
-          'data/res.currency.csv',
           'data/fiscal_position.xml',
           'data/res.country.csv',
           'data/product.uom.csv',

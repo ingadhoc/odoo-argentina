@@ -21,7 +21,7 @@ python:
 
 env:
   global:
-  - VERSION="8.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
+  - VERSION="9.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
   - TRANSIFEX_USER='jjscarafia'
   - TRANSIFEX_ORGANIZATION='adhoc'
   # to get secure, run 'travis encrypt TRANSIFEX_PASSWORD=[transifex_password] -r [github_repo]'
@@ -42,15 +42,14 @@ virtualenv:
 
 install:
   # aeroo reports
-  - git clone https://github.com/aeroo/aeroo_reports.git ${HOME}/aeroo_reports
+  - git clone https://github.com/aeroo/aeroo_reports.git ${HOME}/aeroo_reports -b ${VERSION}
   - pip install git+https://github.com/aeroo/aeroolib.git@master pycups==1.9.68
 
   # odoo addons adhoc
-  # TODO change to 8.0 when ready
-  - git clone https://github.com/ingadhoc/odoo-addons.git -b 8.0.x ${HOME}/odoo-addons
+  - git clone https://github.com/ingadhoc/odoo-addons.git ${HOME}/odoo-addons  -b ${VERSION}
 
   # oca account-financial-tools
-  - git clone https://github.com/OCA/account-financial-tools.git ${HOME}/account-financial-tools
+  - git clone https://github.com/OCA/account-financial-tools.git ${HOME}/account-financial-tools  -b ${VERSION}
 
   # repository requirements
   - pip install -r requirements.txt

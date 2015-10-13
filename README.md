@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/ingadhoc/odoo-argentina.svg?branch=8.0)](https://travis-ci.org/ingadhoc/odoo-argentina)
-[![Coverage Status](https://coveralls.io/repos/ingadhoc/odoo-argentina/badge.png?branch=8.0)](https://coveralls.io/r/ingadhoc/odoo-argentina?branch=8.0)
+[![Build Status](https://travis-ci.org/ingadhoc/odoo-argentina.svg?branch=9.0)](https://travis-ci.org/ingadhoc/odoo-argentina)
+[![Coverage Status](https://coveralls.io/repos/ingadhoc/odoo-argentina/badge.png?branch=9.0)](https://coveralls.io/r/ingadhoc/odoo-argentina?branch=9.0)
 
 # Odoo-Argentina
 

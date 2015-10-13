@@ -45,7 +45,7 @@ Incluye:
         # 'data/account_chart_coop.xml',
     ],
     'installable': True,
-    'version': '8.0.2.2.0',
+    'version': '9.0.1.0.0',
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

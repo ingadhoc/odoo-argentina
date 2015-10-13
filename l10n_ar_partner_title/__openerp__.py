@@ -28,5 +28,5 @@
     'license': 'AGPL-3',
     'name': 'Argentina - Nombre y t\xc3\xadtulos de personas f\xc3\xadsicas o no.',
     'data': ['data/res_partner_title.xml'],
-    'version': '8.0.2.7.2',
+    'version': '9.0.1.0.0',
     'website': 'https://launchpad.net/~openerp-l10n-ar-localization'}

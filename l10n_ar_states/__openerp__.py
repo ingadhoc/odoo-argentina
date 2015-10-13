@@ -29,6 +29,6 @@
     'name': 'Argentina - Listado de Provincias.',
     'test': [],
     'data': ['data/res_country_state.xml'],
-    'version': '8.0.2.7.2',
+    'version': '9.0.1.0.0',
     'website': 'https://launchpad.net/~openerp-l10n-ar-localization'}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

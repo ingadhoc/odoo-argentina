@@ -34,7 +34,7 @@ Incluye:
 """,
     'depends': [
         'l10n_multilang',
-        'l10n_ar_invoice',
+        'l10n_ar_account',
     ],
     'demo': [
     ],

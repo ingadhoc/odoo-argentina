@@ -25,9 +25,9 @@ class argentinian_base_configuration(models.TransientModel):
     module_l10n_ar_base_vat = fields.Boolean(
         'Argentinian VAT validation',
         help="""Installs the l10n_ar_base_vat module that extends base_vat modules so that you can add argentinian VATs (usually called cuit/cuil)""")
-    module_l10n_ar_invoice = fields.Boolean(
+    module_l10n_ar_account = fields.Boolean(
         'Argentinian invoicing and other documents Management',
-        help="""Installs the l10n_ar_invoice module. It creates some clases to manage afip functionality, for example document class, journal class, document letters, vat categories, etc.""")
+        help="""Installs the l10n_ar_account module. It creates some clases to manage afip functionality, for example document class, journal class, document letters, vat categories, etc.""")
     module_l10n_ar_partner_title = fields.Boolean(
         'Partner reference and titles usually used in Argentina',
         help="""Installs the l10n_ar_partner_title module. """)
@@ -53,9 +53,9 @@ class argentinian_base_configuration(models.TransientModel):
     # 'default_coding_method':fields.selection([('category','Based on the Category'), ('group','Based on Major / Sub Groups')], required=True, default_model='product.product'),
 
     # Sales
-    module_l10n_ar_invoice_sale = fields.Boolean(
+    module_l10n_ar_sale = fields.Boolean(
         'Add availabilty to use VAT included or not on sales',
-        help="""Installs the l10n_ar_invoice_sale module.""")
+        help="""Installs the l10n_ar_sale module.""")
 
     # Aeroo reports
     module_l10n_ar_aeroo_invoice = fields.Boolean(

@@ -5,7 +5,7 @@
         <record id="view_argentinian_base_configuration" model="ir.ui.view">
             <field name="name">argentinian.base.settings</field>
             <field name="model">argentinian.base.config.settings</field>
-            <field name="inherit_id" ref="l10n_ar_invoice.view_argentinian_base_configuration"/>
+            <field name="inherit_id" ref="l10n_ar_account.view_argentinian_base_configuration"/>
             <field name="arch" type="xml">
                 <button name="%(account.action_account_journal_form)d" position="after">
                     <button string="Configure AFIP Certificates"

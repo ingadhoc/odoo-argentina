@@ -32,7 +32,7 @@ Aregentinian Receipts and Payment Orders
 ========================================
     """,
     'depends': [
-        'l10n_ar_invoice',
+        'l10n_ar_account',
         'account_voucher',
     ],
     'external_dependencies': {

@@ -35,7 +35,7 @@ Creates Sale and Purchase VAT report menus in
     """,
     "depends": [
         "report_aeroo",
-        "l10n_ar_invoice"
+        "l10n_ar_account"
     ],
     'external_dependencies': {
     },

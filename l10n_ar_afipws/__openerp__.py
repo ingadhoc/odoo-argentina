@@ -61,7 +61,7 @@ publicarlas en los repositorios públicos.
     'depends': [
         # 'base',
         # this dependency is becaouse of CUIT request and some config menus
-        'l10n_ar_invoice',
+        'l10n_ar_account',
         ],
     'external_dependencies': {
         'python': ['suds', 'M2Crypto']

@@ -13,7 +13,7 @@
 on august 2015 we release several modifications on receipts and other modules, to update both odoo-addons and odoo-argentina follow moreless this steps:
 * Update both repositories (odoo-addons and odoo-argentina)
 * update module list on odoo interface
-* Update checks and receipts module `-u account_check,l10n_ar_invoice -i account_voucher_payline,account_journal_payment_subtype,l10n_ar_aeroo_voucher --without-demo=all -d [database_name]`
+* Update checks and receipts module `-u account_check,l10n_ar_account -i account_voucher_payline,account_journal_payment_subtype,l10n_ar_aeroo_voucher --without-demo=all -d [database_name]`
 * desintall depreciated modules `account_bank_voucher` and `account_voucher_receipt`
 * optionally install this new modules: `-i account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement,account_statement_move_import,account_statement_disable_invoice_import --without-demo=all -d [database_name]`
 
@@ -26,7 +26,7 @@ Pasos con infra:
 * entramos y actualizamos lista de modulos
 * buscamos vistas con "argent" y las borramos
 * matamos servicio, levantamos a mano y corremos
-* `runuser -u odoo openerp-server -- -c /etc/odoo/openerp-server.conf --logfile=False --load=web,web_kanban,database_tools,server_mode -u account_check,l10n_ar_invoice,web_support_client,l10n_ar_base,database_cleanup -i account_voucher_payline,account_journal_payment_subtype,l10n_ar_aeroo_voucher,account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement,account_statement_disable_invoice_import,account_statement_move_import,account_journal_active --workers=0 --without-demo=all -d [database_name] `
+* `runuser -u odoo openerp-server -- -c /etc/odoo/openerp-server.conf --logfile=False --load=web,web_kanban,database_tools,server_mode -u account_check,l10n_ar_account,web_support_client,l10n_ar_base,database_cleanup -i account_voucher_payline,account_journal_payment_subtype,l10n_ar_aeroo_voucher,account_transfer,account_tax_settlement_withholding,l10n_ar_account_check,l10n_ar_chart_generic_withholding,l10n_ar_chart_generic_tax_settlement,account_statement_disable_invoice_import,account_statement_move_import,account_journal_active --workers=0 --without-demo=all -d [database_name] `
 * Luego limpiamos bd (purge modules, models, etc)
 * bajamos servicio y leventamos desde infra
 * desactivamos diarios
@@ -52,7 +52,7 @@ En instancia de produccion
 - cambiar docker a 8.0.3
 - pull de odoo argentina en 8.0.2
 - create/update instancia
-- update a l10n_ar_base,l10n_ar_invoice (esto dispara update de l10n_ar_wsafip_fe tmb) (para que ande bien export haría falta hacer un -i o hacer una cargamanual de los csv de uom, currency y countries)
+- update a l10n_ar_base,l10n_ar_account (esto dispara update de l10n_ar_wsafip_fe tmb) (para que ande bien export haría falta hacer un -i o hacer una cargamanual de los csv de uom, currency y countries)
 - hacer backup de la pkey y cert
 - desinstalar l10n_ar_wsafip
 - reiniciar instacia 
@@ -63,7 +63,7 @@ En instancia de produccion
 - ir a puntos de venta y setear electronica al que corresponda
 
 ##### 8.0 to 8.0.1
-- Actualziar l10n_ar_invoice
+- Actualziar l10n_ar_account
 - Configurar atributos de codigos de impuestos
 
 

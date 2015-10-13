@@ -5,7 +5,7 @@
         <record id="view_afip_point_of_sale_form" model="ir.ui.view">
             <field name="name">afip.point_of_sale.form</field>
             <field name="model">afip.point_of_sale</field>
-            <field name="inherit_id" ref="l10n_ar_invoice.view_afip_point_of_sale_form"/>
+            <field name="inherit_id" ref="l10n_ar_account.view_afip_point_of_sale_form"/>
             <field name="arch" type="xml">
                 <header>
                     <button name="action_get_connection" string="Get Connection" help="Get Connection For this webservice and create it if no valid" type="object" attrs="{'invisible':[('afip_ws', '=', False)]}"/>

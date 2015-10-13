@@ -34,7 +34,7 @@ Argentinian Like Stock Picking Aeroo Report
     'depends': [
         'report_extended_stock',
         'l10n_ar_aeroo_base',
-        'l10n_ar_invoice',
+        'l10n_ar_account',
         'stock_voucher',
     ],
     'external_dependencies': {

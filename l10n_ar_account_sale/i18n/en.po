@@ -1,0 +1,75 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * l10n_ar_sale
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: odoo-argentina (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-09 14:17+0000\n"
+"PO-Revision-Date: 2015-09-01 16:34+0000\n"
+"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"Language-Team: English (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_ar_sale
+#: model:ir.model,name:l10n_ar_sale.model_res_company
+msgid "Companies"
+msgstr "Companies"
+
+#. module: l10n_ar_sale
+#: help:res.company,sale_allow_vat_no_discrimination:0
+msgid ""
+"Definie behaviour on sales orders and quoatations reports. Discrimination or"
+" not will depend in partner and company responsability and AFIP letters "
+"setup:            * If False, then VAT will be discriminated like always in "
+"odoo            * If No Discriminate Default, if no match found it won't "
+"discriminate by default            * If Discriminate Default, if no match "
+"found it would discriminate by default            "
+msgstr "Definie behaviour on sales orders and quoatations reports. Discrimination or not will depend in partner and company responsability and AFIP letters setup:            * If False, then VAT will be discriminated like always in odoo            * If No Discriminate Default, if no match found it won't discriminate by default            * If Discriminate Default, if no match found it would discriminate by default            "
+
+#. module: l10n_ar_sale
+#: view:account.invoice.report:l10n_ar_sale.view_account_invoice_report_search_inherit
+#: field:account.invoice.report,afip_document_class_id:0
+msgid "Document Type"
+msgstr "Document Type"
+
+#. module: l10n_ar_sale
+#: model:ir.model,name:l10n_ar_sale.model_account_invoice_report
+msgid "Invoices Statistics"
+msgstr "Invoices Statistics"
+
+#. module: l10n_ar_sale
+#: field:res.company,sale_allow_vat_no_discrimination:0
+msgid "Sale Allow VAT no discrimination?"
+msgstr "Sale Allow VAT no discrimination?"
+
+#. module: l10n_ar_sale
+#: model:res.groups,name:l10n_ar_sale.sale_price_unit_with_tax
+msgid "Sale Unit Price w/ Taxes"
+msgstr "Sale Unit Price w/ Taxes"
+
+#. module: l10n_ar_sale
+#: model:ir.model,name:l10n_ar_sale.model_sale_order
+msgid "Sales Order"
+msgstr "Sales Order"
+
+#. module: l10n_ar_sale
+#: model:ir.model,name:l10n_ar_sale.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Sales Order Line"
+
+#. module: l10n_ar_sale
+#: selection:res.company,sale_allow_vat_no_discrimination:0
+msgid "Yes, Discrimnate Default"
+msgstr "Yes, Discrimnate Default"
+
+#. module: l10n_ar_sale
+#: selection:res.company,sale_allow_vat_no_discrimination:0
+msgid "Yes, No Discriminate Default"
+msgstr "Yes, No Discriminate Default"

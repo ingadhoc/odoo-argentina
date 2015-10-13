@@ -62,10 +62,10 @@
 					<group>
 						<label for="id" string="Invoicing" />	
 						<div name="invoicing">
-							<div name='module_l10n_ar_invoice'>
-								<field name="module_l10n_ar_invoice"
+							<div name='module_l10n_ar_account'>
+								<field name="module_l10n_ar_account"
 									class="oe_inline" />
-								<label for="module_l10n_ar_invoice" />
+								<label for="module_l10n_ar_account" />
 							</div>	
 							<div name='module_l10n_ar_afipws_fe'>
 								<field name="module_l10n_ar_afipws_fe"
@@ -131,9 +131,9 @@
 					<group>
 						<label for="id" string="Sales" />
 						<div name="sales">
-							<div name='module_l10n_ar_invoice_sale'>
-								<field name="module_l10n_ar_invoice_sale" class="oe_inline" />
-								<label for="module_l10n_ar_invoice_sale" />
+							<div name='module_l10n_ar_sale'>
+								<field name="module_l10n_ar_sale" class="oe_inline" />
+								<label for="module_l10n_ar_sale" />
 							</div>
 						</div>						
 					</group>

@@ -33,7 +33,7 @@ Adjust Account Follow UP for Argentinian Localization
     """,
     'depends': [
         'account_followup',
-        'l10n_ar_invoice',
+        'l10n_ar_account',
     ],
     'external_dependencies': {
     },

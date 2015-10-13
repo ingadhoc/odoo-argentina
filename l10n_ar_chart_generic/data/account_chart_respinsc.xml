@@ -5,7 +5,7 @@
 
 #
 # Chart of Accounts
-# Ponemos company comentado en cada linea para poder hacer un replace y usarlo en l10n_Ar_invoice como dato demo
+# Ponemos company comentado en cada linea para poder hacer un replace y usarlo en l10n_ar_account como dato demo
         <record model="account.account.template" id="ri_a_root">
             <field name="type">view</field>
             <field name="code">0.0.00.00.000</field>
@@ -1758,7 +1758,7 @@
         <record model="account.account.template" id="ri_transferencias_internas">
             <field name="type">other</field>
             <field name="code">6.0.00.00.010</field>
-            <field name="user_type" ref="l10n_ar_invoice.data_account_type_transitory"/>
+            <field name="user_type" ref="l10n_ar_account.data_account_type_transitory"/>
             <field name="name">Transferencias Internas</field>
             <field name="parent_id" ref="ri_transitorias"/>
             <!-- <field name="company_id" ref="company_ri"/> -->

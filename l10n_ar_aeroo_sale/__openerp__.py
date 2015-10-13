@@ -37,7 +37,7 @@ Parameters requirements:
     'depends': [
         'report_extended_sale',
         'l10n_ar_aeroo_base',
-        'l10n_ar_invoice_sale',
+        'l10n_ar_sale',
     ],
     'external_dependencies': {
     },

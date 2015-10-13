@@ -81,7 +81,7 @@ class wizard_multi_charts_accounts(models.TransientModel):
                     'padding': 8,
                     'company_id': company_id,
                     'document_class_id': self.env.ref(
-                        'l10n_ar_invoice.dc_recibo_x').id,
+                        'l10n_ar_account.dc_recibo_x').id,
                     'manual_prefix': (
                         '%%0%sd-' % 4 % sequences[sequence_type]),
                     'sequence': sequences[sequence_type],

@@ -50,7 +50,7 @@ Adjust Account Follow UP for Argentinian Localization
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'application': False,
 }

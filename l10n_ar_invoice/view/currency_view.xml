@@ -9,8 +9,6 @@
                 <group string="Miscellaneous" position="after">
                     <group string="AFIP">
                         <field name="afip_code"/>
-                        <field name="afip_desc"/>
-                        <field name="afip_dt_from"/>
                     </group>
                 </group>
             </field>

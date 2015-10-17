@@ -11,7 +11,6 @@
                         <field name="name"/>
                         <field name='afip_code'/>
                         <field name='doc_code_prefix'/>
-                        <field name='code_template'/>
                         <field name='document_letter_id'/>
                         <field name='report_name'/>
                         <field name='document_type'/>
@@ -29,7 +28,6 @@
                     <field name="name"/>
                     <field name="afip_code"/>
                     <field name="doc_code_prefix"/>
-                    <field name="code_template"/>
                     <field name="document_letter_id"/>
                     <field name='report_name'/>
                     <field name='document_type'/>
@@ -45,7 +43,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Document Classes" action="act_afip_document_class" id="menu_action_afip_document_class" parent="menu_afip_config"/>
+        <menuitem name="Document Classes" action="act_afip_document_class" id="menu_action_afip_document_class" sequence="50" parent="menu_afip_config"/>
 
     </data>
 </openerp>

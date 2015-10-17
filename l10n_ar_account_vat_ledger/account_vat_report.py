@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
-import time
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in module root
+# directory
+##############################################################################
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning
+import time
 
 
 class account_vat_ledger(models.Model):
@@ -45,35 +49,27 @@ class account_vat_ledger(models.Model):
     note = fields.Html("Notes")
 # Computed fields
     name = fields.Char(
-        'Titile',
+        _('Titile'),
         compute='_get_name')
     invoice_ids = fields.Many2many(
         'account.invoice',
-        string="Invoices",
+        string=_("Invoices"),
         compute="_get_data")
     document_class_ids = fields.Many2many(
         'afip.document_class',
-        string="Document Classes",
+        string=_("Document Classes"),
         compute="_get_data")
     vat_tax_code_ids = fields.Many2many(
         'account.tax.code',
-        string="VAT Tax Codes",
+        string=_("VAT Tax Codes"),
         compute="_get_data")
     other_tax_code_ids = fields.Many2many(
         'account.tax.code',
-        string="Other Tax Codes",
+        string=_("Other Tax Codes"),
         compute="_get_data")
     responsability_ids = fields.Many2many(
         'afip.responsability',
-        string="Responsabilities",
-        compute="_get_data")
-    other_taxes_base = fields.Float(
-        string="Other Taxes Base",
-        help="Base Amount for taxes without tax code",
-        compute="_get_data")
-    other_taxes_amount = fields.Float(
-        string="Other Taxes Amount",
-        help="Amount for taxes without tax code",
+        string=_("Responsabilities"),
         compute="_get_data")
 
     @api.one
@@ -93,7 +89,7 @@ class account_vat_ledger(models.Model):
             invoices_domain,
             ['id', 'afip_document_class_id'], ['afip_document_class_id'])
         document_class_ids = [
-            x['afip_document_class_id'][0] for x in group_invoices]
+            x['afip_document_class_id'][0] for x in group_invoices if x and x['afip_document_class_id']]
         self.document_class_ids = document_class_ids
 
         # Get invoices
@@ -107,36 +103,11 @@ class account_vat_ledger(models.Model):
             ('invoice_id', 'in', invoices.ids),
             ('tax_code_id', '=', False)
             ]
-        other_taxes = self.env['account.invoice.tax'].search(taxes_domain)
-        self.other_taxes_base = sum([x.base for x in other_taxes])
-        self.other_taxes_amount = sum([x.amount for x in other_taxes])
 
-        # Get vat tax codes
-        vat_taxes_domain = [
-            ('invoice_id', 'in', invoices.ids),
-            ('tax_code_id', '!=', False),
-            ('tax_code_id.parent_id.name', '=', 'IVA'),
-            ]
-        self.tax_code_ids = self.env['account.tax.code']
-        vat_group_taxes = self.env['account.invoice.tax'].read_group(
-            vat_taxes_domain, ['id', 'tax_code_id'], ['tax_code_id'])
-        vat_tax_code_ids = [
-            x['tax_code_id'][0] for x in vat_group_taxes]
-        self.vat_tax_code_ids = vat_tax_code_ids
-
-        # Get other tax codes
-        other_taxes_domain = [
-            ('invoice_id', 'in', invoices.ids),
-            ('tax_code_id', '!=', False),
-            '|', ('tax_code_id.parent_id.name', '!=', 'IVA'),
-            ('tax_code_id.parent_id', '=', False),
-            ]
-        self.other_tax_code_ids = self.env['account.tax.code']
-        other_group_taxes = self.env['account.invoice.tax'].read_group(
-            other_taxes_domain, ['id', 'tax_code_id'], ['tax_code_id'])
-        other_tax_code_ids = [
-            x['tax_code_id'][0] for x in other_group_taxes]
-        self.other_tax_code_ids = other_tax_code_ids
+        self.vat_tax_code_ids = invoices.mapped(
+            'vat_tax_ids.tax_code_id')
+        self.other_tax_code_ids = invoices.mapped(
+            'not_vat_tax_ids.tax_code_id')
 
     @api.one
     @api.depends('type', 'period_id')

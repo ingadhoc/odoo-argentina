@@ -45,25 +45,41 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
-                <button string="Refund Invoice" position="before">
-                    <button name="invoice_print" string="Print Invoice" type="object" attrs="{'invisible':[('state', '!=', 'paid')]}" groups="base.group_user"/>
-                </button>
-
                 <form>
                     <field name="available_journal_document_class_ids" invisible="1"/>
+                    <field name="point_of_sale_type" invisible="1"/>
                     <field name="use_documents" invisible="1"/>
                     <field name="afip_document_number" invisible="1"/>
                     <field name="internal_number" invisible="1"/>
                     <field name="use_argentinian_localization" invisible="1"/>
                 </form>
 
+                <!-- add document number on paymentrs tree view -->
+                <xpath expr="//tree[@string='Payments']//field[@name='move_id']" position="after">
+                    <field name="document_number"/>
+                </xpath>
+                <button string="Print" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('sent','=',True), ('state', 'not in', ['open','paid'])]}</attribute>
+                </button>
+                <button string="Print Invoice" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('sent','=',False), ('state', 'not in', ['open','paid'])]}</attribute>
+                </button>
+
                 <xpath expr="//page[@string='Other Info']//field[@name='company_id']" position="after">
                     <field name="vat_discriminated"/>
                     <field name="responsability_id" states="open,paid"/>
                 </xpath>
 
+                <div groups="base.group_multi_currency" position="after">
+                    <field name="currency_rate"/>
+                </div>
+
                 <field name="fiscal_position" position="after">
                     <field name="reference"/>
+                    <field name="afip_incoterm_id"/>
+                    <field name='afip_concept' attrs="{'invisible':[('point_of_sale_type', 'not in', ['online', 'electronic'])]}"/>
+                    <field name='afip_service_start' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])],'required':[('afip_concept','in',['2', '3', '4'])]}"/>
+                    <field name='afip_service_end' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])],'required':[('afip_concept','in',['2', '3', '4'])]}"/>
                 </field>
                 <xpath expr="//page[@string='Other Info']//field[@name='name']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -98,6 +114,11 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
+                <!-- add document number on paymentrs tree view -->
+                <xpath expr="//tree[@string='Payments']//field[@name='move_id']" position="after">
+                    <field name="document_number"/>
+                </xpath>
+
                 <form>
                     <field name="available_journal_document_class_ids" invisible="1"/>
                     <field name="use_documents" invisible="1"/>

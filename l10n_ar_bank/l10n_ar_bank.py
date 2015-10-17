@@ -1,14 +1,20 @@
 # -*- coding: utf-8 -*-
-from openerp.osv import fields,osv
-from openerp.tools.translate import _
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in module root
+# directory
+##############################################################################
+from openerp import fields, models
 import time
 
-class Bank(osv.osv):
+
+class Bank(models.Model):
     _inherit = 'res.bank'
-    _columns = {
-          'update_date' : fields.date('Update Date'),
-          'vat': fields.char('VAT',size=32 ,help="Value Added Tax number."),
-        }
-    _defaults = {
-          'update_date': lambda *a: time.strftime('%Y-%m-%d')
-        }
+    update_date = fields.Date(
+        'Update Date',
+        default=lambda *a: time.strftime('%Y-%m-%d'),
+        )
+    vat = fields.Char(
+        'VAT',
+        size=32,
+        help="Value Added Tax number."
+        )

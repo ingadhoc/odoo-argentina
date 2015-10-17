@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in module root
+# directory
+##############################################################################
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
@@ -27,7 +31,6 @@ class res_partner(osv.osv):
 
         having_where_clause = ' AND '.join(map(lambda x: '(SUM(bal2) %s %%s)' % (x[1]), args))
         having_values = [x[2] for x in args]
-        print 'having_values', having_values
         query = self.pool.get('account.move.line')._query_get(cr, uid, context=context)
         overdue_only_str = overdue_only and 'AND date_maturity <= NOW()' or ''
         return ('''SELECT pid AS partner_id, SUM(bal2) FROM

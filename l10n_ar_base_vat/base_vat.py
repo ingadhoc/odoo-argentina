@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in module root
+# directory
+##############################################################################
 from openerp.osv import fields, osv
 import re
 _re_ar_vat = re.compile('ar(\d\d)(\d*)(\d)', re.IGNORECASE)

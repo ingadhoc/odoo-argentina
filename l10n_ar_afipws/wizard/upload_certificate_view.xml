@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    <!-- Upload Certificate request -->
+        <record id="view_upload_certificate_form" model="ir.ui.view">
+            <field name="name">afipws.upload_certificate.wizard.form</field>
+            <field name="model">afipws.upload_certificate.wizard</field>
+            <field name="arch" type="xml">
+              <form string="Upload Certificate">
+                <group>
+                  <field name="certificate_id" invisible="1"/>
+                  <field name="certificate_file"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" string="Confirm" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+              </form>
+            </field>
+        </record>
+
+        <record id="action_upload_certificate" model="ir.actions.act_window">
+          <field name="name">AFIP WS - Upload Certificate</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">afipws.upload_certificate.wizard</field>
+          <field name="view_id" ref="view_upload_certificate_form"/>
+          <field name="view_type">form</field>
+          <field name="view_mode">form</field>
+          <field name="target">new</field>
+        </record>
+  
+    </data>
+</openerp>
+<!--
+     vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+-->

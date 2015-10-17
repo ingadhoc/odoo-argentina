@@ -20,7 +20,6 @@
 ##############################################################################
 {
     'name': 'Argentina - Plan Contable General',
-    'version': '2.7.155',
     'author':   'OpenERP - Team de Localización Argentina',
     'category': 'Localization/Account Charts',
     'website':  'https://launchpad.net/~openerp-l10n-ar-localization',
@@ -34,25 +33,19 @@ Incluye:
 
 """,
     'depends': [
-        'account',
-        'account_chart',
         'l10n_multilang',
-        # 'base_vat',
-        # 'base_iban',
-        # 'l10n_ar_states',
-        # 'l10n_ar_base_vat',
+        'l10n_ar_invoice',
     ],
-    'init_xml': [],
-    'demo_xml': [],
+    'demo': [
+    ],
     'test': [],
-    'update_xml': [
-        'data/account_types.xml',
+    'data': [
         'data/account_chart_respinsc.xml',
-#        'data/account_chart_monotrib.xml',
-#        'data/account_chart_coop.xml',
-        'data/res_partner.xml',
+        'data/account_chart_monotrib.xml',
+        # 'data/account_chart_coop.xml',
     ],
     'installable': True,
+    'version': '8.0.2.2.0',
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

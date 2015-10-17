@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<!-- Tree Recibos (Customer and vendor)-->
+		<record id="voucher_receipts_form_inherit_view" model="ir.ui.view">
+			<field name="name">receipts.voucher.inherit.view</field>
+			<field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_voucher_tree"/>
+			<field name="arch" type="xml"> 
+                <field name="number" position="replace">
+                    <field name="document_number"/>
+                </field>
+			</field>
+	    </record>	
+
+
+        <!-- Customer Receipt Pop Up Form  -->
+        <record id="view_vendor_receipt_dialog_form" model="ir.ui.view">
+            <field name="name">account.voucher.receipt.dialog.form</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_dialog_form"/>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="receiptbook_sequence_type" invisible="1"/>
+                    <field name="use_argentinian_localization" invisible="1"/>
+                </form>
+                <field name="date" position="before">
+                    <!-- only required on posted state for compatibility if you install this module with vouchers already created -->
+                    <field name="receiptbook_id" attrs="{'required':[('use_argentinian_localization', '=', True), ('state', '=', 'draft')]}" domain="[('type', '=', type), ('company_id', '=', company_id)]"/>
+                    <field name="manual_prefix" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','manual'),('state','!=','draft')]}"/>
+                    <field name="manual_sufix" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','manual'),('state','!=','draft')],'required':[('receiptbook_sequence_type','=','manual')]}"/>
+                    <field name="next_receipt_number" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','automatic'),('state','!=','draft')]}"/>
+                    <field name="document_number" attrs="{'invisible':[('state','=','draft')]}"/>
+                    <!-- we disable for now, probably depreciated, used by sirpeco yet -->
+                    <!-- <field name="force_number" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','automatic'),('state','!=','draft')]}"/> -->
+                </field>
+            </field>
+        </record>
+
+        <!-- Customer Receipt Form  -->
+        <record id="view_vendor_receipt_form" model="ir.ui.view">
+            <field name="name">account.voucher.form.receipts.pay.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="receiptbook_sequence_type" invisible="1"/>
+                    <field name="use_argentinian_localization" invisible="1"/>
+                </form>
+                <field name="date" position="before">
+                    <field name="receiptbook_id" attrs="{'required':[('use_argentinian_localization', '=', True), ('state', '=', 'draft')]}" domain="[('type', '=', type), ('company_id', '=', company_id)]"/>
+                    <field name="manual_prefix" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','manual'),('state','!=','draft')]}"/>
+                    <field name="manual_sufix" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','manual'),('state','!=','draft')],'required':[('receiptbook_sequence_type','=','manual')]}"/>
+                    <field name="next_receipt_number" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','automatic'),('state','!=','draft')]}"/>
+                    <field name="document_number" attrs="{'invisible':[('state','=','draft')]}"/>
+                    <!-- we disable for now, probably depreciated, used by sirpeco yet -->
+                    <!-- <field name="force_number" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','automatic'),('state','!=','draft')]}"/> -->
+                </field>
+            </field>
+        </record>
+
+        <!-- Supplier Receipt Form  -->
+        <record id="view_vendor_payment_form" model="ir.ui.view">
+            <field name="name">account.voucher.form.receipts.pay.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="receiptbook_sequence_type" invisible="1"/>
+                </form>
+                <field name="date" position="before">
+                    <field name="receiptbook_id" domain="[('type','=',type), ('company_id', '=', company_id)]"/>
+                    <field name="manual_prefix" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','manual'),('state','!=','draft')]}"/>
+                    <field name="manual_sufix" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','manual'),('state','!=','draft')],'required':[('receiptbook_sequence_type','=','manual')]}"/>
+                    <field name="next_receipt_number" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','automatic'),('state','!=','draft')]}"/>
+                    <!-- we disable for now, probably depreciated, used by sirpeco yet -->
+                    <!-- <field name="force_number" attrs="{'invisible':['|',('receiptbook_sequence_type','!=','automatic'),('state','!=','draft')]}"/> -->
+                    <field name="document_number" attrs="{'invisible':[('state','=','draft')]}"/>
+                </field>   
+            </field>
+        </record>
+
+
+        <!-- Search vies -->
+        <record id="view_voucher_filter_customer_pay" model="ir.ui.view">
+            <field name="name">receipt.voucher.customer.inherit.select</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_customer_pay"/>
+            <field name="arch" type="xml">
+                <field name="number" position="after">
+                    <field name="reference"/>
+                </field>
+                <xpath expr="/search/field[@name='date']" position="after">
+                    <field name="receiptbook_id" string="Receiptbook" />
+                </xpath>
+                <filter string="Journal" position="after">
+                    <filter string="Receiptbook" context="{'group_by':'receiptbook_id'}"/>
+                </filter>
+            </field>
+        </record>   
+          
+        <record id="view_voucher_filter_vendor_pay" model="ir.ui.view">
+            <field name="name">voucher.filter.vendor.proof.inherit</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_vendor_pay"/>
+            <field name="arch" type="xml">
+                <field name="number" position="after">
+                    <field name="reference"/>
+                </field>
+                <xpath expr="/search/field[@name='date']" position="after">
+                    <field name="receiptbook_id" string="Receiptbook" />
+                </xpath>
+                <filter string="Journal" position="after">
+                    <filter string="Receiptbook" context="{'group_by':'receiptbook_id'}"/>
+                </filter>
+            </field>
+        </record>            
+    </data>
+</openerp>

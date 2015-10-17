@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-from openerp import models, api, fields
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in module root
+# directory
+##############################################################################
+from openerp import models, api, fields, _
 import openerp.addons.decimal_precision as dp
 
 
@@ -67,38 +71,38 @@ class sale_order_line(models.Model):
 
     price_unit_with_tax = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Unit Price w/ Taxes'
+        digits=dp.get_precision('Account'),
+        string=_('Unit Price w/ Taxes')
         )
     printed_price_unit = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Unit Price'
+        digits=dp.get_precision('Account'),
+        string=_('Unit Price')
         )
     printed_price_net = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Net Price',
+        digits=dp.get_precision('Account'),
+        string=_('Net Price'),
         )
     printed_price_subtotal = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Subtotal',
+        digits=dp.get_precision('Account'),
+        string=_('Subtotal'),
         )
     vat_amount = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Vat Amount',
+        digits=dp.get_precision('Account'),
+        string=_('Vat Amount'),
         )
     other_taxes_amount = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Other Taxes Amount',
+        digits=dp.get_precision('Account'),
+        string=_('Other Taxes Amount'),
         )
     exempt_amount = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Exempt Amount',
+        digits=dp.get_precision('Account'),
+        string=_('Exempt Amount'),
         )
 
 
@@ -142,9 +146,9 @@ class sale_order(models.Model):
         'account.tax',
         compute='get_taxes')
     vat_discriminated = fields.Boolean(
-        'Discriminate VAT?',
+        _('Discriminate VAT?'),
         compute="get_vat_discriminated",
-        help="Discriminate VAT on Quotations and Sale Orders?")
+        help=_("Discriminate VAT on Quotations and Sale Orders?"))
 
     @api.one
     def _printed_prices(self):
@@ -177,40 +181,38 @@ class sale_order(models.Model):
         self.other_taxes_amount = other_taxes_amount
         self.exempt_amount = exempt_amount
 
-
-
     printed_amount_tax = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Tax'
+        digits=dp.get_precision('Account'),
+        string=_('Tax')
         )
     printed_amount_untaxed = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Subtotal'
+        digits=dp.get_precision('Account'),
+        string=_('Subtotal')
         )
     exempt_amount = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Exempt Amount'
+        digits=dp.get_precision('Account'),
+        string=_('Exempt Amount')
         )
     vat_amount = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Vat Amount'
+        digits=dp.get_precision('Account'),
+        string=_('Vat Amount')
         )
     other_taxes_amount = fields.Float(
         compute="_printed_prices",
-        digits_compute=dp.get_precision('Account'),
-        string='Other Taxes Amount'
+        digits=dp.get_precision('Account'),
+        string=_('Other Taxes Amount')
         )
     printed_tax_ids = fields.One2many(
         compute="_printed_prices",
         comodel_name='account.invoice.tax',
-        string='Tax'
+        string=_('Tax')
         )
     vat_tax_ids = fields.One2many(
         compute="_printed_prices",
         comodel_name='account.invoice.tax',
-        string='VAT Taxes'
+        string=_('VAT Taxes')
         )

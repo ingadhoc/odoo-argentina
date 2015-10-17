@@ -67,10 +67,10 @@
 									class="oe_inline" />
 								<label for="module_l10n_ar_invoice" />
 							</div>	
-							<div name='module_l10n_ar_wsafip_fe'>
-								<field name="module_l10n_ar_wsafip_fe"
+							<div name='module_l10n_ar_afipws_fe'>
+								<field name="module_l10n_ar_afipws_fe"
 									class="oe_inline" />
-								<label for="module_l10n_ar_wsafip_fe" />
+								<label for="module_l10n_ar_afipws_fe" />
 							</div>								
 						</div>
 					</group>

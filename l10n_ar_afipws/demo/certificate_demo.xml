@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="certificate_alias_ri" model="afipws.certificate_alias">
+            <field name="common_name">AFIP WS homologation - Responsable Inscripto SA</field>
+            <field name="key">-----BEGIN PRIVATE KEY-----
+MIICeQIBADANBgkqhkiG9w0BAQEFAASCAmMwggJfAgEAAoGBAL4BAFKtPclkX8x5
+sONskmZoxGRHG5ypssuHVh9C6a2V9EKjeOFjcFQON2x6FRieKvsURBdThFW+QcgD
+lavqAUwwVw1ufuoR7cqluOhUp+6E51x/UxRXuloaq1H2f1aAAy5a/uaS10qXaNeO
+rGC1UOW9IWCAUllCdP8dfwfbozDPAgMBAAECgYEAgP5TBs5ArVJsy3guhCf4uHgW
+JPI1p8V58j1+VZjq5oNwojEzZulIoHhKXmX/nof7LByVIbT8me2h4TW1zlH+8FmM
+60rAe/9bcouErL8dCj7cUFvlxs6Qj1AsXeWcuMLYkDjGYusgyBLqYgYOV8byvi3r
+0p/pm6gl35rJNUeqpuECQQD8YOXJusf6SUkfXXXd5RZP9XfG7RGfy4KNnKq8vxsV
+2cC+PUl0ZZFFJt2CllVa3BkoQKlDhJdZaP7u5E6QeO/RAkEAwLr5Go09CbRdHwxK
+sJBsNc4DE2Ab6AJHW9SOvOc7/5EQTWozB2tqq3dn9Tf/e1R5WyOmvj5jjnxybItQ
+ol/enwJBAKsgsO9GfU7S3ogsAT4ClkyFb0Atg6PMhKutLYBqPN1mF3FncSVBsW0o
+W06uzRWc5FoM7jjf8RgpP6OQn00LE+ECQQCzZBWDol1jEA/xW1aWHAes2THBsh6n
+iJ91GVc2+6C8FAFxnV0cFd629TC9bj8OQ6WlsHx+7cFrGejDobUPPl8PAkEA9WeX
+CP5CN91/bRNKRbbSiocjpZnj5hCwvKRt5nw5VQmoddNnIPdTiZ9+qq+7WTkYAiBH
+03Q7wxPKNUAFKHW8QQ==
+-----END PRIVATE KEY-----</field>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="country_id" ref="base.ar"/>
+            <field name="state_id" ref="l10n_ar_invoice.demo_S"/>
+            <field name="city">Rosario</field>
+            <field name="service_provider_cuit">20313932975</field>
+            <field name="service_type">outsourced</field>
+            <!-- <field name="company_cuit">30111111118</field> -->
+            <!-- <field name="service_type">in_house</field> -->
+            <field name="type">homologation</field>
+            <field name="state">confirmed</field>
+        </record>
+
+        <record id="certificate_ri_1" model="afipws.certificate">
+            <field name="alias_id" ref="certificate_alias_ri"/>
+            <field name="state">confirmed</field>
+            <field name="csr">-----BEGIN CERTIFICATE REQUEST-----
+MIIB+DCCAWECAQAwgbcxCzAJBgNVBAYTAkFSMREwDwYDVQQIEwhTYW50YSBGZTEQ
+MA4GA1UEBxMHUm9zYXJpbzEhMB8GA1UEChMYUmVzcG9uc2FibGUgSW5zY3JpcHRv
+IFNBMQswCQYDVQQLEwJJVDE4MDYGA1UEAxMvQUZJUCBXUyBob21vbG9nYXRpb24g
+LSBSZXNwb25zYWJsZSBJbnNjcmlwdG8gU0ExGTAXBgNVBAUTEENVSVQgMjAzMTM5
+MzI5NzUwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAL4BAFKtPclkX8x5sONs
+kmZoxGRHG5ypssuHVh9C6a2V9EKjeOFjcFQON2x6FRieKvsURBdThFW+QcgDlavq
+AUwwVw1ufuoR7cqluOhUp+6E51x/UxRXuloaq1H2f1aAAy5a/uaS10qXaNeOrGC1
+UOW9IWCAUllCdP8dfwfbozDPAgMBAAGgADANBgkqhkiG9w0BAQUFAAOBgQCPiG2J
+56q1Nw99ODWwB7QNbuBEce/YKqaQHSlfAwrEi1980GYqg6y5iG/RKw2+SQv/QSvy
+fNmN7D+NSzD2oB5IiL053A8Gu+0kV4CswwFOWCCfZPFeosUaLDgeAGDNkSaurTC2
+cz22NS4iYgvLSKkUTsKSUb0LBOi5XZwHXlo61Q==
+-----END CERTIFICATE REQUEST-----</field>
+            <field name="crt">-----BEGIN CERTIFICATE-----
+MIIEGjCCAwKgAwIBAgIIHPL5XZwXrLkwDQYJKoZIhvcNAQEFBQAwQzElMCMGA1UE
+AwwcQUZJUCBUZXN0aW5nIENvbXB1dGFkb3JlcyBDQTENMAsGA1UECgwEQUZJUDEL
+MAkGA1UEBhMCQVIwHhcNMTUwNzAxMTUzMzMwWhcNMTgwMzI3MTUzMzMwWjCBtzE4
+MDYGA1UEAwwvQUZJUCBXUyBob21vbG9nYXRpb24gLSBSZXNwb25zYWJsZSBJbnNj
+cmlwdG8gU0ExGTAXBgNVBAUTEENVSVQgMjAzMTM5MzI5NzUxCzAJBgNVBAsMAklU
+MSEwHwYDVQQKDBhSZXNwb25zYWJsZSBJbnNjcmlwdG8gU0ExEDAOBgNVBAcMB1Jv
+c2FyaW8xETAPBgNVBAgMCFNhbnRhIEZlMQswCQYDVQQGEwJBUjCBnzANBgkqhkiG
+9w0BAQEFAAOBjQAwgYkCgYEAvgEAUq09yWRfzHmw42ySZmjEZEcbnKmyy4dWH0Lp
+rZX0QqN44WNwVA43bHoVGJ4q+xREF1OEVb5ByAOVq+oBTDBXDW5+6hHtyqW46FSn
+7oTnXH9TFFe6WhqrUfZ/VoADLlr+5pLXSpdo146sYLVQ5b0hYIBSWUJ0/x1/B9uj
+MM8CAwEAAaOCAR8wggEbMAwGA1UdEwEB/wQCMAAwDgYDVR0PAQH/BAQDAgXgMB0G
+A1UdDgQWBBSvkTTJS7PM+wPwibmtWtiVlLgu8DAfBgNVHSMEGDAWgBREdO60nCbf
+VuHBDetXC5AZNj2WATCBugYDVR0gBIGyMIGvMIGsBg4rBgEEAYG7YwECAQIBATCB
+mTCBlgYIKwYBBQUHAgIwgYkegYYAQwBlAHIAdABpAGYAaQBjAGEAZABvACAAcABh
+AHIAYQAgAGMAbwBtAHAAdQB0AGEAZABvAHIAZQBzACAAcwBvAGwAbwAgAHYAYQBs
+AGkAZABvACAAZQBuACAAZQBuAHQAbwByAG4AbwBzACAAZABlACAAZABlAHMAYQBy
+AHIAbwBsAGwAbzANBgkqhkiG9w0BAQUFAAOCAQEAbvKQ77aD+bc96CdlMSM/iSE9
+0TjErCicv64+00/Gw6xioJSvnOaaX44L1bO77dibNDV0d2gliKTSwlYUjxyOSxA0
+/tuxZA4FGhsl/8e8rMsLHRXsjUJNUJK3dWS5y7K0egYu9Y3ikr41eCv6m5QceywR
++scPpciIbraUaXPP3iUmgDDI4nTAKMAcOrrI1djqi/5Y2qIisePlYc+52IICl0qB
+xBg7ZBfwVkBWaNMVTanQJwGV9VlNOsvcRdX9lKBO6QpVq8oGofZtEf23G7Yag/Js
+pnzqis+Ur2o+3yjCdG9r7+BRTSCNwuFADsEMv3DlclxExPkAgjnGCC9+1DCIlw==
+-----END CERTIFICATE-----
+</field>
+        </record>
+    </data>
+</openerp>

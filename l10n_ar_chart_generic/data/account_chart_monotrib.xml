@@ -25,7 +25,7 @@
         <record model="account.account.template" id="mt_a_root">
             <field name="type">view</field>
             <field name="code">0</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">Plan de Cuentas</field>
         <field name="parent_id" eval="False" />
         </record>
@@ -33,7 +33,7 @@
         <record model="account.account.template" id="mt_activo">
             <field name="type">view</field>
             <field name="code">1*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">ACTIVO</field>
             <field name="parent_id" ref="mt_a_root"/>
         </record>
@@ -41,7 +41,7 @@
         <record model="account.account.template" id="mt_activo_corriente">
             <field name="type">view</field>
             <field name="code">11*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">ACTIVO CORRIENTE</field>
             <field name="parent_id" ref="mt_activo"/>
         </record>
@@ -49,7 +49,7 @@
         <record model="account.account.template" id="mt_disponibilidades">
             <field name="type">view</field>
             <field name="code">111*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">DISPONIBILIDADES</field>
             <field name="parent_id" ref="mt_activo_corriente"/>
         </record>
@@ -57,7 +57,7 @@
         <record model="account.account.template" id="mt_caja_pesos">
             <field name="type">other</field>
             <field name="code">11101</field>
-            <field name="user_type" ref="account.account_type_cash"/>
+            <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Caja pesos</field>
             <field name="parent_id" ref="mt_disponibilidades"/>
         </record>
@@ -65,7 +65,7 @@
         <record model="account.account.template" id="mt_caja_monex">
             <field name="type">other</field>
             <field name="code">11102</field>
-            <field name="user_type" ref="account.account_type_cash"/>
+            <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Caja Monex</field>
             <field name="parent_id" ref="mt_disponibilidades"/>
         </record>
@@ -73,7 +73,7 @@
         <record model="account.account.template" id="mt_fondo_fijo">
             <field name="type">other</field>
             <field name="code">11103</field>
-            <field name="user_type" ref="account.account_type_cash"/>
+            <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Fondo fijo</field>
             <field name="parent_id" ref="mt_disponibilidades"/>
         </record>
@@ -81,7 +81,7 @@
         <record model="account.account.template" id="mt_banco_misc">
             <field name="type">other</field>
             <field name="code">11104</field>
-            <field name="user_type" ref="account.account_type_cash"/>
+            <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Banco misc</field>
             <field name="parent_id" ref="mt_disponibilidades"/>
         </record>
@@ -89,7 +89,7 @@
         <record model="account.account.template" id="mt_valores_a_depositar">
             <field name="type">other</field>
             <field name="code">11105</field>
-            <field name="user_type" ref="account.account_type_cash"/>
+            <field name="user_type" ref="account.data_account_type_cash"/>
             <field name="name">Valores a depositar</field>
             <field name="parent_id" ref="mt_disponibilidades"/>
         </record>
@@ -97,7 +97,7 @@
         <record model="account.account.template" id="mt_creditos">
             <field name="type">view</field>
             <field name="code">113*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">CRÉDITOS</field>
             <field name="parent_id" ref="mt_activo_corriente"/>
         </record>
@@ -105,7 +105,7 @@
         <record model="account.account.template" id="mt_deudores_por_ventas">
             <field name="type">receivable</field>
             <field name="code">11301</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Deudores por ventas</field>
             <field name="parent_id" ref="mt_creditos"/>
 	    <field name="reconcile" eval="True"/>
@@ -114,7 +114,7 @@
         <record model="account.account.template" id="mt_deudores_morosos">
             <field name="type">receivable</field>
             <field name="code">11302</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Deudores morosos</field>
             <field name="parent_id" ref="mt_creditos"/>
         </record>
@@ -122,7 +122,7 @@
         <record model="account.account.template" id="mt_otros_creditos">
             <field name="type">view</field>
             <field name="code">114*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">OTROS CRÉDITOS</field>
             <field name="parent_id" ref="mt_activo_corriente"/>
         </record>
@@ -130,7 +130,7 @@
         <record model="account.account.template" id="mt_creditos_impuestos">
             <field name="type">view</field>
             <field name="code">1144*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">CRÉDITOS POR IMPUESTOS</field>
             <field name="parent_id" ref="mt_otros_creditos"/>
         </record>
@@ -138,7 +138,7 @@
         <record model="account.account.template" id="mt_creditos_ganancias_sociedades">
             <field name="type">view</field>
             <field name="code">11440010*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GANANCIAS SOCIEDADES</field>
             <field name="parent_id" ref="mt_creditos_impuestos"/>
         </record>
@@ -146,7 +146,7 @@
         <record model="account.account.template" id="mt_retencion_impuestos_ganancias_sociedades">
             <field name="type">receivable</field>
             <field name="code">1144001010</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retencion impuestos a las ganancias sociedades</field>
             <field name="parent_id" ref="mt_creditos_ganancias_sociedades"/>
         </record>
@@ -154,7 +154,7 @@
         <record model="account.account.template" id="mt_anticipo_impuestos_ganancias_sociedades">
             <field name="type">receivable</field>
             <field name="code">1144001020</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Anticipo impuestos a las ganancias sociedades</field>
             <field name="parent_id" ref="mt_creditos_ganancias_sociedades"/>
         </record>
@@ -162,7 +162,7 @@
         <record model="account.account.template" id="mt_saldo_favorable_ing_ganancias_sociedades">
             <field name="type">receivable</field>
             <field name="code">1144001030</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Saldo a favor ingresos a las ganancias sociedades</field>
             <field name="parent_id" ref="mt_creditos_ganancias_sociedades"/>
         </record>
@@ -170,7 +170,7 @@
         <record model="account.account.template" id="mt_creditos_ganancias_personas">
             <field name="type">view</field>
             <field name="code">11440011*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GANANCIAS PERSONAS FISICAS</field>
             <field name="parent_id" ref="mt_creditos_impuestos"/>
         </record>
@@ -178,7 +178,7 @@
         <record model="account.account.template" id="mt_retencion_impuestos_ganancias_personas">
             <field name="type">receivable</field>
             <field name="code">1144001110</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retencion impuestos a las ganancias p. fisicas</field>
             <field name="parent_id" ref="mt_creditos_ganancias_personas"/>
         </record>
@@ -186,7 +186,7 @@
         <record model="account.account.template" id="mt_anticipo_impuestos_ganancias_personas">
             <field name="type">receivable</field>
             <field name="code">1144001120</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Anticipo impuestos a las ganancias p. fisicas</field>
             <field name="parent_id" ref="mt_creditos_ganancias_personas"/>
         </record>
@@ -194,7 +194,7 @@
         <record model="account.account.template" id="mt_saldo_favorable_ing_ganancias_personas">
             <field name="type">receivable</field>
             <field name="code">1144001130</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Saldo a favor ingresos a las ganancias sociedades</field>
             <field name="parent_id" ref="mt_creditos_ganancias_personas"/>
         </record>
@@ -202,7 +202,7 @@
         <record model="account.account.template" id="mt_creditos_iibb">
             <field name="type">view</field>
             <field name="code">11440099*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS BRUTOS</field>
             <field name="parent_id" ref="mt_creditos_impuestos"/>
         </record>
@@ -210,7 +210,7 @@
         <record model="account.account.template" id="mt_creditos_iibb_cf">
             <field name="type">view</field>
             <field name="code">1144009900*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS BRUTOS CAPITAL FEDERAL</field>
             <field name="parent_id" ref="mt_creditos_iibb"/>
         </record>
@@ -218,7 +218,7 @@
         <record model="account.account.template" id="mt_percepcion_iibb_cf">
             <field name="type">receivable</field>
             <field name="code">114400990010</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones ingresos brutos capital federal</field>
             <field name="parent_id" ref="mt_creditos_iibb_cf"/>
         </record>
@@ -226,7 +226,7 @@
         <record model="account.account.template" id="mt_retencion_iibb_cf">
             <field name="type">receivable</field>
             <field name="code">114400990020</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retencion ingresos brutos capital federal</field>
             <field name="parent_id" ref="mt_creditos_iibb_cf"/>
         </record>
@@ -234,7 +234,7 @@
         <record model="account.account.template" id="mt_creditos_iibb_ba">
             <field name="type">view</field>
             <field name="code">1144009901*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS BRUTOS PROV. BUENOS AIRES</field>
             <field name="parent_id" ref="mt_creditos_iibb"/>
         </record>
@@ -242,7 +242,7 @@
         <record model="account.account.template" id="mt_percepcion_iibb_ba">
             <field name="type">receivable</field>
             <field name="code">114400990110</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones ingresos brutos p. buenos aires</field>
             <field name="parent_id" ref="mt_creditos_iibb_ba"/>
         </record>
@@ -250,7 +250,7 @@
         <record model="account.account.template" id="mt_retencion_iibb_ba">
             <field name="type">receivable</field>
             <field name="code">114400990120</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retencion ingresos brutos p. buenos aires</field>
             <field name="parent_id" ref="mt_creditos_iibb_ba"/>
         </record>
@@ -258,7 +258,7 @@
         <record model="account.account.template" id="mt_creditos_iibb_co">
             <field name="type">view</field>
             <field name="code">1144009903*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS BRUTOS PROV. CORDOBA</field>
             <field name="parent_id" ref="mt_creditos_iibb"/>
         </record>
@@ -266,7 +266,7 @@
         <record model="account.account.template" id="mt_percepcion_iibb_co">
             <field name="type">receivable</field>
             <field name="code">114400990310</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones ingresos brutos p. córdoba</field>
             <field name="parent_id" ref="mt_creditos_iibb_co"/>
         </record>
@@ -274,7 +274,7 @@
         <record model="account.account.template" id="mt_retencion_iibb_co">
             <field name="type">receivable</field>
             <field name="code">114400990320</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retencion ingresos brutos p. córdoba</field>
             <field name="parent_id" ref="mt_creditos_iibb_co"/>
         </record>
@@ -282,7 +282,7 @@
         <record model="account.account.template" id="mt_creditos_iibb_sf">
             <field name="type">view</field>
             <field name="code">1144009912*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS BRUTOS PROV. SANTA FÉ</field>
             <field name="parent_id" ref="mt_creditos_iibb"/>
         </record>
@@ -290,7 +290,7 @@
         <record model="account.account.template" id="mt_percepcion_iibb_sf">
             <field name="type">receivable</field>
             <field name="code">114400991210</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Percepciones ingresos brutos p. santa fé</field>
             <field name="parent_id" ref="mt_creditos_iibb_sf"/>
         </record>
@@ -298,7 +298,7 @@
         <record model="account.account.template" id="mt_retencion_iibb_sf">
             <field name="type">receivable</field>
             <field name="code">114400991220</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Retencion ingresos brutos p. santa fé</field>
             <field name="parent_id" ref="mt_creditos_iibb_sf"/>
         </record>
@@ -306,7 +306,7 @@
         <record model="account.account.template" id="mt_bienes_de_cambio">
             <field name="type">view</field>
             <field name="code">115*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">BIENES DE CAMBIO</field>
             <field name="parent_id" ref="mt_activo_corriente"/>
         </record>
@@ -314,7 +314,7 @@
         <record model="account.account.template" id="mt_equipos">
             <field name="type">receivable</field>
             <field name="code">11501</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Equipos</field>
             <field name="parent_id" ref="mt_bienes_de_cambio"/>
         </record>
@@ -322,7 +322,7 @@
         <record model="account.account.template" id="mt_equipos_en_demo">
             <field name="type">receivable</field>
             <field name="code">11502</field>
-            <field name="user_type" ref="account.account_type_receivable"/>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="name">Equipos en Demo</field>
             <field name="parent_id" ref="mt_bienes_de_cambio"/>
         </record>
@@ -330,7 +330,7 @@
         <record model="account.account.template" id="mt_activo_no_corriente">
             <field name="type">view</field>
             <field name="code">12*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">ACTIVO NO CORRIENTE</field>
             <field name="parent_id" ref="mt_activo"/>
         </record>
@@ -338,7 +338,7 @@
         <record model="account.account.template" id="mt_bienes_de_uso">
             <field name="type">view</field>
             <field name="code">124*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">BIENES DE USO</field>
             <field name="parent_id" ref="mt_activo_no_corriente"/>
         </record>
@@ -346,7 +346,7 @@
         <record model="account.account.template" id="mt_equipos_de_computacion">
             <field name="type">other</field>
             <field name="code">12401</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">Equipos computación</field>
             <field name="parent_id" ref="mt_bienes_de_uso"/>
         </record>
@@ -354,7 +354,7 @@
         <record model="account.account.template" id="mt_software">
             <field name="type">other</field>
             <field name="code">12402</field>
-            <field name="user_type" ref="account.account_type_asset"/>
+            <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Software</field>
             <field name="parent_id" ref="mt_bienes_de_uso"/>
         </record>
@@ -362,7 +362,7 @@
         <record model="account.account.template" id="mt_instalaciones">
             <field name="type">other</field>
             <field name="code">12403</field>
-            <field name="user_type" ref="account.account_type_asset"/>
+            <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Instalaciones</field>
             <field name="parent_id" ref="mt_bienes_de_uso"/>
         </record>
@@ -370,7 +370,7 @@
         <record model="account.account.template" id="mt_muebles_y_utiles">
             <field name="type">other</field>
             <field name="code">12404</field>
-            <field name="user_type" ref="account.account_type_asset"/>
+            <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Muebles y útiles</field>
             <field name="parent_id" ref="mt_bienes_de_uso"/>
         </record>
@@ -378,7 +378,7 @@
         <record model="account.account.template" id="mt_amortizacion_acumulada_bs_uso">
             <field name="type">view</field>
             <field name="code">125*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">AMORTIZACIONES ACUMULADAS BIENES DE USO</field>
             <field name="parent_id" ref="mt_activo_no_corriente"/>
         </record>
@@ -386,7 +386,7 @@
         <record model="account.account.template" id="mt_amortizacion_acumulada_computacion">
             <field name="type">other</field>
             <field name="code">12501</field>
-            <field name="user_type" ref="account.account_type_asset"/>
+            <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Amortización acumulada equipos computación</field>
             <field name="parent_id" ref="mt_amortizacion_acumulada_bs_uso"/>
         </record>
@@ -394,7 +394,7 @@
         <record model="account.account.template" id="mt_amortizacion_acumulada_software">
             <field name="type">other</field>
             <field name="code">12502</field>
-            <field name="user_type" ref="account.account_type_asset"/>
+            <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Amortización acumulada software</field>
             <field name="parent_id" ref="mt_amortizacion_acumulada_bs_uso"/>
         </record>
@@ -402,7 +402,7 @@
         <record model="account.account.template" id="mt_amortizacion_acumulada_instalaciones">
             <field name="type">other</field>
             <field name="code">12503</field>
-            <field name="user_type" ref="account.account_type_asset"/>
+            <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Amortización acumulada instalaciones</field>
             <field name="parent_id" ref="mt_amortizacion_acumulada_bs_uso"/>
         </record>
@@ -410,7 +410,7 @@
         <record model="account.account.template" id="mt_amortizacion_acumulada_muebles_utiles">
             <field name="type">other</field>
             <field name="code">12504</field>
-            <field name="user_type" ref="account.account_type_asset"/>
+            <field name="user_type" ref="account.data_account_type_asset"/>
             <field name="name">Amortización acumulada muebles y útiles</field>
             <field name="parent_id" ref="mt_amortizacion_acumulada_bs_uso"/>
         </record>
@@ -418,7 +418,7 @@
         <record model="account.account.template" id="mt_pasivo">
             <field name="type">view</field>
             <field name="code">2*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">PASIVO</field>
             <field name="parent_id" ref="mt_a_root"/>
         </record>
@@ -426,7 +426,7 @@
         <record model="account.account.template" id="mt_pasivo_corriente">
             <field name="type">view</field>
             <field name="code">21*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">PASIVO CORRIENTE</field>
             <field name="parent_id" ref="mt_pasivo"/>
         </record>
@@ -434,7 +434,7 @@
         <record model="account.account.template" id="mt_deudas_sociales">
             <field name="type">view</field>
             <field name="code">211*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">DEUDAS SOCIALES</field>
             <field name="parent_id" ref="mt_pasivo_corriente"/>
         </record>
@@ -442,7 +442,7 @@
         <record model="account.account.template" id="mt_sueldos_a_pagar">
             <field name="type">payable</field>
             <field name="code">21101</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Sueldos a pagar</field>
             <field name="parent_id" ref="mt_deudas_sociales"/>
         </record>
@@ -450,7 +450,7 @@
         <record model="account.account.template" id="mt_cargas_sociales_a_pagar">
             <field name="type">payable</field>
             <field name="code">21102</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Cargas sociales a pagar</field>
             <field name="parent_id" ref="mt_deudas_sociales"/>
         </record>
@@ -458,7 +458,7 @@
         <record model="account.account.template" id="mt_provision_sac_a_pagar">
             <field name="type">payable</field>
             <field name="code">21103</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Provision SAC a pagar</field>
             <field name="parent_id" ref="mt_deudas_sociales"/>
         </record>
@@ -466,7 +466,7 @@
         <record model="account.account.template" id="mt_provision_sac_cargas_sociales">
             <field name="type">payable</field>
             <field name="code">21104</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Provision SAC cargas sociales a pagar</field>
             <field name="parent_id" ref="mt_deudas_sociales"/>
         </record>
@@ -474,7 +474,7 @@
         <record model="account.account.template" id="mt_beneficios_al_personal">
             <field name="type">payable</field>
             <field name="code">21105</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Beneficios al personal</field>
             <field name="parent_id" ref="mt_deudas_sociales"/>
         </record>
@@ -482,7 +482,7 @@
         <record model="account.account.template" id="mt_prevision_despidos">
             <field name="type">payable</field>
             <field name="code">21106</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Previsión Despidos</field>
             <field name="parent_id" ref="mt_deudas_sociales"/>
         </record>
@@ -490,7 +490,7 @@
         <record model="account.account.template" id="mt_deudas_fiscales">
             <field name="type">view</field>
             <field name="code">212*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">DEUDAS FISCALES</field>
             <field name="parent_id" ref="mt_pasivo_corriente"/>
         </record>
@@ -498,7 +498,7 @@
         <record model="account.account.template" id="mt_iibb_a_pagar">
             <field name="type">other</field>
             <field name="code">21201</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Ingresos brutos a pagar</field>
             <field name="parent_id" ref="mt_deudas_fiscales"/>
         </record>
@@ -506,7 +506,7 @@
         <record model="account.account.template" id="mt_retencion_ganancias_a_depositar">
             <field name="type">other</field>
             <field name="code">21204</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Retención ganancias a depositar</field>
             <field name="parent_id" ref="mt_deudas_fiscales"/>
         </record>
@@ -514,7 +514,7 @@
         <record model="account.account.template" id="mt_provision_impuesto_a_las_ganancias">
             <field name="type">other</field>
             <field name="code">21205</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Provision impuesto a las ganancias</field>
             <field name="parent_id" ref="mt_deudas_fiscales"/>
         </record>
@@ -522,7 +522,7 @@
         <record model="account.account.template" id="mt_deudas_comerciales">
             <field name="type">view</field>
             <field name="code">213*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">DEUDAS COMERCIALES</field>
             <field name="parent_id" ref="mt_pasivo_corriente"/>
         </record>
@@ -530,7 +530,7 @@
         <record model="account.account.template" id="mt_pago_proveedores">
             <field name="type">payable</field>
             <field name="code">21301</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Proveedores</field>
             <field name="parent_id" ref="mt_deudas_comerciales"/>
         </record>
@@ -538,7 +538,7 @@
         <record model="account.account.template" id="mt_anticipos_de_clientes">
             <field name="type">payable</field>
             <field name="code">21302</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Anticipos de clientes</field>
             <field name="parent_id" ref="mt_deudas_comerciales"/>
         </record>
@@ -546,7 +546,7 @@
         <record model="account.account.template" id="mt_provisiones_varias">
             <field name="type">view</field>
             <field name="code">214*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">PROVISIONES VARIAS</field>
             <field name="parent_id" ref="mt_pasivo_corriente"/>
         </record>
@@ -554,7 +554,7 @@
         <record model="account.account.template" id="mt_provision_gastos">
             <field name="type">payable</field>
             <field name="code">21401</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Provision gastos</field>
             <field name="parent_id" ref="mt_pasivo_corriente"/>
         </record>
@@ -562,7 +562,7 @@
         <record model="account.account.template" id="mt_pasivo_no_corriente">
             <field name="type">view</field>
             <field name="code">22*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">PASIVO NO CORRIENTE</field>
             <field name="parent_id" ref="mt_pasivo"/>
         </record>
@@ -570,7 +570,7 @@
         <record model="account.account.template" id="mt_deudas_comerciales_largo_plazo">
             <field name="type">view</field>
             <field name="code">221*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">DEUDAS COMERCIALES A LARGO PLAZO</field>
             <field name="parent_id" ref="mt_pasivo_no_corriente"/>
         </record>
@@ -578,7 +578,7 @@
         <record model="account.account.template" id="mt_proveedores_largo_plazo">
             <field name="type">payable</field>
             <field name="code">22101</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Deudas proveedores a largo plazo</field>
             <field name="parent_id" ref="mt_deudas_comerciales_largo_plazo"/>
         </record>
@@ -586,7 +586,7 @@
         <record model="account.account.template" id="mt_otras_deudas">
             <field name="type">view</field>
             <field name="code">222*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">OTRAS DEUDAS</field>
             <field name="parent_id" ref="mt_pasivo_no_corriente"/>
         </record>
@@ -594,7 +594,7 @@
         <record model="account.account.template" id="mt_deudas_misc">
             <field name="type">payable</field>
             <field name="code">22201</field>
-            <field name="user_type" ref="account.account_type_payable"/>
+            <field name="user_type" ref="account.data_account_type_payable"/>
             <field name="name">Deudas misc</field>
             <field name="parent_id" ref="mt_otras_deudas"/>
         </record>
@@ -602,7 +602,7 @@
         <record model="account.account.template" id="mt_patrimonio_neto">
             <field name="type">view</field>
             <field name="code">3*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">PATRIMONIO NETO</field>
             <field name="parent_id" ref="mt_a_root"/>
         </record>
@@ -610,7 +610,7 @@
         <record model="account.account.template" id="mt_capital">
             <field name="type">other</field>
             <field name="code">31000</field>
-            <field name="user_type" ref="account.account_type_cash_equity"/>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Capital</field>
             <field name="parent_id" ref="mt_patrimonio_neto"/>
         </record>
@@ -618,7 +618,7 @@
         <record model="account.account.template" id="mt_aporte_irrevocable">
             <field name="type">other</field>
             <field name="code">32000</field>
-            <field name="user_type" ref="account.account_type_cash_equity"/>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Aporte irrevocable </field>
             <field name="parent_id" ref="mt_patrimonio_neto"/>
         </record>
@@ -626,7 +626,7 @@
         <record model="account.account.template" id="mt_reserva_legal">
             <field name="type">other</field>
             <field name="code">33000</field>
-            <field name="user_type" ref="account.account_type_cash_equity"/>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Reserva legal</field>
             <field name="parent_id" ref="mt_patrimonio_neto"/>
         </record>
@@ -634,7 +634,7 @@
         <record model="account.account.template" id="mt_resultados_no_asignados">
             <field name="type">other</field>
             <field name="code">34000</field>
-            <field name="user_type" ref="account.account_type_cash_equity"/>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Resultados no asignados</field>
             <field name="parent_id" ref="mt_patrimonio_neto"/>
         </record>
@@ -642,7 +642,7 @@
         <record model="account.account.template" id="mt_resultado_del_ejercicio">
             <field name="type">other</field>
             <field name="code">35000</field>
-            <field name="user_type" ref="account.account_type_cash_equity"/>
+            <field name="user_type" ref="account.conf_account_type_equity"/>
             <field name="name">Resultado del ejercicio</field>
             <field name="parent_id" ref="mt_patrimonio_neto"/>
         </record>
@@ -650,7 +650,7 @@
         <record model="account.account.template" id="mt_ingresos">
             <field name="type">view</field>
             <field name="code">4*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS</field>
             <field name="parent_id" ref="mt_a_root"/>
         </record>
@@ -658,7 +658,7 @@
         <record model="account.account.template" id="mt_ingresos_operativos">
             <field name="type">view</field>
             <field name="code">41*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS OPERATIVOS</field>
             <field name="parent_id" ref="mt_ingresos"/>
         </record>
@@ -666,7 +666,7 @@
         <record model="account.account.template" id="mt_ventas">
             <field name="type">view</field>
             <field name="code">411*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">VENTAS</field>
             <field name="parent_id" ref="mt_ingresos_operativos"/>
         </record>
@@ -674,7 +674,7 @@
         <record model="account.account.template" id="mt_ingresos_ventas">
             <field name="type">other</field>
             <field name="code">41100</field>
-            <field name="user_type" ref="account.account_type_income"/>
+            <field name="user_type" ref="account.data_account_type_income"/>
             <field name="name">Ingresos por ventas</field>
             <field name="parent_id" ref="mt_ventas"/>
         </record>
@@ -682,7 +682,7 @@
         <record model="account.account.template" id="mt_venta_de_equipos">
             <field name="type">other</field>
             <field name="code">41101</field>
-            <field name="user_type" ref="account.account_type_income"/>
+            <field name="user_type" ref="account.data_account_type_income"/>
             <field name="name">Venta de equipos</field>
             <field name="parent_id" ref="mt_ventas"/>
         </record>
@@ -690,7 +690,7 @@
         <record model="account.account.template" id="mt_venta_de_servicios_misc">
             <field name="type">other</field>
             <field name="code">41102</field>
-            <field name="user_type" ref="account.account_type_income"/>
+            <field name="user_type" ref="account.data_account_type_income"/>
             <field name="name">Venta servicios misc</field>
             <field name="parent_id" ref="mt_ventas"/>
         </record>
@@ -698,7 +698,7 @@
         <record model="account.account.template" id="mt_otros_ingresos">
             <field name="type">view</field>
             <field name="code">42*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">OTROS INGRESOS</field>
             <field name="parent_id" ref="mt_ingresos"/>
         </record>
@@ -706,7 +706,7 @@
         <record model="account.account.template" id="mt_ingresos_financieros">
             <field name="type">view</field>
             <field name="code">421*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">INGRESOS FINANCIEROS</field>
             <field name="parent_id" ref="mt_otros_ingresos"/>
         </record>
@@ -714,7 +714,7 @@
         <record model="account.account.template" id="mt_resultado_invesiones_financieras">
             <field name="type">other</field>
             <field name="code">42110</field>
-            <field name="user_type" ref="account.account_type_income"/>
+            <field name="user_type" ref="account.data_account_type_income"/>
             <field name="name">Resultado de inversiones financieras</field>
             <field name="parent_id" ref="mt_ingresos_financieros"/>
         </record>
@@ -722,7 +722,7 @@
         <record model="account.account.template" id="mt_gastos">
             <field name="type">view</field>
             <field name="code">5*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS</field>
             <field name="parent_id" ref="mt_a_root"/>
         </record>
@@ -730,7 +730,7 @@
         <record model="account.account.template" id="mt_gastos_operativos">
             <field name="type">view</field>
             <field name="code">51*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS OPERATIVOS</field>
             <field name="parent_id" ref="mt_gastos"/>
         </record>
@@ -738,7 +738,7 @@
         <record model="account.account.template" id="mt_gastos_de_produccion">
             <field name="type">view</field>
             <field name="code">511*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS DE PRODUCCION</field>
             <field name="parent_id" ref="mt_gastos_operativos"/>
         </record>
@@ -746,7 +746,7 @@
         <record model="account.account.template" id="mt_gastos_operativos_generales">
             <field name="type">other</field>
             <field name="code">51100</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Gastos operativos general</field>
             <field name="parent_id" ref="mt_gastos_de_produccion"/>
         </record>
@@ -754,7 +754,7 @@
         <record model="account.account.template" id="mt_haberes">
             <field name="type">other</field>
             <field name="code">51101</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Haberes</field>
             <field name="parent_id" ref="mt_gastos_de_produccion"/>
         </record>
@@ -762,7 +762,7 @@
         <record model="account.account.template" id="mt_cargas_sociales">
             <field name="type">other</field>
             <field name="code">51102</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Cargas Sociales</field>
             <field name="parent_id" ref="mt_gastos_de_produccion"/>
         </record>
@@ -770,7 +770,7 @@
         <record model="account.account.template" id="mt_costo_de_equipos">
             <field name="type">other</field>
             <field name="code">51103</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Costo de equipos</field>
             <field name="parent_id" ref="mt_gastos_de_produccion"/>
         </record>
@@ -778,7 +778,7 @@
         <record model="account.account.template" id="mt_materiales">
             <field name="type">other</field>
             <field name="code">51104</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Materiales</field>
             <field name="parent_id" ref="mt_gastos_de_produccion"/>
         </record>
@@ -786,7 +786,7 @@
         <record model="account.account.template" id="mt_gastos_comerciales">
             <field name="type">view</field>
             <field name="code">512*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS COMERCIALES</field>
             <field name="parent_id" ref="mt_gastos_operativos"/>
         </record>
@@ -794,7 +794,7 @@
         <record model="account.account.template" id="mt_haberes_comerciales">
             <field name="type">other</field>
             <field name="code">51201</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Haberes comerciales</field>
             <field name="parent_id" ref="mt_gastos_comerciales"/>
         </record>
@@ -802,7 +802,7 @@
         <record model="account.account.template" id="mt_cargas_sociales_comerciales">
             <field name="type">other</field>
             <field name="code">51202</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Cargas sociales comerciales</field>
             <field name="parent_id" ref="mt_gastos_comerciales"/>
         </record>
@@ -810,7 +810,7 @@
         <record model="account.account.template" id="mt_comisiones_comerciales">
             <field name="type">other</field>
             <field name="code">51203</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Comisiones</field>
             <field name="parent_id" ref="mt_gastos_comerciales"/>
         </record>
@@ -818,7 +818,7 @@
         <record model="account.account.template" id="mt_publicidad">
             <field name="type">other</field>
             <field name="code">51204</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Publicidad</field>
             <field name="parent_id" ref="mt_gastos_comerciales"/>
         </record>
@@ -826,7 +826,7 @@
         <record model="account.account.template" id="mt_gastos_de_administracion">
             <field name="type">view</field>
             <field name="code">513*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS DE ADMINISTRACION</field>
             <field name="parent_id" ref="mt_gastos_operativos"/>
         </record>
@@ -834,7 +834,7 @@
         <record model="account.account.template" id="mt_haberes_administrativos">
             <field name="type">other</field>
             <field name="code">51301</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Haberes administrativos</field>
             <field name="parent_id" ref="mt_gastos_de_administracion"/>
         </record>
@@ -842,7 +842,7 @@
         <record model="account.account.template" id="mt_cargas_sociales_administrativas">
             <field name="type">other</field>
             <field name="code">51302</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Cargas sociales administrativas</field>
             <field name="parent_id" ref="mt_gastos_de_administracion"/>
         </record>
@@ -850,7 +850,7 @@
         <record model="account.account.template" id="mt_honorarios">
             <field name="type">other</field>
             <field name="code">51303</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Honorarios</field>
             <field name="parent_id" ref="mt_gastos_de_administracion"/>
         </record>
@@ -858,7 +858,7 @@
         <record model="account.account.template" id="mt_alquileres">
             <field name="type">other</field>
             <field name="code">51304</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Alquileres</field>
             <field name="parent_id" ref="mt_gastos_de_administracion"/>
         </record>
@@ -866,7 +866,7 @@
         <record model="account.account.template" id="mt_servicios_agua_luz_etc">
             <field name="type">other</field>
             <field name="code">51305</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Servicios de luz, agua, etc</field>
             <field name="parent_id" ref="mt_gastos_de_administracion"/>
         </record>
@@ -874,7 +874,7 @@
         <record model="account.account.template" id="mt_mantenimiento_y_limpieza">
             <field name="type">other</field>
             <field name="code">51306</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Mantenimiento y limpieza</field>
             <field name="parent_id" ref="mt_gastos_de_administracion"/>
         </record>
@@ -882,14 +882,14 @@
         <record model="account.account.template" id="mt_articulos_libreria">
             <field name="type">other</field>
             <field name="code">51307</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Artículos librería</field>
         </record>
 
         <record model="account.account.template" id="mt_cadeteria_y_correo">
             <field name="type">other</field>
             <field name="code">51308</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Cadetería y correo</field>
             <field name="parent_id" ref="mt_gastos_de_administracion"/>
         </record>
@@ -897,7 +897,7 @@
         <record model="account.account.template" id="mt_seguros">
             <field name="type">other</field>
             <field name="code">51309</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Seguros</field>
             <field name="parent_id" ref="mt_gastos_de_administracion"/>
         </record>
@@ -905,7 +905,7 @@
         <record model="account.account.template" id="mt_gastos_fiscales">
             <field name="type">view</field>
             <field name="code">514*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS FISCALES</field>
             <field name="parent_id" ref="mt_gastos_operativos"/>
         </record>
@@ -913,7 +913,7 @@
         <record model="account.account.template" id="mt_impuestos_iibb_cf">
             <field name="type">other</field>
             <field name="code">5149999</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Impuestos ingresos brutos CABA</field>
             <field name="parent_id" ref="mt_gastos_fiscales"/>
         </record>
@@ -921,7 +921,7 @@
         <record model="account.account.template" id="mt_impuestos_iibb_ba">
             <field name="type">other</field>
             <field name="code">5142429</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Impuestos ingresos brutos Prov. Bs. As.</field>
             <field name="parent_id" ref="mt_gastos_fiscales"/>
         </record>
@@ -929,7 +929,7 @@
         <record model="account.account.template" id="mt_impuestos_iibb_co">
             <field name="type">other</field>
             <field name="code">5142452</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Impuestos ingresos brutos Prov. Córdoba</field>
             <field name="parent_id" ref="mt_gastos_fiscales"/>
         </record>
@@ -937,7 +937,7 @@
         <record model="account.account.template" id="mt_impuestos_iibb_sf">
             <field name="type">other</field>
             <field name="code">5149998</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Impuestos ingresos brutos Prov. Santa Fé</field>
             <field name="parent_id" ref="mt_gastos_fiscales"/>
         </record>
@@ -945,7 +945,7 @@
         <record model="account.account.template" id="mt_impuestos_a_las_ganancias">
             <field name="type">other</field>
             <field name="code">5142424</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Impuestos a las ganancias</field>
             <field name="parent_id" ref="mt_gastos_fiscales"/>
         </record>
@@ -953,7 +953,7 @@
         <record model="account.account.template" id="mt_impuestos_transacciones_bancarias">
             <field name="type">other</field>
             <field name="code">5149980</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Impuestos transacciones bancarias</field>
             <field name="parent_id" ref="mt_gastos_fiscales"/>
         </record>
@@ -961,14 +961,14 @@
         <record model="account.account.template" id="mt_otros_gastos">
             <field name="type">view</field>
             <field name="code">515*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">OTROS GASTOS </field>
         </record>
 
         <record model="account.account.template" id="mt_intereses_y_recargos">
             <field name="type">other</field>
             <field name="code">51501</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Intereses y recargos</field>
             <field name="parent_id" ref="mt_otros_gastos"/>
         </record>
@@ -976,7 +976,7 @@
         <record model="account.account.template" id="mt_gastos_no_operativos">
             <field name="type">view</field>
             <field name="code">52*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">GASTOS NO OPERATIVOS</field>
             <field name="parent_id" ref="mt_gastos"/>
         </record>
@@ -984,7 +984,7 @@
         <record model="account.account.template" id="mt_amortizaciones">
             <field name="type">view</field>
             <field name="code">521*</field>
-            <field name="user_type" ref="account.account_type_root"/>
+            <field name="user_type" ref="account.data_account_type_view"/>
             <field name="name">AMORTIZACIONES</field>
             <field name="parent_id" ref="mt_gastos_no_operativos"/>
         </record>
@@ -992,7 +992,7 @@
         <record model="account.account.template" id="mt_amortizaciones_instalaciones">
             <field name="type">other</field>
             <field name="code">52101</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Amortizaciones instalaciones</field>
             <field name="parent_id" ref="mt_amortizaciones"/>
         </record>
@@ -1000,7 +1000,7 @@
         <record model="account.account.template" id="mt_amortizaciones_equipos_computacion">
             <field name="type">other</field>
             <field name="code">52102</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Amortizaciones equipos de computación</field>
             <field name="parent_id" ref="mt_amortizaciones"/>
         </record>
@@ -1008,7 +1008,7 @@
         <record model="account.account.template" id="mt_amortizacion_software">
             <field name="type">other</field>
             <field name="code">52103</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Amortizacion software</field>
             <field name="parent_id" ref="mt_amortizaciones"/>
         </record>
@@ -1016,7 +1016,7 @@
         <record model="account.account.template" id="mt_amortizacion_muebles_y_utiles">
             <field name="type">other</field>
             <field name="code">52104</field>
-            <field name="user_type" ref="account.account_type_expense"/>
+            <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Amortizacion muebles y útiles</field>
             <field name="parent_id" ref="mt_amortizaciones"/>
         </record>

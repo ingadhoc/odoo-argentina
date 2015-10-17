@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="True">
+    <!-- TODO perhups make a wizard that helps you changing base currency -->
+<record forcecreate="0" id="base.rateARS" model="res.currency.rate">
+    <field name='rate' eval='1.0'/>
+    <field name='currency_id' ref='base.ARS'/>
+</record>
+
+<record model='res.currency' id='base.ARS'>
+    <field name='base' eval='True'/>
+</record>
+
+<!-- currency afip codes -->
+<record model='res.currency' forcecreate="0" id='base.ARS'>
+    <field name="afip_code">PES</field>
+</record>
+<record model='res.currency' forcecreate="0" id='base.AUD'>
+    <field name="afip_code">26</field>
+</record>
+<record model='res.currency' forcecreate="0" id='base.CAD'>
+    <field name="afip_code">18</field>
+</record>
+<record model='res.currency' forcecreate="0" id='base.GBP'>
+    <field name="afip_code">21</field>
+</record>
+<record model='res.currency' forcecreate="0" id='base.JPY'>
+    <field name="afip_code">19</field>
+</record>
+<record model='res.currency' forcecreate="0" id='base.MXN'>
+    <field name="afip_code">010</field>
+</record>
+<record model='res.currency' forcecreate="0" id='base.USD'>
+    <field name="afip_code">DOL</field>
+</record>
+<record model='res.currency' forcecreate="0" id='base.UYU'>
+    <field name="afip_code">011</field>
+</record>
+<record model='res.currency' forcecreate="0" id='base.VEF'>
+    <field name="afip_code">23</field>
+</record>
+<record model='res.currency' forcecreate="0" id='base.EUR'>
+    <field name="afip_code">60</field>
+</record>
+
+    </data>
+</openerp>
+ 

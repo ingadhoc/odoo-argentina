@@ -38,7 +38,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Document Letters" action="act_afip_document_letter" id="menu_action_afip_document_letter" parent="menu_afip_config"/>
+        <menuitem name="Document Letters" action="act_afip_document_letter" id="menu_action_afip_document_letter" sequence="70" parent="menu_afip_config"/>
 
     </data>
 </openerp>

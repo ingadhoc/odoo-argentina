@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="True">
+    <!-- TODO perhups make a wizard that helps you changing base currency -->
+        <record id='payment_term_30_60_90' model='account.payment.term'>
+            <field name='note'>30/60/90 Días</field>
+            <field name='name'>30/60/90 Días</field>
+        </record>
+        <record id='payment_term_30_60_90_line1' model='account.payment.term.line'>
+            <field name='value'>procent</field>
+            <field name='value_amount' eval='0.3333'/>
+            <field name='days' eval='30'/>
+            <field name='payment_id' ref='payment_term_30_60_90'/>
+        </record> 
+        <record id='payment_term_30_60_90_line2' model='account.payment.term.line'>
+            <field name='value'>procent</field>
+            <field name='value_amount' eval='0.3333'/>
+            <field name='days' eval='60'/>
+            <field name='payment_id' ref='payment_term_30_60_90'/>
+        </record> 
+        <record id='payment_term_30_60_90_line3' model='account.payment.term.line'>
+            <field name='value'>balance</field>
+            <field name='days' eval='90'/>
+            <field name='payment_id' ref='payment_term_30_60_90'/>
+        </record> 
+
+
+        <record id='payment_term_30_60' model='account.payment.term'>
+            <field name='note'>30/60 Días</field>
+            <field name='name'>30/60 Días</field>
+        </record>
+        <record id='payment_term_30_60_line1' model='account.payment.term.line'>
+            <field name='value'>procent</field>
+            <field name='value_amount' eval='0.5'/>
+            <field name='days' eval='30'/>
+            <field name='payment_id' ref='payment_term_30_60'/>
+        </record> 
+        <record id='payment_term_30_60_line2' model='account.payment.term.line'>
+            <field name='value'>balance</field>
+            <field name='days' eval='60'/>
+            <field name='payment_id' ref='payment_term_30_60'/>
+        </record> 
+
+        <record id='payment_term_0_30_60' model='account.payment.term'>
+            <field name='note'>0/30/60 Días</field>
+            <field name='name'>0/30/60 Días</field>
+        </record>
+        <record id='payment_term_0_30_60_line1' model='account.payment.term.line'>
+            <field name='value'>procent</field>
+            <field name='days' eval='0'/>
+            <field name='value_amount' eval='0.3333'/>
+            <field name='payment_id' ref='payment_term_0_30_60'/>
+        </record> 
+        <record id='payment_term_0_30_60_line2' model='account.payment.term.line'>
+            <field name='value'>procent</field>
+            <field name='value_amount' eval='0.3333'/>
+            <field name='days' eval='30'/>
+            <field name='payment_id' ref='payment_term_0_30_60'/>
+        </record> 
+        <record id='payment_term_0_30_60_line3' model='account.payment.term.line'>
+            <field name='value'>balance</field>
+            <field name='days' eval='60'/>
+            <field name='payment_id' ref='payment_term_0_30_60'/>
+        </record> 
+
+        <record id='payment_term_7' model='account.payment.term'>
+            <field name='note'>7 Días</field>
+            <field name='name'>7 Días</field>
+        </record>
+        <record id='payment_term_7_line1' model='account.payment.term.line'>
+            <field name='value'>balance</field>
+            <field name='days' eval='7'/>
+            <field name='payment_id' ref='payment_term_7'/>
+        </record> 
+
+        <record id='payment_term_90' model='account.payment.term'>
+            <field name='note'>90 Días</field>
+            <field name='name'>90 Días</field>
+        </record>
+        <record id='payment_term_90_line1' model='account.payment.term.line'>
+            <field name='value'>balance</field>
+            <field name='days' eval='90'/>
+            <field name='payment_id' ref='payment_term_90'/>
+        </record> 
+
+        <record id='payment_term_fin_mes' model='account.payment.term'>
+            <field name='note'>Fin de mes</field>
+            <field name='name'>Fin de mes</field>
+        </record>
+        <record id='payment_term_fin_mes_line1' model='account.payment.term.line'>
+            <field name='value'>balance</field>
+            <field name='days' eval='0'/>
+            <field name='days2' eval='-1'/>
+            <field name='payment_id' ref='payment_term_fin_mes'/>
+        </record> 
+
+        <record id='payment_term_6_cuotas' model='account.payment.term'>
+            <field name='note'>6 Cuotas</field>
+            <field name='name'>6 Cuotas</field>
+        </record>
+        <record id='payment_term_6_cuotas_line1' model='account.payment.term.line'>
+            <field name='value'>procent</field>
+            <field name='value_amount' eval='0.16'/>
+            <field name='days' eval='0'/>
+            <field name='payment_id' ref='payment_term_6_cuotas'/>
+        </record> 
+        <record id='payment_term_6_cuotas_line2' model='account.payment.term.line'>
+            <field name='value'>procent</field>
+            <field name='value_amount' eval='0.16'/>
+            <field name='days' eval='30'/>
+            <field name='payment_id' ref='payment_term_6_cuotas'/>
+        </record> 
+        <record id='payment_term_6_cuotas_line3' model='account.payment.term.line'>
+            <field name='value'>procent</field>
+            <field name='value_amount' eval='0.16'/>
+            <field name='days' eval='60'/>
+            <field name='payment_id' ref='payment_term_6_cuotas'/>
+        </record> 
+        <record id='payment_term_6_cuotas_line4' model='account.payment.term.line'>
+            <field name='value'>procent</field>
+            <field name='value_amount' eval='0.16'/>
+            <field name='days' eval='90'/>
+            <field name='payment_id' ref='payment_term_6_cuotas'/>
+        </record> 
+        <record id='payment_term_6_cuotas_line5' model='account.payment.term.line'>
+            <field name='value'>procent</field>
+            <field name='value_amount' eval='0.16'/>
+            <field name='days' eval='120'/>
+            <field name='payment_id' ref='payment_term_6_cuotas'/>
+        </record> 
+        <record id='payment_term_6_cuotas_line6' model='account.payment.term.line'>
+            <field name='value'>balance</field>
+            <field name='days' eval='150'/>
+            <field name='payment_id' ref='payment_term_6_cuotas'/>
+        </record> 
+
+    </data>
+</openerp>
+ 

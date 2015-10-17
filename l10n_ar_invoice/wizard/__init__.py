@@ -1,3 +1,7 @@
 # -*- coding: utf-8 -*-
-import journal_config_wizard #agregado para que se pueda desinstalar el modulo
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in module root
+# directory
+##############################################################################
+from . import account_journal_create_wizard
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

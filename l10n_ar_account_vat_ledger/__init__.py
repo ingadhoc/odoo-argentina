@@ -1,3 +1,7 @@
 # -*- coding: utf-8 -*-
-import account
-import account_vat_report
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in module root
+# directory
+##############################################################################
+from . import account
+from . import account_vat_report

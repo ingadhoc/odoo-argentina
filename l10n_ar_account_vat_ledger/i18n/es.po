@@ -1,173 +1,334 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_ar_vat_reports
-#
+# * l10n_ar_account_vat_ledger
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0\n"
+"Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-09 12:24+0000\n"
-"PO-Revision-Date: 2013-10-09 09:27-0300\n"
+"POT-Creation-Date: 2015-09-09 19:52+0000\n"
+"PO-Revision-Date: 2015-09-09 19:52+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
-"Language-Team: \n"
+"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 1.5.4\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: l10n_ar_vat_reports
-#: selection:account.invoice.vat.report,output_type:0
-msgid "Plain Text (txt)"
-msgstr "Texto Pleno (txt)"
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:119
+#, python-format
+msgid "%s VAT Ledger %s"
+msgstr "Libro de IVA %s %s"
 
-#. module: l10n_ar_vat_reports
-#: view:account.invoice.vat.report:0
-msgid "Print"
-msgstr "Imprimir"
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model,name:l10n_ar_account_vat_ledger.model_afip_responsability
+msgid "AFIP VAT Responsability"
+msgstr "AFIP IVA Responsable"
 
-#. module: l10n_ar_vat_reports
-#: field:account.invoice.vat.report,output_type:0
-msgid "Report format"
-msgstr "Formato del reporte"
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model,name:l10n_ar_account_vat_ledger.model_account_vat_ledger
+msgid "Account VAT Ledger"
+msgstr "Libro de IVA"
 
-#. module: l10n_ar_vat_reports
-#: selection:account.invoice.vat.report,output_type:0
-msgid "Excel Spreadsheet (xls)"
-msgstr "Hoja de cálculo Excel (xls)"
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.actions.report.xml,name:l10n_ar_account_vat_ledger.report_account_vat_ledger
+msgid "Account Vat Ledger"
+msgstr "Libro de IVA"
 
-#. module: l10n_ar_vat_reports
-#: help:account.invoice.vat.report,output_type:0
-msgid "Choose the format for the output"
-msgstr "Elija el formato para la salida"
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model,name:l10n_ar_account_vat_ledger.model_afip_document_class
+msgid "Afip Document Class"
+msgstr "Clase de Documento de Afip"
 
-#. module: l10n_ar_vat_reports
-#: field:account.invoice.vat.report,company_id:0
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: selection:account.vat.ledger,state:0
+msgid "Cancel"
+msgstr "Cancelado"
+
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,company_id:0
 msgid "Company"
-msgstr "Compañía"
+msgstr "Compania"
 
-#. module: l10n_ar_vat_reports
-#: model:ir.ui.menu,name:l10n_ar_vat_reports.account_invoice_taxes_reports_menu
-msgid "Taxes Report"
-msgstr "Informe Impuestos"
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,create_uid:0
+msgid "Created by"
+msgstr "Created by"
 
-#. module: l10n_ar_vat_reports
-#: selection:account.invoice.vat.report,output_type:0
-msgid "HyperText (html)"
-msgstr "Hipertexto (html)"
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,create_date:0
+msgid "Created on"
+msgstr "Created on"
 
-#. module: l10n_ar_vat_reports
-#: selection:account.invoice.vat.report,filter:0
-msgid "Date"
-msgstr "Fecha"
+#. module: l10n_ar_account_vat_ledger
+#: help:account.vat.ledger,message_last_post:0
+msgid "Date of the last message posted on the record."
+msgstr "Fecha del último mensaje publicado en el registro."
 
-#. module: l10n_ar_vat_reports
-#: view:account.invoice.vat.report:0
-#: field:account.invoice.vat.report,journal_ids:0
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:60
+#, python-format
+msgid "Document Classes"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: selection:account.vat.ledger,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,first_page:0
+msgid "First Page"
+msgstr "Primera Pagina"
+
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,fiscalyear_id:0
+msgid "Fiscal Year"
+msgstr "Año Fiscal"
+
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,message_follower_ids:0
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: l10n_ar_account_vat_ledger
+#: help:account.vat.ledger,message_summary:0
+msgid ""
+"Holds the Chatter summary (number of messages, ...). This summary is "
+"directly in html format in order to be inserted in kanban views."
+msgstr "Mantiene el resumen Chateador (número de mensajes, ...). Este resumen es directamente en formato HTML para poder ser insertada en vistas kanban."
+
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: l10n_ar_account_vat_ledger
+#: help:account.vat.ledger,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "Si se marca nuevos mensajes requieren su atención."
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:56
+#, python-format
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,message_is_follower:0
+msgid "Is a Follower"
+msgstr "Es un seguidor"
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: field:account.vat.ledger,journal_ids:0
 msgid "Journals"
 msgstr "Diarios"
 
-#. module: l10n_ar_vat_reports
-#: selection:account.invoice.vat.report,output_type:0
-msgid "Rich Text (rtf)"
-msgstr "Texto enriquecido (RTF)"
-
-#. module: l10n_ar_vat_reports
-#: view:account.invoice.vat.report:0
-msgid "Report Options"
-msgstr "Opciones de Informe"
-
-#. module: l10n_ar_vat_reports
-#: view:account.invoice.vat.report:0
-#: selection:account.invoice.vat.report,filter:0
-msgid "Periods"
-msgstr "Períodos"
-
-#. module: l10n_ar_vat_reports
-#: field:account.invoice.vat.report,date_to:0
-msgid "End Date"
-msgstr "Fecha de Finalización"
-
-#. module: l10n_ar_vat_reports
-#: view:account.invoice.vat.report:0
-msgid "Dates"
-msgstr "Fechas"
-
-#. module: l10n_ar_vat_reports
-#: field:account.invoice.vat.report,period_from:0
-msgid "Start Period"
-msgstr "Período inicial"
-
-#. module: l10n_ar_vat_reports
-#: selection:account.invoice.vat.report,output_type:0
-msgid "Portable Document (pdf)"
-msgstr "Documento Portable (pdf)"
-
-#. module: l10n_ar_vat_reports
-#: help:account.invoice.vat.report,fiscalyear_id:0
+#. module: l10n_ar_account_vat_ledger
+#: help:account.vat.ledger,fiscalyear_id:0
 msgid "Keep empty for all open fiscal year"
-msgstr "Dejarlo vacío para todos los ejercicios fiscales abiertos"
+msgstr "Mantenga vacía para todo el año fiscal abierto"
 
-#. module: l10n_ar_vat_reports
-#: field:account.invoice.vat.report,period_to:0
-msgid "End Period"
-msgstr "Período final"
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,message_last_post:0
+msgid "Last Message Date"
+msgstr "Fecha de Último Mensaje "
 
-#. module: l10n_ar_vat_reports
-#: field:account.invoice.vat.report,fiscalyear_id:0
-msgid "Fiscal Year"
-msgstr "Ejercicio Fiscal"
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,last_page:0
+msgid "Last Page"
+msgstr "Última Página"
 
-#. module: l10n_ar_vat_reports
-#: selection:account.invoice.vat.report,filter:0
-msgid "No Filters"
-msgstr "No filtros"
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,write_uid:0
+msgid "Last Updated by"
+msgstr "Last Updated by"
 
-#. module: l10n_ar_vat_reports
-#: selection:account.invoice.vat.report,output_type:0
-msgid "Comma Separated Values (csv)"
-msgstr "Valores separados por comas (csv)"
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,write_date:0
+msgid "Last Updated on"
+msgstr "Last Updated on"
 
-#. module: l10n_ar_vat_reports
-#: model:ir.actions.report.xml,name:l10n_ar_vat_reports.account_invoice_vat_report_report
-#: model:ir.model,name:l10n_ar_vat_reports.model_account_invoice_vat_report
-msgid "Account Invoice VAT Report"
-msgstr "Reporte de Libro IVA"
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,message_ids:0
+msgid "Messages"
+msgstr "Mensajes"
 
-#. module: l10n_ar_vat_reports
-#: model:ir.actions.act_window,name:l10n_ar_vat_reports.account_invoice_sale_vat_report_action
-#: model:ir.ui.menu,name:l10n_ar_vat_reports.account_invoice_sale_vat_report_menu
-msgid "Sales VAT Report"
-msgstr "Libro IVA Ventas"
+#. module: l10n_ar_account_vat_ledger
+#: help:account.vat.ledger,message_ids:0
+msgid "Messages and communication history"
+msgstr "Los mensajes y la historia de la comunicación"
 
-#. module: l10n_ar_vat_reports
-#: model:ir.actions.act_window,name:l10n_ar_vat_reports.account_invoice_purchase_vat_report_action
-#: model:ir.ui.menu,name:l10n_ar_vat_reports.account_invoice_purchase_vat_report_menu
-msgid "Purchases VAT Report"
-msgstr "Libro IVA Compras"
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: field:account.vat.ledger,note:0
+msgid "Notes"
+msgstr "Notas"
 
-#. module: l10n_ar_vat_reports
-#: view:account.invoice.vat.report:0
-msgid "Filters"
-msgstr "Filtros"
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:68
+#, python-format
+msgid "Other Tax Codes"
+msgstr ""
 
-#. module: l10n_ar_vat_reports
-#: view:account.invoice.vat.report:0
-msgid "Cancel"
-msgstr "Cancelar"
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account.py:22
+#, python-format
+msgid "Other Taxes Amount"
+msgstr ""
 
-#. module: l10n_ar_vat_reports
-#: field:account.invoice.vat.report,date_from:0
-msgid "Start Date"
-msgstr "Fecha inicial"
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,period_id:0
+msgid "Period"
+msgstr "Periodo"
 
-#. module: l10n_ar_vat_reports
-#: field:account.invoice.vat.report,filter:0
-msgid "Filter by"
-msgstr "Filtrar por"
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+msgid "Present"
+msgstr "Presentado"
 
-#. module: l10n_ar_vat_reports
-#: view:account.invoice.vat.report:0
-msgid "or"
-msgstr "o"
+#. module: l10n_ar_account_vat_ledger
+#: selection:account.vat.ledger,state:0
+msgid "Presented"
+msgstr "Presentado"
 
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,presented_ledger:0
+msgid "Presented Ledger"
+msgstr "Libro Mayor Presentado"
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: l10n_ar_account_vat_ledger
+#: selection:account.vat.ledger,type:0
+msgid "Purchase"
+msgstr "Compras"
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:118
+#, python-format
+msgid "Purchases"
+msgstr "Compras"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.actions.act_window,name:l10n_ar_account_vat_ledger.action_account_purchase_vat_ledger
+#: model:ir.ui.menu,name:l10n_ar_account_vat_ledger.menu_account_purchase_vat_ledger
+msgid "Purchases VAT Ledger"
+msgstr "Libro de IVA Compras"
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:72
+#, python-format
+msgid "Responsabilities"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: selection:account.vat.ledger,type:0
+msgid "Sale"
+msgstr "Ventas"
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:116
+#, python-format
+msgid "Sales"
+msgstr "Ventas"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.actions.act_window,name:l10n_ar_account_vat_ledger.action_account_sale_vat_ledger
+#: model:ir.ui.menu,name:l10n_ar_account_vat_ledger.menu_account_sale_vat_ledger
+msgid "Sales VAT Ledger"
+msgstr "Libro de IVA Ventas"
+
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,state:0
+msgid "State"
+msgstr "Estado"
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: field:account.vat.ledger,message_summary:0
+msgid "Summary"
+msgstr "Resumen"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model,name:l10n_ar_account_vat_ledger.model_account_tax_code
+msgid "Tax Code"
+msgstr "Código de impuesto"
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:52
+#, python-format
+msgid "Titile"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+msgid "To Draft"
+msgstr "A Borrador"
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:131
+#, python-format
+msgid "To set \"Presented\" you must set the \"Last Page\" first"
+msgstr "Para marcar como \"Presentado\" primero debe establecer la \"Última Página\""
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:128
+#, python-format
+msgid "To set \"Presented\" you must upload the \"Presented Ledger\" first"
+msgstr "Para marcar como \"Presentado\" primero debe cargar el archivo en el campo \"Libro Presentado\""
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: code:addons/l10n_ar_account_vat_ledger/account.py:30
+#, python-format
+msgid "Total"
+msgstr "Total"
+
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,type:0
+msgid "Type"
+msgstr "Tipo"
+
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,message_unread:0
+msgid "Unread Messages"
+msgstr "Mensajes no leídos"
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account.py:16
+#, python-format
+msgid "Untaxed"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account.py:27
+#, python-format
+msgid "VAT Amount"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_tree
+msgid "VAT Ledger"
+msgstr "Libro de IVA"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.ui.menu,name:l10n_ar_account_vat_ledger.account_vat_ledger_parent_menu
+msgid "VAT Ledgers"
+msgstr "Libros de IVA"
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:64
+#, python-format
+msgid "VAT Tax Codes"
+msgstr ""

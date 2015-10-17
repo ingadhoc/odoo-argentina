@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-        <menuitem id="menu_afip_config" name="AFIP Configuration" parent="account.menu_finance_configuration" sequence="25"/>
+        <menuitem id="menu_afip_config" name="AFIP" parent="account.menu_finance_configuration" sequence="25"/>
 
     </data>
 </openerp>

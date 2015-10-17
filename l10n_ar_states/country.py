@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in module root
+# directory
+##############################################################################
+from openerp import fields, models
 
-from openerp.osv import fields, osv
 
-class country(osv.osv):
-        _inherit = 'res.country'
-        _columns = {
-                'afip_code': fields.char('AFIP code', size=64, help='Codigo oficial del AFIP.'),
-        }
-
-class country_state(osv.osv):
+class country_state(models.Model):
         _inherit = 'res.country.state'
-        _columns = {
-                'afip_code': fields.char('AFIP code', size=64, help='Codigo oficial del AFIP.'),
-        }
-
+        afip_code = fields.Char(
+            'AFIP code', size=64, help='Codigo oficial del AFIP.')

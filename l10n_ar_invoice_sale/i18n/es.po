@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 14:17+0000\n"
-"PO-Revision-Date: 2015-09-01 17:23+0000\n"
+"POT-Creation-Date: 2015-10-18 02:29+0000\n"
+"PO-Revision-Date: 2015-10-19 20:29+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -34,14 +34,46 @@ msgid ""
 msgstr "Defina el compartamiento en los reportes de presupuestos y ordenes de venta. La discriminación o no depende en la reaponsabilidad del partner y la compañía, también de la configuración de las letras AFIP:            * Falso: el IVA se discrimna como siempre en odoo            * Si, No Discriminar por Defecto, si no se encuentra un matchno no se va a discriminar por defecto            * Si, Discriminar por Defecto, si no se encuentra un matchno se va a discriminar por defecto"
 
 #. module: l10n_ar_invoice_sale
+#: code:addons/l10n_ar_invoice_sale/sale.py:151
+#, python-format
+msgid "Discriminate VAT on Quotations and Sale Orders?"
+msgstr ""
+
+#. module: l10n_ar_invoice_sale
+#: code:addons/l10n_ar_invoice_sale/sale.py:149
+#, python-format
+msgid "Discriminate VAT?"
+msgstr ""
+
+#. module: l10n_ar_invoice_sale
 #: view:account.invoice.report:l10n_ar_invoice_sale.view_account_invoice_report_search_inherit
 #: field:account.invoice.report,afip_document_class_id:0
 msgid "Document Type"
 msgstr ""
 
 #. module: l10n_ar_invoice_sale
+#: code:addons/l10n_ar_invoice_sale/sale.py:105
+#: code:addons/l10n_ar_invoice_sale/sale.py:197
+#, python-format
+msgid "Exempt Amount"
+msgstr ""
+
+#. module: l10n_ar_invoice_sale
 #: model:ir.model,name:l10n_ar_invoice_sale.model_account_invoice_report
 msgid "Invoices Statistics"
+msgstr "Estadísticas de facturas"
+
+#. module: l10n_ar_invoice_sale
+#: code:addons/l10n_ar_invoice_sale/sale.py:85
+#, python-format
+msgid "Net Price"
+msgstr ""
+
+#. module: l10n_ar_invoice_sale
+#: code:addons/l10n_ar_invoice_sale/sale.py:100
+#: code:addons/l10n_ar_invoice_sale/sale.py:207
+#, python-format
+msgid "Other Taxes Amount"
 msgstr ""
 
 #. module: l10n_ar_invoice_sale
@@ -63,6 +95,45 @@ msgstr "Orden de Ventas"
 #: model:ir.model,name:l10n_ar_invoice_sale.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de Pedido de Ventas"
+
+#. module: l10n_ar_invoice_sale
+#: code:addons/l10n_ar_invoice_sale/sale.py:90
+#: code:addons/l10n_ar_invoice_sale/sale.py:192
+#, python-format
+msgid "Subtotal"
+msgstr ""
+
+#. module: l10n_ar_invoice_sale
+#: code:addons/l10n_ar_invoice_sale/sale.py:187
+#: code:addons/l10n_ar_invoice_sale/sale.py:212
+#, python-format
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: l10n_ar_invoice_sale
+#: code:addons/l10n_ar_invoice_sale/sale.py:80
+#, python-format
+msgid "Unit Price"
+msgstr ""
+
+#. module: l10n_ar_invoice_sale
+#: code:addons/l10n_ar_invoice_sale/sale.py:75
+#, python-format
+msgid "Unit Price w/ Taxes"
+msgstr ""
+
+#. module: l10n_ar_invoice_sale
+#: code:addons/l10n_ar_invoice_sale/sale.py:217
+#, python-format
+msgid "VAT Taxes"
+msgstr ""
+
+#. module: l10n_ar_invoice_sale
+#: code:addons/l10n_ar_invoice_sale/sale.py:95
+#: code:addons/l10n_ar_invoice_sale/sale.py:202
+#, python-format
+msgid "Vat Amount"
+msgstr ""
 
 #. module: l10n_ar_invoice_sale
 #: selection:res.company,sale_allow_vat_no_discrimination:0

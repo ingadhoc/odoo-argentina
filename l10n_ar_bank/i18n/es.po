@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 14:17+0000\n"
-"PO-Revision-Date: 2015-09-01 17:24+0000\n"
+"POT-Creation-Date: 2015-10-18 02:29+0000\n"
+"PO-Revision-Date: 2015-10-19 20:34+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -55,13 +55,13 @@ msgstr "Cerrar"
 #: field:l10nar.banks.wizard,create_uid:0
 #: field:l10nar.banks.wizard.result,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: l10n_ar_bank
 #: field:l10nar.banks.wizard,create_date:0
 #: field:l10nar.banks.wizard.result,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creado en"
 
 #. module: l10n_ar_bank
 #: code:addons/l10n_ar_bank/wizard/wiz_l10n_ar_bank.py:133
@@ -73,7 +73,7 @@ msgstr "Bancos desactivados"
 #. module: l10n_ar_bank
 #: field:l10nar.banks.wizard,id:0 field:l10nar.banks.wizard.result,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_ar_bank
 #: view:l10nar.banks.wizard:l10n_ar_bank.l10n_ar_banks_wizard

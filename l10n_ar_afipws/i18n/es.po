@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 14:17+0000\n"
-"PO-Revision-Date: 2015-09-03 18:51+0000\n"
-"Last-Translator: Javier Diez <jd@ingadhoc.com>\n"
+"POT-Creation-Date: 2015-10-18 02:29+0000\n"
+"PO-Revision-Date: 2015-09-09 19:53+0000\n"
+"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -66,6 +66,12 @@ msgid "AFIP Distingish Name / Alias"
 msgstr ""
 
 #. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:50
+#, python-format
+msgid "AFIP Login URL"
+msgstr ""
+
+#. module: l10n_ar_afipws
 #: view:afipws.connection:l10n_ar_afipws.view_afipws_auth_form
 msgid "AFIP Servers"
 msgstr "Servidores de AFIP"
@@ -87,7 +93,13 @@ msgid "AFIP WS Connection"
 msgstr "Conexión WS de AFIP"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:191
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:54
+#, python-format
+msgid "AFIP WS URL"
+msgstr ""
+
+#. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/res_company.py:200
 #, python-format
 msgid ""
 "AFIP Web Service unvailable.Check your access to internet or contact to "
@@ -119,6 +131,12 @@ msgstr ""
 #. module: l10n_ar_afipws
 #: selection:afipws.connection,afip_ws:0
 msgid "Bono Fiscal -con detalle- RG2557 (WSMTXCA)"
+msgstr ""
+
+#. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/afipws_certificate_alias.py:75
+#, python-format
+msgid "CUIT"
 msgstr ""
 
 #. module: l10n_ar_afipws
@@ -221,13 +239,13 @@ msgid "Connections"
 msgstr "Conexiones"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:189
+#: code:addons/l10n_ar_afipws/models/res_company.py:198
 #, python-format
 msgid "Could not connect. This is the what we received: %s"
 msgstr "No se pudo conectar. Este es el porqué que recibimos: %s"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:185
+#: code:addons/l10n_ar_afipws/models/res_company.py:194
 #, python-format
 msgid ""
 "Could not connect. This is the what we received: %s.\n"
@@ -266,6 +284,12 @@ msgid "Department"
 msgstr "Departamento"
 
 #. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:54
+#, python-format
+msgid "Download Signed Certificate Request"
+msgstr ""
+
+#. module: l10n_ar_afipws
 #: selection:afipws.certificate,state:0
 #: selection:afipws.certificate_alias,state:0
 msgid "Draft"
@@ -288,6 +312,12 @@ msgstr "Tiempo de expiración"
 #: selection:afipws.connection,afip_ws:0
 msgid "Exportación -con detalle- RG2758 (WSFEXv1)"
 msgstr "Exportación -con detalle- RG2758 (WSFEXv1)"
+
+#. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:59
+#, python-format
+msgid "Filename"
+msgstr ""
 
 #. module: l10n_ar_afipws
 #: field:afipws.connection,generationtime:0
@@ -362,7 +392,13 @@ msgid "Mercado interno -sin detalle- RG2485 (WSFEv1)"
 msgstr "Mercado interno -sin detalle- RG2485 (WSFEv1)"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:103
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:64
+#, python-format
+msgid "Name"
+msgstr ""
+
+#. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/res_company.py:112
 #, python-format
 msgid "Not confirmed certificate for %s on company %s"
 msgstr "Certificado no confirmado para %s en la compañía %s"

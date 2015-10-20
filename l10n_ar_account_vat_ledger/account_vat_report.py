@@ -80,29 +80,18 @@ class account_vat_ledger(models.Model):
         self.responsability_ids = self.env['afip.responsability'].search([])
 
         invoices_domain = [
-            ('state', 'not in', ['draft', 'cancel']),
+            # ('state', 'not in', ['draft', 'cancel']),
+            # cancel invoices with internal number are invoices
+            ('state', '!=', 'draft'),
+            ('internal_number', '!=', False),
             ('journal_id', 'in', self.journal_ids.ids),
             ('period_id', '=', self.period_id.id)]
-        # Get document classes
-        self.document_class_ids = self.env['afip.document_class']
-        group_invoices = self.env['account.invoice'].read_group(
-            invoices_domain,
-            ['id', 'afip_document_class_id'], ['afip_document_class_id'])
-        document_class_ids = [
-            x['afip_document_class_id'][0] for x in group_invoices if x and x['afip_document_class_id']]
-        self.document_class_ids = document_class_ids
 
         # Get invoices
-        # self.invoice_ids = self.env['account.invoice']
         invoices = self.env['account.invoice'].search(
-            invoices_domain, order='date_invoice asc')
+            invoices_domain, order='date_invoice, afip_document_number')
+        self.document_class_ids = invoices.mapped('afip_document_class_id')
         self.invoice_ids = invoices
-
-        # Get other taxes amounts (taxes without tax codes)
-        taxes_domain = [
-            ('invoice_id', 'in', invoices.ids),
-            ('tax_code_id', '=', False)
-            ]
 
         self.vat_tax_code_ids = invoices.mapped(
             'vat_tax_ids.tax_code_id')
@@ -124,11 +113,12 @@ class account_vat_ledger(models.Model):
     def _check_state(self):
         if self.state == 'presented':
             if not self.presented_ledger:
-                raise Warning(
-                    _('To set "Presented" you must upload the "Presented Ledger" first'))
+                raise Warning(_(
+                    'To set "Presented" you must upload the '
+                    '"Presented Ledger" first'))
             elif not self.last_page:
-                raise Warning(
-                    _('To set "Presented" you must set the "Last Page" first'))
+                raise Warning(_(
+                    'To set "Presented" you must set the "Last Page" first'))
 
     @api.onchange('company_id')
     def change_company(self):

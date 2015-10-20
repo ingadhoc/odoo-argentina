@@ -40,6 +40,19 @@
             </field>
         </record>
             
+        <!-- add document number on paymentrs tree view. We make it in a separete view because portal users cant see this tag -->
+        <record id="view_invoice_payment_doc_number_form" model="ir.ui.view">
+            <field name="name">l10n_ar.invoice.payment_doc_number.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="groups_id" eval="[(4, ref('base.group_user'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree[@string='Payments']//field[@name='move_id']" position="after">
+                    <field name="document_number"/>
+                </xpath>
+            </field>
+        </record>       
+
         <record id="view_invoice_form" model="ir.ui.view">
             <field name="name">l10n_ar.invoice.form</field>
             <field name="model">account.invoice</field>
@@ -54,10 +67,6 @@
                     <field name="use_argentinian_localization" invisible="1"/>
                 </form>
 
-                <!-- add document number on paymentrs tree view -->
-                <xpath expr="//tree[@string='Payments']//field[@name='move_id']" position="after">
-                    <field name="document_number"/>
-                </xpath>
                 <button string="Print" position="attributes">
                     <attribute name="attrs">{'invisible':['|',('sent','=',True), ('state', 'not in', ['open','paid'])]}</attribute>
                 </button>
@@ -109,16 +118,24 @@
             </field>
         </record>
 
+        <!-- add document number on paymentrs tree view. We make it in a separete view because portal users cant see this tag -->
+        <record id="view_invoice_supplier_payment_doc_number_form" model="ir.ui.view">
+            <field name="name">l10n_ar.invoice.payment_doc_number.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="groups_id" eval="[(4, ref('base.group_user'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree[@string='Payments']//field[@name='move_id']" position="after">
+                    <field name="document_number"/>
+                </xpath>
+            </field>
+        </record>      
+
         <record id="view_supplier_invoice_form" model="ir.ui.view">
             <field name="name">l10n_ar.invoice.form</field>
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
-                <!-- add document number on paymentrs tree view -->
-                <xpath expr="//tree[@string='Payments']//field[@name='move_id']" position="after">
-                    <field name="document_number"/>
-                </xpath>
-
                 <form>
                     <field name="available_journal_document_class_ids" invisible="1"/>
                     <field name="use_documents" invisible="1"/>

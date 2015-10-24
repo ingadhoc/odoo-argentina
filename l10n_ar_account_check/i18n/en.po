@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 19:52+0000\n"
-"PO-Revision-Date: 2015-09-09 19:52+0000\n"
+"POT-Creation-Date: 2015-10-18 02:29+0000\n"
+"PO-Revision-Date: 2015-10-08 19:58+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: English (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
@@ -30,6 +30,7 @@ msgid "CHT"
 msgstr "CHT"
 
 #. module: l10n_ar_account_check
+#: model:account.journal,name:l10n_ar_account_check.cheques_propios
 #: code:addons/l10n_ar_account_check/wizard/account_journal_create_wizard.py:29
 #, python-format
 msgid "Cheques Propios"
@@ -40,6 +41,11 @@ msgstr "Cheques Propios"
 #, python-format
 msgid "Cheques Terceros"
 msgstr "Cheques Terceros"
+
+#. module: l10n_ar_account_check
+#: model:account.journal,name:l10n_ar_account_check.cheques_terceros
+msgid "Cheques de Terceros"
+msgstr "Cheques de Terceros"
 
 #. module: l10n_ar_account_check
 #: code:addons/l10n_ar_account_check/wizard/account_journal_create_wizard.py:14

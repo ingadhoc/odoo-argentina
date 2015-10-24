@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 19:52+0000\n"
-"PO-Revision-Date: 2015-09-09 19:09+0000\n"
+"POT-Creation-Date: 2015-10-18 02:29+0000\n"
+"PO-Revision-Date: 2015-10-08 19:58+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: English (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
@@ -458,23 +458,23 @@ msgstr "Equipos en Demo"
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_ba_facturado
-msgid "Fac IIBB BS AS"
-msgstr "Fac IIBB BS AS"
+msgid "Facturación IIBB BS AS"
+msgstr "Facturación IIBB BS AS"
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_cf_facturado
-msgid "Fac IIBB CABA"
-msgstr "Fac IIBB CABA"
+msgid "Facturación IIBB CABA"
+msgstr "Facturación IIBB CABA"
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_co_facturado
-msgid "Fac IIBB Cordoba"
-msgstr "Fac IIBB Cordoba"
+msgid "Facturación IIBB Cordoba"
+msgstr "Facturación IIBB Cordoba"
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_sf_facturado
-msgid "Fac IIBB Santa Fé"
-msgstr "Fac IIBB Santa Fé"
+msgid "Facturación IIBB Santa Fé"
+msgstr "Facturación IIBB Santa Fé"
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_ba_facturado
@@ -1025,8 +1025,12 @@ msgid "OTROS CRÉDITOS"
 msgstr "OTROS CRÉDITOS"
 
 #. module: l10n_ar_chart_generic
-#: model:account.account.template,name:l10n_ar_chart_generic.mt_otros_gastos
 #: model:account.account.template,name:l10n_ar_chart_generic.ri_otros_gastos
+msgid "OTROS GASTOS"
+msgstr "OTROS GASTOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_otros_gastos
 msgid "OTROS GASTOS "
 msgstr "OTROS GASTOS "
 
@@ -1077,21 +1081,6 @@ msgid "PROVISIONES VARIAS"
 msgstr "PROVISIONES VARIAS"
 
 #. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_co_percepcion
-msgid "Per IIBB Cordoba"
-msgstr "Per IIBB Cordoba"
-
-#. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_sf_percepcion
-msgid "Per IIBB Santa Fé"
-msgstr "Per IIBB Santa Fé"
-
-#. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_ba_percepcion
-msgid "Perc IIBB BS AS"
-msgstr "Perc IIBB BS AS"
-
-#. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.ri_iva_percepcion
 msgid "Percepciones IVA Sufrida"
 msgstr "Percepciones IVA Sufrida"
@@ -1131,10 +1120,20 @@ msgid "Percepción Ganancias Sufrida"
 msgstr "Percepción Ganancias Sufrida"
 
 #. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_ba_percepcion
+msgid "Percepción IIBB BS AS"
+msgstr "Percepción IIBB BS AS"
+
+#. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_cf_percepcion
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_cf_percepcion
 msgid "Percepción IIBB Capital Federal"
 msgstr "Percepción IIBB Capital Federal"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_co_percepcion
+msgid "Percepción IIBB Cordoba"
+msgstr "Percepción IIBB Cordoba"
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_ba_percepcion
@@ -1153,6 +1152,11 @@ msgstr "Percepción IIBB Prov. Córdoba"
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sf_percepcion
 msgid "Percepción IIBB Prov. Santa Fé"
 msgstr "Percepción IIBB Prov. Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_sf_percepcion
+msgid "Percepción IIBB Santa Fé"
+msgstr "Percepción IIBB Santa Fé"
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_percepcion_iva_aplicada
@@ -1359,26 +1363,6 @@ msgid "Resultados no asignados"
 msgstr "Resultados no asignados"
 
 #. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_ba_retencion
-msgid "Ret IIBB BS AS"
-msgstr "Ret IIBB BS AS"
-
-#. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_cf_retencion
-msgid "Ret IIBB CABA"
-msgstr "Ret IIBB CABA"
-
-#. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_co_retencion
-msgid "Ret IIBB Cordoba"
-msgstr "Ret IIBB Cordoba"
-
-#. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_sf_retencion
-msgid "Ret IIBB Santa Fé"
-msgstr "Ret IIBB Santa Fé"
-
-#. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.mt_retencion_impuestos_ganancias_personas
 msgid "Retencion impuestos a las ganancias p. fisicas"
 msgstr "Retencion impuestos a las ganancias p. fisicas"
@@ -1409,10 +1393,25 @@ msgid "Retencion ingresos brutos p. santa fé"
 msgstr "Retencion ingresos brutos p. santa fé"
 
 #. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_ba_retencion
+msgid "Retención IIBB BS AS"
+msgstr "Retención IIBB BS AS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_cf_retencion
+msgid "Retención IIBB CABA"
+msgstr "Retención IIBB CABA"
+
+#. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_cf_retencion
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_cf_retencion
 msgid "Retención IIBB Capital Federal"
 msgstr "Retención IIBB Capital Federal"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_co_retencion
+msgid "Retención IIBB Cordoba"
+msgstr "Retención IIBB Cordoba"
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_ba_retencion
@@ -1431,6 +1430,11 @@ msgstr "Retención IIBB Prov. Córdoba"
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sf_retencion
 msgid "Retención IIBB Prov. Santa Fé"
 msgstr "Retención IIBB Prov. Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_sf_retencion
+msgid "Retención IIBB Santa Fé"
+msgstr "Retención IIBB Santa Fé"
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_retencion_iva_aplicada
@@ -1602,9 +1606,19 @@ msgid "Sueldos y SAC operativos"
 msgstr "Sueldos y SAC operativos"
 
 #. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_transitorias
+msgid "TRANSITORIAS"
+msgstr "TRANSITORIAS"
+
+#. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.ri_tarjeta_de_credito_pagar
 msgid "Tarjeta de crédito a pagar xxxxx"
 msgstr "Tarjeta de crédito a pagar xxxxx"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_transferencias_internas
+msgid "Transferencias Internas"
+msgstr "Transferencias Internas"
 
 #. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.mt_ventas

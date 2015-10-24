@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 19:52+0000\n"
-"PO-Revision-Date: 2015-09-09 19:53+0000\n"
+"POT-Creation-Date: 2015-10-18 02:29+0000\n"
+"PO-Revision-Date: 2015-10-08 19:58+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: English (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
@@ -18,25 +18,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:79
+#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:90
 #, python-format
 msgid " %s %s"
 msgstr " %s %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:37
+#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:48
 #, python-format
 msgid "* Document Class %s (id %i), Local %i, Remote %i\n"
 msgstr "* Document Class %s (id %i), Local %i, Remote %i\n"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:40
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:44
 #, python-format
 msgid "AFIP Barcode"
 msgstr "AFIP Barcode"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:44
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:48
 #, python-format
 msgid "AFIP Barcode Image"
 msgstr "AFIP Barcode Image"
@@ -47,8 +47,8 @@ msgid "AFIP Message"
 msgstr "AFIP Message"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:424
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:428
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:419
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:423
 #, python-format
 msgid "AFIP Validation Error. %s"
 msgstr "AFIP Validation Error. %s"
@@ -118,7 +118,7 @@ msgid "AFIP request result"
 msgstr "AFIP request result"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:60
+#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:71
 #, python-format
 msgid "AFIP service %s\n"
 msgstr "AFIP service %s\n"
@@ -134,7 +134,7 @@ msgid "Afip Point Of Sale"
 msgstr "Afip Point Of Sale"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:46
+#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:57
 #, python-format
 msgid "All documents are synchronized"
 msgstr "All documents are synchronized"
@@ -149,7 +149,7 @@ msgid ""
 msgstr "Authorized Currencies on AFIP%s\n. \nObservations: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:95
+#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:106
 #, python-format
 msgid ""
 "Authorized Document Clases on AFIP\n"
@@ -272,21 +272,13 @@ msgid "Electronic Invoice Errors"
 msgstr "Electronic Invoice Errors"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:81
+#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:92
 #, python-format
 msgid "Enabled Point Of Sales on AFIP\n"
 msgstr "Enabled Point Of Sales on AFIP\n"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:139
-#, python-format
-msgid ""
-"Error! You can not cancel an electronic invoice (has CAE assigned)."
-"                    You should do a credit note instead."
-msgstr "Error! You can not cancel an electronic invoice (has CAE assigned).                    You should do a credit note instead."
-
-#. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:213
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:208
 #, python-format
 msgid "Error!Invoice id: %iNext invoice number should be %i and not %i"
 msgstr "Error!Invoice id: %iNext invoice number should be %i and not %i"
@@ -297,19 +289,19 @@ msgid "Exportación -con detalle- RG2758 (WSFEXv1)"
 msgstr "Exportación -con detalle- RG2758 (WSFEXv1)"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:204
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:199
 #, python-format
 msgid "For WS \"%s\" country afip code is mandatoryCountry: %s"
 msgstr "For WS \"%s\" country afip code is mandatoryCountry: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:199
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:194
 #, python-format
 msgid "For WS \"%s\" country code is mandatoryCountry: %s"
 msgstr "For WS \"%s\" country code is mandatoryCountry: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:194
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:189
 #, python-format
 msgid "For WS \"%s\" country is required on partner"
 msgstr "For WS \"%s\" country is required on partner"
@@ -437,10 +429,10 @@ msgid "Name"
 msgstr "Name"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:57
-#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:73
-#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:89
-#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:108
+#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:68
+#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:84
+#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:100
+#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:121
 #, python-format
 msgid "No AFIP WS selected"
 msgstr "No AFIP WS selected"
@@ -479,8 +471,8 @@ msgid "No company found using argentinian localization"
 msgstr "No company found using argentinian localization"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:364
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:375
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:359
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:370
 #, python-format
 msgid "Not afip code con producto UOM %s"
 msgstr "Not afip code con producto UOM %s"
@@ -517,7 +509,7 @@ msgid "Resultado"
 msgstr "Resultado"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:43
+#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:54
 #, python-format
 msgid "There are some doument desynchronized:\n"
 msgstr "There are some doument desynchronized:\n"
@@ -529,6 +521,12 @@ msgid ""
 "Unit of mesures:\n"
 "%s\n"
 msgstr "Unit of mesures:\n%s\n"
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:30
+#, python-format
+msgid "You can only use an AFIP WS if type is \"Electronic\""
+msgstr "You can only use an AFIP WS if type is \"Electronic\""
 
 #. module: l10n_ar_afipws_fe
 #: selection:account.invoice,afip_result:0

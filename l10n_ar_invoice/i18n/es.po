@@ -1,27 +1,31 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_ar_invoice
-#
+# * l10n_ar_invoice
+# 
+# Translators:
+# Javier Diez <jd@ingadhoc.com>, 2015
+# Juan Jose Scarafia <scarafia.juanjose@gmail.com>, 2015
+# Mario Calvar <ventas.bbca@gmail.com>, 2015
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-01 15:59+0000\n"
-"PO-Revision-Date: 2015-10-01 13:25-0300\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2015-10-18 02:29+0000\n"
+"PO-Revision-Date: 2015-10-19 20:25+0000\n"
+"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 1.5.4\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_ar_invoice
 #: model:email.template,body_html:l10n_ar_invoice.email_template_edi_invoice
 msgid ""
 "\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
-"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
 "    <p>Hello ${object.partner_id.name},</p>\n"
 "\n"
@@ -29,17 +33,14 @@ msgid ""
 "    \n"
 "    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
 "       &nbsp;&nbsp;<strong>REFERENCES</strong><br />\n"
-"       &nbsp;&nbsp;Invoice number: <strong>${object.document_number}</"
-"strong><br />\n"
-"       &nbsp;&nbsp;Invoice total: <strong>${object.amount_total} ${object."
-"currency_id.name}</strong><br />\n"
+"       &nbsp;&nbsp;Invoice number: <strong>${object.document_number}</strong><br />\n"
+"       &nbsp;&nbsp;Invoice total: <strong>${object.amount_total} ${object.currency_id.name}</strong><br />\n"
 "       &nbsp;&nbsp;Invoice date: ${object.date_invoice}<br />\n"
 "       % if object.origin:\n"
 "       &nbsp;&nbsp;Order reference: ${object.origin}<br />\n"
 "       % endif\n"
 "       % if object.user_id:\n"
-"       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or "
-"''}?subject=Invoice%20${object.number}\">${object.user_id.name}</a>\n"
+"       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Invoice%20${object.number}\">${object.user_id.name}</a>\n"
 "       % endif\n"
 "    </p>  \n"
 "    \n"
@@ -47,8 +48,7 @@ msgid ""
 "    <br/>\n"
 "    <p>It is also possible to directly pay with Paypal:</p>\n"
 "        <a style=\"margin-left: 120px;\" href=\"${object.paypal_url}\">\n"
-"            <img class=\"oe_edi_paypal_button\" src=\"/account/static/src/"
-"img/btn_paynowcc_lg.gif\"/>\n"
+"            <img class=\"oe_edi_paypal_button\" src=\"/account/static/src/img/btn_paynowcc_lg.gif\"/>\n"
 "        </a>\n"
 "    % endif\n"
 "    \n"
@@ -57,16 +57,11 @@ msgid ""
 "    <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
 "    <br/>\n"
 "    <br/>\n"
-"    <div style=\"width: 375px; margin: 0px; padding: 0px; background-color: "
-"#8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; "
-"background-repeat: repeat no-repeat;\">\n"
-"        <h3 style=\"margin: 0px; padding: 2px 14px; font-size: 12px; color: "
-"#DDD;\">\n"
-"            <strong style=\"text-transform:uppercase;\">${object.company_id."
-"name}</strong></h3>\n"
+"    <div style=\"width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;\">\n"
+"        <h3 style=\"margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;\">\n"
+"            <strong style=\"text-transform:uppercase;\">${object.company_id.name}</strong></h3>\n"
 "    </div>\n"
-"    <div style=\"width: 347px; margin: 0px; padding: 5px 14px; line-height: "
-"16px; background-color: #F2F2F2;\">\n"
+"    <div style=\"width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;\">\n"
 "        <span style=\"color: #222; margin-bottom: 5px; display: block; \">\n"
 "        % if object.company_id.street:\n"
 "            ${object.company_id.street}<br/>\n"
@@ -78,117 +73,31 @@ msgid ""
 "            ${object.company_id.zip} ${object.company_id.city}<br/>\n"
 "        % endif\n"
 "        % if object.company_id.country_id:\n"
-"            ${object.company_id.state_id and ('%s, ' % object.company_id."
-"state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
+"            ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
 "        % endif\n"
 "        </span>\n"
 "        % if object.company_id.phone:\n"
-"            <div style=\"margin-top: 0px; margin-right: 0px; margin-bottom: "
-"0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: "
-"0px; padding-left: 0px; \">\n"
+"            <div style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; \">\n"
 "                Phone:&nbsp; ${object.company_id.phone}\n"
 "            </div>\n"
 "        % endif\n"
 "        % if object.company_id.website:\n"
 "            <div>\n"
-"                Web :&nbsp;<a href=\"${object.company_id.website}\">${object."
-"company_id.website}</a>\n"
+"                Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
 "            </div>\n"
 "        %endif\n"
 "        <p></p>\n"
 "    </div>\n"
 "</div>\n"
 "            "
-msgstr ""
-"\n"
-"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-"
-"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"\n"
-"    <p>Hello ${object.partner_id.name},</p>\n"
-"\n"
-"    <p>A new invoice is available for you: </p>\n"
-"    \n"
-"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
-"       &nbsp;&nbsp;<strong>REFERENCES</strong><br />\n"
-"       &nbsp;&nbsp;Invoice number: <strong>${object.document_number}</"
-"strong><br />\n"
-"       &nbsp;&nbsp;Invoice total: <strong>${object.amount_total} ${object."
-"currency_id.name}</strong><br />\n"
-"       &nbsp;&nbsp;Invoice date: ${object.date_invoice}<br />\n"
-"       % if object.origin:\n"
-"       &nbsp;&nbsp;Order reference: ${object.origin}<br />\n"
-"       % endif\n"
-"       % if object.user_id:\n"
-"       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or "
-"''}?subject=Invoice%20${object.number}\">${object.user_id.name}</a>\n"
-"       % endif\n"
-"    </p>  \n"
-"    \n"
-"    % if object.paypal_url:\n"
-"    <br/>\n"
-"    <p>It is also possible to directly pay with Paypal:</p>\n"
-"        <a style=\"margin-left: 120px;\" href=\"${object.paypal_url}\">\n"
-"            <img class=\"oe_edi_paypal_button\" src=\"/account/static/src/"
-"img/btn_paynowcc_lg.gif\"/>\n"
-"        </a>\n"
-"    % endif\n"
-"    \n"
-"    <br/>\n"
-"    <p>If you have any question, do not hesitate to contact us.</p>\n"
-"    <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
-"    <br/>\n"
-"    <br/>\n"
-"    <div style=\"width: 375px; margin: 0px; padding: 0px; background-color: "
-"#8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; "
-"background-repeat: repeat no-repeat;\">\n"
-"        <h3 style=\"margin: 0px; padding: 2px 14px; font-size: 12px; color: "
-"#DDD;\">\n"
-"            <strong style=\"text-transform:uppercase;\">${object.company_id."
-"name}</strong></h3>\n"
-"    </div>\n"
-"    <div style=\"width: 347px; margin: 0px; padding: 5px 14px; line-height: "
-"16px; background-color: #F2F2F2;\">\n"
-"        <span style=\"color: #222; margin-bottom: 5px; display: block; \">\n"
-"        % if object.company_id.street:\n"
-"            ${object.company_id.street}<br/>\n"
-"        % endif\n"
-"        % if object.company_id.street2:\n"
-"            ${object.company_id.street2}<br/>\n"
-"        % endif\n"
-"        % if object.company_id.city or object.company_id.zip:\n"
-"            ${object.company_id.zip} ${object.company_id.city}<br/>\n"
-"        % endif\n"
-"        % if object.company_id.country_id:\n"
-"            ${object.company_id.state_id and ('%s, ' % object.company_id."
-"state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
-"        % endif\n"
-"        </span>\n"
-"        % if object.company_id.phone:\n"
-"            <div style=\"margin-top: 0px; margin-right: 0px; margin-bottom: "
-"0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: "
-"0px; padding-left: 0px; \">\n"
-"                Phone:&nbsp; ${object.company_id.phone}\n"
-"            </div>\n"
-"        % endif\n"
-"        % if object.company_id.website:\n"
-"            <div>\n"
-"                Web :&nbsp;<a href=\"${object.company_id.website}\">${object."
-"company_id.website}</a>\n"
-"            </div>\n"
-"        %endif\n"
-"        <p></p>\n"
-"    </div>\n"
-"</div>\n"
-"            "
+msgstr "\n<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n\n    <p>Hello ${object.partner_id.name},</p>\n\n    <p>A new invoice is available for you: </p>\n    \n    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n       &nbsp;&nbsp;<strong>REFERENCES</strong><br />\n       &nbsp;&nbsp;Invoice number: <strong>${object.document_number}</strong><br />\n       &nbsp;&nbsp;Invoice total: <strong>${object.amount_total} ${object.currency_id.name}</strong><br />\n       &nbsp;&nbsp;Invoice date: ${object.date_invoice}<br />\n       % if object.origin:\n       &nbsp;&nbsp;Order reference: ${object.origin}<br />\n       % endif\n       % if object.user_id:\n       &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Invoice%20${object.number}\">${object.user_id.name}</a>\n       % endif\n    </p>  \n    \n    % if object.paypal_url:\n    <br/>\n    <p>It is also possible to directly pay with Paypal:</p>\n        <a style=\"margin-left: 120px;\" href=\"${object.paypal_url}\">\n            <img class=\"oe_edi_paypal_button\" src=\"/account/static/src/img/btn_paynowcc_lg.gif\"/>\n        </a>\n    % endif\n    \n    <br/>\n    <p>If you have any question, do not hesitate to contact us.</p>\n    <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n    <br/>\n    <br/>\n    <div style=\"width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;\">\n        <h3 style=\"margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;\">\n            <strong style=\"text-transform:uppercase;\">${object.company_id.name}</strong></h3>\n    </div>\n    <div style=\"width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;\">\n        <span style=\"color: #222; margin-bottom: 5px; display: block; \">\n        % if object.company_id.street:\n            ${object.company_id.street}<br/>\n        % endif\n        % if object.company_id.street2:\n            ${object.company_id.street2}<br/>\n        % endif\n        % if object.company_id.city or object.company_id.zip:\n            ${object.company_id.zip} ${object.company_id.city}<br/>\n        % endif\n        % if object.company_id.country_id:\n            ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n        % endif\n        </span>\n        % if object.company_id.phone:\n            <div style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; \">\n                Phone:&nbsp; ${object.company_id.phone}\n            </div>\n        % endif\n        % if object.company_id.website:\n            <div>\n                Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n            </div>\n        %endif\n        <p></p>\n    </div>\n</div>\n            "
 
 #. module: l10n_ar_invoice
 #: model:email.template,subject:l10n_ar_invoice.email_template_edi_invoice
 msgid ""
-"${object.company_id.name|safe} Invoice (Ref ${object.document_number or 'n/"
-"a'})"
-msgstr ""
-"${object.company_id.name|safe} Invoice (Ref ${object.document_number or 'n/"
-"a'})"
+"${object.company_id.name|safe} Invoice (Ref ${object.document_number or "
+"'n/a'})"
+msgstr "${object.company_id.name|safe} Invoice (Ref ${object.document_number or 'n/a'})"
 
 #. module: l10n_ar_invoice
 #: view:account.invoice:l10n_ar_invoice.view_invoice_form
@@ -363,6 +272,11 @@ msgid "Account Entry"
 msgstr "Asiento contable"
 
 #. module: l10n_ar_invoice
+#: field:account.journal.create.wizard,account_user_type_id:0
+msgid "Account Type"
+msgstr "Tipo de Cuenta"
+
+#. module: l10n_ar_invoice
 #: model:account.account,name:l10n_ar_invoice.ri_pago_acreedores
 msgid "Acreedores varios"
 msgstr "Acreedores varios"
@@ -527,7 +441,7 @@ msgid "Available Journal Document Classes"
 msgstr "Clases de Documentos Disponibles en Diario"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:121
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:140
 #, python-format
 msgid "BAN"
 msgstr "BAN"
@@ -554,7 +468,7 @@ msgid "BIENES DE USO"
 msgstr "BIENES DE USO"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:122
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:141
 #, python-format
 msgid "Banco"
 msgstr "Banco"
@@ -585,7 +499,7 @@ msgid "Beneficios al personal"
 msgstr "Beneficios al personal"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:125
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:144
 #, python-format
 msgid "CAJ"
 msgstr "CAJ"
@@ -601,7 +515,7 @@ msgid "CAPITAL SOCIAL"
 msgstr "CAPITAL SOCIAL"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:135
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:154
 #, python-format
 msgid "COM"
 msgstr "COM"
@@ -647,7 +561,7 @@ msgid "Cadetería y correo adminsitracion"
 msgstr "Cadetería y correo adminsitracion"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:126
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:145
 #, python-format
 msgid "Caja"
 msgstr "Caja"
@@ -728,28 +642,14 @@ msgstr "Marque esta casilla si este contacto es un cliente."
 msgid ""
 "Check this box if this contact is a supplier. If it's not checked,purchase "
 "people will not see it when encoding a purchase order."
-msgstr ""
-"Marque esta casilla si este contacto es un proveedor. Si no lo marca, el "
-"personal de compras no lo va a ver al realizar una orden de compras."
+msgstr "Marque esta casilla si este contacto es un proveedor. Si no lo marca, el personal de compras no lo va a ver al realizar una orden de compras."
 
 #. module: l10n_ar_invoice
 #: help:account.journal.create.wizard,update_posted:0
 msgid ""
 "Check this box if you want to allow the cancellation the entries related to "
 "this journals or of the invoice related to this journals"
-msgstr ""
-"Marque esta casilla si quiere permitir cancelación de asientos o facturas "
-"relacionados a este diario."
-
-#. module: l10n_ar_invoice
-#: selection:account.journal.create.wizard,type:0
-msgid "Cheque Emitido"
-msgstr "Cheque Emitido"
-
-#. module: l10n_ar_invoice
-#: selection:account.journal.create.wizard,type:0
-msgid "Cheque de Tercero"
-msgstr "Cheque de Tercero"
+msgstr "Marque esta casilla si quiere permitir cancelación de asientos o facturas relacionados a este diario."
 
 #. module: l10n_ar_invoice
 #: model:account.account,name:l10n_ar_invoice.ri_cheques_diferidos
@@ -795,13 +695,13 @@ msgid "Company id"
 msgstr "ID de Compañía"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:681
+#: code:addons/l10n_ar_invoice/models/invoice.py:697
 #, python-format
 msgid "Compose Email"
-msgstr ""
+msgstr "Componer correo electrónico"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:136
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:155
 #, python-format
 msgid "Compras"
 msgstr "Compras"
@@ -817,12 +717,10 @@ msgid "Costo de mercadería vendida"
 msgstr "Costo de mercadería vendida"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:310
+#: code:addons/l10n_ar_invoice/models/invoice.py:319
 #, python-format
 msgid "Could not get invoice number and point of sale for invoice id %i"
-msgstr ""
-"No se pudo obtener el número de factura y el punto de venta para el id de "
-"factura %i"
+msgstr "No se pudo obtener el número de factura y el punto de venta para el id de factura %i"
 
 #. module: l10n_ar_invoice
 #: model:ir.model,name:l10n_ar_invoice.model_res_country
@@ -941,13 +839,13 @@ msgstr "Fecha de Factura"
 #: code:addons/l10n_ar_invoice/report/invoice_analysis.py:40
 #, python-format
 msgid "Date Invoice from"
-msgstr ""
+msgstr "Fecha Factura desde"
 
 #. module: l10n_ar_invoice
 #: code:addons/l10n_ar_invoice/report/invoice_analysis.py:42
 #, python-format
 msgid "Date Invoice to"
-msgstr ""
+msgstr "Fecha Factura hasta"
 
 #. module: l10n_ar_invoice
 #: field:account.journal.create.wizard,allow_date:0
@@ -960,25 +858,13 @@ msgstr "Fecha en Período"
 msgid ""
 "Dear Sir/Madam,\n"
 "\n"
-"Our records indicate that some payments on your account are still due. "
-"Please find details below.\n"
-"If the amount has already been paid, please disregard this notice. "
-"Otherwise, please forward us the total amount stated below.\n"
+"Our records indicate that some payments on your account are still due. Please find details below.\n"
+"If the amount has already been paid, please disregard this notice. Otherwise, please forward us the total amount stated below.\n"
 "If you have any queries regarding your account, Please contact us.\n"
 "\n"
 "Thank you in advance for your cooperation.\n"
 "Best Regards,"
-msgstr ""
-"Dear Sir/Madam,\n"
-"\n"
-"Our records indicate that some payments on your account are still due. "
-"Please find details below.\n"
-"If the amount has already been paid, please disregard this notice. "
-"Otherwise, please forward us the total amount stated below.\n"
-"If you have any queries regarding your account, Please contact us.\n"
-"\n"
-"Thank you in advance for your cooperation.\n"
-"Best Regards,"
+msgstr "Dear Sir/Madam,\n\nOur records indicate that some payments on your account are still due. Please find details below.\nIf the amount has already been paid, please disregard this notice. Otherwise, please forward us the total amount stated below.\nIf you have any queries regarding your account, Please contact us.\n\nThank you in advance for your cooperation.\nBest Regards,"
 
 #. module: l10n_ar_invoice
 #: selection:afip.document_class,document_type:0
@@ -1000,15 +886,10 @@ msgstr "Cuenta de Débito por defecto"
 msgid ""
 "Definie behaviour on invoices reports. Discrimination or not will depend in "
 "partner and company responsability and AFIP letters setup:            * If "
-"No Discriminate Default, if no match found it won't discriminate by "
-"default            * If Discriminate Default, if no match found it would "
+"No Discriminate Default, if no match found it won't discriminate by default"
+"            * If Discriminate Default, if no match found it would "
 "discriminate by default            "
-msgstr ""
-"Definie behaviour on invoices reports. Discrimination or not will depend in "
-"partner and company responsability and AFIP letters setup:            * If "
-"No Discriminate Default, if no match found it won't discriminate by "
-"default            * If Discriminate Default, if no match found it would "
-"discriminate by default            "
+msgstr "Definie behaviour on invoices reports. Discrimination or not will depend in partner and company responsability and AFIP letters setup:            * If No Discriminate Default, if no match found it won't discriminate by default            * If Discriminate Default, if no match found it would discriminate by default            "
 
 #. module: l10n_ar_invoice
 #: model:account.account,name:l10n_ar_invoice.ri_descuentos_obtenidos
@@ -1174,19 +1055,22 @@ msgid "EAN13"
 msgstr "EAN13"
 
 #. module: l10n_ar_invoice
+#: selection:afip.point_of_sale,type:0
+msgid "Electronic"
+msgstr "Electronica"
+
+#. module: l10n_ar_invoice
 #: field:account.journal.afip_document_class,sequence_id:0
 msgid "Entry Sequence"
 msgstr "Secuencia de Asiento"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:595
+#: code:addons/l10n_ar_invoice/models/invoice.py:607
 #, python-format
 msgid ""
 "Error!. Please define sequence on the journal related documents to this "
 "invoice."
-msgstr ""
-"Error! Por favor defina secuencias en los documentos relacionados al diario "
-"de esta factura."
+msgstr "Error! Por favor defina secuencias en los documentos relacionados al diario de esta factura."
 
 #. module: l10n_ar_invoice
 #: code:addons/l10n_ar_invoice/models/invoice_line.py:119
@@ -1639,18 +1523,14 @@ msgstr "Si Verdadero, el IVA va a ser discriminado en el reporte de factura."
 msgid ""
 "If True, then a vay tax is mandatory on each sale invoice for companies of "
 "this responsability"
-msgstr ""
-"Si verdadero, entonces un impuesto IVA es requerido en cada venta de "
-"compañías de esta responsabilidad"
+msgstr "Si verdadero, entonces un impuesto IVA es requerido en cada venta de compañías de esta responsabilidad"
 
 #. module: l10n_ar_invoice
 #: help:account.journal.create.wizard,allow_date:0
 msgid ""
 "If checked, the entry won't be created if the entry date is not included "
 "into the selected period"
-msgstr ""
-"Si esta marcado, el asiento no va a crearse si la fecha no está dentro del "
-"período seleccionado"
+msgstr "Si esta marcado, el asiento no va a crearse si la fecha no está dentro del período seleccionado"
 
 #. module: l10n_ar_invoice
 #: help:account.journal.create.wizard,default_credit_account_id:0
@@ -1659,23 +1539,32 @@ msgid "If not configured for bank/cash journals it will be created"
 msgstr "Si no esta configurado para diarios de caja/bancos va a ser creada"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:552
+#: code:addons/l10n_ar_invoice/models/invoice.py:563
 #, python-format
 msgid ""
 "If there you have choose a tax with 0, exempt or untaxed, you must choose a "
 "fiscal position with afip code in %s. Invoice id %i"
-msgstr ""
-"Si ha elegido algún impuesto 0, exento o no gravado, entonces debe "
-"seleccionado una posición fiscal con código de afip en %s. ID de Factura %i"
+msgstr "Si ha elegido algún impuesto 0, exento o no gravado, entonces debe seleccionado una posición fiscal con código de afip en %s. ID de Factura %i"
 
 #. module: l10n_ar_invoice
 #: help:account.journal.create.wizard,group_invoice_lines:0
 msgid ""
 "If this box is checked, the system will try to group the accounting lines "
 "when generating them from invoices."
-msgstr ""
-"Si se marca esta casilla, el sistema va a intentar agrupar las lineas "
-"contables al ser generarads desde facturas."
+msgstr "Si se marca esta casilla, el sistema va a intentar agrupar las lineas contables al ser generarads desde facturas."
+
+#. module: l10n_ar_invoice
+#: help:account.journal.create.wizard,parent_account_id:0
+msgid ""
+"If you dont choose parent account, then we will search for one of type "
+"liquidity and use this for type and the parent for parent."
+msgstr "Si no elije una cuenta padre, entonces se va a buscar por una del tipo liquidez y utilizar esta para el tipo y la padre como padre."
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:251
+#, python-format
+msgid "If you set a parent acount you must also set a user type"
+msgstr "Si define una cuenta padre también debe definir un Tipo de Cuenta"
 
 #. module: l10n_ar_invoice
 #: model:account.account,name:l10n_ar_invoice.ri_a_cuenta_impuestos_ganancias_a_favor
@@ -1760,7 +1649,7 @@ msgid "Internal Taxes"
 msgstr "Impuestos Internos"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:247
+#: code:addons/l10n_ar_invoice/models/invoice.py:256
 #: model:ir.model,name:l10n_ar_invoice.model_account_invoice
 #, python-format
 msgid "Invoice"
@@ -1773,20 +1662,18 @@ msgid "Invoice Analysis"
 msgstr "Análisis de Factura"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:537
+#: code:addons/l10n_ar_invoice/models/invoice.py:548
 #, python-format
 msgid "Invoice ID %i shouldn't have any vat tax"
 msgstr "La factura con ID %i no debería tener ningún impuesto IVA"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:524
+#: code:addons/l10n_ar_invoice/models/invoice.py:535
 #, python-format
 msgid ""
 "Invoice ID: %i\n"
 "Invoice subtotal (%.2f) is different from invoice base vat amount (%.2f)"
-msgstr ""
-"Factura con ID: %i\n"
-"El Subtotal de Factura (%.2f) es diferente a la base de IVA (%.2f)"
+msgstr "Factura con ID: %i\nEl Subtotal de Factura (%.2f) es diferente a la base de IVA (%.2f)"
 
 #. module: l10n_ar_invoice
 #: model:ir.model,name:l10n_ar_invoice.model_account_invoice_line
@@ -1822,11 +1709,9 @@ msgstr "Factura y Reembolso"
 #. module: l10n_ar_invoice
 #: model:email.template,report_name:l10n_ar_invoice.email_template_edi_invoice
 msgid ""
-"Invoice_${(object.document_number or '').replace('/','_')}_${object.state == "
-"'draft' and 'draft' or ''}"
-msgstr ""
-"Invoice_${(object.document_number or '').replace('/','_')}_${object.state == "
-"'draft' and 'draft' or ''}"
+"Invoice_${(object.document_number or '').replace('/','_')}_${object.state =="
+" 'draft' and 'draft' or ''}"
+msgstr "Invoice_${(object.document_number or '').replace('/','_')}_${object.state == 'draft' and 'draft' or ''}"
 
 #. module: l10n_ar_invoice
 #: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
@@ -1855,10 +1740,15 @@ msgid "Invoices Statistics"
 msgstr "Estadísticas de facturas"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:486
+#: code:addons/l10n_ar_invoice/models/invoice.py:495
 #, python-format
 msgid "Invoices ids %s amount is cero!"
 msgstr "El importe es cero en las facturas con id %s!"
+
+#. module: l10n_ar_invoice
+#: selection:account.journal.create.wizard,type:0
+msgid "Issue Check"
+msgstr "Cheque Propio"
 
 #. module: l10n_ar_invoice
 #: field:afip.responsability,issued_letter_ids:0
@@ -1874,28 +1764,24 @@ msgstr "Emisores"
 #: help:afip.document_class,document_type:0
 msgid ""
 "It defines some behaviours on different places:        * invoice: used on "
-"sale and purchase journals. Auto selected if not        debit_note specified "
-"on context.        * debit_note: used on sale and purchase journals but with "
-"lower        priority than invoices.        * credit_note: used on "
+"sale and purchase journals. Auto selected if not        debit_note specified"
+" on context.        * debit_note: used on sale and purchase journals but "
+"with lower        priority than invoices.        * credit_note: used on "
 "sale_refund and purchase_refund journals.        * ticket: automatically "
 "loaded for purchase journals but only loaded        on sales journals if "
-"point_of_sale is fiscal_printer        * receipt_invoice: mean to be used as "
-"invoices but not automatically        loaded because it is not usually "
-"used        * ticket: automatically loaded for purchase journals but not "
-"loaded        on sales journals. Also can be selected on partners, to be "
-"available        it must be selected on partner.        "
-msgstr ""
-"It defines some behaviours on different places:        * invoice: used on "
-"sale and purchase journals. Auto selected if not        debit_note specified "
-"on context.        * debit_note: used on sale and purchase journals but with "
-"lower        priority than invoices.        * credit_note: used on "
-"sale_refund and purchase_refund journals.        * ticket: automatically "
-"loaded for purchase journals but only loaded        on sales journals if "
-"point_of_sale is fiscal_printer        * receipt_invoice: mean to be used as "
-"invoices but not automatically        loaded because it is not usually "
-"used        * ticket: automatically loaded for purchase journals but not "
-"loaded        on sales journals. Also can be selected on partners, to be "
-"available        it must be selected on partner.        "
+"point_of_sale is fiscal_printer        * receipt_invoice: mean to be used as"
+" invoices but not automatically        loaded because it is not usually used"
+"        * ticket: automatically loaded for purchase journals but not loaded"
+"        on sales journals. Also can be selected on partners, to be available"
+"        it must be selected on partner.        "
+msgstr "It defines some behaviours on different places:        * invoice: used on sale and purchase journals. Auto selected if not        debit_note specified on context.        * debit_note: used on sale and purchase journals but with lower        priority than invoices.        * credit_note: used on sale_refund and purchase_refund journals.        * ticket: automatically loaded for purchase journals but only loaded        on sales journals if point_of_sale is fiscal_printer        * receipt_invoice: mean to be used as invoices but not automatically        loaded because it is not usually used        * ticket: automatically loaded for purchase journals but not loaded        on sales journals. Also can be selected on partners, to be available        it must be selected on partner.        "
+
+#. module: l10n_ar_invoice
+#: help:account.journal.create.wizard,account_user_type_id:0
+msgid ""
+"It will be used for the new account created. If you choose a parent account,"
+" then you must also select an account type"
+msgstr "Va a ser utilizado para la nueva cuenta creada. Si elige una cuenta padre, entonces debe seleccionar además un tipo de cuenta"
 
 #. module: l10n_ar_invoice
 #: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
@@ -2026,8 +1912,7 @@ msgstr "Nombre en Reportes"
 #. module: l10n_ar_invoice
 #: help:afip.document_class,report_name:0
 msgid "Name that will be printed in reports, for example \"CREDIT NOTE\""
-msgstr ""
-"El nombre va a ser impreso en los reportes, por ejemplo \"NOTA DE CRÉDITO\""
+msgstr "El nombre va a ser impreso en los reportes, por ejemplo \"NOTA DE CRÉDITO\""
 
 #. module: l10n_ar_invoice
 #: selection:account.tax.code,application:0
@@ -2042,7 +1927,7 @@ msgid "Net Price"
 msgstr "Precio Neto"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:225
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:264
 #, python-format
 msgid "No Parent Account Found for Bank/Cash Accounts!"
 msgstr "No se ha encontrado una cuenta padre para cuentas de Caja/Bancos!"
@@ -2106,7 +1991,7 @@ msgstr "OTROS INGRESOS"
 msgid ""
 "On use documents and sales journals is mandatory, con purchase journal is "
 "optional and only used to easily manage journals"
-msgstr ""
+msgstr "En diarios de ventas que utilizen documentos es obligatorio, en diarios de compras es opcional y solo utilizado para gestionar más facilmente los diarios"
 
 #. module: l10n_ar_invoice
 #: selection:afip.point_of_sale,type:0
@@ -2144,13 +2029,13 @@ msgid "Operaciones exentas"
 msgstr "Operaciones exentas"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:648
+#: code:addons/l10n_ar_invoice/models/invoice.py:664
 #, python-format
 msgid "Operation Type Error"
 msgstr "Error de Tipo de Operación"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:649
+#: code:addons/l10n_ar_invoice/models/invoice.py:665
 #, python-format
 msgid "Operation Type Must be \"Sale\" or \"Purchase\""
 msgstr "El Tipo de Operación Debe ser \"Venta\" o \"Compra\""
@@ -2220,6 +2105,11 @@ msgstr "PATRIMONIO NETO"
 #: model:account.account,name:l10n_ar_invoice.ri_provisiones_varias
 msgid "PREVISIONES VARIAS"
 msgstr "PREVISIONES VARIAS"
+
+#. module: l10n_ar_invoice
+#: field:account.journal.create.wizard,parent_account_id:0
+msgid "Parent Account"
+msgstr "Cuenta Padre"
 
 #. module: l10n_ar_invoice
 #: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
@@ -2382,13 +2272,12 @@ msgid "Plan de Impuestos de Argentina para Responsables Inscriptos"
 msgstr "Plan de Impuestos de Argentina para Responsables Inscriptos"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:653
+#: code:addons/l10n_ar_invoice/models/invoice.py:669
 #, python-format
 msgid ""
 "Please, set your company responsability in the company partner before "
 "continue."
-msgstr ""
-"Por favor configura la responsabilidad en la compañía antes de continuar."
+msgstr "Por favor configura la responsabilidad en la compañía antes de continuar."
 
 #. module: l10n_ar_invoice
 #: field:account.journal.create.wizard,point_of_sale_id:0
@@ -2417,9 +2306,7 @@ msgstr "Prefijo"
 msgid ""
 "Prefix for Documents Codes on Invoices         and Account Moves. For eg. "
 "'FA ' will build 'FA 0001-0000001' Document Number"
-msgstr ""
-"Prefijo para Códigos de Documentos en Facturas y Asientos. Por ej. 'FA ' va "
-"a construir el número de documento 'FA 0001-0000001'"
+msgstr "Prefijo para Códigos de Documentos en Facturas y Asientos. Por ej. 'FA ' va a construir el número de documento 'FA 0001-0000001'"
 
 #. module: l10n_ar_invoice
 #: selection:afip.point_of_sale,type:0
@@ -2450,6 +2337,11 @@ msgstr "Prevision gastos"
 #: model:account.account,name:l10n_ar_invoice.ri_prevision_despidos
 msgid "Previsión Despidos"
 msgstr "Previsión Despidos"
+
+#. module: l10n_ar_invoice
+#: view:account.invoice:l10n_ar_invoice.view_invoice_form
+msgid "Print"
+msgstr "Imprimir"
 
 #. module: l10n_ar_invoice
 #: view:account.invoice:l10n_ar_invoice.view_invoice_form
@@ -2524,7 +2416,7 @@ msgid "Quantity"
 msgstr "Cantidad"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:131
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:150
 #, python-format
 msgid "RCO"
 msgstr "RCO"
@@ -2540,7 +2432,7 @@ msgid "RETENCIONES Y PERCEPCIONES APLICADAS"
 msgstr "RETENCIONES Y PERCEPCIONES APLICADAS"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:141
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:160
 #, python-format
 msgid "RVE"
 msgstr "RVE"
@@ -2566,13 +2458,13 @@ msgid "Recupero de gastos"
 msgstr "Recupero de gastos"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:132
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:151
 #, python-format
 msgid "Reembolso Compras"
 msgstr "Reembolso Compras"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:142
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:161
 #, python-format
 msgid "Reembolso Ventas"
 msgstr "Reembolso Ventas"
@@ -2588,15 +2480,10 @@ msgid "Refresh Documents"
 msgstr "Refrescar Documentos"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:249
+#: code:addons/l10n_ar_invoice/models/invoice.py:258
 #, python-format
 msgid "Refund"
 msgstr "Reembolso"
-
-#. module: l10n_ar_invoice
-#: view:account.invoice:l10n_ar_invoice.view_invoice_form
-msgid "Refund Invoice"
-msgstr "Reintegrar factura"
 
 #. module: l10n_ar_invoice
 #: model:account.account,name:l10n_ar_invoice.ri_reserva_estatuitaria
@@ -2835,9 +2722,7 @@ msgstr "Servicios de luz, agua, etc. produccion"
 msgid ""
 "Set here if this partner can issue other documents further        than "
 "invoices, credit notes and debit notes"
-msgstr ""
-"Marque aquí si esta empresa puede emitir otros documentos además de "
-"facturas, notas de crédito y notas de débito"
+msgstr "Marque aquí si esta empresa puede emitir otros documentos además de facturas, notas de crédito y notas de débito"
 
 #. module: l10n_ar_invoice
 #: model:account.account,name:l10n_ar_invoice.ri_software
@@ -2845,26 +2730,20 @@ msgid "Software"
 msgstr "Software"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:436
+#: code:addons/l10n_ar_invoice/models/invoice.py:445
 #, python-format
 msgid ""
-"Some invoices have a journal that require a document but not document type "
-"has been selected.\n"
+"Some invoices have a journal that require a document but not document type has been selected.\n"
 "Invoices ids: %s"
-msgstr ""
-"Algunas facturas tienen un diario que requiere un documento pero ningún tipo "
-"de documento se ha seleccionado.\n"
-"Ids de Facturas: %s"
+msgstr "Algunas facturas tienen un diario que requiere un documento pero ningún tipo de documento se ha seleccionado.\nIds de Facturas: %s"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:505
+#: code:addons/l10n_ar_invoice/models/invoice.py:514
 #, python-format
 msgid ""
 "Some purchase invoices don't have supplier nunmber.\n"
 "Invoices ids: %s"
-msgstr ""
-"Algunas facturas de compra no tienen número de proveedor.\n"
-"Ids de Facturas: %s"
+msgstr "Algunas facturas de compra no tienen número de proveedor.\nIds de Facturas: %s"
 
 #. module: l10n_ar_invoice
 #: field:res.partner,start_date:0
@@ -2921,22 +2800,21 @@ msgstr "Proveedor"
 
 #. module: l10n_ar_invoice
 #: selection:account.invoice.line.report,type:0
-#: code:addons/l10n_ar_invoice/models/invoice.py:248
+#: code:addons/l10n_ar_invoice/models/invoice.py:257
 #, python-format
 msgid "Supplier Invoice"
 msgstr "Factura de Proveedor"
 
 #. module: l10n_ar_invoice
 #: sql_constraint:account.invoice:0
-#: code:addons/l10n_ar_invoice/models/invoice.py:424
+#: code:addons/l10n_ar_invoice/models/invoice.py:433
 #, python-format
 msgid "Supplier Invoice Number must be unique per Supplier and Company!"
-msgstr ""
-"El Número de Factura del Proveedor debe ser único por Compañía y Proveedor!"
+msgstr "El Número de Factura del Proveedor debe ser único por Compañía y Proveedor!"
 
 #. module: l10n_ar_invoice
 #: selection:account.invoice.line.report,type:0
-#: code:addons/l10n_ar_invoice/models/invoice.py:250
+#: code:addons/l10n_ar_invoice/models/invoice.py:259
 #, python-format
 msgid "Supplier Refund"
 msgstr "Reembolso de Proveedor"
@@ -2989,13 +2867,16 @@ msgid ""
 msgstr "La compañía del punto de ventas y del diario deben ser las mismas!"
 
 #. module: l10n_ar_invoice
+#: selection:account.journal.create.wizard,type:0
+msgid "Third Check"
+msgstr "Cheque de tercero"
+
+#. module: l10n_ar_invoice
 #: help:account.journal.afip_document_class,sequence_id:0
 msgid ""
 "This field contains the information related to the numbering of the "
 "documents entries of this document type."
-msgstr ""
-"Este campo contiene información relativa a la numeración de documentos "
-"relacionadas a este tipo de documento!"
+msgstr "Este campo contiene información relativa a la numeración de documentos relacionadas a este tipo de documento!"
 
 #. module: l10n_ar_invoice
 #: selection:afip.document_class,document_type:0
@@ -3046,8 +2927,7 @@ msgstr "¿Usar Documentos?"
 #. module: l10n_ar_invoice
 #: help:afip.point_of_sale,document_sequence_type:0
 msgid "Use own sequence or invoice sequence on Debit and Credit Notes?"
-msgstr ""
-"Usar secuencia propia o secuencia de facturas en Notas de Débito y Crédito?"
+msgstr "Usar secuencia propia o secuencia de facturas en Notas de Débito y Crédito?"
 
 #. module: l10n_ar_invoice
 #: selection:account.tax.code,tax:0 selection:account.tax.code.template,tax:0
@@ -3091,7 +2971,7 @@ msgid "VAT Untaxed"
 msgstr "No gravado en IVA"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:146
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:165
 #, python-format
 msgid "VEN"
 msgstr "VEN"
@@ -3123,7 +3003,7 @@ msgid "Venta servicios misc"
 msgstr "Venta servicios misc"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:147
+#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:166
 #, python-format
 msgid "Ventas"
 msgstr "Ventas"
@@ -3151,29 +3031,24 @@ msgid "Yes, No Discriminate Default"
 msgstr "Si, no discriminar por defecto"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:469
+#: code:addons/l10n_ar_invoice/models/invoice.py:478
 #, python-format
 msgid ""
 "You are using argentinian localization and there are some invoices with "
 "taxes that don't have tax code, tax code is required to generate this "
 "report. Invoies ids: %s"
-msgstr ""
-"Esta utilizando la localización argentina y hay algunas facturas con "
-"impuestos que no tienen configurados códigos de impuestos. Los códigos de "
-"impuesto son requeridos para generar este reporte. Ids de facturas: %s"
+msgstr "Esta utilizando la localización argentina y hay algunas facturas con impuestos que no tienen configurados códigos de impuestos. Los códigos de impuesto son requeridos para generar este reporte. Ids de facturas: %s"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:478
+#: code:addons/l10n_ar_invoice/models/invoice.py:487
 #, python-format
 msgid ""
-"You are using argentinian localization and there are some tax codes that are "
-"not configured. Tax codes ids: %s"
-msgstr ""
-"Esta utilizando la localización argentina y hay algunos códigos de impuestos "
-"que no están configurados. Ids de Códigos de Impuestos: %s"
+"You are using argentinian localization and there are some tax codes that are"
+" not configured. Tax codes ids: %s"
+msgstr "Esta utilizando la localización argentina y hay algunos códigos de impuestos que no están configurados. Ids de Códigos de Impuestos: %s"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:652
+#: code:addons/l10n_ar_invoice/models/invoice.py:668
 #, python-format
 msgid "Your company has not setted any responsability"
 msgstr "Su compañía no tiene configurada ninguna responsabilidad"
@@ -3181,13 +3056,11 @@ msgstr "Su compañía no tiene configurada ninguna responsabilidad"
 #. module: l10n_ar_invoice
 #: view:account.invoice:l10n_ar_invoice.view_account_invoice_filter
 msgid ""
-"['|','|','|','|', ('afip_document_number','ilike',self), ('number','ilike',"
-"self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), "
-"('partner_id', 'child_of', self)]"
-msgstr ""
-"['|','|','|','|', ('afip_document_number','ilike',self), ('number','ilike',"
-"self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), "
-"('partner_id', 'child_of', self)]"
+"['|','|','|','|', ('afip_document_number','ilike',self), "
+"('number','ilike',self), ('origin','ilike',self), "
+"('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', "
+"self)]"
+msgstr "['|','|','|','|', ('afip_document_number','ilike',self), ('number','ilike',self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', self)]"
 
 #. module: l10n_ar_invoice
 #: model:ir.actions.act_window,name:l10n_ar_invoice.action_account_journal_create_wizard
@@ -3206,13 +3079,22 @@ msgstr "o"
 
 #. module: l10n_ar_invoice
 #: view:account.invoice:l10n_ar_invoice.view_invoice_form
+msgid ""
+"{'invisible':['|',('sent','=',False), ('state', 'not in', ['open','paid'])]}"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: view:account.invoice:l10n_ar_invoice.view_invoice_form
+msgid ""
+"{'invisible':['|',('sent','=',True), ('state', 'not in', ['open','paid'])]}"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: view:account.invoice:l10n_ar_invoice.view_invoice_form
 #: view:account.invoice:l10n_ar_invoice.view_supplier_invoice_form
 msgid ""
-"{'readonly':['|','|',('state','!=','draft'),('afip_document_number','!=',"
-"False),('internal_number','!=',False)]}"
-msgstr ""
-"{'readonly':['|','|',('state','!=','draft'),('afip_document_number','!=',"
-"False),('internal_number','!=',False)]}"
+"{'readonly':['|','|',('state','!=','draft'),('afip_document_number','!=',False),('internal_number','!=',False)]}"
+msgstr "{'readonly':['|','|',('state','!=','draft'),('afip_document_number','!=',False),('internal_number','!=',False)]}"
 
 #. module: l10n_ar_invoice
 #: view:res.partner.bank:l10n_ar_invoice.view_partner_bank_form_inherit

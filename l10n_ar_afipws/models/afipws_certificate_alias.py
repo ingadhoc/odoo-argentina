@@ -152,7 +152,7 @@ class afipws_certificate_alias(models.Model):
     def generate_key(self, key_length=1024):
         """
         """
-        # TODO agregar las cosas variables que tenia crypto a la hora de genrar las keys
+        # TODO reemplazar todo esto por las funciones nativas de pyafipws
         k = crypto.PKey()
         k.generate_key(crypto.TYPE_RSA, key_length)
         self.key = crypto.dump_privatekey(crypto.FILETYPE_PEM, k)

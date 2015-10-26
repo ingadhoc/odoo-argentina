@@ -44,7 +44,6 @@ Para actualizar el plan de cuentas de datos demo:
     'external_dependencies': {
     },
     'data': [
-          'security/l10n_ar_invoice_security.xml',
           'data/data_account_type.xml',
           'data/account_financial_report_data.xml',
           'data/responsability.xml',

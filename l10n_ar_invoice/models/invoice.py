@@ -134,7 +134,9 @@ class account_invoice(models.Model):
         )
     document_number = fields.Char(
         compute='_get_document_number',
-        string=_('Document Number'),
+        # string=_('Document Number'),
+        # waiting for a PR 9081 to fix computed fields translations
+        string='Número de documento',
         readonly=True,
         )
     next_invoice_number = fields.Integer(

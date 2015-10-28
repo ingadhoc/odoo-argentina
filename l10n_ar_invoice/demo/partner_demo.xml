@@ -30,5 +30,19 @@
             <field name='document_type_id' ref="dt_CUIT"/>
             <field name='document_number'>30888888884</field>
         </record>
+        <!-- Camptocamp - Global Solutions  - cliente exterior -->
+        <record id="base.res_partner_21" model="res.partner">
+            <field name='responsability_id' ref='res_CLI_EXT'/>
+            <!-- <field name='vat'>AR30888888884</field> -->
+            <field name='document_type_id' ref="dt_CIe"/>
+            <field name='document_number'>12345678</field>
+        </record>
+        <!-- Camptocamp - Global Solutions  - cliente exterior -->
+        <record id="base.res_partner_15" model="res.partner">
+            <field name='responsability_id' ref='res_IVARI'/>
+            <field name='vat'>AR30999999995</dt_CUIT>
+            <field name='document_type_id' ref="dt_CIe"/>
+            <field name='document_number'>30999999995</field>
+        </record>
     </data>
 </openerp>

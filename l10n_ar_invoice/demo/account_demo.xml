@@ -27,14 +27,13 @@
         -->
 
         <record id="point_of_sale_1" model="afip.point_of_sale">
-            <field name="name">Punto de ventas 0001 (Pre impresos)</field>
             <field name="number" eval="1"/>
             <field name="company_id" ref="company_ri"/>
         </record>
 
         <record id="sales_journal" model="account.journal">
-            <field name="name">Factura Ventas 0001</field>
-            <field name="code">FAV01</field>
+            <field name="name">Ventas (0001 - Electronica)</field>
+            <field name="code">VEN01</field>
             <field name="type">sale</field>
             <!-- <field name="sequence_id" ref="sequence_sale_journal"/> -->
             <field name="default_credit_account_id" ref="ri_venta_de_mercaderia"/>
@@ -46,8 +45,8 @@
             <field name="point_of_sale_id" ref="point_of_sale_1"/>
         </record>
         <record id="refund_sales_journal" model="account.journal">
-            <field name="name">Nota de Crédito Ventas 0001</field>
-            <field name="code">NCV01</field>
+            <field name="name">Reembolso Ventas (0001 - Electronica)</field>
+            <field name="code">RVE01</field>
             <field name="type">sale_refund</field>
             <!-- <field name="sequence_id" ref="sequence_refund_sales_journal"/> -->
             <field name="default_credit_account_id" ref="ri_venta_de_mercaderia"/>

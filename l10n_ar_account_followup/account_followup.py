@@ -156,7 +156,7 @@ class res_partner(osv.osv):
         if partner.unreconciled_aml_ids:
             company_id = context.get('company_id', False)
             if not company_id:
-                company = self.pool.get('res.company').browse(cr, uid, uid, context=context).company_id
+                company = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id
             else:
                 company = self.pool.get('res.company').browse(cr, uid, company_id, context=context)
             current_date = fields.date.context_today(self, cr, uid, context=context)

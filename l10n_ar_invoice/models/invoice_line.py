@@ -90,12 +90,12 @@ class account_invoice_line(models.Model):
         )
     printed_price_unit = fields.Float(
         compute="_get_taxes_and_prices",
-        digits=dp.get_precision('Account'),
+        digits=dp.get_precision('Product Price'),
         string=_('Unit Price')
         )
     printed_price_net = fields.Float(
         compute="_get_taxes_and_prices",
-        digits=dp.get_precision('Account'),
+        digits=dp.get_precision('Product Price'),
         string=_('Net Price'),
         )
     printed_price_subtotal = fields.Float(

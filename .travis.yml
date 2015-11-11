@@ -56,7 +56,7 @@ env:
 # it's not necessary (it is only necessary if modules in your repository can't
 # be installed in the same database. And you get a huge speed penalty in your
 # tests)
-  - TESTS="1.0" ODOO_REPO="odoo/odoo" UNIT_TEST="1"
+  - TESTS="1.0" ODOO_REPO="odoo/odoo" UNIT_TEST="1" INCLUDE="l10n_ar_invoice"
 
 virtualenv:
   system_site_packages: true

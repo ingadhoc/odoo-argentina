@@ -266,8 +266,10 @@ class account_vat_ledger(models.Model):
             if self.type == 'sale':
                 row += [
                     # Campo 11: Percepción a no categorizados
-                    # TODO implementar
-                    self.format_amount(0, invoice=inv),
+                    self.format_amount(
+                        sum(inv.tax_line.filtered(
+                            lambda r: r.tax_code_id.type == 'perception' and r.tax_code_id.tax == 'vat' and r.tax_code_id.application == 'national_taxes').mapped(
+                            'tax_amount')), invoice=inv),
 
                     # Campo 12: Importe de operaciones exentas
                     self.format_amount(inv.vat_exempt_amount, invoice=inv),

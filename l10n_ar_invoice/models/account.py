@@ -334,6 +334,10 @@ class account_journal(models.Model):
             ('document_letter_id', 'in', letters.ids)])
 
         # for purchases we add in_documents and ticket whitout letters
+        # TODO ver que no hace falta agregar los tickets aca porque ahora le
+        # pusimos al tique generico la letra x entonces ya se agrega solo.
+        # o tal vez, en vez de usar letra x, lo deberiamos motrar tambien como
+        # factible por no tener letra y ser tique
         if self.type == 'purchase':
             document_classes += self.env['afip.document_class'].search([
                 ('document_type', 'in', other_purchase_doc_types),

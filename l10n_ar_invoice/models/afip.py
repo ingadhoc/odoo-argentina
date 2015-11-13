@@ -137,9 +137,9 @@ class afip_document_class(models.Model):
         on sales journals if point_of_sale is fiscal_printer\
         * receipt_invoice: mean to be used as invoices but not automatically\
         loaded because it is not usually used\
-        * ticket: automatically loaded for purchase journals but not loaded\
-        on sales journals. Also can be selected on partners, to be available\
-        it must be selected on partner.\
+        * in_document: automatically loaded for purchase journals but not \
+        loaded on sales journals. Also can be selected on partners, to be \
+        available it must be selected on partner.\
         ')
     active = fields.Boolean(
         'Active', default=True)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data noupdate="False">
+    <data noupdate="True">
         <record model='account.fiscal.position' id='fiscal_position_zona_franca'>
             <field name='afip_code'>Z</field>
             <field name='name'>Exportaciones a la zona franca</field>

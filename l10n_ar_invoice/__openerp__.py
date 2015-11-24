@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Argentina - Facturación y documentos AFIP",
-    'version': '8.0.0.7.0',
+    'version': '8.0.0.11.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author':  'ADHOC SA',
@@ -44,19 +44,17 @@ Para actualizar el plan de cuentas de datos demo:
     'external_dependencies': {
     },
     'data': [
-          'security/l10n_ar_invoice_security.xml',
           'data/data_account_type.xml',
           'data/account_financial_report_data.xml',
           'data/responsability.xml',
-          'data/afip.incoterm.csv',
-          'data/afip.document_letter.csv',
+          'data/afip_incoterm.xml',
+          'data/afip_document_letter.xml',
           'data/afip.document_class.csv',
           'data/document_type.xml',
-          'data/partner.xml',
-          'data/country.xml',
           'data/fiscal_position.xml',
-          'data/res.country.csv',
-          'data/product.uom.csv',
+          'data/res_country_cuit.xml',
+          'data/res_country_afip_code.xml',
+          'data/product_uom.xml',
           'data/res_partner.xml',
           'data/res_currency.xml',
           'data/account_payment_term.xml',

@@ -7,6 +7,34 @@ from openerp import fields, api, models, _
 from openerp.exceptions import Warning
 
 
+class account_account(models.Model):
+    _inherit = 'account.account'
+
+    @api.multi
+    def _check_allow_type_change(self, new_type):
+        """Fix of this check that do not check if new and old type are the same
+        """
+        type_changed_accounts = self.search([
+            ('id', 'in', self.ids),
+            ('type', '!=', new_type),
+            ])
+        if type_changed_accounts:
+            return super(
+                account_account,
+                type_changed_accounts)._check_allow_type_change(
+                new_type)
+        return True
+
+    @api.multi
+    def _check_allow_code_change(self):
+        # avoid this check on install mode beacuse of "init" error if module
+        # is already installed with demo data (for eg. in travis)
+        # print 'self.context', self.context
+        if self._context.get('install_mode', False):
+            return True
+        return super(account_account, self)._check_allow_code_change()
+
+
 class account_fiscal_position(models.Model):
     _inherit = 'account.fiscal.position'
 
@@ -306,6 +334,10 @@ class account_journal(models.Model):
             ('document_letter_id', 'in', letters.ids)])
 
         # for purchases we add in_documents and ticket whitout letters
+        # TODO ver que no hace falta agregar los tickets aca porque ahora le
+        # pusimos al tique generico la letra x entonces ya se agrega solo.
+        # o tal vez, en vez de usar letra x, lo deberiamos motrar tambien como
+        # factible por no tener letra y ser tique
         if self.type == 'purchase':
             document_classes += self.env['afip.document_class'].search([
                 ('document_type', 'in', other_purchase_doc_types),

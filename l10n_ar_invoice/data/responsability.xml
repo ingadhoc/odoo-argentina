@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data noupdate="False">
+    <data noupdate="True">
         <record model='afip.responsability' id='res_IVARI'>
             <field name='code'>1</field>
             <field name='name'>IVA Responsable Inscripto</field>

@@ -1,0 +1,3 @@
+aeroo_reports https://github.com/aeroo/aeroo_reports.git
+account-financial-tools https://github.com/OCA/account-financial-tools.git
+odoo-addons https://github.com/ingadhoc/odoo-addons.git

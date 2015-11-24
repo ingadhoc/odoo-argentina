@@ -6,7 +6,6 @@
 from openerp.exceptions import Warning
 from openerp import fields, models, api, _
 from OpenSSL import crypto
-from M2Crypto import BIO, SMIME, EVP
 import base64
 import logging
 _logger = logging.getLogger(__name__)
@@ -137,31 +136,3 @@ class afipws_certificate(models.Model):
         else:
             certificate = None
         return certificate
-
-    @api.model
-    def smime(self, message, pkey, cert):
-        """
-        Sign message in SMIME format.
-        TODO migrate this method to not require M2Crypto
-        TODO ver si directamente usamos pyafipws para esto y para genera
-        certificados
-        """
-        res = False
-        if True:
-            smime = SMIME.SMIME()
-            ks = BIO.MemoryBuffer(pkey.encode('ascii'))
-            cs = BIO.MemoryBuffer(cert.encode('ascii'))
-            bf = BIO.MemoryBuffer(str(message))
-            out = BIO.MemoryBuffer()
-            try:
-                smime.load_key_bio(ks, cs)
-            except EVP.EVPError:
-                raise Warning(_(
-                    'Error in Key and Certificate strings! Please check if private key and certificate are in ASCII PEM format.'))
-            sbf = smime.sign(bf)
-            smime.write(out, sbf)
-            res = out.read()
-        else:
-            raise Warning(_(
-                'This certificate is not ready to sign any message! Please set a certificate to continue. You must send your certification request to a authoritative certificator to get one, or execute a self sign certification'))
-        return res

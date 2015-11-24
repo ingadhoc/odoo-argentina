@@ -15,13 +15,14 @@ class afipws_connection(models.Model):
     _name = "afipws.connection"
     _description = "AFIP WS Connection"
     _rec_name = "afip_ws"
+    _order = "expirationtime desc"
 
     company_id = fields.Many2one(
         'res.company',
         'Company',
         required=True,
         )
-    uniqueid = fields.Integer(
+    uniqueid = fields.Char(
         'Unique ID',
         readonly=True,
         )

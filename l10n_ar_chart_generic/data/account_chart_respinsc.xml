@@ -2619,8 +2619,8 @@
         <record id="ri_tax_iibb_cf_percepcion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Percepción de Ingresos Brutos CABA</field>
-            <field name="description">Perc IIBB CABA</field>
+            <field name="name">Percepción IIBB CABA Sufrida</field>
+            <field name="description">Perc IIBB CABA S</field>
             <field name="sequence">100</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
@@ -2632,9 +2632,7 @@
             <field name="ref_tax_sign" eval="-1"/>
         </record>
 
-        <record id="ri_tax_iibb_cf_retencion" model="account.tax.template">
-            <!-- <field name="company_id" ref="company_ri"/> -->
-            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+<!--         <record id="ri_tax_iibb_cf_retencion" model="account.tax.template">
             <field name="name">Retención IIBB CABA</field>
             <field name="description">Ret IIBB CABA</field>
             <field name="sequence">100</field>
@@ -2646,10 +2644,9 @@
             <field name="account_paid_id" ref="ri_retencion_iibb_cf"/>
             <field name="type_tax_use">purchase</field>
             <field name="ref_tax_sign" eval="-1"/>
-        </record>
+        </record> -->
 
-        <record id="ri_tax_iibb_cf_facturado" model="account.tax.template">
-            <!-- <field name="company_id" ref="company_ri"/> -->
+<!--         <record id="ri_tax_iibb_cf_facturado" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Facturación IIBB CABA</field>
             <field name="description">Fac IIBB CABA</field>
@@ -2662,15 +2659,15 @@
             <field name="account_paid_id" ref="ri_impuestos_iibb_cf"/>
             <field name="type_tax_use">sale</field>
             <field name="ref_tax_sign" eval="-1"/>
-        </record>
+        </record> -->
 
 # Prov. BsAs.
 
         <record id="ri_tax_iibb_ba_percepcion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Percepción IIBB BS AS</field>
-            <field name="description">Perc IIBB BS AS</field>
+            <field name="name">Percepción IIBB BS AS Sufrida</field>
+            <field name="description">Perc IIBB BS AS S</field>
             <field name="sequence">100</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
@@ -2682,8 +2679,7 @@
             <field name="ref_tax_sign" eval="-1"/>
         </record>
 
-        <record id="ri_tax_iibb_ba_retencion" model="account.tax.template">
-            <!-- <field name="company_id" ref="company_ri"/> -->
+<!--         <record id="ri_tax_iibb_ba_retencion" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Retención IIBB BS AS</field>
             <field name="description">Ret IIBB BS AS</field>
@@ -2696,10 +2692,9 @@
             <field name="account_paid_id" ref="ri_retencion_iibb_ba"/>
             <field name="type_tax_use">purchase</field>
             <field name="ref_tax_sign" eval="-1"/>
-        </record>
+        </record> -->
 
-        <record id="ri_tax_iibb_ba_facturado" model="account.tax.template">
-            <!-- <field name="company_id" ref="company_ri"/> -->
+<!--         <record id="ri_tax_iibb_ba_facturado" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Facturación IIBB BS AS</field>
             <field name="description">Fac IIBB BS AS</field>
@@ -2712,15 +2707,15 @@
             <field name="account_paid_id" ref="ri_impuestos_iibb_ba"/>
             <field name="type_tax_use">sale</field>
             <field name="ref_tax_sign" eval="-1"/>
-        </record>
+        </record> -->
 
 # Prov. Córdoba.
 
         <record id="ri_tax_iibb_co_percepcion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Percepción IIBB Cordoba</field>
-            <field name="description">Per IIBB Cordoba</field>
+            <field name="name">Percepción IIBB Cordoba Sufrida</field>
+            <field name="description">Per IIBB Cordoba S</field>
             <field name="sequence">100</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
@@ -2732,8 +2727,7 @@
             <field name="ref_tax_sign" eval="-1"/>
         </record>
 
-        <record id="ri_tax_iibb_co_retencion" model="account.tax.template">
-            <!-- <field name="company_id" ref="company_ri"/> -->
+<!--         <record id="ri_tax_iibb_co_retencion" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Retención IIBB Cordoba</field>
             <field name="description">Ret IIBB Cordoba</field>
@@ -2746,10 +2740,9 @@
             <field name="account_paid_id" ref="ri_retencion_iibb_co"/>
             <field name="type_tax_use">purchase</field>
             <field name="ref_tax_sign" eval="-1"/>
-        </record>
+        </record> -->
 
-        <record id="ri_tax_iibb_co_facturado" model="account.tax.template">
-            <!-- <field name="company_id" ref="company_ri"/> -->
+<!--         <record id="ri_tax_iibb_co_facturado" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Facturación IIBB Cordoba</field>
             <field name="description">Fac IIBB Cordoba</field>
@@ -2762,15 +2755,14 @@
             <field name="account_paid_id" ref="ri_impuestos_iibb_co"/>
             <field name="type_tax_use">sale</field>
             <field name="ref_tax_sign" eval="-1"/>
-        </record>
+        </record> -->
 
 # Prov. Santa Fé
 
         <record id="ri_tax_iibb_sf_percepcion" model="account.tax.template">
-            <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
-            <field name="name">Percepción IIBB Santa Fé</field>
-            <field name="description">Per IIBB Santa Fé</field>
+            <field name="name">Percepción IIBB Santa Fé Sufrida</field>
+            <field name="description">Per IIBB Santa Fé S</field>
             <field name="sequence">100</field>
             <field eval="0.02" name="amount"/>
             <field name="type">percent</field>
@@ -2782,8 +2774,7 @@
             <field name="ref_tax_sign" eval="-1"/>
         </record>
 
-        <record id="ri_tax_iibb_sf_retencion" model="account.tax.template">
-            <!-- <field name="company_id" ref="company_ri"/> -->
+<!--         <record id="ri_tax_iibb_sf_retencion" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Retención IIBB Santa Fé</field>
             <field name="description">Ret. IIBB Santa Fe</field>
@@ -2796,10 +2787,9 @@
             <field name="account_paid_id" ref="ri_retencion_iibb_sf"/>
             <field name="type_tax_use">purchase</field>
             <field name="ref_tax_sign" eval="-1"/>
-        </record>
+        </record> -->
 
-        <record id="ri_tax_iibb_sf_facturado" model="account.tax.template">
-            <!-- <field name="company_id" ref="company_ri"/> -->
+<!--         <record id="ri_tax_iibb_sf_facturado" model="account.tax.template">
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Facturación IIBB Santa Fé</field>
             <field name="description">Fac IIBB Santa Fe</field>
@@ -2812,7 +2802,7 @@
             <field name="account_paid_id" ref="ri_impuestos_iibb_sf"/>
             <field name="type_tax_use">sale</field>
             <field name="ref_tax_sign" eval="-1"/>
-        </record>
+        </record> -->
 
 #
 # Impuestos a las Ganancias

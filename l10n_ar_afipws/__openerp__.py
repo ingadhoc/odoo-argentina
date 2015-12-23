@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Argentina - Base para los Web Services del AFIP',
-    'version': '8.0.1.1.1',
+    'version': '8.0.1.1.2',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author':  'ADHOC SA',
@@ -37,9 +37,9 @@ First it search for a paramter "afip.ws.env.type" if exists and:
 * is production --> production
 * is homologation --> homologation
 Else
-Search for 'server_mode' parameter on conf file. If that parameter is:
-* 'test' or 'develop' -->  homologation
-* other or no parameter -->  production
+Search for 'server_mode' parameter on conf file. If that parameter:
+* has a value then we use "homologation",
+* if no parameter, then "production"
 
 Incluye:
 --------

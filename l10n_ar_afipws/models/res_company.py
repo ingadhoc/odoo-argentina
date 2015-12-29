@@ -51,10 +51,11 @@ class res_company(models.Model):
         elif parameter_env_type == 'homologation':
             environment_type = 'homologation'
         else:
-            if tools.config.get('server_mode') in ('test', 'develop'):
-                environment_type = 'homologation'
-            else:
+            server_mode = tools.config.get('server_mode')
+            if not server_mode:
                 environment_type = 'production'
+            else:
+                environment_type = 'homologation'
         _logger.info(
             'Running arg electronic invoice on %s mode' % environment_type)
         return environment_type

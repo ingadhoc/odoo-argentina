@@ -91,6 +91,11 @@
 					<group>
 						<label for="id" string="Aeroo Reports" />
 						<div name="reports">
+							<div name='module_l10n_ar_aeroo_voucher'>
+								<field name="module_l10n_ar_aeroo_voucher"
+									class="oe_inline" />
+								<label for="module_l10n_ar_aeroo_voucher" />
+							</div>
 							<div name='module_l10n_ar_vat_reports'>
 								<field name="module_l10n_ar_account_vat_ledger" class="oe_inline" />
 								<label for="module_l10n_ar_account_vat_ledger" />
@@ -119,12 +124,7 @@
 								<field name="module_l10n_ar_aeroo_sale"
 									class="oe_inline" />
 								<label for="module_l10n_ar_aeroo_sale" />
-							</div>		
-							<div name='module_l10n_ar_aeroo_receipt'>
-								<field name="module_l10n_ar_aeroo_receipt"
-									class="oe_inline" />
-								<label for="module_l10n_ar_aeroo_receipt" />
-							</div>	
+							</div>
 						</div>
 					</group>
 					<separator string="Sales" />

@@ -58,6 +58,9 @@ class argentinian_base_configuration(models.TransientModel):
         help="""Installs the l10n_ar_invoice_sale module.""")
 
     # Aeroo reports
+    module_l10n_ar_aeroo_voucher = fields.Boolean(
+        'Argentinian Like Voucher Aeroo Report',
+        help="""Installs the module_l10n_ar_aeroo_voucher module.""")
     module_l10n_ar_aeroo_invoice = fields.Boolean(
         'Argentinian Aeroo Like Invoice Report',
         help="""Installs the module_l10n_ar_aeroo_invoice module.""")
@@ -73,8 +76,8 @@ class argentinian_base_configuration(models.TransientModel):
     module_l10n_ar_aeroo_sale = fields.Boolean(
         'Argentinian Aeroo Like Sale Reports',
         help="""Installs the l10n_ar_aeroo_sale module.""")
-    module_l10n_ar_aeroo_receipt = fields.Boolean(
-        'Argentinian Aeroo Like Receipt Report',
-        help="""Installs the l10n_ar_aeroo_receipt module.""")
+    # module_l10n_ar_aeroo_receipt = fields.Boolean(
+    #     'Argentinian Aeroo Like Receipt Report',
+    #     help="""Installs the l10n_ar_aeroo_receipt module.""")
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

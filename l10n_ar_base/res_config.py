@@ -49,6 +49,13 @@ class argentinian_base_configuration(models.TransientModel):
     module_l10n_ar_account_vat_ledger = fields.Boolean(
         'Add Account VAT Ledger models and report.',
         help="""Installs the l10n_ar_account_vat_ledger module. """)
+    module_l10n_ar_account_vat_ledger_city = fields.Boolean(
+        'Add Account VAT Ledger TAX entity information requirements by file.',
+        help="""Installs the l10n_ar_account_vat_ledger_city module. """)
+    module_l10n_ar_chart_generic_withholding = fields.Boolean(
+        'Add generic withholding management.',
+        help="""Installs the l10n_ar_chart_generic_withholding module. """)
+
 
     # 'default_coding_method':fields.selection([('category','Based on the Category'), ('group','Based on Major / Sub Groups')], required=True, default_model='product.product'),
 

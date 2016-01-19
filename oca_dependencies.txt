@@ -1,3 +1,5 @@
 aeroo_reports https://github.com/aeroo/aeroo_reports.git
 account-financial-tools https://github.com/OCA/account-financial-tools.git
-odoo-addons https://github.com/ingadhoc/odoo-addons.git
+adhoc-reporting-engine https://github.com/ingadhoc/reporting-engine.git
+adhoc-account-payment https://github.com/ingadhoc/account-payment.git
+adhoc-account-financial-tools https://github.com/ingadhoc/account-financial-tools.git

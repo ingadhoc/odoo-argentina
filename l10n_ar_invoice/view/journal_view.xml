@@ -23,7 +23,7 @@
                 </form>
                 <field name="type" position="after">
                     <field name="use_documents" attrs="{'invisible': [('type','not in',['purchase','sale','purchase_refund','sale_refund'])]}"/>
-                    <field name="point_of_sale_id" attrs="{'invisible':['|',('use_documents', '=', False), ('type', '!=', 'sale')], 'required':[('use_documents', '=', True),('type', '=', 'sale')]}" domain="[('company_id', '=', company_id)]" context="{'default_company_id': company_id}"/>
+                    <field name="point_of_sale_id" attrs="{'invisible':['|',('use_documents', '=', False), ('type', 'not in', ['sale', 'sale_refund'])], 'required':[('use_documents', '=', True),('type', 'in', ['sale', 'sale_refund'])]}" domain="[('company_id', '=', company_id)]" context="{'default_company_id': company_id}"/>
                 </field>
                 <notebook position="inside">
                     <page string="Documents" attrs="{'invisible': ['|',('use_documents','=',False),('type','not in',['purchase','sale','purchase_refund','sale_refund'])]}">

@@ -32,7 +32,7 @@
         </record>
 
         <record id="sales_journal" model="account.journal">
-            <field name="name">Ventas (0001 - Electronica)</field>
+            <field name="name">Ventas (0001 - Manual)</field>
             <field name="code">VEN01</field>
             <field name="type">sale</field>
             <!-- <field name="sequence_id" ref="sequence_sale_journal"/> -->
@@ -45,7 +45,7 @@
             <field name="point_of_sale_id" ref="point_of_sale_1"/>
         </record>
         <record id="refund_sales_journal" model="account.journal">
-            <field name="name">Reembolso Ventas (0001 - Electronica)</field>
+            <field name="name">Reembolso Ventas (0001 - Manual)</field>
             <field name="code">RVE01</field>
             <field name="type">sale_refund</field>
             <!-- <field name="sequence_id" ref="sequence_refund_sales_journal"/> -->

@@ -52,7 +52,7 @@ class res_company(models.Model):
             environment_type = 'homologation'
         else:
             server_mode = tools.config.get('server_mode')
-            if not server_mode:
+            if not server_mode or server_mode == 'production':
                 environment_type = 'production'
             else:
                 environment_type = 'homologation'

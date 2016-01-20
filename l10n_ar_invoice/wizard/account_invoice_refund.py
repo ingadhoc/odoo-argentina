@@ -35,14 +35,12 @@ class account_invoice_refund(models.TransientModel):
         # self.journal_type = journal_type
 
         point_of_sale = self.invoice_id.journal_id.point_of_sale_id
-        print 'point_of_sale', point_of_sale
         if point_of_sale:
             journal = self.env['account.journal'].search(
                 [('type', '=', journal_type),
                  ('company_id', '=', self.invoice_id.company_id.id),
                  ('point_of_sale_id', '=', point_of_sale.id),
                  ], limit=1)
-            print 'journal', journal
             if not journal and journals:
                 journal = journals[0]
         if journal:
@@ -65,23 +63,30 @@ class account_invoice_refund(models.TransientModel):
         invoice_ids = context.get('active_ids', [])
         if not invoice_ids:
             return res
-        sale_order_ids = self.pool['sale.order'].search(
-            cr, uid, [('invoice_ids', 'in', invoice_ids)])
         invoice_obj = self.pool['account.invoice']
         refund_invoice_ids = invoice_obj.search(cr, uid, domain)
         origin = ', '.join([x.number for x in invoice_obj.browse(
             cr, uid, invoice_ids) if x.number])
+        # add origin date from and date to
+        # get first invoice
+        invoice = invoice_obj.browse(cr, uid, invoice_ids, context=context)[0]
         invoice_obj.write(cr, uid, refund_invoice_ids, {
             'origin': origin,
+            'afip_service_start': invoice.afip_service_start,
+            'afip_service_end': invoice.afip_service_end,
         })
         if not self.browse(cr, uid, ids, context=context)[0].period:
             invoice_obj.write(cr, uid, refund_invoice_ids, {
                 'period_id': invoice_obj.browse(
                     cr, uid, invoice_ids)[0].period_id.id
             })
-        for invoice_id in refund_invoice_ids:
-            self.pool['sale.order'].write(
-                cr, uid, sale_order_ids, {'invoice_ids': [(4, invoice_id)]})
+        if self.pool.get('sale.order'):
+            sale_order_ids = self.pool['sale.order'].search(
+                cr, uid, [('invoice_ids', 'in', invoice_ids)])
+            for invoice_id in refund_invoice_ids:
+                self.pool['sale.order'].write(
+                    cr, uid, sale_order_ids,
+                    {'invoice_ids': [(4, invoice_id)]})
         return res
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

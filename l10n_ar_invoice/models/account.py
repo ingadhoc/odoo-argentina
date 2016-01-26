@@ -175,11 +175,13 @@ class account_move(models.Model):
         'afip.document_class',
         'Document Type',
         copy=False,
+        states={'posted': [('readonly', True)]}
         # readonly=True
         )
     afip_document_number = fields.Char(
         string='Document Number',
         copy=False,
+        states={'posted': [('readonly', True)]}
         )
 
     @api.one

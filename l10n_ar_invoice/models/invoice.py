@@ -140,7 +140,7 @@ class account_invoice(models.Model):
         readonly=True,
         )
     next_invoice_number = fields.Integer(
-        related='journal_document_class_id.sequence_id.number_next_actual',
+        compute='_get_next_invoice_number',
         string='Next Document Number',
         readonly=True
         )
@@ -178,6 +178,21 @@ class account_invoice(models.Model):
     afip_service_end = fields.Date(
         string='Service End Date'
         )
+
+    @api.multi
+    @api.depends(
+        'journal_id.sequence_id.number_next_actual',
+        'journal_document_class_id.sequence_id.number_next_actual',
+        )
+    def _get_next_invoice_number(self):
+        for invoice in self:
+            if invoice.use_documents:
+                document_class = invoice.journal_document_class_id
+                invoice.next_invoice_number = (
+                    document_class.sequence_id.number_next_actual)
+            else:
+                invoice.next_invoice_number = (
+                    invoice.journal_id.sequence_id.number_next_actual)
 
     @api.one
     @api.depends(

@@ -22,7 +22,9 @@ class ir_actions_report(models.Model):
         if model == 'account.invoice':
             account_invoice_state = False
 
-            # We user ignore_state to get the report to split invoice before
+            # TODO we should improove this
+
+            # We use ignore_state to get the report to split invoice before
             # the invoice is validated
             ignore_state = context.get('ignore_state', False)
             if ignore_state:
@@ -31,16 +33,51 @@ class ir_actions_report(models.Model):
                 account_invoice_state = ['proforma']
             elif record.state in ['open', 'paid', 'sale']:
                 account_invoice_state = ['approved_invoice']
-            # Search for especific document type and journal report
-            new_domains.append([('account_invoice_state', 'in', account_invoice_state),
-                            ('account_invoice_journal_ids', '=', record.journal_id.id),
-                            ('afip_document_class_ids', '=', record.afip_document_class_id.id)])
-            # Search for especific document type without journal report
-            new_domains.append([('account_invoice_state', 'in', account_invoice_state),
-                            ('account_invoice_journal_ids', '=', False),
-                            ('afip_document_class_ids', '=', record.afip_document_class_id.id)])
-            # Search for especific document type without journal report and without state
-            new_domains.append([('account_invoice_state', '=', False),
-                            ('account_invoice_journal_ids', '=', False),
-                            ('afip_document_class_ids', '=', record.afip_document_class_id.id)])
+            # Search for especific state and document type and journal
+            new_domains.append([
+                ('account_invoice_state', 'in', account_invoice_state),
+                ('account_invoice_journal_ids', '=', record.journal_id.id),
+                ('afip_document_class_ids', '=',
+                    record.afip_document_class_id.id)])
+
+            # Search for especific state and document type without journal
+            new_domains.append([
+                ('account_invoice_state', 'in', account_invoice_state),
+                ('account_invoice_journal_ids', '=', False),
+                ('afip_document_class_ids', '=',
+                    record.afip_document_class_id.id)])
+
+            # Search for especific state and journal without document type
+            new_domains.append([
+                ('account_invoice_state', 'in', account_invoice_state),
+                ('account_invoice_journal_ids', '=', record.journal_id.id),
+                ('afip_document_class_ids', '=', False)])
+
+            # Search for especific document type and journal without state
+            new_domains.append([
+                ('account_invoice_state', 'in', False),
+                ('account_invoice_journal_ids', '=', record.journal_id.id),
+                ('afip_document_class_ids', '=',
+                    record.afip_document_class_id.id)])
+
+            # Search for especific document type without state and journal
+            new_domains.append([
+                ('account_invoice_state', 'in', False),
+                ('account_invoice_journal_ids', '=', False),
+                ('afip_document_class_ids', '=',
+                    record.afip_document_class_id.id)])
+
+            # Search for especific journal without state and document type
+            new_domains.append([
+                ('account_invoice_state', 'in', False),
+                ('account_invoice_journal_ids', '=', record.journal_id.id),
+                ('afip_document_class_ids', '=', False)])
+
+            # Search for especific document type without journal and
+            # without state
+            new_domains.append([
+                ('account_invoice_state', '=', False),
+                ('account_invoice_journal_ids', '=', False),
+                ('afip_document_class_ids', '=',
+                    record.afip_document_class_id.id)])
         return new_domains + domains

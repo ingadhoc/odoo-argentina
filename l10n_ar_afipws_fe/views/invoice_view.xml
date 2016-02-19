@@ -25,7 +25,7 @@
                     <page string="Electronic Invoice" name="electronic_invoice">
                         <group>
                             <field name='afip_batch_number' invisible="1"/>
-                            <field name='validation_type' invisible="0"/>
+                            <field name='validation_type' invisible="1"/>
                             <field name='afip_cae'/>
                             <field name='afip_cae_due'/>
                             <field name='afip_result'/>

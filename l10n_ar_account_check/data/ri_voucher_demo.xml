@@ -165,7 +165,7 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">payment</field>
             <!-- we add amount for compatibility with voucher constraint module -->
-            <field name="amount" eval="15.0"/>
+            <!-- <field name="amount" eval="15.0"/> -->
             <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
             <field name="advance_amount" eval="15.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>

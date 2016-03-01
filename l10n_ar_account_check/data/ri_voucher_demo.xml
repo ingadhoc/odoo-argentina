@@ -11,7 +11,7 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">receipt</field>
             <!-- we add amount for compatibility with voucher constraint module -->
-            <field name="amount" eval="295.0"/>
+            <!-- <field name="amount" eval="295.0"/> -->
             <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
             <field name="advance_amount" eval="295.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
@@ -84,7 +84,7 @@
             <field name="period_id" ref="l10n_ar_invoice.period_ri_5"/>
             <field name="type">receipt</field>
             <!-- we add amount for compatibility with voucher constraint module -->
-            <field name="amount" eval="100.0"/>
+            <!-- <field name="amount" eval="100.0"/> -->
             <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
             <field name="advance_amount" eval="100.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
@@ -120,7 +120,7 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">payment</field>
             <!-- we add amount for compatibility with voucher constraint module -->
-            <field name="amount" eval="150.0"/>
+            <!-- <field name="amount" eval="150.0"/> -->
             <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
             <field name="advance_amount" eval="150.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_cheques_diferidos"/>
@@ -165,7 +165,7 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">payment</field>
             <!-- we add amount for compatibility with voucher constraint module -->
-            <field name="amount" eval="15.0"/>
+            <!-- <field name="amount" eval="15.0"/> -->
             <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
             <field name="advance_amount" eval="15.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
@@ -192,7 +192,7 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">payment</field>
             <!-- we add amount for compatibility with voucher constraint module -->
-            <field name="amount" eval="50.0"/>
+            <!-- <field name="amount" eval="50.0"/> -->
             <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
             <field name="advance_amount" eval="50.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
@@ -213,7 +213,7 @@
             <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
             <field name="type">payment</field>
             <!-- we add amount for compatibility with voucher constraint module -->
-            <field name="amount" eval="30.0"/>
+            <!-- <field name="amount" eval="30.0"/> -->
             <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
             <field name="advance_amount" eval="30.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>

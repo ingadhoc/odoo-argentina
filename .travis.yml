@@ -21,7 +21,6 @@ addons:
       - python-simplejson
       - python-serial
       - python-yaml
-      - libcups2-dev # for aeroo
       # FE
       - python-dev
       - swig
@@ -64,10 +63,7 @@ virtualenv:
   system_site_packages: true
 
 install:
-  # aeroo reports
-  - pip install git+https://github.com/aeroo/aeroolib.git@master pycups==1.9.68
-
-  # repository requirements
+  # repository requirements, we install them here because pyafipws must be installed in a second step
   - pip install -r requirements.txt
   - pip install -r requirements2.txt
 

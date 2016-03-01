@@ -1,4 +1,4 @@
-aeroo_reports https://github.com/aeroo/aeroo_reports.git
+adhoc-aeroo_reports https://github.com/ingadhoc/aeroo_reports.git
 account-financial-tools https://github.com/OCA/account-financial-tools.git
 adhoc-reporting-engine https://github.com/ingadhoc/reporting-engine.git
 adhoc-account-payment https://github.com/ingadhoc/account-payment.git

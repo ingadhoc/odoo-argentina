@@ -12,6 +12,7 @@
             <field name="type">receipt</field>
             <!-- we add amount for compatibility with voucher constraint module -->
             <!-- <field name="amount" eval="295.0"/> -->
+            <!-- <field name="net_amount" eval="295.0"/> -->
             <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
             <field name="advance_amount" eval="295.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_valores"/>
@@ -122,7 +123,7 @@
             <!-- we add amount for compatibility with voucher constraint module -->
             <!-- <field name="amount" eval="150.0"/> -->
             <!-- for compatibility with double validation we add this advance amount. TODO pay some invoice lines already created -->
-            <field name="advance_amount" eval="150.0"/>
+            <field name="advance_amount" eval="450.0"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_cheques_diferidos"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
             <field name="partner_id" ref="base.res_partner_6"/>

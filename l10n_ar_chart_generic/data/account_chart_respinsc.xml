@@ -4458,8 +4458,9 @@
 #
 # Impuestos a las Ganancias
 # TODO. 
+	<!-- AGREGADOS -->
 
-        	<record id="ri_tax_iibb_md_percepcion" model="account.tax.template">
+        <record id="ri_tax_iibb_md_percepcion" model="account.tax.template">
             <!-- <field name="company_id" ref="company_ri"/> -->
             <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
             <field name="name">Percepción IIBB MENDOZA Sufrida</field>
@@ -4817,7 +4818,7 @@
             <field name="ref_tax_sign" eval="-1"/>
         </record>
 
-
+	<!-- FIN AGREGADOS -->
 
 
     </data>

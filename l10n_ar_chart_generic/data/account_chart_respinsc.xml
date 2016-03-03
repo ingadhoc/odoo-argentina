@@ -4459,5 +4459,366 @@
 # Impuestos a las Ganancias
 # TODO. 
 
+        	<record id="ri_tax_iibb_md_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB MENDOZA Sufrida</field>
+            <field name="description">Perc IIBB MENDOZA S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_md_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_md_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_md"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_md"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_tu_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB TUCUMÁN Sufrida</field>
+            <field name="description">Perc IIBB TUCUMÁN S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_tu_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_tu_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_tu"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_tu"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_en_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB ENTRE RÍOS Sufrida</field>
+            <field name="description">Perc IIBB ENTRE RÍOS S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_en_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_en_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_en"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_en"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_sa_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB SALTA Sufrida</field>
+            <field name="description">Perc IIBB SALTA S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_sa_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_sa_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_sa"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_sa"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_mi_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB MISIONES Sufrida</field>
+            <field name="description">Perc IIBB MISIONES S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_mi_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_mi_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_mi"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_mi"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_ch_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB CHACO Sufrida</field>
+            <field name="description">Perc IIBB CHACO S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_ch_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_ch_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_ch"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_ch"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_ct_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB CORRIENTES Sufrida</field>
+            <field name="description">Perc IIBB CORRIENTES S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_ct_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_ct_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_ct"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_ct"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_sg_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB SANTIAGO DEL ESTERO Sufrida</field>
+            <field name="description">Perc IIBB SANTIAGO DEL ESTERO S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_sg_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_sg_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_sg"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_sg"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_ju_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB JUJUY Sufrida</field>
+            <field name="description">Perc IIBB JUJUY S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_ju_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_ju_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_ju"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_ju"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_sj_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB SAN JUAN Sufrida</field>
+            <field name="description">Perc IIBB SAN JUAN S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_sj_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_sj_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_sj"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_sj"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_rn_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB RÍO NEGRO Sufrida</field>
+            <field name="description">Perc IIBB RÍO NEGRO S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_rn_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_rn_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_rn"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_rn"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_fo_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB FORMOSA Sufrida</field>
+            <field name="description">Perc IIBB FORMOSA S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_fo_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_fo_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_fo"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_fo"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_nq_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB NEUQUÉN Sufrida</field>
+            <field name="description">Perc IIBB NEUQUÉN S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_nq_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_nq_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_nq"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_nq"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_ct_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB CHUBUT Sufrida</field>
+            <field name="description">Perc IIBB CHUBUT S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_ct_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_ct_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_ct"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_ct"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_sl_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB SAN LUIS Sufrida</field>
+            <field name="description">Perc IIBB SAN LUIS S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_sl_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_sl_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_sl"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_sl"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_ca_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB CATAMARCA Sufrida</field>
+            <field name="description">Perc IIBB CATAMARCA S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_ca_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_ca_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_ca"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_ca"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_lr_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB LA RIOJA Sufrida</field>
+            <field name="description">Perc IIBB LA RIOJA S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_lr_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_lr_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_lr"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_lr"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_lp_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB LA PAMPA Sufrida</field>
+            <field name="description">Perc IIBB LA PAMPA S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_lp_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_lp_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_lp"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_lp"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_sc_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB SANTA CRUZ Sufrida</field>
+            <field name="description">Perc IIBB SANTA CRUZ S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_sc_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_sc_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_sc"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_sc"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+	<record id="ri_tax_iibb_tf_percepcion" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_ri"/> -->
+            <field name="chart_template_id" ref="ri_l10nAR_chart_template"/>
+            <field name="name">Percepción IIBB TIERRA DEL FUEGO Sufrida</field>
+            <field name="description">Perc IIBB TIERRA DEL FUEGO S</field>
+            <field name="sequence">100</field>
+            <field eval="0.02" name="amount"/>
+            <field name="type">percent</field>
+            <field name="tax_code_id" ref="ri_tax_code_iibb_tf_percepcion"/>
+            <field name="ref_tax_code_id" ref="ri_tax_code_iibb_tf_percepcion"/>
+            <field name="account_collected_id" ref="ri_percepcion_iibb_tf"/>
+            <field name="account_paid_id" ref="ri_percepcion_iibb_tf"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+
+
+
     </data>
 </openerp>

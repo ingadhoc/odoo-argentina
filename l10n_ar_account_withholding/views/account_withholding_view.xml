@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data> 
+
+        <record id="account_voucher_withholding_filter_view" model="ir.ui.view">
+            <field name="name">account.voucher.withholding.filter</field>
+            <field name="model">account.voucher.withholding</field>
+            <field name="arch" type="xml"> 
+                <search string="Withholding Vouchers">
+                    <field name="internal_number"/>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="type"/>
+                    <field name="tax_withholding_id"/>
+                    <field name="partner_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Type" context="{'group_by':'type'}"/>
+                        <filter string="Withholding Tax" context="{'group_by':'tax_withholding_id'}"/>           
+                    </group>
+                </search>
+            </field>
+        </record>   
+        <record id="account_voucher_withholding_tree_view" model="ir.ui.view">
+            <field name="name">account.voucher.withholding.tree</field>
+            <field name="model">account.voucher.withholding</field>
+            <field name="arch" type="xml"> 
+                <tree string="Withholding Vouchers">
+                    <field name="internal_number"/>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="type"/>
+                    <field name="tax_withholding_id"/>
+                    <field name="partner_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="amount" sum="Total"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>   
+
+        <record id="account_voucher_withholding_form_view" model="ir.ui.view">
+            <field name="name">account.voucher.withholding.form</field>
+            <field name="model">account.voucher.withholding</field>
+            <field name="arch" type="xml"> 
+                <form string="Withholding Vouchers">
+                    <field name="state" invisible="1"/>
+                    <header>
+                    </header>
+                    <sheet string="Withholding Vouchers">
+                        <field name="type" invisible="1"/>
+                        <group>  
+                            <group>
+                                <field name="name"/>
+                                <field name="tax_withholding_id" domain="[('type_tax_use','in',(type, 'all'))]"/>
+                                <field name="amount"/>
+                                <field name="move_line_id"/>
+                                <field name="partner_id"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                                <field name="internal_number"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <field name="comment" placeholder="Comment..."/>
+                    </sheet>
+                </form>
+            </field>
+        </record>   
+
+        <record model="ir.actions.act_window" id="action_account_voucher_withholding">
+            <field name="name">Withholding Vouchers</field>
+            <field name="res_model">account.voucher.withholding</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="action_account_voucher_withholding" id="menu_account_voucher_withholding" parent="account.menu_finance_bank_and_cash" sequence="11"/>
+
+    </data>
+</openerp>

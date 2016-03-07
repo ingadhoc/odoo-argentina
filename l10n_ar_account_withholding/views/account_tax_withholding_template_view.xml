@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data> 
+
+        <record id="account_tax_withholding_template_filter_view" model="ir.ui.view">
+            <field name="name">account.tax.withholding.template.filter</field>
+            <field name="model">account.tax.withholding.template</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="account_tax_withholding_filter_view"/>
+            <field name="arch" type="xml"> 
+                <field name="name" position="before">
+                    <field name="chart_template_id"/>
+                </field>
+            </field>
+        </record>   
+
+        <record id="account_tax_withholding_template_tree_view" model="ir.ui.view">
+            <field name="name">account.tax.withholding.template.tree</field>
+            <field name="model">account.tax.withholding.template</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="account_tax_withholding_tree_view"/>
+            <field name="arch" type="xml"> 
+                <field name="name" position="before">
+                    <field name="chart_template_id"/>
+                </field>
+            </field>
+        </record>   
+
+        <record id="account_tax_withholding_template_form_view" model="ir.ui.view">
+            <field name="name">account.tax.withholding.template.form</field>
+            <field name="model">account.tax.withholding.template</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="account_tax_withholding_form_view"/>
+            <field name="arch" type="xml"> 
+                <field name="description" position="before">
+                    <field name="chart_template_id"/>
+                </field>
+            </field>
+        </record>   
+
+        <record model="ir.actions.act_window" id="action_account_tax_withholding_template">
+            <field name="name">Withholding Taxes Template</field>
+            <field name="res_model">account.tax.withholding.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="action_account_tax_withholding_template" id="menu_account_tax_withholding_template" parent="account.account_template_taxes" sequence="13"/>
+
+    </data>
+</openerp>

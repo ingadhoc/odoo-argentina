@@ -6,6 +6,7 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import except_orm, Warning
 import openerp.addons.decimal_precision as dp
+from dateutil.relativedelta import relativedelta
 import re
 import logging
 _logger = logging.getLogger(__name__)
@@ -20,95 +21,95 @@ class account_invoice(models.Model):
         digits=(16, 4),
         # TODO make it editable, we hace to change move create method
         readonly=True,
-        )
+    )
     invoice_number = fields.Integer(
         compute='_get_invoice_number',
         string=_("Invoice Number"),
-        )
+    )
     point_of_sale = fields.Integer(
         compute='_get_invoice_number',
         string=_("Point Of Sale"),
-        )
+    )
     printed_amount_tax = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
         string=_('Tax')
-        )
+    )
     printed_amount_untaxed = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
         string=_('Subtotal')
-        )
+    )
     # no gravado en iva
     vat_untaxed = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
         string=_('VAT Untaxed')
-        )
+    )
     # exento en iva
     vat_exempt_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
         string=_('VAT Exempt Amount')
-        )
+    )
     # von iva
     vat_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
         string=_('VAT Amount')
-        )
+    )
     # von iva
     vat_base_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
         string=_('VAT Base Amount')
-        )
+    )
     other_taxes_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
         string=_('Other Taxes Amount')
-        )
+    )
     printed_tax_ids = fields.One2many(
         compute="_get_taxes_and_prices",
         comodel_name='account.invoice.tax',
         string=_('Tax')
-        )
+    )
     vat_tax_ids = fields.One2many(
         compute="_get_taxes_and_prices",
         comodel_name='account.invoice.tax',
         string=_('VAT Taxes')
-        )
+    )
     not_vat_tax_ids = fields.One2many(
         compute="_get_taxes_and_prices",
         comodel_name='account.invoice.tax',
         string=_('Not VAT Taxes')
-        )
+    )
     vat_discriminated = fields.Boolean(
         _('Discriminate VAT?'),
         compute="get_vat_discriminated",
         help=_("Discriminate VAT on Invoices?"),
-        )
+    )
     available_journal_document_class_ids = fields.Many2many(
         'account.journal.afip_document_class',
         compute='_get_available_journal_document_class',
         string=_('Available Journal Document Classes'),
-        )
+    )
     supplier_invoice_number = fields.Char(
         copy=False,
-        )
+    )
     journal_document_class_id = fields.Many2one(
         'account.journal.afip_document_class',
         'Document Type',
         readonly=True,
         ondelete='restrict',
         states={'draft': [('readonly', False)]}
-        )
+    )
     afip_incoterm_id = fields.Many2one(
         'afip.incoterm',
         'Incoterm',
         readonly=True,
         states={'draft': [('readonly', False)]}
-        )
+    )
     afip_document_class_id = fields.Many2one(
         'afip.document_class',
         related='journal_document_class_id.afip_document_class_id',
@@ -116,48 +117,48 @@ class account_invoice(models.Model):
         copy=False,
         readonly=True,
         store=True,
-        )
+    )
     afip_document_number = fields.Char(
         string='Document Number',
         copy=False,
         readonly=True,
-        )
+    )
     responsability_id = fields.Many2one(
         'afip.responsability',
         string='Responsability',
         readonly=True,
         copy=False,
-        )
+    )
     formated_vat = fields.Char(
         string='Responsability',
         related='commercial_partner_id.formated_vat',
-        )
+    )
     document_number = fields.Char(
         compute='_get_document_number',
         # string=_('Document Number'),
         # waiting for a PR 9081 to fix computed fields translations
         string='Número de documento',
         readonly=True,
-        )
+    )
     next_invoice_number = fields.Integer(
         compute='_get_next_invoice_number',
         string='Next Document Number',
         readonly=True
-        )
+    )
     use_documents = fields.Boolean(
         related='journal_id.use_documents',
         string='Use Documents?',
         readonly=True
-        )
+    )
     use_argentinian_localization = fields.Boolean(
         related='company_id.use_argentinian_localization',
         string='Use Argentinian Localization?',
         readonly=True,
-        )
+    )
     point_of_sale_type = fields.Selection(
         related='journal_id.point_of_sale_id.type',
         readonly=True,
-        )
+    )
     # estos campos los agregamos en este modulo pero en realidad los usa FE
     # pero entendemos que podrian ser necesarios para otros tipos, por ahora
     # solo lo vamos a hacer requerido si el punto de venta es del tipo
@@ -171,19 +172,19 @@ class account_invoice(models.Model):
                    ('4', '4-Otros (exportación)'),
                    ],
         string="AFIP concept",
-        )
+    )
     afip_service_start = fields.Date(
         string='Service Start Date'
-        )
+    )
     afip_service_end = fields.Date(
         string='Service End Date'
-        )
+    )
 
     @api.multi
     @api.depends(
         'journal_id.sequence_id.number_next_actual',
         'journal_document_class_id.sequence_id.number_next_actual',
-        )
+    )
     def _get_next_invoice_number(self):
         for invoice in self:
             if invoice.use_documents:
@@ -244,10 +245,10 @@ class account_invoice(models.Model):
             (self.tax_line - vat_taxes).mapped('amount'))
 
         vat_exempt_amount = sum(vat_taxes.filtered(
-                lambda r: r.tax_code_id.afip_code == 2).mapped('base'))
+            lambda r: r.tax_code_id.afip_code == 2).mapped('base'))
 
         vat_untaxed = sum(vat_taxes.filtered(
-                lambda r: r.tax_code_id.afip_code == 1).mapped('base'))
+            lambda r: r.tax_code_id.afip_code == 1).mapped('base'))
 
         if self.vat_discriminated:
             printed_amount_untaxed = self.amount_untaxed
@@ -299,7 +300,7 @@ class account_invoice(models.Model):
     @api.depends(
         'journal_document_class_id',
         'company_id',
-        )
+    )
     def get_vat_discriminated(self):
         vat_discriminated = False
         if self.afip_document_class_id.document_letter_id.vat_discriminated or self.company_id.invoice_vat_discrimination_default == 'discriminate_default':
@@ -314,7 +315,8 @@ class account_invoice(models.Model):
         de vat ledger citi
         """
         # TODO mejorar estp y almacenar punto de venta y numero de factura por separado
-        # de hecho con esto hacer mas facil la carga de los comprobantes de compra
+        # de hecho con esto hacer mas facil la carga de los comprobantes de
+        # compra
         str_number = self.afip_document_number or self.number or False
         if str_number and self.state not in ['draft', 'proforma', 'proforma2', 'cancel']:
             if self.afip_document_class_id.afip_code in [33, 99, 331, 332]:
@@ -361,7 +363,8 @@ class account_invoice(models.Model):
             operation_type = self.get_operation_type(invoice_type)
 
             if self.use_documents:
-                # corremos con sudo porque da errores con usuario portal en algunos casos
+                # corremos con sudo porque da errores con usuario portal en
+                # algunos casos
                 letter_ids = self.sudo().get_valid_document_letters(
                     self.partner_id.id, operation_type, self.company_id.id)
 
@@ -369,7 +372,7 @@ class account_invoice(models.Model):
                     ('journal_id', '=', self.journal_id.id),
                     ('afip_document_class_id.document_letter_id',
                         'in', letter_ids),
-                    ]
+                ]
 
                 # If document_type in context we try to serch specific document
                 document_type = self._context.get('document_type', False)
@@ -399,7 +402,7 @@ class account_invoice(models.Model):
                 ('journal_id', '=', self.journal_id.id),
                 ('afip_document_class_id',
                     'in', other_afip_document_classes.ids),
-                ]
+            ]
             other_document_classes = self.env[
                 'account.journal.afip_document_class'].search(domain)
 
@@ -414,7 +417,7 @@ class account_invoice(models.Model):
     @api.constrains(
         'journal_id', 'partner_id',
         'journal_document_class_id',
-        )
+    )
     def _get_document_class(self):
         """ Como los campos responsability y journal document class no los
         queremos hacer funcion porque no queremos que sus valores cambien nunca
@@ -422,7 +425,8 @@ class account_invoice(models.Model):
         interfaz, hacemos este hack de constraint para computarlos si no estan
         computados"""
         if not self.journal_document_class_id and self.available_journal_document_class_ids:
-            self.journal_document_class_id = self.available_journal_document_class_ids[0]
+            self.journal_document_class_id = self.available_journal_document_class_ids[
+                0]
 
     @api.one
     @api.depends('afip_document_number', 'number')
@@ -486,7 +490,7 @@ class account_invoice(models.Model):
         without_tax_code = self.env['account.invoice.tax'].search([
             ('invoice_id', 'in', argentinian_invoices.ids),
             ('tax_code_id', '=', False),
-            ])
+        ])
         if without_tax_code:
             raise Warning(_(
                 "You are using argentinian localization and there are some "
@@ -544,7 +548,7 @@ class account_invoice(models.Model):
         for invoice in invoices_with_vat:
             # we check vat base amount is equal to amount untaxed
             # usamos una precision de 0.1 porque en algunos casos no pudimos
-            # arreglar pbñe,as de redondedo 
+            # arreglar pbñe,as de redondedo
             if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
                 raise Warning(_(
                     "Invoice ID: %i\n"
@@ -571,9 +575,9 @@ class account_invoice(models.Model):
             special_vat_taxes = invoice.tax_line.filtered(
                 lambda r: r.tax_code_id.afip_code in [1, 2, 3])
             if (
-                        special_vat_taxes
-                        and invoice.fiscal_position.afip_code
-                        not in afip_exempt_codes):
+                    special_vat_taxes
+                    and invoice.fiscal_position.afip_code
+                    not in afip_exempt_codes):
                 raise Warning(_(
                     "If there you have choose a tax with 0, exempt or untaxed,"
                     " you must choose a fiscal position with afip code in %s. "
@@ -590,7 +594,7 @@ class account_invoice(models.Model):
         self.check_argentinian_invoice_taxes()
         for inv in self:
             inv.currency_rate = inv.currency_id.compute(
-                    1., inv.company_id.currency_id)
+                1., inv.company_id.currency_id)
         return super(account_invoice, self).action_move_create()
 
     @api.multi
@@ -615,13 +619,14 @@ class account_invoice(models.Model):
             inv_vals = {
                 'responsability_id': self.partner_id.commercial_partner_id.responsability_id.id,
                 # 'currency_rate': obj_inv.company_id.currency_id.compute(
-                    # 1., obj_inv.currency_id)
-                }
+                # 1., obj_inv.currency_id)
+            }
             if obj_inv.journal_document_class_id:
                 if not obj_inv.afip_document_number:
                     if invtype in ('out_invoice', 'out_refund'):
                         if not obj_inv.journal_document_class_id.sequence_id:
-                            raise Warning(_('Error!. Please define sequence on the journal related documents to this invoice.'))
+                            raise Warning(
+                                _('Error!. Please define sequence on the journal related documents to this invoice.'))
                         afip_document_number = obj_sequence.next_by_id(
                             obj_inv.journal_document_class_id.sequence_id.id)
                     elif invtype in ('in_invoice', 'in_refund'):
@@ -635,7 +640,7 @@ class account_invoice(models.Model):
                 obj_inv.move_id.write({
                     'document_class_id': document_class_id,
                     'afip_document_number': afip_document_number,
-                    })
+                })
             obj_inv.write(inv_vals)
         res = super(account_invoice, self).action_number()
         return res
@@ -721,3 +726,13 @@ class account_invoice(models.Model):
             'target': 'new',
             'context': ctx,
         }
+
+    @api.constrains('date_invoice')
+    def set_date_afip(self):
+        if self.date_invoice:
+            date_invoice = fields.Datetime.from_string(self.date_invoice)
+            if not self.afip_service_start:
+                self.afip_service_start = date_invoice + relativedelta(day=1)
+            if not self.afip_service_end:
+                self.afip_service_end = date_invoice + \
+                    relativedelta(day=1, days=-1, months=+1)

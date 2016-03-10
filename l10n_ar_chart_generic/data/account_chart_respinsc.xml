@@ -454,6 +454,593 @@
             <!-- <field name="company_id" ref="company_ri"/> -->
         </record>
 
+
+        <!-- AGREGADOS -->
+
+
+<record model="account.account.template" id="ri_creditos_iibb_md">
+    <field name="type">view</field>
+    <field name="code">1.1.04.7.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. MENDOZA</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_md">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.7.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Mendoza</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_md"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_md">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.7.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Mendoza</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_md"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_tu">
+    <field name="type">view</field>
+    <field name="code">1.1.04.8.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. TUCUMÁN</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_tu">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.8.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Tucumán</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_tu"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_tu">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.8.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Tucumán</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_tu"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_en">
+    <field name="type">view</field>
+    <field name="code">1.1.04.9.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. ENTRE RÍOS</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_en">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.9.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Entre Ríos</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_en"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_en">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.9.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Entre Ríos</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_en"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_sa">
+    <field name="type">view</field>
+    <field name="code">1.1.04.10.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. SALTA</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_sa">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.10.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Salta</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_sa"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_sa">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.10.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Salta</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_sa"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_mi">
+    <field name="type">view</field>
+    <field name="code">1.1.04.11.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. MISIONES</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_mi">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.11.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Misiones</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_mi"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_mi">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.11.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Misiones</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_mi"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_ch">
+    <field name="type">view</field>
+    <field name="code">1.1.04.12.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. CHACO</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_ch">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.12.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Chaco</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_ch"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_ch">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.12.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Chaco</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_ch"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_co">
+    <field name="type">view</field>
+    <field name="code">1.1.04.13.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. CORRIENTES</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_co">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.13.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Corrientes</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_co"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_co">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.13.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Corrientes</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_co"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_sg">
+    <field name="type">view</field>
+    <field name="code">1.1.04.14.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. SANTIAGO DEL ESTERO</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_sg">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.14.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Santiago del Estero</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_sg"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_sg">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.14.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Santiago del Estero</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_sg"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_ju">
+    <field name="type">view</field>
+    <field name="code">1.1.04.15.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. JUJUY</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_ju">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.15.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Jujuy</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_ju"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_ju">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.15.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Jujuy</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_ju"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_sj">
+    <field name="type">view</field>
+    <field name="code">1.1.04.16.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. SAN JUAN</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_sj">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.16.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. San Juan</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_sj"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_sj">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.16.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. San Juan</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_sj"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_rn">
+    <field name="type">view</field>
+    <field name="code">1.1.04.17.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. RÍO NEGRO</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_rn">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.17.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Río Negro</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_rn"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_rn">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.17.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Río Negro</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_rn"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_fo">
+    <field name="type">view</field>
+    <field name="code">1.1.04.18.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. FORMOSA</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_fo">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.18.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Formosa</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_fo"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_fo">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.18.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Formosa</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_fo"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_nq">
+    <field name="type">view</field>
+    <field name="code">1.1.04.19.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. NEUQUÉN</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_nq">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.19.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Neuquén</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_nq"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_nq">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.19.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Neuquén</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_nq"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_ct">
+    <field name="type">view</field>
+    <field name="code">1.1.04.20.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. CHUBUT</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_ct">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.20.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Chubut</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_ct"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_ct">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.20.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Chubut</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_ct"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_sl">
+    <field name="type">view</field>
+    <field name="code">1.1.04.21.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. SAN LUIS</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_sl">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.21.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. San Luis</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_sl"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_sl">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.21.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. San Luis</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_sl"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_ca">
+    <field name="type">view</field>
+    <field name="code">1.1.04.22.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. CATAMARCA</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_ca">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.22.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Catamarca</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_ca"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_ca">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.22.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Catamarca</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_ca"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_lr">
+    <field name="type">view</field>
+    <field name="code">1.1.04.23.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. LA RIOJA</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_lr">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.23.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. La Rioja</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_lr"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_lr">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.23.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. La Rioja</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_lr"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_lp">
+    <field name="type">view</field>
+    <field name="code">1.1.04.24.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. LA PAMPA</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_lp">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.24.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. La Pampa</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_lp"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_lp">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.24.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. La Pampa</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_lp"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_sc">
+    <field name="type">view</field>
+    <field name="code">1.1.04.25.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. SANTA CRUZ</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_sc">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.25.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Santa Cruz</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_sc"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_sc">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.25.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Santa Cruz</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_sc"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+<record model="account.account.template" id="ri_creditos_iibb_tf">
+    <field name="type">view</field>
+    <field name="code">1.1.04.26.000</field>
+    <field name="user_type" ref="account.data_account_type_view"/>
+    <field name="name">INGRESOS BRUTOS PROV. TIERRA DEL FUEGO</field>
+    <field name="parent_id" ref="ri_creditos_impuestos"/>
+    <!-- <field name="company_id" ref="company_ri"/> -->
+</record>
+
+	<record model="account.account.template" id="ri_percepcion_iibb_tf">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.26.010</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Percepciones ingresos brutos p. Tierra del Fuego</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_tf"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+	<record model="account.account.template" id="ri_retencion_iibb_tf">
+	    <field name="type">other</field>
+	    <field name="code">1.1.04.26.020</field>
+	    <field name="user_type" ref="account.data_account_type_receivable"/>
+	    <field name="name">Retención ingresos brutos p. Tierra del Fuego</field>
+	    <field name="parent_id" ref="ri_creditos_iibb_tf"/>
+	    <field name="reconcile" eval="False"/>
+	    <!-- <field name="company_id" ref="company_ri"/> -->
+	</record>
+
+
+        <!-- FIN AGREGADOS -->
+
         <record model="account.account.template" id="ri_bienes_de_cambio">
             <field name="type">view</field>
             <field name="code">1.1.05.00.000</field>
@@ -497,7 +1084,7 @@
             <field name="name">BIENES DE USO</field>
             <field name="parent_id" ref="ri_bienes_de_uso"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>        
+        </record>
 
         <record model="account.account.template" id="ri_maq_y_equipos">
             <field name="type">other</field>
@@ -605,8 +1192,8 @@
             <field name="name">Gastos de construccion</field>
             <field name="parent_id" ref="ri_intangibles"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
-        </record> 
-        
+        </record>
+
         <record model="account.account.template" id="ri_pasivo">
             <field name="type">view</field>
             <field name="code">2.0.00.00.000</field>
@@ -677,7 +1264,7 @@
             <field name="name">Comisiones a pagar</field>
             <field name="parent_id" ref="ri_deudas_sociales"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>        
+        </record>
 
         <record model="account.account.template" id="ri_beneficios_al_personal">
             <field name="type">other</field>
@@ -786,6 +1373,20 @@
             <!-- <field name="company_id" ref="company_ri"/> -->
         </record>
 
+
+        <!-- AGREGADO -->
+
+        <record model="account.account.template" id="ri_suss_a_pagar">
+            <field name="type">payable</field>
+            <field name="code">2.1.02.00.090</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+            <field name="name">SUSS a pagar</field>
+            <field name="parent_id" ref="ri_deudas_fiscales"/>
+            <field name="reconcile" eval="True"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+        <!-- FIN AGREGADO -->
+
         <record model="account.account.template" id="ri_ret_per_aplicada">
             <field name="type">view</field>
             <field name="code">2.1.02.01.000</field>
@@ -880,7 +1481,7 @@
             <field name="name">Acreedores varios</field>
             <field name="parent_id" ref="ri_comunes"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>        
+        </record>
 
         <record model="account.account.template" id="ri_documentadas">
             <field name="type">view</field>
@@ -1123,7 +1724,7 @@
             <field name="name">GANANCIAS RESERVADAS</field>
             <field name="parent_id" ref="ri_patrimonio_neto"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>   
+        </record>
 
         <record model="account.account.template" id="ri_reserva_legal">
             <field name="type">other</field>
@@ -1132,7 +1733,7 @@
             <field name="name">Reserva legal</field>
             <field name="parent_id" ref="ri_ganancias_reservadas"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>             
+        </record>
 
         <record model="account.account.template" id="ri_reserva_estatuitaria">
             <field name="type">other</field>
@@ -1141,7 +1742,7 @@
             <field name="name">Reserva estatuitaria</field>
             <field name="parent_id" ref="ri_ganancias_reservadas"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>             
+        </record>
 
         <record model="account.account.template" id="ri_futuras_inversiones">
             <field name="type">other</field>
@@ -1150,7 +1751,7 @@
             <field name="name">Reserva futuras inversiones</field>
             <field name="parent_id" ref="ri_ganancias_reservadas"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>             
+        </record>
 
         <record model="account.account.template" id="ri_resultados">
             <field name="type">view</field>
@@ -1159,7 +1760,7 @@
             <field name="name">RESULTADOS</field>
             <field name="parent_id" ref="ri_patrimonio_neto"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>   
+        </record>
 
         <record model="account.account.template" id="ri_resultado_del_ejercicio">
             <field name="type">other</field>
@@ -1411,7 +2012,7 @@
             <field name="name">Servicios de luz, agua, etc. produccion</field>
             <field name="parent_id" ref="ri_gastos_de_produccion"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>        
+        </record>
 
         <record model="account.account.template" id="ri_gastos_comerciales">
             <field name="type">view</field>
@@ -1501,7 +2102,7 @@
             <field name="name">Servicios de luz, agua, etc. comerciales</field>
             <field name="parent_id" ref="ri_gastos_comerciales"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>        
+        </record>
 
         <record model="account.account.template" id="ri_gastos_de_administracion">
             <field name="type">view</field>
@@ -1546,7 +2147,7 @@
             <field name="name">Gastos varios administracion</field>
             <field name="parent_id" ref="ri_gastos_de_administracion"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
-        </record>        
+        </record>
 
         <record model="account.account.template" id="ri_alquileres_administrativas">
             <field name="type">other</field>
@@ -1580,7 +2181,7 @@
             <field name="code">5.1.03.00.080</field>
             <field name="user_type" ref="account.data_account_type_expense"/>
             <field name="name">Artículos librería administracion</field>
-            <field name="parent_id" ref="ri_gastos_de_administracion"/>            
+            <field name="parent_id" ref="ri_gastos_de_administracion"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
         </record>
 
@@ -1673,6 +2274,191 @@
             <field name="parent_id" ref="ri_gastos_fiscales"/>
             <!-- <field name="company_id" ref="company_ri"/> -->
         </record>
+
+
+        <!-- AGREGADOS -->
+
+        <record model="account.account.template" id="ri_impuestos_iibb_md">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.080</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Mendoza</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_tu">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.090</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Tucumán</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_en">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.100</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Entre Ríos</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_sa">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.110</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Salta</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_mi">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.120</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Misiones</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_ch">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.130</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Chaco</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_ct">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.140</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Corrientes</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_st">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.150</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Santiago del Estero</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_ju">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.160</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Jujuy</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_sj">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.170</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. San Juan</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_rn">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.180</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Río Negro</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_fm">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.190</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Formosa</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_nq">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.200</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Neuquén</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_ct">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.210</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Chubut</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_sl">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.220</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. San Luis</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_ca">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.230</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Catamarca</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_lr">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.240</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. La Rioja</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_lp">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.250</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. La Pampa</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_st">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.260</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Santa Cruz</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <record model="account.account.template" id="ri_impuestos_iibb_tf">
+            <field name="type">other</field>
+            <field name="code">5.1.04.00.270</field>
+            <field name="user_type" ref="account.data_account_type_expense"/>
+            <field name="name">Impuestos ingresos brutos Prov. Tierra del Fuego</field>
+            <field name="parent_id" ref="ri_gastos_fiscales"/>
+            <!-- <field name="company_id" ref="company_ri"/> -->
+        </record>
+
+        <!-- FIN AGREGADOS -->
 
         <record model="account.account.template" id="ri_otros_gastos">
             <field name="type">view</field>
@@ -2340,6 +3126,871 @@
                             <field name="application">provincial_taxes</field>
                             <!-- <field name="company_id" ref="company_ri"/> -->
                         </record>
+
+    <!-- AGREGADOS -->
+
+        <record model="account.tax.code.template" id="ri_tax_code_iibb_md">
+                    <field name="code">2.5.00.000</field>
+                    <field name="name">IIBB Prov. Mendoza</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_md_percepcion">
+                            <field name="code">2.5.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Mendoza</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_md"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_md_retencion">
+                            <field name="code">2.5.00.020</field>
+                            <field name="name">Retención IIBB Prov. Mendoza</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_md"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_md_facturado">
+                            <field name="code">2.5.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Mendoza</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_md"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_tu">
+                    <field name="code">2.6.00.000</field>
+                    <field name="name">IIBB Prov. Tucumán</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_tu_percepcion">
+                            <field name="code">2.6.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Tucumán</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_tu"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_tu_retencion">
+                            <field name="code">2.6.00.020</field>
+                            <field name="name">Retención IIBB Prov. Tucumán</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_tu"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_tu_facturado">
+                            <field name="code">2.6.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Tucumán</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_tu"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_en">
+                    <field name="code">2.7.00.000</field>
+                    <field name="name">IIBB Prov. Entre Ríos</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_en_percepcion">
+                            <field name="code">2.7.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Entre Ríos</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_en"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_en_retencion">
+                            <field name="code">2.7.00.020</field>
+                            <field name="name">Retención IIBB Prov. Entre Ríos</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_en"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_en_facturado">
+                            <field name="code">2.7.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Entre Ríos</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_en"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_sa">
+                    <field name="code">2.8.00.000</field>
+                    <field name="name">IIBB Prov. Salta</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sa_percepcion">
+                            <field name="code">2.8.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Salta</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sa"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sa_retencion">
+                            <field name="code">2.8.00.020</field>
+                            <field name="name">Retención IIBB Prov. Salta</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sa"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sa_facturado">
+                            <field name="code">2.8.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Salta</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sa"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_mi">
+                    <field name="code">2.9.00.000</field>
+                    <field name="name">IIBB Prov. Misiones</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_mi_percepcion">
+                            <field name="code">2.9.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Misiones</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_mi"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_mi_retencion">
+                            <field name="code">2.9.00.020</field>
+                            <field name="name">Retención IIBB Prov. Misiones</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_mi"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_mi_facturado">
+                            <field name="code">2.9.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Misiones</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_mi"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_ch">
+                    <field name="code">2.10.00.000</field>
+                    <field name="name">IIBB Prov. Chaco</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ch_percepcion">
+                            <field name="code">2.10.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Chaco</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ch"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ch_retencion">
+                            <field name="code">2.10.00.020</field>
+                            <field name="name">Retención IIBB Prov. Chaco</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ch"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ch_facturado">
+                            <field name="code">2.10.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Chaco</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ch"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_ct">
+                    <field name="code">2.11.00.000</field>
+                    <field name="name">IIBB Prov. Corrientes</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ct_percepcion">
+                            <field name="code">2.11.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Corrientes</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ct"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ct_retencion">
+                            <field name="code">2.11.00.020</field>
+                            <field name="name">Retención IIBB Prov. Corrientes</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ct"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ct_facturado">
+                            <field name="code">2.11.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Corrientes</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ct"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_sg">
+                    <field name="code">2.12.00.000</field>
+                    <field name="name">IIBB Prov. Santiago del Estero</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sg_percepcion">
+                            <field name="code">2.12.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Santiago del Estero</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sg"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sg_retencion">
+                            <field name="code">2.12.00.020</field>
+                            <field name="name">Retención IIBB Prov. Santiago del Estero</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sg"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sg_facturado">
+                            <field name="code">2.12.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Santiago del Estero</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sg"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_ju">
+                    <field name="code">2.13.00.000</field>
+                    <field name="name">IIBB Prov. Jujuy</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ju_percepcion">
+                            <field name="code">2.13.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Jujuy</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ju"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ju_retencion">
+                            <field name="code">2.13.00.020</field>
+                            <field name="name">Retención IIBB Prov. Jujuy</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ju"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ju_facturado">
+                            <field name="code">2.13.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Jujuy</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ju"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_sj">
+                    <field name="code">2.14.00.000</field>
+                    <field name="name">IIBB Prov. San Juan</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sj_percepcion">
+                            <field name="code">2.14.00.010</field>
+                            <field name="name">Percepción IIBB Prov. San Juan</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sj"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sj_retencion">
+                            <field name="code">2.14.00.020</field>
+                            <field name="name">Retención IIBB Prov. San Juan</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sj"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sj_facturado">
+                            <field name="code">2.14.00.030</field>
+                            <field name="name">Facturado IIBB Prov. San Juan</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sj"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_rn">
+                    <field name="code">2.15.00.000</field>
+                    <field name="name">IIBB Prov. Río Negro</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_rn_percepcion">
+                            <field name="code">2.15.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Río Negro</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_rn"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_rn_retencion">
+                            <field name="code">2.15.00.020</field>
+                            <field name="name">Retención IIBB Prov. Río Negro</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_rn"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_rn_facturado">
+                            <field name="code">2.15.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Río Negro</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_rn"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_fo">
+                    <field name="code">2.16.00.000</field>
+                    <field name="name">IIBB Prov. Formosa</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_fo_percepcion">
+                            <field name="code">2.16.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Formosa</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_fo"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_fo_retencion">
+                            <field name="code">2.16.00.020</field>
+                            <field name="name">Retención IIBB Prov. Formosa</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_fo"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_fo_facturado">
+                            <field name="code">2.16.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Formosa</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_fo"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_nq">
+                    <field name="code">2.17.00.000</field>
+                    <field name="name">IIBB Prov. Neuquén</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_nq_percepcion">
+                            <field name="code">2.17.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Neuquén</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_nq"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_nq_retencion">
+                            <field name="code">2.17.00.020</field>
+                            <field name="name">Retención IIBB Prov. Neuquén</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_nq"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_nq_facturado">
+                            <field name="code">2.17.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Neuquén</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_nq"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_ct">
+                    <field name="code">2.18.00.000</field>
+                    <field name="name">IIBB Prov. Chubut</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ct_percepcion">
+                            <field name="code">2.18.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Chubut</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ct"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ct_retencion">
+                            <field name="code">2.18.00.020</field>
+                            <field name="name">Retención IIBB Prov. Chubut</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ct"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ct_facturado">
+                            <field name="code">2.18.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Chubut</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ct"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_sl">
+                    <field name="code">2.19.00.000</field>
+                    <field name="name">IIBB Prov. San Luis</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sl_percepcion">
+                            <field name="code">2.19.00.010</field>
+                            <field name="name">Percepción IIBB Prov. San Luis</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sl"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sl_retencion">
+                            <field name="code">2.19.00.020</field>
+                            <field name="name">Retención IIBB Prov. San Luis</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sl"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sl_facturado">
+                            <field name="code">2.19.00.030</field>
+                            <field name="name">Facturado IIBB Prov. San Luis</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sl"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_ca">
+                    <field name="code">2.20.00.000</field>
+                    <field name="name">IIBB Prov. Catamarca</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ca_percepcion">
+                            <field name="code">2.20.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Catamarca</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ca"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ca_retencion">
+                            <field name="code">2.20.00.020</field>
+                            <field name="name">Retención IIBB Prov. Catamarca</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ca"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_ca_facturado">
+                            <field name="code">2.20.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Catamarca</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_ca"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_lr">
+                    <field name="code">2.21.00.000</field>
+                    <field name="name">IIBB Prov. La Rioja</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_lr_percepcion">
+                            <field name="code">2.21.00.010</field>
+                            <field name="name">Percepción IIBB Prov. La Rioja</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_lr"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_lr_retencion">
+                            <field name="code">2.21.00.020</field>
+                            <field name="name">Retención IIBB Prov. La Rioja</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_lr"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_lr_facturado">
+                            <field name="code">2.21.00.030</field>
+                            <field name="name">Facturado IIBB Prov. La Rioja</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_lr"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_lp">
+                    <field name="code">2.22.00.000</field>
+                    <field name="name">IIBB Prov. La Pampa</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_lp_percepcion">
+                            <field name="code">2.22.00.010</field>
+                            <field name="name">Percepción IIBB Prov. La Pampa</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_lp"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_lp_retencion">
+                            <field name="code">2.22.00.020</field>
+                            <field name="name">Retención IIBB Prov. La Pampa</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_lp"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_lp_facturado">
+                            <field name="code">2.22.00.030</field>
+                            <field name="name">Facturado IIBB Prov. La Pampa</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_lp"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_sc">
+                    <field name="code">2.23.00.000</field>
+                    <field name="name">IIBB Prov. Santa Cruz</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sc_percepcion">
+                            <field name="code">2.23.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Santa Cruz</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sc"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sc_retencion">
+                            <field name="code">2.23.00.020</field>
+                            <field name="name">Retención IIBB Prov. Santa Cruz</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sc"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_sc_facturado">
+                            <field name="code">2.23.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Santa Cruz</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_sc"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+
+
+		<record model="account.tax.code.template" id="ri_tax_code_iibb_tf">
+                    <field name="code">2.24.00.000</field>
+                    <field name="name">IIBB Prov. Tierra del Fuego</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="ri_tax_code_impuestos_provinciales"/>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_tf_percepcion">
+                            <field name="code">2.24.00.010</field>
+                            <field name="name">Percepción IIBB Prov. Tierra del Fuego</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_tf"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">perception</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_tf_retencion">
+                            <field name="code">2.24.00.020</field>
+                            <field name="name">Retención IIBB Prov. Tierra del Fuego</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_tf"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">withholding</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="ri_tax_code_iibb_tf_facturado">
+                            <field name="code">2.24.00.030</field>
+                            <field name="name">Facturado IIBB Prov. Tierra del Fuego</field>
+                            <field name="sign">0.02</field>
+                            <field name="parent_id" ref="ri_tax_code_iibb_tf"/>
+                            <field name="tax">gross_income</field>
+                            <field name="type">tax</field>
+                            <field name="application">provincial_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+<!-- FIN AGREGADOS -->
+
+
+
 
 #
 # Chart Template

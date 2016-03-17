@@ -79,8 +79,8 @@
                     <field name="responsability_id" states="open,paid"/>
                 </xpath>
 
-                <div groups="base.group_multi_currency" position="after">
-                    <field name="currency_rate"/>
+                <div groups="base.group_multi_currency" position="inside">
+                    <field name="currency_rate" class="oe_inline"/>
                 </div>
 
                 <field name="fiscal_position" position="after">
@@ -156,6 +156,10 @@
                 </field>
                 <field name="number" position="after">
                     <field name="document_number" class="oe_inline"/>
+                </field>
+
+                <field name="check_total" position="before">
+                    <field name="currency_rate" groups="base.group_multi_currency" />
                 </field>
 
                 <!-- Esto es por un mini bug de odoo ya que no se deberia poder cabmiar de diario y que se mantenga secuencia o numeraion de otro diario, hay que exigir borrar los numeros  -->

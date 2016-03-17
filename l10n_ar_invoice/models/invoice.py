@@ -17,10 +17,14 @@ class account_invoice(models.Model):
 
     currency_rate = fields.Float(
         string='Currency Rate',
-        copy=False,
-        digits=(16, 4),
-        # TODO make it editable, we hace to change move create method
-        readonly=True,
+        compute='_get_currency_rate',
+        help='Currency Rate for this currency on invoice date or today '
+        '(if not date)',
+        # digits=(16, 4),
+        # TODO hacer editable en draft con funcion inverse que cree cotizacion
+        # set='_get_currency_rate',
+        # readonly=True,
+        # states={'draft': [('readonly', False)]}
     )
     invoice_number = fields.Integer(
         compute='_get_invoice_number',
@@ -179,6 +183,13 @@ class account_invoice(models.Model):
     afip_service_end = fields.Date(
         string='Service End Date'
     )
+
+    @api.one
+    @api.depends('currency_id')
+    def _get_currency_rate(self):
+        currency = self.currency_id.with_context(
+            date=self.date_invoice or fields.Date.context_today(self))
+        self.currency_rate = currency.compute(1.0, self.company_id.currency_id)
 
     @api.multi
     @api.depends(
@@ -592,9 +603,6 @@ class account_invoice(models.Model):
         """
         self.check_use_documents()
         self.check_argentinian_invoice_taxes()
-        for inv in self:
-            inv.currency_rate = inv.currency_id.compute(
-                1., inv.company_id.currency_id)
         return super(account_invoice, self).action_move_create()
 
     @api.multi
@@ -618,8 +626,6 @@ class account_invoice(models.Model):
             # cancelling for modification)
             inv_vals = {
                 'responsability_id': self.partner_id.commercial_partner_id.responsability_id.id,
-                # 'currency_rate': obj_inv.company_id.currency_id.compute(
-                # 1., obj_inv.currency_id)
             }
             if obj_inv.journal_document_class_id:
                 if not obj_inv.afip_document_number:

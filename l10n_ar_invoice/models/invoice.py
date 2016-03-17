@@ -733,6 +733,7 @@ class account_invoice(models.Model):
             'context': ctx,
         }
 
+    @api.one
     @api.constrains('date_invoice')
     def set_date_afip(self):
         if self.date_invoice:

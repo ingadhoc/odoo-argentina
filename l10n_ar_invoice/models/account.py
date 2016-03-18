@@ -184,6 +184,20 @@ class account_move(models.Model):
         states={'posted': [('readonly', True)]}
         )
 
+    @api.multi
+    def name_get(self):
+        """
+        Use document_number instead of name
+        """
+        res = []
+        for move in self:
+            if move.state == 'draft':
+                name = '*' + str(move.id)
+            else:
+                name = move.document_number
+            res.append((move.id, name))
+        return res
+
     @api.one
     @api.depends(
         'afip_document_number',

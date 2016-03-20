@@ -81,14 +81,16 @@ class account_vat_ledger(models.Model):
     def format_amount(self, amount, padding=15, decimals=2, invoice=False):
         # get amounts on correct sign despite conifiguration on taxes and tax
         # codes
-        if invoice:
-            amount = abs(amount)
-            if invoice.type in ['in_refund', 'out_refund']:
-                amount = -1.0 * amount
-        if amount < 0:
-            template = "-{:0>%dd}" % (padding-1)
-        else:
-            template = "{:0>%dd}" % (padding)
+        # TODO remove this and perhups invoice argument (we always send invoice)
+        # for invoice refund we dont change sign (we do this before)
+        # if invoice:
+        #     amount = abs(amount)
+        #     if invoice.type in ['in_refund', 'out_refund']:
+        #         amount = -1.0 * amount
+        # if amount < 0:
+        #     template = "-{:0>%dd}" % (padding-1)
+        # else:
+        template = "{:0>%dd}" % (padding)
         return template.format(
             int(round(abs(amount) * 10**decimals, decimals)))
 

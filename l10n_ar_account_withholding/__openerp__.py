@@ -24,20 +24,19 @@
     'license': 'AGPL-3',
     'category': 'Accounting & Finance',
     'data': [
-        # 'views/account_tax_withholding_view.xml',
-        # 'views/account_tax_withholding_template_view.xml',
-        # 'views/account_withholding_view.xml',
+        'views/account_tax_withholding_view.xml',
         'views/account_voucher_view.xml',
-        # 'data/data.xml',
         # 'security/security.xml',
         # 'security/ir.model.access.csv'
         'views/res_company_view.xml',
+        'views/res_partner_view.xml',
     ],
     'demo': [
         'demo/ir_parameter.xml',
+        'demo/demo.xml',
     ],
     'depends': [
-        'account_voucher_withholding',
+        'account_voucher_withholding_automatic',
         'l10n_ar_invoice',
     ],
     'external_dependencies': {

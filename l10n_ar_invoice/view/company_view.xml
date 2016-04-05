@@ -11,7 +11,11 @@
                 </field>
                 <field name="vat" position="after">
                     <field name="responsability_id" widget="selection" attrs="{'required': [('use_argentinian_localization', '=', True)]}"/>
-                    <field name="iibb"/>
+                    <label for="gross_income_number" string="Gross Income"/>
+                    <div>
+                        <field name="gross_income_type" placeholder="Type..." class="oe_inline"/>
+                        <field name="gross_income_number" placeholder="Number..." class="oe_inline" attrs="{'invisible': [('gross_income_type', '=', False)], 'required': [('gross_income_type', '!=', False)]}"/>
+                    </div>
                     <field name="start_date" attrs="{'required': [('use_argentinian_localization', '=', True)]}"/>
                 </field>
                  <group name="account_grp">

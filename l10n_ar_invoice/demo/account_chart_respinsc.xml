@@ -779,7 +779,7 @@
                 <field name="type">other</field>
                 <field name="code">2.1.02.01.010</field>
                 <field name="user_type" ref="account.data_account_type_payable"/>
-                <field name="name">Retención ganancias aplicada </field>
+                <field name="name">Retención ganancias aplicada</field>
                 <field name="parent_id" ref="ri_ret_per_aplicada"/>
                 <field name="reconcile" eval="False"/>
                 <field name="company_id" ref="company_ri"/>
@@ -789,7 +789,7 @@
                 <field name="type">other</field>
                 <field name="code">2.1.02.01.020</field>
                 <field name="user_type" ref="account.data_account_type_payable"/>
-                <field name="name">Percepción ganancias aplicada </field>
+                <field name="name">Percepción ganancias aplicada</field>
                 <field name="parent_id" ref="ri_ret_per_aplicada"/>
                 <field name="reconcile" eval="False"/>
                 <field name="company_id" ref="company_ri"/>

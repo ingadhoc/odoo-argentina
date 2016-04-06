@@ -26,7 +26,7 @@
     'data': [
         'views/account_tax_withholding_view.xml',
         'views/account_voucher_view.xml',
-        'security/ir.model.access.csv'
+        'security/ir.model.access.csv',
         'views/res_company_view.xml',
         'views/afip_tabla_ganancias_escala_view.xml',
         'views/afip_tabla_ganancias_alicuotasymontos_view.xml',

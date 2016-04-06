@@ -25,7 +25,7 @@
     'category': 'Accounting & Finance',
     'data': [
         'wizard/res_partner_update_from_padron_wizard_view.xml',
-        'security/ir.model.access.csv'
+        'security/ir.model.access.csv',
         'views/res_partner_view.xml',
         'views/afip_activity_view.xml',
         'views/afip_tax_view.xml',

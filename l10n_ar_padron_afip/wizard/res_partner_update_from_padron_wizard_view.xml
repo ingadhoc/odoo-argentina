@@ -16,13 +16,14 @@
         <menuitem id='menu_base_partner_update_from_padron'
             action='action_base_partner_update_from_padron'
             groups='base.group_system'
-            parent='base.menu_base_partner'/>
+            parent='base.menu_config_address_book'/>
 
         <record model='ir.ui.view' id='view_base_partner_update_from_padron_form'>
             <field name='name'>res.partner.update.from.padron.wizard.form</field>
             <field name='model'>res.partner.update.from.padron.wizard</field>
             <field name='arch' type='xml'>
                 <form string='Update From Padron AFIP'>
+                    <field name="state" invisible="1" />
                     <header>
                         <button name='update_selection' string='Update Selection'
                             class='oe_highlight'
@@ -41,11 +42,6 @@
                             type='object' class='oe_highlight'
                             confirm="Are you sure to execute the automatic update of your partners ?"
                             attrs="{'invisible': [('state', '!=', 'option')]}" />
-                        <button name='update_all_process_cb'
-                            string='Update Automatically all process'
-                            type='object'
-                            confirm="Are you sure to execute the list of automatic updates of your partners ?"
-                            attrs="{'invisible': [('state', '!=', 'option')]}" />
                         <span class="or_cancel" attrs="{'invisible': [('state', '=', 'finished')]} ">or
                             <button string="Cancel" class="oe_link oe_inline" special="cancel"/>
                         </span>
@@ -56,50 +52,24 @@
                     <sheet>
                         <group attrs="{'invisible': [('state', '!=', 'finished')]}" col="1">
                             <h2>There are no more partners to update for this request...</h2>
-                            <button name="%(action_base_partner_update_from_padron)d" string="Update the other partners" class="oe_highlight"
-                            type="action"/>
+                            <!-- <button name="%(action_base_partner_update_from_padron)d" string="Update the other partners" class="oe_highlight"
+                            type="action"/> -->
                         </group>
-<!--                         <p class="oe_grey" attrs="{'invisible': [('state', '!=', ('option'))]}">
-                            Select the list of fields used to search for
-                            duplicated records. If you select several fields,
-                            Odoo will propose you to update only those having
-                            all these fields in common. (not one of the fields).
-                        </p> -->
-                        <group attrs="{'invisible': ['|', ('state', 'not in', ('selection', 'finished')), ('number_group', '=', 0)]}">
-                            <field name="state" invisible="1" />
-                            <!-- <field name="number_group"/> -->
+                        <p class="oe_grey" attrs="{'invisible': [('state', '!=', ('option'))]}">
+                            Only Partners with cuit are going to be updated.<br/>
+                            Select the list of fields you want to update.
+                        </p>
+                        <group attrs="{'invisible': [('state', 'not in', ('option',))]}">
+                            <field name="field_to_update_ids" widget="many2many_tags" options="{'no_create': True}" />
+                            <field name="update_constancia"/>
                         </group>
-                        <!-- <group string="Search duplicates based on duplicated data in"
-                            attrs="{'invisible': [('state', 'not in', ('option',))]}">
-                            <field name='group_by_email' />
-                        </group> -->
-<!--                         <group string="Exclude partners having"
-                            attrs="{'invisible': [('state', 'not in', ('option',))]}">
-                            <field name='exclude_contact' />
-                            <field name='exclude_journal_item' />
-                        </group> -->
-                        <separator string="Options" attrs="{'invisible': [('state', 'not in', ('option',))]}"/>
-                        <group attrs="{'invisible': [('state', 'not in', ('option','finished'))]}">
-                            <field name='maximum_group' attrs="{'readonly': [('state', 'in', ('finished'))]}"/>
-                        </group>
-                        <separator string="update the following partners"
-                            attrs="{'invisible': [('state', 'in', ('option', 'finished'))]}"/>
                         <group attrs="{'invisible': [('state', 'in', ('option', 'finished'))]}" col="1">
-                            <p class="oe_grey">
-                                The selected partners will be updated together. All
-                                documents linking to one of these partners will be
-                                redirected to the aggregated contact. You can remove
-                                partners from this list to avoid merging them.
-                            </p>
-                            <field name="dst_partner_id" domain="[('id', 'in', partner_ids and partner_ids[0] and partner_ids[0][2] or False)]" attrs="{'required': [('state', '=', 'selection')]}"/>
-                            <field name="partner_ids" nolabel="1">
-                                <tree string="Partners">
-                                    <field name="id" />
-                                    <field name="display_name" />
-                                    <field name="email" />
-                                    <field name="is_company" />
-                                    <field name="vat" />
-                                    <field name="country_id" />
+                            <field name="partner_id" attrs="{'required': [('state', '=', 'selection')]}"/>
+                            <field name="field_ids" nolabel="1">
+                                <tree create="false">
+                                    <field name="field"/>
+                                    <field name="old_value"/>
+                                    <field name="new_value"/>
                                 </tree>
                             </field>
                         </group>
@@ -108,8 +78,8 @@
             </field>
         </record>
         
-        <act_window id="action_partner_update" res_model="base.partner.merge.automatic.wizard" src_model="res.partner"
-            target="new" multi="True" key2="client_action_multi" view_mode="form" name="Automatic Merge"/>
+        <act_window id="action_partner_update" res_model="res.partner.update.from.padron.wizard" src_model="res.partner"
+            target="new" multi="True" key2="client_action_multi" view_mode="form" name="Automatic Update from Padron"/>
 
     </data>
 

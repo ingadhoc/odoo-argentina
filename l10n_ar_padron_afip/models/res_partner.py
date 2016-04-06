@@ -101,32 +101,42 @@ class ResPartner(models.Model):
         )
 
     @api.multi
-    def update_data_from_padron_afip(self):
-        for partner in self:
-            document_number = partner.document_number
-            if not document_number or partner.document_type_id.afip_code != 80:
-                raise Warning(_(
-                    'No CUIT for partner %s') % (self.name))
-            vals = self.get_data_from_padron_afip(document_number)
-            constancia = vals.pop('constancia')
-            partner.write(vals)
-            attachments = [
-                ('Constancia %s %s.pdf' % (
-                    self.name,
-                    fields.Date.context_today(self)),
-                    constancia)]
-
-            # posteamos mensaje
-            self.message_post(
-                subject="Actualizacion de datos desde Padron AFIP",
-                body="Datos utilizados:<br/>%s" % vals,
-                attachments=attachments)
+    def update_constancia_from_padron_afip(self):
+        self.ensure_one()
+        cuit = self.document_number
+        if not cuit or self.document_type_id.afip_code != 80:
+            raise Warning(_(
+                'No CUIT for partner %s') % (self.name))
+        # descarga de constancia
+        basedir = os.path.join(os.getcwd(), 'cache')
+        tmpfilename = os.path.join(basedir, "constancia.pdf")
+        padron = PadronAFIP()
+        padron.Consultar(cuit)
+        padron.DescargarConstancia(cuit, tmpfilename)
+        f = file(tmpfilename, 'r')
+        constancia = base64.b64decode(base64.encodestring(f.read()))
+        f.close()
+        attachments = [
+            ('Constancia %s %s.pdf' % (
+                self.name,
+                fields.Date.context_today(self)),
+                constancia)]
+        self.message_post(
+            subject="Constancia de inscripción actualizada",
+            # subject="Actualizacion de datos desde Padron AFIP",
+            # body="Datos utilizados:<br/>%s" % vals,
+            attachments=attachments)
 
     @api.multi
-    def get_data_from_padron_afip(self, cuit):
+    def get_data_from_padron_afip(self):
+
         # TODO agregar funcionalidad de descargar constancia, ver readme del
         # modulo
         self.ensure_one()
+        cuit = self.document_number
+        if not cuit or self.document_type_id.afip_code != 80:
+            raise Warning(_(
+                'No CUIT for partner %s') % (self.name))
         padron = PadronAFIP()
         padron.Consultar(cuit)
 
@@ -134,6 +144,9 @@ class ResPartner(models.Model):
         imp_iva = padron.imp_iva
         if imp_iva == 'S':
             imp_iva = 'AC'
+        elif imp_iva == 'N':
+            # por ej. monotributista devuelve N
+            imp_iva = 'NI'
 
         vals = {
             'name': padron.denominacion,
@@ -144,18 +157,16 @@ class ResPartner(models.Model):
             'street': padron.direccion,
             'city': padron.localidad,
             'zip': padron.cod_postal,
-            'actividades_padron': [
-                (6, False, self.actividades_padron.search(
-                    [('code', 'in', padron.actividades)]).ids)],
-            'impuestos_padron': [
-                (6, False, self.impuestos_padron.search(
-                    [('code', 'in', padron.impuestos)]).ids)],
+            'actividades_padron': self.actividades_padron.search(
+                    [('code', 'in', padron.actividades)]).ids,
+            'impuestos_padron': self.impuestos_padron.search(
+                    [('code', 'in', padron.impuestos)]).ids,
             'imp_iva_padron': imp_iva,
             # TODAVIA no esta funcionando
             # 'imp_ganancias_padron': padron.imp_ganancias,
             'monotributo_padron': padron.monotributo,
             'actividad_monotributo_padron': padron.actividad_monotributo,
-            'empleador_padron': padron.empleador,
+            'empleador_padron': padron.empleador == 'S' and True,
             'integrante_soc_padron': padron.integrante_soc,
             'last_update_padron': fields.Date.today(),
             }
@@ -166,13 +177,4 @@ class ResPartner(models.Model):
                 ('country_id.code', '=', 'AR')], limit=1)
             if state:
                 vals['state_id'] = state.id
-
-        # descarga de constancia
-        basedir = os.path.join(os.getcwd(), 'cache')
-        tmpfilename = os.path.join(basedir, "constancia.pdf")
-        padron.DescargarConstancia(cuit, tmpfilename)
-        f = file(tmpfilename, 'r')
-        vals['constancia'] = base64.b64decode(base64.encodestring(f.read()))
-        f.close()
-
         return vals

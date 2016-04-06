@@ -3,15 +3,6 @@ from openerp import models, fields, api
 import datetime
 
 
-# class AccountTaxWithholdingProfitTable(models.Model):
-    # profits_table = fields.One2many(
-        # )
-    # amount_from
-    # amount_to
-    # withholding_amount
-    # plus_percentage
-    # sobre excedente (calculado)?
-
 class AccountTaxWithholding(models.Model):
     _inherit = "account.tax.withholding"
 
@@ -20,7 +11,10 @@ class AccountTaxWithholding(models.Model):
     #     'Cód. Régimen'
     #     )
     type = fields.Selection(
-        selection_add=([('arba_ws', 'WS Arba')])
+        selection_add=([
+            ('arba_ws', 'WS Arba'),
+            ('tabla_ganancias', 'Tabla Ganancias'),
+            ])
         )
 
     @api.multi
@@ -43,6 +37,8 @@ class AccountTaxWithholding(models.Model):
             vals['amount'] = amount
             vals['suggested_withholding_amount'] = amount
             vals['comment'] = arba_data
+        elif self.type == 'tabla_ganancias':
+            raise Warning('Not implemented yet')
         return vals
 
 

@@ -2,7 +2,7 @@
 from openerp import models, fields, api, _
 import openerp.tools as tools
 from pyafipws.iibb import IIBB
-from pyafipws.padron import PadronAFIP
+# from pyafipws.padron import PadronAFIP
 from openerp.exceptions import Warning
 import logging
 from dateutil.relativedelta import relativedelta

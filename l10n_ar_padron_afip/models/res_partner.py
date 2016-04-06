@@ -8,38 +8,6 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class AccountActivity(models.Model):
-    _name = "afip.activity"
-
-    code = fields.Char(
-        'Code',
-        required=True
-        )
-    name = fields.Char(
-        'Name',
-        required=True
-        )
-    active = fields.Boolean(
-        default=True,
-        )
-
-
-class AccountTax(models.Model):
-    _name = "afip.tax"
-
-    code = fields.Char(
-        'Code',
-        required=True
-        )
-    name = fields.Char(
-        'Name',
-        required=True
-        )
-    active = fields.Boolean(
-        default=True,
-        )
-
-
 class ResPartner(models.Model):
     _inherit = "res.partner"
 

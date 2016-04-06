@@ -14,6 +14,10 @@ class argentinian_base_configuration(models.TransientModel):
         self.refresh_from_padron("impuestos")
 
     @api.multi
+    def refresh_concepts_from_padron(self):
+        self.refresh_from_padron("conceptos")
+
+    @api.multi
     def refresh_activities_from_padron(self):
         self.refresh_from_padron("actividades")
 
@@ -28,6 +32,8 @@ class argentinian_base_configuration(models.TransientModel):
             model = 'afip.tax'
         elif resource_type == 'actividades':
             model = 'afip.activity'
+        elif resource_type == 'conceptos':
+            model = 'afip.concept'
         else:
             raise Warning(_('Resource Type %s not implemented!') % (
                 resource_type))

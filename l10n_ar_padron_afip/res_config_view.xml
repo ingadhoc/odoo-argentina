@@ -15,6 +15,9 @@
                     <div>
                         <button name="refresh_taxes_from_padron" string="Refresh Taxes From AFIP" type="object" class="oe_link"/>
                     </div>
+                    <div>
+                        <button name="refresh_concepts_from_padron" string="Refresh Concepts From AFIP" type="object" class="oe_link"/>
+                    </div>
                 </label>
             </field>
         </record>

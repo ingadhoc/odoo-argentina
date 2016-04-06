@@ -24,25 +24,26 @@
     'license': 'AGPL-3',
     'category': 'Accounting & Finance',
     'data': [
-        'views/account_tax_withholding_view.xml',
-        'views/account_voucher_view.xml',
         # 'security/security.xml',
         # 'security/ir.model.access.csv'
-        'views/res_company_view.xml',
+        'views/res_partner_view.xml',
+        'views/afip_activity_view.xml',
+        'views/afip_tax_view.xml',
+        'wizard/res_partner_update_from_padron_wizard_view.xml',
+        'res_config_view.xml',
     ],
     'demo': [
-        'demo/ir_parameter.xml',
-        'demo/demo.xml',
     ],
     'depends': [
-        'account_voucher_withholding_automatic',
+        # 'base',
+        # 'l10n_ar_base',
         'l10n_ar_invoice',
     ],
     'external_dependencies': {
         'python': ['pyafipws'],
     },
     'installable': True,
-    'name': 'Argentinian Withholding Management',
+    'name': 'Padron AFIP Argentino',
     'test': [],
     'version': '8.0.0.0.0',
  }

@@ -37,6 +37,10 @@
                     <label for="other_afip_document_class_ids"/>
                     <field name="other_afip_document_class_ids"/>
                 </field>
+                <page name="accounting" position="after">
+                    <page string="Fiscal Data" name="fiscal_data" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}">
+                    </page>
+                </page>
             </field>
         </record>
         <record id="view_res_partner_tree" model="ir.ui.view">

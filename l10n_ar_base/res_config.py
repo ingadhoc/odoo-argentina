@@ -55,6 +55,9 @@ class argentinian_base_configuration(models.TransientModel):
     module_l10n_ar_chart_generic_withholding = fields.Boolean(
         'Add generic withholding management.',
         help="""Installs the l10n_ar_chart_generic_withholding module. """)
+    module_l10n_ar_padron_afip = fields.Boolean(
+        'Obtener datos del padron de AFIP.',
+        help="""Installs the module_l10n_ar_padron_afip module. """)
 
 
     # 'default_coding_method':fields.selection([('category','Based on the Category'), ('group','Based on Major / Sub Groups')], required=True, default_model='product.product'),

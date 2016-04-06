@@ -79,16 +79,16 @@
                     <field name="responsability_id" states="open,paid"/>
                 </xpath>
 
-                <div groups="base.group_multi_currency" position="after">
-                    <field name="currency_rate"/>
+                <div groups="base.group_multi_currency" position="inside">
+                    <field name="currency_rate" class="oe_inline"/>
                 </div>
 
                 <field name="fiscal_position" position="after">
                     <field name="reference"/>
                     <field name="afip_incoterm_id"/>
                     <field name='afip_concept' attrs="{'invisible':[('point_of_sale_type', 'not in', ['online', 'electronic'])]}"/>
-                    <field name='afip_service_start' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])],'required':[('afip_concept','in',['2', '3', '4'])]}"/>
-                    <field name='afip_service_end' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])],'required':[('afip_concept','in',['2', '3', '4'])]}"/>
+                    <field name='afip_service_start' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])]}"/>
+                    <field name='afip_service_end' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])]}"/>
                 </field>
                 <xpath expr="//page[@string='Other Info']//field[@name='name']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -156,6 +156,10 @@
                 </field>
                 <field name="number" position="after">
                     <field name="document_number" class="oe_inline"/>
+                </field>
+
+                <field name="check_total" position="before">
+                    <field name="currency_rate" groups="base.group_multi_currency" />
                 </field>
 
                 <!-- Esto es por un mini bug de odoo ya que no se deberia poder cabmiar de diario y que se mantenga secuencia o numeraion de otro diario, hay que exigir borrar los numeros  -->

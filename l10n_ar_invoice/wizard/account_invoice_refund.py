@@ -35,8 +35,9 @@ class account_invoice_refund(models.TransientModel):
         # self.journal_type = journal_type
 
         point_of_sale = self.invoice_id.journal_id.point_of_sale_id
+        journal = self.env['account.journal']
         if point_of_sale:
-            journal = self.env['account.journal'].search(
+            journal = journal.search(
                 [('type', '=', journal_type),
                  ('company_id', '=', self.invoice_id.company_id.id),
                  ('point_of_sale_id', '=', point_of_sale.id),

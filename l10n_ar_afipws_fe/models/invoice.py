@@ -77,7 +77,8 @@ class invoice(models.Model):
 
     @api.one
     def get_validation_type(self):
-        if self.journal_id.point_of_sale_id.afip_ws:
+        # if invoice has cae then me dont validate it against afip
+        if self.journal_id.point_of_sale_id.afip_ws and not self.afip_cae:
             self.validation_type = self.env[
                 'res.company']._get_environment_type()
 

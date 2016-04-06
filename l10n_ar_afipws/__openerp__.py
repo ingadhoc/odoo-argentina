@@ -64,7 +64,7 @@ publicarlas en los repositorios públicos.
         'l10n_ar_invoice',
         ],
     'external_dependencies': {
-        'python': ['suds', 'M2Crypto']
+        'python': ['suds', 'M2Crypto', 'pyafipws']
     },
     'data': [
         'data/afipws_sequence.xml',

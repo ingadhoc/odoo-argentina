@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Argentinian CITI Reports",
-    'version': '8.0.1.1.0',
+    'version': '8.0.1.1.2',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author':  'ADHOC SA',

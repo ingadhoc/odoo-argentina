@@ -24,12 +24,11 @@
     'license': 'AGPL-3',
     'category': 'Accounting & Finance',
     'data': [
-        # 'security/security.xml',
-        # 'security/ir.model.access.csv'
+        'wizard/res_partner_update_from_padron_wizard_view.xml',
+        'security/ir.model.access.csv'
         'views/res_partner_view.xml',
         'views/afip_activity_view.xml',
         'views/afip_tax_view.xml',
-        'wizard/res_partner_update_from_padron_wizard_view.xml',
         'res_config_view.xml',
     ],
     'demo': [

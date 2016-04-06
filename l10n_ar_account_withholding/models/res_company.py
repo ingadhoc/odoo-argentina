@@ -2,7 +2,7 @@
 from openerp import models, fields, api, _
 import openerp.tools as tools
 from pyafipws.iibb import IIBB
-from pyafipws.padron import PadronAFIP
+# from pyafipws.padron import PadronAFIP
 from openerp.exceptions import Warning
 import logging
 from dateutil.relativedelta import relativedelta
@@ -12,6 +12,12 @@ _logger = logging.getLogger(__name__)
 class ResCompany(models.Model):
     _inherit = "res.company"
 
+    regimenes_ganancias = fields.Many2many(
+        'afip.tabla_ganancias.alicuotasymontos',
+        'res_company_tabla_ganancias_rel',
+        'company_id', 'regimen_id',
+        'Regimenes Ganancia',
+        )
     arba_cit = fields.Char(
         'CIT ARBA',
         help='Clave de Identificación Tributaria de ARBA',

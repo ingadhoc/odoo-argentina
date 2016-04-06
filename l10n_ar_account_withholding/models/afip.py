@@ -30,12 +30,14 @@ class AfipTablagananciasAlicuotasymontos(models.Model):
     codigo_de_regimen = fields.Char(
         'Codigo de regimen',
         size=5,
-        required=False,
+        required=True,
         help='Codigo de regimen de inscripcion en impuesto a las ganancias.'
         )
     anexo_referencia = fields.Char(
+        required=True,
         )
     concepto_referencia = fields.Text(
+        required=True,
         )
     porcentaje_inscripto = fields.Float(
         '% Inscripto',

@@ -270,7 +270,7 @@
             <field name="importe_hasta">2000</field>
             <field name="importe_fijo">0</field>
             <field name="porcentaje">10</field>
-            <field name="importe_excedente">2</field>
+            <field name="importe_excedente">0</field>
         </record>
         
         <record model="afip.tabla_ganancias.escala" id="escala_2">

@@ -26,9 +26,11 @@
     'data': [
         'views/account_tax_withholding_view.xml',
         'views/account_voucher_view.xml',
-        # 'security/security.xml',
-        # 'security/ir.model.access.csv'
+        'security/ir.model.access.csv'
         'views/res_company_view.xml',
+        'views/afip_tabla_ganancias_escala_view.xml',
+        'views/afip_tabla_ganancias_alicuotasymontos_view.xml',
+        'data/tabla_ganancias_data.xml',
     ],
     'demo': [
         'demo/ir_parameter.xml',
@@ -36,7 +38,9 @@
     ],
     'depends': [
         'account_voucher_withholding_automatic',
-        'l10n_ar_invoice',
+        # 'l10n_ar_invoice',
+        # para ganancias
+        'l10n_ar_padron_afip',
     ],
     'external_dependencies': {
         'python': ['pyafipws'],

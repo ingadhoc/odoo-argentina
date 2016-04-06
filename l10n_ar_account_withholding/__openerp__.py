@@ -19,37 +19,34 @@
 #
 ##############################################################################
 {
-    'name': 'Retenciones para Plan Contable General Argentino',
-    'version': '8.0.1.0.0',
-    'category': 'Localization/Argentina',
-    'sequence': 14,
     'author':  'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
-    'summary': '',
-    'description': """
-Retenciones para Plan Contable General Argentino
-================================================
-""",
-    'depends': [
-        'l10n_ar_chart_generic',
-        'account_voucher_withholding',
-    ],
-    'external_dependencies': {
-    },
+    'category': 'Accounting & Finance',
     'data': [
-        'data/account_chart_respinsc.xml',
+        'views/account_tax_withholding_view.xml',
+        'views/account_voucher_view.xml',
+        'security/ir.model.access.csv',
+        'views/res_company_view.xml',
+        'views/afip_tabla_ganancias_escala_view.xml',
+        'views/afip_tabla_ganancias_alicuotasymontos_view.xml',
+        'data/tabla_ganancias_data.xml',
     ],
     'demo': [
-        # TODO enable this demo data or use it on l10n_ar_withh..
-        # 'demo/ri_withholding_demo.xml',
-        # 'demo/ri_voucher_demo.xml',
+        'demo/ir_parameter.xml',
+        'demo/demo.xml',
     ],
-    'test': [
+    'depends': [
+        'account_voucher_withholding_automatic',
+        # 'l10n_ar_invoice',
+        # para ganancias
+        'l10n_ar_padron_afip',
     ],
+    'external_dependencies': {
+        'python': ['pyafipws'],
+    },
     'installable': True,
-    'auto_install': True,
-    'application': False,
-}
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+    'name': 'Argentinian Withholding Management',
+    'test': [],
+    'version': '8.0.0.0.0',
+ }

@@ -1,1 +1,1 @@
-pyafipws
+git+https://github.com/reingart/pyafipws@master

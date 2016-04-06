@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data> 
+
+<!--         <record id="account_tax_withholding_form_view" model="ir.ui.view">
+            <field name="name">account.tax.withholding.form</field>
+            <field name="model">account.tax.withholding</field>
+            <field name="inherit_id" ref="account_voucher_withholding.account_tax_withholding_form_view"/>
+            <field name="arch" type="xml"> 
+                <field name="type" position="attributes"/>
+            </field>
+        </record>   
+ -->
+    </data>
+</openerp>

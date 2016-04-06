@@ -21,7 +21,11 @@
                     <field name="responsability_id" options="{'no_open': True, 'no_create': True}"/>
                 </field>               
                 <field name="last_reconciliation_date" position="before">
-                    <field name="iibb"/>
+                    <label for="gross_income_number" string="Gross Income"/>
+                    <div>
+                        <field name="gross_income_type" class="oe_inline"/>
+                        <field name="gross_income_number" class="oe_inline" attrs="{'invisible': [('gross_income_type', '=', False)], 'required': [('gross_income_type', '!=', False)]}"/>
+                    </div>
                     <field name="start_date"/>
                 </field>
 
@@ -33,6 +37,10 @@
                     <label for="other_afip_document_class_ids"/>
                     <field name="other_afip_document_class_ids"/>
                 </field>
+                <page name="accounting" position="after">
+                    <page string="Fiscal Data" name="fiscal_data" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}">
+                    </page>
+                </page>
             </field>
         </record>
         <record id="view_res_partner_tree" model="ir.ui.view">

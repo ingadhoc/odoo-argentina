@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Base Config Settings Form View -->
+        <record id="view_argentinian_base_configuration" model="ir.ui.view">
+            <field name="name">argentinian.base.settings</field>
+            <field name="model">argentinian.base.config.settings</field>
+            <field name="inherit_id" ref="l10n_ar_base.view_argentinian_base_configuration"/>
+            <field name="arch" type="xml">
+                <label for="module_l10n_ar_padron_afip" position="after">
+                    <div>
+                        <button name="refresh_activities_from_padron" string="Refresh Activities From AFIP" type="object" class="oe_link"/>
+                    </div>
+                    <div>
+                        <button name="refresh_taxes_from_padron" string="Refresh Taxes From AFIP" type="object" class="oe_link"/>
+                    </div>
+                    <div>
+                        <button name="refresh_concepts_from_padron" string="Refresh Concepts From AFIP" type="object" class="oe_link"/>
+                    </div>
+                </label>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

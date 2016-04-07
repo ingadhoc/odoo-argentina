@@ -2,7 +2,7 @@
 from openerp import models, fields, api, _
 from pyafipws.padron import PadronAFIP
 from openerp.exceptions import Warning
-import os
+# import os
 import base64
 import logging
 _logger = logging.getLogger(__name__)
@@ -76,8 +76,9 @@ class ResPartner(models.Model):
             raise Warning(_(
                 'No CUIT for partner %s') % (self.name))
         # descarga de constancia
-        basedir = os.path.join(os.getcwd(), 'cache')
-        tmpfilename = os.path.join(basedir, "constancia.pdf")
+        # basedir = os.path.join(os.getcwd(), 'cache')
+        # tmpfilename = os.path.join(basedir, "constancia.pdf")
+        tmpfilename = "/tmp/constancia.pdf"
         padron = PadronAFIP()
         padron.Consultar(cuit)
         padron.DescargarConstancia(cuit, tmpfilename)

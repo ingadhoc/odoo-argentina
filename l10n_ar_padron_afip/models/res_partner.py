@@ -79,6 +79,8 @@ class ResPartner(models.Model):
         # basedir = os.path.join(os.getcwd(), 'cache')
         # tmpfilename = os.path.join(basedir, "constancia.pdf")
         tmpfilename = "/tmp/constancia.pdf"
+        # sie queremos mejora esto podriamos no hardecodearlo con esto
+        # https://bugs.launchpad.net/openobject-addons/+bug/1040901
         padron = PadronAFIP()
         padron.Consultar(cuit)
         padron.DescargarConstancia(cuit, tmpfilename)

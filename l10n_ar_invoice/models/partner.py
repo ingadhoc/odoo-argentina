@@ -22,6 +22,10 @@ class res_partner(models.Model):
         'Document number',
         size=64,
         )
+    # for compatibility
+    iibb = fields.Char(
+        related='gross_income_number'
+        )
     gross_income_type = fields.Selection([
         ('multilateral', 'Multilateral'),
         ('local', 'Local'),

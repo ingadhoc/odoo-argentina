@@ -37,7 +37,7 @@ class AccountTaxWithholding(models.Model):
             alicuot = float(AlicuotaRetencion.replace(',', '.'))
             amount = base_amount * alicuot
             vals['amount'] = amount
-            vals['suggested_withholding_amount'] = amount
+            vals['computed_withholding_amount'] = amount
             vals['comment'] = arba_data
         elif self.type == 'tabla_ganancias':
             if not self.company_id.regimenes_ganancias:
@@ -81,7 +81,7 @@ class AccountTaxWithholding(models.Model):
                 # no corresponde, no impuesto
                     amount = 0.0
             vals['amount'] = amount
-            vals['suggested_withholding_amount'] = amount
+            vals['computed_withholding_amount'] = amount
             # self.env[].search('code')
         return vals
 

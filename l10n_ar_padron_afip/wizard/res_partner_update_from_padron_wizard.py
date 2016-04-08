@@ -12,7 +12,7 @@ class res_partner_update_from_padron_field(models.TransientModel):
     wizard_id = fields.Many2one(
         'res.partner.update.from.padron.wizard',
         'Wizard',
-        required=True,
+        # required=True,
         )
     field = fields.Char(
         )

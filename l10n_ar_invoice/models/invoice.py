@@ -424,20 +424,36 @@ class account_invoice(models.Model):
         self.available_journal_document_class_ids = document_class_ids
         self.journal_document_class_id = document_class_id
 
-    @api.one
-    @api.constrains(
-        'journal_id', 'partner_id',
-        'journal_document_class_id',
-    )
-    def _get_document_class(self):
-        """ Como los campos responsability y journal document class no los
-        queremos hacer funcion porque no queremos que sus valores cambien nunca
-        y como con la funcion anterior solo se almacenan solo si se crea desde
-        interfaz, hacemos este hack de constraint para computarlos si no estan
-        computados"""
-        if not self.journal_document_class_id and self.available_journal_document_class_ids:
-            self.journal_document_class_id = self.available_journal_document_class_ids[
-                0]
+    # Como los campos responsability y journal document class no los
+    # queremos hacer funcion porque no queremos que sus valores cambien nunca
+    # y como con la funcion anterior solo se almacenan solo si se crea desde
+    # interfaz, modificamos write y create para actualizarla
+    @api.multi
+    def write(self, vals):
+        """
+        If we write a journal or partner on an invoice and we have not send a
+        journal_document_class_id then we call
+        _get_available_journal_document_class so that it set one
+        """
+        res = super(account_invoice, self).write(vals)
+        if ((
+                vals.get('partner_id') or
+                vals.get('journal_id')) and
+                not vals.get('journal_document_class_id')):
+            self._get_available_journal_document_class()
+        return res
+
+    @api.model
+    def create(self, vals):
+        """
+        After creating ivoice, if not journal_document_class_id (it has not
+        been send as vals or in context), then we call
+        _get_available_journal_document_class to set it if needed
+        """
+        invoice = super(account_invoice, self).create(vals)
+        if not invoice.journal_document_class_id:
+            invoice._get_available_journal_document_class()
+        return invoice
 
     @api.one
     @api.depends('afip_document_number', 'number')

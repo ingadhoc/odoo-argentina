@@ -60,6 +60,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
             'actividades_padron',
             'impuestos_padron',
             'imp_iva_padron',
+            'state_id',
             # 'imp_ganancias_padron',
             'monotributo_padron',
             'actividad_monotributo_padron',

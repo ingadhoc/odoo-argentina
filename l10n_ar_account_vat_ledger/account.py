@@ -20,12 +20,12 @@ class afip_document_class(models.Model):
         compute="_get_amounts",
         digits=dp.get_precision('Account'),
         string=_('Other Taxes Amount')
-        )
+    )
     vat_amount = fields.Float(
         compute="_get_amounts",
         digits=dp.get_precision('Account'),
         string=_('VAT Amount')
-        )
+    )
     amount_total = fields.Float(
         string=_('Total'),
         digits=dp.get_precision('Account'),
@@ -41,7 +41,7 @@ class afip_document_class(models.Model):
             (
                 amount_untaxed, vat_amount,
                 other_taxes_amount, amount_total
-                ) = self.get_amounts(vat_ledger)
+            ) = self.get_amounts(vat_ledger)
             self.amount_untaxed = amount_untaxed
             self.vat_amount = vat_amount
             self.other_taxes_amount = other_taxes_amount
@@ -102,6 +102,7 @@ class account_tax_code(models.Model):
             self, vat_ledger, responsability=False, journal_type=None):
         taxes_domain = [
             ('invoice_id', 'in', vat_ledger.invoice_ids.ids),
+            ('invoice_id.state', '!=', 'cancel'),
             ('tax_code_id.id', '=', self.id)]
         if journal_type:
             taxes_domain.append(
@@ -113,8 +114,11 @@ class account_tax_code(models.Model):
             taxes_domain)
         # we use base_amount and tax_amount instad of base and amount because
         # we want them in local currency
-        amount_untaxed = sum([x.base_amount for x in invoice_taxes])
-        amount_tax = sum([x.tax_amount for x in invoice_taxes])
+        # usamos valor absoluto porque si el impuesto se configura con signo
+        # negativo, por ej. para notas de credito, nosotros igual queremos
+        # llevarlo positivo
+        amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount')))
+        amount_tax = abs(sum(invoice_taxes.mapped('tax_amount')))
         amount_total = amount_untaxed + amount_tax
         return (amount_untaxed, amount_tax, amount_total)
 

@@ -110,15 +110,31 @@ class account_tax_code(models.Model):
         if responsability:
             taxes_domain.append(
                 ('invoice_id.responsability_id', '=', responsability.id))
+        # invoice_taxes = self.env['account.invoice.tax'].search(
+        #     taxes_domain)
         invoice_taxes = self.env['account.invoice.tax'].search(
-            taxes_domain)
+            taxes_domain +
+            [('invoice_id.type', 'in', ['in_invoice', 'out_invoice'])])
+        refund_invoice_taxes = self.env['account.invoice.tax'].search(
+            taxes_domain +
+            [('invoice_id.type', 'in', ['in_refund', 'out_refund'])])
         # we use base_amount and tax_amount instad of base and amount because
         # we want them in local currency
         # usamos valor absoluto porque si el impuesto se configura con signo
         # negativo, por ej. para notas de credito, nosotros igual queremos
         # llevarlo positivo
-        amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount')))
-        amount_tax = abs(sum(invoice_taxes.mapped('tax_amount')))
+        # TODO mejorarlo, no hace falta si lo disenamos bien, el tema es que
+        # algunos usan regitrando esto como negativo y otros como positivo
+        # el tema en realidad es que en el reporte queremos mostrarlo positivo
+        # tendriamos que hacer alg otipo:
+        # for invoice_tax in invoice_taxes:
+        #     amount_untaxed += invoice_tax.base_amount * invoice_tax
+        # amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount')))
+        # amount_tax = abs(sum(invoice_taxes.mapped('tax_amount')))
+        amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount'))) - abs(
+            sum(refund_invoice_taxes.mapped('base_amount')))
+        amount_tax = abs(sum(invoice_taxes.mapped('tax_amount'))) - abs(
+            sum(refund_invoice_taxes.mapped('tax_amount')))
         amount_total = amount_untaxed + amount_tax
         return (amount_untaxed, amount_tax, amount_total)
 
@@ -157,11 +173,18 @@ class afip_responsability(models.Model):
         domain = [
             ('state', 'not in', ['draft', 'cancel']),
             ('responsability_id', '=', self.id),
+            # TODO we should use vat_ledger.invoice_ids
             ('journal_id', 'in', vat_ledger.journal_ids.ids),
             ('period_id', '=', vat_ledger.period_id.id)
         ]
-        invoices = self.env['account.invoice'].search(domain)
-        amount_untaxed = sum([x.amount_untaxed for x in invoices])
-        amount_tax = sum([x.amount_tax for x in invoices])
-        amount_total = sum([x.amount_total for x in invoices])
+        invoices = self.env['account.invoice'].search(
+            domain + [('type', 'in', ['in_invoice', 'out_invoice'])])
+        refund_invoices = self.env['account.invoice'].search(
+            domain + [('type', 'in', ['in_refund', 'out_refund'])])
+        amount_untaxed = sum(invoices.mapped('amount_untaxed')) - sum(
+            refund_invoices.mapped('amount_untaxed'))
+        amount_tax = sum(invoices.mapped('amount_tax')) - sum(
+            refund_invoices.mapped('amount_tax'))
+        amount_total = sum(invoices.mapped('amount_total')) - sum(
+            refund_invoices.mapped('amount_total'))
         return (amount_untaxed, amount_tax, amount_total)

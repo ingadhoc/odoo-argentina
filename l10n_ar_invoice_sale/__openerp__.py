@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Argentinian Sale Total Fields',
-    'version': '8.0.1.0.0',
+    'version': '8.0.1.0.1',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author':  'ADHOC SA',

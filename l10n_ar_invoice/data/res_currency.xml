@@ -16,16 +16,16 @@
     <field name="afip_code">PES</field>
 </record>
 <record model='res.currency' forcecreate="0" id='base.AUD'>
-    <field name="afip_code">26</field>
+    <field name="afip_code">026</field>
 </record>
 <record model='res.currency' forcecreate="0" id='base.CAD'>
-    <field name="afip_code">18</field>
+    <field name="afip_code">018</field>
 </record>
 <record model='res.currency' forcecreate="0" id='base.GBP'>
-    <field name="afip_code">21</field>
+    <field name="afip_code">021</field>
 </record>
 <record model='res.currency' forcecreate="0" id='base.JPY'>
-    <field name="afip_code">19</field>
+    <field name="afip_code">019</field>
 </record>
 <record model='res.currency' forcecreate="0" id='base.MXN'>
     <field name="afip_code">010</field>
@@ -37,10 +37,10 @@
     <field name="afip_code">011</field>
 </record>
 <record model='res.currency' forcecreate="0" id='base.VEF'>
-    <field name="afip_code">23</field>
+    <field name="afip_code">023</field>
 </record>
 <record model='res.currency' forcecreate="0" id='base.EUR'>
-    <field name="afip_code">60</field>
+    <field name="afip_code">060</field>
 </record>
 
     </data>

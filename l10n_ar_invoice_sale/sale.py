@@ -119,12 +119,15 @@ class sale_order(models.Model):
     def get_vat_discriminated(self):
         vat_discriminated = True
         if self.company_id.sale_allow_vat_no_discrimination:
-            letter_ids = self.env['account.invoice'].get_valid_document_letters(
-                self.partner_id.id, 'sale', self.company_id.id)
-            letters = self.env['afip.document_letter'].browse(letter_ids)
-            if letters:
-                vat_discriminated = letters[0].vat_discriminated
-            elif self.company_id.sale_allow_vat_no_discrimination == 'no_discriminate_default':
+            letters = self.env['afip.document_letter']
+            if self.company_id.partner_id.responsability_id:
+                letter_ids = self.env['account.invoice'].get_valid_document_letters(
+                    self.partner_id.id, 'sale', self.company_id.id)
+                if letter_ids:
+                    letters = letters.browse(letter_ids)
+                    vat_discriminated = letters[0].vat_discriminated
+            # if no responsability or no letters
+            if not letters and self.company_id.sale_allow_vat_no_discrimination == 'no_discriminate_default':
                 vat_discriminated = False
         self.vat_discriminated = vat_discriminated
 

@@ -56,10 +56,10 @@ class afip_document_class(models.Model):
             ('period_id', '=', vat_ledger.period_id.id)
         ]
         invoices = self.env['account.invoice'].search(domain)
-        amount_untaxed = sum([x.amount_untaxed for x in invoices])
-        vat_amount = sum([x.vat_amount for x in invoices])
-        other_taxes_amount = sum([x.other_taxes_amount for x in invoices])
-        amount_total = sum([x.amount_total for x in invoices])
+        amount_untaxed = sum(invoices.mapped('amount_untaxed'))
+        vat_amount = sum(invoices.mapped('vat_amount'))
+        other_taxes_amount = sum(invoices.mapped('other_taxes_amount'))
+        amount_total = sum(invoices.mapped('amount_total'))
         if self.document_type == 'credit_note':
             amount_untaxed = -amount_untaxed
             vat_amount = -vat_amount

@@ -64,12 +64,12 @@ class account_invoice(models.Model):
         string='Company Cur. Total',
     )
     cc_amount_untaxed = fields.Float(
-        compute="_cc_amount_all",
+        compute="_get_currency_values",
         digits=dp.get_precision('Account'),
         string='Company Cur. Untaxed',
     )
     cc_amount_tax = fields.Float(
-        compute="_cc_amount_all",
+        compute="_get_currency_values",
         digits=dp.get_precision('Account'),
         string='Company Cur. Tax',
     )

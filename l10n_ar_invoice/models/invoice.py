@@ -17,10 +17,11 @@ class account_invoice(models.Model):
 
     currency_rate = fields.Float(
         string='Currency Rate',
-        compute='_get_currency_rate',
+        compute='_get_currency_values',
         help='Currency Rate for this currency on invoice date or today '
         '(if not date)',
-        # digits=(16, 4),
+        digits=(12, 6)
+        # Usamos muchos decimales por el citi (requiere) y para buen calculo
         # TODO hacer editable en draft con funcion inverse que cree cotizacion
         # set='_get_currency_rate',
         # readonly=True,
@@ -50,6 +51,28 @@ class account_invoice(models.Model):
         digits=dp.get_precision('Account'),
         string=_('VAT Untaxed')
     )
+    # no gravado en iva
+    cc_vat_untaxed = fields.Float(
+        compute="_get_currency_values",
+        digits=dp.get_precision('Account'),
+        string='Company Cur. VAT Untaxed',
+    )
+    # company currency default odoo fields
+    cc_amount_total = fields.Float(
+        compute="_get_currency_values",
+        digits=dp.get_precision('Account'),
+        string='Company Cur. Total',
+    )
+    cc_amount_untaxed = fields.Float(
+        compute="_cc_amount_all",
+        digits=dp.get_precision('Account'),
+        string='Company Cur. Untaxed',
+    )
+    cc_amount_tax = fields.Float(
+        compute="_cc_amount_all",
+        digits=dp.get_precision('Account'),
+        string='Company Cur. Tax',
+    )
     # exento en iva
     vat_exempt_amount = fields.Float(
         compute="_get_taxes_and_prices",
@@ -60,7 +83,13 @@ class account_invoice(models.Model):
     vat_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
-        string=_('VAT Amount')
+        string='VAT Amount',
+    )
+    # von iva
+    cc_vat_amount = fields.Float(
+        compute="_get_currency_values",
+        digits=dp.get_precision('Account'),
+        string='Company Cur. VAT Amount',
     )
     # von iva
     vat_base_amount = fields.Float(
@@ -71,7 +100,12 @@ class account_invoice(models.Model):
     other_taxes_amount = fields.Float(
         compute="_get_taxes_and_prices",
         digits=dp.get_precision('Account'),
-        string=_('Other Taxes Amount')
+        string='Other Taxes Amount',
+    )
+    cc_other_taxes_amount = fields.Float(
+        compute="_get_currency_values",
+        digits=dp.get_precision('Account'),
+        string='Company Cur. Other Taxes Amount'
     )
     printed_tax_ids = fields.One2many(
         compute="_get_taxes_and_prices",
@@ -186,10 +220,38 @@ class account_invoice(models.Model):
 
     @api.one
     @api.depends('currency_id')
-    def _get_currency_rate(self):
+    def _get_currency_values(self):
+        # TODO si traer el rate de esta manera no resulta (por ej. porque
+        # borran una linea de rate), entonces podemos hacerlo desde el move
+        # mas o menos como hace account_invoice_currency o viendo el total de
+        # debito o credito de ese mismo
         currency = self.currency_id.with_context(
             date=self.date_invoice or fields.Date.context_today(self))
-        self.currency_rate = currency.compute(1.0, self.company_id.currency_id)
+        if self.company_id.currency_id == currency:
+            self.cc_amount_untaxed = self.amount_untaxed
+            self.cc_amount_tax = self.amount_tax
+            self.cc_amount_total = self.amount_total
+            self.cc_vat_untaxed = self.vat_untaxed
+            self.cc_vat_amount = self.vat_amount
+            self.cc_other_taxes_amount = self.other_taxes_amount
+        else:
+            currency_rate = currency.compute(
+                1.0, self.company_id.currency_id, round=False)
+            # otra alternativa serua usar currency.compute con round true
+            # para cada uno de estos valores
+            self.currency_rate = currency_rate
+            self.cc_amount_untaxed = currency.round(
+                self.amount_untaxed * currency_rate)
+            self.cc_amount_tax = currency.round(
+                self.amount_tax * currency_rate)
+            self.cc_amount_total = currency.round(
+                self.amount_total * currency_rate)
+            self.cc_vat_untaxed = currency.round(
+                self.vat_untaxed * currency_rate)
+            self.cc_vat_amount = currency.round(
+                self.vat_amount * currency_rate)
+            self.cc_other_taxes_amount = currency.round(
+                self.other_taxes_amount * currency_rate)
 
     @api.multi
     @api.depends(
@@ -238,6 +300,7 @@ class account_invoice(models.Model):
         self.afip_concept = afip_concept
 
     @api.one
+    # TODO add depends to improove performance?
     def _get_taxes_and_prices(self):
         """
         """

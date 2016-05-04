@@ -56,9 +56,10 @@
                                         <field name="commercial_partner_id"/>
                                         <field name="responsability_id"/>
                                         <field name="formated_vat"/>
-                                        <field name="amount_untaxed" sum="Total"/>
-                                        <field name="amount_tax" sum="Total"/>
-                                        <field name="amount_total" sum="Total"/>
+                                        <!-- remove  sum="Total" because credits are not negative -->
+                                        <field name="amount_untaxed"/>
+                                        <field name="amount_tax"/>
+                                        <field name="amount_total"/>
                                     </tree>
                                 </field>
                             </page>

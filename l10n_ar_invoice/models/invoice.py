@@ -234,6 +234,7 @@ class account_invoice(models.Model):
             self.cc_vat_untaxed = self.vat_untaxed
             self.cc_vat_amount = self.vat_amount
             self.cc_other_taxes_amount = self.other_taxes_amount
+            self.currency_rate = 1.0
         else:
             currency_rate = currency.compute(
                 1.0, self.company_id.currency_id, round=False)

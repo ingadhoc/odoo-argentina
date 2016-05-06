@@ -227,6 +227,8 @@ class account_invoice(models.Model):
         # debito o credito de ese mismo
         currency = self.currency_id.with_context(
             date=self.date_invoice or fields.Date.context_today(self))
+        if not currency:
+            return False
         if self.company_id.currency_id == currency:
             self.cc_amount_untaxed = self.amount_untaxed
             self.cc_amount_tax = self.amount_tax

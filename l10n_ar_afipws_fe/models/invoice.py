@@ -348,6 +348,7 @@ class invoice(models.Model):
                         tax.tax_code_id.afip_code,
                         tax.tax_code_id.name,
                         "%.2f" % abs(tax.base_amount),
+                        "%.2f" % abs(tax.tax_amount/tax.base_amount),
                         "%.2f" % abs(tax.tax_amount),
                         )
 

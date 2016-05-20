@@ -15,6 +15,10 @@ _logger = logging.getLogger(__name__)
 class account_invoice(models.Model):
     _inherit = "account.invoice"
 
+    state_id = fields.Many2one(
+        related='commercial_partner_id.state_id',
+        store=True,
+    )
     currency_rate = fields.Float(
         string='Currency Rate',
         compute='_get_currency_values',
@@ -439,7 +443,9 @@ class account_invoice(models.Model):
                 'out_invoice', 'in_invoice', 'out_refund', 'in_refund']:
             operation_type = self.get_operation_type(invoice_type)
 
-            if self.use_documents:
+            if (
+                    self.use_documents and
+                    self.company_id.partner_id.responsability_id):
                 # corremos con sudo porque da errores con usuario portal en
                 # algunos casos
                 letter_ids = self.sudo().get_valid_document_letters(

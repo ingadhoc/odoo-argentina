@@ -14,7 +14,8 @@
                     <field name="afip_document_class_id"/>
                 </field>
                 <group string="Group By">
-                    <filter string="Document Type" icon="terp-folder-orange" domain="[]" context="{'group_by':'afip_document_class_id'}"/>
+                    <filter string="Document Type" domain="[]" context="{'group_by':'afip_document_class_id'}"/>
+                    <filter string="State" domain="[]" context="{'group_by':'state_id'}"/>
                 </group>
             </field>
         </record>

@@ -12,6 +12,9 @@
             <field name="is_company" eval="True"/>
             <field name="customer" eval="True"/>
             <field name="supplier" eval="True"/>
+            <field name="document_number">33693450239</field>
+            <field name='document_type_id' ref="dt_CUIT"/>
+            <field name='vat'>AR33693450239</field>
         </record>
     </data>
 </openerp>

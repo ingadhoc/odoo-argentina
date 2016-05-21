@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api
+from openerp import models, fields, api, _
 from openerp.exceptions import Warning
 import datetime
 
@@ -33,7 +33,7 @@ class AccountTaxWithholding(models.Model):
                 )
             AlicuotaRetencion = arba_data.get('AlicuotaRetencion')
             if not AlicuotaRetencion:
-                return {}
+                raise Warning('No pudimos obtener la AlicuotaRetencion')
             alicuot = float(AlicuotaRetencion.replace(',', '.'))
             amount = base_amount * alicuot
             vals['amount'] = amount

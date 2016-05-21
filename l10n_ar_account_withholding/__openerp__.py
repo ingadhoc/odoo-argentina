@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'category': 'Accounting & Finance',
@@ -49,4 +49,4 @@
     'name': 'Argentinian Withholding Management',
     'test': [],
     'version': '8.0.0.0.0',
- }
+}

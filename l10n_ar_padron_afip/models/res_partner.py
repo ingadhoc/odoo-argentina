@@ -16,7 +16,7 @@ class ResPartner(models.Model):
     # profits_tax_type = fields.Selection([
     estado_padron = fields.Char(
         'Estado AFIP',
-        )
+    )
     imp_ganancias_padron = fields.Selection([
         ('NI', 'No Inscripto'),
         ('AC', 'Activo'),
@@ -25,9 +25,9 @@ class ResPartner(models.Model):
         # ('XN', 'Exento no alcanzado'),
         # ('AN', 'Activo no alcanzado'),
         ('NC', 'No corresponde'),
-        ],
+    ],
         'Ganancias',
-        )
+    )
     # vat_tax_type_padron = fields.Selection([
     imp_iva_padron = fields.Selection([
         ('NI', 'No Inscripto'),
@@ -37,36 +37,36 @@ class ResPartner(models.Model):
         ('XN', 'Exento no alcanzado'),
         ('AN', 'Activo no alcanzado'),
         # ('NC', 'No corresponde'),
-        ],
+    ],
         'IVA',
-        )
+    )
     integrante_soc_padron = fields.Selection(
         [('N', 'No'), ('S', 'Si')],
         'Integrante Sociedad',
-        )
+    )
     monotributo_padron = fields.Selection(
         [('N', 'No'), ('S', 'Si')],
         'Monotributo',
-        )
+    )
     actividad_monotributo_padron = fields.Char(
-        )
+    )
     empleador_padron = fields.Boolean(
-        )
+    )
     actividades_padron = fields.Many2many(
         'afip.activity',
         'res_partner_afip_activity_rel',
         'partner_id', 'afip_activity_id',
         'Actividades',
-        )
+    )
     impuestos_padron = fields.Many2many(
         'afip.tax',
         'res_partner_afip_tax_rel',
         'partner_id', 'afip_tax_id',
         'Impuestos',
-        )
+    )
     last_update_padron = fields.Date(
         'Last Update Padron',
-        )
+    )
 
     @api.multi
     def update_constancia_from_padron_afip(self):
@@ -129,9 +129,9 @@ class ResPartner(models.Model):
             'city': padron.localidad,
             'zip': padron.cod_postal,
             'actividades_padron': self.actividades_padron.search(
-                    [('code', 'in', padron.actividades)]).ids,
+                [('code', 'in', padron.actividades)]).ids,
             'impuestos_padron': self.impuestos_padron.search(
-                    [('code', 'in', padron.impuestos)]).ids,
+                [('code', 'in', padron.impuestos)]).ids,
             'imp_iva_padron': imp_iva,
             # TODAVIA no esta funcionando
             # 'imp_ganancias_padron': padron.imp_ganancias,
@@ -140,7 +140,7 @@ class ResPartner(models.Model):
             'empleador_padron': padron.empleador == 'S' and True,
             'integrante_soc_padron': padron.integrante_soc,
             'last_update_padron': fields.Date.today(),
-            }
+        }
 
         if padron.provincia:
             state = self.env['res.country.state'].search([

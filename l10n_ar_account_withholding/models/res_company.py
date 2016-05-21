@@ -105,7 +105,7 @@ class ResCompany(models.Model):
 
         cuit = partner.document_number
         if not cuit:
-            raise Warning(_('No CUIT for partner %s') % (
+            raise Warning(('La empresa %s no tiene configurado el CUIT %s') % (
                 partner.name))
 
         _logger.info(

@@ -5,5 +5,6 @@
 ##############################################################################
 from . import res_company
 from . import account_tax_withholding
+from . import account_invoice
 from . import afip
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

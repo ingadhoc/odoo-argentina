@@ -10,14 +10,14 @@ class AccountConcept(models.Model):
     code = fields.Char(
         'Code',
         required=True
-        )
+    )
     name = fields.Char(
         'Name',
         required=True
-        )
+    )
     active = fields.Boolean(
         default=True,
-        )
+    )
 
 
 class AccountActivity(models.Model):
@@ -26,14 +26,14 @@ class AccountActivity(models.Model):
     code = fields.Char(
         'Code',
         required=True
-        )
+    )
     name = fields.Char(
         'Name',
         required=True
-        )
+    )
     active = fields.Boolean(
         default=True,
-        )
+    )
 
 
 class AccountTax(models.Model):
@@ -42,11 +42,11 @@ class AccountTax(models.Model):
     code = fields.Char(
         'Code',
         required=True
-        )
+    )
     name = fields.Char(
         'Name',
         required=True
-        )
+    )
     active = fields.Boolean(
         default=True,
-        )
+    )

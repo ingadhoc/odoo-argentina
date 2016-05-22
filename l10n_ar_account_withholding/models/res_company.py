@@ -12,16 +12,16 @@ _logger = logging.getLogger(__name__)
 class ResCompany(models.Model):
     _inherit = "res.company"
 
-    regimenes_ganancias = fields.Many2many(
+    regimenes_ganancias_ids = fields.Many2many(
         'afip.tabla_ganancias.alicuotasymontos',
         'res_company_tabla_ganancias_rel',
         'company_id', 'regimen_id',
         'Regimenes Ganancia',
-        )
+    )
     arba_cit = fields.Char(
         'CIT ARBA',
         help='Clave de Identificación Tributaria de ARBA',
-        )
+    )
 
     @api.model
     def _get_arba_environment_type(self):
@@ -105,7 +105,7 @@ class ResCompany(models.Model):
 
         cuit = partner.document_number
         if not cuit:
-            raise Warning(_('No CUIT for partner %s') % (
+            raise Warning(('La empresa %s no tiene configurado el CUIT') % (
                 partner.name))
 
         _logger.info(

@@ -8,19 +8,19 @@ class AfipTablagananciasEscala(models.Model):
 
     importe_desde = fields.Float(
         'Mas de $',
-        )
+    )
     importe_hasta = fields.Float(
         'A $',
-        )
+    )
     importe_fijo = fields.Float(
         '$',
-        )
+    )
     porcentaje = fields.Float(
         'Más el %'
-        )
+    )
     importe_excedente = fields.Float(
         'S/ Exced. de $'
-        )
+    )
 
 
 class AfipTablagananciasAlicuotasymontos(models.Model):
@@ -32,19 +32,19 @@ class AfipTablagananciasAlicuotasymontos(models.Model):
         size=5,
         required=True,
         help='Codigo de regimen de inscripcion en impuesto a las ganancias.'
-        )
+    )
     anexo_referencia = fields.Char(
         required=True,
-        )
+    )
     concepto_referencia = fields.Text(
         required=True,
-        )
+    )
     porcentaje_inscripto = fields.Float(
         '% Inscripto',
         help='Elija -1 si se debe calcular s/escala'
-        )
+    )
     porcentaje_no_inscripto = fields.Float(
         '% No Inscripto'
-        )
+    )
     montos_no_sujetos_a_retencion = fields.Float(
-        )
+    )

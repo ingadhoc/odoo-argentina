@@ -13,33 +13,34 @@ class res_partner(models.Model):
     responsability_id = fields.Many2one(
         'afip.responsability',
         'Resposability'
-        )
+    )
     document_type_id = fields.Many2one(
         'afip.document_type',
         'Document type',
-        )
+    )
     document_number = fields.Char(
         'Document number',
         size=64,
-        )
+    )
     # for compatibility
     iibb = fields.Char(
         related='gross_income_number'
-        )
+    )
     gross_income_type = fields.Selection([
         ('multilateral', 'Multilateral'),
         ('local', 'Local'),
-        ],
+        ('no_liquida', 'No Liquida'),
+    ],
         'Gross Income Type',
-        )
+    )
     gross_income_number = fields.Char(
         'Gross Income Number',
         oldname='iibb',
         size=64,
-        )
+    )
     start_date = fields.Date(
         'Start-up Date'
-        )
+    )
     other_afip_document_class_ids = fields.Many2many(
         'afip.document_class',
         'res_partner_afip_doc_class_rel',
@@ -48,7 +49,7 @@ class res_partner(models.Model):
         domain=[('document_type', '=', 'in_document')],
         help='Set here if this partner can issue other documents further\
         than invoices, credit notes and debit notes'
-        )
+    )
 
     @api.onchange('document_number', 'document_type_id')
     def onchange_document(self):

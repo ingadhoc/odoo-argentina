@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api
+from openerp import models, fields, api, _
 from openerp.exceptions import Warning
 import datetime
 
@@ -15,8 +15,8 @@ class AccountTaxWithholding(models.Model):
         selection_add=([
             ('arba_ws', 'WS Arba'),
             ('tabla_ganancias', 'Tabla Ganancias'),
-            ])
-        )
+        ])
+    )
 
     @api.multi
     def get_withholding_vals(self, voucher):
@@ -24,30 +24,36 @@ class AccountTaxWithholding(models.Model):
             voucher)
         base_amount = vals['withholdable_base_amount']
         if self.type == 'arba_ws':
-            date = (
-                voucher.date and fields.Date.from_string(voucher.date) or
-                datetime.date.today())
-            arba_data = self.company_id.get_arba_data(
-                voucher.partner_id.commercial_partner_id,
-                date
+            if voucher.partner_id.gross_income_type == 'no_liquida':
+                vals['amount'] = 0.0
+            else:
+                date = (
+                    voucher.date and fields.Date.from_string(voucher.date) or
+                    datetime.date.today())
+                arba_data = self.company_id.get_arba_data(
+                    voucher.partner_id.commercial_partner_id,
+                    date
                 )
-            AlicuotaRetencion = arba_data.get('AlicuotaRetencion')
-            if not AlicuotaRetencion:
-                return {}
-            alicuot = float(AlicuotaRetencion.replace(',', '.'))
-            amount = base_amount * alicuot
-            vals['amount'] = amount
-            vals['computed_withholding_amount'] = amount
-            vals['comment'] = arba_data
+                AlicuotaRetencion = arba_data.get('AlicuotaRetencion')
+                if not AlicuotaRetencion:
+                    raise Warning('No pudimos obtener la AlicuotaRetencion')
+                alicuot = float(AlicuotaRetencion.replace(',', '.'))
+                amount = base_amount * alicuot
+                vals['amount'] = amount
+                vals['computed_withholding_amount'] = amount
+                vals['comment'] = arba_data
         elif self.type == 'tabla_ganancias':
-            if not self.company_id.regimenes_ganancias:
-                raise Warning(
-                    'No hay regimenes de ganancias configurados para la '
-                    'compania %s' % self.company_id.name)
+            # if not self.company_id.regimenes_ganancias:
+            #     raise Warning(
+            #         'No hay regimenes de ganancias configurados para la '
+            #         'compania %s' % self.company_id.name)
             # TODO, por ahora tomamos el primero pero hay que definir cual va
-            regimen = self.company_id.regimenes_ganancias[0]
+            regimen = voucher.regimen_ganancias_id
             imp_ganancias_padron = voucher.partner_id.imp_ganancias_padron
-            if not imp_ganancias_padron:
+            if voucher.retencion_ganancias != 'nro_regimen' or not regimen:
+                # if amount zero then we dont create withholding
+                amount = 0.0
+            elif not imp_ganancias_padron:
                 raise Warning(
                     'El partner %s no tiene configurada inscripcion en '
                     'impuesto a las ganancias' % voucher.partner_id.name)
@@ -56,13 +62,14 @@ class AccountTaxWithholding(models.Model):
             # TODO validar excencion actualizada
             elif imp_ganancias_padron == 'AC':
                 # alicuota inscripto
-                vals['non_taxable_minimum'] = (
+                # vals['non_taxable_minimum'] = (
+                vals['non_taxable_amount'] = (
                     regimen.montos_no_sujetos_a_retencion)
                 if regimen.porcentaje_inscripto == -1:
                     escala = self.env['afip.tabla_ganancias.escala'].search([
                         ('importe_desde', '<', base_amount),
                         ('importe_hasta', '>=', base_amount),
-                        ], limit=1)
+                    ], limit=1)
                     if not escala:
                         raise Warning(
                             'No se encontro ninguna escala para el monto'
@@ -75,11 +82,12 @@ class AccountTaxWithholding(models.Model):
                         regimen.porcentaje_inscripto / 100.0)
             elif imp_ganancias_padron == 'NI':
                 # alicuota no inscripto
-                    amount = base_amount * (
-                        regimen.porcentaje_no_inscripto / 100.0)
+                amount = base_amount * (
+                    regimen.porcentaje_no_inscripto / 100.0)
             elif imp_ganancias_padron == 'NC':
                 # no corresponde, no impuesto
-                    amount = 0.0
+                amount = 0.0
+            vals['description'] = regimen.codigo_de_regimen
             vals['amount'] = amount
             vals['computed_withholding_amount'] = amount
             # self.env[].search('code')

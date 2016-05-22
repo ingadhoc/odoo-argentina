@@ -15,7 +15,7 @@ class ResCompany(models.Model):
     arba_cit = fields.Char(
         'CIT ARBA',
         help='Clave de Identificación Tributaria de ARBA',
-        )
+    )
 
     @api.model
     def _get_arba_environment_type(self):

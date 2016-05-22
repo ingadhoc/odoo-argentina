@@ -24,21 +24,24 @@ class AccountTaxWithholding(models.Model):
             voucher)
         base_amount = vals['withholdable_base_amount']
         if self.type == 'arba_ws':
-            date = (
-                voucher.date and fields.Date.from_string(voucher.date) or
-                datetime.date.today())
-            arba_data = self.company_id.get_arba_data(
-                voucher.partner_id.commercial_partner_id,
-                date
-            )
-            AlicuotaRetencion = arba_data.get('AlicuotaRetencion')
-            if not AlicuotaRetencion:
-                raise Warning('No pudimos obtener la AlicuotaRetencion')
-            alicuot = float(AlicuotaRetencion.replace(',', '.'))
-            amount = base_amount * alicuot
-            vals['amount'] = amount
-            vals['computed_withholding_amount'] = amount
-            vals['comment'] = arba_data
+            if voucher.partner_id.gross_income_type == 'no_liquida':
+                vals['amount'] = 0.0
+            else:
+                date = (
+                    voucher.date and fields.Date.from_string(voucher.date) or
+                    datetime.date.today())
+                arba_data = self.company_id.get_arba_data(
+                    voucher.partner_id.commercial_partner_id,
+                    date
+                )
+                AlicuotaRetencion = arba_data.get('AlicuotaRetencion')
+                if not AlicuotaRetencion:
+                    raise Warning('No pudimos obtener la AlicuotaRetencion')
+                alicuot = float(AlicuotaRetencion.replace(',', '.'))
+                amount = base_amount * alicuot
+                vals['amount'] = amount
+                vals['computed_withholding_amount'] = amount
+                vals['comment'] = arba_data
         elif self.type == 'tabla_ganancias':
             # if not self.company_id.regimenes_ganancias:
             #     raise Warning(

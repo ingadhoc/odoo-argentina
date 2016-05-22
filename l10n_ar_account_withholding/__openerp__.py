@@ -24,6 +24,7 @@
     'license': 'AGPL-3',
     'category': 'Accounting & Finance',
     'data': [
+        'reports/certificado_de_retencion_report.xml',
         'views/account_tax_withholding_view.xml',
         'views/account_voucher_view.xml',
         'security/ir.model.access.csv',
@@ -32,7 +33,6 @@
         'views/afip_tabla_ganancias_alicuotasymontos_view.xml',
         'views/account_voucher_withholding_view.xml',
         'data/tabla_ganancias_data.xml',
-        'reports/certificado_de_retencion_report.xml',
     ],
     'demo': [
         'demo/ir_parameter.xml',

@@ -7,7 +7,7 @@
             <field name="model">res.company</field>
             <field name="arch" type="xml">
                 <group name="account_grp">
-                    <field name="regimenes_ganancias" widget="many2many_tags"/>
+                    <field name="regimenes_ganancias_ids" widget="many2many_tags"/>
                 </group>
                 <notebook>
                     <page string="ARBA WS" name="arbaws">

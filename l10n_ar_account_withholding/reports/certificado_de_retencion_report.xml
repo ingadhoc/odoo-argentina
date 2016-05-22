@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!-- Printed Invoice -->
+<record id="action_aeroo_certificado_de_retencion_report" model="ir.actions.report.xml">
+    <field name="name">Certificado de Retención </field>
+    <field name="type">ir.actions.report.xml</field>
+    <field name="model">account.voucher.withholding</field>
+    <field name="report_name">certificado_de_retencion_reportreport</field>
+    <field name="report_type">aeroo</field>
+    <field name="in_format">oo-odt</field>
+    <!-- <field name="parser_loc">l10n_ar_aeroo_base/parser.py</field> -->
+    <!-- <field name="parser_state">loc</field> -->
+    <!-- <field name="parser_state">default</field> -->
+    <field name="parser_loc">l10n_ar_aeroo_base/parser.py</field>
+    <field name="parser_state">loc</field>
+    <field name="report_rml">l10n_ar_account_withholding/reports/certificado_de_retencion_report.odt</field>
+    <field name="tml_source">file</field>
+    <field name="out_format" ref="report_aeroo.report_mimetypes_pdf_odt"/>
+    <!-- <field name="styles_mode">specified</field> -->
+    <!-- <field name="stylesheet_id" ref="sipreco_stylesheet"/> -->
+</record>
+
+    </data>
+</openerp>

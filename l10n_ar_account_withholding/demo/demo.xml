@@ -9,7 +9,8 @@
             <field name="base_amount_type">untaxed_amount</field>
             <!-- <field name="accumulated_payments">month</field> -->
             <!-- <field name="amount" eval="0.10"/> -->
-            <field name="non_taxable_minimum" eval="100"/>
+            <field name="non_taxable_minimum" eval="400"/>
+            <field name="non_taxable_amount" eval="0"/>
             <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iibb_cf"/>
             <field name="ref_tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iibb_cf"/>
             <field name="account_id" ref="l10n_ar_invoice.ri_retencion_iibb_cf"/>

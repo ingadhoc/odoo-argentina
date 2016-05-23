@@ -11,7 +11,7 @@
                 <form>
                     <field name="company_regimenes_ganancias_ids" invisible="1"/>
                 </form>
-                <field name="journal_id" position="after">
+                <field name="company_id" position="after">
                     <label for="retencion_ganancias" attrs="{'invisible': [('company_regimenes_ganancias_ids', '=', [(6, False, [])])]}"/>
                     <div attrs="{'invisible': [('company_regimenes_ganancias_ids', '=', [(6, False, [])])]}">
                         <field name="retencion_ganancias" class="oe_inline" attrs="{'required': [('company_regimenes_ganancias_ids', '!=', [(6, False, [])])]}"/>

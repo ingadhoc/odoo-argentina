@@ -30,18 +30,24 @@ class AccountTaxWithholding(models.Model):
                 date = (
                     voucher.date and fields.Date.from_string(voucher.date) or
                     datetime.date.today())
-                arba_data = self.company_id.get_arba_data(
-                    voucher.partner_id.commercial_partner_id,
-                    date
+                arba = voucher.partner_id.get_arba_data(
+                    voucher.company_id,
+                    date,
                 )
-                AlicuotaRetencion = arba_data.get('AlicuotaRetencion')
-                if not AlicuotaRetencion:
-                    raise Warning('No pudimos obtener la AlicuotaRetencion')
-                alicuot = float(AlicuotaRetencion.replace(',', '.'))
-                amount = base_amount * alicuot
+                # arba_data = self.company_id.get_arba_data(
+                #     voucher.partner_id.commercial_partner_id,
+                #     date
+                # )
+                # AlicuotaRetencion = arba_data.get('AlicuotaRetencion')
+                # if not AlicuotaRetencion:
+                #     raise Warning('No pudimos obtener la AlicuotaRetencion')
+                # alicuot = float(AlicuotaRetencion.replace(',', '.'))
+                amount = base_amount * arba.alicuota_retencion
+                vals['comment'] = "%s x %s" % (
+                    base_amount, arba.alicuota_retencion)
                 vals['amount'] = amount
                 vals['computed_withholding_amount'] = amount
-                vals['comment'] = arba_data
+                # vals['comment'] = arba_data
         elif self.type == 'tabla_ganancias':
             # if not self.company_id.regimenes_ganancias:
             #     raise Warning(
@@ -58,13 +64,19 @@ class AccountTaxWithholding(models.Model):
                     'El partner %s no tiene configurada inscripcion en '
                     'impuesto a las ganancias' % voucher.partner_id.name)
             elif imp_ganancias_padron == 'EX':
-                raise Warning('Exentos no implementado!')
+                # if amount zero then we dont create withholding
+                amount = 0.0
             # TODO validar excencion actualizada
             elif imp_ganancias_padron == 'AC':
                 # alicuota inscripto
                 # vals['non_taxable_minimum'] = (
-                vals['non_taxable_amount'] = (
+                non_taxable_amount = (
                     regimen.montos_no_sujetos_a_retencion)
+                vals['non_taxable_amount'] = non_taxable_amount
+                if base_amount < non_taxable_amount:
+                    base_amount = 0.0
+                else:
+                    base_amount -= non_taxable_amount
                 if regimen.porcentaje_inscripto == -1:
                     escala = self.env['afip.tabla_ganancias.escala'].search([
                         ('importe_desde', '<', base_amount),
@@ -77,13 +89,21 @@ class AccountTaxWithholding(models.Model):
                     amount = escala.importe_fijo
                     amount += (escala.porcentaje / 100.0) * (
                         base_amount - escala.importe_excedente)
+                    vals['comment'] = "%s + (%s x %s)" % (
+                        escala.importe_fijo,
+                        base_amount - escala.importe_excedente,
+                        escala.porcentaje / 100.0)
                 else:
                     amount = base_amount * (
                         regimen.porcentaje_inscripto / 100.0)
+                    vals['comment'] = "%s x %s" % (
+                        base_amount, regimen.porcentaje_inscripto / 100.0)
             elif imp_ganancias_padron == 'NI':
                 # alicuota no inscripto
                 amount = base_amount * (
                     regimen.porcentaje_no_inscripto / 100.0)
+                vals['comment'] = "%s x %s" % (
+                    base_amount, regimen.porcentaje_no_inscripto / 100.0)
             elif imp_ganancias_padron == 'NC':
                 # no corresponde, no impuesto
                 amount = 0.0

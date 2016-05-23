@@ -73,7 +73,7 @@ class ResCompany(models.Model):
 
         if not cuit:
             raise Warning(_(
-                'You must configure CUIT con company %s related partner') % (
+                'You must configure CUIT on company %s related partner') % (
                     self.name))
         if not self.arba_cit:
             raise Warning(_(
@@ -96,12 +96,14 @@ class ResCompany(models.Model):
                 arba_url, cuit))
         return ws
 
+    # def get_arba_data(self, partner, date):
     @api.model
-    def get_arba_data(self, partner, date):
+    def get_arba_data(self, partner, from_date, to_date):
         self.ensure_one()
 
-        from_date = date + relativedelta(day=1)
-        to_date = date + relativedelta(day=1, days=-1, months=+1)
+        # from_date = date + relativedelta(day=1).strftime('%Y%m%d')
+        # to_date = date + relativedelta(
+        #     day=1, days=-1, months=+1).strftime('%Y%m%d')
 
         cuit = partner.document_number
         if not cuit:
@@ -113,8 +115,8 @@ class ResCompany(models.Model):
                 from_date, to_date, cuit))
         ws = self.arba_connect()
         ws.ConsultarContribuyentes(
-            from_date.strftime('%Y%m%d'),
-            to_date.strftime('%Y%m%d'),
+            from_date,
+            to_date,
             cuit)
 
         if ws.Excepcion:
@@ -126,15 +128,22 @@ class ResCompany(models.Model):
             raise Warning("%s\nError %s: %s" % (
                 ws.MensajeError, ws.TipoError, ws.CodigoError))
 
+        if not ws.AlicuotaRetencion or not ws.AlicuotaPercepcion:
+            raise Warning('No pudimos obtener la AlicuotaRetencion')
+
         # ' Datos generales de la respuesta:'
         data = {
-            'NumeroComprobante': ws.NumeroComprobante,
-            'CodigoHash': ws.CodigoHash,
-            'CuitContribuyente': ws.CuitContribuyente,
-            'AlicuotaPercepcion': ws.AlicuotaPercepcion,
-            'AlicuotaRetencion': ws.AlicuotaRetencion,
-            'GrupoPercepcion': ws.GrupoPercepcion,
-            'GrupoRetencion': ws.GrupoRetencion,
+            'numero_comprobante': ws.NumeroComprobante,
+            'codigo_hash': ws.CodigoHash,
+            # 'CuitContribuyente': ws.CuitContribuyente,
+            'alicuota_percepcion': float(
+                ws.AlicuotaPercepcion.replace(',', '.')),
+            'alicuota_retencion': float(
+                ws.AlicuotaRetencion.replace(',', '.')),
+            'grupo_percepcion': ws.GrupoPercepcion,
+            'grupo_retencion': ws.GrupoRetencion,
+            'from_date': from_date,
+            'to_date': from_date,
         }
         _logger.info('We get the following data: \n%s' % data)
         return data

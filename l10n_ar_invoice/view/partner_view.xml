@@ -9,9 +9,11 @@
             <field name="arch" type="xml">
                 <field name="ref" position="replace">
                     </field>
+
                 <field name="category_id" position="before">
                     <field name="ref" placeholder="Reference/Name fantasy"/>
                 </field>
+
                 <field name="website" position="after">
                     <label for="document_number"/>
                     <div class="address_format">
@@ -20,25 +22,30 @@
                     </div>
                     <field name="responsability_id" options="{'no_open': True, 'no_create': True}"/>
                 </field>               
-                <field name="last_reconciliation_date" position="before">
-                    <label for="gross_income_number" string="Gross Income"/>
-                    <div>
-                        <field name="gross_income_type" class="oe_inline"/>
-                        <field name="gross_income_number" class="oe_inline" attrs="{'invisible': [('gross_income_type', 'not in', ['multilateral', 'local'])], 'required': [('gross_income_type', 'in', ['multilateral', 'local'])]}"/>
-                    </div>
-                    <field name="start_date"/>
-                </field>
 
-                <!-- add other documents -->
-                <field name="bank_ids" position="before">
-                    <label for="bank_ids"/>
-                </field>
-                <field name="bank_ids" position="after">
-                    <label for="other_afip_document_class_ids"/>
-                    <field name="other_afip_document_class_ids"/>
-                </field>
                 <page name="accounting" position="after">
                     <page string="Fiscal Data" name="fiscal_data" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}">
+                        <!-- add other documents -->
+                        <group string="AFIP" name="afip">
+                            <group name="afip_col_1">
+                                <field name="start_date"/>
+                            </group>
+                            <group name="afip_col_2">
+                            </group>
+                        </group>
+                        <label for="other_afip_document_class_ids"/>
+                        <field name="other_afip_document_class_ids"/>
+                        <group string="Others" name="others">
+                            <group name="others_col_1">
+                                <label for="gross_income_number" string="Gross Income"/>
+                                <div>
+                                    <field name="gross_income_type" class="oe_inline"/>
+                                    <field name="gross_income_number" class="oe_inline" attrs="{'invisible': [('gross_income_type', 'not in', ['multilateral', 'local'])], 'required': [('gross_income_type', 'in', ['multilateral', 'local'])]}"/>
+                                </div>
+                            </group>
+                            <group name="others_col_2">
+                            </group>
+                        </group>
                     </page>
                 </page>
             </field>

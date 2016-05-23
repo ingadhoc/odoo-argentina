@@ -13,6 +13,12 @@ class ResPartner(models.Model):
         'res.partner.arba_alicuot',
         'partner_id',
     )
+    drei = fields.Selection([
+        ('activo', 'Activo'),
+        ('no_activo', 'No Activo'),
+    ],
+        string='DREI',
+    )
 
     @api.multi
     def get_arba_alicuota_percepcion(self):

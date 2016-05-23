@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, _
+from openerp import models, fields, api
 from openerp.exceptions import Warning
 import datetime
 
@@ -17,6 +17,20 @@ class AccountTaxWithholding(models.Model):
             ('tabla_ganancias', 'Tabla Ganancias'),
         ])
     )
+
+    @api.multi
+    def get_withholdable_factor(self, voucher_line):
+        self.ensure_one()
+        if self.base_amount_type == 'untaxed_amount':
+            invoice = voucher_line.move_line_id.invoice
+            doc_letter = invoice.afip_document_class_id.document_letter_id.name
+            # if we receive B invoices, then we take out 21 of vat
+            # this use of case if when company is except on vat for eg.
+            if doc_letter == 'B':
+                factor = 1.0 / 1.21
+                return factor
+        return super(AccountTaxWithholding, self).get_withholdable_factor(
+            voucher_line)
 
     @api.multi
     def get_withholding_vals(self, voucher):

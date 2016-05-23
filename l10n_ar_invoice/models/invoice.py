@@ -669,19 +669,19 @@ class account_invoice(models.Model):
                     "Invoice ID %i shouldn't have any vat tax" % invoice.id))
 
         # Check except vat invoice
-        afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
-        for invoice in argentinian_invoices:
-            special_vat_taxes = invoice.tax_line.filtered(
-                lambda r: r.tax_code_id.afip_code in [1, 2, 3])
-            if (
-                    special_vat_taxes
-                    and invoice.fiscal_position.afip_code
-                    not in afip_exempt_codes):
-                raise Warning(_(
-                    "If there you have choose a tax with 0, exempt or untaxed,"
-                    " you must choose a fiscal position with afip code in %s. "
-                    "Invoice id %i" % (
-                        afip_exempt_codes, invoice.id)))
+#        afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
+#        for invoice in argentinian_invoices:
+#            special_vat_taxes = invoice.tax_line.filtered(
+#                lambda r: r.tax_code_id.afip_code in [1, 2, 3])
+#            if (
+#                    special_vat_taxes
+#                    and invoice.fiscal_position.afip_code
+#                    not in afip_exempt_codes):
+#                raise Warning(_(
+#                    "If there you have choose a tax with 0, exempt or untaxed,"
+#                    " you must choose a fiscal position with afip code in %s. "
+#                    "Invoice id %i" % (
+#                        afip_exempt_codes, invoice.id)))
 
     @api.multi
     def action_move_create(self):

@@ -13,13 +13,13 @@ class res_partner_update_from_padron_field(models.TransientModel):
         'res.partner.update.from.padron.wizard',
         'Wizard',
         # required=True,
-        )
+    )
     field = fields.Char(
-        )
+    )
     old_value = fields.Char(
-        )
+    )
     new_value = fields.Char(
-        )
+    )
 
 
 class res_partner_update_from_padron_wizard(models.TransientModel):
@@ -30,7 +30,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
         domain = [
             ('document_number', '!=', False),
             ('document_type_id.afip_code', '=', 80),
-            ]
+        ]
         active_ids = self._context.get('active_ids', [])
         if active_ids:
             domain.append(('id', 'in', active_ids))
@@ -44,7 +44,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
         if (
                 context.get('active_model') == 'res.partner' and
                 context.get('active_ids')
-                ):
+        ):
             res['state'] = 'selection'
             res['partner_id'] = self.get_partners()[0].id
         return res
@@ -61,18 +61,18 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
             'impuestos_padron',
             'imp_iva_padron',
             'state_id',
-            # 'imp_ganancias_padron',
+            'imp_ganancias_padron',
             'monotributo_padron',
             'actividad_monotributo_padron',
             'empleador_padron',
             'integrante_soc_padron',
             'last_update_padron',
             # 'constancia',
-            ]
+        ]
         return [
-                ('model', '=', 'res.partner'),
-                ('name', 'in', fields_names),
-                ]
+            ('model', '=', 'res.partner'),
+            ('name', 'in', fields_names),
+        ]
 
     @api.model
     def get_fields(self):
@@ -86,27 +86,27 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
         readonly=True,
         required=True,
         default='option',
-        )
+    )
     field_ids = fields.One2many(
         'res.partner.update.from.padron.field',
         'wizard_id',
         string='Fields',
-        )
+    )
     partner_ids = fields.Many2many(
         'res.partner',
         'partner_update_from_padron_rel',
         'update_id', 'partner_id',
         string='Partners',
         default=get_partners,
-        )
+    )
     partner_id = fields.Many2one(
         'res.partner',
         string='Partner',
         readonly=True,
-        )
+    )
     update_constancia = fields.Boolean(
         default=True,
-        )
+    )
     field_to_update_ids = fields.Many2many(
         'ir.model.fields',
         'res_partner_update_fields',
@@ -116,7 +116,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
         default=get_fields,
         domain=_get_domain,
         required=True,
-        )
+    )
 
     @api.multi
     @api.onchange('partner_id')

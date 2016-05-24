@@ -141,6 +141,18 @@ class ResPartner(models.Model):
             'integrante_soc_padron': padron.integrante_soc,
             'last_update_padron': fields.Date.today(),
         }
+        ganancias_inscripto = [10, 11]
+        ganancias_exento = [12]
+        if set(ganancias_inscripto) & set(padron.impuestos):
+            vals['imp_ganancias_padron'] = 'AC'
+        elif set(ganancias_exento) & set(padron.impuestos):
+            vals['imp_ganancias_padron'] = 'EX'
+        elif padron.monotributo == 'S':
+            vals['imp_ganancias_padron'] = 'NC'
+        else:
+            _logger.info(
+                "We couldn't get impuesto a las ganancias from padron, you"
+                "must set it manually")
 
         if padron.provincia:
             state = self.env['res.country.state'].search([

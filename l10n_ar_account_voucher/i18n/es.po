@@ -3,14 +3,15 @@
 # * l10n_ar_account_voucher
 # 
 # Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
 # Mario Calvar <ventas.bbca@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 02:29+0000\n"
-"PO-Revision-Date: 2015-10-19 20:34+0000\n"
-"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"POT-Creation-Date: 2016-05-24 13:24+0000\n"
+"PO-Revision-Date: 2016-05-24 20:39+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,6 +55,11 @@ msgid "Created on"
 msgstr "Creado en"
 
 #. module: l10n_ar_account_voucher
+#: field:account.voucher.receiptbook,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: l10n_ar_account_voucher
 #: field:account.voucher.receiptbook,document_class_id:0
 msgid "Document Class"
 msgstr "Clase de Documento"
@@ -92,14 +98,19 @@ msgid "Journal"
 msgstr "Diario"
 
 #. module: l10n_ar_account_voucher
+#: field:account.voucher.receiptbook,__last_update:0
+msgid "Last Modified on"
+msgstr "Última Modificación en"
+
+#. module: l10n_ar_account_voucher
 #: field:account.voucher.receiptbook,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Last Updated by"
 
 #. module: l10n_ar_account_voucher
 #: field:account.voucher.receiptbook,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización en"
 
 #. module: l10n_ar_account_voucher
 #: selection:account.voucher.receiptbook,sequence_type:0
@@ -116,6 +127,18 @@ msgstr "Manuales"
 #: field:account.voucher.receiptbook,name:0
 msgid "Name"
 msgstr "Nombre"
+
+#. module: l10n_ar_account_voucher
+#: field:account.voucher,next_receipt_number:0
+msgid "Next Receipt Number"
+msgstr "Próximo Número de Recibo"
+
+#. module: l10n_ar_account_voucher
+#: help:account.voucher,next_receipt_number:0
+msgid ""
+"Next number that will be used. This number can be incremented frequently so "
+"the displayed value might already be obsolete"
+msgstr "Próximo número que va a ser utilizad. Este número puede aumentarse frecuentemente por lo cual el valor mostrado puede ser obsoleto"
 
 #. module: l10n_ar_account_voucher
 #: field:account.voucher,manual_sufix:0
@@ -139,6 +162,7 @@ msgid "Payment"
 msgstr "Pago"
 
 #. module: l10n_ar_account_voucher
+#: field:account.voucher,manual_prefix:0
 #: field:account.voucher.receiptbook,manual_prefix:0
 msgid "Prefix"
 msgstr "Prefijo"
@@ -165,6 +189,11 @@ msgstr "Talonario de Recibo"
 #: view:account.voucher:l10n_ar_account_voucher.view_voucher_filter_vendor_pay
 msgid "Receiptbook"
 msgstr "Talonario de Recibos"
+
+#. module: l10n_ar_account_voucher
+#: field:account.voucher,receiptbook_sequence_type:0
+msgid "Receiptbook Sequence Type"
+msgstr "Tipo de Secuencia"
 
 #. module: l10n_ar_account_voucher
 #: model:ir.actions.act_window,name:l10n_ar_account_voucher.action_receiptbook_form
@@ -207,6 +236,11 @@ msgstr "Este campo contiene información relativa a la numeración de los recibo
 #: field:account.voucher.receiptbook,type:0
 msgid "Type"
 msgstr "Tipo"
+
+#. module: l10n_ar_account_voucher
+#: field:account.voucher,use_argentinian_localization:0
+msgid "Use Argentinian Localization?"
+msgstr "¿Usar Localización Argentina?"
 
 #. module: l10n_ar_account_voucher
 #: help:account.voucher.receiptbook,sequence:0

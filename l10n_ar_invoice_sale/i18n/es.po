@@ -3,13 +3,16 @@
 # * l10n_ar_invoice_sale
 # 
 # Translators:
+# Hotellook, 2014
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 02:29+0000\n"
-"PO-Revision-Date: 2015-10-19 20:29+0000\n"
-"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"POT-Creation-Date: 2016-05-24 13:25+0000\n"
+"PO-Revision-Date: 2016-05-24 21:21+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,29 +37,32 @@ msgid ""
 msgstr "Defina el compartamiento en los reportes de presupuestos y ordenes de venta. La discriminación o no depende en la reaponsabilidad del partner y la compañía, también de la configuración de las letras AFIP:            * Falso: el IVA se discrimna como siempre en odoo            * Si, No Discriminar por Defecto, si no se encuentra un matchno no se va a discriminar por defecto            * Si, Discriminar por Defecto, si no se encuentra un matchno se va a discriminar por defecto"
 
 #. module: l10n_ar_invoice_sale
-#: code:addons/l10n_ar_invoice_sale/sale.py:151
+#: code:addons/l10n_ar_invoice_sale/sale.py:154
+#: help:sale.order,vat_discriminated:0
 #, python-format
 msgid "Discriminate VAT on Quotations and Sale Orders?"
-msgstr ""
+msgstr "Discriminar IVA en Presupuestos y Órdenes de Venta?"
 
 #. module: l10n_ar_invoice_sale
-#: code:addons/l10n_ar_invoice_sale/sale.py:149
+#: code:addons/l10n_ar_invoice_sale/sale.py:152
+#: field:sale.order,vat_discriminated:0
 #, python-format
 msgid "Discriminate VAT?"
-msgstr ""
+msgstr "Discriminar IVA_"
 
 #. module: l10n_ar_invoice_sale
 #: view:account.invoice.report:l10n_ar_invoice_sale.view_account_invoice_report_search_inherit
 #: field:account.invoice.report,afip_document_class_id:0
 msgid "Document Type"
-msgstr ""
+msgstr "Tipo de Documetno"
 
 #. module: l10n_ar_invoice_sale
 #: code:addons/l10n_ar_invoice_sale/sale.py:105
-#: code:addons/l10n_ar_invoice_sale/sale.py:197
+#: code:addons/l10n_ar_invoice_sale/sale.py:200
+#: field:sale.order,exempt_amount:0 field:sale.order.line,exempt_amount:0
 #, python-format
 msgid "Exempt Amount"
-msgstr ""
+msgstr "Importe Exento"
 
 #. module: l10n_ar_invoice_sale
 #: model:ir.model,name:l10n_ar_invoice_sale.model_account_invoice_report
@@ -65,16 +71,19 @@ msgstr "Estadísticas de facturas"
 
 #. module: l10n_ar_invoice_sale
 #: code:addons/l10n_ar_invoice_sale/sale.py:85
+#: field:sale.order.line,printed_price_net:0
 #, python-format
 msgid "Net Price"
-msgstr ""
+msgstr "Precio Neto"
 
 #. module: l10n_ar_invoice_sale
 #: code:addons/l10n_ar_invoice_sale/sale.py:100
-#: code:addons/l10n_ar_invoice_sale/sale.py:207
+#: code:addons/l10n_ar_invoice_sale/sale.py:210
+#: field:sale.order,other_taxes_amount:0
+#: field:sale.order.line,other_taxes_amount:0
 #, python-format
 msgid "Other Taxes Amount"
-msgstr ""
+msgstr "Importe de Otros Impuestos"
 
 #. module: l10n_ar_invoice_sale
 #: field:res.company,sale_allow_vat_no_discrimination:0
@@ -98,42 +107,53 @@ msgstr "Línea de Pedido de Ventas"
 
 #. module: l10n_ar_invoice_sale
 #: code:addons/l10n_ar_invoice_sale/sale.py:90
-#: code:addons/l10n_ar_invoice_sale/sale.py:192
+#: code:addons/l10n_ar_invoice_sale/sale.py:195
+#: field:sale.order,printed_amount_untaxed:0
+#: field:sale.order.line,printed_price_subtotal:0
 #, python-format
 msgid "Subtotal"
-msgstr ""
+msgstr "Subtotal"
 
 #. module: l10n_ar_invoice_sale
-#: code:addons/l10n_ar_invoice_sale/sale.py:187
-#: code:addons/l10n_ar_invoice_sale/sale.py:212
+#: code:addons/l10n_ar_invoice_sale/sale.py:190
+#: code:addons/l10n_ar_invoice_sale/sale.py:215
+#: field:sale.order,printed_amount_tax:0 field:sale.order,printed_tax_ids:0
 #, python-format
 msgid "Tax"
 msgstr "Impuesto"
 
 #. module: l10n_ar_invoice_sale
+#: field:sale.order,tax_line:0
+msgid "Tax line"
+msgstr "Línea de Impuesto"
+
+#. module: l10n_ar_invoice_sale
 #: code:addons/l10n_ar_invoice_sale/sale.py:80
+#: field:sale.order.line,printed_price_unit:0
 #, python-format
 msgid "Unit Price"
-msgstr ""
+msgstr "Precio Unitario"
 
 #. module: l10n_ar_invoice_sale
 #: code:addons/l10n_ar_invoice_sale/sale.py:75
+#: field:sale.order.line,price_unit_with_tax:0
 #, python-format
 msgid "Unit Price w/ Taxes"
-msgstr ""
+msgstr "Precio Unitario c/ Impuestos"
 
 #. module: l10n_ar_invoice_sale
-#: code:addons/l10n_ar_invoice_sale/sale.py:217
+#: code:addons/l10n_ar_invoice_sale/sale.py:220 field:sale.order,vat_tax_ids:0
 #, python-format
 msgid "VAT Taxes"
-msgstr ""
+msgstr "IVA"
 
 #. module: l10n_ar_invoice_sale
 #: code:addons/l10n_ar_invoice_sale/sale.py:95
-#: code:addons/l10n_ar_invoice_sale/sale.py:202
+#: code:addons/l10n_ar_invoice_sale/sale.py:205 field:sale.order,vat_amount:0
+#: field:sale.order.line,vat_amount:0
 #, python-format
 msgid "Vat Amount"
-msgstr ""
+msgstr "Importe IVA"
 
 #. module: l10n_ar_invoice_sale
 #: selection:res.company,sale_allow_vat_no_discrimination:0

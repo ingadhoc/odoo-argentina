@@ -3,14 +3,15 @@
 # * l10n_ar_account_followup
 # 
 # Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
 # Mario Calvar <ventas.bbca@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 02:29+0000\n"
-"PO-Revision-Date: 2015-10-01 16:49+0000\n"
-"Last-Translator: Mario Calvar <ventas.bbca@gmail.com>\n"
+"POT-Creation-Date: 2016-05-24 13:24+0000\n"
+"PO-Revision-Date: 2016-05-24 20:36+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -62,6 +63,11 @@ msgid "Created on"
 msgstr "Creado en"
 
 #. module: l10n_ar_account_followup
+#: field:select.company.wizard,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: l10n_ar_account_followup
 #: view:website:account_followup.report_followup
 msgid "Document"
 msgstr "Documento"
@@ -96,7 +102,7 @@ msgstr "ID"
 msgid ""
 "If not specified by the latest follow-up level, it will send from the "
 "default email template"
-msgstr ""
+msgstr "Si no se especifica por el último nivel de seguimiento, se enviará desde la plantilla de correo predeterminada"
 
 #. module: l10n_ar_account_followup
 #: code:addons/l10n_ar_account_followup/account_followup.py:171
@@ -106,14 +112,19 @@ msgid "Invoice Date"
 msgstr "Fecha de factura"
 
 #. module: l10n_ar_account_followup
+#: field:select.company.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr "Última Modificación en"
+
+#. module: l10n_ar_account_followup
 #: field:select.company.wizard,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última modificación por"
 
 #. module: l10n_ar_account_followup
 #: field:select.company.wizard,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización en"
 
 #. module: l10n_ar_account_followup
 #: view:website:account_followup.report_followup
@@ -144,7 +155,7 @@ msgstr "Imprimir Pagos Vencidos"
 #. module: l10n_ar_account_followup
 #: view:res.partner:l10n_ar_account_followup.view_select_company_followup_form
 msgid "Print overdue payments report independent of follow-up line"
-msgstr ""
+msgstr "Imprimir informe de pagos atrasados independiente de la línea de seguimiento"
 
 #. module: l10n_ar_account_followup
 #: code:addons/l10n_ar_account_followup/account_followup.py:213
@@ -168,7 +179,7 @@ msgstr "Seleccione la empresa"
 #. module: l10n_ar_account_followup
 #: view:res.partner:l10n_ar_account_followup.view_select_company_followup_form
 msgid "Send Overdue Email"
-msgstr ""
+msgstr "Enviar correo de seguimiento"
 
 #. module: l10n_ar_account_followup
 #: code:addons/l10n_ar_account_followup/account_followup_print.py:67
@@ -184,7 +195,7 @@ msgstr "El plan de seguimiento definido para la compañía catual no tiene ningu
 msgid ""
 "The partner does not have any accounting entries to print in the overdue "
 "report for the current company."
-msgstr ""
+msgstr "El partner no tiene ningún apunte contable a imprimir en este reporte de deuda para la compañía actual."
 
 #. module: l10n_ar_account_followup
 #: code:addons/l10n_ar_account_followup/account_followup.py:218

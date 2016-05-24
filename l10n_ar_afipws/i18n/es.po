@@ -3,14 +3,17 @@
 # * l10n_ar_afipws
 # 
 # Translators:
+# Hotellook, 2014
 # Javier Diez <jd@ingadhoc.com>, 2015
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 02:29+0000\n"
-"PO-Revision-Date: 2015-09-09 19:53+0000\n"
-"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"POT-Creation-Date: 2016-05-24 13:24+0000\n"
+"PO-Revision-Date: 2016-05-24 21:04+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +27,7 @@ msgid ""
 "* The 'Draft' state is used when a user is creating a new pair key. Warning: everybody can see the key.        \n"
 "* The 'Confirmed' state is used when the key is completed with public or private key.        \n"
 "* The 'Canceled' state is used when the key is not more used. You cant use this key again."
-msgstr ""
+msgstr "* El estado 'Borrador' se utiliza cuando un usuario esta creando un par de claves. Cuidado: cualquiera puede ver las claves.        \n* El estado 'Confirmado' es utilizado cuando la clave esta completada con clave pública o privada.        \n* El estado 'Cancelada' es utilizado cuando la clave no es más utilizada. No puede utilizar esta clave nuevamente."
 
 #. module: l10n_ar_afipws
 #: help:afipws.certificate,state:0
@@ -33,7 +36,7 @@ msgid ""
 "* The 'Waiting' state is used when a request has send to Certificate Authority and is waiting for response.        \n"
 "* The 'Confirmed' state is used when a certificate is valid.        \n"
 "* The 'Canceled' state is used when the key is not more used. You cant use this key again."
-msgstr ""
+msgstr "* El estado 'Borrador' se utiliza cuando un usuario esta creando un par de claves. Cuidado: cualquiera puede ver las claves.     \n* El estado 'Esperando' es utilizado cuando una solicitud se ha enviado a la autoridad de Certificación y se está esperando la respuesta.   \n* El estado 'Confirmado' se utiliza cuando un certificado es válido.        \n* El estado 'Cancelada' es utilizado cuando la clave no es más utilizada. No puede utilizar esta clave nuevamente."
 
 #. module: l10n_ar_afipws
 #: model:ir.actions.act_window,name:l10n_ar_afipws.act_afipws_certificate_alias
@@ -63,13 +66,14 @@ msgstr "Conector de AFIP"
 #. module: l10n_ar_afipws
 #: model:ir.model,name:l10n_ar_afipws.model_afipws_certificate_alias
 msgid "AFIP Distingish Name / Alias"
-msgstr ""
+msgstr "AFIP Distingish Name / Alias"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_connection.py:50
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:51
+#: field:afipws.connection,afip_login_url:0
 #, python-format
 msgid "AFIP Login URL"
-msgstr ""
+msgstr "URL login AFIP"
 
 #. module: l10n_ar_afipws
 #: view:afipws.connection:l10n_ar_afipws.view_afipws_auth_form
@@ -93,18 +97,11 @@ msgid "AFIP WS Connection"
 msgstr "Conexión WS de AFIP"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_connection.py:54
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:55
+#: field:afipws.connection,afip_ws_url:0
 #, python-format
 msgid "AFIP WS URL"
-msgstr ""
-
-#. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:200
-#, python-format
-msgid ""
-"AFIP Web Service unvailable.Check your access to internet or contact to "
-"yoursystem administrator."
-msgstr "Web Service de AFIP inaccesible. Revise su acceso a Internet o contacte con el administrador de su sistema."
+msgstr "AFIP WS URL"
 
 #. module: l10n_ar_afipws
 #: model:ir.ui.menu,name:l10n_ar_afipws.menu_afipws
@@ -112,10 +109,10 @@ msgid "AFIP Web Services"
 msgstr "AFIP Web Services"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_connection.py:115
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:116
 #, python-format
 msgid "AFIP Webservice %s not implemented yet"
-msgstr ""
+msgstr "El Webservice de AFIP %s no está implementado todavía"
 
 #. module: l10n_ar_afipws
 #: view:res.company:l10n_ar_afipws.view_company_inherit_form
@@ -126,18 +123,19 @@ msgstr "Alias"
 #. module: l10n_ar_afipws
 #: field:afipws.connection,batch_sequence_id:0
 msgid "Batch Sequence"
-msgstr ""
+msgstr "Número de Lote"
 
 #. module: l10n_ar_afipws
 #: selection:afipws.connection,afip_ws:0
 msgid "Bono Fiscal -con detalle- RG2557 (WSMTXCA)"
-msgstr ""
+msgstr "Bono Fiscal -con detalle- RG2557 (WSMTXCA)"
 
 #. module: l10n_ar_afipws
 #: code:addons/l10n_ar_afipws/models/afipws_certificate_alias.py:75
+#: field:afipws.certificate_alias,cuit:0
 #, python-format
 msgid "CUIT"
-msgstr ""
+msgstr "CUIT"
 
 #. module: l10n_ar_afipws
 #: view:afipws.certificate:l10n_ar_afipws.view_afipws_certificate_form
@@ -165,22 +163,28 @@ msgstr "C"
 #. module: l10n_ar_afipws
 #: field:afipws.certificate,alias_id:0
 msgid "Certificate Alias"
-msgstr ""
+msgstr "Certificate Alias"
+
+#. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:84
+#, python-format
+msgid "Certificate Alias must be confirmed first!"
+msgstr "El Certificate Alias debe ser confirmado primero!"
 
 #. module: l10n_ar_afipws
 #: help:afipws.certificate,csr:0
 msgid "Certificate Request in PEM format."
-msgstr ""
+msgstr "Solicitud de Certificado en formato PEM."
 
 #. module: l10n_ar_afipws
 #: field:afipws.upload_certificate.wizard,certificate_id:0
 msgid "Certificate id"
-msgstr ""
+msgstr "Id de Certificado"
 
 #. module: l10n_ar_afipws
 #: help:afipws.certificate,crt:0
 msgid "Certificate in PEM format."
-msgstr ""
+msgstr "Certificado en formato PEM."
 
 #. module: l10n_ar_afipws
 #: field:afipws.certificate_alias,certificate_ids:0
@@ -239,18 +243,10 @@ msgid "Connections"
 msgstr "Conexiones"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:198
+#: code:addons/l10n_ar_afipws/models/res_company.py:222
 #, python-format
 msgid "Could not connect. This is the what we received: %s"
 msgstr "No se pudo conectar. Este es el porqué que recibimos: %s"
-
-#. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:194
-#, python-format
-msgid ""
-"Could not connect. This is the what we received: %s.\n"
-"If error is realted to datetime unsynchronized you can try running \"sudo ntpdate ntp.ubuntu.com\" on the server."
-msgstr "No se pudo conectar. Este es el porqué que recibimos: %s.\nSi el error está relacionado a la desincronización de la fecha/hora puede probar corriendo: \"sudo ntpdate ntp.ubuntu.com\" en el servidor."
 
 #. module: l10n_ar_afipws
 #: field:afipws.certificate_alias,country_id:0
@@ -284,24 +280,24 @@ msgid "Department"
 msgstr "Departamento"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:54
+#: field:afipws.certificate_alias,display_name:0
+#: field:afipws.connection,display_name:0
+#: field:afipws.upload_certificate.wizard,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:53
+#: field:afipws.certificate,request_file:0
 #, python-format
 msgid "Download Signed Certificate Request"
-msgstr ""
+msgstr "Descargar Solicitud de certificado firmada"
 
 #. module: l10n_ar_afipws
 #: selection:afipws.certificate,state:0
 #: selection:afipws.certificate_alias,state:0
 msgid "Draft"
 msgstr "Borrador"
-
-#. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:159
-#, python-format
-msgid ""
-"Error in Key and Certificate strings! Please check if private key and "
-"certificate are in ASCII PEM format."
-msgstr ""
 
 #. module: l10n_ar_afipws
 #: field:afipws.connection,expirationtime:0
@@ -314,10 +310,11 @@ msgid "Exportación -con detalle- RG2758 (WSFEXv1)"
 msgstr "Exportación -con detalle- RG2758 (WSFEXv1)"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:59
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:58
+#: field:afipws.certificate,request_filename:0
 #, python-format
 msgid "Filename"
-msgstr ""
+msgstr "Nombre archivo"
 
 #. module: l10n_ar_afipws
 #: field:afipws.connection,generationtime:0
@@ -339,21 +336,21 @@ msgstr "ID"
 #. module: l10n_ar_afipws
 #: selection:afipws.certificate_alias,service_type:0
 msgid "In House"
-msgstr ""
+msgstr "Interno"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:112
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:113
 #, python-format
 msgid "Invalid action! Please, set the certification string to continue."
-msgstr ""
+msgstr "Acción invalida! Por favor, configure la cadena de certificación para continuar."
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:115
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:116
 #, python-format
 msgid ""
 "Invalid action! Your certificate string is invalid. Check if you forgot the "
 "header CERTIFICATE or forgot/append end of lines."
-msgstr ""
+msgstr "Acción Invalida! Su adena de certificado es invalida. Chequee si olvido el header del Certificate o olvido agregar líneas del final."
 
 #. module: l10n_ar_afipws
 #: help:afipws.certificate_alias,common_name:0
@@ -364,6 +361,14 @@ msgstr "Sólo un nombre, puede dejarlo de este modo"
 #: view:afipws.certificate_alias:l10n_ar_afipws.view_afipws_certificate_alias_form
 msgid "Key"
 msgstr "Clave"
+
+#. module: l10n_ar_afipws
+#: field:afipws.certificate,__last_update:0
+#: field:afipws.certificate_alias,__last_update:0
+#: field:afipws.connection,__last_update:0
+#: field:afipws.upload_certificate.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr "Última Modificación en"
 
 #. module: l10n_ar_afipws
 #: field:afipws.certificate,write_uid:0
@@ -392,13 +397,14 @@ msgid "Mercado interno -sin detalle- RG2485 (WSFEv1)"
 msgstr "Mercado interno -sin detalle- RG2485 (WSFEv1)"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:64
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:63
+#: field:afipws.certificate,display_name:0
 #, python-format
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:112
+#: code:addons/l10n_ar_afipws/models/res_company.py:87
 #, python-format
 msgid "Not confirmed certificate for %s on company %s"
 msgstr "Certificado no confirmado para %s en la compañía %s"
@@ -406,7 +412,7 @@ msgstr "Certificado no confirmado para %s en la compañía %s"
 #. module: l10n_ar_afipws
 #: selection:afipws.certificate_alias,service_type:0
 msgid "Outsourced"
-msgstr ""
+msgstr "Tercerizado"
 
 #. module: l10n_ar_afipws
 #: field:afipws.certificate_alias,key:0
@@ -451,16 +457,7 @@ msgid "State"
 msgstr "Provincia"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:165
-#, python-format
-msgid ""
-"This certificate is not ready to sign any message! Please set a certificate "
-"to continue. You must send your certification request to a authoritative "
-"certificator to get one, or execute a self sign certification"
-msgstr ""
-
-#. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_connection.py:100
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:101
 #, python-format
 msgid ""
 "This method is for %s connections and you call it from an %s connection"
@@ -475,7 +472,7 @@ msgstr "A Borrador"
 #. module: l10n_ar_afipws
 #: field:afipws.connection,token:0
 msgid "Token"
-msgstr ""
+msgstr "Token"
 
 #. module: l10n_ar_afipws
 #: field:afipws.certificate_alias,type:0 field:afipws.connection,type:0
@@ -488,7 +485,7 @@ msgid "Unique ID"
 msgstr "ID Único"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:135
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:136
 #, python-format
 msgid ""
 "Unknown error.\n"
@@ -509,13 +506,13 @@ msgid "Waiting"
 msgstr "Esperando"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_connection.py:75
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:76
 #, python-format
 msgid "Webservice %s not supported"
 msgstr "Webservice %s no soportado"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:132
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:133
 #, python-format
 msgid ""
 "Wrong Certificate file format.\n"

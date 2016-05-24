@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 02:29+0000\n"
-"PO-Revision-Date: 2015-10-08 19:59+0000\n"
-"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"POT-Creation-Date: 2016-05-24 13:24+0000\n"
+"PO-Revision-Date: 2016-03-03 14:07+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -457,26 +457,6 @@ msgid "Equipos en Demo"
 msgstr ""
 
 #. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_ba_facturado
-msgid "Facturación IIBB BS AS"
-msgstr ""
-
-#. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_cf_facturado
-msgid "Facturación IIBB CABA"
-msgstr ""
-
-#. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_co_facturado
-msgid "Facturación IIBB Cordoba"
-msgstr ""
-
-#. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_sf_facturado
-msgid "Facturación IIBB Santa Fé"
-msgstr ""
-
-#. module: l10n_ar_chart_generic
 #: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_ba_facturado
 msgid "Facturación Ingresos Brutos Prov. Buenos Aires"
 msgstr ""
@@ -509,16 +489,111 @@ msgid "Facturado IIBB Prov. Buenos Aires"
 msgstr "Facturado IIBB Prov. Buenos Aires"
 
 #. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ca_facturado
+msgid "Facturado IIBB Prov. Catamarca"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ch_facturado
+msgid "Facturado IIBB Prov. Chaco"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ct_facturado
+msgid "Facturado IIBB Prov. Chubut"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_co_facturado
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_co_facturado
 msgid "Facturado IIBB Prov. Córdoba"
 msgstr "Facturado IIBB Prov. Córdoba"
 
 #. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_en_facturado
+msgid "Facturado IIBB Prov. Entre Ríos"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_fo_facturado
+msgid "Facturado IIBB Prov. Formosa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ju_facturado
+msgid "Facturado IIBB Prov. Jujuy"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_lp_facturado
+msgid "Facturado IIBB Prov. La Pampa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_lr_facturado
+msgid "Facturado IIBB Prov. La Rioja"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_md_facturado
+msgid "Facturado IIBB Prov. Mendoza"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_mi_facturado
+msgid "Facturado IIBB Prov. Misiones"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_nq_facturado
+msgid "Facturado IIBB Prov. Neuquén"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_rn_facturado
+msgid "Facturado IIBB Prov. Río Negro"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sa_facturado
+msgid "Facturado IIBB Prov. Salta"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sj_facturado
+msgid "Facturado IIBB Prov. San Juan"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sl_facturado
+msgid "Facturado IIBB Prov. San Luis"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sc_facturado
+msgid "Facturado IIBB Prov. Santa Cruz"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_sf_facturado
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sf_facturado
 msgid "Facturado IIBB Prov. Santa Fé"
 msgstr "Facturado IIBB Prov. Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sg_facturado
+msgid "Facturado IIBB Prov. Santiago del Estero"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_tf_facturado
+msgid "Facturado IIBB Prov. Tierra del Fuego"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_tu_facturado
+msgid "Facturado IIBB Prov. Tucumán"
+msgstr ""
 
 #. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.ri_fondofijo
@@ -686,16 +761,111 @@ msgid "IIBB Prov. Buenos Aires"
 msgstr "IIBB Prov. Buenos Aires"
 
 #. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ca
+msgid "IIBB Prov. Catamarca"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ch
+msgid "IIBB Prov. Chaco"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ct
+msgid "IIBB Prov. Chubut"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_co
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_co
 msgid "IIBB Prov. Córdoba"
 msgstr "IIBB Prov. Córdoba"
 
 #. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_en
+msgid "IIBB Prov. Entre Ríos"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_fo
+msgid "IIBB Prov. Formosa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ju
+msgid "IIBB Prov. Jujuy"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_lp
+msgid "IIBB Prov. La Pampa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_lr
+msgid "IIBB Prov. La Rioja"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_md
+msgid "IIBB Prov. Mendoza"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_mi
+msgid "IIBB Prov. Misiones"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_nq
+msgid "IIBB Prov. Neuquén"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_rn
+msgid "IIBB Prov. Río Negro"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sa
+msgid "IIBB Prov. Salta"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sj
+msgid "IIBB Prov. San Juan"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sl
+msgid "IIBB Prov. San Luis"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sc
+msgid "IIBB Prov. Santa Cruz"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_sf
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sf
 msgid "IIBB Prov. Santa Fé"
 msgstr "IIBB Prov. Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sg
+msgid "IIBB Prov. Santiago del Estero"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_tf
+msgid "IIBB Prov. Tierra del Fuego"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_tu
+msgid "IIBB Prov. Tucumán"
+msgstr ""
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_impuestos_nacionales
@@ -733,16 +903,115 @@ msgid "INGRESOS BRUTOS PROV. BUENOS AIRES"
 msgstr "INGRESOS BRUTOS PROV. BUENOS AIRES"
 
 #. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_ca
+msgid "INGRESOS BRUTOS PROV. CATAMARCA"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_ch
+msgid "INGRESOS BRUTOS PROV. CHACO"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_ct
+msgid "INGRESOS BRUTOS PROV. CHUBUT"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.mt_creditos_iibb_co
-#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_co
 msgid "INGRESOS BRUTOS PROV. CORDOBA"
 msgstr "INGRESOS BRUTOS PROV. CORDOBA"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_co
+msgid "INGRESOS BRUTOS PROV. CORRIENTES"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_en
+msgid "INGRESOS BRUTOS PROV. ENTRE RÍOS"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_fo
+msgid "INGRESOS BRUTOS PROV. FORMOSA"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_ju
+msgid "INGRESOS BRUTOS PROV. JUJUY"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_lp
+msgid "INGRESOS BRUTOS PROV. LA PAMPA"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_lr
+msgid "INGRESOS BRUTOS PROV. LA RIOJA"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_md
+msgid "INGRESOS BRUTOS PROV. MENDOZA"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_mi
+msgid "INGRESOS BRUTOS PROV. MISIONES"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_nq
+msgid "INGRESOS BRUTOS PROV. NEUQUÉN"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_rn
+msgid "INGRESOS BRUTOS PROV. RÍO NEGRO"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_sa
+msgid "INGRESOS BRUTOS PROV. SALTA"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_sj
+msgid "INGRESOS BRUTOS PROV. SAN JUAN"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_sl
+msgid "INGRESOS BRUTOS PROV. SAN LUIS"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_sc
+msgid "INGRESOS BRUTOS PROV. SANTA CRUZ"
+msgstr ""
 
 #. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.mt_creditos_iibb_sf
 #: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_sf
 msgid "INGRESOS BRUTOS PROV. SANTA FÉ"
 msgstr "INGRESOS BRUTOS PROV. SANTA FÉ"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_sg
+msgid "INGRESOS BRUTOS PROV. SANTIAGO DEL ESTERO"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_tf
+msgid "INGRESOS BRUTOS PROV. TIERRA DEL FUEGO"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_tu
+msgid "INGRESOS BRUTOS PROV. TUCUMÁN"
+msgstr ""
 
 #. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.mt_ingresos_financieros
@@ -931,16 +1200,106 @@ msgid "Impuestos ingresos brutos Prov. Bs. As."
 msgstr "Impuestos ingresos brutos Prov. Bs. As."
 
 #. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_ca
+msgid "Impuestos ingresos brutos Prov. Catamarca"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_ch
+msgid "Impuestos ingresos brutos Prov. Chaco"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_ct
+msgid "Impuestos ingresos brutos Prov. Chubut"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.mt_impuestos_iibb_co
 #: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_co
 msgid "Impuestos ingresos brutos Prov. Córdoba"
 msgstr "Impuestos ingresos brutos Prov. Córdoba"
 
 #. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_en
+msgid "Impuestos ingresos brutos Prov. Entre Ríos"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_fm
+msgid "Impuestos ingresos brutos Prov. Formosa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_ju
+msgid "Impuestos ingresos brutos Prov. Jujuy"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_lp
+msgid "Impuestos ingresos brutos Prov. La Pampa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_lr
+msgid "Impuestos ingresos brutos Prov. La Rioja"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_md
+msgid "Impuestos ingresos brutos Prov. Mendoza"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_mi
+msgid "Impuestos ingresos brutos Prov. Misiones"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_nq
+msgid "Impuestos ingresos brutos Prov. Neuquén"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_rn
+msgid "Impuestos ingresos brutos Prov. Río Negro"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_sa
+msgid "Impuestos ingresos brutos Prov. Salta"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_sj
+msgid "Impuestos ingresos brutos Prov. San Juan"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_sl
+msgid "Impuestos ingresos brutos Prov. San Luis"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_st
+msgid "Impuestos ingresos brutos Prov. Santa Cruz"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.mt_impuestos_iibb_sf
 #: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_sf
 msgid "Impuestos ingresos brutos Prov. Santa Fé"
 msgstr "Impuestos ingresos brutos Prov. Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_tf
+msgid "Impuestos ingresos brutos Prov. Tierra del Fuego"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_tu
+msgid "Impuestos ingresos brutos Prov. Tucumán"
+msgstr ""
 
 #. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.mt_impuestos_transacciones_bancarias
@@ -1092,6 +1451,106 @@ msgid "Percepciones ingresos brutos capital federal"
 msgstr "Percepciones ingresos brutos capital federal"
 
 #. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_ca
+msgid "Percepciones ingresos brutos p. Catamarca"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_ch
+msgid "Percepciones ingresos brutos p. Chaco"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_ct
+msgid "Percepciones ingresos brutos p. Chubut"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_co
+msgid "Percepciones ingresos brutos p. Corrientes"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_en
+msgid "Percepciones ingresos brutos p. Entre Ríos"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_fo
+msgid "Percepciones ingresos brutos p. Formosa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_ju
+msgid "Percepciones ingresos brutos p. Jujuy"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_lp
+msgid "Percepciones ingresos brutos p. La Pampa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_lr
+msgid "Percepciones ingresos brutos p. La Rioja"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_md
+msgid "Percepciones ingresos brutos p. Mendoza"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_mi
+msgid "Percepciones ingresos brutos p. Misiones"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_nq
+msgid "Percepciones ingresos brutos p. Neuquén"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_rn
+msgid "Percepciones ingresos brutos p. Río Negro"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_sa
+msgid "Percepciones ingresos brutos p. Salta"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_sj
+msgid "Percepciones ingresos brutos p. San Juan"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_sl
+msgid "Percepciones ingresos brutos p. San Luis"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_sc
+msgid "Percepciones ingresos brutos p. Santa Cruz"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_sg
+msgid "Percepciones ingresos brutos p. Santiago del Estero"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_tf
+msgid "Percepciones ingresos brutos p. Tierra del Fuego"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_tu
+msgid "Percepciones ingresos brutos p. Tucumán"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.mt_percepcion_iibb_ba
 #: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_ba
 msgid "Percepciones ingresos brutos p. buenos aires"
@@ -1099,7 +1558,6 @@ msgstr "Percepciones ingresos brutos p. buenos aires"
 
 #. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.mt_percepcion_iibb_co
-#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_co
 msgid "Percepciones ingresos brutos p. córdoba"
 msgstr "Percepciones ingresos brutos p. córdoba"
 
@@ -1121,7 +1579,12 @@ msgstr "Percepción Ganancias Sufrida"
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_ba_percepcion
-msgid "Percepción IIBB BS AS"
+msgid "Percepción IIBB BS AS Sufrida"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_cf_percepcion
+msgid "Percepción IIBB CABA Sufrida"
 msgstr ""
 
 #. module: l10n_ar_chart_generic
@@ -1132,7 +1595,7 @@ msgstr "Percepción IIBB Capital Federal"
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_co_percepcion
-msgid "Percepción IIBB Cordoba"
+msgid "Percepción IIBB Cordoba Sufrida"
 msgstr ""
 
 #. module: l10n_ar_chart_generic
@@ -1142,10 +1605,90 @@ msgid "Percepción IIBB Prov. Buenos Aires"
 msgstr "Percepción IIBB Prov. Buenos Aires"
 
 #. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ca_percepcion
+msgid "Percepción IIBB Prov. Catamarca"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ch_percepcion
+msgid "Percepción IIBB Prov. Chaco"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ct_percepcion
+msgid "Percepción IIBB Prov. Chubut"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_co_percepcion
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_co_percepcion
 msgid "Percepción IIBB Prov. Córdoba"
 msgstr "Percepción IIBB Prov. Córdoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_en_percepcion
+msgid "Percepción IIBB Prov. Entre Ríos"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_fo_percepcion
+msgid "Percepción IIBB Prov. Formosa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ju_percepcion
+msgid "Percepción IIBB Prov. Jujuy"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_lp_percepcion
+msgid "Percepción IIBB Prov. La Pampa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_lr_percepcion
+msgid "Percepción IIBB Prov. La Rioja"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_md_percepcion
+msgid "Percepción IIBB Prov. Mendoza"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_mi_percepcion
+msgid "Percepción IIBB Prov. Misiones"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_nq_percepcion
+msgid "Percepción IIBB Prov. Neuquén"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_rn_percepcion
+msgid "Percepción IIBB Prov. Río Negro"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sa_percepcion
+msgid "Percepción IIBB Prov. Salta"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sj_percepcion
+msgid "Percepción IIBB Prov. San Juan"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sl_percepcion
+msgid "Percepción IIBB Prov. San Luis"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sc_percepcion
+msgid "Percepción IIBB Prov. Santa Cruz"
+msgstr ""
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_sf_percepcion
@@ -1154,8 +1697,23 @@ msgid "Percepción IIBB Prov. Santa Fé"
 msgstr "Percepción IIBB Prov. Santa Fé"
 
 #. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sg_percepcion
+msgid "Percepción IIBB Prov. Santiago del Estero"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_tf_percepcion
+msgid "Percepción IIBB Prov. Tierra del Fuego"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_tu_percepcion
+msgid "Percepción IIBB Prov. Tucumán"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
 #: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_sf_percepcion
-msgid "Percepción IIBB Santa Fé"
+msgid "Percepción IIBB Santa Fé Sufrida"
 msgstr ""
 
 #. module: l10n_ar_chart_generic
@@ -1196,7 +1754,6 @@ msgstr "Percepción de Ganancias Sufrida"
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_cf_percepcion
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_cf_percepcion
 msgid "Percepción de Ingresos Brutos CABA"
 msgstr "Percepción de Ingresos Brutos CABA"
 
@@ -1393,25 +1950,10 @@ msgid "Retencion ingresos brutos p. santa fé"
 msgstr ""
 
 #. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_ba_retencion
-msgid "Retención IIBB BS AS"
-msgstr ""
-
-#. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_cf_retencion
-msgid "Retención IIBB CABA"
-msgstr ""
-
-#. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_cf_retencion
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_cf_retencion
 msgid "Retención IIBB Capital Federal"
 msgstr "Retención IIBB Capital Federal"
-
-#. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_co_retencion
-msgid "Retención IIBB Cordoba"
-msgstr ""
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_ba_retencion
@@ -1420,10 +1962,90 @@ msgid "Retención IIBB Prov. Buenos Aires"
 msgstr "Retención IIBB Prov. Buenos Aires"
 
 #. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ca_retencion
+msgid "Retención IIBB Prov. Catamarca"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ch_retencion
+msgid "Retención IIBB Prov. Chaco"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ct_retencion
+msgid "Retención IIBB Prov. Chubut"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_co_retencion
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_co_retencion
 msgid "Retención IIBB Prov. Córdoba"
 msgstr "Retención IIBB Prov. Córdoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_en_retencion
+msgid "Retención IIBB Prov. Entre Ríos"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_fo_retencion
+msgid "Retención IIBB Prov. Formosa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ju_retencion
+msgid "Retención IIBB Prov. Jujuy"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_lp_retencion
+msgid "Retención IIBB Prov. La Pampa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_lr_retencion
+msgid "Retención IIBB Prov. La Rioja"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_md_retencion
+msgid "Retención IIBB Prov. Mendoza"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_mi_retencion
+msgid "Retención IIBB Prov. Misiones"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_nq_retencion
+msgid "Retención IIBB Prov. Neuquén"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_rn_retencion
+msgid "Retención IIBB Prov. Río Negro"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sa_retencion
+msgid "Retención IIBB Prov. Salta"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sj_retencion
+msgid "Retención IIBB Prov. San Juan"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sl_retencion
+msgid "Retención IIBB Prov. San Luis"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sc_retencion
+msgid "Retención IIBB Prov. Santa Cruz"
+msgstr ""
 
 #. module: l10n_ar_chart_generic
 #: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_sf_retencion
@@ -1432,8 +2054,18 @@ msgid "Retención IIBB Prov. Santa Fé"
 msgstr "Retención IIBB Prov. Santa Fé"
 
 #. module: l10n_ar_chart_generic
-#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_sf_retencion
-msgid "Retención IIBB Santa Fé"
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sg_retencion
+msgid "Retención IIBB Prov. Santiago del Estero"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_tf_retencion
+msgid "Retención IIBB Prov. Tierra del Fuego"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_tu_retencion
+msgid "Retención IIBB Prov. Tucumán"
 msgstr ""
 
 #. module: l10n_ar_chart_generic
@@ -1503,14 +2135,109 @@ msgid "Retención ingresos brutos capital federal"
 msgstr "Retención ingresos brutos capital federal"
 
 #. module: l10n_ar_chart_generic
-#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_ba
-msgid "Retención ingresos brutos p. buenos aires"
-msgstr "Retención ingresos brutos p. buenos aires"
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_ca
+msgid "Retención ingresos brutos p. Catamarca"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_ch
+msgid "Retención ingresos brutos p. Chaco"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_ct
+msgid "Retención ingresos brutos p. Chubut"
+msgstr ""
 
 #. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_co
-msgid "Retención ingresos brutos p. córdoba"
-msgstr "Retención ingresos brutos p. córdoba"
+msgid "Retención ingresos brutos p. Corrientes"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_en
+msgid "Retención ingresos brutos p. Entre Ríos"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_fo
+msgid "Retención ingresos brutos p. Formosa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_ju
+msgid "Retención ingresos brutos p. Jujuy"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_lp
+msgid "Retención ingresos brutos p. La Pampa"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_lr
+msgid "Retención ingresos brutos p. La Rioja"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_md
+msgid "Retención ingresos brutos p. Mendoza"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_mi
+msgid "Retención ingresos brutos p. Misiones"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_nq
+msgid "Retención ingresos brutos p. Neuquén"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_rn
+msgid "Retención ingresos brutos p. Río Negro"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_sa
+msgid "Retención ingresos brutos p. Salta"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_sj
+msgid "Retención ingresos brutos p. San Juan"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_sl
+msgid "Retención ingresos brutos p. San Luis"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_sc
+msgid "Retención ingresos brutos p. Santa Cruz"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_sg
+msgid "Retención ingresos brutos p. Santiago del Estero"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_tf
+msgid "Retención ingresos brutos p. Tierra del Fuego"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_tu
+msgid "Retención ingresos brutos p. Tucumán"
+msgstr ""
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_ba
+msgid "Retención ingresos brutos p. buenos aires"
+msgstr "Retención ingresos brutos p. buenos aires"
 
 #. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_sf
@@ -1531,6 +2258,11 @@ msgstr "Retención/Percepción ganancias a pagar"
 #: model:account.account.template,name:l10n_ar_chart_generic.ri_rodados
 msgid "Rodados"
 msgstr "Rodados"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_suss_a_pagar
+msgid "SUSS a pagar"
+msgstr ""
 
 #. module: l10n_ar_chart_generic
 #: model:account.account.template,name:l10n_ar_chart_generic.ri_saldo_libre_disponibilidad

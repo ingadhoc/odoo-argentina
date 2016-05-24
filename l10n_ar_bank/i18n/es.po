@@ -3,13 +3,14 @@
 # * l10n_ar_bank
 # 
 # Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 02:29+0000\n"
-"PO-Revision-Date: 2015-10-19 20:34+0000\n"
-"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"POT-Creation-Date: 2016-05-24 13:24+0000\n"
+"PO-Revision-Date: 2016-05-24 21:05+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,6 +72,12 @@ msgid "Desactivated Banks"
 msgstr "Bancos desactivados"
 
 #. module: l10n_ar_bank
+#: field:l10nar.banks.wizard,display_name:0
+#: field:l10nar.banks.wizard.result,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: l10n_ar_bank
 #: field:l10nar.banks.wizard,id:0 field:l10nar.banks.wizard.result,id:0
 msgid "ID"
 msgstr "ID"
@@ -81,16 +88,22 @@ msgid "In this update the Banks of Argentina"
 msgstr "Está a punto de actualizar los datos de los bancos de Argentina"
 
 #. module: l10n_ar_bank
+#: field:l10nar.banks.wizard,__last_update:0
+#: field:l10nar.banks.wizard.result,__last_update:0
+msgid "Last Modified on"
+msgstr "Última Modificación en"
+
+#. module: l10n_ar_bank
 #: field:l10nar.banks.wizard,write_uid:0
 #: field:l10nar.banks.wizard.result,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima actualización por"
 
 #. module: l10n_ar_bank
 #: field:l10nar.banks.wizard,write_date:0
 #: field:l10nar.banks.wizard.result,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización en"
 
 #. module: l10n_ar_bank
 #: code:addons/l10n_ar_bank/wizard/wiz_l10n_ar_bank.py:132
@@ -117,7 +130,7 @@ msgstr "Actualizador de Bancos desde BCRA"
 #. module: l10n_ar_bank
 #: field:res.bank,update_date:0
 msgid "Update Date"
-msgstr ""
+msgstr "Fecha de Actualización"
 
 #. module: l10n_ar_bank
 #: view:l10nar.banks.wizard:l10n_ar_bank.l10n_ar_banks_wizard

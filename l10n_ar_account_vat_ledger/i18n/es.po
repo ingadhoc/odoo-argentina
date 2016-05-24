@@ -3,15 +3,17 @@
 # * l10n_ar_account_vat_ledger
 # 
 # Translators:
-# Juan Jose Scarafia <scarafia.juanjose@gmail.com>, 2015
+# Gonzalo Ruzafa <gr@ingadhoc.com>, 2015
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2015
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
 # Mario Calvar <ventas.bbca@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 02:29+0000\n"
-"PO-Revision-Date: 2015-10-19 20:29+0000\n"
-"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"POT-Creation-Date: 2016-05-24 13:24+0000\n"
+"PO-Revision-Date: 2016-05-24 20:37+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:119
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:110
 #, python-format
 msgid "%s VAT Ledger %s"
 msgstr "Libro de IVA %s %s"
@@ -72,7 +74,13 @@ msgid "Date of the last message posted on the record."
 msgstr "Fecha del último mensaje publicado en el registro."
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:60
+#: field:account.vat.ledger,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,document_class_ids:0
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:62
 #, python-format
 msgid "Document Classes"
 msgstr "Clases de Documentos"
@@ -116,7 +124,8 @@ msgstr "Si se marca nuevos mensajes requieren su atención."
 
 #. module: l10n_ar_account_vat_ledger
 #: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:56
+#: field:account.vat.ledger,invoice_ids:0
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:58
 #, python-format
 msgid "Invoices"
 msgstr "Facturas"
@@ -141,6 +150,11 @@ msgstr "Mantenga vacía para todo el año fiscal abierto"
 #: field:account.vat.ledger,message_last_post:0
 msgid "Last Message Date"
 msgstr "Fecha de Último Mensaje "
+
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,__last_update:0
+msgid "Last Modified on"
+msgstr "Última Modificación en"
 
 #. module: l10n_ar_account_vat_ledger
 #: field:account.vat.ledger,last_page:0
@@ -174,13 +188,15 @@ msgid "Notes"
 msgstr "Notas"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:68
+#: field:account.vat.ledger,other_tax_code_ids:0
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:70
 #, python-format
 msgid "Other Tax Codes"
 msgstr "Otros códigos de impuestos"
 
 #. module: l10n_ar_account_vat_ledger
 #: code:addons/l10n_ar_account_vat_ledger/account.py:22
+#: field:afip.document_class,other_taxes_amount:0
 #, python-format
 msgid "Other Taxes Amount"
 msgstr "Importe de Otros Impuestos"
@@ -216,7 +232,7 @@ msgid "Purchase"
 msgstr "Compras"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:118
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:109
 #, python-format
 msgid "Purchases"
 msgstr "Compras"
@@ -228,7 +244,13 @@ msgid "Purchases VAT Ledger"
 msgstr "Libro de IVA Compras"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:72
+#: field:account.vat.ledger,reference:0
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,responsability_ids:0
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:74
 #, python-format
 msgid "Responsabilities"
 msgstr "Responsabilidades"
@@ -239,7 +261,7 @@ msgid "Sale"
 msgstr "Ventas"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:116
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:107
 #, python-format
 msgid "Sales"
 msgstr "Ventas"
@@ -262,8 +284,10 @@ msgid "Summary"
 msgstr "Resumen"
 
 #. module: l10n_ar_account_vat_ledger
+#: field:account.tax.code,amount_tax:0
 #: code:addons/l10n_ar_account_vat_ledger/account.py:78
-#: code:addons/l10n_ar_account_vat_ledger/account.py:129
+#: code:addons/l10n_ar_account_vat_ledger/account.py:149
+#: field:afip.responsability,amount_tax:0
 #, python-format
 msgid "Tax"
 msgstr "Impuesto"
@@ -274,6 +298,7 @@ msgid "Tax Code"
 msgstr "Código de impuesto"
 
 #. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,name:0
 #: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:52
 #, python-format
 msgid "Titile"
@@ -285,22 +310,25 @@ msgid "To Draft"
 msgstr "A Borrador"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:131
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:124
 #, python-format
 msgid "To set \"Presented\" you must set the \"Last Page\" first"
 msgstr "Para marcar como \"Presentado\" primero debe establecer la \"Última Página\""
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:128
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:120
 #, python-format
 msgid "To set \"Presented\" you must upload the \"Presented Ledger\" first"
 msgstr "Para marcar como \"Presentado\" primero debe cargar el archivo en el campo \"Libro Presentado\""
 
 #. module: l10n_ar_account_vat_ledger
+#: field:account.tax.code,amount_total:0
 #: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
 #: code:addons/l10n_ar_account_vat_ledger/account.py:30
 #: code:addons/l10n_ar_account_vat_ledger/account.py:81
-#: code:addons/l10n_ar_account_vat_ledger/account.py:132
+#: code:addons/l10n_ar_account_vat_ledger/account.py:152
+#: field:afip.document_class,amount_total:0
+#: field:afip.responsability,amount_total:0
 #, python-format
 msgid "Total"
 msgstr "Total"
@@ -316,15 +344,19 @@ msgid "Unread Messages"
 msgstr "Mensajes no leídos"
 
 #. module: l10n_ar_account_vat_ledger
+#: field:account.tax.code,amount_untaxed:0
 #: code:addons/l10n_ar_account_vat_ledger/account.py:16
 #: code:addons/l10n_ar_account_vat_ledger/account.py:75
-#: code:addons/l10n_ar_account_vat_ledger/account.py:126
+#: code:addons/l10n_ar_account_vat_ledger/account.py:146
+#: field:afip.document_class,amount_untaxed:0
+#: field:afip.responsability,amount_untaxed:0
 #, python-format
 msgid "Untaxed"
 msgstr "Sin impuestos"
 
 #. module: l10n_ar_account_vat_ledger
 #: code:addons/l10n_ar_account_vat_ledger/account.py:27
+#: field:afip.document_class,vat_amount:0
 #, python-format
 msgid "VAT Amount"
 msgstr "Importe del IVA "
@@ -341,7 +373,8 @@ msgid "VAT Ledgers"
 msgstr "Libros de IVA"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:64
+#: field:account.vat.ledger,vat_tax_code_ids:0
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:66
 #, python-format
 msgid "VAT Tax Codes"
 msgstr "Códigos de Impuesto IVA"

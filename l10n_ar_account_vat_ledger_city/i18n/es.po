@@ -3,14 +3,15 @@
 # * l10n_ar_account_vat_ledger_city
 # 
 # Translators:
-# Juan Jose Scarafia <scarafia.juanjose@gmail.com>, 2015
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2015
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-18 02:29+0000\n"
-"PO-Revision-Date: 2015-10-19 20:29+0000\n"
-"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"POT-Creation-Date: 2016-05-24 13:24+0000\n"
+"PO-Revision-Date: 2016-05-24 20:37+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,19 +25,21 @@ msgid "Account VAT Ledger"
 msgstr "Libro IVA Contable"
 
 #. module: l10n_ar_account_vat_ledger_city
-#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:79
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:102
 #, python-format
 msgid "Alicuots_%s_%s.txt"
 msgstr "Alicuotas_%s_%s.txt"
 
 #. module: l10n_ar_account_vat_ledger_city
-#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:39
+#: field:account.vat.ledger,aliquots_file:0
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:43
 #, python-format
 msgid "Aliquots File"
 msgstr "Archivo de Alícuotas"
 
 #. module: l10n_ar_account_vat_ledger_city
-#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:44
+#: field:account.vat.ledger,aliquots_filename:0
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:48
 #, python-format
 msgid "Aliquots Filename"
 msgstr "Nombre archivo Alícuotas"
@@ -67,13 +70,27 @@ msgid "Global"
 msgstr "Global"
 
 #. module: l10n_ar_account_vat_ledger_city
-#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:118
+#: field:account.vat.ledger,import_aliquots_file:0
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:53
 #, python-format
-msgid "No vat configured for company %s"
-msgstr "IVA no configurado en compañía %s"
+msgid "Import Aliquots File"
+msgstr "Archivo de Alícuotas"
 
 #. module: l10n_ar_account_vat_ledger_city
-#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:183
+#: field:account.vat.ledger,import_aliquots_filename:0
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:58
+#, python-format
+msgid "Import Aliquots Filename"
+msgstr "Nombre archivo Alícuotas"
+
+#. module: l10n_ar_account_vat_ledger_city
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:107
+#, python-format
+msgid "Import_Alicuots_%s_%s.txt"
+msgstr "Alicuotas_%s_%s.txt"
+
+#. module: l10n_ar_account_vat_ledger_city
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:218
 #, python-format
 msgid ""
 "On purchase citi, partner document is mandatory and partner document type "
@@ -106,6 +123,11 @@ msgid "REGINFO_CV_CBTE"
 msgstr "REGINFO_CV_CBTE"
 
 #. module: l10n_ar_account_vat_ledger_city
+#: field:account.vat.ledger,REGINFO_CV_COMPRAS_IMPORTACIONES:0
+msgid "REGINFO_CV_COMPRAS_IMPORTACIONES"
+msgstr "REGINFO_CV_COMPRAS_IMPORTACIONES"
+
+#. module: l10n_ar_account_vat_ledger_city
 #: help:account.vat.ledger,sequence:0
 msgid ""
 "Se deberá indicar si la presentación es Original (00) o Rectificativa y su "
@@ -118,25 +140,27 @@ msgid "Sequence"
 msgstr "Sequencia"
 
 #. module: l10n_ar_account_vat_ledger_city
-#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:29
+#: field:account.vat.ledger,vouchers_file:0
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:33
 #, python-format
 msgid "Vouchers File"
 msgstr "Archivo de Comprobantes"
 
 #. module: l10n_ar_account_vat_ledger_city
-#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:34
+#: field:account.vat.ledger,vouchers_filename:0
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:38
 #, python-format
 msgid "Vouchers Filename"
 msgstr "Nombre de Archivo de Comprobantes"
 
 #. module: l10n_ar_account_vat_ledger_city
-#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:84
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:112
 #, python-format
 msgid "Vouchers_%s_%s.txt"
 msgstr "Comprobantes_%s_%s.txt"
 
 #. module: l10n_ar_account_vat_ledger_city
-#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:318
+#: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:365
 #, python-format
 msgid "by_voucher not implemented yet"
 msgstr "por_comprobantes no esta implementado aún"

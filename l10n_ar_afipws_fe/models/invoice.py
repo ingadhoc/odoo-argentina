@@ -25,40 +25,40 @@ class invoice(models.Model):
         copy=False,
         string='Batch Number',
         readonly=True
-        )
+    )
     afip_cae = fields.Char(
         copy=False,
         string='CAE number',
         readonly=True,
         size=24,
         states={'draft': [('readonly', False)]},
-        )
+    )
     afip_cae_due = fields.Date(
         copy=False,
         readonly=True,
         string='CAE due Date',
         states={'draft': [('readonly', False)]},
-        )
+    )
     afip_barcode = fields.Char(
         compute='_get_barcode',
         string=_('AFIP Barcode')
-        )
+    )
     afip_barcode_img = fields.Binary(
         compute='_get_barcode',
         string=_('AFIP Barcode Image')
-        )
+    )
     afip_message = fields.Text(
         string='AFIP Message',
         copy=False,
-        )
+    )
     afip_xml_request = fields.Text(
         string='AFIP XML Request',
         copy=False,
-        )
+    )
     afip_xml_response = fields.Text(
         string='AFIP XML Response',
         copy=False,
-        )
+    )
     afip_result = fields.Selection([
         ('', 'n/a'),
         ('A', 'Aceptado'),
@@ -69,11 +69,11 @@ class invoice(models.Model):
         states={'draft': [('readonly', False)]},
         copy=False,
         help="AFIP request result"
-        )
+    )
     validation_type = fields.Char(
         'Validation Type',
         compute='get_validation_type',
-        )
+    )
 
     @api.one
     def get_validation_type(self):
@@ -255,7 +255,7 @@ class invoice(models.Model):
             moneda_id = inv.currency_id.afip_code
             moneda_ctz = inv.currency_rate
             # moneda_ctz = str(inv.company_id.currency_id.compute(
-                # 1., inv.currency_id))
+            # 1., inv.currency_id))
 
             # # foreign trade data: export permit, country code, etc.:
             if inv.afip_incoterm_id:
@@ -275,7 +275,7 @@ class invoice(models.Model):
                 forma_pago = obs_comerciales = None
             idioma_cbte = 1     # invoice language: spanish / español
 
-            ## customer data (foreign trade):
+            # customer data (foreign trade):
             nombre_cliente = commercial_partner.name
             # If argentinian and cuit, then use cuit
             if country.code == 'AR' and tipo_doc == 80 and nro_doc:
@@ -299,7 +299,7 @@ class invoice(models.Model):
                                 commercial_partner.street2 or '',
                                 commercial_partner.zip or '',
                                 commercial_partner.city or '',
-                                ])
+            ])
             pais_dst_cmp = commercial_partner.country_id.afip_code
 
             # create the invoice internally in the helper
@@ -311,7 +311,7 @@ class invoice(models.Model):
                     imp_trib, imp_op_ex, fecha_cbte, fecha_venc_pago,
                     fecha_serv_desde, fecha_serv_hasta,
                     moneda_id, moneda_ctz
-                    )
+                )
             elif afip_ws == 'wsmtxca':
                 ws.CrearFactura(
                     concepto, tipo_doc, nro_doc, doc_afip_code, pos_number,
@@ -321,7 +321,7 @@ class invoice(models.Model):
                     fecha_serv_desde, fecha_serv_hasta,
                     moneda_id, moneda_ctz,
                     obs_generales   # difference with wsfe
-                    )
+                )
             elif afip_ws == 'wsfex':
                 ws.CrearFactura(
                     doc_afip_code, pos_number, cbte_nro, fecha_cbte,
@@ -330,7 +330,7 @@ class invoice(models.Model):
                     id_impositivo, moneda_id, moneda_ctz, obs_comerciales,
                     obs_generales, forma_pago, incoterms,
                     idioma_cbte, incoterms_ds
-                    )
+                )
 
             # TODO ver si en realidad tenemos que usar un vat pero no lo
             # subimos
@@ -341,7 +341,7 @@ class invoice(models.Model):
                         vat.tax_code_id.afip_code,
                         "%.2f" % abs(vat.base_amount),
                         "%.2f" % abs(vat.tax_amount),
-                        )
+                    )
                 for tax in self.not_vat_tax_ids:
                     _logger.info('Adding TAX %s' % tax.tax_code_id.name)
                     ws.AgregarTributo(
@@ -349,7 +349,7 @@ class invoice(models.Model):
                         tax.tax_code_id.name,
                         "%.2f" % abs(tax.base_amount),
                         "%.2f" % abs(tax.tax_amount),
-                        )
+                    )
 
             CbteAsoc = inv.get_related_invoices_data()
             if CbteAsoc:
@@ -357,7 +357,7 @@ class invoice(models.Model):
                     CbteAsoc.afip_document_class_id.afip_code,
                     CbteAsoc.point_of_sale,
                     CbteAsoc.invoice_number,
-                    )
+                )
 
             # analize line items - invoice detail
             # wsfe do not require detail
@@ -386,14 +386,14 @@ class invoice(models.Model):
                         else:
                             iva_id = line.vat_tax_ids.ref_tax_code_id.afip_code
                         vat_taxes_amounts = line.vat_tax_ids.compute_all(
-                                    line.price_unit, line.quantity,
-                                    product=self.product_id,
-                                    partner=self.invoice_id.partner_id)
+                            line.price_unit, line.quantity,
+                            product=self.product_id,
+                            partner=self.invoice_id.partner_id)
                         imp_iva = vat_taxes_amounts[
                             'total_included'] - vat_taxes_amounts['total']
                         ws.AgregarItem(
                             u_mtx, cod_mtx, codigo, ds, qty, umed,
-                            precio, bonif, iva_id, imp_iva, importe+imp_iva)
+                            precio, bonif, iva_id, imp_iva, importe + imp_iva)
                     elif afip_ws == 'wsfex':
                         ws.AgregarItem(
                             codigo, ds, qty, umed, precio, importe,
@@ -443,6 +443,6 @@ class invoice(models.Model):
                 'afip_message': msg,
                 'afip_xml_request': ws.XmlRequest,
                 'afip_xml_response': ws.XmlResponse,
-                })
+            })
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

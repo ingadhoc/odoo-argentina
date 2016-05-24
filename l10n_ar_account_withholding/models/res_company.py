@@ -5,7 +5,6 @@ from pyafipws.iibb import IIBB
 # from pyafipws.padron import PadronAFIP
 from openerp.exceptions import Warning
 import logging
-from dateutil.relativedelta import relativedelta
 _logger = logging.getLogger(__name__)
 
 
@@ -125,25 +124,31 @@ class ResCompany(models.Model):
 
         # ' Hubo error general de ARBA?
         if ws.CodigoError:
-            raise Warning("%s\nError %s: %s" % (
-                ws.MensajeError, ws.TipoError, ws.CodigoError))
+            if ws.CodigoError == '11':
+                # we still create the record so we don need to check it again
+                # on same period
+                _logger.info('CUIT %s not present on padron ARBA' % cuit)
+            else:
+                raise Warning("%s\nError %s: %s" % (
+                    ws.MensajeError, ws.TipoError, ws.CodigoError))
 
-        if not ws.AlicuotaRetencion or not ws.AlicuotaPercepcion:
-            raise Warning('No pudimos obtener la AlicuotaRetencion')
+        # no ponemos esto, si no viene alicuota es porque es cero entonces
+        # if not ws.AlicuotaRetencion or not ws.AlicuotaPercepcion:
+        #     raise Warning('No pudimos obtener la AlicuotaRetencion')
 
         # ' Datos generales de la respuesta:'
         data = {
             'numero_comprobante': ws.NumeroComprobante,
             'codigo_hash': ws.CodigoHash,
             # 'CuitContribuyente': ws.CuitContribuyente,
-            'alicuota_percepcion': float(
+            'alicuota_percepcion': ws.AlicuotaPercepcion and float(
                 ws.AlicuotaPercepcion.replace(',', '.')),
-            'alicuota_retencion': float(
+            'alicuota_retencion': ws.AlicuotaRetencion and float(
                 ws.AlicuotaRetencion.replace(',', '.')),
             'grupo_percepcion': ws.GrupoPercepcion,
             'grupo_retencion': ws.GrupoRetencion,
             'from_date': from_date,
-            'to_date': from_date,
+            'to_date': to_date,
         }
         _logger.info('We get the following data: \n%s' % data)
         return data

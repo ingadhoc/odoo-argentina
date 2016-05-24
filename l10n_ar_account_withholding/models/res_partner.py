@@ -3,6 +3,7 @@ from openerp import models, fields, api
 # from pyafipws.padron import PadronAFIP
 import logging
 from dateutil.relativedelta import relativedelta
+from datetime import datetime
 _logger = logging.getLogger(__name__)
 
 
@@ -12,6 +13,7 @@ class ResPartner(models.Model):
     arba_alicuot_ids = fields.One2many(
         'res.partner.arba_alicuot',
         'partner_id',
+        'Alicuotas de ARBA'
     )
     drei = fields.Selection([
         ('activo', 'Activo'),
@@ -25,11 +27,15 @@ class ResPartner(models.Model):
         company = self._context.get('invoice_company')
         invoice_date = self._context.get('invoice_date')
         if invoice_date and company:
-            from datetime import datetime
             date = datetime.strptime(invoice_date, '%Y-%m-%d')
             arba = self.get_arba_data(company, date)
-            return arba.alicuota_percepcion
+            return arba.alicuota_percepcion / 100.0
         return 0
+
+    @api.multi
+    def get_arba_alicuota_retencion(self, company, date):
+        arba = self.get_arba_data(company, date)
+        return arba.alicuota_retencion / 100.0
 
     @api.multi
     def get_arba_data(self, company, date):

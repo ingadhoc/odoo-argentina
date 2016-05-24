@@ -44,24 +44,15 @@ class AccountTaxWithholding(models.Model):
                 date = (
                     voucher.date and fields.Date.from_string(voucher.date) or
                     datetime.date.today())
-                arba = voucher.partner_id.get_arba_data(
+                alicuota = voucher.partner_id.get_arba_alicuota_retencion(
                     voucher.company_id,
                     date,
                 )
-                # arba_data = self.company_id.get_arba_data(
-                #     voucher.partner_id.commercial_partner_id,
-                #     date
-                # )
-                # AlicuotaRetencion = arba_data.get('AlicuotaRetencion')
-                # if not AlicuotaRetencion:
-                #     raise Warning('No pudimos obtener la AlicuotaRetencion')
-                # alicuot = float(AlicuotaRetencion.replace(',', '.'))
-                amount = base_amount * arba.alicuota_retencion
+                amount = base_amount * (alicuota)
                 vals['comment'] = "%s x %s" % (
-                    base_amount, arba.alicuota_retencion)
+                    base_amount, alicuota)
                 vals['amount'] = amount
                 vals['computed_withholding_amount'] = amount
-                # vals['comment'] = arba_data
         elif self.type == 'tabla_ganancias':
             # if not self.company_id.regimenes_ganancias:
             #     raise Warning(

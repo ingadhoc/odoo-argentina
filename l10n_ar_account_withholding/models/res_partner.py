@@ -56,7 +56,7 @@ class ResPartner(models.Model):
             )
             arba_data['partner_id'] = commercial_partner.id
             arba_data['company_id'] = company.id
-            arba = self.arba_alicuot_ids.create(arba_data)
+            arba = self.arba_alicuot_ids.sudo().create(arba_data)
         return arba
 
 

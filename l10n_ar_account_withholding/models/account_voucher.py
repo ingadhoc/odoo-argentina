@@ -23,13 +23,20 @@ class AccountVoucher(models.Model):
         ('nro_regimen', 'Nro Regimen'),
     ],
         'Retención Ganancias',
+        readonly=True,
+        states={'draft': [('readonly', False)],
+                'confirmed': [('readonly', False)]}
     )
     regimen_ganancias_id = fields.Many2one(
         'afip.tabla_ganancias.alicuotasymontos',
-        'Regimen Ganancias'
+        'Regimen Ganancias',
+        readonly=True,
+        states={'draft': [('readonly', False)],
+                'confirmed': [('readonly', False)]}
     )
     company_regimenes_ganancias_ids = fields.Many2many(
-        related='company_id.regimenes_ganancias_ids'
+        related='company_id.regimenes_ganancias_ids',
+        readonly=True,
     )
 
     @api.onchange('retencion_ganancias')

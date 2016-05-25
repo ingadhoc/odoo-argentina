@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'category': 'Accounting & Finance',
@@ -29,6 +29,7 @@
         'views/res_partner_view.xml',
         'views/afip_activity_view.xml',
         'views/afip_tax_view.xml',
+        'views/afip_concept_view.xml',
         'res_config_view.xml',
     ],
     'demo': [
@@ -44,5 +45,5 @@
     'installable': True,
     'name': 'Padron AFIP Argentino',
     'test': [],
-    'version': '8.0.0.0.1',
- }
+    'version': '8.0.0.1.0',
+}

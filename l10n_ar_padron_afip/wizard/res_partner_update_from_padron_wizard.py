@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from openerp import models, api, fields
+from openerp import models, api, fields, _
 from ast import literal_eval
-# from openerp.exceptions import Warning
+from openerp.exceptions import Warning
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -46,7 +46,11 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
                 context.get('active_ids')
         ):
             res['state'] = 'selection'
-            res['partner_id'] = self.get_partners()[0].id
+            partners = self.get_partners()
+            if not partners:
+                raise Warning(_(
+                    'No se encontró ningún partner con CUIT para actualizar'))
+            res['partner_id'] = partners[0].id
         return res
 
     @api.model

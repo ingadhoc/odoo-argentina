@@ -64,6 +64,7 @@ class account_invoice_line_report(models.Model):
         ('in_refund', 'Supplier Refund'),
     ], 'Type', readonly=True)
     user_id = fields.Many2one('res.users', 'Salesman', readonly=True)
+    state_id = fields.Many2one('res.country.state', 'State', readonly=True)
     company_id = fields.Many2one('res.company', 'Company', readonly=True)
     product_category_id = fields.Many2one(
         'product.category', 'Category', readonly=True)
@@ -111,6 +112,7 @@ class account_invoice_line_report(models.Model):
                 "account_invoice"."journal_id" AS "journal_id",--n
                 "account_invoice"."user_id" AS "user_id",--n
                 "account_invoice"."company_id" AS "company_id",--n
+                "account_invoice"."state_id" AS "state_id",--n
                 "account_invoice"."type" AS "type",
 
                 "account_invoice"."state" AS "state",

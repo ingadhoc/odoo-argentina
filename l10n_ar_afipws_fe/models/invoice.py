@@ -246,10 +246,14 @@ class invoice(models.Model):
 
             # # invoice amount totals:
             imp_total = str("%.2f" % abs(inv.amount_total))
-            imp_tot_conc = "0.00"
-            imp_neto = str("%.2f" % abs(inv.amount_untaxed))
+            # ImpTotConc es el iva no gravado
+            imp_tot_conc = str("%.2f" % abs(inv.vat_untaxed))
+            # en la v9 lo hicimos diferente, aca restamos al vat amount
+            # lo que seria exento y no gravado
+            imp_neto = str("%.2f" % abs(
+                inv.vat_base_amount - inv.vat_untaxed - inv.vat_exempt_amount))
             imp_iva = str("%.2f" % abs(inv.vat_amount))
-            imp_subtotal = imp_neto  # TODO: not allways the case!
+            imp_subtotal = str("%.2f" % abs(inv.amount_untaxed))
             imp_trib = str("%.2f" % abs(inv.other_taxes_amount))
             imp_op_ex = str("%.2f" % abs(inv.vat_exempt_amount))
             moneda_id = inv.currency_id.afip_code
@@ -336,6 +340,9 @@ class invoice(models.Model):
             # subimos
             if afip_ws != 'wsfex':
                 for vat in self.vat_tax_ids:
+                    # we dont send no gravado y exento
+                    if vat.tax_code_id.afip_code in [1, 2]:
+                        continue
                     _logger.info('Adding VAT %s' % vat.tax_code_id.name)
                     ws.AgregarIva(
                         vat.tax_code_id.afip_code,

@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Argentina - Web Services de Factura Electrónica del AFIP",
-    'version': '8.0.1.1.3',
+    'version': '8.0.1.1.4',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author':  'ADHOC SA',

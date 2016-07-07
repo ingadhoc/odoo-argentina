@@ -4,7 +4,9 @@
         <record id="view_invoice_form" model="ir.ui.view">
             <field name="model">account.invoice</field>
             <field name="name">account.invoice.afip.form</field>
-            <field name="inherit_id" ref="account.invoice_form" />
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <!-- we want this view to be loaded after invoice operation view if installed -->
+            <field name="priority">20</field>
             <field name="arch" type="xml">
                 <!-- TODO ver si es necesario cambiar este contexto o no -->
                 <field name="invoice_line" position="attributes">

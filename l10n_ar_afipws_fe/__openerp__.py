@@ -20,10 +20,10 @@
 ##############################################################################
 {
     "name": "Argentina - Web Services de Factura Electrónica del AFIP",
-    'version': '8.0.1.1.4',
+    'version': '8.0.1.2.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',
@@ -35,7 +35,7 @@ algun lugar
 """,
     'depends': [
         'l10n_ar_afipws',
-        ],
+    ],
     'external_dependencies': {
     },
     'data': [
@@ -59,5 +59,5 @@ algun lugar
     'installable': True,
     'auto_install': True,
     'application': False,
- }
+}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

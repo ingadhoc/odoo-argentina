@@ -77,8 +77,13 @@ class invoice(models.Model):
 
     @api.one
     def get_validation_type(self):
+        # for compatibility with account_invoice_operation, if module installed
+        # and there are operations we return no_validation so no validate
+        # button is displayed
+        if self._fields.get('operation_ids') and self.operation_ids:
+            self.validation_type = 'no_validation'
         # if invoice has cae then me dont validate it against afip
-        if self.journal_id.point_of_sale_id.afip_ws and not self.afip_cae:
+        elif self.journal_id.point_of_sale_id.afip_ws and not self.afip_cae:
             self.validation_type = self.env[
                 'res.company']._get_environment_type()
 

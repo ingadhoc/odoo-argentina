@@ -419,8 +419,14 @@ class account_invoice(models.Model):
                 raise Warning(_(
                     'Could not get invoice number and point of sale for invoice id %i') % (
                         self.id))
-            self.invoice_number = int(re.sub("[^0-9]", "", invoice_number))
-            self.point_of_sale = int(re.sub("[^0-9]", "", point_of_sale))
+            try:
+                self.invoice_number = int(re.sub("[^0-9]", "", invoice_number))
+                self.point_of_sale = int(re.sub("[^0-9]", "", point_of_sale))
+            except Exception, e:
+                raise Warning(_(
+                    'Could not get invoice number and point of sale for invoice id %i.\n'
+                    'This is what we get:\n%s') % (
+                        self.id, e))
 
     _sql_constraints = [
         ('number_supplier_invoice_number',

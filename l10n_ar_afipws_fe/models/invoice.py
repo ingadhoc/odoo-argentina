@@ -228,8 +228,8 @@ class invoice(models.Model):
 
             partner_doc_code = commercial_partner.document_type_id.afip_code
             tipo_doc = partner_doc_code or '99'
-            nro_doc = partner_doc_code and int(
-                commercial_partner.document_number) or "0"
+            nro_doc = (
+                partner_doc_code and commercial_partner.document_number or "0")
             cbt_desde = cbt_hasta = cbte_nro = next_invoice_number
             concepto = tipo_expo = int(inv.afip_concept)
 

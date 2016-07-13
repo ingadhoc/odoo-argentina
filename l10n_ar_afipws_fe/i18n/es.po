@@ -6,12 +6,12 @@
 # Cristian S. Rocha <cristian.rocha@moldeointeractive.com.ar>, 2013
 # Hotellook, 2014
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2015
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-24 13:24+0000\n"
+"POT-Creation-Date: 2016-07-08 01:16+0000\n"
 "PO-Revision-Date: 2016-05-24 21:05+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
@@ -53,8 +53,8 @@ msgid "AFIP Message"
 msgstr "Mensaje del AFIP"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:430
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:434
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:442
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:446
 #, python-format
 msgid "AFIP Validation Error. %s"
 msgstr "Error de Validación AFIP. %s"
@@ -292,7 +292,7 @@ msgid "Enabled Point Of Sales on AFIP\n"
 msgstr "Puntos de Venta habilitados en AFIP\n"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:219
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:224
 #, python-format
 msgid "Error!Invoice id: %iNext invoice number should be %i and not %i"
 msgstr "ERROR! Id Factura: %iEl próximo número de factura debería ser %i y no %i"
@@ -303,19 +303,19 @@ msgid "Exportación -con detalle- RG2758 (WSFEXv1)"
 msgstr "Exportación -con detalle- RG2758 (WSFEXv1)"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:210
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:215
 #, python-format
 msgid "For WS \"%s\" country afip code is mandatoryCountry: %s"
 msgstr "Para el WS \"%s\" el código AFIP de pais es obligatorio. Pais: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:205
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:210
 #, python-format
 msgid "For WS \"%s\" country code is mandatoryCountry: %s"
 msgstr "Para el WS \"%s\" el código de pais es obligatorio. Pais: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:200
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:205
 #, python-format
 msgid "For WS \"%s\" country is required on partner"
 msgstr "Para el WS \"%s\" el país es requerido en la empresa"
@@ -492,8 +492,8 @@ msgid "No company found using argentinian localization"
 msgstr "No se encontró compañía utilizando la localización argentina"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:370
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:381
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:382
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:393
 #, python-format
 msgid "Not afip code con producto UOM %s"
 msgstr "No hay código de afip en el UdM %s"

@@ -3,19 +3,21 @@
 # * l10n_ar_invoice
 # 
 # Translators:
+# emiq2 <eq@ingadhoc.com>, 2016
+# emiq2 <eq@ingadhoc.com>, 2016
 # Hotellook, 2014
 # Javier Diez <jd@ingadhoc.com>, 2015
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2015
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2015-2016
 # Mario Calvar <ventas.bbca@gmail.com>, 2015
 # Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-24 13:25+0000\n"
-"PO-Revision-Date: 2016-05-24 21:13+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
+"POT-Creation-Date: 2016-07-11 14:23+0000\n"
+"PO-Revision-Date: 2016-07-11 15:04+0000\n"
+"Last-Translator: emiq2 <eq@ingadhoc.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -745,7 +747,7 @@ msgid "Company id"
 msgstr "ID de Compañía"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:813
+#: code:addons/l10n_ar_invoice/models/invoice.py:819
 #, python-format
 msgid "Compose Email"
 msgstr "Componer correo electrónico"
@@ -771,6 +773,15 @@ msgstr "Costo de mercadería vendida"
 #, python-format
 msgid "Could not get invoice number and point of sale for invoice id %i"
 msgstr "No se pudo obtener el número de factura y el punto de venta para el id de factura %i"
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/invoice.py:426
+#, python-format
+msgid ""
+"Could not get invoice number and point of sale for invoice id %i.\n"
+"This is what we get:\n"
+"%s"
+msgstr ""
 
 #. module: l10n_ar_invoice
 #: model:ir.model,name:l10n_ar_invoice.model_res_country
@@ -1136,7 +1147,7 @@ msgid "Entry Sequence"
 msgstr "Secuencia de Asiento"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:723
+#: code:addons/l10n_ar_invoice/models/invoice.py:729
 #, python-format
 msgid ""
 "Error!. Please define sequence on the journal related documents to this "
@@ -1624,7 +1635,7 @@ msgid "If not configured for bank/cash journals it will be created"
 msgstr "Si no esta configurado para diarios de caja/bancos va a ser creada"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:683
+#: code:addons/l10n_ar_invoice/models/invoice.py:689
 #, python-format
 msgid ""
 "If there you have choose a tax with 0, exempt or untaxed, you must choose a "
@@ -1742,13 +1753,13 @@ msgid "Invoice"
 msgstr "Factura"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:668
+#: code:addons/l10n_ar_invoice/models/invoice.py:674
 #, python-format
 msgid "Invoice ID %i shouldn't have any vat tax"
 msgstr "La factura con ID %i no debería tener ningún impuesto IVA"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:655
+#: code:addons/l10n_ar_invoice/models/invoice.py:661
 #, python-format
 msgid ""
 "Invoice ID: %i\n"
@@ -1832,7 +1843,7 @@ msgid "Invoices Statistics"
 msgstr "Estadísticas de facturas"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:615
+#: code:addons/l10n_ar_invoice/models/invoice.py:621
 #, python-format
 msgid "Invoices ids %s amount is cero!"
 msgstr "El importe es cero en las facturas con id %s!"
@@ -2162,13 +2173,13 @@ msgid "Operaciones exentas"
 msgstr "Operaciones exentas"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:780
+#: code:addons/l10n_ar_invoice/models/invoice.py:786
 #, python-format
 msgid "Operation Type Error"
 msgstr "Error de Tipo de Operación"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:781
+#: code:addons/l10n_ar_invoice/models/invoice.py:787
 #, python-format
 msgid "Operation Type Must be \"Sale\" or \"Purchase\""
 msgstr "El Tipo de Operación Debe ser \"Venta\" o \"Compra\""
@@ -2407,7 +2418,7 @@ msgid "Plan de Impuestos de Argentina para Responsables Inscriptos"
 msgstr "Plan de Impuestos de Argentina para Responsables Inscriptos"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:785
+#: code:addons/l10n_ar_invoice/models/invoice.py:791
 #, python-format
 msgid ""
 "Please, set your company responsability in the company partner before "
@@ -2905,7 +2916,13 @@ msgid "Software"
 msgstr "Software"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:565
+#: code:addons/l10n_ar_invoice/wizard/account_invoice_refund.py:68
+#, python-format
+msgid "Solo una factura puede ser reembolsada en cada operación"
+msgstr ""
+
+#. module: l10n_ar_invoice
+#: code:addons/l10n_ar_invoice/models/invoice.py:571
 #, python-format
 msgid ""
 "Some invoices have a journal that require a document but not document type has been selected.\n"
@@ -2913,7 +2930,7 @@ msgid ""
 msgstr "Algunas facturas tienen un diario que requiere un documento pero ningún tipo de documento se ha seleccionado.\nIds de Facturas: %s"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:634
+#: code:addons/l10n_ar_invoice/models/invoice.py:640
 #, python-format
 msgid ""
 "Some purchase invoices don't have supplier nunmber.\n"
@@ -2929,8 +2946,9 @@ msgstr "Fecha Comienzo de Actividades"
 #: view:account.invoice:l10n_ar_invoice.view_account_invoice_filter
 #: field:account.invoice,state_id:0
 #: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#: field:account.invoice.line.report,state_id:0
 msgid "State"
-msgstr "Estado"
+msgstr "Provincia"
 
 #. module: l10n_ar_invoice
 #: field:account.invoice,printed_amount_untaxed:0
@@ -2986,7 +3004,7 @@ msgstr "Factura de Proveedor"
 
 #. module: l10n_ar_invoice
 #: sql_constraint:account.invoice:0
-#: code:addons/l10n_ar_invoice/models/invoice.py:553
+#: code:addons/l10n_ar_invoice/models/invoice.py:559
 #, python-format
 msgid "Supplier Invoice Number must be unique per Supplier and Company!"
 msgstr "El Número de Factura del Proveedor debe ser único por Compañía y Proveedor!"
@@ -3231,7 +3249,7 @@ msgid "Yes, No Discriminate Default"
 msgstr "Si, no discriminar por defecto"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:598
+#: code:addons/l10n_ar_invoice/models/invoice.py:604
 #, python-format
 msgid ""
 "You are using argentinian localization and there are some invoices with "
@@ -3240,7 +3258,7 @@ msgid ""
 msgstr "Esta utilizando la localización argentina y hay algunas facturas con impuestos que no tienen configurados códigos de impuestos. Los códigos de impuesto son requeridos para generar este reporte. Ids de facturas: %s"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:607
+#: code:addons/l10n_ar_invoice/models/invoice.py:613
 #, python-format
 msgid ""
 "You are using argentinian localization and there are some tax codes that are"
@@ -3248,7 +3266,7 @@ msgid ""
 msgstr "Esta utilizando la localización argentina y hay algunos códigos de impuestos que no están configurados. Ids de Códigos de Impuestos: %s"
 
 #. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:784
+#: code:addons/l10n_ar_invoice/models/invoice.py:790
 #, python-format
 msgid "Your company has not setted any responsability"
 msgstr "Su compañía no tiene configurada ninguna responsabilidad"

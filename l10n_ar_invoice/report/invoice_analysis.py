@@ -68,6 +68,10 @@ class account_invoice_line_report(models.Model):
     company_id = fields.Many2one('res.company', 'Company', readonly=True)
     product_category_id = fields.Many2one(
         'product.category', 'Category', readonly=True)
+    account_analytic_id = fields.Many2one(
+        'account.analytic.account',
+        'Analytic Account',
+        readonly=True)
 
     _order = 'id'
 
@@ -80,6 +84,7 @@ class account_invoice_line_report(models.Model):
                 "account_invoice_line"."id" AS "id",  
                 "account_invoice_line"."price_unit" AS "price_unit",
                 "account_invoice_line"."discount" AS "discount",
+                "account_invoice_line"."account_analytic_id" AS "account_analytic_id",
                 case when "account_invoice"."type" in ('in_refund','out_refund') then
                                        -("account_invoice_line"."quantity")
                                       else

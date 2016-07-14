@@ -9,6 +9,7 @@
                 <field name="number"/>
                 <field name="date_invoice"/>
                 <field name="journal_id"/>
+                <field name="account_analytic_id"/>
                 <field name="state_id" invisible="1"/>
                 <field name="type" invisible="1"/>
                 <field name="partner_id"/>

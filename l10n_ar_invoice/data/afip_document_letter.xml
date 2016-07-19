@@ -27,9 +27,9 @@
         </record>
         <record model='afip.document_letter' id='dl_e'>
             <field name='name'>E</field>
-            <field name='issuer_ids' eval="[(6, 0, [ref('res_IVARI'), ref('res_RM')])]"/>
+            <field name='issuer_ids' eval="[(6, 0, [ref('res_IVARI'), ref('res_RM'), ref('res_EXT'), ref('res_CLI_EXT')])]"/>
             <field name='receptor_ids' eval="[(6, 0, [ref('res_CLI_EXT'), ref('res_EXT'), ref('res_IVARI')])]"/>
-            <field name='vat_discriminated' eval="False"/>
+            <field name='vat_discriminated' eval="True"/>
         </record>
         <record model='afip.document_letter' id='dl_x'>
             <field name='name'>X</field>

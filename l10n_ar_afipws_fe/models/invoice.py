@@ -357,9 +357,12 @@ class invoice(models.Model):
                 for tax in self.not_vat_tax_ids:
                     _logger.info('Adding TAX %s' % tax.tax_code_id.name)
                     ws.AgregarTributo(
-                        tax.tax_code_id.afip_code,
+                        tax.tax_code_id.application_code,
                         tax.tax_code_id.name,
                         "%.2f" % abs(tax.base_amount),
+                        # como no tenemos la alicuota pasamos cero, en v9
+                        # podremos pasar la alicuota
+                        0,
                         "%.2f" % abs(tax.tax_amount),
                     )
 

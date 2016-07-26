@@ -33,7 +33,6 @@ Incluye:
 
 """,
     'depends': [
-        'l10n_multilang',
         'l10n_ar_invoice',
     ],
     'demo': [

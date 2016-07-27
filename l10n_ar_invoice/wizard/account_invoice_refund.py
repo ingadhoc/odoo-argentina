@@ -87,9 +87,9 @@ class account_invoice_refund(models.TransientModel):
         if self.pool.get('sale.order'):
             sale_orders = self.env['sale.order'].search(
                 [('invoice_ids', 'in', invoice_ids)])
-            for invoice_id in refund_invoices:
+            for refund_invoice in refund_invoices:
                 sale_orders.write(
-                    {'invoice_ids': [(4, invoice_id)]})
+                    {'invoice_ids': [(4, refund_invoice.id)]})
         return res
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

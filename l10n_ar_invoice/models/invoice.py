@@ -205,6 +205,8 @@ class account_invoice(models.Model):
     # pero entendemos que podrian ser necesarios para otros tipos, por ahora
     # solo lo vamos a hacer requerido si el punto de venta es del tipo
     # electronico
+    # TODO mejorar, este concepto deberia quedar fijo y no poder modificarse
+    # una vez validada, cosa que pasaria por ej si cambias el producto
     afip_concept = fields.Selection(
         compute='_get_concept',
         # store=True,

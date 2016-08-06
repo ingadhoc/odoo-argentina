@@ -1059,7 +1059,7 @@
                     <!-- <field name="company_id" ref="company_ri"/> -->
                 </record>
 
-                        <record model="account.tax.code.template" id="mt_tax_code_iva_venta_no_gravado">
+                        <record model="account.tax.code.template" id="mt_tax_code_iva_ventas_no_gravado">
                             <field name="code">1.1.00.010</field>
                             <field name="name">IVA Ventas No Gravado</field>
                             <field name="sign">1</field>
@@ -1228,8 +1228,8 @@
             <field name="name">IVA Ventas No Gravado</field>
             <field name="sequence">2</field>
             <field name="type">none</field>
-            <field name="tax_code_id" ref="mt_tax_code_iva_venta_no_gravado"/>
-            <field name="ref_tax_code_id" ref="mt_tax_code_iva_venta_no_gravado"/>
+            <field name="tax_code_id" ref="mt_tax_code_iva_ventas_no_gravado"/>
+            <field name="ref_tax_code_id" ref="mt_tax_code_iva_ventas_no_gravado"/>
             <field name="type_tax_use">sale</field>
             <field name="ref_tax_sign" eval="-1"/>
         </record>

@@ -1037,7 +1037,7 @@
         <record id="mt_tax_code_chart_root" model="account.tax.code.template">
             <field name="name">Plan de Impuestos para Monotributistas</field>
             <field name="info">Raíz de la estructura para Monotributistas. No Incluye IVA, pero si Ingresos Brutos para Capital Federal, Buenos Aires, Córdoba y Santa Fé</field>
-	    <field name="code">IVAM</field>
+            <field name="code">IVAM</field>
             <field name="parent_id" eval="False"/>
         </record>
 
@@ -1047,6 +1047,41 @@
             <field name="sign">1</field>
             <field name="parent_id" ref="mt_tax_code_chart_root"/>
         </record>
+
+                <record model="account.tax.code.template" id="mt_tax_code_iva">
+                    <field name="name">IVA</field>
+                    <field name="code">1.1.00.000</field>
+                    <field name="sign">1</field>
+                    <field name="parent_id" ref="mt_tax_code_impuestos_nacionales"/>
+                    <field name="tax">vat</field>
+                    <field name="type">view</field>
+                    <field name="application">national_taxes</field>
+                    <!-- <field name="company_id" ref="company_ri"/> -->
+                </record>
+
+                        <record model="account.tax.code.template" id="mt_tax_code_iva_venta_no_gravado">
+                            <field name="code">1.1.00.010</field>
+                            <field name="name">IVA Ventas No Gravado</field>
+                            <field name="sign">1</field>
+                            <field name="parent_id" ref="mt_tax_code_iva"/>
+                            <field name="afip_code" eval="1"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
+
+                        <record model="account.tax.code.template" id="mt_tax_code_iva_compras_no_gravado">
+                            <field name="code">1.1.00.020</field>
+                            <field name="name">IVA Compras No Gravado</field>
+                            <field name="sign">-1</field>
+                            <field name="parent_id" ref="mt_tax_code_iva"/>
+                            <field name="afip_code" eval="1"/>
+                            <field name="tax">vat</field>
+                            <field name="type">tax</field>
+                            <field name="application">national_taxes</field>
+                            <!-- <field name="company_id" ref="company_ri"/> -->
+                        </record>
 
         <record model="account.tax.code.template" id="mt_tax_code_impuestos_provinciales">
             <field name="name">IMPUESTOS PROVINCIALES</field>
@@ -1179,6 +1214,37 @@
             <field name="property_account_payable" ref="mt_pago_proveedores"/>
             <field name="property_account_expense_categ" ref="mt_gastos_operativos_generales"/>
             <field name="property_account_income_categ" ref="mt_ingresos_ventas"/>
+        </record>
+
+#
+# Tax Template
+#
+# IVA
+#
+        <record id="mt_tax_vat_no_gravado_ventas" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_mt"/> -->
+            <field name="chart_template_id" ref="mt_l10nAR_chart_template"/>
+            <field name="description">IVA No Gravado</field>
+            <field name="name">IVA Ventas No Gravado</field>
+            <field name="sequence">2</field>
+            <field name="type">none</field>
+            <field name="tax_code_id" ref="mt_tax_code_iva_venta_no_gravado"/>
+            <field name="ref_tax_code_id" ref="mt_tax_code_iva_venta_no_gravado"/>
+            <field name="type_tax_use">sale</field>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+        <record id="mt_tax_vat_no_gravado_compras" model="account.tax.template">
+            <!-- <field name="company_id" ref="company_mt"/> -->
+            <field name="chart_template_id" ref="mt_l10nAR_chart_template"/>
+            <field name="description">IVA No Gravado</field>
+            <field name="name">IVA Compras No Gravado</field>
+            <field name="sequence">2</field>
+            <field name="type">none</field>
+            <field name="tax_code_id" ref="mt_tax_code_iva_compras_no_gravado"/>
+            <field name="ref_tax_code_id" ref="mt_tax_code_iva_compras_no_gravado"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="ref_tax_sign" eval="-1"/>
         </record>
 
 #

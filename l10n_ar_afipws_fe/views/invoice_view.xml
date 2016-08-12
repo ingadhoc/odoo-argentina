@@ -6,14 +6,20 @@
             <field name="name">account.invoice.afip.form</field>
             <field name="inherit_id" ref="account.invoice_form" />
             <field name="arch" type="xml">
-                <!-- TODO ver si es necesario cambiar este contexto o no -->
-                <field name="invoice_line" position="attributes">
-                    <attribute name="context">{'partner_id': partner_id, 'price_type': context.get('price_type') or False, 'type': type}" name="invoice_line" on_change="onchange_invoice_line(invoice_line)</attribute>
-                </field>
- 
+                <!-- we change button labels for better usability -->
+                <button name="invoice_open" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', False)]}</attribute>
+                    <attribute name="states"></attribute>
+                </button>
+                <button name="invoice_open" position="after">
+                    <button name="invoice_open" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', 'production')]}" string="Validar en AFIP" class="oe_highlight" groups="base.group_user"/>
+                    <button name="invoice_open" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', 'homologation')]}" string="Validar en HOMOLOGACION" class="oe_highlight" groups="base.group_user"/>
+                </button>
+
                 <notebook>
                     <page string="Electronic Invoice" name="electronic_invoice">
                         <group>
+                            <field name='validation_type' invisible="1"/>
                             <field name='afip_batch_number' invisible="1"/>
                             <field name='afip_cae'/>
                             <field name='afip_cae_due'/>

@@ -5,9 +5,8 @@
 ##############################################################################
 from . import wsfe_error
 from . import invoice
-from . import journal_afip_document_class
+from . import account_journal_document_type
 from . import afipws_connection
-from . import afip_point_of_sale
 from . import journal
 from . import product_uom
 from . import res_currency

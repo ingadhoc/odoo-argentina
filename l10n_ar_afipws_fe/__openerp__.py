@@ -1,40 +1,19 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
-#    All Rights Reserved.
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 {
     "name": "Argentina - Web Services de Factura Electrónica del AFIP",
-    'version': '9.0.1.0.0',
+    'version': '9.0.0.0.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
-    'author':  'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
+    'author':  'ADHOC SA, Moldeo Interactive',
     'license': 'AGPL-3',
     'summary': '',
-    'description': """
-API y GUI para acceder a las Web Services de Factura Electrónica de la AFIP
-===========================================================================
-TODO analizar que hacemos con la clase afip error, a ver si la aprovechamos en
-algun lugar
-""",
     'depends': [
         'l10n_ar_afipws',
+        # 'l10n_ar_account',
+        # TODO improove this, we add this dependency because of demo data only
+        # becuase demo data needs de chart account installed, we should
+        # take this data tu l10n_ar_chart and set electronic if available
+        'l10n_ar_chart',
         ],
     'external_dependencies': {
     },
@@ -42,20 +21,27 @@ algun lugar
         'wizard/afip_ws_consult_wizard_view.xml',
         'wizard/afip_ws_currency_rate_wizard_view.xml',
         'views/invoice_view.xml',
-        'views/journal_afip_document_class_view.xml',
+        'views/account_journal_document_type_view.xml',
         'views/wsfe_error_view.xml',
-        'views/afip_point_of_sale_view.xml',
+        'views/account_journal_view.xml',
         'views/product_uom_view.xml',
         'views/res_currency_view.xml',
+        'res_config_view.xml',
         'data/afip.wsfe_error.csv',
         'security/ir.model.access.csv',
     ],
     'demo': [
+        # 'demo/account_demo.xml',
+        # 'demo/ri_sale_invoice_demo.xml',
+        'demo/account_journal_demo.yml',
+        'demo/account_invoice_demo.yml',
     ],
     'test': [
+    ],
+    'images': [
     ],
     'installable': True,
     'auto_install': True,
     'application': False,
- }
+}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

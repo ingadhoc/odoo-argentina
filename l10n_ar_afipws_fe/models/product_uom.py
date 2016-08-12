@@ -4,13 +4,13 @@
 # directory
 ##############################################################################
 from openerp import models, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 import logging
 
 _logger = logging.getLogger(__name__)
 
 
-class product_uom(models.Model):
+class ProductUom(models.Model):
     _inherit = "product.uom"
 
     @api.multi
@@ -26,13 +26,14 @@ class product_uom(models.Model):
                 [('use_argentinian_localization', '=', True)],
                 limit=1)
         if not company:
-            raise Warning(_('No company found using argentinian localization'))
+            raise UserError(_(
+                'No company found using argentinian localization'))
         ws = company.get_connection(afip_ws).connect()
 
         if afip_ws == "wsfex":
             res = ws.GetParamUMed(sep=' ')
         else:
-            raise Warning(_('AFIP WS %s not implemented') % (
+            raise UserError(_('AFIP WS %s not implemented') % (
                 afip_ws))
         title = _('Unit of mesures:\n%s' % '\n'.join(res))
         msg = " - ".join([
@@ -40,4 +41,4 @@ class product_uom(models.Model):
             ws.ErrMsg,
             ws.Obs])
         _logger.info('%s\n%s' % (title, msg))
-        raise Warning(title + msg)
+        raise UserError(title + msg)

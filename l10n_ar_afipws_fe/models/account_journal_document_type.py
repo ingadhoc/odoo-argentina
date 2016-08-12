@@ -4,34 +4,35 @@
 # directory
 ##############################################################################
 from openerp import models, api, fields, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 import logging
 
 _logger = logging.getLogger(__name__)
 
 
-class account_journal_afip_document_class(models.Model):
-    _inherit = "account.journal.afip_document_class"
+class AccountJournalDocumentType(models.Model):
+    _inherit = "account.journal.document.type"
 
     afip_ws = fields.Selection(
-        related='point_of_sale_id.afip_ws',
+        related='journal_id.afip_ws',
         redaonly=True,
         )
 
     @api.multi
     def get_pyafipws_consult_invoice(self, document_number):
         self.ensure_one()
-        document_class = self.afip_document_class_id.afip_code
-        point_of_sale = self.journal_id.point_of_sale_id
-        company = point_of_sale.company_id
-        afip_ws = point_of_sale.afip_ws
+        document_type = self.document_type_id.code
+        company = self.journal_id.company_id
+        afip_ws = self.journal_id.afip_ws
         if not afip_ws:
-            raise Warning(_('No AFIP WS selected on point of sale %s') % (
-                point_of_sale.name))
+            raise UserError(_('No AFIP WS selected on point of sale %s') % (
+                self.journal_id.name))
         ws = company.get_connection(afip_ws).connect()
         if afip_ws in ("wsfe", "wsmtxca"):
             ws.CompConsultar(
-                document_class, point_of_sale.number, document_number)
+                document_type,
+                self.journal_id.point_of_sale_number,
+                document_number)
             attributes = [
                 'FechaCbte', 'CbteNro', 'PuntoVenta',
                 'Vencimiento', 'ImpTotal', 'Resultado', 'CbtDesde', 'CbtHasta',
@@ -39,12 +40,14 @@ class account_journal_afip_document_class(models.Model):
                 'EmisionTipo', 'CAE', 'CAEA', 'XmlResponse']
         elif afip_ws == 'wsfex':
             ws.GetCMP(
-                document_class, point_of_sale.number, document_number)
+                document_type,
+                self.journal_id.point_of_sale_number,
+                document_number)
             attributes = [
                 'PuntoVenta', 'CbteNro', 'FechaCbte', 'ImpTotal', 'CAE',
                 'Vencimiento', 'FchVencCAE', 'Resultado', 'XmlResponse']
         else:
-            raise Warning(_('AFIP WS %s not implemented') % afip_ws)
+            raise UserError(_('AFIP WS %s not implemented') % afip_ws)
         msg = ''
         title = _('Invoice number %s\n' % document_number)
 
@@ -63,32 +66,31 @@ class account_journal_afip_document_class(models.Model):
         # T = ET.fromstring(ws.XmlResponse)
 
         _logger.info('%s\n%s' % (title, msg))
-        raise Warning(title + msg)
+        raise UserError(title + msg)
 
     @api.multi
     def action_get_pyafipws_last_invoice(self):
         self.ensure_one()
-        raise Warning(self.get_pyafipws_last_invoice()['msg'])
+        raise UserError(self.get_pyafipws_last_invoice()['msg'])
 
     @api.multi
     def get_pyafipws_last_invoice(self):
         self.ensure_one()
-        document_class = self.afip_document_class_id.afip_code
-        point_of_sale = self.journal_id.point_of_sale_id
-        company = point_of_sale.company_id
-        afip_ws = point_of_sale.afip_ws
+        document_type = self.document_type_id.code
+        company = self.journal_id.company_id
+        afip_ws = self.journal_id.afip_ws
 
         if not afip_ws:
             return (_('No AFIP WS selected on point of sale %s') % (
-                point_of_sale.name))
+                self.journal_id.name))
         ws = company.get_connection(afip_ws).connect()
         # call the webservice method to get the last invoice at AFIP:
         if afip_ws in ("wsfe", "wsmtxca"):
             last = ws.CompUltimoAutorizado(
-                document_class, point_of_sale.number)
+                document_type, self.journal_id.point_of_sale_number)
         elif afip_ws == "wsfex":
             last = ws.GetLastCMP(
-                document_class, point_of_sale.number)
+                document_type, self.journal_id.point_of_sale_number)
         else:
             return(_('AFIP WS %s not implemented') % afip_ws)
         msg = " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])
@@ -97,8 +99,8 @@ class account_journal_afip_document_class(models.Model):
         next_local = self.sequence_id.number_next_actual
         if next_ws != next_local:
             msg = _(
-                'ERROR! Local (%i) and remote (%i) next number mismatch!\n') % (
-                next_local, next_ws) + msg
+                'ERROR! Local (%i) and remote (%i) next number '
+                'mismatch!\n') % (next_local, next_ws) + msg
         else:
             msg = _('OK! Local and remote next number match!') + msg
         title = _('Last Invoice %s\n' % last)

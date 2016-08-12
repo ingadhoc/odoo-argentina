@@ -42,8 +42,8 @@
     'external_dependencies': {
         'python': ['pyafipws'],
     },
-    'installable': True,
+    'installable': False,
     'name': 'Padron AFIP Argentino',
     'test': [],
-    'version': '8.0.0.2.0',
+    'version': '9.0.1.0.0',
 }

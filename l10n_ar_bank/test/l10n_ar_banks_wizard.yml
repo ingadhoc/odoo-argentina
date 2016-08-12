@@ -4,9 +4,10 @@
   !python {model: l10nar.banks.wizard}: |
     self.on_process(cr, uid, [], {})
     banks_obj = self.pool.get('res.bank')
-    bid = banks_obj.search(cr, uid, [('name','=','Nuevo Banco De Entre Rios S.A.')])
-    bank = banks_obj.browse(cr, uid, bid)[0]
+    bid = banks_obj.search(cr, uid, [('vat','=','30-99922856-5')])
+    assert len(bid) > 0 , 'No se puede encontrar el Banco De La Provincia De Cordoba S.A.!'
+    bank = banks_obj.browse(cr, uid, bid)
     import datetime as dt
-    if (bank.update_date != dt.date.today().isoformat()):
-       raise RuntimeError('El banco no fue actualizado!')
+    if (bank.write_date.split(' ')[0] != dt.date.today().isoformat().split(' ')[0]):
+         raise RuntimeError('El banco no fue actualizado!')
     

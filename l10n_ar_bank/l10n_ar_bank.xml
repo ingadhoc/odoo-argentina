@@ -3,16 +3,16 @@
   <data > 
     
         <record id="view_res_bank_form" model="ir.ui.view">
-          <field name="model">res.bank</field>
-          <field name="name">res.bank.form.date.inherit</field>
-          <field name="inherit_id" ref="base.view_res_bank_form" />
-          <field name="type">form</field>
-          <field name="arch" type="xml">
-            <field name="bic" position="after">
-              <field name='update_date' readonly='1'/>
-              <field name='vat'/>
+            <field name="model">res.bank</field>
+	    <field name="name">res.bank.form.date.inherit</field>
+            <field name="inherit_id" ref="base.view_res_bank_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+	      <field name="bic" position="after">
+		  <field name='bcra_code'/>
+		  <field name='vat'/>
+	      </field>
             </field>
-          </field>
         </record>
  
   </data>

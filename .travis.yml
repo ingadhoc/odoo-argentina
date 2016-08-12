@@ -46,7 +46,7 @@ env:
   #   $ gem install travis --user-install
   # and use:
     # $ travis encrypt TRANSIFEX_PASSWORD=your-password -r owner/project
-  - secure: Bpz07pxQRfbc5uKzs0en4px536TXrGO8CwBJqBJW2LmtaJYRQ+bpvPIxk/5DpaMMi7qzrGuZ4DMzPOr+neN+lHArxG5B6gQlEgQqu/wQCIzkgewuNSZoV8Sa4ecrA8/eSx9/tEBUxYek79CtL8glvx0T7YzpraTtvyKtcjp6ZbHEV7RaVBTZWMPDXXhVkK5QUugyMt3BA0irLUvvIcUp87bJhP3qyQr/MHk0E5+n/s5nuvni2rDnNH2V0ACrz1kztjEL7vBd2ckjyHtXhdj+Un81CBOfZG26e0jVsyI0PmILcGnpeLkkzkNRJI9ec1yfKrVsm0l0mC6S5zpLBYUoeXzEPa+uiDiEMyV2cgAszN1tKJ6ZRcm4kcre0Z+EW/ar5Tlg0PW5/igH0q9Hxx8RJwE2bA+sTUGNmBSM0IPoqf7FjlSxAV/xjo7LmetKFfUgewkxwiVxgyYdE4fyg8ftHBz6cEKRzw8QK9jCuhXZdvjttX7MQkLtj79CEd0rzgE2GF0/WXEt2HEfAvrg5KPHOFQhIkeC8S4nzbMcdJJY6MYymmOhjRQEbZfK1Ptjwb+wT+a63yh9A/Rx6SrpBk/EPf/pSv2rHJD3p6SHi6MWiw7K+VGyejEMQWMolgzI8XwrEbBX8jkKvOqHjLRA2PEUnFy50J9Zt1Ri2sA8umP3fUY=
+  - secure: Kys/o1svHJON9p6Vwv4qVSAvR/e6KGp4qKeDjWNcVeQoCfs0O35aiouLWUUiuj+JSrACL6ngha3QbeuajhYr6cYPur4NjIbCq7ePcmbEu45OcJz3l/7EiUFit8XwlRmT1uGtgknsvbn37vlF0IC28gK/1D/06CLJnxAXBOjkEd7sNmAQNAYVHQREsQsK1Pw39APAzUAtB5K5fNU3MUhQ0dCWWZ+nQeghbVM0kzf1k1iJkRDf3WDWZRRDCQdS93bMkXsw0ojkW1X5sSAqfxu89uDSyMNgMVmPsLsavatFrlUMEMZXkSlevGvNUSgoClLQMeIzbivhDME9Nv6hKcqYU8TKIYF7URtSdWwOA1FxXnrOqUjkAqvajS2P2byLYHMoRC31SH5Mh3s2A04qh+sLEf406fB8e8//7leN4l9YL2S3F6m++ZUHgN7YHXD0jhspiuC9FtnMDULUIDXGM4vaMpkZY5lhROOPXecE9FAIl9rc8s3BqlV2GMP4rrBxqo8l5SoSt4I5TOacI3niHBUHU47jhRK8NsGI/Z9ybElNeVmBI9QzZXHhciB31IPC/nRL9MgBFN1/JsHH2FXUv9OnOi8VxU5AqsCCeCG+dSFGeKZfRPZiqIHZNavL7DLitrYmN3JsizKTPGsA1CQ1788Q8oTx8C+Fn4zk+hQ+vCI+DKo=
   # Use the following lines if you need to manually change the transifex project slug or/and the transifex organization.
   # The default project slug is owner-repo_name-version (with dash in the version string).
   # The default organization is the owner of the repo.
@@ -55,7 +55,7 @@ env:
   # - TRANSIFEX_PROJECT_SLUG=
   # - TRANSIFEX_FILL_UP_RESOURCES=
   - TRANSIFEX_ORGANIZATION='adhoc'
-  - TRANSIFEX_TEAM='58916'
+  - TRANSIFEX_TEAM='46451'
 
   matrix:
   - LINT_CHECK="1"

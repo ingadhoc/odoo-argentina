@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    <!-- Partners -->
+        <!-- Main Partner -->
+        <record id="base.main_partner" model="res.partner">
+            <field name='document_type_id' ref="dt_CUIT"/>
+            <field name='document_value'>30111111118</field>
+        </record>
+
+        <!-- ASUSTeK - Supplier -->
+        <record id="base.res_partner_1" model="res.partner">
+            <!-- <field name='vat'>AR30222222229</field> -->
+            <field name='document_type_id' ref="dt_CUIT"/>
+            <field name='document_value'>30222222229</field>
+        </record>
+        <!-- Agrolait - Customer -->
+        <record id="base.res_partner_2" model="res.partner">
+            <!-- <field name='vat'>AR30777777773</field> -->
+            <field name='document_type_id' ref="dt_CUIT"/>
+            <field name='document_value'>30111111118</field>
+        </record>
+        <!-- Camptocamp - Supplier/Customer -->
+        <record id="base.res_partner_12" model="res.partner">
+            <!-- <field name='vat'>AR30888888884</field> -->
+            <field name='document_type_id' ref="dt_CUIT"/>
+            <field name='document_value'>30888888884</field>
+        </record>
+        <!-- Global Solutions  - cliente exterior -->
+        <record id="base.res_partner_4" model="res.partner">
+            <!-- <field name='vat'>AR30888888884</field> -->
+            <field name='document_type_id' ref="dt_CIe"/>
+            <field name='document_value'>12345678</field>
+        </record>
+        <!--   - cliente exterior -->
+        <record id="base.res_partner_3" model="res.partner">
+            <!-- <field name='vat'>AR27333333339</field> -->
+            <field name='document_type_id' ref="dt_CUIT"/>
+            <field name='document_value'>27333333339</field>
+        </record>
+    </data>
+</openerp>

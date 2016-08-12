@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="False">
+        <record model='res.partner.document.type' id='dt_CPF'>
+            <field name='abbreviation'>CPF</field>
+            <field name='name'>CI Policía Federal</field>
+            <field name='code'>0</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CBA'>
+            <field name='abbreviation'>CBA</field>
+            <field name='name'>CI Buenos Aires</field>
+            <field name='code'>1</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CCat'>
+            <field name='abbreviation'>CCat</field>
+            <field name='name'>CI Catamarca</field>
+            <field name='code'>2</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CCor'>
+            <field name='abbreviation'>CCor</field>
+            <field name='name'>CI Córdoba</field>
+            <field name='code'>3</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CCorr'>
+            <field name='abbreviation'>CCorr</field>
+            <field name='name'>CI Corrientes</field>
+            <field name='code'>4</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CIER'>
+            <field name='abbreviation'>CIER</field>
+            <field name='name'>CI Entre Ríos</field>
+            <field name='code'>5</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CIJ'>
+            <field name='abbreviation'>CIJ</field>
+            <field name='name'>CI Jujuy</field>
+            <field name='code'>6</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CIMen'>
+            <field name='abbreviation'>CIMen</field>
+            <field name='name'>CI Mendoza</field>
+            <field name='code'>7</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CILR'>
+            <field name='abbreviation'>CILR</field>
+            <field name='name'>CI La Rioja</field>
+            <field name='code'>8</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CIS'>
+            <field name='abbreviation'>CIS</field>
+            <field name='name'>CI Salta</field>
+            <field name='code'>9</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CISJ'>
+            <field name='abbreviation'>CISJ</field>
+            <field name='name'>CI San Juan</field>
+            <field name='code'>10</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CISL'>
+            <field name='abbreviation'>CISL</field>
+            <field name='name'>CI San Luis</field>
+            <field name='code'>11</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CISF'>
+            <field name='abbreviation'>CISF</field>
+            <field name='name'>CI Santa Fe</field>
+            <field name='code'>12</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CISdE'>
+            <field name='abbreviation'>CISdE</field>
+            <field name='name'>CI Santiago del Estero</field>
+            <field name='code'>13</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CIT'>
+            <field name='abbreviation'>CIT</field>
+            <field name='name'>CI Tucumán</field>
+            <field name='code'>14</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CICha'>
+            <field name='abbreviation'>CICha</field>
+            <field name='name'>CI Chaco</field>
+            <field name='code'>16</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CIChu'>
+            <field name='abbreviation'>CIChu</field>
+            <field name='name'>CI Chubut</field>
+            <field name='code'>17</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CIF'>
+            <field name='abbreviation'>CIF</field>
+            <field name='name'>CI Formosa</field>
+            <field name='code'>18</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CIMis'>
+            <field name='abbreviation'>CIMis</field>
+            <field name='name'>CI Misiones</field>
+            <field name='code'>19</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CIN'>
+            <field name='abbreviation'>CIN</field>
+            <field name='name'>CI Neuquén</field>
+            <field name='code'>20</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CILP'>
+            <field name='abbreviation'>CILP</field>
+            <field name='name'>CI La Pampa</field>
+            <field name='code'>21</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CIRN'>
+            <field name='abbreviation'>CIRN</field>
+            <field name='name'>CI Río Negro</field>
+            <field name='code'>22</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CISC'>
+            <field name='abbreviation'>CISC</field>
+            <field name='name'>CI Santa Cruz</field>
+            <field name='code'>23</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CITdF'>
+            <field name='abbreviation'>CITdF</field>
+            <field name='name'>CI Tierra del Fuego</field>
+            <field name='code'>24</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CUIT'>
+            <field name='code'>80</field>
+            <field name='name'>Código Único de Identificación Tributaria</field>
+            <field name='abbreviation'>CUIT</field>
+            <field name='validator_re'>^\d\d{6,10}\d$</field>
+            <field name='template_re'>(\d\d)(\d*)(\d)</field>
+            <field name='template'>{0}-{1}-{2}</field>
+            <field name='test_in'>23250954549</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CUIL'>
+            <field name='abbreviation'>CUIL</field>
+            <field name='name'>CUIL</field>
+            <field name='code'>86</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CDI'>
+            <field name='abbreviation'>CDI</field>
+            <field name='name'>CDI</field>
+            <field name='code'>87</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_LE'>
+            <field name='abbreviation'>LE</field>
+            <field name='name'>LE</field>
+            <field name='code'>89</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_LC'>
+            <field name='abbreviation'>LC</field>
+            <field name='name'>LC</field>
+            <field name='code'>90</field>
+        </record> 
+        <!-- TODO modificar este para que acepte letras tmb -->
+        <record model='res.partner.document.type' id='dt_CIe'>
+            <field name='abbreviation'>CIe</field>
+            <field name='name'>CI extranjera</field>
+            <field name='code'>91</field>
+            <field name='validator_re'>^\d*$</field>
+            <field name='template_re'>(.*)</field>
+            <field name='template'>{0}</field>
+            <field name='test_in'>21345654</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_ET'>
+            <field name='abbreviation'>ET</field>
+            <field name='name'>en trámite</field>
+            <field name='code'>92</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_AN'>
+            <field name='abbreviation'>AN</field>
+            <field name='name'>Acta nacimiento</field>
+            <field name='code'>93</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_PAS'>
+            <field name='abbreviation'>PAS</field>
+            <field name='name'>Pasaporte</field>
+            <field name='code'>94</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CIBAR'>
+            <field name='abbreviation'>CIBAR</field>
+            <field name='name'>CI Bs. As. RNP</field>
+            <field name='code'>95</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_DNI'>
+            <field name='name'>Documento Nacional de Identidad</field>
+            <field name='abbreviation'>DNI</field>
+            <field name='validator_re'>^\d*$</field>
+            <field name='sub_re'>(?&lt;=\d)(?=(\d\d\d)+(?!\d))</field>
+            <field name='sub'>.</field>
+            <field name='template_re'>([\d.]*)</field>
+            <field name='template'>{0}</field>
+            <field name='test_in'>25095454</field>
+            <field name='code'>96</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_Sigd'>
+            <field name='abbreviation'>Sigd</field>
+            <field name='name'>Sin identificar/venta global diaria</field>
+            <field name='code'>99</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_CdM'>
+            <field name='abbreviation'>CdM</field>
+            <field name='name'>Certificado de Migración</field>
+            <field name='code'>30</field>
+        </record> 
+        <record model='res.partner.document.type' id='dt_UpApP'>
+            <field name='abbreviation'>UpApP</field>
+            <field name='name'>Usado por Anses para Padrón</field>
+            <field name='code'>88</field>
+        </record> 
+    </data>
+</openerp>
+        

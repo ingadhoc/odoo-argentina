@@ -4,11 +4,19 @@
 # directory
 ##############################################################################
 from openerp import fields, models
+import logging
+_logger = logging.getLogger(__name__)
 
 
-class ProductUom(models.Model):
-    _inherit = 'product.uom'
+class AfipIncoterm(models.Model):
+    _name = 'afip.incoterm'
+    _description = 'Afip Incoterm'
 
     afip_code = fields.Char(
-        'Afip Code'
+        'Code',
+        required=True
+        )
+    name = fields.Char(
+        'Name',
+        required=True
         )

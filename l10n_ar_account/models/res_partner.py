@@ -6,9 +6,17 @@
 from openerp import fields, models
 
 
-class ProductUom(models.Model):
-    _inherit = 'product.uom'
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
 
-    afip_code = fields.Char(
-        'Afip Code'
+    iibb = fields.Char(
+        'Gross Income',
+        size=64
+        )
+    start_date = fields.Date(
+        'Start-up Date'
+        )
+    afip_responsible_type_id = fields.Many2one(
+        'afip.responsible.type',
+        'AFIP Responsible Type',
         )

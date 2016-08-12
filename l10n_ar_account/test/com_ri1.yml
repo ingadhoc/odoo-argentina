@@ -31,17 +31,17 @@
   - purchase_tax.id == ref("l10n_ar_chart_generic.ri_tax_vat_21_compras")
 
 - Setup wizard to create journals for responsable inscripto
-- !record {model: l10n_ar_account.config, id: inv_wiz_ivari }:
+- !record {model: l10n_ar_invoice.config, id: inv_wiz_ivari }:
         company_id: com_ivari
         cuit: 30712007288
         iibb: 1248845-03
         start_date: 2011-09-01
         do_export: False
         remove_old_journals: True
-        responsability_id: !ref {model: afip.responsability, search: "[('name','=','IVA Responsable Inscripto')]"}
+        responsible_id: !ref {model: afip.responsible, search: "[('name','=','IVA Responsable Inscripto')]"}
 
 - Execute Wizard to create journals for responsable inscripto
-- !python {model: l10n_ar_account.config }: |
+- !python {model: l10n_ar_invoice.config }: |
     self.view_init(cr, uid, [ref("inv_wiz_ivari")], {})
     self.update_journals(cr, uid, [ref("inv_wiz_ivari")], {})
     self.execute(cr, uid, [ref("inv_wiz_ivari")], {})

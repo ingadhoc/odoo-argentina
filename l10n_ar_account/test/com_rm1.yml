@@ -35,16 +35,16 @@
 #
 # Wizard que crea los journals para un responsable inscripto
 #
-- !record {model: l10n_ar_account.config, id: inv_wiz_rm }:
+- !record {model: l10n_ar_invoice.config, id: inv_wiz_rm }:
         company_id: com_rm
         cuit: 30712007288
         iibb: 1248845-03
         start_date: 2011-09-01
         do_export: False
         remove_old_journals: True
-        responsability_id: !ref {model: afip.responsability, search: "[('name','=','IVA Responsable Inscripto')]"}
+        responsible_id: !ref {model: afip.responsible, search: "[('name','=','IVA Responsable Inscripto')]"}
 
-- !python {model: l10n_ar_account.config }: |
+- !python {model: l10n_ar_invoice.config }: |
     self.view_init(cr, uid, [ref("inv_wiz_rm")], {})
     self.update_journals(cr, uid, [ref("inv_wiz_rm")], {})
     self.execute(cr, uid, [ref("inv_wiz_rm")], {})

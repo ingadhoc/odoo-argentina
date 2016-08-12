@@ -3,7 +3,7 @@
 #
 - !record {model: res.partner, id: par_cf_gm }:
     name: Cristian Sebastian Rocha
-    responsability_id: res_CF
+    responsible_id: res_CF
     document_type_id: dt_DNI
     document_number: 25095454
     street: Av. Rivadavia
@@ -18,7 +18,7 @@
 - Create partner
 - !record {model: res.partner, id: par_ivae }:
     name: ASOCIACION DOCENTES DE LA UNIVERSIDAD NACIONAL DE BUENOS AIRES
-    responsability_id: res_IVAE
+    responsible_id: res_IVAE
     document_type_id: dt_CUIT
     document_number: 30681521077
     vat: ar30681521077
@@ -44,7 +44,7 @@
 - Create partner
 - !record {model: res.partner, id: par_ivari }:
     name: Coop. Trab. Moldeo Interactive Ltda.
-    responsability_id: res_IVARI 
+    responsible_id: res_IVARI 
     document_type_id: dt_CUIT
     document_number: 30712007288
     vat: ar30712007288
@@ -85,7 +85,7 @@
 - Create partner
 - !record {model: res.partner, id: par_ivari2 }:
     name: Melanoma SA.
-    responsability_id: res_IVARI 
+    responsible_id: res_IVARI 
     document_type_id: dt_CUIT
     document_number: 30571421352
     vat: ar30571421352
@@ -139,7 +139,7 @@
 - Create partner
 - !record {model: res.partner, id: par_ivarni }:
     name: FUNDACION UNIVERSIDAD NACIONAL
-    responsability_id: res_IVARNI 
+    responsible_id: res_IVARNI 
     document_type_id: dt_CUIT
     document_number: 30642332771
     vat: ar30642332771
@@ -178,7 +178,7 @@
 - Create partner
 - !record {model: res.partner, id: par_ivanr }:
     name: CONSORCIO DE PROPIETARIOS EDIFICIO UNIVERSIDAD
-    responsability_id: res_IVANR
+    responsible_id: res_IVANR
     document_type_id: dt_CUIT
     document_number: 33707348629
     vat: ar33707348629
@@ -217,7 +217,7 @@
 - Create partner
 - !record {model: res.partner, id: par_rm }:
     name: Cristian S. Rocha
-    responsability_id: res_RM
+    responsible_id: res_RM
     document_type_id: dt_CUIT
     document_number: 23250954549
     vat: ar23250954549

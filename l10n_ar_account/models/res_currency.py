@@ -3,8 +3,12 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from . import wizard
-from . import models
-from . import report
-from . import res_config
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+from openerp import fields, models
+
+
+class ResCurrency(models.Model):
+    _inherit = "res.currency"
+
+    afip_code = fields.Char(
+        'AFIP Code', size=4
+        )

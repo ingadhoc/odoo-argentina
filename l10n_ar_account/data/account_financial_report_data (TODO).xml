@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!-- 
+            Financial Reports
+        -->
+
+        <record id="account.account_financial_report_assets0" model="account.financial.report">
+            <field name="type">sum</field>
+            <field name="sequence" eval="10"/>
+        </record>
+
+        <record id="account_financial_report_current_assets" model="account.financial.report">
+            <field name="name">Activos Corrientes</field>
+            <field name="sequence" eval="10"/>
+            <field name="parent_id" ref="account.account_financial_report_assets0"/>
+            <field name="type">account_type</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('account.data_account_type_bank'), ref('account.data_account_type_cash'), ref('account.conf_account_type_chk'), ref('account.data_account_type_receivable')])]"/>
+        </record>
+
+        <record id="account_financial_report_no_current_assets" model="account.financial.report">
+            <field name="name">Activos No Corrientes</field>
+            <field name="sequence" eval="20"/>
+            <field name="parent_id" ref="account.account_financial_report_assets0"/>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="type">account_type</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('account.data_account_type_asset'), ref('l10n_ar_invoice.data_account_type_receivable_no_current')])]"/>
+        </record>
+
+        <record id="account.account_financial_report_liabilitysum0" model="account.financial.report">
+            <field name="sequence" eval="20"/>
+        </record>
+
+        <record id="account.account_financial_report_liability0" model="account.financial.report">
+            <field name="name">Pasivos Corrientes</field>
+            <field name="parent_id" ref="account.account_financial_report_liabilitysum0"/>
+            <field name="account_type_ids" eval=""/>
+            <field name="account_type_ids" eval="[(6, 0, [ref('account.data_account_type_payable')])]"/>
+        </record>
+
+        <record id="account_financial_report_no_current_liability0" model="account.financial.report">
+            <field name="name">Pasivos No Corrientes</field>
+            <field name="parent_id" ref="account.account_financial_report_liabilitysum0"/>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="type">account_type</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('account.data_account_type_liability'), ref('l10n_ar_invoice.data_account_type_payable_no_current')])]"/>
+        </record>
+
+        <record id="account_financial_report_equity" model="account.financial.report">
+            <field name="name">Patrimonio Neto</field>
+            <field name="sequence" eval="30"/>
+            <field name="parent_id" ref="account.account_financial_report_balancesheet0"/>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="type">account_type</field>
+            <field name="account_type_ids" eval=""/>
+            <field name="account_type_ids" eval="[(6, 0, [ref('account.conf_account_type_equity')])]"/>
+        </record>
+
+        <record id="account.account_financial_report_profitloss_toreport0" model="account.financial.report">
+            <field name="sequence" eval="40"/>
+            <field name="parent_id" ref="account.account_financial_report_balancesheet0"/>
+        </record>
+    </data>
+</openerp>
+

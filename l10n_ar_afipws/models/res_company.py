@@ -4,45 +4,19 @@
 # directory
 ##############################################################################
 from openerp import fields, models, api, _
-from dateutil.tz import tzlocal
-from datetime import datetime, timedelta
-from dateutil.parser import parse as dateparse
-from random import randint
-
-import xml.etree.ElementTree as ET
 import logging
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 import openerp.tools as tools
 import os
+import hashlib
+import time
+import sys
+import traceback
 
 _logger = logging.getLogger(__name__)
 
-try:
-    from suds import WebFault
-except ImportError:
-    _logger.debug('Can not `from suds import WebFault`.')
 
-try:
-    from suds.client import Client
-except ImportError:
-    _logger.debug('from suds.client import Client`.')
-
-_login_message = """\
-<?xml version="1.0" encoding="UTF-8"?>
-<loginTicketRequest version="1.0">
-<header>
-    <uniqueId>{uniqueid}</uniqueId>
-    <generationTime>{generationtime}</generationTime>
-    <expirationTime>{expirationtime}</expirationTime>
-</header>
-<service>{service}</service>
-</loginTicketRequest>"""
-
-_intmin = -2147483648
-_intmax = 2147483647
-
-
-class res_company(models.Model):
+class ResCompany(models.Model):
 
     _inherit = "res.company"
 
@@ -77,10 +51,11 @@ class res_company(models.Model):
         elif parameter_env_type == 'homologation':
             environment_type = 'homologation'
         else:
-            if tools.config.get('server_mode') in ('test', 'develop'):
-                environment_type = 'homologation'
-            else:
+            server_mode = tools.config.get('server_mode')
+            if not server_mode or server_mode == 'production':
                 environment_type = 'production'
+            else:
+                environment_type = 'homologation'
         _logger.info(
             'Running arg electronic invoice on %s mode' % environment_type)
         return environment_type
@@ -94,7 +69,7 @@ class res_company(models.Model):
         * en el conf del server de odoo
         * en registros de esta misma clase
         """
-        self.ensure_one
+        self.ensure_one()
         pkey = False
         cert = False
         msg = False
@@ -134,7 +109,7 @@ class res_company(models.Model):
                 else:
                     _logger.info('Using odoo conf certificates')
         if not pkey or not cert:
-            raise Warning(msg)
+            raise UserError(msg)
         return (pkey, cert)
 
     @api.multi
@@ -164,58 +139,93 @@ class res_company(models.Model):
         TODO ver si podemos usar metodos de pyafipws para esto
         """
         self.ensure_one()
-        _logger.info('Creating connection for company %s, environment type %s and ws %s' %(
-            self.name, environment_type, afip_ws))
+        _logger.info(
+            'Creating connection for company %s, environment type %s and ws '
+            '%s' % (self.name, environment_type, afip_ws))
         login_url = self.env['afipws.connection'].get_afip_login_url(
             environment_type)
-
-        uniqueid = randint(_intmin, _intmax)
-        generationtime = (
-            datetime.now(tzlocal()) - timedelta(0, 60)).isoformat()
-        expirationtime = (
-            datetime.now(tzlocal()) + timedelta(0, 60)).isoformat()
-        msg = _login_message.format(
-            uniqueid=uniqueid - _intmin,
-            generationtime=generationtime,
-            expirationtime=expirationtime,
-            service=afip_ws
-        )
         pkey, cert = self.get_key_and_certificate(environment_type)
-        msg = self.env['afipws.certificate'].smime(msg, pkey, cert)
-        head, body, end = msg.split('\n\n')
-
-        try:
-            client = Client(login_url + '?WSDL')
-            response = client.service.loginCms(in0=body)
-        except WebFault as e:
-            raise Warning(_(
-                'Could not connect. This is the what we received: %s.\n'
-                'If error is realted to datetime unsynchronized you can try'
-                ' running "sudo ntpdate ntp.ubuntu.com" on the server.' % (
-                    e[0])))
-        except Exception, e:
-            raise Warning(
-                _('Could not connect. This is the what we received: %s' % e))
-        except:
-            raise Warning(_(
-                'AFIP Web Service unvailable.'
-                'Check your access to internet or contact to your\
-system administrator.'))
-
-        T = ET.fromstring(response)
-
-        auth_data = {
-            'uniqueid': int(T.find('header/uniqueId').text) + _intmin,
-            'generationtime': dateparse(
-                T.find('header/generationTime').text),
-            'expirationtime': dateparse(
-                T.find('header/expirationTime').text),
-            'token': T.find('credentials/token').text,
-            'sign': T.find('credentials/sign').text,
+        # because pyafipws wsaa loos for "BEGIN RSA PRIVATE KEY" we change key
+        if pkey.startswith("-----BEGIN PRIVATE KEY-----"):
+            pkey = pkey.replace(" PRIVATE KEY", " RSA PRIVATE KEY")
+        auth_data = self.authenticate(
+            afip_ws, cert, pkey, wsdl=login_url)
+        auth_data.update({
             'company_id': self.id,
             'afip_ws': afip_ws,
             'type': environment_type,
-        }
-
+            })
         _logger.info("Successful Connection to AFIP.")
         return self.connection_ids.create(auth_data)
+
+    @api.model
+    def authenticate(self, service, certificate, private_key, force=False,
+                     cache="", wsdl="", proxy=""):
+        """
+        Call AFIP Authentication webservice to get token & sign or error
+        message
+        """
+        # import AFIP webservice authentication helper:
+        from pyafipws.wsaa import WSAA
+        # create AFIP webservice authentication helper instance:
+        wsaa = WSAA()
+        # raise python exceptions on any failure
+        wsaa.LanzarExcepciones = True
+
+        # five hours
+        DEFAULT_TTL = 60*60*5
+
+        # make md5 hash of the parameter for caching...
+        fn = "%s.xml" % hashlib.md5(
+            service + certificate + private_key).hexdigest()
+        if cache:
+            fn = os.path.join(cache, fn)
+        else:
+            fn = os.path.join(wsaa.InstallDir, "cache", fn)
+
+        try:
+            # read the access ticket (if already authenticated)
+            if not os.path.exists(fn) or \
+               os.path.getmtime(fn)+(DEFAULT_TTL) < time.time():
+                # access ticket (TA) outdated, create new access request
+                # ticket (TRA)
+                tra = wsaa.CreateTRA(service=service, ttl=DEFAULT_TTL)
+                # cryptographically sing the access ticket
+                cms = wsaa.SignTRA(tra, certificate, private_key)
+                # connect to the webservice:
+                wsaa.Conectar(cache, wsdl, proxy)
+                # call the remote method
+                ta = wsaa.LoginCMS(cms)
+                if not ta:
+                    raise RuntimeError()
+                # write the access ticket for further consumption
+                open(fn, "w").write(ta)
+            else:
+                # get the access ticket from the previously written file
+                ta = open(fn, "r").read()
+            # analyze the access ticket xml and extract the relevant fields
+            wsaa.AnalizarXml(xml=ta)
+            token = wsaa.ObtenerTagXml("token")
+            sign = wsaa.ObtenerTagXml("sign")
+            expirationTime = wsaa.ObtenerTagXml("expirationTime")
+            generationTime = wsaa.ObtenerTagXml("generationTime")
+            uniqueId = wsaa.ObtenerTagXml("uniqueId")
+        except:
+            token = sign = None
+            if wsaa.Excepcion:
+                # get the exception already parsed by the helper
+                err_msg = wsaa.Excepcion
+            else:
+                # avoid encoding problem when reporting exceptions to the user:
+                err_msg = traceback.format_exception_only(
+                    sys.exc_type, sys.exc_value)[0]
+            raise UserError(_(
+                'Could not connect. This is the what we received: %s') % (
+                    err_msg))
+        return {
+            'uniqueid': uniqueId,
+            'generationtime': generationTime,
+            'expirationtime': expirationTime,
+            'token': token,
+            'sign': sign,
+            }

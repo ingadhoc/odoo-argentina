@@ -3,16 +3,15 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 from openerp import fields, models, api, _
 from OpenSSL import crypto
-from M2Crypto import BIO, SMIME, EVP
 import base64
 import logging
 _logger = logging.getLogger(__name__)
 
 
-class afipws_certificate(models.Model):
+class AfipwsCertificate(models.Model):
     _name = "afipws.certificate"
     _rec_name = "display_name"
 
@@ -37,31 +36,35 @@ class afipws_certificate(models.Model):
         help='Certificate in PEM format.'
         )
     state = fields.Selection([
-            ('draft', 'Draft'),
-            ('waiting', 'Waiting'),
-            ('confirmed', 'Confirmed'),
-            ('cancel', 'Cancelled'),
+        ('draft', 'Draft'),
+        ('waiting', 'Waiting'),
+        ('confirmed', 'Confirmed'),
+        ('cancel', 'Cancelled'),
         ],
         'State',
         select=True,
         readonly=True,
         default='draft',
-        help='* The \'Draft\' state is used when a user is creating a new pair key. Warning: everybody can see the key.\
-        \n* The \'Waiting\' state is used when a request has send to Certificate Authority and is waiting for response.\
-        \n* The \'Confirmed\' state is used when a certificate is valid.\
-        \n* The \'Canceled\' state is used when the key is not more used. You cant use this key again.')
+        help="* The 'Draft' state is used when a user is creating a new pair "
+        "key. Warning: everybody can see the key."
+        "\n* The 'Waiting' state is used when a request has send to "
+        "Certificate Authority and is waiting for response."
+        "\n* The 'Confirmed' state is used when a certificate is valid."
+        "\n* The 'Canceled' state is used when the key is not more used. You "
+        "cant use this key again."
+        )
     request_file = fields.Binary(
-        _('Download Signed Certificate Request'),
+        'Download Signed Certificate Request',
         compute='get_request_file',
         readonly=True
         )
     request_filename = fields.Char(
-        _('Filename'),
+        'Filename',
         readonly=True,
         compute='get_request_file',
         )
     display_name = fields.Char(
-        string=_('Name'),
+        string='Name',
         compute='_compute_display_name',
         )
 
@@ -81,6 +84,8 @@ class afipws_certificate(models.Model):
 
     @api.multi
     def action_to_draft(self):
+        if self.alias_id.state != 'confirmed':
+            raise UserError(_('Certificate Alias must be confirmed first!'))
         self.write({'state': 'draft'})
         return True
 
@@ -109,12 +114,17 @@ class afipws_certificate(models.Model):
         msg = False
 
         if not crt:
-            msg = _('Invalid action! Please, set the certification string to continue.')
+            msg = _(
+                'Invalid action! Please, set the certification string to '
+                'continue.')
         certificate = self.get_certificate()
         if certificate is None:
-            msg = _('Invalid action! Your certificate string is invalid. Check if you forgot the header CERTIFICATE or forgot/append end of lines.')
+            msg = _(
+                'Invalid action! Your certificate string is invalid. Check if '
+                'you forgot the header CERTIFICATE or forgot/append end of '
+                'lines.')
         if msg:
-            raise Warning(msg)
+            raise UserError(msg)
         return True
 
     @api.multi
@@ -129,39 +139,13 @@ class afipws_certificate(models.Model):
                     crypto.FILETYPE_PEM, self.crt.encode('ascii'))
             except Exception, e:
                 if 'Expecting: CERTIFICATE' in e[0]:
-                    raise Warning(_(
-                        'Wrong Certificate file format.\nBe sure you have BEGIN CERTIFICATE string in your first line.'))
+                    raise UserError(_(
+                        'Wrong Certificate file format.\nBe sure you have '
+                        'BEGIN CERTIFICATE string in your first line.'))
                 else:
-                    raise Warning(_(
-                    'Unknown error.\nX509 return this message:\n %s') % e[0])
+                    raise UserError(_(
+                        'Unknown error.\nX509 return this message:\n %s') % (
+                        e[0]))
         else:
             certificate = None
         return certificate
-
-    @api.model
-    def smime(self, message, pkey, cert):
-        """
-        Sign message in SMIME format.
-        TODO migrate this method to not require M2Crypto
-        TODO ver si directamente usamos pyafipws para esto y para genera
-        certificados
-        """
-        res = False
-        if True:
-            smime = SMIME.SMIME()
-            ks = BIO.MemoryBuffer(pkey.encode('ascii'))
-            cs = BIO.MemoryBuffer(cert.encode('ascii'))
-            bf = BIO.MemoryBuffer(str(message))
-            out = BIO.MemoryBuffer()
-            try:
-                smime.load_key_bio(ks, cs)
-            except EVP.EVPError:
-                raise Warning(_(
-                    'Error in Key and Certificate strings! Please check if private key and certificate are in ASCII PEM format.'))
-            sbf = smime.sign(bf)
-            smime.write(out, sbf)
-            res = out.read()
-        else:
-            raise Warning(_(
-                'This certificate is not ready to sign any message! Please set a certificate to continue. You must send your certification request to a authoritative certificator to get one, or execute a self sign certification'))
-        return res

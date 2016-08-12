@@ -20,9 +20,9 @@ iJ91GVc2+6C8FAFxnV0cFd629TC9bj8OQ6WlsHx+7cFrGejDobUPPl8PAkEA9WeX
 CP5CN91/bRNKRbbSiocjpZnj5hCwvKRt5nw5VQmoddNnIPdTiZ9+qq+7WTkYAiBH
 03Q7wxPKNUAFKHW8QQ==
 -----END PRIVATE KEY-----</field>
-            <field name="company_id" ref="l10n_ar_account.company_ri"/>
+            <field name="company_id" ref="base.main_company"/>
             <field name="country_id" ref="base.ar"/>
-            <field name="state_id" ref="l10n_ar_account.demo_S"/>
+            <!-- <field name="state_id" ref="l10n_ar_invoice.demo_S"/> -->
             <field name="city">Rosario</field>
             <field name="service_provider_cuit">20313932975</field>
             <field name="service_type">outsourced</field>

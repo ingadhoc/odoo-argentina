@@ -3,13 +3,13 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, api, _
+from openerp import fields, models, api
 from OpenSSL import crypto
 import logging
 _logger = logging.getLogger(__name__)
 
 
-class afipws_certificate_alias(models.Model):
+class AfipwsCertificateAlias(models.Model):
     _name = "afipws.certificate_alias"
     _description = "AFIP Distingish Name / Alias"
     _rec_name = "common_name"
@@ -56,7 +56,6 @@ class afipws_certificate_alias(models.Model):
         'res.country.state', 'State',
         states={'draft': [('readonly', False)]},
         readonly=True,
-        required=True,
         )
     city = fields.Char(
         'City',
@@ -72,7 +71,7 @@ class afipws_certificate_alias(models.Model):
         required=True,
         )
     cuit = fields.Char(
-        _('CUIT'),
+        'CUIT',
         compute='get_cuit',
         required=True,
         )
@@ -92,6 +91,7 @@ class afipws_certificate_alias(models.Model):
         'afipws.certificate',
         'alias_id',
         'Certificates',
+        states={'cancel': [('readonly', True)]},
         )
     service_type = fields.Selection(
         [('in_house', 'In House'), ('outsourced', 'Outsourced')],
@@ -102,13 +102,17 @@ class afipws_certificate_alias(models.Model):
         states={'draft': [('readonly', False)]},
         )
     state = fields.Selection([
-            ('draft', 'Draft'),
-            ('confirmed', 'Confirmed'),
-            ('cancel', 'Cancelled'),
+        ('draft', 'Draft'),
+        ('confirmed', 'Confirmed'),
+        ('cancel', 'Cancelled'),
         ], 'State', select=True, readonly=True, default='draft',
-        help='* The \'Draft\' state is used when a user is creating a new pair key. Warning: everybody can see the key.\
-        \n* The \'Confirmed\' state is used when the key is completed with public or private key.\
-        \n* The \'Canceled\' state is used when the key is not more used. You cant use this key again.')
+        help="* The 'Draft' state is used when a user is creating a new pair "
+        "key. Warning: everybody can see the key."
+        "\n* The 'Confirmed' state is used when the key is completed with "
+        "public or private key."
+        "\n* The 'Canceled' state is used when the key is not more used. "
+        "You cant use this key again."
+        )
     type = fields.Selection(
         [('production', 'Production'), ('homologation', 'Homologation')],
         'Type',
@@ -152,7 +156,7 @@ class afipws_certificate_alias(models.Model):
     def generate_key(self, key_length=1024):
         """
         """
-        # TODO agregar las cosas variables que tenia crypto a la hora de genrar las keys
+        # TODO reemplazar todo esto por las funciones nativas de pyafipws
         k = crypto.PKey()
         k.generate_key(crypto.TYPE_RSA, key_length)
         self.key = crypto.dump_privatekey(crypto.FILETYPE_PEM, k)
@@ -165,6 +169,7 @@ class afipws_certificate_alias(models.Model):
     @api.multi
     def action_cancel(self):
         self.write({'state': 'cancel'})
+        self.certificate_ids.write({'state': 'cancel'})
         return True
 
     @api.multi
@@ -176,8 +181,9 @@ class afipws_certificate_alias(models.Model):
             req = crypto.X509Req()
             req.get_subject().C = self.country_id.code.encode(
                 'ascii', 'ignore')
-            req.get_subject().ST = self.state_id.name.encode(
-                'ascii', 'ignore')
+            if self.state_id:
+                req.get_subject().ST = self.state_id.name.encode(
+                    'ascii', 'ignore')
             req.get_subject().L = self.city.encode(
                 'ascii', 'ignore')
             req.get_subject().O = self.company_id.name.encode(

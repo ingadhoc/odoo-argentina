@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 19:52+0000\n"
+"POT-Creation-Date: 2015-10-18 02:29+0000\n"
 "PO-Revision-Date: 2015-09-09 19:53+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: English (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/en/)\n"
@@ -98,7 +98,7 @@ msgid "AFIP WS URL"
 msgstr "AFIP WS URL"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:191
+#: code:addons/l10n_ar_afipws/models/res_company.py:200
 #, python-format
 msgid ""
 "AFIP Web Service unvailable.Check your access to internet or contact to "
@@ -238,13 +238,13 @@ msgid "Connections"
 msgstr "Connections"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:189
+#: code:addons/l10n_ar_afipws/models/res_company.py:198
 #, python-format
 msgid "Could not connect. This is the what we received: %s"
 msgstr "Could not connect. This is the what we received: %s"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:185
+#: code:addons/l10n_ar_afipws/models/res_company.py:194
 #, python-format
 msgid ""
 "Could not connect. This is the what we received: %s.\n"
@@ -397,7 +397,7 @@ msgid "Name"
 msgstr "Name"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:103
+#: code:addons/l10n_ar_afipws/models/res_company.py:112
 #, python-format
 msgid "Not confirmed certificate for %s on company %s"
 msgstr "Not confirmed certificate for %s on company %s"

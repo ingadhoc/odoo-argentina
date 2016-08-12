@@ -10,11 +10,15 @@
                         <group>
                             <field name="afip_ws"/>
                             <field name="type"/>
-                            <field name="company_id"/>
                             <field name="batch_sequence_id"/>
                             <field name="uniqueid"/>
                             <field name="generationtime"/>
                             <field name="expirationtime"/>
+                            <field name="sign"/>
+                            <field name="token"/>
+                            <field name="afip_login_url"/>
+                            <field name="afip_ws_url"/>
+                            <field name="company_id"/>
                         </group>
                     </sheet>
                 </form>
@@ -28,6 +32,11 @@
                 <tree string="AFIP Connector">
                     <field name="afip_ws"/>
                     <field name="type"/>
+                    <field name="batch_sequence_id"/>
+                    <field name="uniqueid"/>
+                    <field name="generationtime"/>
+                    <field name="expirationtime"/>
+                    <field name="company_id"/>
                 </tree>
             </field>
         </record>

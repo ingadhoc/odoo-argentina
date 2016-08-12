@@ -50,8 +50,8 @@
     'external_dependencies': {
         'python': ['pyafipws'],
     },
-    'installable': True,
+    'installable': False,
     'name': 'Argentinian Withholding Management',
     'test': [],
-    'version': '8.0.0.0.0',
+    'version': '9.0.1.0.0',
 }

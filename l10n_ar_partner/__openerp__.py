@@ -13,5 +13,5 @@
         'data/res_partner_document_type.xml',
         'demo/partner_demo.xml',
     ],
-    'version': '9.0.0.0.0',
+    'version': '9.0.1.0.0',
 }

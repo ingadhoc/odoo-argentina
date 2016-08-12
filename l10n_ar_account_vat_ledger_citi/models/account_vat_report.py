@@ -16,79 +16,81 @@ class account_vat_ledger(models.Model):
     REGINFO_CV_ALICUOTAS = fields.Text(
         'REGINFO_CV_ALICUOTAS',
         readonly=True,
-        )
+    )
     REGINFO_CV_COMPRAS_IMPORTACIONES = fields.Text(
         'REGINFO_CV_COMPRAS_IMPORTACIONES',
         readonly=True,
-        )
+    )
     REGINFO_CV_CBTE = fields.Text(
         'REGINFO_CV_CBTE',
         readonly=True,
-        )
+    )
     REGINFO_CV_CABECERA = fields.Text(
         'REGINFO_CV_CABECERA',
         readonly=True,
-        )
+    )
     vouchers_file = fields.Binary(
         _('Vouchers File'),
         compute='get_files',
         readonly=True
-        )
+    )
     vouchers_filename = fields.Char(
         _('Vouchers Filename'),
         readonly=True,
         compute='get_files',
-        )
+    )
     aliquots_file = fields.Binary(
         _('Aliquots File'),
         compute='get_files',
         readonly=True
-        )
+    )
     aliquots_filename = fields.Char(
         _('Aliquots Filename'),
         readonly=True,
         compute='get_files',
-        )
+    )
     import_aliquots_file = fields.Binary(
         _('Import Aliquots File'),
         compute='get_files',
         readonly=True
-        )
+    )
     import_aliquots_filename = fields.Char(
         _('Import Aliquots Filename'),
         readonly=True,
         compute='get_files',
-        )
+    )
     prorate_tax_credit = fields.Boolean(
         'Prorate Tax Credit',
-        )
+    )
     prorate_type = fields.Selection(
         [('global', 'Global'), ('by_voucher', 'By Voucher')],
         'Prorate Type',
-        )
+    )
     tax_credit_computable_amount = fields.Float(
         'Credit Computable Amount',
-        )
+    )
     sequence = fields.Integer(
         'Sequence',
         default=0,
         required=True,
         help='Se deberá indicar si la presentación es Original (00) o '
         'Rectificativa y su orden'
-        )
+    )
 
     @api.model
     def format_amount(self, amount, padding=15, decimals=2, invoice=False):
         # get amounts on correct sign despite conifiguration on taxes and tax
         # codes
-        if invoice:
-            amount = abs(amount)
-            if invoice.type in ['in_refund', 'out_refund']:
-                amount = -1.0 * amount
-        if amount < 0:
-            template = "-{:0>%dd}" % (padding-1)
-        else:
-            template = "{:0>%dd}" % (padding)
+        # TODO remove this and perhups invoice argument (we always send invoice)
+        # for invoice refund we dont change sign (we do this before)
+        # if invoice:
+        #     amount = abs(amount)
+        #     if invoice.type in ['in_refund', 'out_refund']:
+        #         amount = -1.0 * amount
+        # if amount < 0:
+        #     template = "-{:0>%dd}" % (padding-1)
+        # else:
+        template = "{:0>%dd}" % (padding)
         return template.format(
             int(round(abs(amount) * 10**decimals, decimals)))
 
@@ -213,9 +215,21 @@ class account_vat_ledger(models.Model):
             partners = self.invoice_ids.mapped('commercial_partner_id').filtered(
                 lambda r: r.document_type_id.afip_code in (False, 99) or not r.document_number)
             if partners:
-                raise Warning(_("On purchase citi, partner document is mandatory and partner document type must be different from 99. Partners %s") % partners.ids)
+                raise Warning(
+                    _("On purchase citi, partner document is mandatory and partner document type must be different from 99. Partners %s") % partners.ids)
 
         for inv in self.invoice_ids:
+            # only vat taxes with codes 3, 4, 5, 6, 8, 9
+            # segun: http://contadoresenred.com/regimen-de-informacion-de-
+            # compras-y-ventas-rg-3685-como-cargar-la-informacion/
+            # empezamos a contar los codigos 1 (no gravado) y 2 (exento)
+            # si no hay alicuotas, sumamos una de esta con 0, 0, 0 en detalle
+            cant_alicuotas = len(inv.vat_tax_ids.filtered(
+                lambda r: r.tax_code_id.afip_code in [3, 4, 5, 6, 8, 9]))
+            if not cant_alicuotas and inv.vat_tax_ids.filtered(
+                    lambda r: r.tax_code_id.afip_code in [1, 2]):
+                cant_alicuotas = 1
+
             row = [
                 # Campo 1: Fecha de comprobante
                 fields.Date.from_string(inv.date_invoice).strftime('%Y%m%d'),
@@ -229,13 +243,16 @@ class account_vat_ledger(models.Model):
                 # Campo 4: Número de Comprobante
                 # TODO agregar estos casos de uso
                 # Si se trata de un comprobante de varias hojas, se deberá informar el número de documento de la primera hoja, teniendo en cuenta lo normado en el  artículo 23, inciso a), punto 6., de la Resolución General N° 1.415, sus modificatorias y complementarias.
-                # En el supuesto de registrar de manera agrupada por totales diarios, se deberá consignar el primer número de comprobante del rango a considerar.
+                # En el supuesto de registrar de manera agrupada por totales
+                # diarios, se deberá consignar el primer número de comprobante
+                # del rango a considerar.
                 "{:0>20d}".format(inv.invoice_number)
-                ]
+            ]
 
             if self.type == 'sale':
                 # Campo 5: Número de Comprobante Hasta.
-                # TODO agregar esto En el resto de los casos se consignará el dato registrado en el campo 4
+                # TODO agregar esto En el resto de los casos se consignará el
+                # dato registrado en el campo 4
                 row.append("{:0>20d}".format(inv.invoice_number))
             else:
                 # Campo 5: Despacho de importación
@@ -246,7 +263,7 @@ class account_vat_ledger(models.Model):
                     row.append(''.rjust(16, ' '))
 
             row += [
-                # Campo 6: Código de documento del comprador. 
+                # Campo 6: Código de documento del comprador.
                 self.get_partner_document_code(inv.commercial_partner_id),
 
                 # Campo 7: Número de Identificación del comprador
@@ -259,9 +276,10 @@ class account_vat_ledger(models.Model):
                 # Campo 9: Importe Total de la Operación.
                 self.format_amount(inv.amount_total, invoice=inv),
 
-                # Campo 10: Importe total de conceptos que no integran el precio neto gravado
+                # Campo 10: Importe total de conceptos que no integran el
+                # precio neto gravado
                 self.format_amount(inv.vat_untaxed, invoice=inv),
-                ]
+            ]
 
             if self.type == 'sale':
                 row += [
@@ -273,21 +291,23 @@ class account_vat_ledger(models.Model):
 
                     # Campo 12: Importe de operaciones exentas
                     self.format_amount(inv.vat_exempt_amount, invoice=inv),
-                    ]
+                ]
             else:
                 row += [
                     # Campo 11: Importe de operaciones exentas
                     self.format_amount(inv.vat_exempt_amount, invoice=inv),
 
-                    # Campo 12: Importe de percepciones o pagos a cuenta del Impuesto al Valor Agregado
+                    # Campo 12: Importe de percepciones o pagos a cuenta del
+                    # Impuesto al Valor Agregado
                     self.format_amount(
                         sum(inv.tax_line.filtered(
                             lambda r: r.tax_code_id.type == 'perception' and r.tax_code_id.tax == 'vat' and r.tax_code_id.application == 'national_taxes').mapped(
                             'tax_amount')), invoice=inv),
-                    ]
+                ]
 
             row += [
-                # Campo 13: Importe de percepciones o pagos a cuenta de impuestos nacionales
+                # Campo 13: Importe de percepciones o pagos a cuenta de
+                # impuestos nacionales
                 self.format_amount(
                     sum(inv.tax_line.filtered(
                         lambda r: r.tax_code_id.type == 'perception' and r.tax_code_id.tax != 'vat' and r.tax_code_id.application == 'national_taxes').mapped(
@@ -322,15 +342,14 @@ class account_vat_ledger(models.Model):
                     padding=10, decimals=6),
 
                 # Campo 19: Cantidad de alícuotas de IVA
-                # only vat taxes with codes 3, 4, 5, 6, 8, 9
-                str(len(inv.vat_tax_ids.filtered(
-                    lambda r: r.tax_code_id.afip_code in [3, 4, 5, 6, 8, 9]))),
+                str(cant_alicuotas),
 
                 # Campo 20: Código de operación.
                 # WARNING. segun la plantilla es 0 si no es ninguna
-                # TODO ver que no se informe un codigo si no correpsonde, tal vez da error
+                # TODO ver que no se informe un codigo si no correpsonde,
+                # tal vez da error
                 inv.fiscal_position.afip_code or ' ',
-                ]
+            ]
 
             if self.type == 'sale':
                 row += [
@@ -340,9 +359,10 @@ class account_vat_ledger(models.Model):
                             lambda r: r.tax_code_id.application == 'others').mapped(
                             'tax_amount')), invoice=inv),
 
-                    # Campo 22: vencimiento comprobante (no figura en instructivo pero si en aplicativo)
+                    # Campo 22: vencimiento comprobante (no figura en
+                    # instructivo pero si en aplicativo)
                     fields.Date.from_string(inv.date_due).strftime('%Y%m%d'),
-                    ]
+                ]
             else:
                 # Campo 21: Crédito Fiscal Computable
                 if self.prorate_tax_credit:
@@ -363,68 +383,89 @@ class account_vat_ledger(models.Model):
 
                     # TODO implementar estos 3
                     # Campo 23: CUIT Emisor / Corredor
-                    # Se informará sólo si en el campo "Tipo de Comprobante" se consigna '033', '058', '059', '060' ó '063'. Si para éstos comprobantes no interviene un tercero en la operación, se consignará la C.U.I.T. del informante. Para el resto de los comprobantes se completará con ceros
+                    # Se informará sólo si en el campo "Tipo de Comprobante" se
+                    # consigna '033', '058', '059', '060' ó '063'. Si para
+                    # éstos comprobantes no interviene un tercero en la
+                    # operación, se consignará la C.U.I.T. del informante. Para
+                    # el resto de los comprobantes se completará con ceros
                     self.format_amount(0, padding=11, invoice=inv),
 
                     # Campo 24: Denominación Emisor / Corredor
                     ''.ljust(30, ' ')[:30],
 
                     # Campo 25: IVA Comisión
-                    # Si el campo 23 es distinto de cero se consignará el importe del I.V.A. de la comisión
+                    # Si el campo 23 es distinto de cero se consignará el
+                    # importe del I.V.A. de la comisión
                     self.format_amount(0, invoice=inv),
-                    ]
+                ]
             res.append(''.join(row))
         self.REGINFO_CV_CBTE = '\r\n'.join(res)
+
+    @api.multi
+    def get_tax_row(self, invoice, base_amount, code, tax_amount):
+        self.ensure_one()
+        inv = invoice
+        row = [
+            # Campo 1: Tipo de Comprobante
+            "{:0>3d}".format(inv.afip_document_class_id.afip_code),
+
+            # Campo 2: Punto de Venta
+            self.get_point_of_sale(inv),
+
+            # Campo 3: Número de Comprobante
+            "{:0>20d}".format(inv.invoice_number),
+        ]
+        if self.type == 'sale':
+            row += [
+                # Campo 4: Importe Neto Gravado
+                self.format_amount(base_amount, invoice=inv),
+
+                # Campo 5: Alícuota de IVA.
+                str(code).rjust(4, '0'),
+
+                # Campo 6: Impuesto Liquidado.
+                self.format_amount(tax_amount, invoice=inv),
+            ]
+        else:
+            row += [
+                # Campo 4: Código de documento del vendedor
+                self.get_partner_document_code(
+                    inv.commercial_partner_id),
+
+                # Campo 5: Número de identificación del vendedor
+                self.get_partner_document_number(
+                    inv.commercial_partner_id),
+
+                # Campo 6: Importe Neto Gravado
+                self.format_amount(base_amount, invoice=inv),
+
+                # Campo 7: Alícuota de IVA.
+                str(code).rjust(4, '0'),
+
+                # Campo 8: Impuesto Liquidado.
+                self.format_amount(tax_amount, invoice=inv),
+            ]
+        return row
 
     @api.one
     def get_REGINFO_CV_ALICUOTAS(self):
         res = []
         for inv in self.invoice_ids.filtered(
                 lambda r: r.afip_document_class_id.afip_code != 66):
-            for tax in inv.vat_tax_ids.filtered(
-                    lambda r: r.tax_code_id.afip_code in [3, 4, 5, 6, 8, 9]):
-                row = [
-                    # Campo 1: Tipo de Comprobante
-                    "{:0>3d}".format(inv.afip_document_class_id.afip_code),
+            vat_taxes = inv.vat_tax_ids.filtered(
+                lambda r: r.tax_code_id.afip_code in [3, 4, 5, 6, 8, 9])
 
-                    # Campo 2: Punto de Venta
-                    self.get_point_of_sale(inv),
-
-                    # Campo 3: Número de Comprobante
-                    "{:0>20d}".format(inv.invoice_number),
-                    ]
-
-                if self.type == 'sale':
-                    row += [
-                        # Campo 4: Importe Neto Gravado
-                        self.format_amount(tax.base_amount, invoice=inv),
-
-                        # Campo 5: Alícuota de IVA.
-                        str(tax.tax_code_id.afip_code).rjust(4, '0'),
-
-                        # Campo 6: Impuesto Liquidado.
-                        self.format_amount(tax.tax_amount, invoice=inv),
-                    ]
-                else:
-                    row += [
-                        # Campo 4: Código de documento del vendedor
-                        self.get_partner_document_code(
-                            inv.commercial_partner_id),
-
-                        # Campo 5: Número de identificación del vendedor
-                        self.get_partner_document_number(
-                            inv.commercial_partner_id),
-
-                        # Campo 6: Importe Neto Gravado
-                        self.format_amount(tax.base_amount, invoice=inv),
-
-                        # Campo 7: Alícuota de IVA.
-                        str(tax.tax_code_id.afip_code).rjust(4, '0'),
-
-                        # Campo 8: Impuesto Liquidado.
-                        self.format_amount(tax.tax_amount, invoice=inv),
-                    ]
-                res.append(''.join(row))
+            # if only exempt or no gravado, we add one line with 0, 0, 0
+            if not vat_taxes and inv.vat_tax_ids.filtered(
+                    lambda r: r.tax_code_id.afip_code in [1, 2]):
+                res.append(''.join(self.get_tax_row(inv, 0.0, 3, 0.0)))
+            for tax in vat_taxes:
+                res.append(''.join(self.get_tax_row(
+                    inv,
+                    tax.base_amount,
+                    tax.tax_code_id.afip_code,
+                    tax.tax_amount,
+                )))
         self.REGINFO_CV_ALICUOTAS = '\r\n'.join(res)
 
     @api.one
@@ -447,6 +488,6 @@ class account_vat_ledger(models.Model):
 
                     # Campo 4: Impuesto Liquidado.
                     self.format_amount(tax.tax_amount, invoice=inv),
-                    ]
+                ]
                 res.append(''.join(row))
         self.REGINFO_CV_COMPRAS_IMPORTACIONES = '\r\n'.join(res)

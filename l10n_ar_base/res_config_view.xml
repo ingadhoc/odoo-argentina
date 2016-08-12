@@ -161,6 +161,10 @@
 					<group>
 						<label for="id" string="Data" />
 						<div name="partners_data">
+							<div name='module_l10n_ar_padron_afip'>
+                                <field name="module_l10n_ar_padron_afip" class="oe_inline" />
+                                <label for="module_l10n_ar_padron_afip"/>
+                            </div>
 							<div name='module_l10n_ar_partner_title'>
 								<field name="module_l10n_ar_partner_title" class="oe_inline" />
 								<label for="module_l10n_ar_partner_title" />

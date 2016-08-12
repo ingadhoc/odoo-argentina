@@ -1,0 +1,62 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * l10n_ar_currency_update
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: odoo-argentina (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-24 13:24+0000\n"
+"PO-Revision-Date: 2016-05-24 21:08+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_ar_currency_update
+#: view:currency.rate.update.service:l10n_ar_currency_update.currency_rate_update_form
+msgid "Base Rate"
+msgstr "taza Base"
+
+#. module: l10n_ar_currency_update
+#: code:addons/l10n_ar_currency_update/models/currency_rate_update.py:76
+#, python-format
+msgid "Base currency rate should be 1.00!"
+msgstr "La taza base debe ser 1.00!"
+
+#. module: l10n_ar_currency_update
+#: model:ir.model,name:l10n_ar_currency_update.model_currency_rate_update_service
+msgid "Currency Rate Update"
+msgstr "Actualización de taza de cambio"
+
+#. module: l10n_ar_currency_update
+#: code:addons/l10n_ar_currency_update/models/currency_rate_update.py:79
+#, python-format
+msgid "For AFIP WS base currency must be ARS!"
+msgstr "Para el WS AFIP la moneda base debe ser ARS!"
+
+#. module: l10n_ar_currency_update
+#: view:currency.rate.update.service:l10n_ar_currency_update.currency_rate_update_form
+msgid "New Rate ="
+msgstr "Nueva Taza = "
+
+#. module: l10n_ar_currency_update
+#: field:currency.rate.update.service,rate_perc:0
+msgid "Rate Perc."
+msgstr "Porcentaje"
+
+#. module: l10n_ar_currency_update
+#: field:currency.rate.update.service,rate_surcharge:0
+msgid "Rate Surcharge"
+msgstr "Fijo"
+
+#. module: l10n_ar_currency_update
+#: code:addons/l10n_ar_currency_update/models/currency_rate_update.py:74
+#, python-format
+msgid "There is no base currency set!"
+msgstr "No hay moneda base configurada!"

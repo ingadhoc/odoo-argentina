@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Point of sales -->
+        <record id="point_of_sale_3" model="afip.point_of_sale">
+            <field name="number" eval="3"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="afip_ws">wsfe</field>
+            <field name="type">electronic</field>
+        </record>
+
+        <record id="point_of_sale_4" model="afip.point_of_sale">
+            <field name="number" eval="4"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="afip_ws">wsfex</field>
+            <field name="type">electronic</field>
+            <field name="sufix">Expo</field>
+        </record>
+
+        <!-- Journals -->
+        <record id="sales_journal_3" model="account.journal">
+            <field name="name">Ventas (0003 - Electronica)</field>
+            <field name="code">VEN03</field>
+            <field name="type">sale</field>
+            <!-- <field name="sequence_id" ref="sequence_sale_journal"/> -->
+            <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="default_debit_account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <!-- <field name="analytic_journal_id" ref="cose_journal_sale"/> -->
+            <field name="use_documents" eval="True"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="point_of_sale_id" ref="point_of_sale_3"/>
+        </record>
+        <record id="refund_sales_journal_3" model="account.journal">
+            <field name="name">Reembolso Ventas (0003 - Electronica)</field>
+            <field name="code">RVE03</field>
+            <field name="type">sale_refund</field>
+            <!-- <field name="sequence_id" ref="sequence_refund_sales_journal"/> -->
+            <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="default_debit_account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <!-- <field name="analytic_journal_id" ref="cose_journal_sale"/> -->
+            <field name="use_documents" eval="True"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="point_of_sale_id" ref="point_of_sale_3"/>
+        </record>
+
+        <record id="sales_journal_4" model="account.journal">
+            <field name="name">Ventas Expo (0004 - Electronica)</field>
+            <field name="code">VEN04</field>
+            <field name="type">sale</field>
+            <!-- <field name="sequence_id" ref="sequence_sale_journal"/> -->
+            <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="default_debit_account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <!-- <field name="analytic_journal_id" ref="cose_journal_sale"/> -->
+            <field name="use_documents" eval="True"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="point_of_sale_id" ref="point_of_sale_4"/>
+        </record>
+        <record id="refund_sales_journal_4" model="account.journal">
+            <field name="name">Reembolso Ventas Expo (0004 - Electronica)</field>
+            <field name="code">RVE04</field>
+            <field name="type">sale_refund</field>
+            <!-- <field name="sequence_id" ref="sequence_refund_sales_journal"/> -->
+            <field name="default_credit_account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="default_debit_account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <!-- <field name="analytic_journal_id" ref="cose_journal_sale"/> -->
+            <field name="use_documents" eval="True"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="point_of_sale_id" ref="point_of_sale_4"/>
+        </record>
+    </data>
+</openerp>

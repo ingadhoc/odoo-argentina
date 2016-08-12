@@ -25,40 +25,40 @@ class AccountInvoice(models.Model):
         copy=False,
         string='Batch Number',
         readonly=True
-        )
+    )
     afip_cae = fields.Char(
         copy=False,
         string='CAE number',
         readonly=True,
         size=24,
         states={'draft': [('readonly', False)]},
-        )
+    )
     afip_cae_due = fields.Date(
         copy=False,
         readonly=True,
         string='CAE due Date',
         states={'draft': [('readonly', False)]},
-        )
+    )
     afip_barcode = fields.Char(
         compute='_get_barcode',
         string='AFIP Barcode'
-        )
+    )
     afip_barcode_img = fields.Binary(
         compute='_get_barcode',
         string='AFIP Barcode Image'
-        )
+    )
     afip_message = fields.Text(
         string='AFIP Message',
         copy=False,
-        )
+    )
     afip_xml_request = fields.Text(
         string='AFIP XML Request',
         copy=False,
-        )
+    )
     afip_xml_response = fields.Text(
         string='AFIP XML Response',
         copy=False,
-        )
+    )
     afip_result = fields.Selection([
         ('', 'n/a'),
         ('A', 'Aceptado'),
@@ -69,15 +69,21 @@ class AccountInvoice(models.Model):
         states={'draft': [('readonly', False)]},
         copy=False,
         help="AFIP request result"
-        )
+    )
     validation_type = fields.Char(
         'Validation Type',
         compute='get_validation_type',
-        )
+    )
 
     @api.one
     def get_validation_type(self):
-        if self.journal_id.afip_ws:
+        # for compatibility with account_invoice_operation, if module installed
+        # and there are operations we return no_validation so no validate
+        # button is displayed
+        if self._fields.get('operation_ids') and self.operation_ids:
+            self.validation_type = 'no_validation'
+        # if invoice has cae then me dont validate it against afip
+        elif self.journal_id.point_of_sale_id.afip_ws and not self.afip_cae:
             self.validation_type = self.env[
                 'res.company']._get_environment_type()
 
@@ -296,7 +302,7 @@ class AccountInvoice(models.Model):
                 commercial_partner.street2 or '',
                 commercial_partner.zip or '',
                 commercial_partner.city or '',
-                ])
+            ])
             pais_dst_cmp = commercial_partner.country_id.afip_code
 
             # create the invoice internally in the helper
@@ -308,7 +314,7 @@ class AccountInvoice(models.Model):
                     imp_trib, imp_op_ex, fecha_cbte, fecha_venc_pago,
                     fecha_serv_desde, fecha_serv_hasta,
                     moneda_id, moneda_ctz
-                    )
+                )
             elif afip_ws == 'wsmtxca':
                 ws.CrearFactura(
                     concepto, tipo_doc, nro_doc, doc_afip_code, pos_number,
@@ -318,7 +324,7 @@ class AccountInvoice(models.Model):
                     fecha_serv_desde, fecha_serv_hasta,
                     moneda_id, moneda_ctz,
                     obs_generales   # difference with wsfe
-                    )
+                )
             elif afip_ws == 'wsfex':
                 ws.CrearFactura(
                     doc_afip_code, pos_number, cbte_nro, fecha_cbte,
@@ -327,7 +333,7 @@ class AccountInvoice(models.Model):
                     id_impositivo, moneda_id, moneda_ctz, obs_comerciales,
                     obs_generales, forma_pago, incoterms,
                     idioma_cbte, incoterms_ds
-                    )
+                )
 
             # TODO ver si en realidad tenemos que usar un vat pero no lo
             # subimos
@@ -339,7 +345,7 @@ class AccountInvoice(models.Model):
                         vat.tax_id.tax_group_id.afip_code,
                         "%.2f" % abs(vat.base_amount),
                         "%.2f" % abs(vat.amount),
-                        )
+                    )
                 for tax in inv.not_vat_tax_ids:
                     _logger.info(
                         'Adding TAX %s' % tax.tax_id.tax_group_id.name)
@@ -347,8 +353,12 @@ class AccountInvoice(models.Model):
                         tax.tax_id.tax_group_id.afip_code,
                         tax.tax_id.tax_group_id.name,
                         "%.2f" % abs(tax.base_amount),
+                        # TODO pasar la alicuota
+                        # como no tenemos la alicuota pasamos cero, en v9
+                        # podremos pasar la alicuota
+                        0,
                         "%.2f" % abs(tax.amount),
-                        )
+                    )
 
             CbteAsoc = inv.get_related_invoices_data()
             if CbteAsoc:
@@ -356,7 +366,7 @@ class AccountInvoice(models.Model):
                     CbteAsoc.document_type_id.code,
                     CbteAsoc.point_of_sale,
                     CbteAsoc.invoice_number,
-                    )
+                )
 
             # analize line items - invoice detail
             # wsfe do not require detail
@@ -376,26 +386,23 @@ class AccountInvoice(models.Model):
                     importe = line.price_subtotal
                     bonif = line.discount or None
                     if afip_ws == 'wsmtxca':
-                        raise UserError('Not implemented yet')
-                        # cod_mtx = line.uom_id.afip_code
-                        # if not line.product_id.uom_id.afip_code:
-                        #     raise UserError(_(
-                        #         'Not afip code con producto UOM %s' % (
-                        #             line.product_id.uom_id.name)))
-                        # u_mtx = (
-                        #     line.product_id.uom_id.afip_code or
-                        #     line.uom_id.afip_code)
-                        # iva_id = (
-                        #     line.vat_tax_ids.tax_id.tax_group_id.afip_code)
-                        # vat_taxes_amounts = line.vat_tax_ids.compute_all(
-                        #             line.price_unit, line.quantity,
-                        #             product=self.product_id,
-                        #             partner=self.invoice_id.partner_id)
-                        # imp_iva = vat_taxes_amounts[
-                        #     'total_included'] - vat_taxes_amounts['total']
-                        # ws.AgregarItem(
-                        #     u_mtx, cod_mtx, codigo, ds, qty, umed,
-                        #     precio, bonif, iva_id, imp_iva, importe+imp_iva)
+                        if not line.product_id.uom_id.afip_code:
+                            raise Warning(_('Not afip code con producto UOM %s' % (
+                                line.product_id.uom_id.name)))
+                        u_mtx = line.product_id.uom_id.afip_code or line.uos_id.afip_code
+                        if self.invoice_id.type in ('out_invoice', 'in_invoice'):
+                            iva_id = line.vat_tax_ids.tax_code_id.afip_code
+                        else:
+                            iva_id = line.vat_tax_ids.ref_tax_code_id.afip_code
+                        vat_taxes_amounts = line.vat_tax_ids.compute_all(
+                            line.price_unit, line.quantity,
+                            product=self.product_id,
+                            partner=self.invoice_id.partner_id)
+                        imp_iva = vat_taxes_amounts[
+                            'total_included'] - vat_taxes_amounts['total']
+                        ws.AgregarItem(
+                            u_mtx, cod_mtx, codigo, ds, qty, umed,
+                            precio, bonif, iva_id, imp_iva, importe + imp_iva)
                     elif afip_ws == 'wsfex':
                         ws.AgregarItem(
                             codigo, ds, qty, umed, precio, importe,
@@ -445,6 +452,6 @@ class AccountInvoice(models.Model):
                 'afip_message': msg,
                 'afip_xml_request': ws.XmlRequest,
                 'afip_xml_response': ws.XmlResponse,
-                })
+            })
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

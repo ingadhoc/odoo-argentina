@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_partner_form">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="inherit_id" ref="l10n_ar_invoice.view_res_partner_form"/>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <group name="afip_col_1">
+                    <field name="last_update_padron"/>
+                    <field name="estado_padron"/>
+                    <field name="imp_ganancias_padron"/>
+                    <field name="imp_iva_padron"/>
+                    <field name="integrante_soc_padron"/>
+                    <field name="monotributo_padron"/>
+                    <field name="empleador_padron"/>
+                </group>
+                <group name="afip_col_2">
+                    <field name="actividad_monotributo_padron"/>
+                    <field name="actividades_padron" widget="many2many_tags"/>
+                    <field name="impuestos_padron" widget="many2many_tags"/>
+                </group>
+<!--                 <page name="fiscal_data">
+                    <group>
+                        <group>
+                        </group>
+                    </group>
+                </page> -->
+                <field name="document_number" position="after">
+                    <button name="%(action_partner_update)d" string="Update From AFIP" class="oe_link oe_inline" type="action" attrs="{'invisible': ['|', ('document_number', '=', False), ('document_type_id', '=', False)]}"/>
+                    <!-- <button name="update_data_from_padron_afip" string="Update From AFIP" class="oe_link oe_inline" type="object"/> -->
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

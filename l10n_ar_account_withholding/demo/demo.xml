@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="ri_with_ret_iibb_arba_aplicada" model="account.tax.withholding">
+            <field name="description">Ret IIBB ARBA A</field>
+            <field name="name">Retención IIBB ARBA Aplicada</field>
+            <field name="type">arba_ws</field>
+            <field name="base_amount_type">untaxed_amount</field>
+            <!-- <field name="accumulated_payments">month</field> -->
+            <!-- <field name="amount" eval="0.10"/> -->
+            <field name="non_taxable_minimum" eval="400"/>
+            <field name="non_taxable_amount" eval="0"/>
+            <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iibb_cf"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iibb_cf"/>
+            <field name="account_id" ref="l10n_ar_invoice.ri_retencion_iibb_cf"/>
+            <field name="ref_account_id" ref="l10n_ar_invoice.ri_retencion_iibb_cf"/>
+            <field name="type_tax_use">payment</field>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+        <record id="ri_with_ret_ganancias_aplicada" model="account.tax.withholding">
+            <field name="description">Ret Ganancias A</field>
+            <field name="name">Retención Ganancias Aplicada</field>
+            <field name="type">tabla_ganancias</field>
+            <field name="base_amount_type">untaxed_amount</field>
+            <!-- <field name="accumulated_payments">month</field> -->
+            <!-- <field name="amount" eval="0.10"/> -->
+            <!-- <field name="non_taxable_minimum" eval="0"/> -->
+            <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_ganancias_ret_aplicada"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_invoice.ri_tax_code_ganancias_ret_aplicada"/>
+            <field name="account_id" ref="l10n_ar_invoice.ri_retencion_ganancias_aplicada"/>
+            <field name="ref_account_id" ref="l10n_ar_invoice.ri_retencion_ganancias_aplicada"/>
+            <field name="type_tax_use">payment</field>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="ref_tax_sign" eval="-1"/>
+        </record>
+
+    </data>
+</openerp>

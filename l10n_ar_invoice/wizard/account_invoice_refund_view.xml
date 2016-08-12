@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_invoice" model="ir.ui.view">
+            <field name="name">account.invoice_refund.view</field>
+            <field name="model">account.invoice.refund</field>
+            <field name="inherit_id" ref="account.view_account_invoice_refund"/>
+            <field name="arch" type="xml">
+                <form>   
+                    <field name="invoice_id" invisible="1"/>
+                </form>           
+            </field>
+        </record>
+
+    </data>
+</openerp>

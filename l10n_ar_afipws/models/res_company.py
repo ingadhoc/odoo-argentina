@@ -228,4 +228,4 @@ class ResCompany(models.Model):
             'expirationtime': expirationTime,
             'token': token,
             'sign': sign,
-            }
+        }

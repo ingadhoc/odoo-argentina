@@ -3,16 +3,19 @@
 [![Coverage Status](https://coveralls.io/repos/ingadhoc/odoo-argentina/badge.png?branch=9.0)](https://coveralls.io/r/ingadhoc/odoo-argentina?branch=9.0)
 [![Code Climate](https://codeclimate.com/github/ingadhoc/odoo-argentina/badges/gpa.svg)](https://codeclimate.com/github/ingadhoc/odoo-argentina)
 
-# Odoo-Argentina
+# ADHOC odoo-argentina
 
-Un Repositorio de la localización argentina.
+ADHOC Odoo odoo-argentina Modules
 
-## Links de interes
+[//]: # (addons)
+This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+[//]: # (end addons)
 
-- [Tutoriales de instalación, blog, foro y demás](http://www.odooargentina.com/)
-- [Wiki](https://github.com/ingadhoc/odoo-argentina/wiki)
+Translation Status
+------------------
+[![Transifex Status](https://www.transifex.com/projects/p/ingadhoc-odoo-argentina-8-0/chart/image_png)](https://www.transifex.com/projects/p/ingadhoc-odoo-argentina-8-0)
 
-## Localizaciones Modelos
+----
 
 - [Brazil](https://github.com/openerpbrasil/l10n_br_core)** - fuente de conceptos avanzados sobre impuestos
 - [Colombia](https://github.com/odoo-colombia/odoo-colombia) - De quien hemos tomado todo este contenido e ideas para organizarnos. Gracias!

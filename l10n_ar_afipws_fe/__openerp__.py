@@ -4,7 +4,7 @@
     'version': '9.0.1.0.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
-    'author':  'ADHOC SA, Moldeo Interactive',
+    'author': 'ADHOC SA, Moldeo Interactive',
     'license': 'AGPL-3',
     'summary': '',
     'depends': [
@@ -14,7 +14,7 @@
         # becuase demo data needs de chart account installed, we should
         # take this data tu l10n_ar_chart and set electronic if available
         'l10n_ar_chart',
-        ],
+    ],
     'external_dependencies': {
     },
     'data': [

@@ -1,0 +1,29 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * l10n_ar_base_vat
+# 
+# Translators:
+# Javier Diez <jd@ingadhoc.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: odoo-argentina (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-18 02:29+0000\n"
+"PO-Revision-Date: 2015-09-11 18:22+0000\n"
+"Last-Translator: Javier Diez <jd@ingadhoc.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_ar_base_vat
+#: model:ir.model,name:l10n_ar_base_vat.model_res_partner
+msgid "Partner"
+msgstr "Partner"
+
+#. module: l10n_ar_base_vat
+#: field:res.partner,formated_vat:0
+msgid "Printeable VAT"
+msgstr "VAT imprimible"

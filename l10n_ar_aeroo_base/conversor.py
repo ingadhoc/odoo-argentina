@@ -49,7 +49,7 @@ CENTENAS = (
 def to_word(number):
     ans = to_word_int(int(number))
     # ans = to_word_int(int(number)) + ' PESOS'
-    centavos = int((number - int(number)) * 100)
+    centavos = int(round((number - int(number)), 2) * 100)
     if centavos > 0:
         ans += ' CON ' + to_word_int(centavos) + ' CENTAVOS'
     return ans.title()

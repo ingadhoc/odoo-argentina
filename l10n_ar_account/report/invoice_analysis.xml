@@ -9,6 +9,8 @@
                 <field name="number"/>
                 <field name="date_invoice"/>
                 <field name="journal_id"/>
+                <field name="account_analytic_id"/>
+                <field name="state_id" invisible="1"/>
                 <field name="type" invisible="1"/>
                 <field name="partner_id"/>
                 <field name="product_id"/>
@@ -66,6 +68,7 @@
                 <field name="date_invoice_from" filter_domain="[('date_invoice','&gt;=',self)]"/>
                 <field name="date_invoice_to" filter_domain="[('date_invoice','&lt;=',self)]"/>
                 <field name="company_id"/>
+                <field name="state_id"/>
                 <field name="user_id" />
                 <field name="period_id" />
                 <field name="fiscalyear_id" />
@@ -78,6 +81,7 @@
                     <filter string="Salesman" name='user' context="{'group_by':'user_id'}"/>
                     <filter string="Period" name='period_id' context="{'group_by':'period_id'}"/>
                     <filter string="Fiscal Year" name='fiscalyear_id' context="{'group_by':'fiscalyear_id'}"/>
+                    <filter string="State" context="{'group_by':'state_id'}"/>
                     <filter string="Product" context="{'group_by':'product_id'}"/>
                     <filter string="Product Category" name="category_product" context="{'group_by':'product_category_id'}"/>
                     <filter string="State" icon="terp-stock_effects-object-colorize" context="{'group_by':'state'}"/>

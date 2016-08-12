@@ -41,8 +41,9 @@ Retenciones para Plan Contable General Argentino
         'data/account_chart_respinsc.xml',
     ],
     'demo': [
-        'demo/ri_withholding_demo.xml',
-        'demo/ri_voucher_demo.xml',
+        # TODO enable this demo data or use it on l10n_ar_withh..
+        # 'demo/ri_withholding_demo.xml',
+        # 'demo/ri_voucher_demo.xml',
     ],
     'test': [
     ],

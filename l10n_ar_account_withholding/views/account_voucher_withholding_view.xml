@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data> 
+
+        <record id="account_voucher_withholding_tree_view" model="ir.ui.view">
+            <field name="name">account.voucher.withholding.tree</field>
+            <field name="model">account.voucher.withholding</field>
+            <field name="inherit_id" ref="account_voucher_withholding.account_voucher_withholding_tree_view"/>
+            <field name="arch" type="xml"> 
+                <tree>
+                    <button name="%(action_aeroo_certificado_de_retencion_report)d" string="Print" type="action"/>
+                </tree>
+            </field>
+        </record>   
+
+    </data>
+</openerp>
+

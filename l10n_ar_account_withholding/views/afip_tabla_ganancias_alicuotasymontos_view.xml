@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!--         <record id="view_afip_tabla_ganancias_alicuotasymontos_form" model="ir.ui.view">
+            <field name="name">afip.tabla_ganancias.alicuotasymontos.form</field>
+            <field name="model">afip.tabla_ganancias.alicuotasymontos</field>
+            <field name="arch" type="xml">
+                <form string="AFIP tax">
+                    <group>
+                        <field name="name"/>
+                        <field name='code'/>
+                        <field name='active'/>
+                    </group>
+                </form>
+            </field>
+        </record> -->
+
+        <record id="view_afip_tabla_ganancias_alicuotasymontos_tree" model="ir.ui.view">
+            <field name="name">afip.tabla_ganancias.alicuotasymontos.tree</field>
+            <field name="model">afip.tabla_ganancias.alicuotasymontos</field>
+            <field name="arch" type="xml">
+                <tree string="AFIP tax" editable="top">
+                    <field name="codigo_de_regimen"/>
+                    <field name="anexo_referencia"/>
+                    <field name="concepto_referencia"/>
+                    <field name="porcentaje_inscripto"/>
+                    <field name="porcentaje_no_inscripto"/>
+                    <field name="montos_no_sujetos_a_retencion"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_afip_tabla_ganancias_alicuotasymontos">
+            <field name="name">AFIP tax</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">afip.tabla_ganancias.alicuotasymontos</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem name="Alicuotas y Montos Ganancias" action="act_afip_tabla_ganancias_alicuotasymontos" id="menu_action_afip_tabla_ganancias_alicuotasymontos" sequence="95" parent="l10n_ar_invoice.menu_afip_config"/>
+
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
+     -->

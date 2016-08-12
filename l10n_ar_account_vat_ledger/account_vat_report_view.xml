@@ -6,9 +6,9 @@
             <field name="model">account.vat.ledger</field>
             <field name='arch' type='xml'>
                 <tree colors="blue:state == 'draft';gray:state == 'cancel'" string="VAT Ledger">
+                    <field name="name"/>
                     <field name="company_id" groups="base.group_multi_company"/>
                     <field name="fiscalyear_id"/>
-                    <field name="period_id"/>
                     <field name="first_page"/>
                     <field name="last_page"/>
                     <field name="state"/>
@@ -40,7 +40,8 @@
                             </group>
                             <group>
                                 <field name="first_page"/>
-                            	<field name="last_page"/>
+                                <field name="last_page"/>
+                            	<field name="reference"/>
                             </group>
     	                </group>
     	                <notebook>
@@ -56,9 +57,10 @@
                                         <field name="commercial_partner_id"/>
                                         <field name="responsability_id"/>
                                         <field name="formated_vat"/>
-                                        <field name="amount_untaxed" sum="Total"/>
-                                        <field name="amount_tax" sum="Total"/>
-                                        <field name="amount_total" sum="Total"/>
+                                        <!-- remove  sum="Total" because credits are not negative -->
+                                        <field name="amount_untaxed"/>
+                                        <field name="amount_tax"/>
+                                        <field name="amount_total"/>
                                     </tree>
                                 </field>
                             </page>

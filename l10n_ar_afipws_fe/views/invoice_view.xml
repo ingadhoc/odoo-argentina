@@ -4,7 +4,9 @@
         <record id="view_invoice_form" model="ir.ui.view">
             <field name="model">account.invoice</field>
             <field name="name">account.invoice.afip.form</field>
-            <field name="inherit_id" ref="account.invoice_form" />
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <!-- we want this view to be loaded after invoice operation view if installed -->
+            <field name="priority">20</field>
             <field name="arch" type="xml">
                 <!-- we change button labels for better usability -->
                 <button name="invoice_open" position="attributes">
@@ -21,12 +23,13 @@
                         <group>
                             <field name='validation_type' invisible="1"/>
                             <field name='afip_batch_number' invisible="1"/>
+                            <field name='validation_type' invisible="1"/>
                             <field name='afip_cae'/>
                             <field name='afip_cae_due'/>
                             <field name='afip_result'/>
                             <field name='afip_message'/>
-                            <field name='afip_xml_request' invisible="1"/>
-                            <field name='afip_xml_response' invisible="1"/>
+                            <field name='afip_xml_request' groups="base.group_no_one"/>
+                            <field name='afip_xml_response' groups="base.group_no_one"/>
                         </group>
                     </page>
                 </notebook>

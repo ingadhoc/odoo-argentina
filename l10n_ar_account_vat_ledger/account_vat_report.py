@@ -51,6 +51,8 @@ class account_vat_ledger(models.Model):
     name = fields.Char(
         _('Titile'),
         compute='_get_name')
+    reference = fields.Char(
+        'Reference',)
     invoice_ids = fields.Many2many(
         'account.invoice',
         string=_("Invoices"),
@@ -99,13 +101,15 @@ class account_vat_ledger(models.Model):
             'not_vat_tax_ids.tax_code_id')
 
     @api.one
-    @api.depends('type', 'period_id')
+    @api.depends('type', 'period_id', 'reference')
     def _get_name(self):
         if self.type == 'sale':
             ledger_type = _('Sales')
         elif self.type == 'purchase':
             ledger_type = _('Purchases')
         name = _("%s VAT Ledger %s") % (ledger_type, self.period_id.name)
+        if self.reference:
+            name = "%s - %s" % (name, self.reference)
         self.name = name
 
     @api.one

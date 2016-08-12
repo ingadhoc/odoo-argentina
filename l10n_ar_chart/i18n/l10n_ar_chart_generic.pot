@@ -3,7 +3,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 8.0alpha1\n"
+"Project-Id-Version: OpenERP Server 9.0alpha1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-30 12:39+0000\n"
 "PO-Revision-Date: 2014-05-30 12:39+0000\n"

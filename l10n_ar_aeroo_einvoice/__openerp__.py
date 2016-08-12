@@ -35,19 +35,19 @@ Argentinian Like Electronic Invoice Aeroo Report
         'report_extended_account',
         'l10n_ar_afipws_fe',
         'l10n_ar_aeroo_base',
-        ],
+    ],
     'external_dependencies': {
     },
     'data': [
         'report_configuration_defaults_data.xml',
         'invoice_report.xml',
         'invoice_template.xml',
-        ],
+    ],
     'demo': [
-        ],
+    ],
     'test': [
-        ],
-    'installable': True,
+    ],
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

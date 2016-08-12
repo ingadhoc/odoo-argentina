@@ -24,7 +24,7 @@
     'demo': [],
     'depends': ['base'],
     'description': '\n\nListado de provincias de la Rep\xc3\xbablica Argentina.\n\n\n\nIncluye:\n\n - Listado de Provincias.\n\n - Codificaci\xc3\xb3n AFIP de cada provincia.\n\n',
-    'installable': True,
+    'installable': False,
     'license': 'AGPL-3',
     'name': 'Argentina - Listado de Provincias.',
     'test': [],

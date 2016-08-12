@@ -46,7 +46,7 @@ TODO implementar cambios como los hace l10n_ar_chart_generic_withholding
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'application': False,
 }

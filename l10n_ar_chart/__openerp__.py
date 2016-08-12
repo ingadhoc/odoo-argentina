@@ -23,7 +23,7 @@
         '../account/demo/account_bank_statement.yml',
         '../account/demo/account_invoice_demo.yml',
     ],
-    'installable': True,
+    'installable': False,
     'images': [
     ],
     'version': '9.0.1.0.0',

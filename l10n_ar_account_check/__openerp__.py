@@ -46,7 +46,7 @@ Argentinian Account Check Integration
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'application': False,
 }

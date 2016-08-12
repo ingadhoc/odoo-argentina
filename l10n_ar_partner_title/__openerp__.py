@@ -24,7 +24,7 @@
     'demo': [],
     'depends': ['base'],
     'description': '\n\nM\xc3\xb3dulo de nombres y t\xc3\xadtulos para personas f\xc3\xadsicas y no f\xc3\xadsicas.\n\n\n\nIncluye:\n\n\n\n - Denominaci\xc3\xb3n de clientes, proveedores y contactos.\n\n\n\n',
-    'installable': True,
+    'installable': False,
     'license': 'AGPL-3',
     'name': 'Argentina - Nombre y t\xc3\xadtulos de personas f\xc3\xadsicas o no.',
     'data': ['data/res_partner_title.xml'],

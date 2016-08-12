@@ -5,7 +5,7 @@
     'demo_xml': [],
     'depends': ['partner_documents'],
     'init_xml': [],
-    'installable': True,
+    'installable': False,
     'license': 'AGPL-3',
     'name': 'Argentina - Datos de documentos y títulos de personerías',
     'data': [

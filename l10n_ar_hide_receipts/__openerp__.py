@@ -45,7 +45,7 @@ Hide Sale Receipt, Purchase recepit and Sale receipts analysis menus
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

@@ -49,7 +49,7 @@ Argentinian Like Sale Order Integration With Portal Sale
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'application': False,
 }

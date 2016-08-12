@@ -50,7 +50,7 @@ Aregentinian Receipts and Payment Orders
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'application': False,
 }

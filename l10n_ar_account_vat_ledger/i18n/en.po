@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 19:52+0000\n"
-"PO-Revision-Date: 2015-09-09 19:52+0000\n"
+"POT-Creation-Date: 2015-10-18 02:29+0000\n"
+"PO-Revision-Date: 2015-10-08 19:58+0000\n"
 "Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
 "Language-Team: English (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
@@ -260,6 +260,13 @@ msgid "Summary"
 msgstr "Summary"
 
 #. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/account.py:78
+#: code:addons/l10n_ar_account_vat_ledger/account.py:129
+#, python-format
+msgid "Tax"
+msgstr "Tax"
+
+#. module: l10n_ar_account_vat_ledger
 #: model:ir.model,name:l10n_ar_account_vat_ledger.model_account_tax_code
 msgid "Tax Code"
 msgstr "Tax Code"
@@ -290,6 +297,8 @@ msgstr "To set \"Presented\" you must upload the \"Presented Ledger\" first"
 #. module: l10n_ar_account_vat_ledger
 #: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
 #: code:addons/l10n_ar_account_vat_ledger/account.py:30
+#: code:addons/l10n_ar_account_vat_ledger/account.py:81
+#: code:addons/l10n_ar_account_vat_ledger/account.py:132
 #, python-format
 msgid "Total"
 msgstr "Total"
@@ -306,6 +315,8 @@ msgstr "Unread Messages"
 
 #. module: l10n_ar_account_vat_ledger
 #: code:addons/l10n_ar_account_vat_ledger/account.py:16
+#: code:addons/l10n_ar_account_vat_ledger/account.py:75
+#: code:addons/l10n_ar_account_vat_ledger/account.py:126
 #, python-format
 msgid "Untaxed"
 msgstr "Untaxed"

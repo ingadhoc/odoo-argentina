@@ -5,3 +5,4 @@
 ##############################################################################
 from . import account
 from . import account_vat_report
+from . import account_invoice

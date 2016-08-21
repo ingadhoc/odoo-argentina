@@ -144,7 +144,8 @@ class account_invoice(models.Model):
         'Document Type',
         readonly=True,
         ondelete='restrict',
-        states={'draft': [('readonly', False)]}
+        states={'draft': [('readonly', False)]},
+        copy=False
     )
     afip_incoterm_id = fields.Many2one(
         'afip.incoterm',
@@ -566,6 +567,18 @@ class account_invoice(models.Model):
                     'Supplier Invoice Number must be unique per Supplier'
                     ' and Company!'))
 
+    # no lo usamos al final porque ya hay chequeo en chequeos de la loc
+    # @api.one
+    # def check_supplier_invoice_number(self):
+    #     # TODO podemos mejorar esto en la v9 con distintos chequeos del
+    #     # supplier number
+    #     if (
+    #             self.type in ('in_invoice', 'in_refund') and
+    #             self.use_documents and not self.supplier_invoice_number):
+    #         raise Warning(_(
+    #             'On supplier invoices with a "Use Document" Journal, supplier'
+    #             ' invoice number is mandatory, invoice %s' % self.id))
+
     @api.multi
     def check_use_documents(self):
         # check invoices has document class but journal require it (we check
@@ -703,6 +716,8 @@ class account_invoice(models.Model):
         """
         self.check_use_documents()
         self.check_argentinian_invoice_taxes()
+        # no lo usamos al final porque ya hay chequeo en chequeos de la loc
+        # self.check_supplier_invoice_number()
         return super(account_invoice, self).action_move_create()
 
     @api.multi

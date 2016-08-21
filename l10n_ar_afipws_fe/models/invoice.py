@@ -101,7 +101,10 @@ class invoice(models.Model):
                     str(self.afip_cae), cae_due])
             barcode = barcode + self.verification_digit_modulo10(barcode)
         self.afip_barcode = barcode
+        self.afip_barcode_img = self._make_image_I25(barcode)
 
+    @api.model
+    def _make_image_I25(self, barcode):
         "Generate the required barcode Interleaved of 7 image using PIL"
         image = False
         if barcode:
@@ -117,7 +120,7 @@ class invoice(models.Model):
             image = output.getvalue()
             image = output.getvalue().encode("base64")
             output.close()
-        self.afip_barcode_img = image
+        return image
 
     @api.model
     def verification_digit_modulo10(self, code):

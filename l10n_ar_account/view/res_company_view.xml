@@ -8,11 +8,14 @@
             <field name="arch" type="xml">
                 <field name="vat" position="after">
                     <field name="afip_responsability_type_id" options="{'no_open': True, 'no_create': True}" attrs="{'required': [('localization', '=', 'argentina')], 'invisible': [('localization', '!=', 'argentina')]}"/>
+                    <label for="gross_income_number" string="Gross Income"/>
+                    <div>
+                        <field name="gross_income_type" placeholder="Type..." class="oe_inline"/>
+                        <field name="gross_income_number" placeholder="Number..." class="oe_inline" attrs="{'invisible': [('gross_income_type', '=', False)], 'required': [('gross_income_type', '!=', False)]}"/>
+                    </div>
                     <field name="start_date" attrs="{'required': [('localization', '=', 'argentina')], 'invisible': [('localization', '!=', 'argentina')]}"/>
-                    <field name="iibb" attrs="{'invisible': [('localization', '!=', 'argentina')]}"/>
                 </field>
             </field>
         </record>
-
     </data>
 </openerp>

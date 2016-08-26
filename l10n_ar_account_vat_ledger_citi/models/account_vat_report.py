@@ -285,7 +285,7 @@ class account_vat_ledger(models.Model):
                 row += [
                     # Campo 11: Percepción a no categorizados
                     self.format_amount(
-                        sum(inv.tax_line.filtered(
+                        sum(inv.tax_line_ids.filtered(
                             lambda r: r.tax_code_id.type == 'perception' and r.tax_code_id.tax == 'vat' and r.tax_code_id.application == 'national_taxes').mapped(
                             'tax_amount')), invoice=inv),
 
@@ -300,7 +300,7 @@ class account_vat_ledger(models.Model):
                     # Campo 12: Importe de percepciones o pagos a cuenta del
                     # Impuesto al Valor Agregado
                     self.format_amount(
-                        sum(inv.tax_line.filtered(
+                        sum(inv.tax_line_ids.filtered(
                             lambda r: r.tax_code_id.type == 'perception' and r.tax_code_id.tax == 'vat' and r.tax_code_id.application == 'national_taxes').mapped(
                             'tax_amount')), invoice=inv),
                 ]
@@ -309,25 +309,25 @@ class account_vat_ledger(models.Model):
                 # Campo 13: Importe de percepciones o pagos a cuenta de
                 # impuestos nacionales
                 self.format_amount(
-                    sum(inv.tax_line.filtered(
+                    sum(inv.tax_line_ids.filtered(
                         lambda r: r.tax_code_id.type == 'perception' and r.tax_code_id.tax != 'vat' and r.tax_code_id.application == 'national_taxes').mapped(
                         'tax_amount')), invoice=inv),
 
                 # Campo 14: Importe de percepciones de ingresos brutos
                 self.format_amount(
-                    sum(inv.tax_line.filtered(
+                    sum(inv.tax_line_ids.filtered(
                         lambda r: r.tax_code_id.type == 'perception' and r.tax_code_id.application == 'provincial_taxes').mapped(
                         'tax_amount')), invoice=inv),
 
                 # Campo 15: Importe de percepciones de impuestos municipales
                 self.format_amount(
-                    sum(inv.tax_line.filtered(
+                    sum(inv.tax_line_ids.filtered(
                         lambda r: r.tax_code_id.type == 'perception' and r.tax_code_id.application == 'municipal_taxes').mapped(
                         'tax_amount')), invoice=inv),
 
                 # Campo 16: Importe de impuestos internos
                 self.format_amount(
-                    sum(inv.tax_line.filtered(
+                    sum(inv.tax_line_ids.filtered(
                         lambda r: r.tax_code_id.application == 'internal_taxes').mapped(
                         'tax_amount')), invoice=inv),
 
@@ -355,7 +355,7 @@ class account_vat_ledger(models.Model):
                 row += [
                     # Campo 21: Otros Tributos
                     self.format_amount(
-                        sum(inv.tax_line.filtered(
+                        sum(inv.tax_line_ids.filtered(
                             lambda r: r.tax_code_id.application == 'others').mapped(
                             'tax_amount')), invoice=inv),
 
@@ -377,7 +377,7 @@ class account_vat_ledger(models.Model):
                 row += [
                     # Campo 22: Otros Tributos
                     self.format_amount(
-                        sum(inv.tax_line.filtered(
+                        sum(inv.tax_line_ids.filtered(
                             lambda r: r.tax_code_id.application == 'others').mapped(
                             'tax_amount')), invoice=inv),
 

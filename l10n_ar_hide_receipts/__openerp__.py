@@ -20,10 +20,10 @@
 ##############################################################################
 {
     'name': 'Hider Purchase/Sale Receipts Menus',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',
@@ -45,7 +45,7 @@ Hide Sale Receipt, Purchase recepit and Sale receipts analysis menus
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

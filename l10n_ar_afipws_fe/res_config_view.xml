@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_account_config_settings">
+            <field name="name">l10n_ar.view.account.config.form.inherit</field>
+            <field name="inherit_id" ref="l10n_ar_account.view_account_config_settings"/>
+            <field name="model">account.config.settings</field>
+            <field name="arch" type="xml">
+                <div name="point_of_sale_type" position="after">
+                    <div name="afip_ws">
+                        <label for="afip_ws" attrs="{'invisible':['|', '|', '|', ('point_of_sale_type', '!=', 'electronic'), ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)]}"/>
+                        <field name="afip_ws" class="oe_inline" attrs="{'invisible':['|', '|', '|', ('point_of_sale_type', '!=', 'electronic'), ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)], 'required':[('point_of_sale_type', '=', 'electronic'), ('localization', '=', 'argentina'), ('sale_use_documents', '=', True), ('has_chart_of_accounts', '=', False)]}"/>
+                    </div>
+                </div>
+            </field>
+        </record>
+
+    </data>
+</openerp>

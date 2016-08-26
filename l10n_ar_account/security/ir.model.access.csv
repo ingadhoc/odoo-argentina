@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_afip_responsability_type_manager,afip.responsability.type.manager,model_afip_responsability_type,account.group_account_manager,1,1,1,1
+access_afip_responsability_type_user,afip.responsability.type.all,model_afip_responsability_type,,1,0,0,0
+access_account_document_letter_adviser,account.document.letter.adviser,model_account_document_letter,account.group_account_manager,1,1,1,1
+access_account_document_letter_all,account.document.letter.all,model_account_document_letter,,1,0,0,0
+access_afip_incoterm_manager,afip.incoterm.manager,model_afip_incoterm,account.group_account_manager,1,1,1,1
+access_afip_incoterm_all,afip.incoterm.all,model_afip_incoterm,,1,0,0,0

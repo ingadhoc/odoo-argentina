@@ -20,10 +20,10 @@
 ##############################################################################
 {
     'name': 'Argentinian Like Purchase Order Aeroo Report',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',
@@ -46,7 +46,7 @@ Argentinian Like Purchase Order Aeroo Report
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

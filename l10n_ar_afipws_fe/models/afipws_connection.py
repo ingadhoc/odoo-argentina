@@ -9,9 +9,10 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class afipws_connection(models.Model):
+class AfipwsConnection(models.Model):
     _inherit = "afipws.connection"
 
+    # TODO use _get_afip_ws_selection to add values to this selection
     afip_ws = fields.Selection(
         selection_add=[
             ('wsfe', 'Mercado interno -sin detalle- RG2485 (WSFEv1)'),
@@ -25,7 +26,7 @@ class afipws_connection(models.Model):
         """
         Method to be inherited
         """
-        ws = super(afipws_connection, self)._get_ws(afip_ws)
+        ws = super(AfipwsConnection, self)._get_ws(afip_ws)
         if afip_ws == 'wsfe':
             from pyafipws.wsfev1 import WSFEv1
             ws = WSFEv1()
@@ -39,20 +40,24 @@ class afipws_connection(models.Model):
 
     @api.model
     def get_afip_ws_url(self, afip_ws, environment_type):
-        afip_ws_url = super(afipws_connection, self).get_afip_ws_url(
+        afip_ws_url = super(AfipwsConnection, self).get_afip_ws_url(
             afip_ws, environment_type)
         if afip_ws_url:
             return afip_ws_url
         elif afip_ws == 'wsfe':
             if environment_type == 'production':
-                afip_ws_url = 'https://servicios1.afip.gov.ar/wsfev1/service.asmx'
+                afip_ws_url = (
+                    'https://servicios1.afip.gov.ar/wsfev1/service.asmx')
             else:
-                afip_ws_url = 'https://wswhomo.afip.gov.ar/wsfev1/service.asmx'
+                afip_ws_url = (
+                    'https://wswhomo.afip.gov.ar/wsfev1/service.asmx')
         elif afip_ws == 'wsfex':
             if environment_type == 'production':
-                afip_ws_url = 'https://servicios1.afip.gov.ar/wsfexv1/service.asmx'
+                afip_ws_url = (
+                    'https://servicios1.afip.gov.ar/wsfexv1/service.asmx')
             else:
-                afip_ws_url = 'https://wswhomo.afip.gov.ar/wsfexv1/service.asmx'
+                afip_ws_url = (
+                    'https://wswhomo.afip.gov.ar/wsfexv1/service.asmx')
         elif afip_ws in ('wsmtxca', 'wsbfe'):
             raise Warning('AFIP WS %s Not implemented yet' % afip_ws)
         return afip_ws_url

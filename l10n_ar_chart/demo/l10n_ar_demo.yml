@@ -1,0 +1,34 @@
+-
+   Create this invoices with supplier number because if not we have an error in demo data load
+   Set the context for supplier bills because the 'type' field is readonly in invoice form views, so it value won't be considered by the yaml import
+-
+  !context
+    type: 'in_invoice'
+-
+  !record {model: account.invoice, id: demo_invoice_january_wages}:
+    company_id: base.main_company
+    partner_id: base.res_partner_12
+    type: 'in_invoice'
+    document_number: '0001-00000011'
+-
+  !record {model: account.invoice, id: demo_invoice_equipment_purchase}:
+    company_id: base.main_company
+    partner_id: base.res_partner_1
+    type: 'in_invoice'
+    document_number: '0003-00000023'
+-
+  Set some products with vat 0, vat exempt, vat untaxed and aat 27
+-
+  !python {model: product.template} : |
+      mapping_list = [
+          ('product.product_product_43_product_template', 'l10n_ar_account.ri_tax_group_iva_no_gravado'),
+          ('product.product_product_39_product_template', 'l10n_ar_account.ri_tax_group_iva_exento'),
+          ('product.product_product_54_product_template', 'l10n_ar_account.ri_tax_group_iva_0'),
+          ('product.product_product_53_product_template', 'l10n_ar_account.ri_tax_group_iva_10'),
+          ('product.product_product_50_product_template', 'l10n_ar_account.ri_tax_group_iva_27'),
+      ]
+      for product_xml_id, tax_code_xml_id in mapping_list:
+          # product_template = self.browse(cr, uid, ref(product_xml_id))
+          tax_ids = self.pool.get('account.tax').search(cr, uid, [('type_tax_use', '=', 'sale'), ('tax_group_id', '=', ref(tax_code_xml_id))])
+          if tax_ids:
+              self.write(cr, uid, ref(product_xml_id), {'taxes_id': [(6, None, tax_ids)]})

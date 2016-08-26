@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="fiscal_position" position="after">
+                    <field name="vat_discriminated"/>
+                </field>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='tax_id']" position="after">
+                    <field name="price_unit_with_tax" groups="l10n_ar_sale.sale_price_unit_with_tax"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form//field[@name='tax_id']" position="after">
+                    <field name="price_unit_with_tax" groups="l10n_ar_sale.sale_price_unit_with_tax"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

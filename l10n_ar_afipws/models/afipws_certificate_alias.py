@@ -3,13 +3,13 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, api, _
+from openerp import fields, models, api
 from OpenSSL import crypto
 import logging
 _logger = logging.getLogger(__name__)
 
 
-class afipws_certificate_alias(models.Model):
+class AfipwsCertificateAlias(models.Model):
     _name = "afipws.certificate_alias"
     _description = "AFIP Distingish Name / Alias"
     _rec_name = "common_name"
@@ -33,67 +33,66 @@ class afipws_certificate_alias(models.Model):
         states={'draft': [('readonly', False)]},
         readonly=True,
         required=True,
-        )
+    )
     key = fields.Text(
         'Private Key',
         readonly=True,
         states={'draft': [('readonly', False)]},
-        )
+    )
     company_id = fields.Many2one(
         'res.company',
         'Company',
         required=True,
         states={'draft': [('readonly', False)]},
         readonly=True,
-        )
+    )
     country_id = fields.Many2one(
         'res.country', 'Country',
         states={'draft': [('readonly', False)]},
         readonly=True,
         required=True,
-        )
+    )
     state_id = fields.Many2one(
         'res.country.state', 'State',
         states={'draft': [('readonly', False)]},
         readonly=True,
-        required=True,
-        )
+    )
     city = fields.Char(
         'City',
         states={'draft': [('readonly', False)]},
         readonly=True,
         required=True,
-        )
+    )
     department = fields.Char(
         'Department',
         default='IT',
         states={'draft': [('readonly', False)]},
         readonly=True,
         required=True,
-        )
+    )
     cuit = fields.Char(
-        _('CUIT'),
+        'CUIT',
         compute='get_cuit',
         required=True,
-        )
+    )
     company_cuit = fields.Char(
         'Company CUIT',
         size=16,
         states={'draft': [('readonly', False)]},
         readonly=True,
-        )
+    )
     service_provider_cuit = fields.Char(
         'Service Provider CUIT',
         size=16,
         states={'draft': [('readonly', False)]},
         readonly=True,
-        )
+    )
     certificate_ids = fields.One2many(
         'afipws.certificate',
         'alias_id',
         'Certificates',
         states={'cancel': [('readonly', True)]},
-        )
+    )
     service_type = fields.Selection(
         [('in_house', 'In House'), ('outsourced', 'Outsourced')],
         'Service Type',
@@ -101,15 +100,19 @@ class afipws_certificate_alias(models.Model):
         required=True,
         readonly=True,
         states={'draft': [('readonly', False)]},
-        )
+    )
     state = fields.Selection([
-            ('draft', 'Draft'),
-            ('confirmed', 'Confirmed'),
-            ('cancel', 'Cancelled'),
-        ], 'State', select=True, readonly=True, default='draft',
-        help='* The \'Draft\' state is used when a user is creating a new pair key. Warning: everybody can see the key.\
-        \n* The \'Confirmed\' state is used when the key is completed with public or private key.\
-        \n* The \'Canceled\' state is used when the key is not more used. You cant use this key again.')
+        ('draft', 'Draft'),
+        ('confirmed', 'Confirmed'),
+        ('cancel', 'Cancelled'),
+    ], 'State', select=True, readonly=True, default='draft',
+        help="* The 'Draft' state is used when a user is creating a new pair "
+        "key. Warning: everybody can see the key."
+        "\n* The 'Confirmed' state is used when the key is completed with "
+        "public or private key."
+        "\n* The 'Canceled' state is used when the key is not more used. "
+        "You cant use this key again."
+    )
     type = fields.Selection(
         [('production', 'Production'), ('homologation', 'Homologation')],
         'Type',
@@ -117,7 +120,7 @@ class afipws_certificate_alias(models.Model):
         default='production',
         readonly=True,
         states={'draft': [('readonly', False)]},
-        )
+    )
 
     @api.onchange('company_id')
     def change_company_name(self):
@@ -178,8 +181,9 @@ class afipws_certificate_alias(models.Model):
             req = crypto.X509Req()
             req.get_subject().C = self.country_id.code.encode(
                 'ascii', 'ignore')
-            req.get_subject().ST = self.state_id.name.encode(
-                'ascii', 'ignore')
+            if self.state_id:
+                req.get_subject().ST = self.state_id.name.encode(
+                    'ascii', 'ignore')
             req.get_subject().L = self.city.encode(
                 'ascii', 'ignore')
             req.get_subject().O = self.company_id.name.encode(

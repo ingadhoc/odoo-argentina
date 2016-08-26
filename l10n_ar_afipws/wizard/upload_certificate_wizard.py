@@ -3,12 +3,11 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, api, models, _
-from openerp.exceptions import Warning
+from openerp import fields, api, models
 import base64
-import logging
 
-class l10n_ar_afipws_upload_certificate(models.TransientModel):
+
+class L10nArAfipwsUploadCertificate(models.TransientModel):
     _name = 'afipws.upload_certificate.wizard'
 
     @api.model
@@ -22,11 +21,11 @@ class l10n_ar_afipws_upload_certificate(models.TransientModel):
         readonly=True,
         default=get_certificate,
         ondelete='cascade',
-        )
+    )
     certificate_file = fields.Binary(
         'Upload Certificate',
         required=True
-        )
+    )
 
     @api.multi
     def action_confirm(self):

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="report_invoice_document" inherit_id="account_document.report_invoice_document">
+
+    <xpath expr="//span[@t-if='o.partner_id.vat']" position="after">
+        <span t-if="o.afip_responsability_type_id">AFIP Responsability Type: <span t-field="o.afip_responsability_type_id.name"/></span>
+    </xpath>
+
+    <span t-field="o.document_type_id.report_name" position="after">
+        <span t-field="o.document_letter_id.name"/>
+    </span>
+
+</template>
+
+</data>
+</openerp>

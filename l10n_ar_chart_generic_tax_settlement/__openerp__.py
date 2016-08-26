@@ -20,10 +20,10 @@
 ##############################################################################
 {
     'name': 'Liquidacion de Impuestos para Plan Contable General Argentino',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',
@@ -46,8 +46,9 @@ TODO implementar cambios como los hace l10n_ar_chart_generic_withholding
     ],
     'test': [
     ],
-    'installable': True,
-    'auto_install': True,
+    'installable': False,
+    # TODO enable
+    # 'auto_install': True,
     'application': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

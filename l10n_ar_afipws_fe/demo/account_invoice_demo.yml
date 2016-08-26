@@ -1,0 +1,91 @@
+-
+   Set the context for customer invoices because the 'type' field is readonly in invoice form views, so it value won't be considered by the yaml import
+   TODO ver si podemos intentar validarla pero que si da error siga adelante, si no molestaria mucho los datos demo
+-
+   Electronic invoice with vat 21 and 27 and 10,5
+-
+  !record {model: account.invoice, id: demo_invoice_1}:
+    company_id: base.main_company
+    journal_id: sales_journal_2
+    partner_id: base.res_partner_12
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Dell Inspiron Laptop without OS'
+        product_id: product.product_product_49
+        price_unit: 642.0
+        quantity: 5
+      - name: 'Linutop'
+        product_id: product.product_product_50
+        price_unit: 280.0
+        quantity: 4.0
+      - name: 'TypeMatrix Dvorak Keyboard'
+        product_id: product.product_product_53
+        price_unit: 3500.0
+        quantity: 2.0
+-
+   We call onchange because taxes sometimes miss the 'tax_id' reference
+-
+  !python {model: account.invoice} : |
+      self.browse(cr, uid, ref('demo_invoice_1'))._onchange_invoice_line_ids()
+# -
+#   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_1}
+-
+   Electronic invoice with vat 21, 0, exempt and untaxed
+-
+  !record {model: account.invoice, id: demo_invoice_2}:
+    company_id: base.main_company
+    journal_id: sales_journal_2
+    partner_id: base.res_partner_12
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Dell Inspiron Laptop without OS'
+        product_id: product.product_product_49
+        price_unit: 642.0
+        quantity: 5
+      - name: 'Zed+ Antivirus'
+        product_id: product.product_product_43
+        price_unit: 280.0
+        quantity: 1.0
+      - name: 'Toner Cartridge'
+        product_id: product.product_product_39
+        price_unit: 70.0
+        quantity: 4.0
+      - name: 'Ergonomic Mouse'
+        product_id: product.product_product_54
+        price_unit: 300.0
+        quantity: 2.0
+-
+   We call onchange because taxes sometimes miss the 'tax_id' reference
+-
+  !python {model: account.invoice} : |
+      self.browse(cr, uid, ref('demo_invoice_2'))._onchange_invoice_line_ids()
+-
+   Export Electronic invoice with exempt vat tax
+-
+  !record {model: account.invoice, id: demo_invoice_3}:
+    company_id: base.main_company
+    journal_id: sales_journal_3
+    partner_id: base.res_partner_3
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    afip_incoterm_id: l10n_ar_account.incoterm_exw
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Toner Cartridge'
+        product_id: product.product_product_39
+        price_unit: 70.0
+        quantity: 4.0
+-
+   We call onchange because taxes sometimes miss the 'tax_id' reference
+-
+  !python {model: account.invoice} : |
+      self.browse(cr, uid, ref('demo_invoice_3'))._onchange_invoice_line_ids()
+# -
+#   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_3}

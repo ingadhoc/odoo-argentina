@@ -4,13 +4,13 @@
 # directory
 ##############################################################################
 from openerp import fields, models, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 import logging
 
 _logger = logging.getLogger(__name__)
 
 
-class afipws_connection(models.Model):
+class AfipwsConnection(models.Model):
 
     _name = "afipws.connection"
     _description = "AFIP WS Connection"
@@ -21,50 +21,50 @@ class afipws_connection(models.Model):
         'res.company',
         'Company',
         required=True,
-        )
+    )
     uniqueid = fields.Char(
         'Unique ID',
         readonly=True,
-        )
+    )
     token = fields.Text(
         'Token',
         readonly=True,
-        )
+    )
     sign = fields.Text(
         'Sign',
         readonly=True,
-        )
+    )
     generationtime = fields.Datetime(
         'Generation Time',
         readonly=True
-        )
+    )
     expirationtime = fields.Datetime(
         'Expiration Time',
         readonly=True
-        )
+    )
     batch_sequence_id = fields.Many2one(
         'ir.sequence',
         'Batch Sequence',
         readonly=False,
-        )
+    )
     afip_login_url = fields.Char(
-        _('AFIP Login URL'),
+        'AFIP Login URL',
         compute='get_urls',
-        )
+    )
     afip_ws_url = fields.Char(
-        _('AFIP WS URL'),
+        'AFIP WS URL',
         compute='get_urls',
-        )
+    )
     type = fields.Selection(
         [('production', 'Production'), ('homologation', 'Homologation')],
         'Type',
         required=True,
-        )
+    )
     afip_ws = fields.Selection(
         [],
         'AFIP WS',
         required=True,
-        )
+    )
 
     @api.one
     @api.depends('type', 'afip_ws')
@@ -73,15 +73,17 @@ class afipws_connection(models.Model):
 
         afip_ws_url = self.get_afip_ws_url(self.afip_ws, self.type)
         if self.afip_ws and not afip_ws_url:
-            raise Warning(_('Webservice %s not supported') % self.afip_ws)
+            raise UserError(_('Webservice %s not supported') % self.afip_ws)
         self.afip_ws_url = afip_ws_url
 
     @api.model
     def get_afip_login_url(self, environment_type):
         if environment_type == 'production':
-            afip_login_url = 'https://wsaa.afip.gov.ar/ws/services/LoginCms'
+            afip_login_url = (
+                'https://wsaa.afip.gov.ar/ws/services/LoginCms')
         else:
-            afip_login_url = 'https://wsaahomo.afip.gov.ar/ws/services/LoginCms'
+            afip_login_url = (
+                'https://wsaahomo.afip.gov.ar/ws/services/LoginCms')
         return afip_login_url
 
     @api.model
@@ -98,8 +100,9 @@ class afipws_connection(models.Model):
         # TODO tal vez cambiar nombre cuando veamos si devuelve otra cosa
         self.ensure_one()
         if self.afip_ws != afip_ws:
-            raise Warning(_(
-                'This method is for %s connections and you call it from an %s connection') % (
+            raise UserError(_(
+                'This method is for %s connections and you call it from an'
+                ' %s connection') % (
                 afip_ws, self.afip_ws))
 
     @api.multi
@@ -109,21 +112,27 @@ class afipws_connection(models.Model):
         """
         self.ensure_one()
         _logger.info(
-            'Getting connection to ws %s from libraries on connection id %s' % (
-                self.afip_ws, self.id))
+            'Getting connection to ws %s from libraries on '
+            'connection id %s' % (self.afip_ws, self.id))
         ws = self._get_ws(self.afip_ws)
         if not ws:
-            raise Warning(_('AFIP Webservice %s not implemented yet' % (
+            raise UserError(_('AFIP Webservice %s not implemented yet' % (
                 self.afip_ws)))
         # TODO implementar cache y proxy
         # create the proxy and get the configuration system parameters:
         # cfg = self.pool.get('ir.config_parameter')
         # cache = cfg.get_param(cr, uid, 'pyafipws.cache', context=context)
         # proxy = cfg.get_param(cr, uid, 'pyafipws.proxy', context=context)
-        wsdl = self.afip_ws_url+'?WSDL'
+        wsdl = self.afip_ws_url + '?WSDL'
         # connect to the webservice and call to the test method
         ws.Conectar("", wsdl or "", "")
-        ws.Cuit = self.company_id.partner_id.document_number
+        # TODO check document type is cuit
+        document_value = self.company_id.partner_id.document_value
+        if not document_value:
+            raise UserError(_(
+                'No se definió CUIT al partner de la compañia %s') % (
+                self.company_id.name))
+        ws.Cuit = self.company_id.partner_id.document_value
         ws.Token = self.token.encode('ascii')
         ws.Sign = self.sign.encode('ascii')
         _logger.info(

@@ -20,10 +20,10 @@
 ##############################################################################
 {
     'name': 'Aregentinian Receipts and Payment Orders',
-    'version': '8.0.1.2.2',
+    'version': '9.0.1.0.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',
@@ -32,7 +32,7 @@ Aregentinian Receipts and Payment Orders
 ========================================
     """,
     'depends': [
-        'l10n_ar_invoice',
+        'l10n_ar_account',
         'account_voucher',
     ],
     'external_dependencies': {
@@ -50,7 +50,7 @@ Aregentinian Receipts and Payment Orders
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'application': False,
 }

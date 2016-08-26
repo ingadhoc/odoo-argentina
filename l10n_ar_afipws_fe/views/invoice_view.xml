@@ -8,11 +8,6 @@
             <!-- we want this view to be loaded after invoice operation view if installed -->
             <field name="priority">20</field>
             <field name="arch" type="xml">
-                <!-- TODO ver si es necesario cambiar este contexto o no -->
-                <field name="invoice_line" position="attributes">
-                    <attribute name="context">{'partner_id': partner_id, 'price_type': context.get('price_type') or False, 'type': type}" name="invoice_line" on_change="onchange_invoice_line(invoice_line)</attribute>
-                </field>
-
                 <!-- we change button labels for better usability -->
                 <button name="invoice_open" position="attributes">
                     <attribute name="attrs">{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', False)]}</attribute>
@@ -26,6 +21,7 @@
                 <notebook>
                     <page string="Electronic Invoice" name="electronic_invoice">
                         <group>
+                            <field name='validation_type' invisible="1"/>
                             <field name='afip_batch_number' invisible="1"/>
                             <field name='validation_type' invisible="1"/>
                             <field name='afip_cae'/>

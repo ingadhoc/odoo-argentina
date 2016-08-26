@@ -4,26 +4,26 @@
 # directory
 ##############################################################################
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 
 
-class afip_ws_consult_wizard(models.TransientModel):
+class AfipWsConsultWizard(models.TransientModel):
     _name = 'afip.ws.consult.wizard'
     _description = 'AFIP WS Consult Wizard'
 
     number = fields.Integer(
         'Number',
         required=True,
-        )
+    )
 
     @api.multi
     def confirm(self):
         self.ensure_one()
-        journal_afip_document_class_id = self._context.get('active_id', False)
-        if not journal_afip_document_class_id:
-            raise Warning(_(
+        journal_document_type_id = self._context.get('active_id', False)
+        if not journal_document_type_id:
+            raise UserError(_(
                 'No Journal Document Class as active_id on context'))
-        journal_doc_class = self.env[
-            'account.journal.afip_document_class'].browse(
-            journal_afip_document_class_id)
-        return journal_doc_class.get_pyafipws_consult_invoice(self.number)
+        journal_document_type = self.env[
+            'account.journal.document.type'].browse(
+            journal_document_type_id)
+        return journal_document_type.get_pyafipws_consult_invoice(self.number)

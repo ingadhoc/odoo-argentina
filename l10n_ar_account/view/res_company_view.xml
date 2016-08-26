@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_company_inherit_form">
+            <field name="name">res.company.form.inherit</field>
+            <field name="inherit_id" ref="account_document.view_company_inherit_form"/>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <field name="vat" position="after">
+                    <field name="afip_responsability_type_id" options="{'no_open': True, 'no_create': True}" attrs="{'required': [('localization', '=', 'argentina')], 'invisible': [('localization', '!=', 'argentina')]}"/>
+                    <field name="start_date" attrs="{'required': [('localization', '=', 'argentina')], 'invisible': [('localization', '!=', 'argentina')]}"/>
+                    <field name="iibb" attrs="{'invisible': [('localization', '!=', 'argentina')]}"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

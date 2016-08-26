@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="res.partner.title" id="sa">
+            <field name="name">Sociedad Anónima</field>
+            <field name="shortcut">S.A.</field>
+        </record>
+
+        <record model="res.partner.title" id="srl">
+            <field name="name">Sociedad Limitada</field>
+            <field name="shortcut">S.R.L.</field>
+        </record>
+
+        <record model="res.partner.title" id="sdh">
+            <field name="name">Sociedad de Hecho</field>
+            <field name="shortcut">S.D.H.</field>
+        </record>
+
+        <record model="res.partner.title" id="sr">
+            <field name="name">Señor</field>
+            <field name="shortcut">Sr</field>
+        </record>
+
+        <record model="res.partner.title" id="sra">
+            <field name="name">Señora</field>
+            <field name="shortcut">Sra</field>
+        </record>
+
+        <record model="res.partner.title" id="srta">
+            <field name="name">Señorita</field>
+            <field name="shortcut">Srta</field>
+        </record>
+
+        <record model="res.partner.title" id="ing">
+            <field name="name">Ingeniero</field>
+            <field name="shortcut">Ing.</field>
+        </record>
+
+        <record model="res.partner.title" id="lic">
+            <field name="name">Licenciado</field>
+            <field name="shortcut">Lic.</field>
+        </record>
+
+        <record model="res.partner.title" id="doc">
+            <field name="name">Doctor</field>
+            <field name="shortcut">Doc.</field>
+        </record>
+
+        <record model="res.partner.title" id="med">
+            <field name="name">Médico</field>
+            <field name="shortcut">Med.</field>
+        </record>
+
+        <record model="res.partner.title" id="phd">
+            <field name="name">Doctor en Filosofía</field>
+            <field name="shortcut">PhD.</field>
+        </record>
+
+        <record model="res.partner.title" id="tec">
+            <field name="name">Técnico</field>
+            <field name="shortcut">Tec.</field>
+        </record>
+
+        <record model="res.partner.title" id="coop">
+            <field name="name">Cooperativa</field>
+            <field name="shortcut">Coop.</field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,1647 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * l10n_ar_chart_generic
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: odoo-argentina (9.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-18 02:29+0000\n"
+"PO-Revision-Date: 2015-10-08 19:58+0000\n"
+"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
+"Language-Team: English (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_activo
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_activo
+msgid "ACTIVO"
+msgstr "ACTIVO"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_activo_corriente
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_activo_corriente
+msgid "ACTIVO CORRIENTE"
+msgstr "ACTIVO CORRIENTE"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_activo_no_corriente
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_activo_no_corriente
+msgid "ACTIVO NO CORRIENTE"
+msgstr "ACTIVO NO CORRIENTE"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_ajustes_de_capital
+msgid "AJUSTES DE CAPITAL"
+msgstr "AJUSTES DE CAPITAL"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_amortizaciones
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_amortizaciones
+msgid "AMORTIZACIONES"
+msgstr "AMORTIZACIONES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_amortizacion_acumulada_bs_uso
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_amortizacion_acumulada_bs_uso
+msgid "AMORTIZACIONES ACUMULADAS BIENES DE USO"
+msgstr "AMORTIZACIONES ACUMULADAS BIENES DE USO"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_aportes_de_los_propietarios
+msgid "APORTES DE LOS PROPIETARIOS"
+msgstr "APORTES DE LOS PROPIETARIOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_aportes_no_capitalizados
+msgid "APORTES NO CAPITALIZADOS"
+msgstr "APORTES NO CAPITALIZADOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_pago_acreedores
+msgid "Acreedores varios"
+msgstr "Acreedores varios"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_ajuste_por_redondeo
+msgid "Ajuste por redondeo"
+msgstr "Ajuste por redondeo"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_resultados_no_asignados
+msgid "Ajuste resultados ejercicios anteriores"
+msgstr "Ajuste resultados ejercicios anteriores"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_alquileres
+msgid "Alquileres"
+msgstr "Alquileres"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_alquileres_a_pagar
+msgid "Alquileres a pagar"
+msgstr "Alquileres a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_alquileres_administrativas
+msgid "Alquileres administracion"
+msgstr "Alquileres administracion"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_alquileres_comerciales
+msgid "Alquileres comerciales"
+msgstr "Alquileres comerciales"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_alquileres_produccion
+msgid "Alquileres produccion"
+msgstr "Alquileres produccion"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_amortizacion_muebles_y_utiles
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_amortizacion_muebles_y_utiles
+msgid "Amortizacion muebles y útiles"
+msgstr "Amortizacion muebles y útiles"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_amortizacion_rodados
+msgid "Amortizacion rodados"
+msgstr "Amortizacion rodados"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_amortizacion_software
+msgid "Amortizacion software"
+msgstr "Amortizacion software"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_amortizaciones_equipos_computacion
+msgid "Amortizaciones equipos de computación"
+msgstr "Amortizaciones equipos de computación"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_amortizaciones_instalaciones
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_amortizaciones_instalaciones
+msgid "Amortizaciones instalaciones"
+msgstr "Amortizaciones instalaciones"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_amortizaciones_equipos_computacion
+msgid "Amortizaciones maquinaria y equipos"
+msgstr "Amortizaciones maquinaria y equipos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_amortizacion_acumulada_computacion
+msgid "Amortización acumulada equipos computación"
+msgstr "Amortización acumulada equipos computación"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_amortizacion_acumulada_instalaciones
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_amortizacion_acumulada_instalaciones
+msgid "Amortización acumulada instalaciones"
+msgstr "Amortización acumulada instalaciones"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_amortizacion_acumulada_maq_y_equipos
+msgid "Amortización acumulada maquinarias y equipos"
+msgstr "Amortización acumulada maquinarias y equipos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_amortizacion_acumulada_muebles_utiles
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_amortizacion_acumulada_muebles_utiles
+msgid "Amortización acumulada muebles y útiles"
+msgstr "Amortización acumulada muebles y útiles"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_amortizacion_acumulada_software
+msgid "Amortización acumulada software"
+msgstr "Amortización acumulada software"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_amortizacion_acumulada_rodados
+msgid "Amortización rodados"
+msgstr "Amortización rodados"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_anticipo_impuestos_ganancias
+msgid "Anticipo impuestos a las ganancias"
+msgstr "Anticipo impuestos a las ganancias"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_anticipo_impuestos_ganancias_personas
+msgid "Anticipo impuestos a las ganancias p. fisicas"
+msgstr "Anticipo impuestos a las ganancias p. fisicas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_anticipo_impuestos_ganancias_sociedades
+msgid "Anticipo impuestos a las ganancias sociedades"
+msgstr "Anticipo impuestos a las ganancias sociedades"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_anticipos_de_clientes
+msgid "Anticipos de clientes"
+msgstr "Anticipos de clientes"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_aporte_irrevocable
+msgid "Aporte irrevocable "
+msgstr "Aporte irrevocable "
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_aportes_no_capitalizados_2
+msgid "Aportes no capitalizados"
+msgstr "Aportes no capitalizados"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_articulos_libreria
+msgid "Artículos librería"
+msgstr "Artículos librería"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_articulos_libreria
+msgid "Artículos librería administracion"
+msgstr "Artículos librería administracion"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_autonomos_a_pagar
+msgid "Autonomos a pagar"
+msgstr "Autonomos a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_bancarias
+msgid "BANCARIAS"
+msgstr "BANCARIAS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_bienes_de_cambio
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_bienes_de_cambio
+msgid "BIENES DE CAMBIO"
+msgstr "BIENES DE CAMBIO"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_bienes_de_uso
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_bienes_de_uso
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_bienes_de_uso_2
+msgid "BIENES DE USO"
+msgstr "BIENES DE USO"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_banco_misc
+msgid "Banco misc"
+msgstr "Banco misc"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_beneficios_al_personal
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_beneficios_al_personal
+msgid "Beneficios al personal"
+msgstr "Beneficios al personal"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_caja_y_bancos
+msgid "CAJA Y BANCOS"
+msgstr "CAJA Y BANCOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_capital_social
+msgid "CAPITAL SOCIAL"
+msgstr "CAPITAL SOCIAL"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_comunes
+msgid "COMUNES"
+msgstr "COMUNES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_creditos
+msgid "CRÉDITOS"
+msgstr "CRÉDITOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_comerciales
+msgid "CRÉDITOS COMERCIALES"
+msgstr "CRÉDITOS COMERCIALES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_creditos_impuestos
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_impuestos
+msgid "CRÉDITOS POR IMPUESTOS"
+msgstr "CRÉDITOS POR IMPUESTOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_cuentas_particulares
+msgid "CUENTAS PARTICULARES"
+msgstr "CUENTAS PARTICULARES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_cadeteria_y_correo
+msgid "Cadetería y correo"
+msgstr "Cadetería y correo"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_cadeteria_y_correo
+msgid "Cadetería y correo adminsitracion"
+msgstr "Cadetería y correo adminsitracion"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_caja_monex
+msgid "Caja Monex"
+msgstr "Caja Monex"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_caja_pesos
+msgid "Caja pesos"
+msgstr "Caja pesos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_capital
+msgid "Capital"
+msgstr "Capital"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_ajustes_de_capital_2
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_capital
+msgid "Capital susctipto"
+msgstr "Capital susctipto"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_cargas_sociales
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_cargas_sociales_produccion
+msgid "Cargas Sociales"
+msgstr "Cargas Sociales"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_cargas_sociales_a_pagar
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_cargas_sociales_a_pagar
+msgid "Cargas sociales a pagar"
+msgstr "Cargas sociales a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_cargas_sociales_administrativas
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_cargas_sociales_administrativas
+msgid "Cargas sociales administrativas"
+msgstr "Cargas sociales administrativas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_cargas_sociales_comerciales
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_cargas_sociales_comerciales
+msgid "Cargas sociales comerciales"
+msgstr "Cargas sociales comerciales"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_cheques_diferidos
+msgid "Cheques diferidos"
+msgstr "Cheques diferidos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_comisiones_comerciales
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_comisiones_comerciales
+msgid "Comisiones"
+msgstr "Comisiones"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_comisiones_a_pagar
+msgid "Comisiones a pagar"
+msgstr "Comisiones a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_costo_de_equipos
+msgid "Costo de equipos"
+msgstr "Costo de equipos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_costo_de_mercaderia_vendida
+msgid "Costo de mercadería vendida"
+msgstr "Costo de mercadería vendida"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_cta_particular_socio_x
+msgid "Cta particular socio x"
+msgstr "Cta particular socio x"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_deudas_comerciales
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_deudas_comerciales
+msgid "DEUDAS COMERCIALES"
+msgstr "DEUDAS COMERCIALES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_deudas_comerciales_largo_plazo
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_deudas_comerciales_largo_plazo
+msgid "DEUDAS COMERCIALES A LARGO PLAZO"
+msgstr "DEUDAS COMERCIALES A LARGO PLAZO"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_deudas_fiscales
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_deudas_fiscales
+msgid "DEUDAS FISCALES"
+msgstr "DEUDAS FISCALES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_deudas_sociales
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_deudas_sociales
+msgid "DEUDAS SOCIALES"
+msgstr "DEUDAS SOCIALES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_disponibilidades
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_disponibilidades
+msgid "DISPONIBILIDADES"
+msgstr "DISPONIBILIDADES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_documentadas
+msgid "DOCUMENTADAS"
+msgstr "DOCUMENTADAS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_drei_a_pagar
+msgid "DREI a pagar"
+msgstr "DREI a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_descuentos_obtenidos
+msgid "Descuentos obtenidos"
+msgstr "Descuentos obtenidos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_deudas_misc
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_deudas_misc
+msgid "Deudas misc"
+msgstr "Deudas misc"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_proveedores_largo_plazo
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_proveedores_largo_plazo
+msgid "Deudas proveedores a largo plazo"
+msgstr "Deudas proveedores a largo plazo"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_deudores_morosos
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_deudores_morosos
+msgid "Deudores morosos"
+msgstr "Deudores morosos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_deudores_por_ventas
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_deudores_por_ventas
+msgid "Deudores por ventas"
+msgstr "Deudores por ventas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_deudores_varios
+msgid "Deudores varios"
+msgstr "Deudores varios"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_diferencias_de_cambio
+msgid "Diferencias de cambio"
+msgstr "Diferencias de cambio"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_equipos
+msgid "Equipos"
+msgstr "Equipos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_equipos_de_computacion
+msgid "Equipos computación"
+msgstr "Equipos computación"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_equipos_en_demo
+msgid "Equipos en Demo"
+msgstr "Equipos en Demo"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_ba_facturado
+msgid "Facturación IIBB BS AS"
+msgstr "Facturación IIBB BS AS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_cf_facturado
+msgid "Facturación IIBB CABA"
+msgstr "Facturación IIBB CABA"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_co_facturado
+msgid "Facturación IIBB Cordoba"
+msgstr "Facturación IIBB Cordoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_sf_facturado
+msgid "Facturación IIBB Santa Fé"
+msgstr "Facturación IIBB Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_ba_facturado
+msgid "Facturación Ingresos Brutos Prov. Buenos Aires"
+msgstr "Facturación Ingresos Brutos Prov. Buenos Aires"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_co_facturado
+msgid "Facturación Ingresos Brutos Prov. Córdoba"
+msgstr "Facturación Ingresos Brutos Prov. Córdoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_sf_facturado
+msgid "Facturación Ingresos Brutos Prov. Santa Fé"
+msgstr "Facturación Ingresos Brutos Prov. Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_cf_facturado
+msgid "Facturación de Ingresos Brutos CABA"
+msgstr "Facturación de Ingresos Brutos CABA"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_cf_facturado
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_cf_facturado
+msgid "Facturado IIBB Capital Federal"
+msgstr "Facturado IIBB Capital Federal"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_ba_facturado
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ba_facturado
+msgid "Facturado IIBB Prov. Buenos Aires"
+msgstr "Facturado IIBB Prov. Buenos Aires"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_co_facturado
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_co_facturado
+msgid "Facturado IIBB Prov. Córdoba"
+msgstr "Facturado IIBB Prov. Córdoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_sf_facturado
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sf_facturado
+msgid "Facturado IIBB Prov. Santa Fé"
+msgstr "Facturado IIBB Prov. Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_fondofijo
+msgid "Fondo Fijo"
+msgstr "Fondo Fijo"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_fondo_fijo
+msgid "Fondo fijo"
+msgstr "Fondo fijo"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_impuestos_ganancias
+msgid "GANANCIAS"
+msgstr "GANANCIAS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_creditos_ganancias_personas
+msgid "GANANCIAS PERSONAS FISICAS"
+msgstr "GANANCIAS PERSONAS FISICAS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_ganancias_reservadas
+msgid "GANANCIAS RESERVADAS"
+msgstr "GANANCIAS RESERVADAS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_creditos_ganancias_sociedades
+msgid "GANANCIAS SOCIEDADES"
+msgstr "GANANCIAS SOCIEDADES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_gastos
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_gastos
+msgid "GASTOS"
+msgstr "GASTOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_gastos_comerciales
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_gastos_comerciales
+msgid "GASTOS COMERCIALES"
+msgstr "GASTOS COMERCIALES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_gastos_de_administracion
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_gastos_de_administracion
+msgid "GASTOS DE ADMINISTRACION"
+msgstr "GASTOS DE ADMINISTRACION"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_gastos_de_produccion
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_gastos_de_produccion
+msgid "GASTOS DE PRODUCCION"
+msgstr "GASTOS DE PRODUCCION"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_gastos_fiscales
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_gastos_fiscales
+msgid "GASTOS FISCALES"
+msgstr "GASTOS FISCALES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_gastos_no_operativos
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_gastos_no_operativos
+msgid "GASTOS NO OPERATIVOS"
+msgstr "GASTOS NO OPERATIVOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_gastos_operativos
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_gastos_operativos
+msgid "GASTOS OPERATIVOS"
+msgstr "GASTOS OPERATIVOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_ret_per_ganancias_aplicada
+msgid "Ganacias Ret/Perc Aplicadas"
+msgstr "Ganacias Ret/Perc Aplicadas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_ret_per_ganancias_sufrida
+msgid "Ganacias Ret/Perc Sufridas"
+msgstr "Ganacias Ret/Perc Sufridas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_ganancias
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_ganancias_vista
+msgid "Ganancias"
+msgstr "Ganancias"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_gastos_a_pagar
+msgid "Gastos a pagar"
+msgstr "Gastos a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_gastos_de_construccion
+msgid "Gastos de construccion"
+msgstr "Gastos de construccion"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_gastos_de_eventos_comerciales
+msgid "Gastos de eventos comerciales"
+msgstr "Gastos de eventos comerciales"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_gastos_operativos_generales
+msgid "Gastos operativos general"
+msgstr "Gastos operativos general"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_gastos_varios_administrativas
+msgid "Gastos varios administracion"
+msgstr "Gastos varios administracion"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_gastos_varios_comerciales
+msgid "Gastos varios comerciales"
+msgstr "Gastos varios comerciales"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_gastos_operativos_generales
+msgid "Gastos varios produccion"
+msgstr "Gastos varios produccion"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_giro_en_descubierto
+msgid "Giro en descubierto"
+msgstr "Giro en descubierto"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_haberes
+msgid "Haberes"
+msgstr "Haberes"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_haberes_administrativos
+msgid "Haberes administrativos"
+msgstr "Haberes administrativos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_haberes_comerciales
+msgid "Haberes comerciales"
+msgstr "Haberes comerciales"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_honorarios
+msgid "Honorarios"
+msgstr "Honorarios"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_honorarios_administrativas
+msgid "Honorarios profesionales administracion"
+msgstr "Honorarios profesionales administracion"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_cf
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_cf
+msgid "IIBB Capital Federal"
+msgstr "IIBB Capital Federal"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_ba
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ba
+msgid "IIBB Prov. Buenos Aires"
+msgstr "IIBB Prov. Buenos Aires"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_co
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_co
+msgid "IIBB Prov. Córdoba"
+msgstr "IIBB Prov. Córdoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_sf
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sf
+msgid "IIBB Prov. Santa Fé"
+msgstr "IIBB Prov. Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_impuestos_nacionales
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_impuestos_nacionales
+msgid "IMPUESTOS NACIONALES"
+msgstr "IMPUESTOS NACIONALES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_impuestos_provinciales
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_impuestos_provinciales
+msgid "IMPUESTOS PROVINCIALES"
+msgstr "IMPUESTOS PROVINCIALES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_ingresos
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_ingresos
+msgid "INGRESOS"
+msgstr "INGRESOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_creditos_iibb
+msgid "INGRESOS BRUTOS"
+msgstr "INGRESOS BRUTOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_creditos_iibb_cf
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_cf
+msgid "INGRESOS BRUTOS CAPITAL FEDERAL"
+msgstr "INGRESOS BRUTOS CAPITAL FEDERAL"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_creditos_iibb_ba
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_ba
+msgid "INGRESOS BRUTOS PROV. BUENOS AIRES"
+msgstr "INGRESOS BRUTOS PROV. BUENOS AIRES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_creditos_iibb_co
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_co
+msgid "INGRESOS BRUTOS PROV. CORDOBA"
+msgstr "INGRESOS BRUTOS PROV. CORDOBA"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_creditos_iibb_sf
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_iibb_sf
+msgid "INGRESOS BRUTOS PROV. SANTA FÉ"
+msgstr "INGRESOS BRUTOS PROV. SANTA FÉ"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_ingresos_financieros
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_ingresos_financieros
+msgid "INGRESOS FINANCIEROS"
+msgstr "INGRESOS FINANCIEROS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_ingresos_operativos
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_ingresos_operativos
+msgid "INGRESOS OPERATIVOS"
+msgstr "INGRESOS OPERATIVOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_ventas
+msgid "INGRESOS POR VENTAS"
+msgstr "INGRESOS POR VENTAS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_intangibles
+msgid "INTANGIBLES"
+msgstr "INTANGIBLES"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_creditos_impuestos_iva
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva
+msgid "IVA"
+msgstr "IVA"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_compras0
+msgid "IVA Compra 0%"
+msgstr "IVA Compra 0%"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_compras_exento
+msgid "IVA Compra Exento"
+msgstr "IVA Compra Exento"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_compras_no_gravado
+msgid "IVA Compra No Gravado"
+msgstr "IVA Compra No Gravado"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_0_compras
+msgid "IVA Compras 0%"
+msgstr "IVA Compras 0%"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_compras10
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_10_compras
+msgid "IVA Compras 10.5%"
+msgstr "IVA Compras 10.5%"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_compras21
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_21_compras
+msgid "IVA Compras 21%"
+msgstr "IVA Compras 21%"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_compras27
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_27_compras
+msgid "IVA Compras 27%"
+msgstr "IVA Compras 27%"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_compras_adicional
+msgid "IVA Compras Adicional"
+msgstr "IVA Compras Adicional"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_exento_compras
+msgid "IVA Compras Exento"
+msgstr "IVA Compras Exento"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_no_gravado_compras
+msgid "IVA Compras No Gravado"
+msgstr "IVA Compras No Gravado"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_ret_per_iva_aplicada
+msgid "IVA Ret/Perc Aplicadas"
+msgstr "IVA Ret/Perc Aplicadas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_ret_per_iva_sufrida
+msgid "IVA Ret/Perc Sufridas"
+msgstr "IVA Ret/Perc Sufridas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_saldo_a_favor
+msgid "IVA Saldo a Favor"
+msgstr "IVA Saldo a Favor"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_venta0
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_0_ventas
+msgid "IVA Ventas 0%"
+msgstr "IVA Ventas 0%"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_venta10
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_10_ventas
+msgid "IVA Ventas 10.5%"
+msgstr "IVA Ventas 10.5%"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_venta21
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_21_ventas
+msgid "IVA Ventas 21%"
+msgstr "IVA Ventas 21%"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_venta27
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_27_ventas
+msgid "IVA Ventas 27%"
+msgstr "IVA Ventas 27%"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_venta_exento
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_exento_ventas
+msgid "IVA Ventas Exento"
+msgstr "IVA Ventas Exento"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_venta_no_gravado
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_no_gravado_ventas
+msgid "IVA Ventas No Gravado"
+msgstr "IVA Ventas No Gravado"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_iva_credito_fiscal
+msgid "IVA crédito fiscal"
+msgstr "IVA crédito fiscal"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_iva_debito_fiscal
+msgid "IVA débito fiscal"
+msgstr "IVA débito fiscal"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_iva_saldo_a_favor
+msgid "IVA saldo a favor"
+msgstr "IVA saldo a favor"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_iva_a_pagar
+msgid "IVA saldo a pagar"
+msgstr "IVA saldo a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_a_cuenta_impuestos_ganancias_a_favor
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_imp_ganancias_a_favor
+msgid "Impuesto a las Ganancias a favor"
+msgstr "Impuesto a las Ganancias a favor"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuesto_ganancias_a_pagar
+msgid "Impuesto a las ganancias a pagar"
+msgstr "Impuesto a las ganancias a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_impuestos_a_las_ganancias
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_a_las_ganancias
+msgid "Impuestos a las ganancias"
+msgstr "Impuestos a las ganancias"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_transacciones_bancarias
+msgid "Impuestos a los débitos bancarios"
+msgstr "Impuestos a los débitos bancarios"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_impuestos_iibb_cf
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_cf
+msgid "Impuestos ingresos brutos CABA"
+msgstr "Impuestos ingresos brutos CABA"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_impuestos_iibb_ba
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_ba
+msgid "Impuestos ingresos brutos Prov. Bs. As."
+msgstr "Impuestos ingresos brutos Prov. Bs. As."
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_impuestos_iibb_co
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_co
+msgid "Impuestos ingresos brutos Prov. Córdoba"
+msgstr "Impuestos ingresos brutos Prov. Córdoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_impuestos_iibb_sf
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_impuestos_iibb_sf
+msgid "Impuestos ingresos brutos Prov. Santa Fé"
+msgstr "Impuestos ingresos brutos Prov. Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_impuestos_transacciones_bancarias
+msgid "Impuestos transacciones bancarias"
+msgstr "Impuestos transacciones bancarias"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_iibb_a_pagar
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_iibb_a_pagar
+msgid "Ingresos brutos a pagar"
+msgstr "Ingresos brutos a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_ingresos_ventas
+msgid "Ingresos por ventas"
+msgstr "Ingresos por ventas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_instalaciones
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_instalaciones
+msgid "Instalaciones"
+msgstr "Instalaciones"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_resultado_intereses_ganados
+msgid "Intereses ganados"
+msgstr "Intereses ganados"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_intereses_y_recargos
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_intereses_y_recargos
+msgid "Intereses y recargos"
+msgstr "Intereses y recargos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_mantenimiento_y_limpieza
+msgid "Mantenimiento y limpieza"
+msgstr "Mantenimiento y limpieza"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_mantenimiento_y_limpieza
+msgid "Mantenimiento y limpieza adminsitracion"
+msgstr "Mantenimiento y limpieza adminsitracion"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_maq_y_equipos
+msgid "Maquinarias y equipos"
+msgstr "Maquinarias y equipos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_materiales
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_materiales
+msgid "Materiales"
+msgstr "Materiales"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_mercaderia
+msgid "Mercaderia"
+msgstr "Mercaderia"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_movilidad_y_viaticos_comerciales
+msgid "Movilidad y viáticos comerciales"
+msgstr "Movilidad y viáticos comerciales"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_muebles_y_utiles
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_muebles_y_utiles
+msgid "Muebles y útiles"
+msgstr "Muebles y útiles"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_otras_deudas
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_otras_deudas
+msgid "OTRAS DEUDAS"
+msgstr "OTRAS DEUDAS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_otros_creditos
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_otros_creditos
+msgid "OTROS CRÉDITOS"
+msgstr "OTROS CRÉDITOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_otros_gastos
+msgid "OTROS GASTOS"
+msgstr "OTROS GASTOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_otros_gastos
+msgid "OTROS GASTOS "
+msgstr "OTROS GASTOS "
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_otros_ingresos
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_otros_ingresos
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_otros_ingresos_2
+msgid "OTROS INGRESOS"
+msgstr "OTROS INGRESOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_otras_deudas_documentadas
+msgid "Otras deudas documentadas"
+msgstr "Otras deudas documentadas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_pasivo
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_pasivo
+msgid "PASIVO"
+msgstr "PASIVO"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_pasivo_corriente
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_pasivo_corriente
+msgid "PASIVO CORRIENTE"
+msgstr "PASIVO CORRIENTE"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_pasivo_no_corriente
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_pasivo_no_corriente
+msgid "PASIVO NO CORRIENTE"
+msgstr "PASIVO NO CORRIENTE"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_patrimonio_neto
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_patrimonio_neto
+msgid "PATRIMONIO NETO"
+msgstr "PATRIMONIO NETO"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_provisiones_varias
+msgid "PREVISIONES VARIAS"
+msgstr "PREVISIONES VARIAS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_provisiones_varias
+msgid "PROVISIONES VARIAS"
+msgstr "PROVISIONES VARIAS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_iva_percepcion
+msgid "Percepciones IVA Sufrida"
+msgstr "Percepciones IVA Sufrida"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_percepcion_iibb_cf
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_cf
+msgid "Percepciones ingresos brutos capital federal"
+msgstr "Percepciones ingresos brutos capital federal"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_percepcion_iibb_ba
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_ba
+msgid "Percepciones ingresos brutos p. buenos aires"
+msgstr "Percepciones ingresos brutos p. buenos aires"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_percepcion_iibb_co
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_co
+msgid "Percepciones ingresos brutos p. córdoba"
+msgstr "Percepciones ingresos brutos p. córdoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_percepcion_iibb_sf
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iibb_sf
+msgid "Percepciones ingresos brutos p. santa fé"
+msgstr "Percepciones ingresos brutos p. santa fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_ganancias_percepcion_ventas
+msgid "Percepción Ganancias Aplicada"
+msgstr "Percepción Ganancias Aplicada"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_ganancias_percepcion_compras
+msgid "Percepción Ganancias Sufrida"
+msgstr "Percepción Ganancias Sufrida"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_ba_percepcion
+msgid "Percepción IIBB BS AS"
+msgstr "Percepción IIBB BS AS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_cf_percepcion
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_cf_percepcion
+msgid "Percepción IIBB Capital Federal"
+msgstr "Percepción IIBB Capital Federal"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_co_percepcion
+msgid "Percepción IIBB Cordoba"
+msgstr "Percepción IIBB Cordoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_ba_percepcion
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ba_percepcion
+msgid "Percepción IIBB Prov. Buenos Aires"
+msgstr "Percepción IIBB Prov. Buenos Aires"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_co_percepcion
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_co_percepcion
+msgid "Percepción IIBB Prov. Córdoba"
+msgstr "Percepción IIBB Prov. Córdoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_sf_percepcion
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sf_percepcion
+msgid "Percepción IIBB Prov. Santa Fé"
+msgstr "Percepción IIBB Prov. Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_sf_percepcion
+msgid "Percepción IIBB Santa Fé"
+msgstr "Percepción IIBB Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_percepcion_iva_aplicada
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_percepcion_ventas
+msgid "Percepción IVA Aplicada"
+msgstr "Percepción IVA Aplicada"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_vat_percepcion_compras
+msgid "Percepción IVA Sufrida"
+msgstr "Percepción IVA Sufrida"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_iva_aplicada
+msgid "Percepción IVA aplicada"
+msgstr "Percepción IVA aplicada"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_compras_percepcion
+msgid "Percepción IVA sufrida"
+msgstr "Percepción IVA sufrida"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_a_cuenta_impuestos_ganancias
+msgid "Percepción Impuesto a las Ganancias Sufrida"
+msgstr "Percepción Impuesto a las Ganancias Sufrida"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_ganancias_per_aplicada
+msgid "Percepción de Ganancias Aplicada"
+msgstr "Percepción de Ganancias Aplicada"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_ganancias_per_sufrida
+msgid "Percepción de Ganancias Sufrida"
+msgstr "Percepción de Ganancias Sufrida"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_cf_percepcion
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_cf_percepcion
+msgid "Percepción de Ingresos Brutos CABA"
+msgstr "Percepción de Ingresos Brutos CABA"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_ba_percepcion
+msgid "Percepción de Ingresos Brutos Prov. Buenos Aires"
+msgstr "Percepción de Ingresos Brutos Prov. Buenos Aires"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_co_percepcion
+msgid "Percepción de Ingresos Brutos Prov. Córdoba"
+msgstr "Percepción de Ingresos Brutos Prov. Córdoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_sf_percepcion
+msgid "Percepción de Ingresos Brutos Prov. Santa Fé"
+msgstr "Percepción de Ingresos Brutos Prov. Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_percepcion_ganancias_aplicada
+msgid "Percepción ganancias aplicada "
+msgstr "Percepción ganancias aplicada "
+
+#. module: l10n_ar_chart_generic
+#: model:account.chart.template,name:l10n_ar_chart_generic.mt_l10nAR_chart_template
+msgid "Plan Contable Genérico de Argentina para Monotributistas"
+msgstr "Plan Contable Genérico de Argentina para Monotributistas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.chart.template,name:l10n_ar_chart_generic.ri_l10nAR_chart_template
+msgid "Plan Contable Genérico de Argentina para Responsables Inscriptos"
+msgstr "Plan Contable Genérico de Argentina para Responsables Inscriptos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_a_root
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_a_root
+msgid "Plan de Cuentas"
+msgstr "Plan de Cuentas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_chart_root
+msgid "Plan de Impuestos de Argentina para Responsables Inscriptos"
+msgstr "Plan de Impuestos de Argentina para Responsables Inscriptos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_chart_root
+msgid "Plan de Impuestos para Monotributistas"
+msgstr "Plan de Impuestos para Monotributistas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_prestamos
+msgid "Prestamos"
+msgstr "Prestamos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_provision_sac_a_pagar
+msgid "Prevision SAC a pagar"
+msgstr "Prevision SAC a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_provision_sac_cargas_sociales
+msgid "Prevision cargas sociales a pagar"
+msgstr "Prevision cargas sociales a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_provision_gastos
+msgid "Prevision gastos"
+msgstr "Prevision gastos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_prevision_despidos
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_prevision_despidos
+msgid "Previsión Despidos"
+msgstr "Previsión Despidos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_pago_proveedores
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_pago_proveedores
+msgid "Proveedores"
+msgstr "Proveedores"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_provision_sac_a_pagar
+msgid "Provision SAC a pagar"
+msgstr "Provision SAC a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_provision_sac_cargas_sociales
+msgid "Provision SAC cargas sociales a pagar"
+msgstr "Provision SAC cargas sociales a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_provision_gastos
+msgid "Provision gastos"
+msgstr "Provision gastos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_provision_impuesto_a_las_ganancias
+msgid "Provision impuesto a las ganancias"
+msgstr "Provision impuesto a las ganancias"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_publicidad
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_publicidad
+msgid "Publicidad"
+msgstr "Publicidad"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_resultados
+msgid "RESULTADOS"
+msgstr "RESULTADOS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_ret_per_aplicada
+msgid "RETENCIONES Y PERCEPCIONES APLICADAS"
+msgstr "RETENCIONES Y PERCEPCIONES APLICADAS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_recupero_de_gastos
+msgid "Recupero de gastos"
+msgstr "Recupero de gastos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_reserva_estatuitaria
+msgid "Reserva estatuitaria"
+msgstr "Reserva estatuitaria"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_futuras_inversiones
+msgid "Reserva futuras inversiones"
+msgstr "Reserva futuras inversiones"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_reserva_legal
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_reserva_legal
+msgid "Reserva legal"
+msgstr "Reserva legal"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_resultado_acumulados
+msgid "Resultado acumlados"
+msgstr "Resultado acumlados"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_resultado_invesiones_financieras
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_resultado_invesiones_financieras
+msgid "Resultado de inversiones financieras"
+msgstr "Resultado de inversiones financieras"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_resultado_del_ejercicio
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_resultado_del_ejercicio
+msgid "Resultado del ejercicio"
+msgstr "Resultado del ejercicio"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_resultado_venta_bienes_de_uso
+msgid "Resultado venta bienes de uso"
+msgstr "Resultado venta bienes de uso"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_resultados_no_asignados
+msgid "Resultados no asignados"
+msgstr "Resultados no asignados"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_retencion_impuestos_ganancias_personas
+msgid "Retencion impuestos a las ganancias p. fisicas"
+msgstr "Retencion impuestos a las ganancias p. fisicas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_retencion_impuestos_ganancias_sociedades
+msgid "Retencion impuestos a las ganancias sociedades"
+msgstr "Retencion impuestos a las ganancias sociedades"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_retencion_iibb_cf
+msgid "Retencion ingresos brutos capital federal"
+msgstr "Retencion ingresos brutos capital federal"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_retencion_iibb_ba
+msgid "Retencion ingresos brutos p. buenos aires"
+msgstr "Retencion ingresos brutos p. buenos aires"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_retencion_iibb_co
+msgid "Retencion ingresos brutos p. córdoba"
+msgstr "Retencion ingresos brutos p. córdoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_retencion_iibb_sf
+msgid "Retencion ingresos brutos p. santa fé"
+msgstr "Retencion ingresos brutos p. santa fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_ba_retencion
+msgid "Retención IIBB BS AS"
+msgstr "Retención IIBB BS AS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_cf_retencion
+msgid "Retención IIBB CABA"
+msgstr "Retención IIBB CABA"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_cf_retencion
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_cf_retencion
+msgid "Retención IIBB Capital Federal"
+msgstr "Retención IIBB Capital Federal"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_co_retencion
+msgid "Retención IIBB Cordoba"
+msgstr "Retención IIBB Cordoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_ba_retencion
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_ba_retencion
+msgid "Retención IIBB Prov. Buenos Aires"
+msgstr "Retención IIBB Prov. Buenos Aires"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_co_retencion
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_co_retencion
+msgid "Retención IIBB Prov. Córdoba"
+msgstr "Retención IIBB Prov. Córdoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.mt_tax_code_iibb_sf_retencion
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iibb_sf_retencion
+msgid "Retención IIBB Prov. Santa Fé"
+msgstr "Retención IIBB Prov. Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.ri_tax_iibb_sf_retencion
+msgid "Retención IIBB Santa Fé"
+msgstr "Retención IIBB Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_retencion_iva_aplicada
+msgid "Retención IVA Aplicada"
+msgstr "Retención IVA Aplicada"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_iva_retencion
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_iva_compras_retencion
+msgid "Retención IVA Sufrida"
+msgstr "Retención IVA Sufrida"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iva_aplicada
+msgid "Retención IVA aplicada"
+msgstr "Retención IVA aplicada"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_ganancias_ret_aplicada
+msgid "Retención de Ganancias Aplicada"
+msgstr "Retención de Ganancias Aplicada"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.code.template,name:l10n_ar_chart_generic.ri_tax_code_ganancias_ret_sufrida
+msgid "Retención de Ganancias Sufrida"
+msgstr "Retención de Ganancias Sufrida"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_cf_retencion
+msgid "Retención de Ingresos Brutos CABA"
+msgstr "Retención de Ingresos Brutos CABA"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_ba_retencion
+msgid "Retención de Ingresos Brutos Prov. Buenos Aires"
+msgstr "Retención de Ingresos Brutos Prov. Buenos Aires"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_co_retencion
+msgid "Retención de Ingresos Brutos Prov. Córdoba"
+msgstr "Retención de Ingresos Brutos Prov. Córdoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.tax.template,name:l10n_ar_chart_generic.mt_tax_iibb_sf_retencion
+msgid "Retención de Ingresos Brutos Prov. Santa Fé"
+msgstr "Retención de Ingresos Brutos Prov. Santa Fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_retencion_ganancias_a_depositar
+msgid "Retención ganancias a depositar"
+msgstr "Retención ganancias a depositar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_ganancias_aplicada
+msgid "Retención ganancias aplicada "
+msgstr "Retención ganancias aplicada "
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_impuestos_ganancias
+msgid "Retención impuestos a las ganancias Sufrida"
+msgstr "Retención impuestos a las ganancias Sufrida"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_cf
+msgid "Retención ingresos brutos capital federal"
+msgstr "Retención ingresos brutos capital federal"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_ba
+msgid "Retención ingresos brutos p. buenos aires"
+msgstr "Retención ingresos brutos p. buenos aires"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_co
+msgid "Retención ingresos brutos p. córdoba"
+msgstr "Retención ingresos brutos p. córdoba"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iibb_sf
+msgid "Retención ingresos brutos p. santa fé"
+msgstr "Retención ingresos brutos p. santa fé"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_iva_a_pagar
+msgid "Retención/Percepción IVA a pagar"
+msgstr "Retención/Percepción IVA a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_retencion_ganancias_a_pagar
+msgid "Retención/Percepción ganancias a pagar"
+msgstr "Retención/Percepción ganancias a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_rodados
+msgid "Rodados"
+msgstr "Rodados"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_saldo_libre_disponibilidad
+msgid "Saldo Libre Disponibilidad"
+msgstr "Saldo Libre Disponibilidad"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_saldo_favorable_ing_ganancias_personas
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_saldo_favorable_ing_ganancias_sociedades
+msgid "Saldo a favor ingresos a las ganancias sociedades"
+msgstr "Saldo a favor ingresos a las ganancias sociedades"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_seguros
+msgid "Seguros"
+msgstr "Seguros"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_seguros_a_pagar
+msgid "Seguros a pagar"
+msgstr "Seguros a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_seguros
+msgid "Seguros adminsitracion"
+msgstr "Seguros adminsitracion"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_servicios_agua_luz_etc
+msgid "Servicios de luz, agua, etc"
+msgstr "Servicios de luz, agua, etc"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_servicios_agua_luz_etc
+msgid "Servicios de luz, agua, etc. administracion"
+msgstr "Servicios de luz, agua, etc. administracion"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_servicios_agua_luz_etc_comerciales
+msgid "Servicios de luz, agua, etc. comerciales"
+msgstr "Servicios de luz, agua, etc. comerciales"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_servicios_agua_luz_etc_produccion
+msgid "Servicios de luz, agua, etc. produccion"
+msgstr "Servicios de luz, agua, etc. produccion"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_software
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_software
+msgid "Software"
+msgstr "Software"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_sueldos_a_pagar
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_sueldos_a_pagar
+msgid "Sueldos a pagar"
+msgstr "Sueldos a pagar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_haberes_administrativos
+msgid "Sueldos y SAC administrativos"
+msgstr "Sueldos y SAC administrativos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_haberes_comerciales
+msgid "Sueldos y SAC comerciales"
+msgstr "Sueldos y SAC comerciales"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_haberes_produccion
+msgid "Sueldos y SAC operativos"
+msgstr "Sueldos y SAC operativos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_transitorias
+msgid "TRANSITORIAS"
+msgstr "TRANSITORIAS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_tarjeta_de_credito_pagar
+msgid "Tarjeta de crédito a pagar xxxxx"
+msgstr "Tarjeta de crédito a pagar xxxxx"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_transferencias_internas
+msgid "Transferencias Internas"
+msgstr "Transferencias Internas"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_ventas
+msgid "VENTAS"
+msgstr "VENTAS"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_valores_a_depositar
+msgid "Valores a depositar"
+msgstr "Valores a depositar"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_venta_de_equipos
+msgid "Venta de equipos"
+msgstr "Venta de equipos"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_venta_de_mercaderia
+msgid "Venta de mercaderia"
+msgstr "Venta de mercaderia"
+
+#. module: l10n_ar_chart_generic
+#: model:account.account.template,name:l10n_ar_chart_generic.mt_venta_de_servicios_misc
+#: model:account.account.template,name:l10n_ar_chart_generic.ri_venta_de_servicios_misc
+msgid "Venta servicios misc"
+msgstr "Venta servicios misc"

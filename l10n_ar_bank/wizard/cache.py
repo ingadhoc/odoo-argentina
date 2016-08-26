@@ -1,20 +1,25 @@
 # -*- coding: utf-8 -*-
-#!/usr/bin/python
 
-import sys, urllib, hashlib, os, os.path, pickle
-from types import GeneratorType
 import logging
 _logger = logging.getLogger(__name__)
 
 try:
-    from geopy import geocoders
+    from geopy.geocoders import Nominatim
+    from geopy.exc import GeocoderTimedOut
+    gc = Nominatim(timeout=3)
 except ImportError:
-    _logger.debug('Can not `from geopy import geocoders`.')
+    gc = None
+    GeocoderTimedOut = None
+    _logger.warning("Please, install geopy using 'pip install geopy'.")
 
-gc = geocoders.Google('ABQIAAAAMWm7ddpoRV3HO0u7NtA_IhRTfPMBNX3pvExQyYBKj7aZZJK5lxQYw0LDgWXedvepzKpGxQKf-kmN3A')
+import urllib
+import hashlib
+import os
+import os.path
+import pickle
+
 
 def urlopen(url):
-    print >> sys.stderr, "Urlopen reading:", url
     basedir = os.path.join(os.getcwd(), 'cache')
     m = hashlib.new('ripemd160')
     m.update(url)
@@ -25,18 +30,29 @@ def urlopen(url):
         filename, header = urllib.urlretrieve(url, tmpfilename)
     return open(tmpfilename)
 
+
 def geocode(input_string, **args):
+    if gc is None:
+        return None
     m = hashlib.new('ripemd160')
     m.update(input_string)
     m.update(pickle.dumps(args))
     tmpfilename = "cache/geocode_%s" % m.hexdigest()
     if not os.path.exists(tmpfilename):
         geocode_out = gc.geocode(input_string, **args)
-        if isinstance(geocode_out, GeneratorType):
-            geocode_out = list(geocode_out)
-        pickle.dump(geocode_out, open(tmpfilename, 'w'))
+        if geocode_out is None:
+            # Not found
+            response = []
+        elif isinstance(geocode_out, list):
+            # Found more than one
+            response = [_gc.raw for _gc in geocode_out]
+        else:
+            # Found one
+            response = [geocode_out.raw]
+        pickle.dump(response, open(tmpfilename, 'w'))
     else:
-        geocode_out = pickle.load(open(tmpfilename))
+        response = pickle.load(open(tmpfilename))
 
-    return geocode_out
+    return response
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

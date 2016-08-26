@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_account_config_settings">
+            <field name="name">l10n_ar.view.account.config.form.inherit</field>
+            <field name="inherit_id" ref="account_document.view_account_config_settings"/>
+            <field name="model">account.config.settings</field>
+            <field name="arch" type="xml">
+                <div name="sale_use_documents" position="after">
+                    <div name="afip_responsability_type_id">
+                        <label for="afip_responsability_type_id" attrs="{'invisible':['|', ('localization', '!=', 'argentina'), ('has_chart_of_accounts','!=',False)]}"/>
+                        <field name="afip_responsability_type_id" class="oe_inline" attrs="{'invisible':['|', ('localization', '!=', 'argentina'), ('has_chart_of_accounts','!=',False)], 'required':[('localization', '=', 'argentina'), ('sale_use_documents', '=', True), ('has_chart_of_accounts', '=', False)]}"/>
+                    </div>
+                    <div name="point_of_sale_type">
+                        <label for="point_of_sale_type" attrs="{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)]}"/>
+                        <field name="point_of_sale_type" class="oe_inline" attrs="{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)], 'required':[('localization', '=', 'argentina'), ('sale_use_documents', '=', True), ('has_chart_of_accounts', '=', False)]}"/>
+                    </div>
+                    <div name="point_of_sale_number">
+                        <label for="point_of_sale_number" attrs="{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)]}"/>
+                        <field name="point_of_sale_number" class="oe_inline" attrs="{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)], 'required':[('localization', '=', 'argentina'), ('sale_use_documents', '=', True), ('has_chart_of_accounts', '=', False)]}"/>
+                    </div>
+                </div>
+            </field>
+        </record>
+
+    </data>
+</openerp>

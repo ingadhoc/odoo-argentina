@@ -5,7 +5,7 @@
 ##############################################################################
 from openerp import fields, models, api, _
 import logging
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 import openerp.tools as tools
 import os
 import hashlib
@@ -16,7 +16,7 @@ import traceback
 _logger = logging.getLogger(__name__)
 
 
-class res_company(models.Model):
+class ResCompany(models.Model):
 
     _inherit = "res.company"
 
@@ -24,13 +24,13 @@ class res_company(models.Model):
         'afipws.certificate_alias',
         'company_id',
         'Aliases',
-        )
+    )
     connection_ids = fields.One2many(
         'afipws.connection',
         'company_id',
         'Connections',
         readonly=True,
-        )
+    )
 
     @api.model
     def _get_environment_type(self):
@@ -69,7 +69,7 @@ class res_company(models.Model):
         * en el conf del server de odoo
         * en registros de esta misma clase
         """
-        self.ensure_one
+        self.ensure_one()
         pkey = False
         cert = False
         msg = False
@@ -77,7 +77,7 @@ class res_company(models.Model):
             ('alias_id.company_id', '=', self.id),
             ('alias_id.type', '=', environment_type),
             ('state', '=', 'confirmed'),
-            ], limit=1)
+        ], limit=1)
         if certificate:
             pkey = certificate.alias_id.key
             cert = certificate.crt
@@ -109,7 +109,7 @@ class res_company(models.Model):
                 else:
                     _logger.info('Using odoo conf certificates')
         if not pkey or not cert:
-            raise Warning(msg)
+            raise UserError(msg)
         return (pkey, cert)
 
     @api.multi
@@ -126,7 +126,7 @@ class res_company(models.Model):
             ('expirationtime', '>', now),
             ('afip_ws', '=', afip_ws),
             ('company_id', '=', self.id),
-            ], limit=1)
+        ], limit=1)
         if not connection:
             connection = self._create_connection(afip_ws, environment_type)
         return connection
@@ -154,7 +154,7 @@ class res_company(models.Model):
             'company_id': self.id,
             'afip_ws': afip_ws,
             'type': environment_type,
-            })
+        })
         _logger.info("Successful Connection to AFIP.")
         return self.connection_ids.create(auth_data)
 
@@ -173,7 +173,7 @@ class res_company(models.Model):
         wsaa.LanzarExcepciones = True
 
         # five hours
-        DEFAULT_TTL = 60*60*5
+        DEFAULT_TTL = 60 * 60 * 5
 
         # make md5 hash of the parameter for caching...
         fn = "%s.xml" % hashlib.md5(
@@ -186,7 +186,7 @@ class res_company(models.Model):
         try:
             # read the access ticket (if already authenticated)
             if not os.path.exists(fn) or \
-               os.path.getmtime(fn)+(DEFAULT_TTL) < time.time():
+               os.path.getmtime(fn) + (DEFAULT_TTL) < time.time():
                 # access ticket (TA) outdated, create new access request
                 # ticket (TRA)
                 tra = wsaa.CreateTRA(service=service, ttl=DEFAULT_TTL)
@@ -219,7 +219,7 @@ class res_company(models.Model):
                 # avoid encoding problem when reporting exceptions to the user:
                 err_msg = traceback.format_exception_only(
                     sys.exc_type, sys.exc_value)[0]
-            raise Warning(_(
+            raise UserError(_(
                 'Could not connect. This is the what we received: %s') % (
                     err_msg))
         return {
@@ -228,4 +228,4 @@ class res_company(models.Model):
             'expirationtime': expirationTime,
             'token': token,
             'sign': sign,
-            }
+        }

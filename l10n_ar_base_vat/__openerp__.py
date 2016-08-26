@@ -23,11 +23,11 @@
     'category': 'Localization/Argentina',
     'depends': ['base_vat'],
     'description': '\n\nFunci\xc3\xb3n de validaci\xc3\xb3n del CUIT seg\xc3\xban la AFIP.\n\n\n\nIncluye:\n\n - Funci\xc3\xb3n de validaci\xc3\xb3n del CUIT seg\xc3\xban la AFIP.\n\n',
-    'installable': True,
+    'installable': False,
     'license': 'AGPL-3',
     'name': 'VAT Localization Argentina',
     'test': ['test/l10n_ar_base_vat.yml'],
     'data': [],
-    'version': '8.0.2.7.2',
+    'version': '9.0.1.0.0',
     'website': 'https://launchpad.net/~openerp-l10n-ar-localization'}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

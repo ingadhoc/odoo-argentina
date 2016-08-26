@@ -3,9 +3,9 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from pyi25 import PyI25
+from .pyi25 import PyI25
 from openerp import fields, models, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 from cStringIO import StringIO as StringIO
 import logging
 import sys
@@ -18,7 +18,7 @@ except ImportError:
     _logger.debug('Can not `from pyafipws.soap import SoapFault`.')
 
 
-class invoice(models.Model):
+class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
     afip_batch_number = fields.Integer(
@@ -41,11 +41,11 @@ class invoice(models.Model):
     )
     afip_barcode = fields.Char(
         compute='_get_barcode',
-        string=_('AFIP Barcode')
+        string='AFIP Barcode'
     )
     afip_barcode_img = fields.Binary(
         compute='_get_barcode',
-        string=_('AFIP Barcode Image')
+        string='AFIP Barcode Image'
     )
     afip_message = fields.Text(
         string='AFIP Message',
@@ -96,16 +96,13 @@ class invoice(models.Model):
                 [c for c in str(self.afip_cae_due or '') if c.isdigit()])
             barcode = ''.join(
                 [str(self.company_id.partner_id.vat[2:]),
-                    "%02d" % int(self.afip_document_class_id.afip_code),
-                    "%04d" % int(self.journal_id.point_of_sale_id.number),
+                    "%02d" % int(self.document_type_id.code),
+                    "%04d" % int(self.journal_id.point_of_sale_number),
                     str(self.afip_cae), cae_due])
             barcode = barcode + self.verification_digit_modulo10(barcode)
         self.afip_barcode = barcode
-        self.afip_barcode_img = self._make_image_I25(barcode)
 
-    @api.model
-    def _make_image_I25(self, barcode):
-        "Generate the required barcode Interleaved of 7 image using PIL"
+        # Generate the required barcode Interleaved of 7 image using PIL
         image = False
         if barcode:
             # create the helper:
@@ -120,7 +117,7 @@ class invoice(models.Model):
             image = output.getvalue()
             image = output.getvalue().encode("base64")
             output.close()
-        return image
+        self.afip_barcode_img = image
 
     @api.model
     def verification_digit_modulo10(self, code):
@@ -155,19 +152,17 @@ class invoice(models.Model):
         return rel_invoices
 
     @api.multi
-    # def invoice_validate(self):
-    def action_number(self):
+    def invoice_validate(self):
         """
-        We would prefere use invoice_validate or call request cae after
-        action_number so that CAE is requested at the last part but raise error
-        can not fall back the sequence next number.
+        The last thing we do is request the cae because if an error occurs
+        after cae requested, the invoice has been already validated on afip
         We want to add a inv._cr.commit() after sucesfuul cae request because
         we dont want to loose cae data because of a raise error on next steps
         but it doesn work as expected
         """
+        res = super(AccountInvoice, self).invoice_validate()
         self.do_pyafipws_request_cae()
         # self._cr.commit()
-        res = super(invoice, self).action_number()
         return res
 
     @api.multi
@@ -178,7 +173,7 @@ class invoice(models.Model):
             if inv.afip_cae and inv.afip_cae_due:
                 continue
 
-            afip_ws = self.journal_id.point_of_sale_id.afip_ws
+            afip_ws = inv.journal_id.afip_ws
             # Ignore invoice if not ws on point of sale
             if not afip_ws:
                 continue
@@ -187,14 +182,11 @@ class invoice(models.Model):
             commercial_partner = inv.commercial_partner_id
             country = commercial_partner.country_id
             journal = inv.journal_id
-            point_of_sale = journal.point_of_sale_id
-            pos_number = point_of_sale.number
-            doc_afip_code = self.afip_document_class_id.afip_code
+            pos_number = journal.point_of_sale_number
+            doc_afip_code = inv.document_type_id.code
 
             # authenticate against AFIP:
-            ws = self.company_id.get_connection(afip_ws).connect()
-
-            next_invoice_number = inv.next_invoice_number
+            ws = inv.company_id.get_connection(afip_ws).connect()
 
             # get the last invoice number registered in AFIP
             if afip_ws == "wsfe" or afip_ws == "wsmtxca":
@@ -204,36 +196,36 @@ class invoice(models.Model):
                 ws_invoice_number = ws.GetLastCMP(
                     doc_afip_code, pos_number)
                 if not country:
-                    raise Warning(_(
+                    raise UserError(_(
                         'For WS "%s" country is required on partner' % (
                             afip_ws)))
                 elif not country.code:
-                    raise Warning(_(
+                    raise UserError(_(
                         'For WS "%s" country code is mandatory'
                         'Country: %s' % (
                             afip_ws, country.name)))
                 elif not country.afip_code:
-                    raise Warning(_(
+                    raise UserError(_(
                         'For WS "%s" country afip code is mandatory'
                         'Country: %s' % (
                             afip_ws, country.name)))
 
             ws_next_invoice_number = int(ws_invoice_number) + 1
             # verify that the invoice is the next one to be registered in AFIP
-            if next_invoice_number != ws_next_invoice_number:
-                raise Warning(_(
+            if inv.invoice_number != ws_next_invoice_number:
+                raise UserError(_(
                     'Error!'
                     'Invoice id: %i'
                     'Next invoice number should be %i and not %i' % (
                         inv.id,
                         ws_next_invoice_number,
-                        next_invoice_number)))
+                        inv.invoice_number)))
 
-            partner_doc_code = commercial_partner.document_type_id.afip_code
+            partner_doc_code = commercial_partner.document_type_id.code
             tipo_doc = partner_doc_code or '99'
-            nro_doc = (
-                partner_doc_code and commercial_partner.document_number or "0")
-            cbt_desde = cbt_hasta = cbte_nro = next_invoice_number
+            nro_doc = partner_doc_code and int(
+                commercial_partner.document_value) or "0"
+            cbt_desde = cbt_hasta = cbte_nro = inv.invoice_number
             concepto = tipo_expo = int(inv.afip_concept)
 
             fecha_cbte = inv.date_invoice
@@ -255,19 +247,14 @@ class invoice(models.Model):
             # # invoice amount totals:
             imp_total = str("%.2f" % abs(inv.amount_total))
             # ImpTotConc es el iva no gravado
-            imp_tot_conc = str("%.2f" % abs(inv.vat_untaxed))
-            # en la v9 lo hicimos diferente, aca restamos al vat amount
-            # lo que seria exento y no gravado
-            imp_neto = str("%.2f" % abs(
-                inv.vat_base_amount - inv.vat_untaxed - inv.vat_exempt_amount))
+            imp_tot_conc = str("%.2f" % abs(inv.vat_untaxed_base_amount))
+            imp_neto = str("%.2f" % abs(inv.vat_base_amount))
             imp_iva = str("%.2f" % abs(inv.vat_amount))
             imp_subtotal = str("%.2f" % abs(inv.amount_untaxed))
             imp_trib = str("%.2f" % abs(inv.other_taxes_amount))
-            imp_op_ex = str("%.2f" % abs(inv.vat_exempt_amount))
+            imp_op_ex = str("%.2f" % abs(inv.vat_exempt_base_amount))
             moneda_id = inv.currency_id.afip_code
             moneda_ctz = inv.currency_rate
-            # moneda_ctz = str(inv.company_id.currency_id.compute(
-            # 1., inv.currency_id))
 
             # # foreign trade data: export permit, country code, etc.:
             if inv.afip_incoterm_id:
@@ -280,9 +267,9 @@ class invoice(models.Model):
             else:
                 permiso_existente = ""
             obs_generales = inv.comment
-            if inv.payment_term:
-                forma_pago = inv.payment_term.name
-                obs_comerciales = inv.payment_term.name
+            if inv.payment_term_id:
+                forma_pago = inv.payment_term_id.name
+                obs_comerciales = inv.payment_term_id.name
             else:
                 forma_pago = obs_comerciales = None
             idioma_cbte = 1     # invoice language: spanish / español
@@ -304,13 +291,17 @@ class invoice(models.Model):
                     cuit_pais_cliente = country.cuit_juridica
                 else:
                     cuit_pais_cliente = country.cuit_fisica
+                if not cuit_pais_cliente:
+                    raise UserError(_(
+                        'No vat defined for the partner and also no CUIT set '
+                        'on country'))
 
             domicilio_cliente = " - ".join([
-                                commercial_partner.name or '',
-                                commercial_partner.street or '',
-                                commercial_partner.street2 or '',
-                                commercial_partner.zip or '',
-                                commercial_partner.city or '',
+                commercial_partner.name or '',
+                commercial_partner.street or '',
+                commercial_partner.street2 or '',
+                commercial_partner.zip or '',
+                commercial_partner.city or '',
             ])
             pais_dst_cmp = commercial_partner.country_id.afip_code
 
@@ -347,32 +338,32 @@ class invoice(models.Model):
             # TODO ver si en realidad tenemos que usar un vat pero no lo
             # subimos
             if afip_ws != 'wsfex':
-                for vat in self.vat_tax_ids:
-                    # we dont send no gravado y exento
-                    if vat.tax_code_id.afip_code in [1, 2]:
-                        continue
-                    _logger.info('Adding VAT %s' % vat.tax_code_id.name)
+                for vat in inv.vat_tax_ids:
+                    _logger.info(
+                        'Adding VAT %s' % vat.tax_id.tax_group_id.name)
                     ws.AgregarIva(
-                        vat.tax_code_id.afip_code,
+                        vat.tax_id.tax_group_id.afip_code,
                         "%.2f" % abs(vat.base_amount),
-                        "%.2f" % abs(vat.tax_amount),
+                        "%.2f" % abs(vat.amount),
                     )
-                for tax in self.not_vat_tax_ids:
-                    _logger.info('Adding TAX %s' % tax.tax_code_id.name)
+                for tax in inv.not_vat_tax_ids:
+                    _logger.info(
+                        'Adding TAX %s' % tax.tax_id.tax_group_id.name)
                     ws.AgregarTributo(
-                        tax.tax_code_id.application_code,
-                        tax.tax_code_id.name,
+                        tax.tax_id.tax_group_id.afip_code,
+                        tax.tax_id.tax_group_id.name,
                         "%.2f" % abs(tax.base_amount),
+                        # TODO pasar la alicuota
                         # como no tenemos la alicuota pasamos cero, en v9
                         # podremos pasar la alicuota
                         0,
-                        "%.2f" % abs(tax.tax_amount),
+                        "%.2f" % abs(tax.amount),
                     )
 
             CbteAsoc = inv.get_related_invoices_data()
             if CbteAsoc:
                 ws.AgregarCmpAsoc(
-                    CbteAsoc.afip_document_class_id.afip_code,
+                    CbteAsoc.document_type_id.code,
                     CbteAsoc.point_of_sale,
                     CbteAsoc.invoice_number,
                 )
@@ -380,26 +371,31 @@ class invoice(models.Model):
             # analize line items - invoice detail
             # wsfe do not require detail
             if afip_ws != 'wsfe':
-                for line in inv.invoice_line:
+                for line in inv.invoice_line_ids:
                     codigo = line.product_id.code
                     # unidad de referencia del producto si se comercializa
                     # en una unidad distinta a la de consumo
-                    if not line.uos_id.afip_code:
-                        raise Warning(_('Not afip code con producto UOM %s' % (
-                            line.uos_id.name)))
+                    if not line.uom_id.afip_code:
+                        raise UserError(_(
+                            'Not afip code con producto UOM %s' % (
+                                line.uom_id.name)))
                     cod_mtx = line.uos_id.afip_code
                     ds = line.name
                     qty = line.quantity
-                    umed = line.uos_id.afip_code
+                    umed = line.uom_id.afip_code
                     precio = line.price_unit
                     importe = line.price_subtotal
                     bonif = line.discount or None
                     if afip_ws == 'wsmtxca':
                         if not line.product_id.uom_id.afip_code:
-                            raise Warning(_('Not afip code con producto UOM %s' % (
-                                line.product_id.uom_id.name)))
-                        u_mtx = line.product_id.uom_id.afip_code or line.uos_id.afip_code
-                        if self.invoice_id.type in ('out_invoice', 'in_invoice'):
+                            raise Warning(_(
+                                'Not afip code con producto UOM %s' % (
+                                    line.product_id.uom_id.name)))
+                        u_mtx = (
+                            line.product_id.uom_id.afip_code or
+                            line.uos_id.afip_code)
+                        if self.invoice_id.type in (
+                                'out_invoice', 'in_invoice'):
                             iva_id = line.vat_tax_ids.tax_code_id.afip_code
                         else:
                             iva_id = line.vat_tax_ids.ref_tax_code_id.afip_code
@@ -445,11 +441,11 @@ class invoice(models.Model):
                         sys.exc_type,
                         sys.exc_value)[0]
             if msg:
-                raise Warning(_('AFIP Validation Error. %s' % msg))
+                raise UserError(_('AFIP Validation Error. %s' % msg))
 
             msg = u"\n".join([ws.Obs or "", ws.ErrMsg or ""])
             if not ws.CAE or ws.Resultado != 'A':
-                raise Warning(_('AFIP Validation Error. %s' % msg))
+                raise UserError(_('AFIP Validation Error. %s' % msg))
             # TODO ver que algunso campos no tienen sentido porque solo se
             # escribe aca si no hay errores
             _logger.info('CAE solicitado con exito. CAE: %s. Resultado %s' % (

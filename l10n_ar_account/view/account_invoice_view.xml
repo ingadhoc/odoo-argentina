@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_invoice_form" model="ir.ui.view">
+            <field name="name">l10n_ar_account invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="point_of_sale_type" invisible="1"/>
+                </form>
+                <div groups="base.group_multi_currency" position="after">
+                    <field name="currency_rate" attrs="{'invisible': [('currency_rate', '=', False)]}"/>
+                </div>
+
+                <field name="journal_id" position="after">
+                    <field name="afip_responsability_type_id" states="open,paid"/>
+                </field>
+
+                <field name="payment_term_id" position="after">
+                    <!-- if poitn of sale = false then not argentina journal -->
+                    <field name="afip_incoterm_id" attrs="{'invisible': [('point_of_sale_type', '=', False)]}"/>
+                    <field name='afip_concept' attrs="{'invisible': [('point_of_sale_type', 'not in', ['online', 'electronic'])]}"/>
+                    <field name='afip_service_start' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])],'required':[('afip_concept','in',['2', '3', '4'])]}"/>
+                    <field name='afip_service_end' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])],'required':[('afip_concept','in',['2', '3', '4'])]}"/>
+                </field>   
+            </field>
+        </record>
+
+        <record id="view_supplier_invoice_form" model="ir.ui.view">
+            <field name="name">l10n_ar_account supplier.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="journal_id" position="after">
+                    <field name="afip_responsability_type_id" states="open,paid"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

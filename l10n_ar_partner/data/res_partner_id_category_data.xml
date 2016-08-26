@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="False">
+        <record model='res.partner.id_category' id='dt_CPF'>
+            <field name='code'>CPF</field>
+            <field name='name'>CI Policía Federal</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CBA'>
+            <field name='code'>CBA</field>
+            <field name='name'>CI Buenos Aires</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CCat'>
+            <field name='code'>CCat</field>
+            <field name='name'>CI Catamarca</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CCor'>
+            <field name='code'>CCor</field>
+            <field name='name'>CI Córdoba</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CCorr'>
+            <field name='code'>CCorr</field>
+            <field name='name'>CI Corrientes</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CIER'>
+            <field name='code'>CIER</field>
+            <field name='name'>CI Entre Ríos</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CIJ'>
+            <field name='code'>CIJ</field>
+            <field name='name'>CI Jujuy</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CIMen'>
+            <field name='code'>CIMen</field>
+            <field name='name'>CI Mendoza</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CILR'>
+            <field name='code'>CILR</field>
+            <field name='name'>CI La Rioja</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CIS'>
+            <field name='code'>CIS</field>
+            <field name='name'>CI Salta</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CISJ'>
+            <field name='code'>CISJ</field>
+            <field name='name'>CI San Juan</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CISL'>
+            <field name='code'>CISL</field>
+            <field name='name'>CI San Luis</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CISF'>
+            <field name='code'>CISF</field>
+            <field name='name'>CI Santa Fe</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CISdE'>
+            <field name='code'>CISdE</field>
+            <field name='name'>CI Santiago del Estero</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CIT'>
+            <field name='code'>CIT</field>
+            <field name='name'>CI Tucumán</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CICha'>
+            <field name='code'>CICha</field>
+            <field name='name'>CI Chaco</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CIChu'>
+            <field name='code'>CIChu</field>
+            <field name='name'>CI Chubut</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CIF'>
+            <field name='code'>CIF</field>
+            <field name='name'>CI Formosa</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CIMis'>
+            <field name='code'>CIMis</field>
+            <field name='name'>CI Misiones</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CIN'>
+            <field name='code'>CIN</field>
+            <field name='name'>CI Neuquén</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CILP'>
+            <field name='code'>CILP</field>
+            <field name='name'>CI La Pampa</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CIRN'>
+            <field name='code'>CIRN</field>
+            <field name='name'>CI Río Negro</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CISC'>
+            <field name='code'>CISC</field>
+            <field name='name'>CI Santa Cruz</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CITdF'>
+            <field name='code'>CITdF</field>
+            <field name='name'>CI Tierra del Fuego</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CUIT'>
+            <field name='code'>CUIT</field>
+            <field name='name'>Código Único de Identificación Tributaria</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CUIL'>
+            <field name='code'>CUIL</field>
+            <field name='name'>Código Único de Identificación Laboral</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CDI'>
+            <field name='code'>CDI</field>
+            <field name='name'>CDI</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_LE'>
+            <field name='code'>LE</field>
+            <field name='name'>LE</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_LC'>
+            <field name='code'>LC</field>
+            <field name='name'>LC</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CIe'>
+            <field name='code'>CIe</field>
+            <field name='name'>CI extranjera</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_ET'>
+            <field name='code'>ET</field>
+            <field name='name'>en trámite</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_AN'>
+            <field name='code'>AN</field>
+            <field name='name'>Acta nacimiento</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_PAS'>
+            <field name='code'>PAS</field>
+            <field name='name'>Pasaporte</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CIBAR'>
+            <field name='code'>CIBAR</field>
+            <field name='name'>CI Bs. As. RNP</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_DNI'>
+            <field name='name'>Documento Nacional de Identidad</field>
+            <field name='code'>DNI</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_Sigd'>
+            <field name='code'>Sigd</field>
+            <field name='name'>Sin identificar/venta global diaria</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_CdM'>
+            <field name='code'>CdM</field>
+            <field name='name'>Certificado de Migración</field>
+        </record> 
+        <record model='res.partner.id_category' id='dt_UpApP'>
+            <field name='code'>UpApP</field>
+            <field name='name'>Usado por Anses para Padrón</field>
+        </record> 
+    </data>
+</openerp>
+        

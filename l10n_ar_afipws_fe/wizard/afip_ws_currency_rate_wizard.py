@@ -4,10 +4,10 @@
 # directory
 ##############################################################################
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 
 
-class afip_ws_currency_rate_wizard(models.TransientModel):
+class AfipWsCurrencyRateWizard(models.TransientModel):
     _name = 'afip.ws.currency_rate.wizard'
     _description = 'AFIP WS Currency Rate Wizard'
 
@@ -15,15 +15,15 @@ class afip_ws_currency_rate_wizard(models.TransientModel):
         'res.currency',
         'Currency',
         required=True,
-        )
+    )
 
     @api.multi
     def confirm(self):
         self.ensure_one()
-        point_of_sale_id = self._context.get('active_id', False)
-        if not point_of_sale_id:
-            raise Warning(_(
-                'No Point Of sale as active_id on context'))
-        point_of_sale = self.env[
-            'afip.point_of_sale'].browse(point_of_sale_id)
-        return point_of_sale.get_pyafipws_currency_rate(self.currency_id)
+        journal_id = self._context.get('active_id', False)
+        if not journal_id:
+            raise UserError(_(
+                'No Journal Id as active_id on context'))
+        journal = self.env[
+            'account.journal'].browse(journal_id)
+        return journal.get_pyafipws_currency_rate(self.currency_id)

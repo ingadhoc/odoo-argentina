@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model='account.fiscal.position.template' id='fiscal_position_template_zona_franca'>
+            <field name='afip_code'>Z</field>
+            <field name='name'>Exportaciones a la zona franca</field>
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+        </record>
+
+        <record model='account.fiscal.position.template' id='fiscal_position_template_exportaciones_al_exterior'>
+            <field name='afip_code'>X</field>
+            <field name='name'>Exportaciones al exterior</field>
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+        </record>
+
+        <record model='account.fiscal.position.template' id='fiscal_position_template_operaciones_exentas'>
+            <field name='afip_code'>E</field>
+            <field name='name'>Operaciones exentas</field>
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+        </record>
+
+        <record model='account.fiscal.position.template' id='fiscal_position_template_no_gravado'>
+            <field name='afip_code'>N</field>
+            <field name='name'>No gravado</field>
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+        </record>
+
+        <record model='account.fiscal.position.template' id='fiscal_position_template_operaciones_de_canje'>
+            <field name='afip_code'>C</field>
+            <field name='name'>Operaciones de Canje</field>
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+        </record>
+    </data>
+</openerp>

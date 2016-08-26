@@ -20,10 +20,10 @@
 ##############################################################################
 {
     "name": "Argentinian Account Check Integration",
-    'version': '8.0.1.0.1',
+    'version': '9.0.1.0.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
-    'author':  'ADHOC SA',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',
@@ -46,7 +46,7 @@ Argentinian Account Check Integration
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'application': False,
 }

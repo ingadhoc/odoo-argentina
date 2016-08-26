@@ -29,8 +29,9 @@
                             <group name="afip_col_2">
                             </group>
                         </group>
-                        <label for="other_afip_document_class_ids"/>
-                        <field name="other_afip_document_class_ids"/>
+                        <!-- TODO agregar esto -->
+                        <!-- <label for="other_afip_document_class_ids"/> -->
+                        <!-- <field name="other_afip_document_class_ids"/> -->
                         <group string="Others" name="others">
                             <group name="others_col_1">
                                 <label for="gross_income_number" string="Gross Income"/>

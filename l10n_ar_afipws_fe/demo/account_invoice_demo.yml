@@ -57,7 +57,7 @@
         price_unit: 70.0
         quantity: 4.0
       - name: 'Ergonomic Mouse'
-        product_id: product.product_product_54
+        product_id: product.product_product_55
         price_unit: 300.0
         quantity: 2.0
 -

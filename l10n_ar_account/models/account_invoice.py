@@ -112,14 +112,6 @@ class AccountInvoice(models.Model):
     def _get_argentina_amounts(self):
         """
         """
-        # vat values
-        # we exclude exempt vats and untaxed (no gravados)
-        wihtout_tax_id = self.tax_line_ids.filtered(lambda r: not r.tax_id)
-        if wihtout_tax_id:
-            raise UserError(_(
-                "Some Invoice Tax Lines don't have a tax_id asociated, please "
-                "correct them or try to refresh invoice "))
-
         vat_taxes = self.tax_line_ids.filtered(
             lambda r: (
                 r.tax_id.tax_group_id.type == 'tax' and
@@ -314,3 +306,84 @@ class AccountInvoice(models.Model):
             'available_journal_document_types': journal_document_types,
             'journal_document_type': journal_document_type,
         }
+
+    @api.multi
+    def action_move_create(self):
+        """
+        We add currency rate on move creation so it can be used by electronic
+        invoice later on action_number
+        """
+        self.check_argentinian_invoice_taxes()
+        return super(AccountInvoice, self).action_move_create()
+
+    @api.multi
+    def check_argentinian_invoice_taxes(self):
+        """
+        We make theis function to be used as a constraint but also to be called
+        from other models like vat citi
+        """
+        # only check for argentinian localization companies
+        _logger.info('Running checks related to argentinian documents')
+
+        # we consider argentinian invoices the ones from companies with
+        # localization localization and that belongs to a journal with
+        # use_documents
+        argentinian_invoices = self.filtered(
+            lambda r: (
+                r.localization == 'argentina' and r.use_documents))
+        if not argentinian_invoices:
+            return True
+
+        # we check all invoice tax lines has tax_id related
+        # we exclude exempt vats and untaxed (no gravados)
+        wihtout_tax_id = argentinian_invoices.mapped('tax_line_ids').filtered(
+            lambda r: not r.tax_id)
+        if wihtout_tax_id:
+            raise UserError(_(
+                "Some Invoice Tax Lines don't have a tax_id asociated, please "
+                "correct them or try to refresh invoice "))
+
+        # check codes has argentinian tax attributes configured
+        tax_groups = argentinian_invoices.mapped(
+            'tax_line_ids.tax_id.tax_group_id')
+        unconfigured_tax_groups = tax_groups.filtered(
+            lambda r: not r.type or not r.tax or not r.application)
+        if unconfigured_tax_groups:
+            raise UserError(_(
+                "You are using argentinian localization and there are some tax"
+                " tax group that are not configured. Tax Groups ids: %s" % (
+                    unconfigured_tax_groups.ids)))
+
+        for invoice in argentinian_invoices:
+            # we check vat base amount is equal to amount untaxed
+            # usamos una precision de 0.1 porque en algunos casos no pudimos
+            # arreglar pbñe,as de redondedo
+            if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
+                raise UserError(_(
+                    "Invoice with ID %i has some lines without vat Tax ") % (
+                        invoice.id))
+
+        # Check except vat invoice
+        afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
+        for invoice in argentinian_invoices:
+            special_vat_taxes = invoice.tax_line_ids.filtered(
+                lambda r: r.tax_id.tax_group_id.afip_code in [1, 2, 3])
+            if (
+                    special_vat_taxes and
+                    invoice.fiscal_position_id.afip_code
+                    not in afip_exempt_codes):
+                raise UserError(_(
+                    "If you have choose a 0, exempt or untaxed 'tax', "
+                    "you must choose a fiscal position with afip code in %s.\n"
+                    "* Invoice id %i" % (afip_exempt_codes, invoice.id))
+                )
+
+    # TODO check if we can remove this. If we import or get demo data
+    # tax_id is not loaded on tax lines, we couldn't find the error
+    # so we add this to fix it
+    @api.constrains('invoice_line_ids')
+    def update_taxes_fix(self):
+        context = dict(self._context)
+        if context.get('constraint_update_taxes'):
+            return True
+        self.with_context(constraint_update_taxes=True).compute_taxes()

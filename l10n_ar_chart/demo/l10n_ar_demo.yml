@@ -23,8 +23,8 @@
       mapping_list = [
           ('product.product_product_43_product_template', 'l10n_ar_account.ri_tax_group_iva_no_gravado'),
           ('product.product_product_39_product_template', 'l10n_ar_account.ri_tax_group_iva_exento'),
-          ('product.product_product_54_product_template', 'l10n_ar_account.ri_tax_group_iva_0'),
           ('product.product_product_53_product_template', 'l10n_ar_account.ri_tax_group_iva_10'),
+          ('product.product_product_55_product_template', 'l10n_ar_account.ri_tax_group_iva_0'),
           ('product.product_product_50_product_template', 'l10n_ar_account.ri_tax_group_iva_27'),
       ]
       for product_xml_id, tax_code_xml_id in mapping_list:

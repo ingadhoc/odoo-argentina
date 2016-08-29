@@ -18,9 +18,11 @@
         'data/menuitem.xml',
     ],
     'demo': [
-        'demo/l10n_ar_demo.yml',
         '../account/demo/account_bank_statement.yml',
-        '../account/demo/account_invoice_demo.yml',
+        # fue muy complicado hacer andar los datos demo de odoo
+        # los copiamos y modificamos en este archivo
+        'demo/l10n_ar_account_demo.yml',
+        'demo/l10n_ar_demo.yml',
     ],
     'installable': True,
     'images': [

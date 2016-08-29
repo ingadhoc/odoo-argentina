@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+
+<record id="view_partner_id_numbers_form" model="ir.ui.view">
+    <field name="name">res.partner.id_number.form</field>
+    <field name="model">res.partner.id_number</field>
+    <field name="type">form</field>
+    <field name="inherit_id" ref="partner_identification.view_partner_id_numbers_form"/>
+    <field name="arch" type="xml">
+        <field name="name" position="before">
+            <field name="sequence"/>
+        </field>
+    </field>
+</record>
+
+<record id="view_partner_id_numbers_tree" model="ir.ui.view">
+    <field name="name">res.partner.id_number.tree</field>
+    <field name="model">res.partner.id_number</field>
+    <field name="type">tree</field>
+    <field name="inherit_id" ref="partner_identification.view_partner_id_numbers_tree"/>
+    <field name="arch" type="xml">
+        <field name="category_id" position="before">
+            <field name="sequence" widget="handle"/>
+        </field>
+    </field>
+</record>
+
+</data>
+</openerp>

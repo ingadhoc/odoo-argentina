@@ -4,7 +4,11 @@
 Títulos de Personería y Tipos de documentos Arentinos
 =====================================================
 
-TODO
+Hacemos algunas mejoras al módulo de partner identifications:
+* Agregamos secuencia a las categorías de ID
+* Agregamos secuencia a los id de un partner
+* Agregamos en partner un campo Main Id Category y un computado con inverso Main Id Number
+* Hacemos que los id categories puedan buscar por codigo y por nombre
 
 Configuration
 =============

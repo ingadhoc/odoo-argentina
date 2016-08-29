@@ -5,8 +5,7 @@
         <record model='res.partner' id='par_cfa'>
             <field name='name'>Consumidor Final Anónimo</field>
             <field name="notify_email">none</field>
-            <!-- TODO agregar documento -->
-            <!-- <field name='document_type_id' ref='l10n_ar_partner.dt_Sigd'/> -->
+            <field name='main_id_category_id' ref='dt_Sigd'/>
         </record>
 
         <record id="partner_afip" model="res.partner">
@@ -15,6 +14,8 @@
             <field name="is_company" eval="True"/>
             <field name="customer" eval="True"/>
             <field name="supplier" eval="True"/>
+            <field name='main_id_category_id' ref="dt_CUIT"/>
+            <field name='main_id_number'>33693450239</field>
         </record>
 
     </data>

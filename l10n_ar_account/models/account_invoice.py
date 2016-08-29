@@ -324,11 +324,7 @@ class AccountInvoice(models.Model):
         """
         # only check for argentinian localization companies
         _logger.info('Running checks related to argentinian documents')
-        # we ommit checks if we are on  install_mode because of errors with
-        # test cases
-        if self._context.get('install_mode'):
-            _logger.info('Omitting argentinian checks because on install_mode')
-            return True
+
         # we consider argentinian invoices the ones from companies with
         # localization localization and that belongs to a journal with
         # use_documents

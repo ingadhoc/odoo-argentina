@@ -83,9 +83,8 @@ class AccountInvoice(models.Model):
         if self._fields.get('operation_ids') and self.operation_ids:
             self.validation_type = 'no_validation'
         # if invoice has cae then me dont validate it against afip
-        elif self.journal_id.point_of_sale_id.afip_ws and not self.afip_cae:
-            self.validation_type = self.env[
-                'res.company']._get_environment_type()
+        elif self.journal_id.afip_ws and not self.afip_cae:
+            self.validation_type = self.env['res.company']._get_environment_type()
 
     @api.one
     @api.depends('afip_cae')
@@ -95,7 +94,7 @@ class AccountInvoice(models.Model):
             cae_due = ''.join(
                 [c for c in str(self.afip_cae_due or '') if c.isdigit()])
             barcode = ''.join(
-                [str(self.company_id.partner_id.vat[2:]),
+                [str(self.company_id.cuit),
                     "%02d" % int(self.document_type_id.code),
                     "%04d" % int(self.journal_id.point_of_sale_number),
                     str(self.afip_cae), cae_due])
@@ -221,10 +220,10 @@ class AccountInvoice(models.Model):
                         ws_next_invoice_number,
                         inv.invoice_number)))
 
-            partner_doc_code = commercial_partner.document_type_id.code
-            tipo_doc = partner_doc_code or '99'
-            nro_doc = partner_doc_code and int(
-                commercial_partner.document_value) or "0"
+            partner_id_code = commercial_partner.main_id_category_id.afip_code
+            tipo_doc = partner_id_code or '99'
+            nro_doc = partner_id_code and int(
+                commercial_partner.main_id_number) or "0"
             cbt_desde = cbt_hasta = cbte_nro = inv.invoice_number
             concepto = tipo_expo = int(inv.afip_concept)
 
@@ -281,8 +280,8 @@ class AccountInvoice(models.Model):
                 id_impositivo = nro_doc
                 cuit_pais_cliente = None
             # If not argentinian and vat, use vat
-            elif country.code != 'AR' and commercial_partner.vat:
-                id_impositivo = commercial_partner.vat[2:]
+            elif country.code != 'AR' and nro_doc:
+                id_impositivo = nro_doc
                 cuit_pais_cliente = None
             # else use cuit pais cliente
             else:

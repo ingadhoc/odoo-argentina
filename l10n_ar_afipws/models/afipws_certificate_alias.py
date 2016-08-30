@@ -142,8 +142,7 @@ class AfipwsCertificateAlias(models.Model):
             self.country_id = self.company_id.country_id.id
             self.state_id = self.company_id.state_id.id
             self.city = self.company_id.city
-            if self.company_id.partner_id.vat:
-                self.company_cuit = self.company_id.partner_id.vat[2:]
+            self.company_cuit = self.company_id.cuit
 
     @api.multi
     def action_confirm(self):

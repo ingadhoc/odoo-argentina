@@ -126,13 +126,8 @@ class AfipwsConnection(models.Model):
         wsdl = self.afip_ws_url + '?WSDL'
         # connect to the webservice and call to the test method
         ws.Conectar("", wsdl or "", "")
-        # TODO check document type is cuit
-        document_value = self.company_id.partner_id.document_value
-        if not document_value:
-            raise UserError(_(
-                'No se definió CUIT al partner de la compañia %s') % (
-                self.company_id.name))
-        ws.Cuit = self.company_id.partner_id.document_value
+        cuit = self.company_id.cuit
+        ws.Cuit = cuit
         ws.Token = self.token.encode('ascii')
         ws.Sign = self.sign.encode('ascii')
         _logger.info(

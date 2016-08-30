@@ -71,10 +71,7 @@ class ResPartner(models.Model):
     @api.multi
     def update_constancia_from_padron_afip(self):
         self.ensure_one()
-        cuit = self.document_number
-        if not cuit or self.document_type_id.afip_code != 80:
-            raise Warning(_(
-                'No CUIT for partner %s') % (self.name))
+        cuit = self.cuit
         # descarga de constancia
         # basedir = os.path.join(os.getcwd(), 'cache')
         # tmpfilename = os.path.join(basedir, "constancia.pdf")
@@ -104,10 +101,7 @@ class ResPartner(models.Model):
         # TODO agregar funcionalidad de descargar constancia, ver readme del
         # modulo
         self.ensure_one()
-        cuit = self.document_number
-        if not cuit or self.document_type_id.afip_code != 80:
-            raise Warning(_(
-                'No CUIT for partner %s') % (self.name))
+        cuit = self.cuit
         padron = PadronAFIP()
         padron.Consultar(cuit)
 

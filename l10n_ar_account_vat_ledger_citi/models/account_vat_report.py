@@ -128,8 +128,8 @@ class account_vat_ledger(models.Model):
         # TODO agregar validaciones para los que se presentan sin numero de
         # documento para operaciones menores a 1000 segun doc especificacion
         # regimen de...
-        if partner.document_type_id.afip_code:
-            return "{:0>2d}".format(partner.document_type_id.afip_code)
+        if partner.main_id_category_id.afip_code:
+            return "{:0>2d}".format(partner.main_id_category_id.afip_code)
         else:
             return '99'
 
@@ -138,7 +138,7 @@ class account_vat_ledger(models.Model):
         # TODO agregar validaciones para los que se presentan sin numero de
         # documento para operaciones menores a 1000 segun doc especificacion
         # regimen de...
-        return (partner.document_number or '').rjust(20, '0')
+        return (partner.main_id_number or '').rjust(20, '0')
 
     @api.model
     def get_point_of_sale(self, invoice):
@@ -213,7 +213,7 @@ class account_vat_ledger(models.Model):
         self.invoice_ids.check_argentinian_invoice_taxes()
         if self.type == 'purchase':
             partners = self.invoice_ids.mapped('commercial_partner_id').filtered(
-                lambda r: r.document_type_id.afip_code in (False, 99) or not r.document_number)
+                lambda r: r.main_id_category_id.afip_code in (False, 99) or not r.main_id_number)
             if partners:
                 raise Warning(
                     _("On purchase citi, partner document is mandatory and partner document type must be different from 99. Partners %s") % partners.ids)

@@ -97,10 +97,7 @@ class ResCompany(models.Model):
         from_date = date + relativedelta(day=1)
         to_date = date + relativedelta(day=1, days=-1, months=+1)
 
-        cuit = partner.document_number
-        if not cuit:
-            raise Warning(_('No CUIT for partner %s') % (
-                partner.name))
+        cuit = partner.cuit
 
         _logger.info(
             'Getting ARBA data for cuit %s from date %s to date %s' % (

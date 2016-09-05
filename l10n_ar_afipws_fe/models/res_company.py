@@ -19,7 +19,7 @@ class ResCompany(models.Model):
     ],
         required=True,
         default='not_available',
-        string='AFP authorization verification',
+        string='AFIP authorization verification',
         help='It adds an option on invoices to verify the afip authorization '
         'data (for documents with CAE, CAI or CAEA).\n'
         'If you choose required, then on supplier invoices, verification is '

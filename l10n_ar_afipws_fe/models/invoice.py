@@ -206,7 +206,7 @@ class invoice(models.Model):
     def check_afip_auth_verify_required(self):
         for inv in self:
             if (
-                    inv.type in ['in_invoice', 'out_invoice'] and
+                    inv.type in ['in_invoice', 'in_refund'] and
                     inv.afip_auth_verify_type == 'required' and
                     inv.document_type in [
                         'invoice', 'debit_note', 'credit_note',
@@ -283,9 +283,9 @@ print "Observaciones:", wscdc.Obs
                     'Point of sale and document number and document type '
                     'are required!'))
             cbte_fch = inv.date_invoice
-            cbte_fch = cbte_fch.replace("-", "")
             if not cbte_fch:
                 raise Warning(_('Invoice Date is required!'))
+            cbte_fch = cbte_fch.replace("-", "")
             imp_total = str("%.2f" % abs(inv.amount_total))
 
             _logger.info('Constatando Comprobante en afip')

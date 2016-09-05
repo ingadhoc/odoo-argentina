@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-08 01:16+0000\n"
-"PO-Revision-Date: 2016-05-24 21:05+0000\n"
+"POT-Creation-Date: 2016-09-05 17:33+0000\n"
+"PO-Revision-Date: 2016-09-05 17:34+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -34,15 +34,21 @@ msgid "* Document Class %s (id %i), Local %i, Remote %i\n"
 msgstr "* Clase de Documento %s (id %i), Local %i, Remoto %i\n"
 
 #. module: l10n_ar_afipws_fe
+#: view:account.invoice:l10n_ar_afipws_fe.invoice_supplier_form
+#: view:account.invoice:l10n_ar_afipws_fe.view_invoice_form
+msgid "AFIP"
+msgstr "AFIP"
+
+#. module: l10n_ar_afipws_fe
 #: field:account.invoice,afip_barcode:0
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:44
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:75
 #, python-format
 msgid "AFIP Barcode"
 msgstr "Código de Barras AFIP"
 
 #. module: l10n_ar_afipws_fe
 #: field:account.invoice,afip_barcode_img:0
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:48
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:79
 #, python-format
 msgid "AFIP Barcode Image"
 msgstr "Imagen del Código de Barras AFIP"
@@ -53,11 +59,17 @@ msgid "AFIP Message"
 msgstr "Mensaje del AFIP"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:442
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:446
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:597
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:601
 #, python-format
 msgid "AFIP Validation Error. %s"
 msgstr "Error de Validación AFIP. %s"
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:315
+#, python-format
+msgid "AFIP Verification Error. %s"
+msgstr "Error de Verificación en afip AFIP. %s"
 
 #. module: l10n_ar_afipws_fe
 #: field:account.journal.afip_document_class,afip_ws:0
@@ -120,6 +132,39 @@ msgid "AFIP XML Response"
 msgstr "XML de Respuesta de AFIP"
 
 #. module: l10n_ar_afipws_fe
+#: view:account.invoice:l10n_ar_afipws_fe.invoice_supplier_form
+#: view:account.invoice:l10n_ar_afipws_fe.view_invoice_form
+msgid "AFIP authorization"
+msgstr "Autorización AFIP"
+
+#. module: l10n_ar_afipws_fe
+#: field:account.invoice,afip_auth_mode:0
+msgid "AFIP authorization mode"
+msgstr "Modo de Autorización AFIP"
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:249
+#, python-format
+msgid "AFIP authorization mode and Code are required!"
+msgstr "El modo y código de autorización de AFIP son requeridos!"
+
+#. module: l10n_ar_afipws_fe
+#: field:account.invoice,afip_auth_verify_type:0
+#: field:res.company,afip_auth_verify_type:0
+msgid "AFIP authorization verification"
+msgstr "Verificación de autorización de AFIP"
+
+#. module: l10n_ar_afipws_fe
+#: field:account.invoice,afip_auth_verify_observation:0
+msgid "AFIP authorization verification observation"
+msgstr "Observación de la verificación de la autorización de AFIP"
+
+#. module: l10n_ar_afipws_fe
+#: field:account.invoice,afip_auth_verify_result:0
+msgid "AFIP authorization verification result"
+msgstr "Resultado de la verificación de la autorización de AFIP"
+
+#. module: l10n_ar_afipws_fe
 #: help:account.invoice,afip_result:0
 msgid "AFIP request result"
 msgstr "Resultado de solicitud a AFIP"
@@ -147,6 +192,11 @@ msgid "All documents are synchronized"
 msgstr "Todos los documentos están sincronizados"
 
 #. module: l10n_ar_afipws_fe
+#: selection:account.invoice,afip_auth_verify_result:0
+msgid "Aprobado"
+msgstr "Aprobado"
+
+#. module: l10n_ar_afipws_fe
 #: code:addons/l10n_ar_afipws_fe/models/res_currency.py:39
 #, python-format
 msgid ""
@@ -166,6 +216,11 @@ msgid ""
 msgstr "Clases de Documentos Autorizados en AFIP\n%s\n. \nObservaciones: %s"
 
 #. module: l10n_ar_afipws_fe
+#: selection:res.company,afip_auth_verify_type:0
+msgid "Available"
+msgstr "Disponible"
+
+#. module: l10n_ar_afipws_fe
 #: field:account.invoice,afip_batch_number:0
 msgid "Batch Number"
 msgstr "Número de Lote"
@@ -176,14 +231,30 @@ msgid "Bono Fiscal -con detalle- RG2557 (WSMTXCA)"
 msgstr "Bono Fiscal -con detalle- RG2557 (WSMTXCA)"
 
 #. module: l10n_ar_afipws_fe
-#: field:account.invoice,afip_cae_due:0
-msgid "CAE due Date"
-msgstr "Vencimiento CAE"
+#: selection:account.invoice,afip_auth_mode:0
+msgid "CAE"
+msgstr "CAE"
 
 #. module: l10n_ar_afipws_fe
-#: field:account.invoice,afip_cae:0
-msgid "CAE number"
-msgstr "Número CAE"
+#: field:account.invoice,afip_auth_code:0 field:account.invoice,afip_cae:0
+msgid "CAE/CAI/CAEA Code"
+msgstr "Código CAE/CAI/CAEA"
+
+#. module: l10n_ar_afipws_fe
+#: field:account.invoice,afip_auth_code_due:0
+#: field:account.invoice,afip_cae_due:0
+msgid "CAE/CAI/CAEA due Date"
+msgstr "Vencimiento CAE/CAI/CAEA"
+
+#. module: l10n_ar_afipws_fe
+#: selection:account.invoice,afip_auth_mode:0
+msgid "CAEA"
+msgstr "CAEA"
+
+#. module: l10n_ar_afipws_fe
+#: selection:account.invoice,afip_auth_mode:0
+msgid "CAI"
+msgstr "CAI"
 
 #. module: l10n_ar_afipws_fe
 #: view:afip.ws.consult.wizard:l10n_ar_afipws_fe.afip_ws_consult_wizard_form
@@ -202,15 +273,34 @@ msgid "Check documents local next number against remote Numbers"
 msgstr "Chequear próximo número de documento local contra números remotos"
 
 #. module: l10n_ar_afipws_fe
+#: view:account.invoice:l10n_ar_afipws_fe.invoice_supplier_form
+#: view:account.invoice:l10n_ar_afipws_fe.view_invoice_form
 #: field:afip.wsfe_error,code:0
 msgid "Code"
 msgstr "Código"
+
+#. module: l10n_ar_afipws_fe
+#: model:ir.model,name:l10n_ar_afipws_fe.model_res_company
+msgid "Companies"
+msgstr "Compañías"
 
 #. module: l10n_ar_afipws_fe
 #: view:afip.ws.consult.wizard:l10n_ar_afipws_fe.afip_ws_consult_wizard_form
 #: view:afip.ws.currency_rate.wizard:l10n_ar_afipws_fe.afip_ws_currency_rate_wizard_form
 msgid "Confirm"
 msgstr "Confirmar"
+
+#. module: l10n_ar_afipws_fe
+#: view:account.invoice:l10n_ar_afipws_fe.invoice_supplier_form
+#: view:account.invoice:l10n_ar_afipws_fe.view_invoice_form
+msgid "Constantar"
+msgstr "Constantar"
+
+#. module: l10n_ar_afipws_fe
+#: view:account.invoice:l10n_ar_afipws_fe.invoice_supplier_form
+#: view:account.invoice:l10n_ar_afipws_fe.view_invoice_form
+msgid "Constatar en AFIP"
+msgstr "Constatar en AFIP"
 
 #. module: l10n_ar_afipws_fe
 #: field:afip.ws.consult.wizard,create_uid:0
@@ -275,11 +365,6 @@ msgid "Electronic"
 msgstr "Electronica"
 
 #. module: l10n_ar_afipws_fe
-#: view:account.invoice:l10n_ar_afipws_fe.view_invoice_form
-msgid "Electronic Invoice"
-msgstr "Factura Electrónica"
-
-#. module: l10n_ar_afipws_fe
 #: model:ir.actions.act_window,name:l10n_ar_afipws_fe.act_wsfe_error
 #: model:ir.ui.menu,name:l10n_ar_afipws_fe.menu_action_wsfe_error
 msgid "Electronic Invoice Errors"
@@ -292,7 +377,7 @@ msgid "Enabled Point Of Sales on AFIP\n"
 msgstr "Puntos de Venta habilitados en AFIP\n"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:224
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:376
 #, python-format
 msgid "Error!Invoice id: %iNext invoice number should be %i and not %i"
 msgstr "ERROR! Id Factura: %iEl próximo número de factura debería ser %i y no %i"
@@ -303,19 +388,19 @@ msgid "Exportación -con detalle- RG2758 (WSFEXv1)"
 msgstr "Exportación -con detalle- RG2758 (WSFEXv1)"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:215
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:367
 #, python-format
 msgid "For WS \"%s\" country afip code is mandatoryCountry: %s"
 msgstr "Para el WS \"%s\" el código AFIP de pais es obligatorio. Pais: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:210
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:362
 #, python-format
 msgid "For WS \"%s\" country code is mandatoryCountry: %s"
 msgstr "Para el WS \"%s\" el código de pais es obligatorio. Pais: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:205
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:357
 #, python-format
 msgid "For WS \"%s\" country is required on partner"
 msgstr "Para el WS \"%s\" el país es requerido en la empresa"
@@ -392,10 +477,30 @@ msgid "Invoice"
 msgstr "Factura"
 
 #. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:287
+#, python-format
+msgid "Invoice Date is required!"
+msgstr "La fecha de factura es requerida!"
+
+#. module: l10n_ar_afipws_fe
 #: code:addons/l10n_ar_afipws_fe/models/journal_afip_document_class.py:49
 #, python-format
 msgid "Invoice number %s\n"
 msgstr "Número de Factura %s\n"
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:262
+#, python-format
+msgid "Issuer must have a CUIT configured"
+msgstr "El emisor debe tener un CUIT configurado"
+
+#. module: l10n_ar_afipws_fe
+#: help:account.invoice,afip_auth_verify_type:0
+#: help:res.company,afip_auth_verify_type:0
+msgid ""
+"It adds an option on invoices to verify the afip authorization data (for documents with CAE, CAI or CAEA).\n"
+"If you choose required, then on supplier invoices, verification is mandatory before invoice validation"
+msgstr "Agrega una opción en factura para verificar la información de autorización de afip (para documentos con CAE, CAI o CAEA).\nSi elige \"Requerido\", entonces en facturas de proveedor, la verificación es obligatoria antes de validar una factura."
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.model,name:l10n_ar_afipws_fe.model_account_journal
@@ -492,8 +597,13 @@ msgid "No company found using argentinian localization"
 msgstr "No se encontró compañía utilizando la localización argentina"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:382
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:393
+#: selection:res.company,afip_auth_verify_type:0
+msgid "Not Available"
+msgstr "No Disponible"
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:537
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:548
 #, python-format
 msgid "Not afip code con producto UOM %s"
 msgstr "No hay código de afip en el UdM %s"
@@ -510,9 +620,25 @@ msgid "OK! Local and remote next number match!"
 msgstr "OK! Números locales y remotos coinciden!"
 
 #. module: l10n_ar_afipws_fe
+#: selection:account.invoice,afip_auth_verify_result:0
 #: selection:account.invoice,afip_result:0
 msgid "Observado"
 msgstr "Observado"
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:272
+#, python-format
+msgid ""
+"Para Comprobantes tipo A o tipo M:\n"
+"*  el documento del receptor debe ser CUIT\n"
+"*  el documento del Receptor es obligatorio\n"
+msgstr "Para Comprobantes tipo A o tipo M:\n*  el documento del receptor debe ser CUIT\n*  el documento del Receptor es obligatorio\n"
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:282
+#, python-format
+msgid "Point of sale and document number and document type are required!"
+msgstr "El punto de ventas, número de documento y tipo de documento son requeridos!"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.model,name:l10n_ar_afipws_fe.model_product_uom
@@ -520,19 +646,15 @@ msgid "Product Unit of Measure"
 msgstr "Unidad de medida del producto"
 
 #. module: l10n_ar_afipws_fe
+#: selection:account.invoice,afip_auth_verify_result:0
 #: selection:account.invoice,afip_result:0
 msgid "Rechazado"
 msgstr "Rechazado"
 
 #. module: l10n_ar_afipws_fe
-#: model:account.journal,name:l10n_ar_afipws_fe.refund_sales_journal_3
-msgid "Reembolso Ventas (0003 - Electronica)"
-msgstr "Reembolso Ventas (0003 - Electronica)"
-
-#. module: l10n_ar_afipws_fe
-#: model:account.journal,name:l10n_ar_afipws_fe.refund_sales_journal_4
-msgid "Reembolso Ventas Expo (0004 - Electronica)"
-msgstr "Reembolso Ventas Expo (0004 - Electronica)"
+#: selection:res.company,afip_auth_verify_type:0
+msgid "Required"
+msgstr "Requerido"
 
 #. module: l10n_ar_afipws_fe
 #: field:account.invoice,afip_result:0
@@ -569,14 +691,11 @@ msgid "Validation Type"
 msgstr "Tipo de Validación"
 
 #. module: l10n_ar_afipws_fe
-#: model:account.journal,name:l10n_ar_afipws_fe.sales_journal_3
-msgid "Ventas (0003 - Electronica)"
-msgstr "Ventas (0003 - Electronica)"
-
-#. module: l10n_ar_afipws_fe
-#: model:account.journal,name:l10n_ar_afipws_fe.sales_journal_4
-msgid "Ventas Expo (0004 - Electronica)"
-msgstr "Ventas Expo (0004 - Electronica)"
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:215
+#, python-format
+msgid ""
+"You can not validate invoice as AFIP authorization verification is required"
+msgstr "No puede validar la factura porque la verificación de la autorización de AFIP es requerida"
 
 #. module: l10n_ar_afipws_fe
 #: code:addons/l10n_ar_afipws_fe/models/afip_point_of_sale.py:30

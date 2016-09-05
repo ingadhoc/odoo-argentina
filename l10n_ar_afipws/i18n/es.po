@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-24 13:24+0000\n"
-"PO-Revision-Date: 2016-05-24 21:04+0000\n"
+"POT-Creation-Date: 2016-09-05 17:33+0000\n"
+"PO-Revision-Date: 2016-09-05 17:34+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -89,7 +89,7 @@ msgstr "AFIP WS"
 #. module: l10n_ar_afipws
 #: model:ir.actions.act_window,name:l10n_ar_afipws.action_upload_certificate
 msgid "AFIP WS - Upload Certificate"
-msgstr ""
+msgstr "WS AFIP - Subir Certificado"
 
 #. module: l10n_ar_afipws
 #: model:ir.model,name:l10n_ar_afipws.model_afipws_connection
@@ -241,6 +241,11 @@ msgstr "Confirmado"
 #: field:res.company,connection_ids:0
 msgid "Connections"
 msgstr "Conexiones"
+
+#. module: l10n_ar_afipws
+#: selection:afipws.connection,afip_ws:0
+msgid "Constatación de Comprobantes (WSCDC)"
+msgstr "Constatación de Comprobantes (WSCDC)"
 
 #. module: l10n_ar_afipws
 #: code:addons/l10n_ar_afipws/models/res_company.py:222

@@ -5,14 +5,14 @@
 # Translators:
 # Gonzalo Ruzafa <gr@ingadhoc.com>, 2015
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2015
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2015-2016
 # Mario Calvar <ventas.bbca@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-24 13:24+0000\n"
-"PO-Revision-Date: 2016-05-24 20:37+0000\n"
+"POT-Creation-Date: 2016-09-05 17:33+0000\n"
+"PO-Revision-Date: 2016-08-19 19:39+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -123,6 +123,16 @@ msgid "If checked new messages require your attention."
 msgstr "Si se marca nuevos mensajes requieren su atención."
 
 #. module: l10n_ar_account_vat_ledger
+#: model:ir.model,name:l10n_ar_account_vat_ledger.model_account_invoice_line
+msgid "Invoice Line"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model,name:l10n_ar_account_vat_ledger.model_account_invoice_tax
+msgid "Invoice Tax"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
 #: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
 #: field:account.vat.ledger,invoice_ids:0
 #: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:58
@@ -195,7 +205,7 @@ msgid "Other Tax Codes"
 msgstr "Otros códigos de impuestos"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account.py:22
+#: code:addons/l10n_ar_account_vat_ledger/account.py:24
 #: field:afip.document_class,other_taxes_amount:0
 #, python-format
 msgid "Other Taxes Amount"
@@ -285,8 +295,8 @@ msgstr "Resumen"
 
 #. module: l10n_ar_account_vat_ledger
 #: field:account.tax.code,amount_tax:0
-#: code:addons/l10n_ar_account_vat_ledger/account.py:78
-#: code:addons/l10n_ar_account_vat_ledger/account.py:149
+#: code:addons/l10n_ar_account_vat_ledger/account.py:82
+#: code:addons/l10n_ar_account_vat_ledger/account.py:155
 #: field:afip.responsability,amount_tax:0
 #, python-format
 msgid "Tax"
@@ -324,9 +334,9 @@ msgstr "Para marcar como \"Presentado\" primero debe cargar el archivo en el cam
 #. module: l10n_ar_account_vat_ledger
 #: field:account.tax.code,amount_total:0
 #: view:account.vat.ledger:l10n_ar_account_vat_ledger.account_vat_ledger_form
-#: code:addons/l10n_ar_account_vat_ledger/account.py:30
-#: code:addons/l10n_ar_account_vat_ledger/account.py:81
-#: code:addons/l10n_ar_account_vat_ledger/account.py:152
+#: code:addons/l10n_ar_account_vat_ledger/account.py:32
+#: code:addons/l10n_ar_account_vat_ledger/account.py:85
+#: code:addons/l10n_ar_account_vat_ledger/account.py:158
 #: field:afip.document_class,amount_total:0
 #: field:afip.responsability,amount_total:0
 #, python-format
@@ -345,9 +355,9 @@ msgstr "Mensajes no leídos"
 
 #. module: l10n_ar_account_vat_ledger
 #: field:account.tax.code,amount_untaxed:0
-#: code:addons/l10n_ar_account_vat_ledger/account.py:16
-#: code:addons/l10n_ar_account_vat_ledger/account.py:75
-#: code:addons/l10n_ar_account_vat_ledger/account.py:146
+#: code:addons/l10n_ar_account_vat_ledger/account.py:18
+#: code:addons/l10n_ar_account_vat_ledger/account.py:79
+#: code:addons/l10n_ar_account_vat_ledger/account.py:152
 #: field:afip.document_class,amount_untaxed:0
 #: field:afip.responsability,amount_untaxed:0
 #, python-format
@@ -355,7 +365,7 @@ msgid "Untaxed"
 msgstr "Sin impuestos"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account.py:27
+#: code:addons/l10n_ar_account_vat_ledger/account.py:29
 #: field:afip.document_class,vat_amount:0
 #, python-format
 msgid "VAT Amount"

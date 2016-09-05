@@ -380,7 +380,7 @@ class account_invoice(models.Model):
         recs = self.browse()
         if name:
             recs = self.search(
-                [('document_number', '=', name)] + args, limit=limit)
+                [('afip_document_number', operator, name)] + args, limit=limit)
         if not recs:
             recs = self.search([('name', operator, name)] + args, limit=limit)
         return recs.name_get()
@@ -406,8 +406,15 @@ class account_invoice(models.Model):
         # TODO mejorar estp y almacenar punto de venta y numero de factura por separado
         # de hecho con esto hacer mas facil la carga de los comprobantes de
         # compra
+
+        # modificamos para que sea compatible con obetener numero y punto
+        # de venta para facturas de proveedor en borrador
         str_number = self.afip_document_number or self.number or False
-        if str_number and self.state not in ['draft', 'proforma', 'proforma2', 'cancel']:
+        if not str_number and self.supplier_invoice_number:
+            str_number = self.supplier_invoice_number
+        # if str_number and self.state not in ['draft', 'proforma', 'proforma2', 'cancel']:
+
+        if str_number:
             if self.afip_document_class_id.afip_code in [33, 99, 331, 332]:
                 point_of_sale = '0'
                 # leave only numbers and convert to integer

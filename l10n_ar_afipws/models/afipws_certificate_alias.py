@@ -150,7 +150,7 @@ class afipws_certificate_alias(models.Model):
         return True
 
     @api.one
-    def generate_key(self, key_length=1024):
+    def generate_key(self, key_length=2048):
         """
         """
         # TODO reemplazar todo esto por las funciones nativas de pyafipws
@@ -193,7 +193,7 @@ class afipws_certificate_alias(models.Model):
             k = crypto.load_privatekey(crypto.FILETYPE_PEM, self.key)
             self.key = crypto.dump_privatekey(crypto.FILETYPE_PEM, k)
             req.set_pubkey(k)
-            req.sign(k, 'sha1')
+            req.sign(k, 'sha256')
             csr = crypto.dump_certificate_request(crypto.FILETYPE_PEM, req)
             vals = {
                 'csr': csr,

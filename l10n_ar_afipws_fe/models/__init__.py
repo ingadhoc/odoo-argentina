@@ -11,5 +11,6 @@ from . import afip_point_of_sale
 from . import journal
 from . import product_uom
 from . import res_currency
+from . import res_company
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

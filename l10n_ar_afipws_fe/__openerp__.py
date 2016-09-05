@@ -47,6 +47,7 @@ algun lugar
         'views/afip_point_of_sale_view.xml',
         'views/product_uom_view.xml',
         'views/res_currency_view.xml',
+        'views/res_company_view.xml',
         'data/afip.wsfe_error.csv',
         'security/ir.model.access.csv',
     ],

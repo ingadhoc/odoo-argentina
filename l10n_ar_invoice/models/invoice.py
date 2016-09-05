@@ -229,6 +229,9 @@ class account_invoice(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)]},
     )
+    document_type = fields.Selection(
+        related='afip_document_class_id.document_type',
+    )
 
     @api.one
     @api.depends('currency_id')

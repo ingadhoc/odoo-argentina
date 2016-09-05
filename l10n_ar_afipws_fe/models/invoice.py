@@ -21,6 +21,9 @@ except ImportError:
 class invoice(models.Model):
     _inherit = "account.invoice"
 
+    afip_auth_verify_type = fields.Selection(
+        related='company_id.afip_auth_verify_type'
+    )
     afip_batch_number = fields.Integer(
         copy=False,
         string='Batch Number',
@@ -193,10 +196,25 @@ class invoice(models.Model):
         we dont want to loose cae data because of a raise error on next steps
         but it doesn work as expected
         """
+        self.check_afip_auth_verify_required()
         self.do_pyafipws_request_cae()
         # self._cr.commit()
         res = super(invoice, self).action_number()
         return res
+
+    @api.multi
+    def check_afip_auth_verify_required(self):
+        for inv in self:
+            if (
+                    inv.type in ['in_invoice', 'out_invoice'] and
+                    inv.afip_auth_verify_type == 'required' and
+                    inv.document_type in [
+                        'invoice', 'debit_note', 'credit_note',
+                        'receipt_invoice'] and
+                    not inv.afip_auth_verify_result):
+                raise Warning(_(
+                    'You can not validate invoice as AFIP authorization '
+                    'verification is required'))
 
     @api.multi
     def verify_on_afip(self):

@@ -66,6 +66,7 @@
                     <field name="afip_document_number" invisible="1"/>
                     <field name="internal_number" invisible="1"/>
                     <field name="use_argentinian_localization" invisible="1"/>
+                    <field name="document_type" invisible="1"/>
                 </form>
 
                 <button string="Print" position="attributes">
@@ -143,6 +144,7 @@
                     <field name="afip_document_number" invisible="1"/>
                     <field name="internal_number" invisible="1"/>
                     <field name="use_argentinian_localization" invisible="1"/>
+                    <field name="document_type" invisible="1"/>
                 </form>
                 <!-- no lo hacemos obligatorio desde vista para que, por ejemplo, si queremos correr una operation no nos obligue a poner algo -->
 <!-- 

@@ -16,7 +16,8 @@ class account_invoice_refund(models.TransientModel):
 
     @api.model
     def _get_invoice_id(self):
-        return self._context.get('active_id', False)
+        return self.env['account.invoice'].browse(
+            self._context.get('active_id', False))
 
     # @api.one
     @api.multi
@@ -56,7 +57,7 @@ class account_invoice_refund(models.TransientModel):
         'account.invoice',
         'Invoice',
         default=_get_invoice_id,
-        store=True)
+    )
 
     @api.multi
     def compute_refund(self, data_refund):

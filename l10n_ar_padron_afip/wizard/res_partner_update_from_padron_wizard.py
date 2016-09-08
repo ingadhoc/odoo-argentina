@@ -111,6 +111,11 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
     update_constancia = fields.Boolean(
         default=True,
     )
+    title_case = fields.Boolean(
+        string='Title Case',
+        help='Converts retreived text fields to Title Case.',
+        default=True,
+    )
     field_to_update_ids = fields.Many2many(
         'ir.model.fields',
         'res_partner_update_fields',
@@ -137,6 +142,8 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
                 old_value = getattr(partner, key)
                 if new_value == '':
                     new_value = False
+                if self.title_case and key in ('name', 'city', 'street'):
+                    new_value = new_value and new_value.title()
                 if key in ('impuestos_padron', 'actividades_padron'):
                     old_value = old_value.ids
                 elif key == 'state_id':

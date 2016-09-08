@@ -45,5 +45,5 @@
     'installable': True,
     'name': 'Padron AFIP Argentino',
     'test': [],
-    'version': '8.0.0.2.0',
+    'version': '8.0.0.3.0',
 }

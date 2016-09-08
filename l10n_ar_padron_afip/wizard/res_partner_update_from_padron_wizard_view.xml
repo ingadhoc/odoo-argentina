@@ -62,6 +62,7 @@
                         <group attrs="{'invisible': [('state', 'not in', ('option',))]}">
                             <field name="field_to_update_ids" widget="many2many_tags" options="{'no_create': True}" />
                             <field name="update_constancia"/>
+                            <field name="title_case"/>
                         </group>
                         <group attrs="{'invisible': [('state', 'in', ('option', 'finished'))]}" col="1">
                             <field name="partner_id" attrs="{'required': [('state', '=', 'selection')]}"/>

@@ -412,7 +412,10 @@ class account_invoice(models.Model):
 
         # modificamos para que sea compatible con obetener numero y punto
         # de venta para facturas de proveedor en borrador
-        str_number = self.afip_document_number or self.number or False
+        str_number = self.afip_document_number or False
+        # self.number es el numero nativo de odoo y nos puede dar error
+        # no deberia ser necesario
+        # str_number = self.afip_document_number or self.number or False
         if not str_number and self.supplier_invoice_number:
             str_number = self.supplier_invoice_number
         # if str_number and self.state not in ['draft', 'proforma', 'proforma2', 'cancel']:

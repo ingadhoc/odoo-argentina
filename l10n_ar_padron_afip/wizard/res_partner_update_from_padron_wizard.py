@@ -71,6 +71,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
             'empleador_padron',
             'integrante_soc_padron',
             'last_update_padron',
+            'responsability_id',
             # 'constancia',
         ]
         return [
@@ -146,7 +147,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
                     new_value = new_value and new_value.title()
                 if key in ('impuestos_padron', 'actividades_padron'):
                     old_value = old_value.ids
-                elif key == 'state_id':
+                elif key in ('state_id', 'responsability_id'):
                     old_value = old_value.id
                 if key in fields_names and old_value != new_value:
                     line_vals = {

@@ -7,11 +7,11 @@
             <field name="inherit_id" ref="account_cancel.invoice_form_cancel_inherit" />
             <field name="arch" type="xml">
                  <button name="invoice_cancel" position="attributes">
-                    <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['draft', 'proforma2', 'open']), ('afip_cae', '!=', False)]}</attribute>
+                    <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['draft', 'proforma2', 'open']), ('afip_auth_code', '!=', False)]}</attribute>
                     <attribute name="states"></attribute>
                 </button>
                  <button name="invoice_cancel" position="after">
-                    <button name="invoice_cancel" string="Cancel Invoicel" attrs="{'invisible': ['|', ('state', 'not in', ['draft', 'proforma2', 'open']), ('afip_cae', '=', False)]}" groups="base.group_no_one" confirm="Esta factura tiene número de CAE asignado lo cual significa que fue validad contra AFIP. No recomendamos que la cancele ya que podría generar inconsistencia de datos. Desea continuar?"/>
+                    <button name="invoice_cancel" string="Cancel Invoicel" attrs="{'invisible': ['|', ('state', 'not in', ['draft', 'proforma2', 'open']), ('afip_auth_code', '=', False)]}" groups="base.group_no_one" confirm="Esta factura tiene número de CAE asignado lo cual significa que fue validad contra AFIP. No recomendamos que la cancele ya que podría generar inconsistencia de datos. Desea continuar?"/>
                 </button>
             </field>
         </record>

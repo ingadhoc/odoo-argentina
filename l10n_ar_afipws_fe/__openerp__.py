@@ -27,6 +27,7 @@
         'views/product_uom_view.xml',
         'views/res_currency_view.xml',
         'res_config_view.xml',
+        'views/res_company_view.xml',
         'data/afip.wsfe_error.csv',
         'security/ir.model.access.csv',
     ],
@@ -41,7 +42,7 @@
     'images': [
     ],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
     'application': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

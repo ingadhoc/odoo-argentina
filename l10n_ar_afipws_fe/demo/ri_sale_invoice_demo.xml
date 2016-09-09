@@ -8,19 +8,19 @@
             <field name="journal_id" ref="sales_journal_4"/>
             <field name="currency_id" ref="base.USD"/>
             <field name="user_id" ref="base.user_demo"/>
-            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="company_id" ref="l10n_ar_account.company_ri"/>
             <field name="type">out_invoice</field>
-            <field name="account_id" ref="l10n_ar_invoice.ri_deudores_por_ventas"/>
+            <field name="account_id" ref="l10n_ar_account.ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-01'"/>
             <field name="partner_id" ref="base.res_partner_21"/>
-            <field name="fiscal_position" ref="l10n_ar_invoice.fiscal_position_exportaciones_al_exterior"/>
+            <field name="fiscal_position" ref="l10n_ar_account.fiscal_position_exportaciones_al_exterior"/>
         </record>
          <record id="demo_ri_sale_invoice_0_line_rpanrearpanelshe0" model="account.invoice.line">
             <field name="invoice_id" ref="demo_ri_sale_invoice_0"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="75.0" />
-            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_invoice.ri_tax_code_iva_venta_exento'))]"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_account.ri_tax_code_iva_venta_exento'))]"/>
+            <field name="account_id" ref="l10n_ar_account.ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Toner Cartridge</field>
@@ -29,8 +29,8 @@
             <field name="invoice_id" ref="demo_ri_sale_invoice_0"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="30.0"/>
-            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_invoice.ri_tax_code_iva_venta_exento'))]"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_account.ri_tax_code_iva_venta_exento'))]"/>
+            <field name="account_id" ref="l10n_ar_account.ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_43"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Zed+ Antivirus</field>
@@ -43,19 +43,19 @@
             <field name="journal_id" ref="sales_journal_4"/>
             <field name="currency_id" ref="base.ARS"/>
             <field name="user_id" ref="base.user_demo"/>
-            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="company_id" ref="l10n_ar_account.company_ri"/>
             <field name="type">out_invoice</field>
-            <field name="account_id" ref="l10n_ar_invoice.ri_deudores_por_ventas"/>
+            <field name="account_id" ref="l10n_ar_account.ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-01'"/>
             <field name="partner_id" ref="base.res_partner_21"/>
-            <field name="fiscal_position" ref="l10n_ar_invoice.fiscal_position_zona_franca"/>
+            <field name="fiscal_position" ref="l10n_ar_account.fiscal_position_zona_franca"/>
         </record>
          <record id="demo_ri_sale_invoice_5_line_rpanrearpanelshe0" model="account.invoice.line">
             <field name="invoice_id" ref="demo_ri_sale_invoice_5"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="70.0" />
-            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_invoice.ri_tax_code_iva_venta_exento'))]"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_account.ri_tax_code_iva_venta_exento'))]"/>
+            <field name="account_id" ref="l10n_ar_account.ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Toner Cartridge</field>
@@ -64,8 +64,8 @@
             <field name="invoice_id" ref="demo_ri_sale_invoice_5"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="28.0"/>
-            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_invoice.ri_tax_code_iva_venta_exento'))]"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_account.ri_tax_code_iva_venta_exento'))]"/>
+            <field name="account_id" ref="l10n_ar_account.ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_43"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Zed+ Antivirus</field>
@@ -79,19 +79,19 @@
             <field name="journal_id" ref="sales_journal_3"/>
             <field name="currency_id" ref="base.ARS"/>
             <field name="user_id" ref="base.user_demo"/>
-            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="company_id" ref="l10n_ar_account.company_ri"/>
             <field name="type">out_invoice</field>
-            <field name="account_id" ref="l10n_ar_invoice.ri_deudores_por_ventas"/>
+            <field name="account_id" ref="l10n_ar_account.ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-02'"/>
             <field name="partner_id" ref="base.res_partner_12"/>
-            <field name="fiscal_position" ref="l10n_ar_invoice.fiscal_position_no_gravado"/>
+            <field name="fiscal_position" ref="l10n_ar_account.fiscal_position_no_gravado"/>
         </record>
          <record id="demo_ri_sale_invoice_1_line_rpanrearpanelshe0" model="account.invoice.line">
             <field name="invoice_id" ref="demo_ri_sale_invoice_1"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="10.0" />
-            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_invoice.ri_tax_vat_21_ventas'))]"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_account.ri_tax_vat_21_ventas'))]"/>
+            <field name="account_id" ref="l10n_ar_account.ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Toner Cartridge</field>
@@ -100,8 +100,8 @@
             <field name="invoice_id" ref="demo_ri_sale_invoice_1"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="4.0"/>
-            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_invoice.ri_tax_vat_no_gravado_ventas'))]"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_account.ri_tax_vat_no_gravado_ventas'))]"/>
+            <field name="account_id" ref="l10n_ar_account.ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_43"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Zed+ Antivirus</field>
@@ -113,19 +113,19 @@
         <record id="demo_ri_sale_invoice_2" model="account.invoice">
             <field name="journal_id" ref="sales_journal_3"/>
             <field name="user_id" ref="base.user_demo"/>
-            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="company_id" ref="l10n_ar_account.company_ri"/>
             <field name="type">out_invoice</field> 
-            <field name="account_id" ref="l10n_ar_invoice.ri_deudores_por_ventas"/>
+            <field name="account_id" ref="l10n_ar_account.ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-07'"/>
-            <field name="partner_id" ref="l10n_ar_invoice.partner_mono"/>
+            <field name="partner_id" ref="l10n_ar_account.partner_mono"/>
             <field name="currency_id" ref="base.ARS"/>
         </record>
          <record id="demo_ri_sale_invoice_2_line_rpanrearpanelshe0" model="account.invoice.line">
             <field name="invoice_id" ref="demo_ri_sale_invoice_2"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="20.0" />
-            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_invoice.ri_tax_vat_21_ventas'))]"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_account.ri_tax_vat_21_ventas'))]"/>
+            <field name="account_id" ref="l10n_ar_account.ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Toner Cartridge</field>
@@ -138,9 +138,9 @@
             <!-- <field name="payment_term" ref="account.account_payment_term"/> -->
             <field name="journal_id" ref="sales_journal_3"/>
             <field name="user_id" ref="base.user_demo"/>
-            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="company_id" ref="l10n_ar_account.company_ri"/>
             <field name="type">out_invoice</field> 
-            <field name="account_id" ref="l10n_ar_invoice.ri_deudores_por_ventas"/>
+            <field name="account_id" ref="l10n_ar_account.ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-12'"/>
             <field name="partner_id" ref="base.res_partner_13"/>
             <field name="currency_id" ref="base.ARS"/>
@@ -149,8 +149,8 @@
             <field name="invoice_id" ref="demo_ri_sale_invoice_3"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="20.0" />
-            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_invoice.ri_tax_vat_27_ventas'))]"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_account.ri_tax_vat_27_ventas'))]"/>
+            <field name="account_id" ref="l10n_ar_account.ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Toner Cartridge</field>
@@ -160,8 +160,8 @@
             <!-- <field name="base_amount" eval="20" /> -->
             <!-- <field name="base_code_id" ref=""/> -->
             <field name="name">Percepcion IVA</field>
-            <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_percepcion_iva_aplicada"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_percepcion_iva_aplicada"/>
+            <field name="tax_code_id" ref="l10n_ar_account.ri_tax_code_percepcion_iva_aplicada"/>
+            <field name="account_id" ref="l10n_ar_account.ri_percepcion_iva_aplicada"/>
             <field name="amount" eval="5"/>
             <field name="tax_amount" eval="5"/>
         </record>
@@ -172,9 +172,9 @@
         <record id="demo_ri_sale_invoice_4" model="account.invoice">
             <field name="journal_id" ref="sales_journal_3"/>
             <field name="user_id" ref="base.user_demo"/>
-            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="company_id" ref="l10n_ar_account.company_ri"/>
             <field name="type">out_invoice</field> 
-            <field name="account_id" ref="l10n_ar_invoice.ri_deudores_por_ventas"/>
+            <field name="account_id" ref="l10n_ar_account.ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-15'"/>
             <field name="partner_id" ref="base.res_partner_12"/>
             <field name="currency_id" ref="base.ARS"/>
@@ -183,16 +183,16 @@
             <field name="invoice_id" ref="demo_ri_sale_invoice_4"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="35.0" />
-            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_invoice.ri_tax_vat_10_ventas'))]"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_account.ri_tax_vat_10_ventas'))]"/>
+            <field name="account_id" ref="l10n_ar_account.ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="2.0" />
             <field name="name">Toner Cartridge</field>
         </record>
         <record id="demo_ri_sale_invoice_4_tax_line" model="account.invoice.tax">
             <field name="invoice_id" ref="demo_ri_sale_invoice_4"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_percepcion_ganancias_aplicada"/>
-            <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_ganancias_per_aplicada"/>
+            <field name="account_id" ref="l10n_ar_account.ri_percepcion_ganancias_aplicada"/>
+            <field name="tax_code_id" ref="l10n_ar_account.ri_tax_code_ganancias_per_aplicada"/>
             <!-- <field name="base_amount" eval="20" /> -->
             <!-- <field name="base_code_id" ref=""/> -->
             <field name="name">Percepcion Ganacias</field>
@@ -209,9 +209,9 @@
             <field name="journal_id" ref="refund_sales_journal_3"/>
             <field name="currency_id" ref="base.ARS"/>
             <field name="user_id" ref="base.user_demo"/>
-            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="company_id" ref="l10n_ar_account.company_ri"/>
             <field name="type">out_refund</field>
-            <field name="account_id" ref="l10n_ar_invoice.ri_deudores_por_ventas"/>
+            <field name="account_id" ref="l10n_ar_account.ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-05'"/>
             <field name="partner_id" ref="base.res_partner_2"/>
         </record>
@@ -219,8 +219,8 @@
             <field name="invoice_id" ref="demo_ri_refund_0"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="15.0" />
-            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_invoice.ri_tax_vat_21_ventas'))]"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_account.ri_tax_vat_21_ventas'))]"/>
+            <field name="account_id" ref="l10n_ar_account.ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_39"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Toner Cartridge</field>
@@ -229,8 +229,8 @@
             <field name="invoice_id" ref="demo_ri_refund_0"/>
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="price_unit" eval="4.8"/>
-            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_invoice.ri_tax_vat_21_ventas'))]"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_venta_de_mercaderia"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('l10n_ar_account.ri_tax_vat_21_ventas'))]"/>
+            <field name="account_id" ref="l10n_ar_account.ri_venta_de_mercaderia"/>
             <field name="product_id" ref="product.product_product_43"/>
             <field name="quantity" eval="1.0" />
             <field name="name">Zed+ Antivirus</field>

@@ -66,7 +66,8 @@ class AfipwsConnection(models.Model):
             raise Warning('AFIP WS %s Not implemented yet' % afip_ws)
         elif afip_ws == 'wscdc':
             if environment_type == 'production':
-                afip_ws_url = 'https://servicios1.afip.gov.ar/WSCDC/service.asmx'
+                afip_ws_url = (
+                    'https://servicios1.afip.gov.ar/WSCDC/service.asmx')
             else:
                 afip_ws_url = 'https://wswhomo.afip.gov.ar/WSCDC/service.asmx'
         return afip_ws_url

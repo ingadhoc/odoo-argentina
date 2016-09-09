@@ -38,7 +38,7 @@ class ResPartner(models.Model):
         if not cuit:
             raise UserError(_('No CUIT cofigured for partner %s') % (
                 self.name))
-        self.cuit = cuit
+        self.cuit = cuit.name
 
     @api.multi
     @api.depends(

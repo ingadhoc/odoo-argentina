@@ -12,7 +12,7 @@
             <field name="type">out_invoice</field>
             <field name="account_id" ref="l10n_ar_account.ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-01'"/>
-            <field name="partner_id" ref="base.res_partner_21"/>
+            <field name="partner_id" ref="l10n_ar_partner.res_partner_adhoc"/>
             <field name="fiscal_position" ref="l10n_ar_account.fiscal_position_exportaciones_al_exterior"/>
         </record>
          <record id="demo_ri_sale_invoice_0_line_rpanrearpanelshe0" model="account.invoice.line">
@@ -83,7 +83,7 @@
             <field name="type">out_invoice</field>
             <field name="account_id" ref="l10n_ar_account.ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-02'"/>
-            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="partner_id" ref="l10n_ar_partner.res_partner_adhoc"/>
             <field name="fiscal_position" ref="l10n_ar_account.fiscal_position_no_gravado"/>
         </record>
          <record id="demo_ri_sale_invoice_1_line_rpanrearpanelshe0" model="account.invoice.line">
@@ -176,7 +176,7 @@
             <field name="type">out_invoice</field> 
             <field name="account_id" ref="l10n_ar_account.ri_deudores_por_ventas"/>
             <field name="date_invoice" eval="time.strftime('%Y-%m')+'-15'"/>
-            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="partner_id" ref="l10n_ar_partner.res_partner_adhoc"/>
             <field name="currency_id" ref="base.ARS"/>
         </record>
          <record id="demo_ri_sale_invoice_4_line_rpanrearpanelshe0" model="account.invoice.line">

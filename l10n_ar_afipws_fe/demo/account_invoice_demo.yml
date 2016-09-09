@@ -38,7 +38,7 @@
   !record {model: account.invoice, id: demo_invoice_2}:
     company_id: base.main_company
     journal_id: sales_journal_2
-    partner_id: base.res_partner_12
+    partner_id: l10n_ar_partner.res_partner_adhoc
     user_id: base.user_demo
     reference_type: none
     payment_term_id: account.account_payment_term

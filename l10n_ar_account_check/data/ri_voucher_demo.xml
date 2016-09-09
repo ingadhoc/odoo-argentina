@@ -90,7 +90,7 @@
             <field name="advance_amount" eval="100.0"/>
             <field name="account_id" ref="l10n_ar_account.ri_valores"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-1'"/>
-            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="partner_id" ref="l10n_ar_partner.res_partner_adhoc"/>
             <field name="receiptbook_id" ref="l10n_ar_account_voucher.customer_receiptbook_1_ri"/>
         </record>
         <record id="demo_ri_rec_voucher_2_issue_check_1" model="account.check">

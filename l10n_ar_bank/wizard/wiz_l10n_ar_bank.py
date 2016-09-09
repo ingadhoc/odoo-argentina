@@ -31,7 +31,6 @@ class l10n_ar_banks_wizard(osv.osv_memory):
                                           [('name', '=', 'Argentina')])[0]
 
         for bank in ar_banks_iterator():
-            print bank
             vals = {
                 'name': bank['name'],
                 'street': u'%s %s' % (bank.get('street', ''),

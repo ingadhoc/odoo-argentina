@@ -493,7 +493,8 @@ print "Observaciones:", wscdc.Obs
                     # we dont send no gravado y exento
                     if vat.tax_id.tax_group_id.afip_code in [1, 2]:
                         continue
-                    _logger.info('Adding VAT %s' % vat.tax_code_id.name)
+                    _logger.info(
+                        'Adding VAT %s' % vat.tax_id.tax_group_id.name)
                     ws.AgregarIva(
                         vat.tax_id.tax_group_id.afip_code,
                         "%.2f" % abs(vat.base_amount),

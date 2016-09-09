@@ -15,7 +15,7 @@
             <field name="advance_amount" eval="100.0"/>
             <field name="account_id" ref="l10n_ar_account.ri_banco_1"/>
             <field name="date" eval="time.strftime('%Y-%m')+'-20'"/>
-            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="partner_id" ref="l10n_ar_partner.res_partner_adhoc"/>
         </record>
         <record id="demo_ri_pay_voucher_0_withh_1" model="account.voucher.withholding">
             <field name="tax_withholding_id" ref="ri_with_ret_iva_aplicada"/>

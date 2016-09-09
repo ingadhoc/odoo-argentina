@@ -159,9 +159,10 @@ class AccountInvoice(models.Model):
         # TODO mejorar estp y almacenar punto de venta y numero de factura por
         # separado, de hecho con esto hacer mas facil la carga de los
         # comprobantes de compra
-        str_number = self.document_number or self.number or False
-        if str_number and self.state not in [
-                'draft', 'proforma', 'proforma2', 'cancel']:
+
+        # decidimos obtener esto solamente para comprobantes con doc number
+        str_number = self.document_number or False
+        if str_number:
             if self.document_type_id.code in [33, 99, 331, 332]:
                 point_of_sale = '0'
                 # leave only numbers and convert to integer

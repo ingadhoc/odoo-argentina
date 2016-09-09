@@ -23,7 +23,7 @@ class ProductUom(models.Model):
         # if not company, then we search one that uses argentinian localization
         if not company:
             company = self.env['res.company'].search(
-                [('use_argentinian_localization', '=', True)],
+                [('localization', '=', 'argentina')],
                 limit=1)
         if not company:
             raise UserError(_(

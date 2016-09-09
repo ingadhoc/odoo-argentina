@@ -24,7 +24,7 @@
             <field name="parent_id" ref="account.account_financial_report_assets0"/>
             <field name="display_detail">detail_with_hierarchy</field>
             <field name="type">account_type</field>
-            <field name="account_type_ids" eval="[(6, 0, [ref('account.data_account_type_asset'), ref('l10n_ar_invoice.data_account_type_receivable_no_current')])]"/>
+            <field name="account_type_ids" eval="[(6, 0, [ref('account.data_account_type_asset'), ref('l10n_ar_account.data_account_type_receivable_no_current')])]"/>
         </record>
 
         <record id="account.account_financial_report_liabilitysum0" model="account.financial.report">
@@ -43,7 +43,7 @@
             <field name="parent_id" ref="account.account_financial_report_liabilitysum0"/>
             <field name="display_detail">detail_with_hierarchy</field>
             <field name="type">account_type</field>
-            <field name="account_type_ids" eval="[(6, 0, [ref('account.data_account_type_liability'), ref('l10n_ar_invoice.data_account_type_payable_no_current')])]"/>
+            <field name="account_type_ids" eval="[(6, 0, [ref('account.data_account_type_liability'), ref('l10n_ar_account.data_account_type_payable_no_current')])]"/>
         </record>
 
         <record id="account_financial_report_equity" model="account.financial.report">

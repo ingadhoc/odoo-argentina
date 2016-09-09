@@ -203,7 +203,7 @@ class AccountInvoice(models.Model):
             if (
                     inv.type in ['in_invoice', 'in_refund'] and
                     inv.afip_auth_verify_type == 'required' and
-                    inv.document_type in [
+                    inv.internal_type in [
                         'invoice', 'debit_note', 'credit_note',
                         'receipt_invoice'] and
                     not inv.afip_auth_verify_result):

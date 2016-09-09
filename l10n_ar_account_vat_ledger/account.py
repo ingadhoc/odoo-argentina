@@ -60,7 +60,7 @@ class afip_document_class(models.Model):
         vat_amount = sum(invoices.mapped('cc_vat_amount'))
         other_taxes_amount = sum(invoices.mapped('cc_other_taxes_amount'))
         amount_total = sum(invoices.mapped('cc_amount_total'))
-        if self.document_type == 'credit_note':
+        if self.internal_type == 'credit_note':
             amount_untaxed = -amount_untaxed
             vat_amount = -vat_amount
             other_taxes_amount = -other_taxes_amount

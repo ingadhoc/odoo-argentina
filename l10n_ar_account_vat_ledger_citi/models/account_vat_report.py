@@ -227,7 +227,7 @@ class account_vat_ledger(models.Model):
             cant_alicuotas = len(inv.vat_tax_ids.filtered(
                 lambda r: r.tax_code_id.afip_code in [3, 4, 5, 6, 8, 9]))
             if not cant_alicuotas and inv.vat_tax_ids.filtered(
-                    lambda r: r.tax_code_id.afip_code in [1, 2]):
+                    lambda r: r.tax_code_id.afip_code in [0, 1, 2]):
                 cant_alicuotas = 1
 
             row = [
@@ -457,7 +457,7 @@ class account_vat_ledger(models.Model):
 
             # if only exempt or no gravado, we add one line with 0, 0, 0
             if not vat_taxes and inv.vat_tax_ids.filtered(
-                    lambda r: r.tax_code_id.afip_code in [1, 2]):
+                    lambda r: r.tax_code_id.afip_code in [0, 1, 2]):
                 res.append(''.join(self.get_tax_row(inv, 0.0, 3, 0.0)))
             for tax in vat_taxes:
                 res.append(''.join(self.get_tax_row(

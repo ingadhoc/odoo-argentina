@@ -397,7 +397,7 @@ print "Observaciones:", wscdc.Obs
             imp_total = str("%.2f" % abs(inv.amount_total))
             # ImpTotConc es el iva no gravado
             imp_tot_conc = str("%.2f" % abs(inv.vat_untaxed_base_amount))
-            imp_neto = str("%.2f" % abs(inv.vat_base_amount))
+            imp_neto = str("%.2f" % abs(inv.vat_taxable_amount))
             imp_iva = str("%.2f" % abs(inv.vat_amount))
             imp_subtotal = str("%.2f" % abs(inv.amount_untaxed))
             imp_trib = str("%.2f" % abs(inv.other_taxes_amount))
@@ -487,12 +487,7 @@ print "Observaciones:", wscdc.Obs
             # TODO ver si en realidad tenemos que usar un vat pero no lo
             # subimos
             if afip_ws != 'wsfex':
-                for vat in inv.vat_tax_ids:
-                    _logger.info(
-                        'Adding VAT %s' % vat.tax_id.tax_group_id.name)
-                    # we dont send no gravado y exento
-                    if vat.tax_id.tax_group_id.afip_code in [1, 2]:
-                        continue
+                for vat in inv.vat_taxable_ids:
                     _logger.info(
                         'Adding VAT %s' % vat.tax_id.tax_group_id.name)
                     ws.AgregarIva(
@@ -500,10 +495,10 @@ print "Observaciones:", wscdc.Obs
                         "%.2f" % abs(vat.base_amount),
                         "%.2f" % abs(vat.amount),
                     )
+
                 for tax in inv.not_vat_tax_ids:
                     _logger.info(
                         'Adding TAX %s' % tax.tax_id.tax_group_id.name)
-
                     ws.AgregarTributo(
                         tax.tax_id.tax_group_id.afip_code,
                         tax.tax_id.tax_group_id.name,
@@ -549,6 +544,8 @@ print "Observaciones:", wscdc.Obs
                         u_mtx = (
                             line.product_id.uom_id.afip_code or
                             line.uos_id.afip_code)
+                        raise Warning(_('WS wsmtxca Not implemented yet'))
+                        # TODO en las lineas no tenemos vat_tax_ids todavia
                         if self.invoice_id.type in (
                                 'out_invoice', 'in_invoice'):
                             iva_id = line.vat_tax_ids.tax_code_id.afip_code

@@ -7,6 +7,14 @@
             <field name="sequence">10</field>
         </record> -->
 
+        <record model="account.tax.group" id="ri_tax_group_iva_no_corresponde">
+            <field name="name">IVA No Corresponde</field>
+            <field name="afip_code">0</field>
+            <field name="tax">vat</field>
+            <field name="type">tax</field>
+            <field name="application">national_taxes</field>
+        </record>
+
         <record model="account.tax.group" id="ri_tax_group_iva_no_gravado">
             <field name="name">IVA No Gravado</field>
             <field name="afip_code">1</field>

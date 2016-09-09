@@ -14,7 +14,7 @@ class ResPartner(models.Model):
     # TODO podriamos agregar tambien que el cuit se guarde en el vat con lo de
     # AR... si es necesario y entonces llamamos a vat en vez de cuit
     # field used only some argentinian methods that requires a CUIT and not
-    # any other 
+    # any other
     cuit = fields.Char(
         compute='_compute_cuit',
     )
@@ -34,7 +34,7 @@ class ResPartner(models.Model):
         cuit = self.id_numbers.search([
             ('partner_id', '=', self.id),
             ('category_id.afip_code', '=', '80'),
-            ], limit=1)
+        ], limit=1)
         if not cuit:
             raise UserError(_('No CUIT cofigured for partner %s') % (
                 self.name))
@@ -52,7 +52,7 @@ class ResPartner(models.Model):
                 lambda x: x.category_id == partner.main_id_category_id)
             if id_numbers:
                 partner.main_id_number = id_numbers[0].name
-            
+
     @api.multi
     def _set_main_id_number(self):
         for partner in self:

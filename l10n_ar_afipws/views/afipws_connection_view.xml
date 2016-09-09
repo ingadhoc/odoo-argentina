@@ -29,7 +29,7 @@
             <field name="name">afipws.auth.tree</field>
             <field name="model">afipws.connection</field>
             <field name="arch" type="xml">
-                <tree string="AFIP Connector">
+                <tree string="AFIP Connector" create="false" edit="false">
                     <field name="afip_ws"/>
                     <field name="type"/>
                     <field name="batch_sequence_id"/>

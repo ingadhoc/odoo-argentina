@@ -29,7 +29,6 @@ class ResCompany(models.Model):
         'afipws.connection',
         'company_id',
         'Connections',
-        readonly=True,
     )
 
     @api.model

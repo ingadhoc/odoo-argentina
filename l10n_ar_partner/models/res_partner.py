@@ -35,7 +35,7 @@ class ResPartner(models.Model):
             ('partner_id', '=', self.id),
             ('category_id.afip_code', '=', '80'),
         ], limit=1)
-        if not cuit:
+        if not cuit or not cuit.name:
             raise UserError(_('No CUIT cofigured for partner %s') % (
                 self.name))
         self.cuit = cuit.name
@@ -58,12 +58,15 @@ class ResPartner(models.Model):
         for partner in self:
             name = partner.main_id_number
             category_id = partner.main_id_category_id
-            if name and category_id:
+            if category_id:
                 partner_id_numbers = partner.id_numbers.filtered(
                     lambda d: d.category_id == category_id)
-                if partner_id_numbers:
+                if partner_id_numbers and name:
                     partner_id_numbers[0].name = name
-                else:
+                elif partner_id_numbers and not name:
+                    partner_id_numbers[0].unlink()
+                # we only create new record if name has a value
+                elif name:
                     partner_id_numbers.create({
                         'partner_id': partner.id,
                         'category_id': category_id.id,

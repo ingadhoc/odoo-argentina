@@ -62,6 +62,7 @@ env:
   - TRANSIFEX="1"
   # we include account so that is not pre-installed because it raise an error
   # running test with account already installed (i also happends with odoo default modules)
+  # we should find another way instead of include
   - TESTS="1" ODOO_REPO="odoo/odoo" INCLUDE="account"
 # either use the two lines above or the two below. Don't change the default if
 # it's not necessary (it is only necessary if modules in your repository can't

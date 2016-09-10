@@ -1,22 +1,18 @@
 -
-  TODO Estaria bueno mejorar esto y que el name y el code los tome de la funcion get_name_and_code
--
   !record {model: account.journal, id: sales_journal_2}:
     type: 'sale'
     use_documents: True
     afip_ws: 'wsfe'
-    point_of_sale_number: 2
+    # simply way to generate random number greater greater thant 10 (no same point of sale as other, and different from others so it can be used for demo)
+    point_of_sale_number: !eval int(time.strftime('%S')) + 10
     point_of_sale_type: 'electronic'
     company_id: base.main_company
-    name: 'Ventas Electronica 0002'
-    code: 'V0002'
 -
   !record {model: account.journal, id: sales_journal_3}:
     type: 'sale'
     use_documents: True
     afip_ws: 'wsfex'
-    point_of_sale_number: 3
+    # we dont want same number as before
+    point_of_sale_number: !eval int(time.strftime('%S')) + 12
     point_of_sale_type: 'electronic'
     company_id: base.main_company
-    name: 'Ventas Electronica 0003'
-    code: 'V0003'

@@ -544,7 +544,10 @@ print "Observaciones:", wscdc.Obs
                         u_mtx = (
                             line.product_id.uom_id.afip_code or
                             line.uos_id.afip_code)
-                        raise Warning(_('WS wsmtxca Not implemented yet'))
+                        # dummy true to avoid pylint error
+                        if True:
+                            raise Warning(
+                                _('WS wsmtxca Not implemented yet'))
                         # TODO en las lineas no tenemos vat_tax_ids todavia
                         if self.invoice_id.type in (
                                 'out_invoice', 'in_invoice'):

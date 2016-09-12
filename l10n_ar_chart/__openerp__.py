@@ -18,10 +18,13 @@
         'data/menuitem.xml',
     ],
     'demo': [
-        'demo/l10n_ar_demo.xml',
+        # decidimos no levantar los datos demo de odoo
+        # 'demo/l10n_ar_demo.xml',
         'demo/l10n_ar_demo.yml',
         '../account/demo/account_bank_statement.yml',
-        '../account/demo/account_invoice_demo.yml',
+        '../l10n_ar_account/demo/account_customer_invoice_demo.yml',
+        # '../account/demo/account_invoice_demo.yml',
+        # '../l10n_ar_account/demo/account_invoice_demo.yml',
     ],
     'installable': True,
     'images': [

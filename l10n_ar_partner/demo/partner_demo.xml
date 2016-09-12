@@ -2,6 +2,7 @@
 <openerp>
     <data>
 <!-- New Partners -->
+    <!-- ADHOC -->
     <record id="res_partner_adhoc" model="res.partner">
         <field name="name">ADHOC SA</field>
         <field eval="[(6, 0, [ref('base.res_partner_category_8'), ref('base.res_partner_category_11')])]" name="category_id"/>
@@ -10,6 +11,7 @@
         <field name="is_company">1</field>
         <field name="city">Rosario</field>
         <field name="zip">2000</field>
+        <field name="state_id" ref="l10n_ar_states.S"/>
         <field name="country_id" ref="base.ar"/>
         <field name="street">Ovidio Lagos 41 bis</field>
         <field name="email">info@adhoc.com.ar</field>
@@ -25,6 +27,95 @@
         <field name="type">contact</field>
         <field name="parent_id" ref="res_partner_adhoc"/>
         <field name="image" type="base64" file="l10n_ar_partner/demo/adhoc_jjs.jpeg"/>
+    </record>
+
+    <!-- Gritti Agrimensura -->
+    <record id="res_partner_gritti_agrimensura" model="res.partner">
+        <field name="name">Gritti Agrimensura</field>
+        <field eval="[(6, 0, [ref('base.res_partner_category_8'), ref('base.res_partner_category_11')])]" name="category_id"/>
+        <field eval="1" name="supplier"/>
+        <field eval="1" name="customer"/>
+        <field name="is_company">1</field>
+        <field name="city">Rosario</field>
+        <field name="zip">2000</field>
+        <field name="state_id" ref="l10n_ar_states.S"/>
+        <field name="country_id" ref="base.ar"/>
+        <field name="street">Calle Falsa 123</field>
+        <field name="email">info@example.com.ar</field>
+        <field name="phone">(+54) (341) 111 2222</field>
+        <field name="website">http://www.grittiagrimensura.com</field>
+        <field name='main_id_category_id' ref="dt_CUIT"/>
+        <field name='main_id_number'>27320732811</field>
+        <field name="image" type="base64" file="l10n_ar_partner/demo/gritti_logo.png"/>
+    </record>
+
+    <!-- Consejo Municipal Rosario -->
+    <record id="res_partner_cmr" model="res.partner">
+        <field name="name">Concejo Municipal de Rosario</field>
+        <field eval="1" name="customer"/>
+        <field name="is_company">1</field>
+        <field name="city">Rosario</field>
+        <field name="zip">2000</field>
+        <field name="state_id" ref="l10n_ar_states.S"/>
+        <field name="country_id" ref="base.ar"/>
+        <field name="street">Cordoba 501</field>
+        <field name="email">info@example.com.ar</field>
+        <field name="phone">(+54) (341) 222 3333</field>
+        <field name="website">http://www.concejorosario.gov.ar/</field>
+        <field name='main_id_category_id' ref="dt_CUIT"/>
+        <field name='main_id_number'>30684679372</field>
+        <field name="image" type="base64" file="l10n_ar_partner/demo/cmr_logo.jpg"/>
+    </record>
+
+    <!-- Odoo -->
+    <record id="res_partner_odoo" model="res.partner">
+        <field name="name">Odoo Inc</field>
+        <field eval="1" name="supplier"/>
+        <field name="is_company">1</field>
+        <field name="city">San Francisco</field>
+        <field name="zip">CA 94107</field>
+        <field name="country_id" ref="base.us"/>
+        <field name="street">51 Federal Street, Suite 401</field>
+        <field name="email">info@odoo.com</field>
+        <field name="phone">(+00) (11) 222 3333</field>
+        <field name="website">https://www.odoo.com/</field>
+        <field name='main_id_category_id' ref="dt_CIe"/>
+        <field name='main_id_number'>111222333444</field>
+        <field name="image" type="base64" file="l10n_ar_partner/demo/odoo_logo.jpg"/>
+    </record>
+
+    <!-- Odoo -->
+    <record id="res_partner_expresso" model="res.partner">
+        <field name="name">Expresso</field>
+        <field eval="1" name="customer"/>
+        <field name="is_company">1</field>
+        <field name="city">Barcelona</field>
+        <field name="zip">11002</field>
+        <field name="country_id" ref="base.es"/>
+        <field name="street">La gran avenida 123</field>
+        <field name="email">info@expresso.com</field>
+        <field name="phone">(+00) (11) 222 3333</field>
+        <field name="website">http://www.expresso.com/</field>
+        <field name='main_id_category_id' ref="dt_CIe"/>
+        <field name='main_id_number'>2222333344445555</field>
+        <field name="image" type="base64" file="l10n_ar_partner/demo/expresso_logo.png"/>
+    </record>
+
+    <!-- Paseo del Fuego -->
+    <record id="res_partner_cerrocastor" model="res.partner">
+        <field name="name">Cerro Castor</field>
+        <field eval="1" name="customer"/>
+        <field name="is_company">1</field>
+        <field name="city">Ushuaia</field>
+        <field name="state_id" ref="l10n_ar_states.V"/>
+        <field name="country_id" ref="base.ar"/>
+        <field name="street">Ruta 3 km 26</field>
+        <field name="email">info@cerrocastor.com</field>
+        <field name="phone">(+00) (11) 4444 5556</field>
+        <field name="website">http://www.cerrocastor.com/</field>
+        <field name='main_id_category_id' ref="dt_CUIT"/>
+        <field name='main_id_number'>27333333339</field>
+        <field name="image" type="base64" file="l10n_ar_partner/demo/cerrocastor_logo.png"/>
     </record>
 
 <!-- Default Partners -->
@@ -60,9 +151,10 @@
     </record>
 
         <!--   - cliente exterior -->
-        <record id="base.res_partner_3" model="res.partner">
+<!--     <record id="base.res_partner_3" model="res.partner">
         <field name='main_id_category_id' ref="dt_CUIT"/>
         <field name='main_id_number'>27333333339</field>
-    </record>
+    </record> -->
+
     </data>
 </openerp>

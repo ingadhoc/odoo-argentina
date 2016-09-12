@@ -2,9 +2,12 @@
 {
     'author': "Moldeo Interactive,ADHOC SA",
     'category': 'Localization/Argentina',
-    'demo_xml': [],
-    'depends': ['partner_identification'],
-    'init_xml': [],
+    'depends': [
+        'partner_identification',
+        # this is for demo data, for fiscal position data on account
+        # and also beacuse it is essential for argentinian use
+        'l10n_ar_states',
+    ],
     'installable': True,
     'license': 'AGPL-3',
     'name': 'Títulos de Personería y Tipos de documentos Arentinos',

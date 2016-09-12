@@ -1,22 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+    <!-- Exportaciones a la zona franca -->
         <record model='account.fiscal.position.template' id='fiscal_position_template_zona_franca'>
             <field name='afip_code'>Z</field>
             <field name='name'>Exportaciones a la zona franca</field>
+            <field name="auto_apply" eval="True"/>
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="state_ids" eval="[(6, False, [ref('l10n_ar_states.V')])]"/>
+            <field name="country_id" ref="base.ar"/>
+        </record>
+        <record id="fiscal_position_template_zona_franca_tax_0" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_zona_franca"/>
+            <field name="tax_src_id" ref="ri_tax_vat_0_ventas"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_exento_ventas"/>
+        </record>
+        <record id="fiscal_position_template_zona_franca_tax_10" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_zona_franca"/>
+            <field name="tax_src_id" ref="ri_tax_vat_10_ventas"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_exento_ventas"/>
+        </record>
+        <record id="fiscal_position_template_zona_franca_tax_21" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_zona_franca"/>
+            <field name="tax_src_id" ref="ri_tax_vat_21_ventas"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_exento_ventas"/>
+        </record>
+        <record id="fiscal_position_template_zona_franca_tax_27" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_zona_franca"/>
+            <field name="tax_src_id" ref="ri_tax_vat_27_ventas"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_exento_ventas"/>
         </record>
 
+    <!-- Exportaciones a la zona franca -->
         <record model='account.fiscal.position.template' id='fiscal_position_template_exportaciones_al_exterior'>
             <field name='afip_code'>X</field>
             <field name='name'>Exportaciones al exterior</field>
+            <field name="auto_apply" eval="True"/>
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <!-- Proveedor y cliente del exterior -->
+            <field name="afip_responsability_type_ids" eval="[(6, False, [ref('l10n_ar_account.res_CLI_EXT'), ref('l10n_ar_account.res_EXT')])]"/>
+        </record>
+        <record id="fiscal_position_template_exportaciones_al_exterior_tax_0" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_exportaciones_al_exterior"/>
+            <field name="tax_src_id" ref="ri_tax_vat_0_ventas"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_exento_ventas"/>
+        </record>
+        <record id="fiscal_position_template_exportaciones_al_exterior_tax_10" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_exportaciones_al_exterior"/>
+            <field name="tax_src_id" ref="ri_tax_vat_10_ventas"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_exento_ventas"/>
+        </record>
+        <record id="fiscal_position_template_exportaciones_al_exterior_tax_21" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_exportaciones_al_exterior"/>
+            <field name="tax_src_id" ref="ri_tax_vat_21_ventas"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_exento_ventas"/>
+        </record>
+        <record id="fiscal_position_template_exportaciones_al_exterior_tax_27" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_exportaciones_al_exterior"/>
+            <field name="tax_src_id" ref="ri_tax_vat_27_ventas"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_exento_ventas"/>
         </record>
 
+    <!-- Operaciones exentas -->
         <record model='account.fiscal.position.template' id='fiscal_position_template_operaciones_exentas'>
             <field name='afip_code'>E</field>
             <field name='name'>Operaciones exentas</field>
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+        </record>
+        <record id="fiscal_position_template_operaciones_exentas_tax_0" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_operaciones_exentas"/>
+            <field name="tax_src_id" ref="ri_tax_vat_0_ventas"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_exento_ventas"/>
+        </record>
+        <record id="fiscal_position_template_operaciones_exentas_tax_10" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_operaciones_exentas"/>
+            <field name="tax_src_id" ref="ri_tax_vat_10_ventas"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_exento_ventas"/>
+        </record>
+        <record id="fiscal_position_template_operaciones_exentas_tax_21" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_operaciones_exentas"/>
+            <field name="tax_src_id" ref="ri_tax_vat_21_ventas"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_exento_ventas"/>
+        </record>
+        <record id="fiscal_position_template_operaciones_exentas_tax_27" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_operaciones_exentas"/>
+            <field name="tax_src_id" ref="ri_tax_vat_27_ventas"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_exento_ventas"/>
         </record>
 
         <record model='account.fiscal.position.template' id='fiscal_position_template_no_gravado'>

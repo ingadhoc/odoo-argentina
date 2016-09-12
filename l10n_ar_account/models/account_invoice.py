@@ -403,3 +403,14 @@ class AccountInvoice(models.Model):
         if context.get('constraint_update_taxes'):
             return True
         self.with_context(constraint_update_taxes=True).compute_taxes()
+
+    # we add fiscal position with fp method instead of directly from partner
+    # TODO. this should go in a PR to ODOO
+    @api.onchange('partner_id', 'company_id')
+    def _onchange_partner_id(self):
+        res = super(AccountInvoice, self)._onchange_partner_id()
+        fiscal_position = self.env[
+            'account.fiscal.position'].get_fiscal_position(self.partner_id.id)
+        if fiscal_position:
+            self.fiscal_position_id = fiscal_position
+        return res

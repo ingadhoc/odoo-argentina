@@ -44,6 +44,7 @@ class AccountFiscalPositionTemplate(models.Model):
         help='For eg. This code will be used on electronic invoice and citi '
         'reports'
     )
+    # TODO borrar si no lo usamos, por ahora lo resolivmos de manera nativa
     afip_responsability_type_ids = fields.Many2many(
         'afip.responsability.type',
         'afip_reponsbility_account_fiscal_pos_rel',
@@ -78,6 +79,7 @@ class AccountFiscalPosition(models.Model):
         help='For eg. This code will be used on electronic invoice and citi '
         'reports'
     )
+    # TODO tal vez podriamos usar funcionalidad nativa con "vat subjected"
     afip_responsability_type_ids = fields.Many2many(
         'afip.responsability.type',
         'afip_reponsbility_account_fiscal_pos_rel',
@@ -88,26 +90,26 @@ class AccountFiscalPosition(models.Model):
     )
 
     @api.model
-    def _get_fpos_by_afip_responsability(
-            self, partner_responsability, country_id=False, state_id=False,
-            zipcode=False,):
+    def _get_fpos_by_region_and_responsability(
+            self, country_id=False, state_id=False,
+            zipcode=False, afip_responsability_id=False):
         """
         We use similar code than _get_fpos_by_region but we use
         "partner_responsability_id" insted of vat_required
         """
-        if not partner_responsability:
-            return False
 
         base_domain = [
-            ('afip_responsability_type_ids', '=', partner_responsability.id),
-            ('auto_apply', '=', True)]
+            ('auto_apply', '=', True),
+            ('afip_responsability_type_ids', '=', afip_responsability_id)
+        ]
 
         if self.env.context.get('force_company'):
             base_domain.append(
                 ('company_id', '=', self.env.context.get('force_company')))
 
         null_state_dom = state_domain = [('state_ids', '=', False)]
-        null_zip_dom = zip_domain = [('zip_from', '=', 0), ('zip_to', '=', 0)]
+        null_zip_dom = zip_domain = [
+            ('zip_from', '=', 0), ('zip_to', '=', 0)]
         null_country_dom = [
             ('country_id', '=', False), ('country_group_id', '=', False)]
 
@@ -126,7 +128,8 @@ class AccountFiscalPosition(models.Model):
             ('country_group_id.country_ids', '=', country_id)]
 
         # Build domain to search records with exact matching criteria
-        fpos = self.search(domain_country + state_domain + zip_domain, limit=1)
+        fpos = self.search(
+            domain_country + state_domain + zip_domain, limit=1)
 
         # return records that fit the most the criteria, and fallback on less
         # specific fiscal positions if any can be found
@@ -153,7 +156,11 @@ class AccountFiscalPosition(models.Model):
 
     @api.model
     def get_fiscal_position(self, partner_id, delivery_id=None):
-        # we need to overwrite some code (between #####) from original function
+        """
+        We overwrite original functionality and replace vat_required logic
+        for afip_responsability_type_ids
+        """
+        # we need to overwrite code (between #####) from original function
         #####
         if not partner_id:
             return False
@@ -176,13 +183,16 @@ class AccountFiscalPosition(models.Model):
                 partner.property_account_position_id.id)
         #####
 
-        partner_responsability = (
+        afip_responsability = (
             partner.commercial_partner_id.afip_responsability_type_id)
 
-        fpos = self._get_fpos_by_afip_responsability(
-            partner_responsability, delivery.country_id.id,
-            delivery.state_id.id, delivery.zip)
-        if not fpos:
-            fpos = super(AccountFiscalPosition, self).get_fiscal_position(
-                partner_id, delivery_id=delivery_id)
-        return fpos
+        # First search only matching responsability positions
+        fpos = self._get_fpos_by_region_and_responsability(
+            delivery.country_id.id, delivery.state_id.id, delivery.zip,
+            afip_responsability.id)
+        if not fpos and afip_responsability:
+            fpos = self._get_fpos_by_region_and_responsability(
+                delivery.country_id.id, delivery.state_id.id, delivery.zip,
+                False)
+
+        return fpos.id if fpos else False

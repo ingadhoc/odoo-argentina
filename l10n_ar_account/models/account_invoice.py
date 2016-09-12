@@ -383,7 +383,7 @@ class AccountInvoice(models.Model):
         afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
         for invoice in argentinian_invoices:
             special_vat_taxes = invoice.tax_line_ids.filtered(
-                lambda r: r.tax_id.tax_group_id.afip_code in [0, 1, 2, 3])
+                lambda r: r.tax_id.tax_group_id.afip_code in [1, 2, 3])
             if (
                     special_vat_taxes and
                     invoice.fiscal_position_id.afip_code

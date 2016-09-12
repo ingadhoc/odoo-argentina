@@ -38,7 +38,8 @@
             <field name="auto_apply" eval="True"/>
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
             <!-- Proveedor y cliente del exterior -->
-            <field name="afip_responsability_type_ids" eval="[(6, False, [ref('l10n_ar_account.res_CLI_EXT'), ref('l10n_ar_account.res_EXT')])]"/>
+            <!-- no agregamos proveedores porque elije mal en factura de compra -->
+            <field name="afip_responsability_type_ids" eval="[(6, False, [ref('l10n_ar_account.res_CLI_EXT')])]"/>
         </record>
         <record id="fiscal_position_template_exportaciones_al_exterior_tax_0" model="account.fiscal.position.tax.template">
             <field name="position_id" ref="fiscal_position_template_exportaciones_al_exterior"/>
@@ -98,6 +99,46 @@
             <field name='afip_code'>C</field>
             <field name='name'>Operaciones de Canje</field>
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+        </record>
+
+    <!-- IVA no corresponde -->
+        <record model='account.fiscal.position.template' id='fiscal_position_template_iva_no_corresponde'>
+            <field name='afip_code'></field>
+            <field name='name'>IVA Compras no corresponde</field>
+            <field name="auto_apply" eval="True"/>
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <!-- en compras reemplazamos por iva no corresponde para importaciones, monotributsistas, exentos -->
+            <field name="afip_responsability_type_ids" eval="[(6, False, [ref('l10n_ar_account.res_RM'), ref('l10n_ar_account.res_IVAE'), ref('l10n_ar_account.res_CLI_EXT'), ref('l10n_ar_account.res_EXT')])]"/>
+        </record>
+        <record id="fiscal_position_template_iva_no_corresponde_tax_0" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_iva_no_corresponde"/>
+            <field name="tax_src_id" ref="ri_tax_vat_0_compras"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_no_corresponde_compras"/>
+        </record>
+        <record id="fiscal_position_template_iva_no_corresponde_tax_10" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_iva_no_corresponde"/>
+            <field name="tax_src_id" ref="ri_tax_vat_10_compras"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_no_corresponde_compras"/>
+        </record>
+        <record id="fiscal_position_template_iva_no_corresponde_tax_21" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_iva_no_corresponde"/>
+            <field name="tax_src_id" ref="ri_tax_vat_21_compras"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_no_corresponde_compras"/>
+        </record>
+        <record id="fiscal_position_template_iva_no_corresponde_tax_27" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_iva_no_corresponde"/>
+            <field name="tax_src_id" ref="ri_tax_vat_27_compras"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_no_corresponde_compras"/>
+        </record>
+        <record id="fiscal_position_template_iva_no_corresponde_exento" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_iva_no_corresponde"/>
+            <field name="tax_src_id" ref="ri_tax_vat_exento_compras"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_no_corresponde_compras"/>
+        </record>
+        <record id="fiscal_position_template_iva_no_corresponde_no_gravado" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fiscal_position_template_iva_no_corresponde"/>
+            <field name="tax_src_id" ref="ri_tax_vat_no_gravado_compras"/>
+            <field name="tax_dest_id" ref="ri_tax_vat_no_corresponde_compras"/>
         </record>
     </data>
 </openerp>

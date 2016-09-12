@@ -529,7 +529,7 @@ print "Observaciones:", wscdc.Obs
                         raise UserError(_(
                             'Not afip code con producto UOM %s' % (
                                 line.uom_id.name)))
-                    cod_mtx = line.uos_id.afip_code
+                    cod_mtx = line.uom_id.afip_code
                     ds = line.name
                     qty = line.quantity
                     umed = line.uom_id.afip_code
@@ -543,7 +543,7 @@ print "Observaciones:", wscdc.Obs
                                     line.product_id.uom_id.name)))
                         u_mtx = (
                             line.product_id.uom_id.afip_code or
-                            line.uos_id.afip_code)
+                            line.uom_id.afip_code)
                         # dummy true to avoid pylint error
                         if True:
                             raise Warning(

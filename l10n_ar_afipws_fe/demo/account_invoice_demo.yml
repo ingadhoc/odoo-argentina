@@ -25,11 +25,13 @@
         product_id: product.product_product_53
         price_unit: 3500.0
         quantity: 2.0
--
-   We call onchange because taxes sometimes miss the 'tax_id' reference
--
-  !python {model: account.invoice} : |
-      self.browse(cr, uid, ref('demo_invoice_1'))._onchange_invoice_line_ids()
+# con un hack que hicimos en invoice de l10 account ya no es necesario
+# no las validamos porque no siempre sincroniza bien con afip los numeros
+# -
+#    We call onchange because taxes sometimes miss the 'tax_id' reference
+# -
+#   !python {model: account.invoice} : |
+#       self.browse(cr, uid, ref('demo_invoice_1'))._onchange_invoice_line_ids()
 # -
 #   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_1}
 -
@@ -61,10 +63,19 @@
         price_unit: 300.0
         quantity: 2.0
 -
-   We call onchange because taxes sometimes miss the 'tax_id' reference
+  We add fiscal position
 -
-  !python {model: account.invoice} : |
-      self.browse(cr, uid, ref('demo_invoice_2'))._onchange_invoice_line_ids()
+  !python {model: ir.model.data} : |
+      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
+      if position_id:
+          self._update(cr, uid, 'account.invoice', 'l10n_ar_afipws_fe', {'fiscal_position_id': position_id[0]}, 'demo_invoice_2')
+# -
+#    We call onchange because taxes sometimes miss the 'tax_id' reference
+# -
+#   !python {model: account.invoice} : |
+#       self.browse(cr, uid, ref('demo_invoice_2'))._onchange_invoice_line_ids()
+# -
+#   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_2}
 -
    Export Electronic invoice with exempt vat tax
 -
@@ -82,6 +93,13 @@
         product_id: product.product_product_39
         price_unit: 70.0
         quantity: 4.0
+-
+  We add fiscal position
+-
+  !python {model: ir.model.data} : |
+      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'Operaciones exentas')])
+      if position_id:
+          self._update(cr, uid, 'account.invoice', 'l10n_ar_afipws_fe', {'fiscal_position_id': position_id[0]}, 'demo_invoice_3')
 -
    We call onchange because taxes sometimes miss the 'tax_id' reference
 -

@@ -4,6 +4,7 @@
 # directory
 ##############################################################################
 from openerp import fields, models, api
+from openerp.exceptions import UserError
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -18,7 +19,7 @@ class AfipwsConnection(models.Model):
             ('wsfe', 'Mercado interno -sin detalle- RG2485 (WSFEv1)'),
             ('wsmtxca', 'Mercado interno -con detalle- RG2904 (WSMTXCA)'),
             ('wsfex', 'Exportación -con detalle- RG2758 (WSFEXv1)'),
-            ('wsbfe', 'Bono Fiscal -con detalle- RG2557 (WSMTXCA)'),
+            ('wsbfe', 'Bono Fiscal -con detalle- RG2557 (WSBFE)'),
             ('wscdc', 'Constatación de Comprobantes (WSCDC)'),
         ])
 
@@ -62,8 +63,24 @@ class AfipwsConnection(models.Model):
             else:
                 afip_ws_url = (
                     'https://wswhomo.afip.gov.ar/wsfexv1/service.asmx')
-        elif afip_ws in ('wsmtxca', 'wsbfe'):
-            raise Warning('AFIP WS %s Not implemented yet' % afip_ws)
+        elif afip_ws == 'wsbfe':
+            raise UserError('AFIP WS %s Not implemented yet' % afip_ws)
+            # if environment_type == 'production':
+            #     afip_ws_url = (
+            #         'https://servicios1.afip.gov.ar/wsbfe/service.asmx')
+            # else:
+            #     afip_ws_url = (
+            #         'https://wswhomo.afip.gov.ar/wsbfe/service.asmx')
+        elif afip_ws == 'wsmtxca':
+            raise UserError('AFIP WS %s Not implemented yet' % afip_ws)
+            # if environment_type == 'production':
+            #     afip_ws_url = (
+            #         'https://serviciosjava.afip.gob.ar/wsmtxca/services/'
+            #         'MTXCAService')
+            # else:
+            #     afip_ws_url = (
+            #         'https://fwshomo.afip.gov.ar/wsmtxca/services/'
+            #         'MTXCAService')
         elif afip_ws == 'wscdc':
             if environment_type == 'production':
                 afip_ws_url = (

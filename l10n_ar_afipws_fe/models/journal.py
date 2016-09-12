@@ -22,7 +22,7 @@ class AccountJournal(models.Model):
             ('wsfe', 'Mercado interno -sin detalle- RG2485 (WSFEv1)'),
             ('wsmtxca', 'Mercado interno -con detalle- RG2904 (WSMTXCA)'),
             ('wsfex', 'Exportación -con detalle- RG2758 (WSFEXv1)'),
-            ('wsbfe', 'Bono Fiscal -con detalle- RG2557 (WSMTXCA)'),
+            ('wsbfe', 'Bono Fiscal -con detalle- RG2557 (WSBFE)'),
         ]
 
     afip_ws = fields.Selection(

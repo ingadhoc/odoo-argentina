@@ -353,7 +353,11 @@ class account_vat_ledger(models.Model):
                             'tax_amount')), invoice=inv),
 
                     # Campo 22: vencimiento comprobante (no figura en instructivo pero si en aplicativo)
-                    fields.Date.from_string(inv.date_due).strftime('%Y%m%d'),
+                    # para tique no se informa
+                    (inv.afip_document_class_id.afip_code in [81, 82, 83] and
+                        '00000000' or
+                        fields.Date.from_string(inv.date_due).strftime(
+                            '%Y%m%d')),
                     ]
             else:
                 # Campo 21: Crédito Fiscal Computable

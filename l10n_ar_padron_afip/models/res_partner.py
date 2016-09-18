@@ -100,9 +100,6 @@ class ResPartner(models.Model):
 
     @api.multi
     def get_data_from_padron_afip(self):
-
-        # TODO agregar funcionalidad de descargar constancia, ver readme del
-        # modulo
         self.ensure_one()
         cuit = self.document_number
         if not cuit or self.document_type_id.afip_code != 80:
@@ -160,4 +157,19 @@ class ResPartner(models.Model):
                 ('country_id.code', '=', 'AR')], limit=1)
             if state:
                 vals['state_id'] = state.id
+
+        if imp_iva == 'NI' and padron.monotributo == 'S':
+            vals['responsability_id'] = self.env.ref(
+                'l10n_ar_invoice.res_RM').id
+        elif imp_iva == 'AC':
+            vals['responsability_id'] = self.env.ref(
+                'l10n_ar_invoice.res_IVARI').id
+        elif imp_iva == 'EX':
+            vals['responsability_id'] = self.env.ref(
+                'l10n_ar_invoice.res_IVAE').id
+        else:
+            _logger.info(
+                "We couldn't infer the responsability_id from padron, you"
+                "must set it manually.")
+
         return vals

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="True">
+    <data noupdate="False">
 
 <!--         <record model="account.tax.code.template" id="ri_tax_code_ganancia_categ">
             <field name="name">IMPUESTO A LAS GANANCIAS</field>
@@ -59,7 +59,7 @@
             <field name="concepto_referencia">Intereses originados en operaciones no comprendidas en el punto 1.</field>
             <field name="porcentaje_inscripto">6</field>
             <field name="porcentaje_no_inscripto">28</field>
-            <field name="montos_no_sujetos_a_retencion">1200</field>
+            <field name="montos_no_sujetos_a_retencion">3500</field>
         </record>
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_3">
@@ -68,7 +68,7 @@
             <field name="concepto_referencia">Alquileres o arrendamientos de bienes muebles.</field>
             <field name="porcentaje_inscripto">6</field>
             <field name="porcentaje_no_inscripto">28</field>
-            <field name="montos_no_sujetos_a_retencion">1200</field>
+            <field name="montos_no_sujetos_a_retencion">5000</field>
         </record>
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_4">
@@ -95,7 +95,7 @@
             <field name="concepto_referencia">Regalías</field>
             <field name="porcentaje_inscripto">6</field>
             <field name="porcentaje_no_inscripto">28</field>
-            <field name="montos_no_sujetos_a_retencion">1200</field>
+            <field name="montos_no_sujetos_a_retencion">3500</field>
         </record>
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_7">
@@ -122,7 +122,7 @@
             <field name="concepto_referencia">Enajenación de bienes muebles y bienes de cambio.</field>
             <field name="porcentaje_inscripto">2</field>
             <field name="porcentaje_no_inscripto">10</field>
-            <field name="montos_no_sujetos_a_retencion">12000</field>
+            <field name="montos_no_sujetos_a_retencion">100000</field>
         </record>
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_10">
@@ -140,7 +140,7 @@
             <field name="concepto_referencia">Explotación de derechos de autor (Ley N° 11.723).</field>
             <field name="porcentaje_inscripto">-1</field>
             <field name="porcentaje_no_inscripto">28</field>
-            <field name="montos_no_sujetos_a_retencion">1200</field>
+            <field name="montos_no_sujetos_a_retencion">10000</field>
         </record>
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_12">
@@ -149,7 +149,7 @@
             <field name="concepto_referencia">Locaciones de obra y/o servicios no ejecutados en relación de dependencia no mencionados expresamente en otros incisos.</field>
             <field name="porcentaje_inscripto">2</field>
             <field name="porcentaje_no_inscripto">28</field>
-            <field name="montos_no_sujetos_a_retencion">5000</field>
+            <field name="montos_no_sujetos_a_retencion">30000</field>
         </record>
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_13">
@@ -158,7 +158,7 @@
             <field name="concepto_referencia">Comisiones u otras retribuciones derivadas de la actividad de comisionista, rematador, consignatario y demás auxiliares de comercio a que se refiere el inciso c) del artículo 49 de la Ley de Impuesto a las Ganancias, texto ordenado en 1997 y sus modificaciones.</field>
             <field name="porcentaje_inscripto">-1</field>
             <field name="porcentaje_no_inscripto">28</field>
-            <field name="montos_no_sujetos_a_retencion">1200</field>
+            <field name="montos_no_sujetos_a_retencion">7500</field>
         </record>
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_14">
@@ -167,7 +167,7 @@
             <field name="concepto_referencia">Honorarios de director de sociedades anónimas,  síndico fiduciario,  consejero de sociedades cooperativas integrante de consejos de vigilancia y socios administradores de las sociedades de responsabilidad limitada, en comandita simple y en comandita por acciones.</field>
             <field name="porcentaje_inscripto">-1</field>
             <field name="porcentaje_no_inscripto">28</field>
-            <field name="montos_no_sujetos_a_retencion">5000</field>
+            <field name="montos_no_sujetos_a_retencion">30000</field>
         </record>
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_15">
@@ -176,7 +176,7 @@
             <field name="concepto_referencia">Profesionales liberales, oficios, albacea, mandatario, gestor de negocio.</field>
             <field name="porcentaje_inscripto">-1</field>
             <field name="porcentaje_no_inscripto">28</field>
-            <field name="montos_no_sujetos_a_retencion">1200</field>
+            <field name="montos_no_sujetos_a_retencion">7500</field>
         </record>
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_16">
@@ -194,7 +194,7 @@
             <field name="concepto_referencia">Operaciones de transporte de carga nacional e internacional.</field>
             <field name="porcentaje_inscripto">0.25</field>
             <field name="porcentaje_no_inscripto">28</field>
-            <field name="montos_no_sujetos_a_retencion">6500</field>
+            <field name="montos_no_sujetos_a_retencion">30000</field>
         </record>
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_18">
@@ -203,7 +203,7 @@
             <field name="concepto_referencia">Operaciones realizadas por intermedio de mercados de cereales a término que se resuelvan en el curso del término (arbitrajes) y de mercados de futuros y opciones.</field>
             <field name="porcentaje_inscripto">0.5</field>
             <field name="porcentaje_no_inscripto">2</field>
-            <field name="montos_no_sujetos_a_retencion">1200</field>
+            <field name="montos_no_sujetos_a_retencion">0</field>
         </record>
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_19">
@@ -230,7 +230,7 @@
             <field name="concepto_referencia">Beneficios provenientes del cumplimiento de los requisitos de los planes de seguro de retiro privados administrados por entidades sujetas al control de la Superintendencia de Seguros de la Nación, establecidos por el inciso d) del artículo 45 y el inciso d) del artículo 79 de la Ley del Impuesto a las Ganancias, texto ordenado en 1997 y sus modificaciones -excepto cuando se encuentren alcanzados por el régimen de retención establecido por la Resolución General Nº 1261, sus modificatorias y complementarias-.</field>
             <field name="porcentaje_inscripto">3</field>
             <field name="porcentaje_no_inscripto">3</field>
-            <field name="montos_no_sujetos_a_retencion">1200</field>
+            <field name="montos_no_sujetos_a_retencion">7500</field>
         </record>
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_22">
@@ -248,7 +248,7 @@
             <field name="concepto_referencia">Subsidios abonados por los estados Nacional, provinciales, municipales o el Gobierno de la Ciudad Autónoma de Buenos Aires, en concepto de enajenación de bienes muebles y bienes de cambio, en la medida que una ley general o especial no establezca la exención de los mismos en el impuesto a las ganancias.</field>
             <field name="porcentaje_inscripto">2</field>
             <field name="porcentaje_no_inscripto">10</field>
-            <field name="montos_no_sujetos_a_retencion">12000</field>
+            <field name="montos_no_sujetos_a_retencion">34000</field>
         </record>
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_24">

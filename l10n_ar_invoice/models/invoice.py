@@ -625,6 +625,15 @@ class account_invoice(models.Model):
         if not argentinian_invoices:
             return True
 
+        # check partner has responsability so it will be assigned on invoice
+        # validate
+        without_responsability = argentinian_invoices.filtered(
+            lambda x: not x.commercial_partner_id.responsability_id)
+        if without_responsability:
+            raise Warning(_(
+                'The following invoices has a partner without AFIP '
+                'responsability: %s' % without_responsability.ids))
+
         # check invoice tax has code
         without_tax_code = self.env['account.invoice.tax'].search([
             ('invoice_id', 'in', argentinian_invoices.ids),

@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Argentinian CITI Reports",
-    'version': '8.0.1.1.2',
+    'version': '8.0.1.2.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author':  'ADHOC SA',
@@ -41,6 +41,8 @@ Argentinian CITI Reportsto comply with RG3685
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/account_vat_report_view.xml',
+        'views/afip_document_class_view.xml',
+        'data/afip.document_class.csv',
     ],
     'demo': [
     ],

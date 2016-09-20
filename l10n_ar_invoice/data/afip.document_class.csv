@@ -79,3 +79,5 @@ dc_nca,104,NOTA DE CREDITO DE ASIGNACION,,,,
 dc_recibo_x,,RECIBOS X,dl_x,RECIBO,,RE-X 
 dc_remito_x,,REMITOS X,dl_x,REMITO,,RM-X 
 dc_orden_pago_x,,ORDEN DE PAGO X,dl_x,ORDEN DE PAGO,,OP-X 
+fa_exterior,,FACTURAS Y COMPROBANTES DEL EXTERIOR,dl_i,,invoice,FA-I
+nc_exterior,,NOTAS DE CREDITO Y REEMBOLSOS DEL EXTERIOR,dl_i,,credit_note,NC-I

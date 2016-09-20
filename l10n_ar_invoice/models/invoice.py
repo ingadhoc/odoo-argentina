@@ -400,7 +400,7 @@ class account_invoice(models.Model):
         self.vat_discriminated = vat_discriminated
 
     @api.one
-    @api.depends('afip_document_number', 'number')
+    # @api.depends('afip_document_number', 'number')
     def _get_invoice_number(self):
         """ Funcion que calcula numero de punto de venta y numero de factura
         a partir del document number. Es utilizado principalmente por el modulo
@@ -420,8 +420,9 @@ class account_invoice(models.Model):
             str_number = self.supplier_invoice_number
         # if str_number and self.state not in ['draft', 'proforma', 'proforma2', 'cancel']:
 
+        afip_code = self.afip_document_class_id.afip_code
         if str_number:
-            if self.afip_document_class_id.afip_code in [33, 99, 331, 332]:
+            if not afip_code or afip_code in [33, 99, 331, 332]:
                 point_of_sale = '0'
                 # leave only numbers and convert to integer
                 invoice_number = str_number

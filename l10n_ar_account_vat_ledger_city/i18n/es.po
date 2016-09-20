@@ -74,20 +74,20 @@ msgstr "Global"
 #: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:53
 #, python-format
 msgid "Import Aliquots File"
-msgstr "Archivo de Alícuotas"
+msgstr "Archivo de Alícuotas de Despacho"
 
 #. module: l10n_ar_account_vat_ledger_city
 #: field:account.vat.ledger,import_aliquots_filename:0
 #: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:58
 #, python-format
 msgid "Import Aliquots Filename"
-msgstr "Nombre archivo Alícuotas"
+msgstr "Nombre archivo Alícuotas de Despacho"
 
 #. module: l10n_ar_account_vat_ledger_city
 #: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:107
 #, python-format
 msgid "Import_Alicuots_%s_%s.txt"
-msgstr "Alicuotas_%s_%s.txt"
+msgstr "Alicuotas_Despachos_%s_%s.txt"
 
 #. module: l10n_ar_account_vat_ledger_city
 #: code:addons/l10n_ar_account_vat_ledger_city/models/account_vat_report.py:218

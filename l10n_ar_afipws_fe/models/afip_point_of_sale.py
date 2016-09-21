@@ -24,6 +24,7 @@ class afip_point_of_sale(models.Model):
         'AFIP WS',
         )
 
+    @api.one
     @api.constrains('type', 'afip_ws')
     def check_afip_ws_and_type(self):
         if self.type != 'electronic' and self.afip_ws:

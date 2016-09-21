@@ -22,7 +22,8 @@ class invoice(models.Model):
     _inherit = "account.invoice"
 
     afip_auth_verify_type = fields.Selection(
-        related='company_id.afip_auth_verify_type'
+        related='company_id.afip_auth_verify_type',
+        readonly=True,
     )
     afip_batch_number = fields.Integer(
         copy=False,

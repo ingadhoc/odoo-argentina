@@ -19,6 +19,7 @@ class account_invoice(models.Model):
     state_id = fields.Many2one(
         related='commercial_partner_id.state_id',
         store=True,
+        readonly=True,
     )
     currency_rate = fields.Float(
         string='Currency Rate',
@@ -176,6 +177,7 @@ class account_invoice(models.Model):
     formated_vat = fields.Char(
         string='Responsability',
         related='commercial_partner_id.formated_vat',
+        readonly=True,
     )
     document_number = fields.Char(
         compute='_get_document_number',
@@ -231,6 +233,7 @@ class account_invoice(models.Model):
     )
     document_type = fields.Selection(
         related='afip_document_class_id.document_type',
+        readonly=True,
     )
 
     @api.one

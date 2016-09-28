@@ -80,6 +80,14 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
         ]
 
     @api.model
+    def _get_default_title_case(self):
+        parameter = self.env[
+            'ir.config_parameter'].get_param('use_title_case_on_padron_afip')
+        if parameter == 'False' or parameter == '0':
+            return False
+        return True
+
+    @api.model
     def get_fields(self):
         return self.env['ir.model.fields'].search(self._get_domain())
 
@@ -115,7 +123,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
     title_case = fields.Boolean(
         string='Title Case',
         help='Converts retreived text fields to Title Case.',
-        default=True,
+        default=_get_default_title_case,
     )
     field_to_update_ids = fields.Many2many(
         'ir.model.fields',

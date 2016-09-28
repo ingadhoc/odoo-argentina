@@ -4,12 +4,28 @@
 # directory
 ##############################################################################
 from openerp.osv import fields, osv
+from openerp import api
 import re
 _re_ar_vat = re.compile('ar(\d\d)(\d*)(\d)', re.IGNORECASE)
 
 
 class res_partner(osv.osv):
     _inherit = 'res.partner'
+
+    @api.model
+    def _commercial_fields(self):
+        """
+        Nosotros no usamos el campo vat practicamente y si se copia a los
+        contactos, luego, con vat unique, si sacamos un contacto tenemos error
+        y es poco claro. Preferimos que no se copie a los contactos lo relativo
+        a vat
+        """
+        res = super(res_partner, self)._commercial_fields()
+        if 'vat' in res:
+            res.remove('vat')
+        if 'vat_subjected' in res:
+            res.remove('vat_subjected')
+        return res
 
     def _get_formated_vat(self, cr, uid, ids, name, args, context=None):
         """

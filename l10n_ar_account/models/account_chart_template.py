@@ -27,41 +27,41 @@ class AccountTaxTemplate(models.Model):
 class AccountChartTemplate(models.Model):
     _inherit = 'account.chart.template'
 
-    @api.multi
-    def generate_fiscal_position(
-            self, tax_template_ref, acc_template_ref, company):
-        """
-        if chart is argentina localization, then we add afip_code to fiscal
-        positions.
-        We also add other data to add fiscal positions automatically
-        """
-        res = super(AccountChartTemplate, self).generate_fiscal_position(
-            tax_template_ref, acc_template_ref, company)
-        if self.localization != 'argentina':
-            return res
-        positions = self.env['account.fiscal.position.template'].search(
-            [('chart_template_id', '=', self.id)])
-        for position in positions:
-            created_position = self.env['account.fiscal.position'].search([
-                ('company_id', '=', company.id),
-                ('name', '=', position.name),
-                ('note', '=', position.note)], limit=1)
-            if created_position:
-                print 'created_position', created_position
-                created_position.write({
-                    'afip_code': position.afip_code,
-                    'afip_responsability_type_ids': [
-                        (6, False, position.afip_responsability_type_ids.ids)],
-                    # TODO this should be done in odoo core
-                    'country_id': position.country_id.id,
-                    'country_group_id': position.country_group_id.id,
-                    'state_ids': [
-                        (6, False, position.state_ids.ids)],
-                    'zip_to': position.zip_to,
-                    'zip_from': position.zip_from,
-                    'auto_apply': position.auto_apply,
-                })
-        return res
+    # @api.multi
+    # def generate_fiscal_position(
+    #         self, tax_template_ref, acc_template_ref, company):
+    #     """
+    #     if chart is argentina localization, then we add afip_code to fiscal
+    #     positions.
+    #     We also add other data to add fiscal positions automatically
+    #     """
+    #     res = super(AccountChartTemplate, self).generate_fiscal_position(
+    #         tax_template_ref, acc_template_ref, company)
+    #     if self.localization != 'argentina':
+    #         return res
+    #     positions = self.env['account.fiscal.position.template'].search(
+    #         [('chart_template_id', '=', self.id)])
+    #     for position in positions:
+    #         created_position = self.env['account.fiscal.position'].search([
+    #             ('company_id', '=', company.id),
+    #             ('name', '=', position.name),
+    #             ('note', '=', position.note)], limit=1)
+    #         if created_position:
+    #             print 'created_position', created_position
+    #             created_position.write({
+    #                 'afip_code': position.afip_code,
+    #                 'afip_responsability_type_ids': [
+    #                     (6, False, position.afip_responsability_type_ids.ids)],
+    #                 # TODO this should be done in odoo core
+    #                 'country_id': position.country_id.id,
+    #                 'country_group_id': position.country_group_id.id,
+    #                 'state_ids': [
+    #                     (6, False, position.state_ids.ids)],
+    #                 'zip_to': position.zip_to,
+    #                 'zip_from': position.zip_from,
+    #                 'auto_apply': position.auto_apply,
+    #             })
+    #     return res
 
     @api.model
     def _prepare_all_journals(

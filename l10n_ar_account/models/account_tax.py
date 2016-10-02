@@ -154,45 +154,45 @@ class AccountFiscalPosition(models.Model):
                 base_domain + null_country_dom, limit=1)
         return fpos or False
 
-    # @api.model
-    # def get_fiscal_position(self, partner_id, delivery_id=None):
-    #     """
-    #     We overwrite original functionality and replace vat_required logic
-    #     for afip_responsability_type_ids
-    #     """
-    #     # we need to overwrite code (between #####) from original function
-    #     #####
-    #     if not partner_id:
-    #         return False
-    #     # This can be easily overriden to apply more complex fiscal rules
-    #     PartnerObj = self.env['res.partner']
-    #     partner = PartnerObj.browse(partner_id)
+    @api.model
+    def get_fiscal_position(self, partner_id, delivery_id=None):
+        """
+        We overwrite original functionality and replace vat_required logic
+        for afip_responsability_type_ids
+        """
+        # we need to overwrite code (between #####) from original function
+        #####
+        if not partner_id:
+            return False
+        # This can be easily overriden to apply more complex fiscal rules
+        PartnerObj = self.env['res.partner']
+        partner = PartnerObj.browse(partner_id)
 
-    #     # if no delivery use invoicing
-    #     if delivery_id:
-    #         delivery = PartnerObj.browse(delivery_id)
-    #     else:
-    #         delivery = partner
+        # if no delivery use invoicing
+        if delivery_id:
+            delivery = PartnerObj.browse(delivery_id)
+        else:
+            delivery = partner
 
-    #     # partner manually set fiscal position always win
-    #     if (
-    #             delivery.property_account_position_id or
-    #             partner.property_account_position_id):
-    #         return (
-    #             delivery.property_account_position_id.id or
-    #             partner.property_account_position_id.id)
-    #     #####
+        # partner manually set fiscal position always win
+        if (
+                delivery.property_account_position_id or
+                partner.property_account_position_id):
+            return (
+                delivery.property_account_position_id.id or
+                partner.property_account_position_id.id)
+        #####
 
-    #     afip_responsability = (
-    #         partner.commercial_partner_id.afip_responsability_type_id)
+        afip_responsability = (
+            partner.commercial_partner_id.afip_responsability_type_id)
 
-    #     # First search only matching responsability positions
-    #     fpos = self._get_fpos_by_region_and_responsability(
-    #         delivery.country_id.id, delivery.state_id.id, delivery.zip,
-    #         afip_responsability.id)
-    #     if not fpos and afip_responsability:
-    #         fpos = self._get_fpos_by_region_and_responsability(
-    #             delivery.country_id.id, delivery.state_id.id, delivery.zip,
-    #             False)
+        # First search only matching responsability positions
+        fpos = self._get_fpos_by_region_and_responsability(
+            delivery.country_id.id, delivery.state_id.id, delivery.zip,
+            afip_responsability.id)
+        if not fpos and afip_responsability:
+            fpos = self._get_fpos_by_region_and_responsability(
+                delivery.country_id.id, delivery.state_id.id, delivery.zip,
+                False)
 
-    #     return fpos.id if fpos else False
+        return fpos.id if fpos else False

@@ -339,7 +339,6 @@ class AccountInvoice(models.Model):
         """
         # only check for argentinian localization companies
         _logger.info('Running checks related to argentinian documents')
-        return True
 
         # we consider argentinian invoices the ones from companies with
         # localization localization and that belongs to a journal with

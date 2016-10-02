@@ -1,0 +1,219 @@
+-
+   Set the context for customer invoices because the 'type' field is readonly in invoice form views, so it value won't be considered by the yaml import
+-
+  !context
+    type: 'out_invoice'
+-
+   Invoice to gritti support service, vat 21
+-
+  !record {model: account.invoice, id: demo_invoice_1}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_gritti_agrimensura
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Support Services'
+        product_id: product.product_product_2
+        price_unit: 642.0
+        quantity: 1
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_1}
+-
+   Invoice to CMR with vat 21, 27 and 10,5
+-
+  !record {model: account.invoice, id: demo_invoice_2}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_cmr
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
+        product_id: product.product_product_49
+        price_unit: 642.0
+        quantity: 5
+      - name: 'Servicio de telefonía (IVA 27)'
+        product_id: product_product_telefonia
+        price_unit: 250.0
+        quantity: 1.0
+      - name: 'Laptop E5023 (IVA 10,5)'
+        product_id: product.product_product_25
+        price_unit: 3245.0
+        quantity: 2.0
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_2}
+-
+   Invoice to ADHOC with vat cero and 21 (requires fiscal position, setted manually)
+-
+  !record {model: account.invoice, id: demo_invoice_3}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_adhoc
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
+        product_id: product.product_product_49
+        price_unit: 642.0
+        quantity: 5
+      - name: 'Animales y vegetales no industrializados (IVA cero)'
+        product_id: product_product_cero
+        price_unit: 200.0
+        quantity: 1.0
+-
+  !python {model: ir.model.data} : |
+      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
+      if position_id:
+          self._update(cr, uid, 'account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position_id[0]}, 'demo_invoice_3')
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_3}
+-
+   Invoice to ADHOC with vat exempt and 21 (requires fiscal position, setted manually)
+-
+  !record {model: account.invoice, id: demo_invoice_4}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_adhoc
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
+        product_id: product.product_product_49
+        price_unit: 642.0
+        quantity: 5
+      - name: 'Libro "Desarrollo en Odoo" (IVA exento)'
+        product_id: product_product_exento
+        price_unit: 100.0
+        quantity: 1.0
+-
+  !python {model: ir.model.data} : |
+      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
+      if position_id:
+          self._update(cr, uid, 'account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position_id[0]}, 'demo_invoice_4')
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_4}
+-
+   Invoice to ADHOC with all type of taxes (requires fiscal position, setted manually)
+-
+  !record {model: account.invoice, id: demo_invoice_5}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_adhoc
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
+        product_id: product.product_product_49
+        price_unit: 642.0
+        quantity: 5
+      - name: 'Servicio de telefonía (IVA 27)'
+        product_id: product_product_telefonia
+        price_unit: 250.0
+        quantity: 1.0
+      - name: 'Laptop E5023 (IVA 10,5)'
+        product_id: product.product_product_25
+        price_unit: 3245.0
+        quantity: 2.0
+      - name: 'Conceptos no gravados (IVA NG)'
+        product_id: product_product_no_gravado
+        price_unit: 50.0
+        quantity: 10.0
+      - name: 'Animales y vegetales no industrializados (IVA cero)'
+        product_id: product_product_cero
+        price_unit: 200.0
+        quantity: 1.0
+      - name: 'Libro "Desarrollo en Odoo" (IVA exento)'
+        product_id: product_product_exento
+        price_unit: 100.0
+        quantity: 1.0
+-
+  We add fiscal position
+-
+  !python {model: ir.model.data} : |
+      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
+      if position_id:
+          self._update(cr, uid, 'account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position_id[0]}, 'demo_invoice_5')
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_5}
+-
+   Invoice to cerro castor, fiscal position changes taxes to exempt
+-
+  !record {model: account.invoice, id: demo_invoice_6}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_cerrocastor
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    afip_incoterm_id: l10n_ar_account.incoterm_exw
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
+        product_id: product.product_product_49
+        price_unit: 642.0
+        quantity: 5
+      - name: 'Servicio de telefonía (IVA 27)'
+        product_id: product_product_telefonia
+        price_unit: 250.0
+        quantity: 1.0
+      - name: 'Laptop E5023 (IVA 10,5)'
+        product_id: product.product_product_25
+        price_unit: 3245.0
+        quantity: 2.0
+      - name: 'Conceptos no gravados (IVA NG)'
+        product_id: product_product_no_gravado
+        price_unit: 50.0
+        quantity: 10.0
+      - name: 'Animales y vegetales no industrializados (IVA cero)'
+        product_id: product_product_cero
+        price_unit: 200.0
+        quantity: 1.0
+      - name: 'Libro "Desarrollo en Odoo" (IVA exento)'
+        product_id: product_product_exento
+        price_unit: 100.0
+        quantity: 1.0
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_6}
+-
+   Export invoice to expresso, fiscal position changes tax to exempt
+-
+  !record {model: account.invoice, id: demo_invoice_7}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_expresso
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    afip_incoterm_id: l10n_ar_account.incoterm_exw
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
+        product_id: product.product_product_49
+        price_unit: 642.0
+        quantity: 5
+      - name: 'Servicio de telefonía (IVA 27)'
+        product_id: product_product_telefonia
+        price_unit: 250.0
+        quantity: 1.0
+      - name: 'Laptop E5023 (IVA 10,5)'
+        product_id: product.product_product_25
+        price_unit: 3245.0
+        quantity: 2.0
+      - name: 'Conceptos no gravados (IVA NG)'
+        product_id: product_product_no_gravado
+        price_unit: 50.0
+        quantity: 10.0
+      - name: 'Animales y vegetales no industrializados (IVA cero)'
+        product_id: product_product_cero
+        price_unit: 200.0
+        quantity: 1.0
+      - name: 'Libro "Desarrollo en Odoo" (IVA exento)'
+        product_id: product_product_exento
+        price_unit: 100.0
+        quantity: 1.0
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_7}

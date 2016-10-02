@@ -7,6 +7,9 @@ from openerp import fields, models
 
 
 class country_state(models.Model):
-        _inherit = 'res.country.state'
-        afip_code = fields.Char(
-            'AFIP code', size=64, help='Codigo oficial del AFIP.')
+    _inherit = 'res.country.state'
+
+    afip_code = fields.Char(
+        'AFIP code',
+        help='Codigo oficial del AFIP.'
+    )

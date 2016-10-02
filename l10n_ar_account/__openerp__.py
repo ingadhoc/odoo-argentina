@@ -24,6 +24,7 @@
         'data/res_currency.xml',
         'data/res_partner.xml',
         'data/account_tax_group.xml',
+        'data/res_country_group_data.xml',
         # TODO analizar y migrar
         # 'data/account_financial_report_data.xml',
         # 'data/account_payment_term.xml',

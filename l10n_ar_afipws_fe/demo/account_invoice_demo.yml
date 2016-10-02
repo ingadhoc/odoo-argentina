@@ -102,8 +102,8 @@
           self._update(cr, uid, 'account.invoice', 'l10n_ar_afipws_fe', {'fiscal_position_id': position_id[0]}, 'demo_invoice_3')
 -
    We call onchange because taxes sometimes miss the 'tax_id' reference
--
-  !python {model: account.invoice} : |
-      self.browse(cr, uid, ref('demo_invoice_3'))._onchange_invoice_line_ids()
+# -
+#   !python {model: account.invoice} : |
+#       self.browse(cr, uid, ref('demo_invoice_3'))._onchange_invoice_line_ids()
 # -
 #   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_3}

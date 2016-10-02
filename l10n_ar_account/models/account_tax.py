@@ -47,7 +47,7 @@ class AccountFiscalPositionTemplate(models.Model):
     # TODO borrar si no lo usamos, por ahora lo resolivmos de manera nativa
     afip_responsability_type_ids = fields.Many2many(
         'afip.responsability.type',
-        'afip_reponsbility_account_fiscal_pos_rel',
+        'afip_reponsbility_account_fiscal_pos_temp_rel',
         'position_id', 'responsability_id',
         'AFIP Responsabilities',
         help='Add this fiscalposition if partner has one of this '

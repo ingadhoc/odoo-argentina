@@ -21,6 +21,9 @@ addons:
       - python-simplejson
       - python-serial
       - python-yaml
+      # for aeroo
+      - cups
+      - libcups2-dev
       # FE
       - python-dev
       - swig

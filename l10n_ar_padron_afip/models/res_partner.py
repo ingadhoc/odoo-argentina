@@ -152,9 +152,17 @@ class ResPartner(models.Model):
                 "must set it manually")
 
         if padron.provincia:
-            state = self.env['res.country.state'].search([
-                ('name', 'ilike', padron.provincia),
-                ('country_id.code', '=', 'AR')], limit=1)
+            # if not localidad then it should be CABA.
+            if not padron.localidad:
+                state = self.env['res.country.state'].search([
+                    ('code', '=', 'ABA'),
+                    ('country_id.code', '=', 'AR')], limit=1)
+            # If localidad cant be caba
+            else:
+                state = self.env['res.country.state'].search([
+                    ('name', 'ilike', padron.provincia),
+                    ('code', '!=', 'ABA'),
+                    ('country_id.code', '=', 'AR')], limit=1)
             if state:
                 vals['state_id'] = state.id
 

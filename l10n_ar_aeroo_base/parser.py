@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from openerp.report.report_sxw import rml_parse
 
 

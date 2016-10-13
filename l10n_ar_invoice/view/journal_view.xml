@@ -28,7 +28,7 @@
                 <notebook position="inside">
                     <page string="Documents" attrs="{'invisible': ['|',('use_documents','=',False),('type','not in',['purchase','sale','purchase_refund','sale_refund'])]}">
                         <button name="check_document_classes" type="object" string="Refresh Documents"/>
-                        <field name='journal_document_class_ids' context="{'default_journal_id': id}"/>
+                        <field name='journal_document_class_ids' context="{'default_journal_id': id, 'editable': 1}"/>
                     </page>
                 </notebook>
             </field>

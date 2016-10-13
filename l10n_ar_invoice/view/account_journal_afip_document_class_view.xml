@@ -25,9 +25,9 @@
                         <field name="journal_id" invisible="1"/>
                         <group>
                             <group>
-                                <field name="point_of_sale_id"/>
-                                <field name="afip_document_class_id"/>
-                                <field name="sequence_id" attrs="{'invisible':[('journal_type','not in', ['sale','sale_refund'])],'required':[('journal_type','in', ['sale','sale_refund'])]}"/>
+                                <field name="point_of_sale_id" readonly="not context.get('editable')"/>
+                                <field name="afip_document_class_id" readonly="not context.get('editable')"/>
+                                <field name="sequence_id" attrs="{'invisible':[('journal_type','not in', ['sale','sale_refund'])],'required':[('journal_type','in', ['sale','sale_refund'])]}" readonly="not context.get('editable')"/>
                             </group>
                         </group>
                     </sheet>

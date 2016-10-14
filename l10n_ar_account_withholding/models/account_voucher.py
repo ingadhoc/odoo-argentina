@@ -31,6 +31,7 @@ class AccountVoucher(models.Model):
         'afip.tabla_ganancias.alicuotasymontos',
         'Regimen Ganancias',
         readonly=True,
+        ondelete='restrict',
         states={'draft': [('readonly', False)],
                 'confirmed': [('readonly', False)]}
     )

@@ -9,3 +9,4 @@ m2crypto>=0.18
 fpdf>=1.7.2
 dbf>=0.88.019
 Pillow>=2.0.0
+git+https://github.com/reingart/pyafipws@master

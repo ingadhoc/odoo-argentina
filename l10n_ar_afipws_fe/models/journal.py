@@ -47,6 +47,7 @@ class AccountJournal(models.Model):
         types.append(['electronic', _('Electronic')])
         return types
 
+    @api.one
     @api.constrains('point_of_sale_type', 'afip_ws')
     def check_afip_ws_and_type(self):
         if self.point_of_sale_type != 'electronic' and self.afip_ws:

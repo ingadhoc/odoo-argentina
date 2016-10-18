@@ -3,9 +3,12 @@
     <data>
         <record model="ir.ui.view" id="view_partner_form">
             <field name="name">res.partner.form.inherit</field>
-            <field name="inherit_id" ref="l10n_ar_invoice.view_res_partner_form"/>
+            <field name="inherit_id" ref="l10n_ar_padron_afip.view_partner_form"/>
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
+                <field name="imp_ganancias_padron" position="after">
+                    <field name="default_regimen_ganancias_id"/>
+                </field>
                 <group name="others_col_1">
                     <field name="drei"/>
                 </group>

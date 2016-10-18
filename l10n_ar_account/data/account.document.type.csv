@@ -79,3 +79,5 @@ dc_nca,104,NOTA DE CREDITO DE ASIGNACION,,,,,argentina
 dc_recibo_x,,RECIBOS X,dl_x,RECIBO,,RE-X ,argentina
 dc_remito_x,,REMITOS X,dl_x,REMITO,,RM-X ,argentina
 dc_orden_pago_x,,ORDEN DE PAGO X,dl_x,ORDEN DE PAGO,,OP-X ,argentina
+fa_exterior,,FACTURAS Y COMPROBANTES DEL EXTERIOR,dl_i,,invoice,FA-I,argentina
+nc_exterior,,NOTAS DE CREDITO Y REEMBOLSOS DEL EXTERIOR,dl_i,,credit_note,NC-I,argentina

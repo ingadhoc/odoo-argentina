@@ -349,6 +349,15 @@ class AccountInvoice(models.Model):
         if not argentinian_invoices:
             return True
 
+        # check partner has responsability so it will be assigned on invoice
+        # validate
+        without_responsability = argentinian_invoices.filtered(
+            lambda x: not x.commercial_partner_id.afip_responsability_id)
+        if without_responsability:
+            raise Warning(_(
+                'The following invoices has a partner without AFIP '
+                'responsability: %s' % without_responsability.ids))
+
         # we check all invoice tax lines has tax_id related
         # we exclude exempt vats and untaxed (no gravados)
         wihtout_tax_id = argentinian_invoices.mapped('tax_line_ids').filtered(
@@ -397,6 +406,7 @@ class AccountInvoice(models.Model):
     # TODO check if we can remove this. If we import or get demo data
     # tax_id is not loaded on tax lines, we couldn't find the error
     # so we add this to fix it
+    @api.one
     @api.constrains('invoice_line_ids')
     def update_taxes_fix(self):
         context = dict(self._context)

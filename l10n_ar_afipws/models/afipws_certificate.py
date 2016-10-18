@@ -5,7 +5,10 @@
 ##############################################################################
 from openerp.exceptions import UserError
 from openerp import fields, models, api, _
-from OpenSSL import crypto
+try:
+    from OpenSSL import crypto
+except ImportError:
+    crypto = None
 import base64
 import logging
 _logger = logging.getLogger(__name__)

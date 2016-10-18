@@ -81,7 +81,7 @@ class Parser(rml_parse):
         })
 
     def net_price(self, gross_price, discount):
-        return gross_price * (1-(discount / 100))
+        return gross_price * (1 - (discount / 100))
 
     def number_to_string(self, val):
         return conversor.to_word(val)

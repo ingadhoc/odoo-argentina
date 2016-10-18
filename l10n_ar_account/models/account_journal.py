@@ -35,6 +35,7 @@ class AccountJournal(models.Model):
         'Point Of Sale Number',
     )
 
+    @api.one
     @api.constrains('point_of_sale_number', 'company_id', 'type')
     def check_point_of_sale_number(self):
         """

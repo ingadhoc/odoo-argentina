@@ -406,6 +406,7 @@ class AccountInvoice(models.Model):
     # TODO check if we can remove this. If we import or get demo data
     # tax_id is not loaded on tax lines, we couldn't find the error
     # so we add this to fix it
+    @api.one
     @api.constrains('invoice_line_ids')
     def update_taxes_fix(self):
         context = dict(self._context)

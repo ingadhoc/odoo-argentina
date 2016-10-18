@@ -17,6 +17,7 @@
         'security/ir.model.access.csv',
         'views/account_vat_report_view.xml',
         'views/afip_document_class_view.xml',
+        'data/afip.document_class.csv',
     ],
     'demo': [
     ],

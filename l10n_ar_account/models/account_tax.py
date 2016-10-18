@@ -92,7 +92,7 @@ class AccountFiscalPosition(models.Model):
     @api.model
     def _get_fpos_by_region_and_responsability(
             self, country_id=False, state_id=False,
-            zipcode=False, afip_responsability_id=False):
+            zipcode=False, afip_responsability_type_id=False):
         """
         We use similar code than _get_fpos_by_region but we use
         "partner_responsability_id" insted of vat_required
@@ -100,7 +100,7 @@ class AccountFiscalPosition(models.Model):
 
         base_domain = [
             ('auto_apply', '=', True),
-            ('afip_responsability_type_ids', '=', afip_responsability_id)
+            ('afip_responsability_type_ids', '=', afip_responsability_type_id)
         ]
 
         if self.env.context.get('force_company'):

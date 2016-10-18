@@ -18,7 +18,7 @@
         'data/menuitem.xml',
     ],
     'demo': [
-        '../l10n_ar_account/demo/account_journal_demo.xml',
+        # '../l10n_ar_account/demo/account_journal_demo.xml',
         '../l10n_ar_account/demo/product_product_demo.xml',
         '../l10n_ar_account/demo/account_customer_invoice_demo.yml',
         '../l10n_ar_account/demo/account_supplier_invoice_demo.yml',

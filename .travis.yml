@@ -21,6 +21,9 @@ addons:
       - python-simplejson
       - python-serial
       - python-yaml
+      # for aeroo
+      - cups
+      - libcups2-dev
       # FE
       - python-dev
       - swig
@@ -75,7 +78,6 @@ virtualenv:
   system_site_packages: true
 
 install:
-  # repository requirements, we install them here because pyafipws must be installed in a second step
   - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly

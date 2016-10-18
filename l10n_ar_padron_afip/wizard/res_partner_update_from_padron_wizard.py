@@ -71,12 +71,21 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
             'empleador_padron',
             'integrante_soc_padron',
             'last_update_padron',
+            'responsability_id',
             # 'constancia',
         ]
         return [
             ('model', '=', 'res.partner'),
             ('name', 'in', fields_names),
         ]
+
+    @api.model
+    def _get_default_title_case(self):
+        parameter = self.env[
+            'ir.config_parameter'].get_param('use_title_case_on_padron_afip')
+        if parameter == 'False' or parameter == '0':
+            return False
+        return True
 
     @api.model
     def get_fields(self):
@@ -114,7 +123,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
     title_case = fields.Boolean(
         string='Title Case',
         help='Converts retreived text fields to Title Case.',
-        default=True,
+        default=_get_default_title_case,
     )
     field_to_update_ids = fields.Many2many(
         'ir.model.fields',
@@ -146,7 +155,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
                     new_value = new_value and new_value.title()
                 if key in ('impuestos_padron', 'actividades_padron'):
                     old_value = old_value.ids
-                elif key == 'state_id':
+                elif key in ('state_id', 'responsability_id'):
                     old_value = old_value.id
                 if key in fields_names and old_value != new_value:
                     line_vals = {

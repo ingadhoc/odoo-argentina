@@ -97,9 +97,6 @@ class ResPartner(models.Model):
 
     @api.multi
     def get_data_from_padron_afip(self):
-
-        # TODO agregar funcionalidad de descargar constancia, ver readme del
-        # modulo
         self.ensure_one()
         cuit = self.cuit
         padron = PadronAFIP()
@@ -149,9 +146,32 @@ class ResPartner(models.Model):
                 "must set it manually")
 
         if padron.provincia:
-            state = self.env['res.country.state'].search([
-                ('name', 'ilike', padron.provincia),
-                ('country_id.code', '=', 'AR')], limit=1)
+            # if not localidad then it should be CABA.
+            if not padron.localidad:
+                state = self.env['res.country.state'].search([
+                    ('code', '=', 'ABA'),
+                    ('country_id.code', '=', 'AR')], limit=1)
+            # If localidad cant be caba
+            else:
+                state = self.env['res.country.state'].search([
+                    ('name', 'ilike', padron.provincia),
+                    ('code', '!=', 'ABA'),
+                    ('country_id.code', '=', 'AR')], limit=1)
             if state:
                 vals['state_id'] = state.id
+
+        if imp_iva == 'NI' and padron.monotributo == 'S':
+            vals['responsability_id'] = self.env.ref(
+                'l10n_ar_invoice.res_RM').id
+        elif imp_iva == 'AC':
+            vals['responsability_id'] = self.env.ref(
+                'l10n_ar_invoice.res_IVARI').id
+        elif imp_iva == 'EX':
+            vals['responsability_id'] = self.env.ref(
+                'l10n_ar_invoice.res_IVAE').id
+        else:
+            _logger.info(
+                "We couldn't infer the responsability_id from padron, you"
+                "must set it manually.")
+
         return vals

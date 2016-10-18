@@ -31,6 +31,7 @@ class AccountVoucher(models.Model):
         'afip.tabla_ganancias.alicuotasymontos',
         'Regimen Ganancias',
         readonly=True,
+        ondelete='restrict',
         states={'draft': [('readonly', False)],
                 'confirmed': [('readonly', False)]}
     )
@@ -39,10 +40,28 @@ class AccountVoucher(models.Model):
         readonly=True,
     )
 
+    @api.multi
+    def onchange_partner_id(
+            self, partner_id, journal_id, amount, currency_id, ttype, date):
+        """
+        Because view onchange overwrite api onchange, we call it from here
+        """
+        vals = super(AccountVoucher, self).onchange_partner_id(
+            partner_id, journal_id, amount, currency_id, ttype, date)
+        if 'value' not in vals:
+            vals['value'] = {}
+        partner = self.env['res.partner'].browse(partner_id)
+        default_regimen = partner.default_regimen_ganancias_id
+        if default_regimen:
+            vals['value']['regimen_ganancias_id'] = default_regimen.id
+        return vals
+
     @api.onchange('retencion_ganancias')
     def change_retencion_ganancias(self):
         if self.retencion_ganancias == 'nro_regimen':
-            self.regimen_ganancias_id = self.company_regimenes_ganancias_ids[0]
+            self.regimen_ganancias_id = (
+                self.partner_id.default_regimen_ganancias_id or
+                self.company_regimenes_ganancias_ids[0])
         else:
             self.regimen_ganancias_id = False
 

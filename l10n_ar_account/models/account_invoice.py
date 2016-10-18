@@ -349,6 +349,15 @@ class AccountInvoice(models.Model):
         if not argentinian_invoices:
             return True
 
+        # check partner has responsability so it will be assigned on invoice
+        # validate
+        without_responsability = argentinian_invoices.filtered(
+            lambda x: not x.commercial_partner_id.afip_responsability_id)
+        if without_responsability:
+            raise Warning(_(
+                'The following invoices has a partner without AFIP '
+                'responsability: %s' % without_responsability.ids))
+
         # we check all invoice tax lines has tax_id related
         # we exclude exempt vats and untaxed (no gravados)
         wihtout_tax_id = argentinian_invoices.mapped('tax_line_ids').filtered(

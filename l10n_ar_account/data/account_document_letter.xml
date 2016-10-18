@@ -38,5 +38,11 @@
             <field name='receptor_ids' eval="[(6, 0, [ref('res_IVARI'), ref('res_IVANR'), ref('res_RM'), ref('res_IVARNI'), ref('res_IVAE')])]"/>
             <field name="taxes_included" eval="True"/>
         </record>
+        <!-- Lo usamos para documentos varios de importacion -->
+        <record model='afip.document_letter' id='dl_i'>
+            <field name='name'>I</field>
+            <field name='issuer_ids' eval="[(6, 0, [ref('res_CLI_EXT'), ref('res_EXT')])]"/>
+            <field name='receptor_ids' eval="[(6, 0, [ref('res_IVARI'), ref('res_IVANR'), ref('res_RM'), ref('res_IVARNI'), ref('res_IVAE')])]"/>
+        </record>
     </data>
 </openerp>

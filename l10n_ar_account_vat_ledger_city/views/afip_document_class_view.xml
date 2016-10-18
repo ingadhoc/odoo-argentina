@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_afip_document_class_form" model="ir.ui.view">
+            <field name="name">afip.document_class.form</field>
+            <field name="model">afip.document_class</field>
+            <field name="inherit_id" ref="l10n_ar_invoice.view_afip_document_class_form"/>
+            <field name="arch" type="xml">
+                <group>
+                    <field name="export_to_citi"/>
+                </group>
+            </field>
+        </record>
+
+        <record id="view_afip_document_class_tree" model="ir.ui.view">
+            <field name="name">afip.document_class.tree</field>
+            <field name="model">afip.document_class</field>
+            <field name="inherit_id" ref="l10n_ar_invoice.view_afip_document_class_tree"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="export_to_citi"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</openerp>

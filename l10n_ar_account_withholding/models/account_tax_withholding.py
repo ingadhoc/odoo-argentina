@@ -7,10 +7,6 @@ import datetime
 class AccountTaxWithholding(models.Model):
     _inherit = "account.tax.withholding"
 
-    # TODO lo necesitamos?
-    # regime_code = fields.Char(
-    #     'Cód. Régimen'
-    #     )
     type = fields.Selection(
         selection_add=([
             ('arba_ws', 'WS Arba'),
@@ -39,7 +35,7 @@ class AccountTaxWithholding(models.Model):
         base_amount = vals['withholdable_base_amount']
         if self.type == 'arba_ws':
             if voucher.partner_id.gross_income_type == 'no_liquida':
-                vals['amount'] = 0.0
+                vals['computed_withholding_amount'] = 0.0
             else:
                 date = (
                     voucher.date and fields.Date.from_string(voucher.date) or
@@ -51,14 +47,8 @@ class AccountTaxWithholding(models.Model):
                 amount = base_amount * (alicuota)
                 vals['comment'] = "%s x %s" % (
                     base_amount, alicuota)
-                vals['amount'] = amount
                 vals['computed_withholding_amount'] = amount
         elif self.type == 'tabla_ganancias':
-            # if not self.company_id.regimenes_ganancias:
-            #     raise Warning(
-            #         'No hay regimenes de ganancias configurados para la '
-            #         'compania %s' % self.company_id.name)
-            # TODO, por ahora tomamos el primero pero hay que definir cual va
             regimen = voucher.regimen_ganancias_id
             imp_ganancias_padron = voucher.partner_id.imp_ganancias_padron
             if voucher.retencion_ganancias != 'nro_regimen' or not regimen:
@@ -74,7 +64,6 @@ class AccountTaxWithholding(models.Model):
             # TODO validar excencion actualizada
             elif imp_ganancias_padron == 'AC':
                 # alicuota inscripto
-                # vals['non_taxable_minimum'] = (
                 non_taxable_amount = (
                     regimen.montos_no_sujetos_a_retencion)
                 vals['non_taxable_amount'] = non_taxable_amount
@@ -113,50 +102,5 @@ class AccountTaxWithholding(models.Model):
                 # no corresponde, no impuesto
                 amount = 0.0
             vals['description'] = regimen.codigo_de_regimen
-            vals['amount'] = amount
             vals['computed_withholding_amount'] = amount
-            # self.env[].search('code')
         return vals
-
-
-#     @api.multi
-#     def get_period_withholding_amount(self, base_amount, voucher):
-#         self.ensure_one()
-#         if self.type == 'arba_ws':
-#             date = (
-#                 voucher.date and fields.Date.from_string(voucher.date) or
-#                 datetime.date.today())
-#             arba_data = self.company_id.get_arba_data(
-#                 voucher.partner_id.commercial_partner_id,
-#                 date
-#                 )
-#             AlicuotaRetencion = arba_data.get('AlicuotaRetencion')
-#             if AlicuotaRetencion:
-#                 alicuot = float(AlicuotaRetencion.replace(',', '.'))
-#                 return base_amount * alicuot
-#         return super(
-#             AccountTaxWithholding, self).get_period_withholding_amount(
-#                 base_amount)
-# {'GrupoRetencion': '3', 'NumeroComprobante': '82257338', 'GrupoPercepcion': '5', 'AlicuotaPercepcion': '0,30', 'CodigoHash': '26fa6202134dd758366f7a79ae9b8569', 'CuitContribuyente': '30714517682', 'AlicuotaRetencion': '0,20'}
-    # @api.multi
-    # def create_voucher_withholdings(self, voucher):
-    #     for tax in self:
-    #         if tax.automatic_method == 'arba_ws':
-    #             date = (
-    #                 voucher.date and fields.Date.from_string(voucher.date) or
-    #                 datetime.date.today())
-    #             arba_data = self.company_id.get_arba_data(
-    #                 voucher.partner_id.commercial_partner_id,
-    #                 date
-    #                 )
-    #             AlicuotaRetencion = arba_data.get('AlicuotaRetencion')
-    #             if AlicuotaRetencion:
-    #                 alicuot = float(AlicuotaRetencion.replace(',', '.'))
-    #                 self.env['account.voucher.withholding'].create({
-    #                     'amount': voucher.amount * alicuot,
-    #                     'voucher_id': voucher.id,
-    #                     'tax_withholding_id': tax.id,
-    #                     })
-    #                 # TODO descontar del monto lo que tenemos que tener
-    #     return super(AccountTaxWithholding, self).create_voucher_withholdings(
-    #         voucher)

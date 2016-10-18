@@ -21,6 +21,10 @@ class ResPartner(models.Model):
     ],
         string='DREI',
     )
+    default_regimen_ganancias_id = fields.Many2one(
+        'afip.tabla_ganancias.alicuotasymontos',
+        'Regimen Ganancias por Defecto',
+    )
 
     @api.multi
     def get_arba_alicuota_percepcion(self):

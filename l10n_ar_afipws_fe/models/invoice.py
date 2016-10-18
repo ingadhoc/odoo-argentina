@@ -22,12 +22,8 @@ class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
     afip_auth_verify_type = fields.Selection(
-<<<<<<< HEAD
-        related='company_id.afip_auth_verify_type'
-=======
         related='company_id.afip_auth_verify_type',
         readonly=True,
->>>>>>> origin/8.0
     )
     afip_batch_number = fields.Integer(
         copy=False,
@@ -119,11 +115,7 @@ class AccountInvoice(models.Model):
         if self._fields.get('operation_ids') and self.operation_ids:
             self.validation_type = 'no_validation'
         # if invoice has cae then me dont validate it against afip
-<<<<<<< HEAD
         elif self.journal_id.afip_ws and not self.afip_auth_code:
-=======
-        elif self.journal_id.point_of_sale_id.afip_ws and not self.afip_auth_code:
->>>>>>> origin/8.0
             self.validation_type = self.env[
                 'res.company']._get_environment_type()
 
@@ -135,15 +127,9 @@ class AccountInvoice(models.Model):
             cae_due = ''.join(
                 [c for c in str(self.afip_auth_code_due or '') if c.isdigit()])
             barcode = ''.join(
-<<<<<<< HEAD
                 [str(self.company_id.cuit),
                     "%02d" % int(self.document_type_id.code),
                     "%04d" % int(self.journal_id.point_of_sale_number),
-=======
-                [str(self.company_id.partner_id.vat[2:]),
-                    "%02d" % int(self.afip_document_class_id.afip_code),
-                    "%04d" % int(self.journal_id.point_of_sale_id.number),
->>>>>>> origin/8.0
                     str(self.afip_auth_code), cae_due])
             barcode = barcode + self.verification_digit_modulo10(barcode)
         self.afip_barcode = barcode
@@ -206,10 +192,7 @@ class AccountInvoice(models.Model):
         we dont want to loose cae data because of a raise error on next steps
         but it doesn work as expected
         """
-<<<<<<< HEAD
         res = super(AccountInvoice, self).invoice_validate()
-=======
->>>>>>> origin/8.0
         self.check_afip_auth_verify_required()
         self.do_pyafipws_request_cae()
         # self._cr.commit()
@@ -221,11 +204,7 @@ class AccountInvoice(models.Model):
             if (
                     inv.type in ['in_invoice', 'in_refund'] and
                     inv.afip_auth_verify_type == 'required' and
-<<<<<<< HEAD
                     inv.document_type_internal_type in [
-=======
-                    inv.document_type in [
->>>>>>> origin/8.0
                         'invoice', 'debit_note', 'credit_note',
                         'receipt_invoice'] and
                     not inv.afip_auth_verify_result):
@@ -344,11 +323,7 @@ print "Observaciones:", wscdc.Obs
             if inv.afip_auth_code and inv.afip_auth_code_due:
                 continue
 
-<<<<<<< HEAD
             afip_ws = inv.journal_id.afip_ws
-=======
-            afip_ws = inv.journal_id.point_of_sale_id.afip_ws
->>>>>>> origin/8.0
             # Ignore invoice if not ws on point of sale
             if not afip_ws:
                 continue
@@ -357,22 +332,11 @@ print "Observaciones:", wscdc.Obs
             commercial_partner = inv.commercial_partner_id
             country = commercial_partner.country_id
             journal = inv.journal_id
-<<<<<<< HEAD
             pos_number = journal.point_of_sale_number
             doc_afip_code = inv.document_type_id.code
 
             # authenticate against AFIP:
             ws = inv.company_id.get_connection(afip_ws).connect()
-=======
-            point_of_sale = journal.point_of_sale_id
-            pos_number = point_of_sale.number
-            doc_afip_code = inv.afip_document_class_id.afip_code
-
-            # authenticate against AFIP:
-            ws = inv.company_id.get_connection(afip_ws).connect()
-
-            next_invoice_number = inv.next_invoice_number
->>>>>>> origin/8.0
 
             # get the last invoice number registered in AFIP
             if afip_ws == "wsfe" or afip_ws == "wsmtxca":
@@ -524,31 +488,18 @@ print "Observaciones:", wscdc.Obs
             # TODO ver si en realidad tenemos que usar un vat pero no lo
             # subimos
             if afip_ws != 'wsfex':
-<<<<<<< HEAD
                 for vat in inv.vat_taxable_ids:
                     _logger.info(
                         'Adding VAT %s' % vat.tax_id.tax_group_id.name)
-=======
-                for vat in inv.vat_tax_ids:
-                    # we dont send no gravado y exento
-                    if vat.tax_code_id.afip_code in [1, 2]:
-                        continue
-                    _logger.info('Adding VAT %s' % vat.tax_code_id.name)
->>>>>>> origin/8.0
                     ws.AgregarIva(
                         vat.tax_id.tax_group_id.afip_code,
                         "%.2f" % abs(vat.base_amount),
                         "%.2f" % abs(vat.amount),
                     )
-<<<<<<< HEAD
 
                 for tax in inv.not_vat_tax_ids:
                     _logger.info(
                         'Adding TAX %s' % tax.tax_id.tax_group_id.name)
-=======
-                for tax in inv.not_vat_tax_ids:
-                    _logger.info('Adding TAX %s' % tax.tax_code_id.name)
->>>>>>> origin/8.0
                     ws.AgregarTributo(
                         tax.tax_id.tax_group_id.afip_code,
                         tax.tax_id.tax_group_id.name,
@@ -588,7 +539,6 @@ print "Observaciones:", wscdc.Obs
                     bonif = line.discount or None
                     if afip_ws == 'wsmtxca':
                         if not line.product_id.uom_id.afip_code:
-<<<<<<< HEAD
                             raise Warning(_(
                                 'Not afip code con producto UOM %s' % (
                                     line.product_id.uom_id.name)))
@@ -602,12 +552,6 @@ print "Observaciones:", wscdc.Obs
                         # TODO en las lineas no tenemos vat_tax_ids todavia
                         if self.invoice_id.type in (
                                 'out_invoice', 'in_invoice'):
-=======
-                            raise Warning(_('Not afip code con producto UOM %s' % (
-                                line.product_id.uom_id.name)))
-                        u_mtx = line.product_id.uom_id.afip_code or line.uos_id.afip_code
-                        if inv.invoice_id.type in ('out_invoice', 'in_invoice'):
->>>>>>> origin/8.0
                             iva_id = line.vat_tax_ids.tax_code_id.afip_code
                         else:
                             iva_id = line.vat_tax_ids.ref_tax_code_id.afip_code

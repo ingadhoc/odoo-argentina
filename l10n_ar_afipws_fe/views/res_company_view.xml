@@ -7,11 +7,7 @@
             <field name="model">res.company</field>
             <field name="arch" type="xml">
                  <group name="account_grp">
-<<<<<<< HEAD
                     <field name="afip_auth_verify_type" attrs="{'invisible': [('localization', '!=', 'argentina')]}"/>
-=======
-                    <field name="afip_auth_verify_type" attrs="{'invisible': [('use_argentinian_localization', '=', False)]}"/>
->>>>>>> origin/8.0
                 </group>
             </field>
         </record>

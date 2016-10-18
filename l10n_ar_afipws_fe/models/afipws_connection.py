@@ -19,11 +19,7 @@ class AfipwsConnection(models.Model):
             ('wsfe', 'Mercado interno -sin detalle- RG2485 (WSFEv1)'),
             ('wsmtxca', 'Mercado interno -con detalle- RG2904 (WSMTXCA)'),
             ('wsfex', 'Exportación -con detalle- RG2758 (WSFEXv1)'),
-<<<<<<< HEAD
             ('wsbfe', 'Bono Fiscal -con detalle- RG2557 (WSBFE)'),
-=======
-            ('wsbfe', 'Bono Fiscal -con detalle- RG2557 (WSMTXCA)'),
->>>>>>> origin/8.0
             ('wscdc', 'Constatación de Comprobantes (WSCDC)'),
         ])
 
@@ -65,7 +61,6 @@ class AfipwsConnection(models.Model):
                 afip_ws_url = (
                     'https://servicios1.afip.gov.ar/wsfexv1/service.asmx')
             else:
-<<<<<<< HEAD
                 afip_ws_url = (
                     'https://wswhomo.afip.gov.ar/wsfexv1/service.asmx')
         elif afip_ws == 'wsbfe':
@@ -90,14 +85,6 @@ class AfipwsConnection(models.Model):
             if environment_type == 'production':
                 afip_ws_url = (
                     'https://servicios1.afip.gov.ar/WSCDC/service.asmx')
-=======
-                afip_ws_url = 'https://wswhomo.afip.gov.ar/wsfexv1/service.asmx'
-        elif afip_ws in ('wsmtxca', 'wsbfe'):
-            raise Warning('AFIP WS %s Not implemented yet' % afip_ws)
-        elif afip_ws == 'wscdc':
-            if environment_type == 'production':
-                afip_ws_url = 'https://servicios1.afip.gov.ar/WSCDC/service.asmx'
->>>>>>> origin/8.0
             else:
                 afip_ws_url = 'https://wswhomo.afip.gov.ar/WSCDC/service.asmx'
         return afip_ws_url

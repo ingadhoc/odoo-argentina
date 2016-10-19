@@ -18,10 +18,11 @@
         'data/menuitem.xml',
     ],
     'demo': [
-        '../l10n_ar_account/demo/account_journal_demo.xml',
         '../l10n_ar_account/demo/product_product_demo.xml',
         '../l10n_ar_account/demo/account_customer_invoice_demo.yml',
         '../l10n_ar_account/demo/account_supplier_invoice_demo.yml',
+        # we add this file only fot tests run by odoo
+        '../l10n_ar_account/demo/account_journal_demo.xml',
         # '../account/demo/account_bank_statement.yml',
         # '../account/demo/account_invoice_demo.yml',
     ],

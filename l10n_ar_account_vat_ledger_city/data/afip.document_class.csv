@@ -45,7 +45,7 @@ l10n_ar_invoice.dc_b_cvl,True
 l10n_ar_invoice.dc_a_l,True
 l10n_ar_invoice.dc_b_l,True
 l10n_ar_invoice.dc_nc,False
-l10n_ar_invoice.dc_desp_imp,True
+l10n_ar_invoice.dc_desp_imp,False
 l10n_ar_invoice.dc_imp_serv,False
 l10n_ar_invoice.dc_c_l,True
 l10n_ar_invoice.dc_rfc,True

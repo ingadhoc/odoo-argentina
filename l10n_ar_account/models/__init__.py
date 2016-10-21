@@ -17,4 +17,6 @@ from . import account_invoice_tax
 from . import account_invoice
 from . import product_uom
 from . import account_chart_template
+# from . import account_payment_book
+# from . import account_payment
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

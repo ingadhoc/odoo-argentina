@@ -26,6 +26,7 @@
         'data/account_tax_group.xml',
         'data/res_country_group_data.xml',
         # TODO analizar y migrar
+        # data_account_type
         # 'data/account_financial_report_data.xml',
         # 'data/account_payment_term.xml',
         'wizard/account_invoice_refund_view.xml',
@@ -58,5 +59,6 @@
     'installable': True,
     'auto_install': False,
     'application': False,
+    'post_init_hook': 'post_init_hook',
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

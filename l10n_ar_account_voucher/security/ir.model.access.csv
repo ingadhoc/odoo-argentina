@@ -1,4 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-account_voucher_receiptbook_user,account_voucher_receiptbook_user,model_account_voucher_receiptbook,account.group_account_invoice,1,0,0,0
-account_voucher_receiptbook_manager,account_voucher_receiptbook_manager,model_account_voucher_receiptbook,account.group_account_manager,1,1,1,1
-account_voucher_receiptbook_global,account_voucher_receiptbook_global,model_account_voucher_receiptbook,,1,0,0,0

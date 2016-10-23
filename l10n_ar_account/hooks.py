@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 # Copyright <YEAR(S)> <AUTHOR(S)>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from openupgradelib.openupgrade_tools import table_exists
+try:
+    from openupgradelib.openupgrade_tools import table_exists
+except ImportError:
+    table_exists = None
 
 
 def post_init_hook(cr, registry):
@@ -12,6 +15,10 @@ def post_init_hook(cr, registry):
     :param openerp.modules.registry.RegistryManager registry:
         Database registry, using v7 api.
     """
+    # we don not force dependency on openupgradelib, only if available we try
+    # o un de hook
+    if not table_exists:
+        return False
     # write en vez de sql para que genere los campos por defecto necesarios
     query = (
         "SELECT aj.id, apos.number, apos.document_sequence_type, apos.type "

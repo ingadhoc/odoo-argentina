@@ -35,24 +35,26 @@ class AccountJournal(models.Model):
         'Point Of Sale Number',
     )
 
-    @api.one
-    @api.constrains('point_of_sale_number', 'company_id', 'type')
-    def check_point_of_sale_number(self):
-        """
-        We can not use sql constraint because integer is loaded as 0
-        """
-        if not self.point_of_sale_number or self.point_of_sale_number == 0:
-            return True
-        if self.type != 'sale':
-            raise UserError(_(
-                'You can only set point of sale number on sales journals'))
-        journal = self.search([
-            ('point_of_sale_number', '=', self.point_of_sale_number),
-            ('id', '!=', self.id),
-            ('company_id', '=', self.company_id.id)], limit=1)
-        if journal:
-            raise UserError(_(
-                'Point Of Sale Number must be unique per Company!'))
+    # TODO revisar esta constraint porque nos da error al migrar, sobre todo
+    # porque los refund journals pasaron a ser journals comunes
+    # @api.one
+    # @api.constrains('point_of_sale_number', 'company_id', 'type')
+    # def check_point_of_sale_number(self):
+    #     """
+    #     We can not use sql constraint because integer is loaded as 0
+    #     """
+    #     if not self.point_of_sale_number or self.point_of_sale_number == 0:
+    #         return True
+    #     if self.type != 'sale':
+    #         raise UserError(_(
+    #             'You can only set point of sale number on sales journals'))
+    #     journal = self.search([
+    #         ('point_of_sale_number', '=', self.point_of_sale_number),
+    #         ('id', '!=', self.id),
+    #         ('company_id', '=', self.company_id.id)], limit=1)
+    #     if journal:
+    #         raise UserError(_(
+    #             'Point Of Sale Number must be unique per Company!'))
 
     @api.onchange(
         'type', 'localization', 'use_documents', 'point_of_sale_number',

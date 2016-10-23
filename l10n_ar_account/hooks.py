@@ -32,18 +32,3 @@ def post_init_hook(cr, registry):
                 'point_of_sale_number': number,
                 'document_sequence_type': document_sequence_type,
             })
-
-    # migrate voucher data (usamos mismo whare que migrador)
-    query = (
-        "SELECT id, manual_sufix, force_number, receiptbook_id "
-        "FROM account_voucher "
-        "WHERE voucher_type IN ('receipt', 'payment') "
-        "AND state in ('draft', 'posted')")
-    if table_exists(cr, 'account_voucher'):
-        cr.execute(query)
-        for id, manual_sufix, force_number, receiptbook_id in cr.fetchall():
-            registry['account.payment'].write(cr, 1, [id], {
-                'manual_sufix': manual_sufix,
-                'force_number': force_number,
-                'receiptbook_id': receiptbook_id,
-            })

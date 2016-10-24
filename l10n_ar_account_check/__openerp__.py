@@ -47,6 +47,7 @@ Argentinian Account Check Integration
     'test': [
     ],
     'installable': False,
-    'auto_install': True,
+    # TODO add autoinstall (removed for runbot)
+    # 'auto_install': True,
     'application': False,
 }

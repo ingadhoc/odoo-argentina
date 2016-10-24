@@ -32,3 +32,21 @@ def post_init_hook(cr, registry):
                 'point_of_sale_number': number,
                 'document_sequence_type': document_sequence_type,
             })
+
+    # TODO borrar o activar, por ahora modificamos openugprade directamente
+    # porque borra los account_voucher y perdemos la data
+    # migrate voucher data (usamos mismo where que migrador)
+    # if table_exists(cr, 'account_voucher'):
+    #     for payment_id in registry['account.payment'].search(cr, 1, []):
+    #         cr.execute("""
+    #             SELECT receiptbook_id, document_number
+    #             FROM account_voucher
+    #             WHERE id = %i
+    #             """, (payment_id,))
+    #         recs = cr.fetchall()
+    #         if recs:
+    #             receiptbook_id, document_number = recs[0]
+    #             registry['account.payment'].write(cr, 1, [id], {
+    #                 'receiptbook_id': receiptbook_id,
+    #                 'document_number': document_number,
+    #             })

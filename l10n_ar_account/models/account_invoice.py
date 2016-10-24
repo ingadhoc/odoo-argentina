@@ -396,7 +396,8 @@ class AccountInvoice(models.Model):
 
         # self.env['account.invoice.line'].search([
         #     ('invoice_id', 'in', argentinian_invoices.ids),
-        #     ('invoice_line_tax_ids.tax_group_id', 'in', argentinian_invoices.ids),
+        #     ('invoice_line_tax_ids.tax_group_id', 'in',
+        #         argentinian_invoices.ids),
         #     ])
         # for invoice in argentinian_invoices:
         #     # we check vat base amount is equal to amount untaxed

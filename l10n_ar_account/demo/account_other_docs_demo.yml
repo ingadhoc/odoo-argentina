@@ -1,0 +1,108 @@
+-
+  agregamos doc type para tique en diario manual
+-
+  !python {model: ir.model.data} : |
+      manual_journal_id = self.pool['account.journal'].search(cr, uid, [('type', '=', 'sale'), ('point_of_sale_type', '=', 'manual')], limit=1)
+      manual_journal = self.pool['account.journal'].browse(cr, uid, manual_journal_id)
+      if manual_journal:
+        type_tique_id = self.pool['account.journal.document.type'].create(cr, uid, {
+          'journal_id': manual_journal.id,
+          'document_type_id': ref('l10n_ar_account.dc_t'),
+        })
+-
+  !context
+    type: 'out_invoice'
+    internal_type: 'ticket'
+-
+  creamos comprobante de ticket z
+-
+  !record {model: account.invoice, id: demo_invoice_9}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.par_cfa
+    user_id: base.user_demo
+    reference_type: none
+    document_number: '0001-00000001'
+    # payment_term_id: account.account_payment_term
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Support Services'
+        product_id: product.product_product_2
+        price_unit: 10000.0
+        quantity: 1
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_9}
+-
+   Set the context for supplier invoices because the 'type' field is readonly in invoice form views, so it value won't be considered by the yaml import
+-
+  !context
+    type: 'in_invoice'
+-
+  creamos despacho de importación
+-
+  !record {model: account.invoice, id: demo_despacho_1}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.partner_afip
+    user_id: base.user_demo
+    reference_type: none
+    document_number: '16052IC04000605L'
+    # payment_term_id: account.account_payment_term
+    type: 'in_invoice'
+    invoice_line_ids:
+      - name: 'Despacho de importación'
+        product_id: l10n_ar_account.product_product_quote_despacho
+        price_unit: 11320.61
+        quantity: 1
+      - name: 'Tasa estadistica'
+        product_id: l10n_ar_account.product_product_arancel
+        price_unit: 463.74
+        quantity: 1
+      - name: 'Servicio de Guarda'
+        product_id: l10n_ar_account.product_product_servicio_de_guarda
+        price_unit: 524.78
+        quantity: 1
+-
+  We should improove this and search tax by other thing than name
+-
+  !python {model: ir.model.data} : |
+      tax_id = self.pool['account.tax'].search(cr, uid, [('type_tax_use', '=', 'purchase'), ('name', '=', 'Percepción Ganancias Sufrida')], limit=1)
+      tax = self.pool['account.tax'].browse(cr, uid, tax_id)
+      if tax and tax.account_id:
+        invoice_tax_id = self.pool['account.invoice.tax'].create(cr, uid, {
+          'invoice_id': ref('demo_despacho_1'),
+          'name': tax.name,
+          'tax_id': tax.id,
+          'account_id': tax.account_id.id,
+          'amount': 6270.560,
+          'manual': True,
+          'sequence': 99,
+        })
+-
+  !python {model: ir.model.data} : |
+      tax_id = self.pool['account.tax'].search(cr, uid, [('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', ref('l10n_ar_account.ri_tax_group_iva_21'))], limit=1)
+      tax = self.pool['account.tax'].browse(cr, uid, tax_id)
+      if tax and tax.account_id:
+        invoice_tax_id = self.pool['account.invoice.tax'].create(cr, uid, {
+          'invoice_id': ref('demo_despacho_1'),
+          'name': tax.name,
+          'tax_id': tax.id,
+          'account_id': tax.account_id.id,
+          'amount': 19472.141,
+          'manual': True,
+          'sequence': 99,
+        })
+-
+  !python {model: ir.model.data} : |
+      tax_id = self.pool['account.tax'].search(cr, uid, [('type_tax_use', '=', 'purchase'), ('name', '=', 'IVA Adicional 20%')], limit=1)
+      tax = self.pool['account.tax'].browse(cr, uid, tax_id)
+      if tax and tax.account_id:
+        invoice_tax_id = self.pool['account.invoice.tax'].create(cr, uid, {
+          'invoice_id': ref('demo_despacho_1'),
+          'name': tax.name,
+          'tax_id': tax.id,
+          'account_id': tax.account_id.id,
+          'amount': 20901.766,
+          'manual': True,
+          'sequence': 99,
+        })
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_despacho_1}

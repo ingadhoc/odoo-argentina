@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="0">
+    <!-- <data noupdate="True"> -->
+        <record id="product_product_quote_despacho" model="product.product">
+            <field name="name">Despacho de importación</field>
+            <field name="type">service</field>
+            <field name="sale_ok" eval="False"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+        </record>
+        <record id="product_product_tasa_estadistica" model="product.product">
+            <field name="name">Tasa Estadística</field>
+            <field name="type">service</field>
+            <field name="sale_ok" eval="False"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+        </record>
+        <record id="product_product_arancel" model="product.product">
+            <field name="name">Arancel</field>
+            <field name="type">service</field>
+            <field name="sale_ok" eval="False"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+        </record>
+        <record id="product_product_servicio_de_guarda" model="product.product">
+            <field name="name">Servicio de Guarda</field>
+            <field name="type">service</field>
+            <field name="sale_ok" eval="False"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+        </record>
+    </data>
+</openerp>

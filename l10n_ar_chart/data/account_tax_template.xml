@@ -194,6 +194,7 @@
             <field name="account_id" ref="ri_percepcion_iva_aplicada"/>
             <field name="refund_account_id" ref="ri_percepcion_iva_aplicada"/>
             <field name="type_tax_use">sale</field>
+            <field name="tax_group_id" ref="l10n_ar_account.ri_tax_group_iva_percepcion_aplicada"/>
         </record>
 
         <record id="ri_tax_vat_percepcion_compras" model="account.tax.template">
@@ -206,6 +207,7 @@
             <field name="account_id" ref="ri_iva_percepcion"/>
             <field name="refund_account_id" ref="ri_iva_percepcion"/>
             <field name="type_tax_use">purchase</field>
+            <field name="tax_group_id" ref="l10n_ar_account.ri_tax_group_iva_percepcion_sufrida"/>
         </record>
 
         <record id="ri_tax_ganancias_percepcion_ventas" model="account.tax.template">
@@ -218,6 +220,7 @@
             <field name="account_id" ref="ri_percepcion_ganancias_aplicada"/>
             <field name="refund_account_id" ref="ri_percepcion_ganancias_aplicada"/>
             <field name="type_tax_use">sale</field>
+            <field name="tax_group_id" ref="l10n_ar_account.ri_tax_group_ganancias_percepcion_aplicada"/>
         </record>
 
         <record id="ri_tax_ganancias_percepcion_compras" model="account.tax.template">
@@ -230,6 +233,20 @@
             <field name="account_id" ref="ri_a_cuenta_impuestos_ganancias"/>
             <field name="refund_account_id" ref="ri_a_cuenta_impuestos_ganancias"/>
             <field name="type_tax_use">purchase</field>
+            <field name="tax_group_id" ref="l10n_ar_account.ri_tax_group_ganancias_percepcion_sufrida"/>
+        </record>
+
+        <record id="ri_tax_ganancias_iva_adicional" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="name">IVA Adicional 20%</field>
+            <field name="description">IVA Adicional 20%</field>
+            <field name="sequence">4</field>
+            <field eval="20.5" name="amount"/>
+            <field name="amount_type">percent</field>
+            <field name="account_id" ref="ri_iva_percepcion"/>
+            <field name="refund_account_id" ref="ri_iva_percepcion"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="tax_group_id" ref="l10n_ar_account.ri_tax_group_iva_percepcion_sufrida"/>
         </record>
   </data>
 </openerp>

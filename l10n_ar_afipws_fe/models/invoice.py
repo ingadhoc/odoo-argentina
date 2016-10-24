@@ -493,7 +493,8 @@ print "Observaciones:", wscdc.Obs
                         'Adding VAT %s' % vat.tax_id.tax_group_id.name)
                     ws.AgregarIva(
                         vat.tax_id.tax_group_id.afip_code,
-                        "%.2f" % abs(vat.base_amount),
+                        "%.2f" % abs(vat.base),
+                        # "%.2f" % abs(vat.base_amount),
                         "%.2f" % abs(vat.amount),
                     )
 
@@ -503,7 +504,8 @@ print "Observaciones:", wscdc.Obs
                     ws.AgregarTributo(
                         tax.tax_id.tax_group_id.afip_code,
                         tax.tax_id.tax_group_id.name,
-                        "%.2f" % abs(tax.base_amount),
+                        "%.2f" % abs(tax.base),
+                        # "%.2f" % abs(tax.base_amount),
                         # TODO pasar la alicuota
                         # como no tenemos la alicuota pasamos cero, en v9
                         # podremos pasar la alicuota

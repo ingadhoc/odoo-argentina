@@ -34,7 +34,8 @@ class AccountDocumentLetter(models.Model):
         default=True
     )
     taxes_included = fields.Boolean(
-        'Taxes Included?'
+        'Taxes Included?',
+        help='Documents related to this letter will include taxes on reports',
     )
     # taxes_discriminated = fields.Boolean(
     #     'Taxes Discriminated on Invoices?',

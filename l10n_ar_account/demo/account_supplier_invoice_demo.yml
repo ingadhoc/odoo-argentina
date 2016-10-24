@@ -1,5 +1,5 @@
 -
-   Set the context for customer invoices because the 'type' field is readonly in invoice form views, so it value won't be considered by the yaml import
+   Set the context for supplier invoices because the 'type' field is readonly in invoice form views, so it value won't be considered by the yaml import
 -
   !context
     type: 'in_invoice'

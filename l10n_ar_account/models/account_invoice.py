@@ -134,8 +134,10 @@ class AccountInvoice(models.Model):
         self.vat_tax_ids = vat_taxes
         self.vat_taxable_ids = vat_taxables
         self.vat_amount = vat_amount
-        self.vat_taxable_amount = sum(vat_taxables.mapped('base_amount'))
-        self.vat_base_amount = sum(vat_taxes.mapped('base_amount'))
+        # self.vat_taxable_amount = sum(vat_taxables.mapped('base_amount'))
+        self.vat_taxable_amount = sum(vat_taxables.mapped('base'))
+        # self.vat_base_amount = sum(vat_taxes.mapped('base_amount'))
+        self.vat_base_amount = sum(vat_taxes.mapped('base'))
 
         # vat exempt values
         # exempt taxes are the ones with code 2
@@ -145,7 +147,9 @@ class AccountInvoice(models.Model):
                 r.tax_id.tax_group_id.tax == 'vat' and
                 r.tax_id.tax_group_id.afip_code == 2))
         self.vat_exempt_base_amount = sum(
-            vat_exempt_taxes.mapped('base_amount'))
+            vat_exempt_taxes.mapped('base'))
+        # self.vat_exempt_base_amount = sum(
+        #     vat_exempt_taxes.mapped('base_amount'))
 
         # vat_untaxed_base_amount values (no gravado)
         # vat exempt taxes are the ones with code 1
@@ -155,7 +159,9 @@ class AccountInvoice(models.Model):
                 r.tax_id.tax_group_id.tax == 'vat' and
                 r.tax_id.tax_group_id.afip_code == 1))
         self.vat_untaxed_base_amount = sum(
-            vat_untaxed_taxes.mapped('base_amount'))
+            vat_untaxed_taxes.mapped('base'))
+        # self.vat_untaxed_base_amount = sum(
+        #     vat_untaxed_taxes.mapped('base_amount'))
 
         # other taxes values
         not_vat_taxes = self.tax_line_ids - vat_taxes
@@ -273,7 +279,6 @@ class AccountInvoice(models.Model):
                 'out_invoice', 'in_invoice', 'out_refund', 'in_refund']:
 
             if self.use_documents:
-
                 letters = self.journal_id.get_journal_letter(
                     counterpart_partner=self.commercial_partner_id)
 
@@ -284,6 +289,17 @@ class AccountInvoice(models.Model):
                     ('document_type_id.document_letter_id', '=', False),
                 ]
 
+                # if invoice_type is refund, only credit notes
+                if invoice_type in ['out_refund', 'in_refund']:
+                    domain += [
+                        ('document_type_id.internal_type',
+                            '=', 'credit_note')]
+                # else, none credit notes
+                else:
+                    domain += [
+                        ('document_type_id.internal_type',
+                            '!=', 'credit_note')]
+
                 # If internal_type in context we try to serch specific document
                 # for eg used on debit notes
                 internal_type = self._context.get('internal_type', False)
@@ -292,7 +308,6 @@ class AccountInvoice(models.Model):
                         domain + [
                             ('document_type_id.internal_type',
                                 '=', internal_type)], limit=1)
-
                 # For domain, we search all documents
                 journal_document_types = journal_document_types.search(domain)
 
@@ -354,7 +369,7 @@ class AccountInvoice(models.Model):
         without_responsability = argentinian_invoices.filtered(
             lambda x: not x.commercial_partner_id.afip_responsability_type_id)
         if without_responsability:
-            raise Warning(_(
+            raise UserError(_(
                 'The following invoices has a partner without AFIP '
                 'responsability: %s' % without_responsability.ids))
 
@@ -375,18 +390,23 @@ class AccountInvoice(models.Model):
         if unconfigured_tax_groups:
             raise UserError(_(
                 "You are using argentinian localization and there are some tax"
-                " tax group that are not configured. Tax Groups ids: %s" % (
-                    unconfigured_tax_groups.ids)))
+                " groups that are not configured. Tax Groups (id): %s" % (
+                    ', '.join(unconfigured_tax_groups.mapped(
+                        lambda x: '%s (%s)' % (x.name, x.id))))))
 
-        for invoice in argentinian_invoices:
-            # we check vat base amount is equal to amount untaxed
-            # usamos una precision de 0.1 porque en algunos casos no pudimos
-            # arreglar pbñe,as de redondedo
-            # TODO usar round
-            if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
-                raise UserError(_(
-                    "Invoice with ID %i has some lines without vat Tax ") % (
-                        invoice.id))
+        # self.env['account.invoice.line'].search([
+        #     ('invoice_id', 'in', argentinian_invoices.ids),
+        #     ('invoice_line_tax_ids.tax_group_id', 'in', argentinian_invoices.ids),
+        #     ])
+        # for invoice in argentinian_invoices:
+        #     # we check vat base amount is equal to amount untaxed
+        #     # usamos una precision de 0.1 porque en algunos casos no pudimos
+        #     # arreglar pbñe,as de redondedo
+        #     # TODO usar round
+        #     if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
+        #         raise UserError(_(
+        #             "Invoice with ID %i has some lines without vat Tax ") % (
+        #                 invoice.id))
 
         # Check except vat invoice
         afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']

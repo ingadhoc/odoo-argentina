@@ -131,8 +131,10 @@ class account_tax_code(models.Model):
         #     amount_untaxed += invoice_tax.base_amount * invoice_tax
         # amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount')))
         # amount_tax = abs(sum(invoice_taxes.mapped('tax_amount')))
-        amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount'))) - abs(
-            sum(refund_invoice_taxes.mapped('base_amount')))
+        amount_untaxed = abs(sum(invoice_taxes.mapped('base'))) - abs(
+            sum(refund_invoice_taxes.mapped('base')))
+        # amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount'))) - abs(
+        #     sum(refund_invoice_taxes.mapped('base_amount')))
         amount_tax = abs(sum(invoice_taxes.mapped('tax_amount'))) - abs(
             sum(refund_invoice_taxes.mapped('tax_amount')))
         amount_total = amount_untaxed + amount_tax

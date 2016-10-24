@@ -35,7 +35,7 @@
         <record model='account.document.letter' id='dl_x'>
             <field name='name'>X</field>
             <field name='issuer_ids' eval="[(6, 0, [ref('res_IVARI'), ref('res_IVANR'), ref('res_RM'), ref('res_IVARNI'), ref('res_IVAE')])]"/>
-            <field name='receptor_ids' eval="[(6, 0, [ref('res_IVARI'), ref('res_IVANR'), ref('res_RM'), ref('res_IVARNI'), ref('res_IVAE')])]"/>
+            <field name='receptor_ids' eval="[(6, 0, [ref('res_IVARI'), ref('res_IVANR'), ref('res_RM'), ref('res_IVARNI'), ref('res_IVAE'), ref('res_CF')])]"/>
             <field name="taxes_included" eval="True"/>
         </record>
         <!-- Lo usamos para documentos varios de importacion -->

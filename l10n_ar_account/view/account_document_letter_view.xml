@@ -12,7 +12,7 @@
                         <field name="active"/>                    
                         <field name="issuer_ids"/>
                         <field name="receptor_ids"/>
-                        <field name="taxes_included" widget="many2many_tags"/>
+                        <field name="taxes_included"/>
                         <!-- <field name="included_tax_group_ids" widget="many2many_tags"/> -->
                         <field name="document_type_ids" colspan="4"/>
                     </group>

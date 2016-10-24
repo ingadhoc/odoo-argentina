@@ -415,7 +415,7 @@ class account_vat_ledger(models.Model):
         self.REGINFO_CV_CBTE = '\r\n'.join(res)
 
     @api.multi
-    def get_tax_row(self, invoice, base_amount, code, tax_amount):
+    def get_tax_row(self, invoice, base, code, tax_amount):
         self.ensure_one()
         inv = invoice
         row = [
@@ -431,7 +431,7 @@ class account_vat_ledger(models.Model):
         if self.type == 'sale':
             row += [
                 # Campo 4: Importe Neto Gravado
-                self.format_amount(base_amount, invoice=inv),
+                self.format_amount(base, invoice=inv),
 
                 # Campo 5: Alícuota de IVA.
                 str(code).rjust(4, '0'),
@@ -450,7 +450,7 @@ class account_vat_ledger(models.Model):
                     inv.commercial_partner_id),
 
                 # Campo 6: Importe Neto Gravado
-                self.format_amount(base_amount, invoice=inv),
+                self.format_amount(base, invoice=inv),
 
                 # Campo 7: Alícuota de IVA.
                 str(code).rjust(4, '0'),
@@ -479,9 +479,9 @@ class account_vat_ledger(models.Model):
                     lambda x: x.tax_code_id.afip_code == afip_code)
                 res.append(''.join(self.get_tax_row(
                     inv,
-                    sum(taxes.mapped('base_amount')),
+                    sum(taxes.mapped('base')),
                     afip_code,
-                    sum(taxes.mapped('tax_amount')),
+                    sum(taxes.mapped('amount')),
                     )))
         self.REGINFO_CV_ALICUOTAS = '\r\n'.join(res)
 
@@ -497,21 +497,22 @@ class account_vat_ledger(models.Model):
             for afip_code in vat_taxes.mapped('tax_code_id.afip_code'):
                 taxes = vat_taxes.filtered(
                     lambda x: x.tax_code_id.afip_code == afip_code)
-                base_amount = sum(taxes.mapped('base_amount'))
-                tax_amount = sum(taxes.mapped('tax_amount'))
+                base = sum(taxes.mapped('base'))
+                # base_amount = sum(taxes.mapped('base_amount'))
+                amount = sum(taxes.mapped('amount'))
                 row = [
                     # Campo 1: Despacho de importación.
                     (inv.afip_document_number or inv.number or '').rjust(
                         16, '0'),
 
                     # Campo 2: Importe Neto Gravado
-                    self.format_amount(base_amount, invoice=inv),
+                    self.format_amount(base, invoice=inv),
 
                     # Campo 3: Alícuota de IVA
                     str(afip_code).rjust(4, '0'),
 
                     # Campo 4: Impuesto Liquidado.
-                    self.format_amount(tax_amount, invoice=inv),
+                    self.format_amount(amount, invoice=inv),
                     ]
                 res.append(''.join(row))
         self.REGINFO_CV_COMPRAS_IMPORTACIONES = '\r\n'.join(res)

@@ -220,3 +220,20 @@
         quantity: 1.0
 -
   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_7}
+-
+   Invoice to consumidor final
+-
+  !record {model: account.invoice, id: demo_invoice_8}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.par_cfa
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Support Services'
+        product_id: product.product_product_2
+        price_unit: 642.0
+        quantity: 1
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_8}

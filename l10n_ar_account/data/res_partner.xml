@@ -5,6 +5,9 @@
         <record model='res.partner' id='l10n_ar_partner.par_cfa'>
             <field name='afip_responsability_type_id' ref='res_CF'/>
         </record>
+        <record model='res.partner' id='l10n_ar_partner.partner_afip'>
+            <field name='afip_responsability_type_id' ref='res_IVANR'/>
+        </record>
 
     </data>
 </openerp>

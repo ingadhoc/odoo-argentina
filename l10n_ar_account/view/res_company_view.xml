@@ -3,15 +3,24 @@
     <data>
         <record model="ir.ui.view" id="view_company_inherit_form">
             <field name="name">res.company.form.inherit</field>
-            <field name="inherit_id" ref="account_document.view_company_inherit_form"/>
+            <field name="inherit_id" ref="l10n_ar_partner.view_company_inherit_form"/>
+            <!-- <field name="inherit_id" ref="account_document.view_company_inherit_form"/> -->
             <field name="model">res.company</field>
             <field name="arch" type="xml">
+                <!-- extendemos l10n_ar_partner para hacer obligatorio si cia argentina -->
+                <field name="main_id_category_id" position="attributes">
+                    <attribute name="attrs">{'required': [('localization', '=', 'argentina')]}</attribute>
+                </field>
+                <field name="main_id_number" position="attributes">
+                    <attribute name="attrs">{'required': [('localization', '=', 'argentina')]}</attribute>
+                </field>
+
                 <field name="vat" position="after">
                     <field name="afip_responsability_type_id" options="{'no_open': True, 'no_create': True}" attrs="{'required': [('localization', '=', 'argentina')], 'invisible': [('localization', '!=', 'argentina')]}"/>
-                    <label for="gross_income_number" string="Gross Income"/>
-                    <div>
-                        <field name="gross_income_type" placeholder="Type..." class="oe_inline"/>
-                        <field name="gross_income_number" placeholder="Number..." class="oe_inline" attrs="{'invisible': [('gross_income_type', '=', False)], 'required': [('gross_income_type', '!=', False)]}"/>
+                    <label for="gross_income_number" string="Gross Income" attrs="{'invisible': [('localization', '!=', 'argentina')]}"/>
+                    <div attrs="{'invisible': [('localization', '!=', 'argentina')]}">
+                        <field name="gross_income_type" attrs="{'required': [('localization', '=', 'argentina')]}" class="oe_inline"/>
+                        <field name="gross_income_number" placeholder="Number..." class="oe_inline" attrs="{'invisible': [('gross_income_type', 'in', [False, 'no_liquida'])], 'required': [('gross_income_type', 'not in', [False, 'no_liquida'])]}"/>
                     </div>
                     <field name="start_date" attrs="{'required': [('localization', '=', 'argentina')], 'invisible': [('localization', '!=', 'argentina')]}"/>
                 </field>

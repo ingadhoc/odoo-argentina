@@ -10,10 +10,14 @@
     'depends': [
         'account_document',
         'l10n_ar_partner',
+        # no es una dependencia en si (salvo para datos demo) pero si es
+        # necesario por como implemenamos la localizacion
+        # 'account_invoice_tax_wizard',
     ],
     'external_dependencies': {
     },
     'data': [
+        'data/product_data.xml',
         'data/afip_responsability_type.xml',
         'data/account_document_letter.xml',
         'data/account.document.type.csv',

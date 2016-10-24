@@ -145,18 +145,20 @@ class AccountJournal(models.Model):
 
         document_types = self.env['account.document.type'].search([
             ('internal_type', 'in', internal_types),
+            ('localization', '=', self.localization),
             '|', ('document_letter_id', 'in', letters.ids),
             ('document_letter_id', '=', False)])
 
+        # TODO borrar, ya estamos agregando arriba porque buscamos letter false
         # for purchases we add in_documents and ticket whitout letters
         # TODO ver que no hace falta agregar los tickets aca porque ahora le
         # pusimos al tique generico la letra x entonces ya se agrega solo.
         # o tal vez, en vez de usar letra x, lo deberiamos motrar tambien como
         # factible por no tener letra y ser tique
-        if self.type == 'purchase':
-            document_types += self.env['account.document.type'].search([
-                ('internal_type', 'in', other_purchase_internal_types),
-                ('document_letter_id', '=', False)])
+        # if self.type == 'purchase':
+        #     document_types += self.env['account.document.type'].search([
+        #         ('internal_type', 'in', other_purchase_internal_types),
+        #         ('document_letter_id', '=', False)])
 
         # take out documents that already exists
         document_types = document_types - self.mapped(

@@ -19,6 +19,13 @@ class account_voucher(models.Model):
         readonly=True,
         store=True,
         )
+    # agregamos este campo para hacer mas facil la migracion
+    afip_document_number = fields.Char(
+        string=_('Document Number'),
+        related='move_id.afip_document_number',
+        readonly=True,
+        store=True,
+        )
     manual_prefix = fields.Char(
         related='receiptbook_id.manual_prefix',
         string='Prefix',

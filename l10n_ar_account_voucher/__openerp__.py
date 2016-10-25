@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Aregentinian Receipts and Payment Orders',
-    'version': '8.0.1.2.2',
+    'version': '8.0.1.3.2',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author':  'ADHOC SA',

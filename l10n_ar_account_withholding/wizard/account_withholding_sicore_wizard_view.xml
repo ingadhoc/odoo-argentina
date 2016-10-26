@@ -19,6 +19,13 @@
                         </group>
                     </group>
                     <separator />
+                        <p class="oe_grey">
+Asegúrese de tener bien configurado el <b>Código de AFIP</b> para cada Código de Impuesto que quiera exportar.<br />
+Además, procure establecer los parámetros de importación de SICORE de la siguiente manera: <br/>
+<b>Separador decimal:</b> Punto. <br/>
+<b>Incluye Operaciones con Beneficiarios del Exterior:</b> Desactivado. <br/>
+                        </p>
+                    <separator />
                     <field name="withholding_ids" />
                     <footer>
                         <button string="Confirm" name="confirm" type="object" class="oe_highlight"/>

@@ -66,9 +66,7 @@ class account_debt_report_wizard(models.TransientModel):
 
     @api.onchange('company_id', 'tax_withholding_type')
     def _update_fields_domain(self):
-        tax_domain = []
-        if self.company_id:
-            tax_domain.append(('company_id', '=', self.company_id.id))
+        tax_domain = [('company_id', '=', self.company_id.id)]
         if self.tax_withholding_type:
             tax_domain.append(('type_tax_use', 'in', ('all', self.tax_withholding_type)))
         return {
@@ -81,17 +79,15 @@ class account_debt_report_wizard(models.TransientModel):
     def _compute_withholding_ids(self):
         self.ensure_one()
         # search withholdings
-        domain = [['state', '=', 'posted']]
+        domain = [('state', '=', 'posted'), ('company_id', '=', self.company_id.id)]
         if self.from_date:
-            domain.append(['date', '>=', self.from_date])
+            domain.append(('date', '>=', self.from_date))
         if self.to_date:
-            domain.append(['date', '<=', self.to_date])
-        if self.company_id:
-            domain.append(['company_id', '=', self.company_id.id])
+            domain.append(('date', '<=', self.to_date))
         if self.tax_withholding_type and self.tax_withholding_type != 'all':
-            domain.append(['type', '=', self.tax_withholding_type])
+            domain.append(('type', '=', self.tax_withholding_type))
         if self.tax_withholding_id:
-            domain.append(['tax_withholding_id', '=', self.tax_withholding_id.id])
+            domain.append(('tax_withholding_id', '=', self.tax_withholding_id.id))
         self.withholding_ids = self.env['account.voucher.withholding'].search(domain)        
 
     @api.multi

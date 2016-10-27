@@ -1127,16 +1127,16 @@
 
             <record model="account.account.template" id="ri_amortizacion_derechos_de_marca">
                 <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-                <field name="code">4.4.01.00.020</field>
+                <field name="code">4.4.02.00.020</field>
                 <field name="user_type_id" ref="account.data_account_type_depreciation"/>
                 <field name="name">Amortización Derechos de marca</field>
             </record>
 
-            <record model="account.account.template" id="ri_amortizacion_muebles_y_utiles">
+            <record model="account.account.template" id="ri_amortizacion_derechos_de_uso">
                 <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-                <field name="code">4.4.01.00.030</field>
+                <field name="code">4.4.02.00.030</field>
                 <field name="user_type_id" ref="account.data_account_type_depreciation"/>
-                <field name="name">Amortización muebles y útiles</field>
+                <field name="name">Amortización Derechos de uso</field>
             </record>
 
     <!-- 4.5 (Impuesto a las ganancias) --> 

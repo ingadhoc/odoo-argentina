@@ -6,6 +6,7 @@
             <field name="code">6.0.00.00.010</field>
             <field name="user_type_id" ref="account.data_account_type_current_assets"/>
             <field name="name">Transferencias Internas</field>
+            <field name="reconcile" eval="True"/>
         </record>
 
         <!-- Chart template -->

@@ -719,23 +719,16 @@
                     <field name="name">Costo de Mercadería Vendida</field>
                 </record>
 
-                <record model="account.account.template" id="ri_materia_prima">
-                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-                    <field name="code">4.1.01.02.030</field>
-                    <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
-                    <field name="name">Materia Prima</field>
-                </record>
-
                 <record model="account.account.template" id="ri_descuentos_clientes">
                     <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-                    <field name="code">4.1.01.02.040</field>
+                    <field name="code">4.1.01.02.030</field>
                     <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
                     <field name="name">Descuentos a clientes</field>
                 </record>
 
                 <record model="account.account.template" id="ri_comisiones">
                     <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-                    <field name="code">4.1.01.02.050</field>
+                    <field name="code">4.1.01.02.040</field>
                     <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
                     <field name="name">Comisiones</field>
                 </record>
@@ -770,7 +763,7 @@
                     <field name="name">IIBB Prov. Santa Fé</field>
                 </record>
 
-                <record model="account.account.template" id="ri_comisiones">
+                <record model="account.account.template" id="ri_drei">
                     <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
                     <field name="code">4.1.01.03.050</field>
                     <field name="user_type_id" ref="account.data_account_type_direct_costs"/>

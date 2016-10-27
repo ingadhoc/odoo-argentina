@@ -1,0 +1,33 @@
+-
+  set invoice context needed for refunds
+-
+  !context
+    model: 'account.invoice'
+-
+  Create draft refund for sup invoice 3
+-
+  !record {model: account.invoice.refund, id: demo_sup_refund_invoice_3}:
+    description: 'Mercadería defectuosa'
+    document_number: '0001-01234567'
+    invoice_id: demo_sup_invoice_3
+    filter_refund: 'refund'
+-
+  !python {model: account.invoice.refund} : |
+    context = {'active_ids': [ref('demo_sup_invoice_3')], 'active_model': 'account.invoice'}
+    refund_ids = [ref("demo_sup_refund_invoice_3")]
+    self.get_available_journal_document_types(cr, uid, refund_ids, context)
+    self.invoice_refund(cr, uid, refund_ids, context)
+-
+  Create cancel refund for sup invoice 4
+-
+  !record {model: account.invoice.refund, id: demo_sup_refund_invoice_4}:
+    document_number: '0001-01234566'
+    description: 'Compra cancelada'
+    invoice_id: demo_sup_invoice_4
+    filter_refund: 'cancel'
+-
+  !python {model: account.invoice.refund} : |
+    context = {'active_ids': [ref('demo_sup_invoice_4')], 'active_model': 'account.invoice'}
+    refund_ids = [ref("demo_sup_refund_invoice_4")]
+    self.get_available_journal_document_types(cr, uid, refund_ids, context)
+    self.invoice_refund(cr, uid, refund_ids, context)

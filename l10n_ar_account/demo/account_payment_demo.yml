@@ -59,8 +59,8 @@
           'payment_type': 'outbound',
           'journal_id': payment_journal.id,
           'partner_type': 'supplier',
-          'invoice_ids': [(6, 0, [ref('demo_sup_invoice_4')])],
-          'amount': 3266.50,
+          'invoice_ids': [(6, 0, [ref('demo_sup_invoice_2')])],
+          'amount': 8254.20,
           'payment_method_id': payment_journal.outbound_payment_method_ids[0].id,
         }
         payment_id = self.pool['account.payment'].create(cr, uid, payment_vals)

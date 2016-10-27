@@ -255,8 +255,9 @@ class AccountInvoice(models.Model):
             return super(
                 AccountInvoice, self).get_localization_invoice_vals()
 
-    @api.multi
-    def _get_available_journal_document_types(self):
+    @api.model
+    def _get_available_journal_document_types(
+            self, journal, invoice_type, partner):
         """
         This function search for available document types regarding:
         * Journal
@@ -266,11 +267,12 @@ class AccountInvoice(models.Model):
         If needed, we can make this funcion inheritable and customizable per
         localization
         """
-        self.ensure_one()
-        if self.localization != 'argentina':
+        if journal.localization != 'argentina':
             return super(
-                AccountInvoice, self)._get_available_journal_document_types()
-        invoice_type = self.type
+                AccountInvoice, self)._get_available_journal_document_types(
+                    journal, invoice_type, partner)
+
+        commercial_partner = partner.commercial_partner_id
 
         journal_document_types = journal_document_type = self.env[
             'account.journal.document.type']
@@ -278,12 +280,12 @@ class AccountInvoice(models.Model):
         if invoice_type in [
                 'out_invoice', 'in_invoice', 'out_refund', 'in_refund']:
 
-            if self.use_documents:
-                letters = self.journal_id.get_journal_letter(
-                    counterpart_partner=self.commercial_partner_id)
+            if journal.use_documents:
+                letters = journal.get_journal_letter(
+                    counterpart_partner=commercial_partner)
 
                 domain = [
-                    ('journal_id', '=', self.journal_id.id),
+                    ('journal_id', '=', journal.id),
                     '|',
                     ('document_type_id.document_letter_id', 'in', letters.ids),
                     ('document_type_id.document_letter_id', '=', False),
@@ -316,11 +318,10 @@ class AccountInvoice(models.Model):
                     journal_document_type = journal_document_types[0]
 
         if invoice_type == 'in_invoice':
-            other_document_types = (
-                self.commercial_partner_id.other_document_type_ids)
+            other_document_types = (commercial_partner.other_document_type_ids)
 
             domain = [
-                ('journal_id', '=', self.journal_id.id),
+                ('journal_id', '=', journal.id),
                 ('document_type_id',
                     'in', other_document_types.ids),
             ]

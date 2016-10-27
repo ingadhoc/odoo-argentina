@@ -241,7 +241,7 @@
             <field name="name">IVA Adicional 20%</field>
             <field name="description">IVA Adicional 20%</field>
             <field name="sequence">4</field>
-            <field eval="20.5" name="amount"/>
+            <field eval="20.0" name="amount"/>
             <field name="amount_type">percent</field>
             <field name="account_id" ref="ri_percepcion_iva_sufrida"/>
             <field name="refund_account_id" ref="ri_percepcion_iva_sufrida"/>

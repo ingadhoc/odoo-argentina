@@ -78,7 +78,7 @@
         })
 -
   !python {model: ir.model.data} : |
-      tax_id = self.pool['account.tax'].search(cr, uid, [('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', ref('l10n_ar_account.ri_tax_group_iva_21'))], limit=1)
+      tax_id = self.pool['account.tax'].search(cr, uid, [('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', ref('l10n_ar_account.tax_group_iva_21'))], limit=1)
       tax = self.pool['account.tax'].browse(cr, uid, tax_id)
       if tax and tax.account_id:
         invoice_tax_id = self.pool['account.invoice.tax'].create(cr, uid, {

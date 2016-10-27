@@ -7,7 +7,7 @@
             <field name="sequence">10</field>
         </record> -->
     <!-- IVAS -->
-        <record model="account.tax.group" id="ri_tax_group_iva_no_corresponde">
+        <record model="account.tax.group" id="tax_group_iva_no_corresponde">
             <field name="name">IVA No Corresponde</field>
             <field name="afip_code">0</field>
             <field name="tax">vat</field>
@@ -15,7 +15,7 @@
             <field name="application">national_taxes</field>
         </record>
 
-        <record model="account.tax.group" id="ri_tax_group_iva_no_gravado">
+        <record model="account.tax.group" id="tax_group_iva_no_gravado">
             <field name="name">IVA No Gravado</field>
             <field name="afip_code">1</field>
             <field name="tax">vat</field>
@@ -23,7 +23,7 @@
             <field name="application">national_taxes</field>
         </record>
 
-        <record model="account.tax.group" id="ri_tax_group_iva_exento">
+        <record model="account.tax.group" id="tax_group_iva_exento">
             <field name="name">IVA Exento</field>
             <field name="afip_code">2</field>
             <field name="tax">vat</field>
@@ -31,7 +31,7 @@
             <field name="application">national_taxes</field>
         </record>
 
-        <record model="account.tax.group" id="ri_tax_group_iva_0">
+        <record model="account.tax.group" id="tax_group_iva_0">
             <field name="name">IVA 0%</field>
             <field name="afip_code">3</field>
             <field name="tax">vat</field>
@@ -39,7 +39,7 @@
             <field name="application">national_taxes</field>
         </record>
 
-        <record model="account.tax.group" id="ri_tax_group_iva_10">
+        <record model="account.tax.group" id="tax_group_iva_10">
             <field name="name">IVA 10.5%</field>
             <field name="afip_code">4</field>
             <field name="tax">vat</field>
@@ -47,7 +47,7 @@
             <field name="application">national_taxes</field>
         </record>
 
-        <record model="account.tax.group" id="ri_tax_group_iva_21">
+        <record model="account.tax.group" id="tax_group_iva_21">
             <field name="name">IVA 21%</field>
             <field name="afip_code">5</field>
             <field name="tax">vat</field>
@@ -55,7 +55,7 @@
             <field name="application">national_taxes</field>
         </record>
 
-        <record model="account.tax.group" id="ri_tax_group_iva_27">
+        <record model="account.tax.group" id="tax_group_iva_27">
             <field name="name">IVA 27%</field>
             <field name="afip_code">6</field>
             <field name="tax">vat</field>
@@ -63,7 +63,7 @@
             <field name="application">national_taxes</field>
         </record>
 
-        <record model="account.tax.group" id="ri_tax_group_iva_gravado">
+        <record model="account.tax.group" id="tax_group_iva_gravado">
             <field name="name">IVA Gravado</field>
             <field name="afip_code">7</field>
             <field name="tax">vat</field>
@@ -71,7 +71,7 @@
             <field name="application">national_taxes</field>
         </record>
 
-        <record model="account.tax.group" id="ri_tax_group_iva_5">
+        <record model="account.tax.group" id="tax_group_iva_5">
             <field name="name">IVA 5%</field>
             <field name="afip_code">8</field>
             <field name="tax">vat</field>
@@ -79,7 +79,7 @@
             <field name="application">national_taxes</field>
         </record>
 
-        <record model="account.tax.group" id="ri_tax_group_iva_25">
+        <record model="account.tax.group" id="tax_group_iva_25">
             <field name="name">IVA 2,5%</field>
             <field name="afip_code">9</field>
             <field name="tax">vat</field>
@@ -87,16 +87,17 @@
             <field name="application">national_taxes</field>
         </record>
 
+    <!-- TODO, por ahora creamos sufrida y aplicada para cada uno porque entendemos que son impuestos diferentes pero tal vez en el futuro se puedan unidifcar, es mas facil unificar después que separarlos en el futuro -->
     <!-- Percepción IVA -->
 
-        <record model="account.tax.group" id="ri_tax_group_iva_percepcion_sufrida">
+        <record model="account.tax.group" id="tax_group_percepcion_iva_sufrida">
             <field name="name">Percepción IVA sufrida</field>
             <field name="tax">vat</field>
             <field name="type">perception</field>
             <field name="application">national_taxes</field>
         </record>
 
-        <record model="account.tax.group" id="ri_tax_group_iva_percepcion_aplicada">
+        <record model="account.tax.group" id="tax_group_percepcion_iva_aplicada">
             <field name="name">Percepción IVA aplicada</field>
             <field name="tax">vat</field>
             <field name="type">perception</field>
@@ -104,19 +105,36 @@
         </record>
 
     <!-- Ganancias -->
-        <record model="account.tax.group" id="ri_tax_group_ganancias_percepcion_sufrida">
+        <record model="account.tax.group" id="tax_group_percepcion_ganancias_sufrida">
             <field name="name">Percepción Ganancias sufrida</field>
             <field name="tax">profits</field>
             <field name="type">perception</field>
             <field name="application">national_taxes</field>
         </record>
 
-        <record model="account.tax.group" id="ri_tax_group_ganancias_percepcion_aplicada">
+        <record model="account.tax.group" id="tax_group_percepcion_ganancias_aplicada">
             <field name="name">Percepción Ganancias aplicada</field>
             <field name="tax">profits</field>
             <field name="type">perception</field>
             <field name="application">national_taxes</field>
         </record>
+
+    <!-- IIBB -->
+    <!-- Vamos a tratar de que la info de que provincia esté en el impuesto u otro lugar -->
+        <record model="account.tax.group" id="tax_group_percepcion_iibb_sufrida">
+            <field name="name">Percepción IIBB sufrida</field>
+            <field name="tax">gross_income</field>
+            <field name="type">perception</field>
+            <field name="application">national_taxes</field>
+        </record>
+
+        <record model="account.tax.group" id="tax_group_percepcion_iibb_aplicada">
+            <field name="name">Percepción IIBB aplicada</field>
+            <field name="tax">gross_income</field>
+            <field name="type">perception</field>
+            <field name="application">national_taxes</field>
+        </record>
+
 
     </data>
 </openerp>

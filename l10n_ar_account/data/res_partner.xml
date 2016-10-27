@@ -7,6 +7,8 @@
         </record>
         <record model='res.partner' id='l10n_ar_partner.partner_afip'>
             <field name='afip_responsability_type_id' ref='res_IVANR'/>
+            <!-- add doc despacho y despacho imp serv -->
+            <field name='other_document_type_ids' eval='[(4, ref("dc_desp_imp"), False), (4, ref("dc_imp_serv"), False)]'/>
         </record>
 
     </data>

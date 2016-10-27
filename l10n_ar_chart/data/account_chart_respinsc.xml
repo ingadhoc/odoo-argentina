@@ -2,609 +2,640 @@
 <openerp>
     <data noupdate="0">
         <!-- Transfer Account Template -->
-        <record id="trans" model="account.account.template">
-            <field name="name">Transfers</field>
+        <record model="account.account.template" id="ri_transferencias_internas">
             <field name="code">6.0.00.00.010</field>
-            <field name="reconcile" eval="True"/>
             <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+            <field name="name">Transferencias Internas</field>
         </record>
 
         <!-- Chart template -->
         <record id="l10nar_ri_chart_template" model="account.chart.template">
             <field name="name">Plan Contable Genérico Argentina para Responsables Inscriptos</field>
-            <field name="transfer_account_id" ref="trans"/>
+            <field name="transfer_account_id" ref="ri_transferencias_internas"/>
             <field name="currency_id" ref="base.ARS"/>
-            <!-- <field name="spoken_languages" eval="'es_AR'"/> -->
-            <field name="bank_account_code_prefix">1.1.01.01</field>
-            <field name="cash_account_code_prefix">1.1.01.01</field>
+            <field name="bank_account_code_prefix">1.1.01.01.</field>
+            <field name="cash_account_code_prefix">1.1.01.01.</field>
             <field name="localization">argentina</field>
             <field name="code_digits">13</field>
         </record>
 
-        <record id="trans" model="account.account.template">
+        <record model="account.account.template" id="ri_transferencias_internas">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
         </record>
 
-        <!-- Accounts Template -->
-<!--         <record model="account.account.template" id="ri_caja_pesos">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.01.01.010</field>
-            <field name="user_type_id" ref="account.data_account_type_cash"/>
-            <field name="name">Caja pesos</field>
-            <field name="parent_id" ref="ri_caja"/>
-            <field name="company_id" ref="company_ri"/>
-        </record> -->
+<!-- 1 (activo) -->
 
-<!--         <record model="account.account.template" id="ri_caja_usd">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.01.01.020</field>
-            <field name="user_type_id" ref="account.data_account_type_cash"/>
-            <field name="name">Caja USD</field>
-            <field name="parent_id" ref="ri_caja"/>
-            <field name="company_id" ref="company_ri"/>
-            <field name="currency_id" ref="base.USD"/>
-        </record> -->
+    <!-- 1.1 (activo corriente) -->
 
-<!--         <record model="account.account.template" id="ri_caja_eur">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.01.01.030</field>
-            <field name="user_type_id" ref="account.data_account_type_cash"/>
-            <field name="name">Caja EUR</field>
-            <field name="parent_id" ref="ri_caja"/>
-            <field name="company_id" ref="company_ri"/>
-            <field name="currency_id" ref="base.EUR"/>
-        </record> -->
+        <!-- 1.1.01 (Caja y bancos, se crea desde los diarios) -->
 
-<!--         <record model="account.account.template" id="ri_caja_eur">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.01.01.030</field>
-            <field name="user_type_id" ref="account.data_account_type_cash"/>
-            <field name="name">Caja EUR</field>
-            <field name="parent_id" ref="ri_caja_y_bancos"/>
-            <field name="company_id" ref="company_ri"/>
-            <field name="currency_id" ref="base.EUR"/>
-        </record> -->
+        <!-- 1.1.02 (créditos comerciales) -->
 
-<!--         <record model="account.account.template" id="ri_fondofijo">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.01.01.010</field>
-            <field name="user_type_id" ref="account.data_account_type_cash"/>
-            <field name="name">Fondo Fijo</field>
-            <field name="parent_id" ref="ri_caja_y_bancos"/>
-        </record>
- -->
-<!--         <record model="account.account.template" id="ri_valores">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.01.01.050</field>
-            <field name="user_type_id" ref="account.data_account_type_cash"/>
-            <field name="name">Valores en cartera</field>
-            <field name="parent_id" ref="ri_caja"/>
-            <field name="company_id" ref="company_ri"/>
-        </record> -->
+            <record model="account.account.template" id="ri_deudores_por_ventas">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">1.1.02.00.010</field>
+                <field name="user_type_id" ref="account.data_account_type_receivable"/>
+                <field name="name">Deudores por ventas</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_deudores_por_ventas">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.02.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_receivable"/>
-            <field name="name">Deudores por ventas</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+            <record model="account.account.template" id="ri_deudores_morosos">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">1.1.02.00.020</field>
+                <field name="user_type_id" ref="account.data_account_type_receivable"/>
+                <field name="name">Deudores morosos</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_deudores_morosos">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.02.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_receivable"/>
-            <field name="name">Deudores morosos</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+        <!-- 1.1.03 (otros créditos) -->
 
-        <record model="account.account.template" id="ri_deudores_varios">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.03.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_receivable"/>
-            <field name="name">Deudores varios</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+            <record model="account.account.template" id="ri_deudores_varios">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">1.1.03.00.010</field>
+                <field name="user_type_id" ref="account.data_account_type_receivable"/>
+                <field name="name">Deudores varios</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_saldo_libre_disponibilidad">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_receivable"/>
-            <field name="name">Saldo Libre Disponibilidad</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+        <!-- 1.1.04 (créditos por impuestos) -->
 
-        <record model="account.account.template" id="ri_retencion_impuestos_ganancias">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.01.010</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Retención impuestos a las ganancias Sufrida</field>
-        </record>
+            <record model="account.account.template" id="ri_saldo_libre_disponibilidad">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">1.1.04.00.010</field>
+                <field name="user_type_id" ref="account.data_account_type_receivable"/>
+                <field name="name">Saldo Libre Disponibilidad</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_a_cuenta_impuestos_ganancias">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.01.020</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Percepción Impuesto a las Ganancias Sufrida</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+            <record model="account.account.template" id="ri_a_retencion_suss_sufrida">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">1.1.04.00.020</field>
+                <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                <field name="name">Retención SUSS Sufrida</field>
+                <field name="reconcile" eval="False"/>
+            </record>
 
-        <record model="account.account.template" id="ri_anticipo_impuestos_ganancias">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.01.030</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Anticipo impuestos a las ganancias</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+            <!-- 1.1.04.01 (iva) --> 
 
-        <record model="account.account.template" id="ri_a_cuenta_impuestos_ganancias_a_favor">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.01.040</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Impuesto a las Ganancias a favor</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+                <record model="account.account.template" id="ri_retencion_iva_sufrida">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.01.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Retención IVA Sufrida</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-<!--         <record model="account.account.template" id="ri_a_cuenta_impuestos_ret_perc_ganancias_a_favor">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1141050</field>
-            <field name="user_type_id" ref="account.data_account_type_receivable"/>
-            <field name="name">Ret/Perc Ganancias a favor</field>
-            <field name="reconcile" eval="True"/>
-            <field name="company_id" ref="company_ri"/>
-        </record> -->
+                <record model="account.account.template" id="ri_percepcion_iva_sufrida">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.01.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Percepción IVA Sufrida</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_iva_retencion">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.02.010</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Retención IVA Sufrida</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+                <record model="account.account.template" id="ri_iva_credito_fiscal">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.01.030</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">IVA crédito fiscal</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_iva_percepcion">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.02.020</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Percepciones IVA Sufrida</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+                <record model="account.account.template" id="ri_iva_saldo_a_favor">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.01.040</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">IVA saldo a favor</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_iva_credito_fiscal">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.02.030</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">IVA crédito fiscal</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+            <!-- 1.1.04.02 (ganancias) --> 
 
-        <record model="account.account.template" id="ri_iva_saldo_a_favor">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.02.040</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">IVA saldo a favor</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+                <record model="account.account.template" id="ri_retencion_ganancias_sufrida">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.02.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Retención ganancias Sufrida</field>
+                </record>
 
-<!--         <record model="account.account.template" id="ri_a_cuenta_impuestos_ret_perc_iva_a_favor">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1142050</field>
-            <field name="user_type_id" ref="account.data_account_type_receivable"/>
-            <field name="name">Ret/Perc IVA a favor</field>
-            <field name="reconcile" eval="True"/>
-            <field name="company_id" ref="company_ri"/>
-        </record> -->
+                <record model="account.account.template" id="ri_percepcion_ganancias_sufrida">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.02.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Percepción ganancias Sufrida</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_percepcion_iibb_cf">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.03.010</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Percepciones ingresos brutos capital federal</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+                <record model="account.account.template" id="ri_anticipo_impuesto_ganancias">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.02.030</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Anticipo impuesto a las ganancias</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_retencion_iibb_cf">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.03.020</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Retención ingresos brutos capital federal</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+                <record model="account.account.template" id="ri_a_cuenta_impuesto_ganancias_a_favor">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.02.040</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Impuesto a las Ganancias a favor</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_percepcion_iibb_ba">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.04.010</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Percepciones ingresos brutos p. buenos aires</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+            <!-- 1.1.04.03 (ibbb caba) --> 
 
-        <record model="account.account.template" id="ri_retencion_iibb_ba">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.04.020</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Retención ingresos brutos p. buenos aires</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+                <record model="account.account.template" id="ri_percepcion_iibb_caba_sufrida">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.03.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Percepción IIBB CABA sufrida</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_percepcion_iibb_co">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.05.010</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Percepciones ingresos brutos p. córdoba</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+                <record model="account.account.template" id="ri_retencion_iibb_caba_sufrida">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.03.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Retención IIBB CABA sufrida</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_retencion_iibb_co">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.05.020</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Retención ingresos brutos p. córdoba</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+            <!-- 1.1.04.04 (ibbb Buenos Aires) --> 
 
-        <record model="account.account.template" id="ri_percepcion_iibb_sf">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.06.010</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Percepciones ingresos brutos p. santa fé</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+                <record model="account.account.template" id="ri_percepcion_iibb_ba_sufrida">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.04.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Percepción IIBB p. Buenos Aires sufrida</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_retencion_iibb_sf">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.04.06.020</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Retención ingresos brutos p. santa fé</field>
-            <field name="reconcile" eval="False"/>
-        </record>
+                <record model="account.account.template" id="ri_retencion_iibb_ba_sufrida">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.04.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Retención IIBB p. Buenos Aires sufrida</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_mercaderia">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.1.05.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Mercaderia</field>
-        </record>
+            <!-- 1.1.04.05 (ibbb Córdoba) --> 
 
-        <record model="account.account.template" id="ri_instalaciones">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.2.01.01.020</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Instalaciones</field>
-        </record>
+                <record model="account.account.template" id="ri_percepcion_iibb_co_sufrida">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.05.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Percepción IIBB p. Córdoba sufrida</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_muebles_y_utiles">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.2.01.01.030</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Muebles y útiles</field>
-        </record>
+                <record model="account.account.template" id="ri_retencion_iibb_co_sufrida">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.05.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Retención IIBB p. Córdoba sufrida</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_rodados">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.2.01.01.040</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Rodados</field>
-        </record>
+            <!-- 1.1.04.06 (ibbb Santa Fé) --> 
 
-        <record model="account.account.template" id="ri_amortizacion_acumulada_maq_y_equipos">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.2.01.02.010</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Amortización acumulada maquinarias y equipos</field>
-        </record>
+                <record model="account.account.template" id="ri_percepcion_iibb_sf_sufrida">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.06.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Percepción IIBB p. Santa Fé sufrida</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_amortizacion_acumulada_instalaciones">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.2.01.02.020</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Amortización acumulada instalaciones</field>
-        </record>
+                <record model="account.account.template" id="ri_retencion_iibb_sf_sufrida">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.1.04.06.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                    <field name="name">Retención IIBB p. Santa Fé sufrida</field>
+                    <field name="reconcile" eval="False"/>
+                </record>
 
-        <record model="account.account.template" id="ri_amortizacion_acumulada_muebles_utiles">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.2.01.02.030</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Amortización acumulada muebles y útiles</field>
-        </record>
+        <!-- 1.1.05 (Bienes de cambio) --> 
 
-        <record model="account.account.template" id="ri_amortizacion_acumulada_rodados">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.2.01.02.040</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Amortización rodados</field>
-        </record>
+            <record model="account.account.template" id="ri_mercaderia">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">1.1.05.00.010</field>
+                <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                <field name="name">Productos terminados / Mercaderia</field>
+            </record>
 
-        <record model="account.account.template" id="ri_software">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.2.02.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Software</field>
-        </record>
+            <record model="account.account.template" id="ri_materia_prima">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">1.1.05.00.020</field>
+                <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                <field name="name">Materia Prima</field>
+            </record>
 
-        <record model="account.account.template" id="ri_gastos_de_construccion">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">1.2.02.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Gastos de construccion</field>
-        </record> 
+            <record model="account.account.template" id="ri_productos_en_proceso">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">1.1.05.00.030</field>
+                <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                <field name="name">Productos en proceso</field>
+            </record>
+
+    <!-- 1.2 (Activo no corriente) --> 
+    
+        <!-- 1.2.01 (Bienes de uso) --> 
+
+            <!-- 1.2.01.01 (Bienes de uso) --> 
+
+                <record model="account.account.template" id="ri_maq_y_equipos">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.2.01.01.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_non_current_assets"/>
+                    <field name="name">Maquinarias y equipos</field>
+                </record>
+
+                <record model="account.account.template" id="ri_instalaciones">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.2.01.01.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_non_current_assets"/>
+                    <field name="name">Instalaciones</field>
+                </record>
+
+                <record model="account.account.template" id="ri_muebles_y_utiles">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.2.01.01.030</field>
+                    <field name="user_type_id" ref="account.data_account_type_non_current_assets"/>
+                    <field name="name">Muebles y útiles</field>
+                </record>
+
+                <record model="account.account.template" id="ri_rodados">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.2.01.01.040</field>
+                    <field name="user_type_id" ref="account.data_account_type_non_current_assets"/>
+                    <field name="name">Rodados</field>
+                </record>
+
+            <!-- 1.2.02 (Amortizaciones acumuladas Bienes de uso) --> 
+
+                <record model="account.account.template" id="ri_amortizacion_acumulada_maq_y_equipos">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.2.01.02.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_non_current_assets"/>
+                    <field name="name">Amortización acumulada maquinarias y equipos</field>
+                </record>
+
+                <record model="account.account.template" id="ri_amortizacion_acumulada_instalaciones">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.2.01.02.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_non_current_assets"/>
+                    <field name="name">Amortización acumulada instalaciones</field>
+                </record>
+
+                <record model="account.account.template" id="ri_amortizacion_acumulada_muebles_utiles">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.2.01.02.030</field>
+                    <field name="user_type_id" ref="account.data_account_type_non_current_assets"/>
+                    <field name="name">Amortización acumulada muebles y útiles</field>
+                </record>
+
+                <record model="account.account.template" id="ri_amortizacion_acumulada_rodados">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">1.2.01.02.040</field>
+                    <field name="user_type_id" ref="account.data_account_type_non_current_assets"/>
+                    <field name="name">Amortización acumulada rodados</field>
+                </record>
+
+        <!-- 1.2.02 (Intangibles) --> 
+
+            <record model="account.account.template" id="ri_software">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">1.2.02.00.010</field>
+                <field name="user_type_id" ref="account.data_account_type_non_current_assets"/>
+                <field name="name">Software</field>
+            </record>
+
+            <record model="account.account.template" id="ri_gastos_de_construccion">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">1.2.02.00.020</field>
+                <field name="user_type_id" ref="account.data_account_type_non_current_assets"/>
+                <field name="name">Gastos de construccion</field>
+            </record> 
         
-        <record model="account.account.template" id="ri_sueldos_a_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.01.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Sueldos a pagar</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+<!-- 2 (Pasivo) --> 
 
-        <record model="account.account.template" id="ri_cargas_sociales_a_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.01.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Cargas sociales a pagar</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+    <!-- 2.1 (Pasivo corriente) --> 
 
-<!-- TODO chequear esta cuenta -->
-<!--         <record model="account.account.template" id="ri_provision_sac_a_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.01.00.030</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Prevision SAC a pagar</field>
-            <field name="reconcile" eval="True"/>
-        </record> -->
+        <!-- 2.1.01 (Deudas sociales) --> 
+            <record model="account.account.template" id="ri_sueldos_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.01.00.010</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">Sueldos a pagar</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-<!-- TODO chequear esta cuenta -->
-<!--         <record model="account.account.template" id="ri_provision_sac_cargas_sociales">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.01.00.040</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Prevision cargas sociales a pagar</field>
-            <field name="reconcile" eval="True"/>
-        </record> -->
+            <record model="account.account.template" id="ri_beneficios_personal_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.01.00.020</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">Beneficios al personal</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_comisiones_a_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.01.00.050</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Comisiones a pagar</field>
-            <field name="reconcile" eval="True"/>
-        </record>        
+            <record model="account.account.template" id="ri_prevision_despidos_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.01.00.030</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">Previsión para despidos</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-<!-- TODO chequear esta cuenta -->
-<!--         <record model="account.account.template" id="ri_beneficios_al_personal">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.01.00.060</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Beneficios al personal</field>
-            <field name="reconcile" eval="True"/>
-        </record> -->
+            <record model="account.account.template" id="ri_suss_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.01.00.040</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">SUSS a pagar</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-<!-- TODO chequear esta cuenta -->
-<!--         <record model="account.account.template" id="ri_prevision_despidos">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.01.00.070</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Previsión Despidos</field>
-            <field name="reconcile" eval="True"/>
-        </record> -->
+            <record model="account.account.template" id="ri_aportes_sindicales_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.01.00.050</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">Aportes sindicales a pagar</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_iva_debito_fiscal">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.02.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
-            <field name="name">IVA débito fiscal</field>
-        </record>
+            <record model="account.account.template" id="ri_otras_cargas_sociales_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.01.00.060</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">Otras cargas sociales a pagar</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_iva_a_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.02.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">IVA saldo a pagar</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+        <!-- 2.1.02 (Deudas fiscales) --> 
+        <!-- la idea es poner en deudas fiscales los impuestos en si, cuando somos agentes lo ponemos en otra categoria (o sub de esta) -->
 
-        <record model="account.account.template" id="ri_impuesto_ganancias_a_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.02.00.030</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Impuesto a las ganancias a pagar</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+            <!-- TODO donde lo ponemos? o borramos? -->
+            <!-- <record model="account.account.template" id="ri_autonomos_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.02.00.040</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">Autonomos a pagar</field>
+                <field name="reconcile" eval="True"/>
+            </record> -->
 
-        <record model="account.account.template" id="ri_autonomos_a_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.02.00.040</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Autonomos a pagar</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+            <!-- (IVA) --> 
 
-        <record model="account.account.template" id="ri_retencion_ganancias_a_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.02.00.050</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Retención/Percepción ganancias a pagar</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+            <record model="account.account.template" id="ri_iva_debito_fiscal">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.02.00.010</field>
+                <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+                <field name="name">IVA débito fiscal</field>
+            </record>
 
-        <record model="account.account.template" id="ri_retencion_iva_a_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.02.00.060</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Retención/Percepción IVA a pagar</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+            <record model="account.account.template" id="ri_iva_saldo_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.02.00.020</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">IVA saldo a pagar</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_iibb_a_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.02.00.070</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Ingresos brutos a pagar</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+            <!-- (Ganancias) --> 
 
-        <record model="account.account.template" id="ri_drei_a_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.02.00.080</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">DREI a pagar</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+            <record model="account.account.template" id="ri_impuesto_ganancias_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.02.00.030</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">Impuesto a las ganancias a pagar</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_retencion_ganancias_aplicada">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.02.01.010</field>
-            <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
-            <field name="name">Retención ganancias aplicada </field>
-        </record>
+            <!-- (IIBB) --> 
 
-        <record model="account.account.template" id="ri_percepcion_ganancias_aplicada">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.02.01.020</field>
-            <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
-            <field name="name">Percepción ganancias aplicada </field>
-        </record>
+            <record model="account.account.template" id="ri_iibb_caba_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.02.00.040</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">IIBB CABA a pagar</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_retencion_iva_aplicada">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.02.01.030</field>
-            <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
-            <field name="name">Retención IVA aplicada</field>
-        </record>
+            <record model="account.account.template" id="ri_iibb_ba_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.02.00.050</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">IIBB p. Buenos Aires a pagar</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_percepcion_iva_aplicada">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.02.01.040</field>
-            <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
-            <field name="name">Percepción IVA aplicada</field>
-        </record>
+            <record model="account.account.template" id="ri_iibb_cordoba_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.02.00.060</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">IIBB Córdoba a pagar</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_pago_proveedores">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.03.01.010</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Proveedores</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+            <record model="account.account.template" id="ri_iibb_santa_fe_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.02.00.070</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">IIBB Santa Fé a pagar</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_alquileres_a_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.03.01.020</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Alquileres a pagar</field>
-            <field name="reconcile" eval="True"/>
-        </record>
+            <record model="account.account.template" id="ri_drei_a_pagar">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.02.00.080</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">DREI a pagar</field>
+                <field name="reconcile" eval="True"/>
+            </record>
 
-        <record model="account.account.template" id="ri_pago_acreedores">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.03.01.030</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Acreedores varios</field>
-            <field name="reconcile" eval="True"/>
-        </record>        
+            <!-- TODO esta bien esto aca? iva y ganancias liquidan juntos? -->
+            <!-- 2.1.02.01 (SICORE Ganancias e IVA)  -->
 
-        <record model="account.account.template" id="ri_cheques_diferidos">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.03.02.010</field>
-            <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
-            <field name="name">Cheques diferidos</field>
-        </record>
+                <record model="account.account.template" id="ri_retencion_ganancias_aplicada">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">2.1.02.01.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+                    <field name="name">Retención ganancias aplicada</field>
+                </record>
 
-        <record model="account.account.template" id="ri_otras_deudas_documentadas">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.03.02.020</field>
-            <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
-            <field name="name">Otras deudas documentadas</field>
-        </record>
+                <record model="account.account.template" id="ri_percepcion_ganancias_aplicada">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">2.1.02.01.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+                    <field name="name">Percepción ganancias aplicada </field>
+                </record>
 
-<!-- TODO verificar esta cuenta -->
-<!--         <record model="account.account.template" id="ri_tarjeta_de_credito_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.04.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Tarjeta de crédito a pagar xxxxx</field>
-        </record> -->
+                <record model="account.account.template" id="ri_retencion_iva_aplicada">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">2.1.02.01.030</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+                    <field name="name">Retención IVA aplicada</field>
+                </record>
 
-        <record model="account.account.template" id="ri_prestamos">
+                <record model="account.account.template" id="ri_percepcion_iva_aplicada">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">2.1.02.01.040</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+                    <field name="name">Percepción IVA aplicada</field>
+                </record>
+
+                <record model="account.account.template" id="ri_retencion_ganancias_a_pagar">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">2.1.02.01.050</field>
+                    <field name="user_type_id" ref="account.data_account_type_payable"/>
+                    <field name="name">Retención/Percepción ganancias a pagar</field>
+                    <field name="reconcile" eval="True"/>
+                </record>
+
+                <record model="account.account.template" id="ri_retencion_iva_a_pagar">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">2.1.02.02.060</field>
+                    <field name="user_type_id" ref="account.data_account_type_payable"/>
+                    <field name="name">Retención/Percepción IVA a pagar</field>
+                    <field name="reconcile" eval="True"/>
+                </record>
+
+        <!-- 2.1.03 (Deudas Comerciales) --> 
+
+            <!-- 2.1.03.01 (Comunes) --> 
+
+                <record model="account.account.template" id="ri_proveedores">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">2.1.03.01.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_payable"/>
+                    <field name="name">Proveedores</field>
+                    <field name="reconcile" eval="True"/>
+                </record>
+
+                <record model="account.account.template" id="ri_alquileres_a_pagar">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">2.1.03.01.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_payable"/>
+                    <field name="name">Alquileres a pagar</field>
+                    <field name="reconcile" eval="True"/>
+                </record>
+
+                <record model="account.account.template" id="ri_acreedores_varios">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">2.1.03.01.030</field>
+                    <field name="user_type_id" ref="account.data_account_type_payable"/>
+                    <field name="name">Acreedores varios</field>
+                    <field name="reconcile" eval="True"/>
+                </record>        
+
+                <record model="account.account.template" id="ri_anticipos_de_clientes">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">2.1.03.01.040</field>
+                    <field name="user_type_id" ref="account.data_account_type_payable"/>
+                    <field name="name">Anticipos de clientes</field>
+                    <field name="reconcile" eval="True"/>
+                </record>        
+
+            <!-- 2.1.03.02 (Documentadas) --> 
+
+                <record model="account.account.template" id="ri_cheques_diferidos">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">2.1.03.02.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+                    <field name="name">Cheques diferidos</field>
+                </record>
+
+                <record model="account.account.template" id="ri_otras_deudas_documentadas">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">2.1.03.02.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+                    <field name="name">Otras deudas documentadas</field>
+                </record>
+
+        <!-- 2.1.04 (Bancarias) --> 
+
+
+            <record model="account.account.template" id="ri_tarjeta_de_credito_pagar_x">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.04.00.010</field>
+                <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+                <field name="name">Tarjeta de crédito a pagar xxxxx</field>
+            </record>
+
+            <record model="account.account.template" id="ri_giro_en_descubierto">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.04.00.020</field>
+                <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+                <field name="name">Giro en descubierto Banco xxxxx</field>
+            </record>
+
+        <!-- 2.1.05 (Previsiones varias) --> 
+
+            <record model="account.account.template" id="ri_prevision_gastos">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.05.00.010</field>
+                <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+                <field name="name">Prevision gastos</field>
+            </record>
+
+        <!-- 2.1.06 (Cuentas Particulares) --> 
+
+            <record model="account.account.template" id="ri_cta_particular_socio_x">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">2.1.06.00.010</field>
+                <field name="user_type_id" ref="account.data_account_type_non_current_liabilities"/>
+                <field name="name">Cta particular socio x</field>
+            </record>
+
+    <!-- 2.2 (Pasivo no corriente) --> 
+
+        <!-- 2.2 (Pasivo no corriente) --> 
+
+        <record model="account.account.template" id="ri_proveedores_largo_plazo">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.04.00.020</field>
+            <field name="code">2.2.00.00.010</field>
             <field name="user_type_id" ref="account.data_account_type_non_current_liabilities"/>
-            <field name="name">Prestamos</field>
-        </record>
-
-        <record model="account.account.template" id="ri_giro_en_descubierto">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.04.00.030</field>
-            <field name="user_type_id" ref="account.data_account_type_non_current_liabilities"/>
-            <field name="name">Giro en descubierto</field>
-        </record>
-
-<!--         <record model="account.account.template" id="ri_provision_gastos">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.05.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Prevision gastos</field>
-        </record> -->
-
-<!--         <record model="account.account.template" id="ri_cta_particular_socio_x">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.1.06.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_non_current_liabilities"/>
-            <field name="name">Cta particular socio x</field>
-        </record> -->
-
-<!--         <record model="account.account.template" id="ri_proveedores_largo_plazo">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.2.01.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
             <field name="name">Deudas proveedores a largo plazo</field>
-        </record> -->
-
-        <record model="account.account.template" id="ri_seguros_a_pagar">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.2.02.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Seguros a pagar</field>
-            <field name="reconcile" eval="True"/>
         </record>
 
-        <record model="account.account.template" id="ri_gastos_a_pagar">
+        <record model="account.account.template" id="ri_planes_a_pagar_afip">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.2.02.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Gastos a pagar</field>
-            <field name="reconcile" eval="True"/>
+            <field name="code">2.2.00.00.020</field>
+            <field name="user_type_id" ref="account.data_account_type_non_current_liabilities"/>
+            <field name="name">Planes a pagar afip</field>
         </record>
 
-        <record model="account.account.template" id="ri_deudas_misc">
+        <record model="account.account.template" id="ri_prestamo_banco_x">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">2.2.02.00.030</field>
-            <field name="user_type_id" ref="account.data_account_type_payable"/>
-            <field name="name">Deudas misc</field>
-            <field name="reconcile" eval="True"/>
+            <field name="code">2.2.00.00.030</field>
+            <field name="user_type_id" ref="account.data_account_type_non_current_liabilities"/>
+            <field name="name">Prestamo Banco xxxxx</field>
         </record>
+
+<!-- 3 (Patrimonio neto) --> 
+
+    <!-- 3.1 (Aportes de los propietarios) --> 
 
         <record model="account.account.template" id="ri_capital">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">3.1.01.00.010</field>
+            <field name="code">3.1.00.00.010</field>
             <field name="user_type_id" ref="account.data_account_type_equity"/>
             <field name="name">Capital susctipto</field>
         </record>
 
-        <record model="account.account.template" id="ri_ajustes_de_capital_2">
+        <record model="account.account.template" id="ri_ajustes_de_capital">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">3.1.02.00.010</field>
+            <field name="code">3.1.00.00.020</field>
             <field name="user_type_id" ref="account.data_account_type_equity"/>
-            <field name="name">Capital susctipto</field>
+            <field name="name">Ajustes de capital</field>
         </record>
 
-        <record model="account.account.template" id="ri_aportes_no_capitalizados_2">
+        <record model="account.account.template" id="ri_aportes_no_capitalizados">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">3.1.03.00.010</field>
+            <field name="code">3.1.03.00.030</field>
             <field name="user_type_id" ref="account.data_account_type_equity"/>
             <field name="name">Aportes no capitalizados</field>
         </record>
+
+    <!-- 3.2 (Aportes de los propietarios) --> 
 
         <record model="account.account.template" id="ri_reserva_legal">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
@@ -627,6 +658,8 @@
             <field name="name">Reserva futuras inversiones</field>
         </record>             
 
+    <!-- 3.3 (Resultados) --> 
+
         <record model="account.account.template" id="ri_resultado_del_ejercicio">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
             <field name="code">3.3.00.00.010</field>
@@ -641,346 +674,368 @@
             <field name="name">Resultado acumlados</field>
         </record>
 
-        <record model="account.account.template" id="ri_resultados_no_asignados">
+        <record model="account.account.template" id="ri_ajuste_resultados">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
             <field name="code">3.3.00.00.030</field>
             <field name="user_type_id" ref="account.data_account_type_equity"/>
             <field name="name">Ajuste resultados ejercicios anteriores</field>
         </record>
+    
+<!-- 4 (Resultado Neto) --> 
 
-        <record model="account.account.template" id="ri_venta_de_mercaderia">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">4.1.01.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_revenue"/>
-            <field name="name">Venta de mercaderia</field>
-        </record>
+    <!-- 4.1 (Resultado Operativo) --> 
 
-        <record model="account.account.template" id="ri_venta_de_servicios_misc">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">4.1.01.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_revenue"/>
-            <field name="name">Venta servicios misc</field>
-        </record>
+        <!-- 4.1.01 (Margen bruto) --> 
+        
+            <!-- 4.1.01.01 (Ventas) --> 
 
-        <record model="account.account.template" id="ri_resultado_invesiones_financieras">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">4.2.01.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_revenue"/>
-            <field name="name">Resultado de inversiones financieras</field>
-        </record>
+                <record model="account.account.template" id="ri_venta_de_mercaderia">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.01.00.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_revenue"/>
+                    <field name="name">Venta de mercaderia</field>
+                </record>
 
-        <record model="account.account.template" id="ri_resultado_intereses_ganados">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">4.2.01.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_revenue"/>
-            <field name="name">Intereses ganados</field>
-        </record>
+                <record model="account.account.template" id="ri_venta_de_servicios">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.01.00.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_revenue"/>
+                    <field name="name">Venta de servicios</field>
+                </record>
 
-        <record model="account.account.template" id="ri_diferencias_de_cambio">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">4.2.01.00.030</field>
-            <field name="user_type_id" ref="account.data_account_type_revenue"/>
-            <field name="name">Diferencias de cambio</field>
-        </record>
+            <!-- 4.1.01.02 (Costos directos) --> 
+
+                <record model="account.account.template" id="ri_compra_mercaderia">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.01.02.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+                    <field name="name">Compra de mercadería</field>
+                </record>
+
+                <record model="account.account.template" id="ri_cmv">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.01.02.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+                    <field name="name">Costo de Mercadería Vendida</field>
+                </record>
+
+                <record model="account.account.template" id="ri_materia_prima">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.01.02.030</field>
+                    <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+                    <field name="name">Materia Prima</field>
+                </record>
+
+                <record model="account.account.template" id="ri_descuentos_clientes">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.01.02.040</field>
+                    <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+                    <field name="name">Descuentos a clientes</field>
+                </record>
+
+                <record model="account.account.template" id="ri_comisiones">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.01.02.050</field>
+                    <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+                    <field name="name">Comisiones</field>
+                </record>
+
+            <!-- 4.1.01.03 (Impuestos Directos) --> 
+
+                <record model="account.account.template" id="ri_impuestos_iibb_caba">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.01.03.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+                    <field name="name">IIBB CABA</field>
+                </record>
+
+                <record model="account.account.template" id="ri_impuestos_iibb_ba">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.01.03.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+                    <field name="name">IIBB Prov. Bs. As.</field>
+                </record>
+
+                <record model="account.account.template" id="ri_impuestos_iibb_co">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.01.03.030</field>
+                    <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+                    <field name="name">IIBB Prov. Córdoba</field>
+                </record>
+
+                <record model="account.account.template" id="ri_impuestos_iibb_sf">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.01.03.040</field>
+                    <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+                    <field name="name">IIBB Prov. Santa Fé</field>
+                </record>
+
+                <record model="account.account.template" id="ri_comisiones">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.01.03.050</field>
+                    <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+                    <field name="name">DREI</field>
+                </record>
+
+        <!-- 4.1.02 (Gastos Fijos) --> 
+
+            <!-- 4.1.02.01 (Administrativos) --> 
+
+                <record model="account.account.template" id="ri_haberes_administrativos">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.01.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Sueldos y SAC Administrativos</field>
+                </record>
+
+                <record model="account.account.template" id="ri_cargas_sociales_administrativos">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.01.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Cargas Sociales Administrativos</field>
+                </record>
+
+                <record model="account.account.template" id="ri_gastos_varios_administrativos">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.01.030</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Gastos varios Administrativos</field>
+                </record>
+
+                <record model="account.account.template" id="ri_alquileres_administrativos">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.01.040</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Alquileres Administrativos</field>
+                </record>
+
+                <record model="account.account.template" id="ri_servicios_agua_luz_etc_administrativos">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.01.050</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Servicios de luz, agua, etc. Administrativos</field>
+                </record>
+
+                <record model="account.account.template" id="ri_sistema_y_software">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.01.060</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Sistema y Software</field>
+                </record>
+
+                <record model="account.account.template" id="ri_impuestos_debitos_y_creditos">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.01.070</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Impuestos a los débitos y créditos bancarios</field>
+                </record>
+
+            <!-- 4.1.02.02 (Comerciales) --> 
+        
+                <record model="account.account.template" id="ri_haberes_comerciales">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.02.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Sueldos y SAC Comerciales</field>
+                </record>
+
+                <record model="account.account.template" id="ri_cargas_sociales_comerciales">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.02.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Cargas Sociales Comerciales</field>
+                </record>
+
+                <record model="account.account.template" id="ri_gastos_varios_comerciales">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.02.030</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Gastos varios Comerciales</field>
+                </record>
+
+                <record model="account.account.template" id="ri_alquileres_comerciales">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.02.040</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Alquileres Comerciales</field>
+                </record>
+
+                <record model="account.account.template" id="ri_servicios_agua_luz_etc_comerciales">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.02.050</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Servicios de luz, agua, etc. Comerciales</field>
+                </record>
+
+                <record model="account.account.template" id="ri_publicidad">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.02.060</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Publicidad</field>
+                </record>
+
+            <!-- 4.1.02.03 (De Operación / Producción) --> 
+                
+                <record model="account.account.template" id="ri_haberes_produccion">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.03.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Sueldos y SAC Producción</field>
+                </record>
+
+                <record model="account.account.template" id="ri_cargas_sociales_produccion">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.03.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Cargas Sociales Producción</field>
+                </record>
+
+                <record model="account.account.template" id="ri_gastos_varios_produccion">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.03.030</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Gastos varios produccion</field>
+                </record>
+
+                <record model="account.account.template" id="ri_alquileres_produccion">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.03.040</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Alquileres produccion</field>
+                </record>
+
+                <record model="account.account.template" id="ri_servicios_agua_luz_etc_produccion">
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                    <field name="code">4.1.02.03.050</field>
+                    <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                    <field name="name">Servicios de luz, agua, etc. produccion</field>
+                </record>
+
+    <!-- 4.2 (Resultado Financiero) --> 
+
+        <!-- 4.2.01 (Ingresos Financieros) --> 
+
+            <record model="account.account.template" id="ri_resultado_intereses_ganados">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">4.2.01.00.010</field>
+                <field name="user_type_id" ref="account.data_account_type_other_income"/>
+                <field name="name">Intereses ganados</field>
+            </record>
+
+            <record model="account.account.template" id="ri_diferencias_de_cambio">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">4.2.01.00.020</field>
+                <field name="user_type_id" ref="account.data_account_type_other_income"/>
+                <field name="name">Diferencias de cambio</field>
+            </record>
+
+        <!-- 4.2.02 (Egresos Financieros) --> 
+
+            <record model="account.account.template" id="ri_resultado_intereses_y_recargos">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">4.2.02.00.010</field>
+                <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                <field name="name">Intereses y recargos</field>
+            </record>
+
+            <record model="account.account.template" id="ri_gastos_prestamos">
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+                <field name="code">4.2.02.00.020</field>
+                <field name="user_type_id" ref="account.data_account_type_expenses"/>
+                <field name="name">Gastos préstamos</field>
+            </record>
+
+    <!-- 4.3 (Resultados Extraordinarios) --> 
 
         <record model="account.account.template" id="ri_resultado_venta_bienes_de_uso">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">4.2.02.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_revenue"/>
+            <field name="code">4.3.00.00.010</field>
+            <field name="user_type_id" ref="account.data_account_type_other_income"/>
             <field name="name">Resultado venta bienes de uso</field>
         </record>
 
         <record model="account.account.template" id="ri_ajuste_por_redondeo">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">4.2.02.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_revenue"/>
+            <field name="code">4.3.00.00.020</field>
+            <field name="user_type_id" ref="account.data_account_type_other_income"/>
             <field name="name">Ajuste por redondeo</field>
         </record>
 
         <record model="account.account.template" id="ri_descuentos_obtenidos">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">4.2.02.00.030</field>
-            <field name="user_type_id" ref="account.data_account_type_revenue"/>
+            <field name="code">4.3.00.00.030</field>
+            <field name="user_type_id" ref="account.data_account_type_other_income"/>
             <field name="name">Descuentos obtenidos</field>
         </record>
 
         <record model="account.account.template" id="ri_recupero_de_gastos">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">4.2.02.00.040</field>
-            <field name="user_type_id" ref="account.data_account_type_revenue"/>
+            <field name="code">4.3.00.00.040</field>
+            <field name="user_type_id" ref="account.data_account_type_other_income"/>
             <field name="name">Recupero de gastos</field>
         </record>
 
-        <record model="account.account.template" id="ri_haberes_produccion">
+        <record model="account.account.template" id="ri_aportes_no_reembolsables">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.01.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Sueldos y SAC operativos</field>
+            <field name="code">4.3.00.00.050</field>
+            <field name="user_type_id" ref="account.data_account_type_other_income"/>
+            <field name="name">Aportes no reeombolsables (subsidios)</field>
         </record>
 
-        <record model="account.account.template" id="ri_cargas_sociales_produccion">
+    <!-- 4.4 (Amortizaciones) --> 
+
+        <record model="account.account.template" id="ri_amortizacion_equipos_computacion">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.01.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Cargas Sociales</field>
+            <field name="code">4.4.00.00.010</field>
+            <field name="user_type_id" ref="account.data_account_type_depreciation"/>
+            <field name="name">Amortización maquinaria y equipos</field>
         </record>
 
-        <record model="account.account.template" id="ri_costo_de_mercaderia_vendida">
+        <record model="account.account.template" id="ri_amortizacion_instalaciones">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.01.00.030</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Costo de mercadería vendida</field>
-        </record>
-
-        <record model="account.account.template" id="ri_materiales">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.01.00.040</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Materiales</field>
-        </record>
-
-        <record model="account.account.template" id="ri_gastos_operativos_generales">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.01.00.050</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Gastos varios produccion</field>
-        </record>
-
-        <record model="account.account.template" id="ri_alquileres_produccion">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.01.00.060</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Alquileres produccion</field>
-        </record>
-
-        <record model="account.account.template" id="ri_servicios_agua_luz_etc_produccion">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.01.00.070</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Servicios de luz, agua, etc. produccion</field>
-        </record>        
-
-        <record model="account.account.template" id="ri_haberes_comerciales">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.02.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Sueldos y SAC comerciales</field>
-        </record>
-
-        <record model="account.account.template" id="ri_cargas_sociales_comerciales">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.02.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Cargas sociales comerciales</field>
-        </record>
-
-        <record model="account.account.template" id="ri_comisiones_comerciales">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.02.00.030</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Comisiones</field>
-        </record>
-
-        <record model="account.account.template" id="ri_publicidad">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.02.00.040</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Publicidad</field>
-        </record>
-
-        <record model="account.account.template" id="ri_movilidad_y_viaticos_comerciales">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.02.00.050</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Movilidad y viáticos comerciales</field>
-        </record>
-
-        <record model="account.account.template" id="ri_gastos_de_eventos_comerciales">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.02.00.060</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Gastos de eventos comerciales</field>
-        </record>
-
-        <record model="account.account.template" id="ri_gastos_varios_comerciales">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.02.00.070</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Gastos varios comerciales</field>
-        </record>
-
-        <record model="account.account.template" id="ri_alquileres_comerciales">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.02.00.080</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Alquileres comerciales</field>
-        </record>
-
-        <record model="account.account.template" id="ri_servicios_agua_luz_etc_comerciales">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.02.00.090</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Servicios de luz, agua, etc. comerciales</field>
-        </record>        
-
-        <record model="account.account.template" id="ri_haberes_administrativos">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.03.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Sueldos y SAC administrativos</field>
-        </record>
-
-        <record model="account.account.template" id="ri_cargas_sociales_administrativas">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.03.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Cargas sociales administrativas</field>
-        </record>
-
-        <record model="account.account.template" id="ri_honorarios_administrativas">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.03.00.030</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Honorarios profesionales administracion</field>
-        </record>
-
-        <record model="account.account.template" id="ri_gastos_varios_administrativas">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.03.00.040</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Gastos varios administracion</field>
-        </record>        
-
-        <record model="account.account.template" id="ri_alquileres_administrativas">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.03.00.050</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Alquileres administracion</field>
-        </record>
-
-        <record model="account.account.template" id="ri_servicios_agua_luz_etc">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.03.00.060</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Servicios de luz, agua, etc. administracion</field>
-        </record>
-
-        <record model="account.account.template" id="ri_mantenimiento_y_limpieza">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.03.00.070</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Mantenimiento y limpieza adminsitracion</field>
-        </record>
-
-        <record model="account.account.template" id="ri_articulos_libreria">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.03.00.080</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Artículos librería administracion</field>            
-        </record>
-
-        <record model="account.account.template" id="ri_cadeteria_y_correo">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.03.00.090</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Cadetería y correo adminsitracion</field>
-        </record>
-
-        <record model="account.account.template" id="ri_seguros">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.03.00.100</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Seguros adminsitracion</field>
-        </record>
-
-        <record model="account.account.template" id="ri_impuestos_iibb_cf">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.04.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Impuestos ingresos brutos CABA</field>
-        </record>
-
-        <record model="account.account.template" id="ri_impuestos_iibb_ba">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.04.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Impuestos ingresos brutos Prov. Bs. As.</field>
-        </record>
-
-        <record model="account.account.template" id="ri_impuestos_iibb_co">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.04.00.030</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Impuestos ingresos brutos Prov. Córdoba</field>
-        </record>
-
-        <record model="account.account.template" id="ri_impuestos_iibb_sf">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.04.00.040</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Impuestos ingresos brutos Prov. Santa Fé</field>
-        </record>
-
-        <record model="account.account.template" id="ri_impuestos_a_las_ganancias">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.04.00.050</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Impuestos a las ganancias</field>
-        </record>
-
-        <record model="account.account.template" id="ri_impuestos_transacciones_bancarias">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.04.00.060</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Impuestos a los créditos bancarios</field>
-        </record>
-
-        <record model="account.account.template" id="ri_impuestos_debitos_bancarios">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.04.00.070</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Impuestos a los débitos bancarios</field>
-        </record>
-
-        <record model="account.account.template" id="ri_intereses_y_recargos">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.1.05.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Intereses y recargos</field>
-        </record>
-
-        <record model="account.account.template" id="ri_amortizaciones_equipos_computacion">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.2.01.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Amortizaciones maquinaria y equipos</field>
-        </record>
-
-        <record model="account.account.template" id="ri_amortizaciones_instalaciones">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.2.01.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Amortizaciones instalaciones</field>
+            <field name="code">4.4.00.00.020</field>
+            <field name="user_type_id" ref="account.data_account_type_depreciation"/>
+            <field name="name">Amortización instalaciones</field>
         </record>
 
         <record model="account.account.template" id="ri_amortizacion_muebles_y_utiles">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.2.01.00.030</field>
-            <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Amortizacion muebles y útiles</field>
+            <field name="code">4.4.00.00.030</field>
+            <field name="user_type_id" ref="account.data_account_type_depreciation"/>
+            <field name="name">Amortización muebles y útiles</field>
         </record>
 
         <record model="account.account.template" id="ri_amortizacion_rodados">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="code">5.2.01.00.040</field>
+            <field name="code">4.4.00.00.040</field>
+            <field name="user_type_id" ref="account.data_account_type_depreciation"/>
+            <field name="name">Amortización rodados</field>
+        </record>
+
+    <!-- 4.5 (Impuesto a las ganancias) --> 
+
+        <record model="account.account.template" id="ri_impuestos_a_las_ganancias">
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="code">4.5.00.00.010</field>
             <field name="user_type_id" ref="account.data_account_type_expenses"/>
-            <field name="name">Amortizacion rodados</field>
+            <field name="name">Impuestos a las ganancias</field>
+        </record>
+
+<!-- 6 (Transitorias) --> 
+
+        <!-- transfererncias internas creadas al principio -->
+
+        <record model="account.account.template" id="ri_cheques_rechazados">
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="code">6.0.00.00.020</field>
+            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+            <field name="name">Cheques Rechazados</field>
         </record>
 
         <!-- Update chart template -->
         <record id="l10nar_ri_chart_template" model="account.chart.template">
             <field name="property_account_receivable_id" ref="ri_deudores_por_ventas"/>
-            <field name="property_account_payable_id" ref="ri_pago_proveedores"/>
+            <field name="property_account_payable_id" ref="ri_proveedores"/>
             <field name="property_account_expense_categ_id" ref="ri_mercaderia"/>
             <field name="property_account_income_categ_id" ref="ri_venta_de_mercaderia"/>
             <field name="expense_currency_exchange_account_id" ref="ri_diferencias_de_cambio"/>

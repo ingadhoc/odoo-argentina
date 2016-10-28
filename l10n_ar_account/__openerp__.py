@@ -18,6 +18,7 @@
     },
     'data': [
         'data/product_data.xml',
+        'data/base_validator_data.xml',
         'data/afip_responsability_type.xml',
         'data/account_document_letter.xml',
         'data/account.document.type.csv',

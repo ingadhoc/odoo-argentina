@@ -61,6 +61,21 @@ class AccountVoucher(models.Model):
         if self.company_regimenes_ganancias_ids and self.type == 'payment':
             self.retencion_ganancias = 'nro_regimen'
 
+    @api.model
+    def create(self, vals):
+        """
+        para casos donde se paga desde algun otro lugar (por ej. liquidador de
+        impuestos), seteamos no aplica si no hay nada seteado
+        """
+        voucher = super(AccountVoucher, self).create(vals)
+        if (
+                voucher.company_regimenes_ganancias_ids and
+                voucher.type == 'payment' and
+                not voucher.retencion_ganancias and
+                not voucher.regimen_ganancias_id):
+            voucher.retencion_ganancias = 'no_aplica'
+        return voucher
+
     @api.multi
     def compute_withholdings(self):
         for voucher in self:

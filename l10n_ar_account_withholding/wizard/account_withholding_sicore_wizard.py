@@ -7,6 +7,7 @@ import datetime
 import calendar
 import base64
 import re
+from dateutil.relativedelta import relativedelta
 from openerp import api, fields, models, _
 from openerp.exceptions import Warning
 
@@ -20,14 +21,14 @@ class account_debt_report_wizard(models.TransientModel):
         if currdate.day > 15:
             return currdate.strftime('%Y-%m-01')
         else:
-            return (currdate-timedelta(months=1)).strftime('%Y-%m-16')
+            return (currdate+relativedelta(months=-1)).strftime('%Y-%m-16')
 
     def _default_to_date(self):
         currdate = datetime.date.today()
         if currdate.day > 15:
             return currdate.strftime('%Y-%m-15')
         else:
-            dt = currdate-timedelta(months=1)
+            dt = currdate+relativedelta(months=-1)
             mr = calendar.monthrange(dt.year, dt.month)
             return dt.strftime('%Y-%m-') + '%02d' % mr[1]
 

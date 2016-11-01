@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="sicore_wizard_form" model="ir.ui.view">
+            <field name="model">l10n_ar_account_withholding.sicore_wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Export to SICORE">
+                    <group>
+                        <group>
+                            <field name="from_date"/>
+                            <field name="to_date"/>
+                        </group>
+                        <group>
+                            <field name="company_id" string="Company" ref="base.main_company"/>
+                            <field name="tax_withholding_type" invisible="1" />
+                            <field name="tax_withholding_id" />
+                        </group>
+                    </group>
+                    <separator />
+                        <p class="oe_grey">
+Asegúrese de tener bien configurado el <b>Código de AFIP</b> para cada Código de Impuesto que quiera exportar.<br />
+Además, procure establecer los parámetros de importación de SICORE de la siguiente manera: <br/>
+<b>Separador decimal:</b> Punto. <br/>
+<b>Incluye Operaciones con Beneficiarios del Exterior:</b> Desactivado. <br/>
+                        </p>
+                    <separator />
+                    <field name="withholding_ids" />
+                    <footer>
+                        <button string="Confirm" name="confirm" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="sicore_wizard_form_download" model="ir.ui.view">
+            <field name="model">l10n_ar_account_withholding.sicore_wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Export to SICORE">
+                    <center>
+                        <i class="fa fa-5x fa-download" style="padding: 0.25em;" aria-hidden="true"></i>
+                        <field name="txt_filename" invisible="1"/>
+                        <h1><field name="txt_binary" filename="txt_filename" readonly="1"/></h1>
+                    </center>
+                    <footer>
+                        <button string="Close" special="cancel" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+             
+        <act_window
+            name="Export to SICORE"
+            id="sicore_wizard_action"
+            res_model="l10n_ar_account_withholding.sicore_wizard"
+            view_type="form"
+            view_mode="form"
+            view_id="sicore_wizard_form"
+            target="new" />
+
+        <menuitem
+            id="account_voucher_withholding_sicore_wizard_menu"
+            action="sicore_wizard_action"
+            parent="account_voucher_withholding.menu_account_withholding"
+            sequence="20" />
+
+    </data>
+</openerp>

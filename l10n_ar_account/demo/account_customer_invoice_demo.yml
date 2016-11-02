@@ -19,7 +19,8 @@
         price_unit: 642.0
         quantity: 1
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_1}
+  !python {model: account.invoice, id: demo_invoice_1}:
+    self.action_invoice_open()
 -
    Invoice to CMR with vat 21, 27 and 10,5
 -
@@ -31,8 +32,8 @@
     payment_term_id: account.account_payment_term
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Servicio de telefonía (IVA 27)'
@@ -44,7 +45,8 @@
         price_unit: 3245.0
         quantity: 2.0
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_2}
+  !python {model: account.invoice, id: demo_invoice_2}:
+    self.action_invoice_open()
 -
    Invoice to ADHOC with vat cero and 21 (requires fiscal position, setted manually)
 -
@@ -56,8 +58,8 @@
     payment_term_id: account.account_payment_term
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Animales y vegetales no industrializados (IVA cero)'
@@ -66,11 +68,12 @@
         quantity: 1.0
 -
   !python {model: ir.model.data} : |
-      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
-      if position_id:
-          self._update(cr, uid, 'account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position_id[0]}, 'demo_invoice_3')
+      position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')], limit=1)
+      if position:
+          self._update('account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position.id}, 'demo_invoice_3')
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_3}
+  !python {model: account.invoice, id: demo_invoice_3}:
+    self.action_invoice_open()
 -
    Invoice to ADHOC with vat exempt and 21 (requires fiscal position, setted manually)
 -
@@ -82,8 +85,8 @@
     payment_term_id: account.account_payment_term
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Libro "Desarrollo en Odoo" (IVA exento)'
@@ -92,11 +95,12 @@
         quantity: 1.0
 -
   !python {model: ir.model.data} : |
-      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
-      if position_id:
-          self._update(cr, uid, 'account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position_id[0]}, 'demo_invoice_4')
+      position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')], limit=1)
+      if position:
+          self._update('account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position.id}, 'demo_invoice_4')
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_4}
+  !python {model: account.invoice, id: demo_invoice_4}:
+    self.action_invoice_open()
 -
    Invoice to ADHOC with all type of taxes (requires fiscal position, setted manually)
 -
@@ -108,8 +112,8 @@
     payment_term_id: account.account_payment_term
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Servicio de telefonía (IVA 27)'
@@ -136,11 +140,12 @@
   We add fiscal position
 -
   !python {model: ir.model.data} : |
-      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
-      if position_id:
-          self._update(cr, uid, 'account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position_id[0]}, 'demo_invoice_5')
+      position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')], limit=1)
+      if position:
+          self._update('account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position.id}, 'demo_invoice_5')
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_5}
+  !python {model: account.invoice, id: demo_invoice_5}:
+    self.action_invoice_open()
 -
 # TODO esta factura deberia elegir de alguna manera exportacion
 # la damos de alta en fe donde directamente elgimos el diario correspondiente
@@ -156,8 +161,8 @@
 #     afip_incoterm_id: l10n_ar_account.incoterm_exw
 #     type: 'out_invoice'
 #     invoice_line_ids:
-#       - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-#         product_id: product.product_product_49
+#       - name: 'Laptop Customized (IVA 21)'
+#         product_id: product.product_product_27
 #         price_unit: 642.0
 #         quantity: 5
 #       - name: 'Servicio de telefonía (IVA 27)'
@@ -194,8 +199,8 @@
     afip_incoterm_id: l10n_ar_account.incoterm_exw
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Servicio de telefonía (IVA 27)'
@@ -219,7 +224,8 @@
         price_unit: 100.0
         quantity: 1.0
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_7}
+  !python {model: account.invoice, id: demo_invoice_7}:
+    self.action_invoice_open()
 -
    Invoice to consumidor final
 -
@@ -236,4 +242,5 @@
         price_unit: 642.0
         quantity: 1
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_8}
+  !python {model: account.invoice, id: demo_invoice_8}:
+    self.action_invoice_open()

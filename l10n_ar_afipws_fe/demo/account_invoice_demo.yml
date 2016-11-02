@@ -13,8 +13,8 @@
     payment_term_id: account.account_payment_term
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Linutop'
@@ -31,7 +31,7 @@
 #    We call onchange because taxes sometimes miss the 'tax_id' reference
 # -
 #   !python {model: account.invoice} : |
-#       self.browse(cr, uid, ref('demo_invoice_1'))._onchange_invoice_line_ids()
+#       self.browse(ref('demo_invoice_1'))._onchange_invoice_line_ids()
 # -
 #   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_1}
 -
@@ -46,8 +46,8 @@
     payment_term_id: account.account_payment_term
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Zed+ Antivirus'
@@ -66,14 +66,14 @@
   We add fiscal position
 -
   !python {model: ir.model.data} : |
-      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
+      position_id = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')])
       if position_id:
-          self._update(cr, uid, 'account.invoice', 'l10n_ar_afipws_fe', {'fiscal_position_id': position_id[0]}, 'demo_invoice_2')
+          self._update('account.invoice', 'l10n_ar_afipws_fe', {'fiscal_position_id': position_id[0]}, 'demo_invoice_2')
 # -
 #    We call onchange because taxes sometimes miss the 'tax_id' reference
 # -
 #   !python {model: account.invoice} : |
-#       self.browse(cr, uid, ref('demo_invoice_2'))._onchange_invoice_line_ids()
+#       self.browse(ref('demo_invoice_2'))._onchange_invoice_line_ids()
 # -
 #   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_2}
 -
@@ -97,13 +97,13 @@
   We add fiscal position
 -
   !python {model: ir.model.data} : |
-      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'Operaciones exentas')])
+      position_id = self.env['account.fiscal.position'].search([('name', '=', 'Operaciones exentas')])
       if position_id:
-          self._update(cr, uid, 'account.invoice', 'l10n_ar_afipws_fe', {'fiscal_position_id': position_id[0]}, 'demo_invoice_3')
+          self._update('account.invoice', 'l10n_ar_afipws_fe', {'fiscal_position_id': position_id[0]}, 'demo_invoice_3')
 -
    We call onchange because taxes sometimes miss the 'tax_id' reference
 # -
 #   !python {model: account.invoice} : |
-#       self.browse(cr, uid, ref('demo_invoice_3'))._onchange_invoice_line_ids()
+#       self.browse(ref('demo_invoice_3'))._onchange_invoice_line_ids()
 # -
 #   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_3}

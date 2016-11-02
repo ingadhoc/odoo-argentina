@@ -2,10 +2,9 @@
   agregamos doc type para tique en diario manual
 -
   !python {model: ir.model.data} : |
-      manual_journal_id = self.pool['account.journal'].search(cr, uid, [('type', '=', 'sale'), ('point_of_sale_type', '=', 'manual')], limit=1)
-      manual_journal = self.pool['account.journal'].browse(cr, uid, manual_journal_id)
+      manual_journal = self.env['account.journal'].search([('type', '=', 'sale'), ('point_of_sale_type', '=', 'manual')], limit=1)
       if manual_journal:
-        type_tique_id = self.pool['account.journal.document.type'].create(cr, uid, {
+        type_tique_id = self.env['account.journal.document.type'].create({
           'journal_id': manual_journal.id,
           'document_type_id': ref('l10n_ar_account.dc_t'),
         })
@@ -30,7 +29,8 @@
         price_unit: 10000.0
         quantity: 1
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_9}
+  !python {model: account.invoice, id: demo_invoice_9}:
+    self.action_invoice_open()
 -
    Set the context for supplier invoices because the 'type' field is readonly in invoice form views, so it value won't be considered by the yaml import
 -
@@ -64,10 +64,9 @@
   We should improove this and search tax by other thing than name
 -
   !python {model: ir.model.data} : |
-      tax_id = self.pool['account.tax'].search(cr, uid, [('type_tax_use', '=', 'purchase'), ('name', '=', 'Percepción Ganancias Sufrida')], limit=1)
-      tax = self.pool['account.tax'].browse(cr, uid, tax_id)
+      tax = self.env['account.tax'].search([('type_tax_use', '=', 'purchase'), ('name', '=', 'Percepción Ganancias Sufrida')], limit=1)
       if tax and tax.account_id:
-        invoice_tax_id = self.pool['account.invoice.tax'].create(cr, uid, {
+        invoice_tax_id = self.env['account.invoice.tax'].create({
           'invoice_id': ref('demo_despacho_1'),
           'name': tax.name,
           'tax_id': tax.id,
@@ -78,10 +77,9 @@
         })
 -
   !python {model: ir.model.data} : |
-      tax_id = self.pool['account.tax'].search(cr, uid, [('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', ref('l10n_ar_account.tax_group_iva_21'))], limit=1)
-      tax = self.pool['account.tax'].browse(cr, uid, tax_id)
+      tax = self.env['account.tax'].search([('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', ref('l10n_ar_account.tax_group_iva_21'))], limit=1)
       if tax and tax.account_id:
-        invoice_tax_id = self.pool['account.invoice.tax'].create(cr, uid, {
+        invoice_tax_id = self.env['account.invoice.tax'].create({
           'invoice_id': ref('demo_despacho_1'),
           'name': tax.name,
           'tax_id': tax.id,
@@ -92,10 +90,9 @@
         })
 -
   !python {model: ir.model.data} : |
-      tax_id = self.pool['account.tax'].search(cr, uid, [('type_tax_use', '=', 'purchase'), ('name', '=', 'IVA Adicional 20%')], limit=1)
-      tax = self.pool['account.tax'].browse(cr, uid, tax_id)
+      tax = self.env['account.tax'].search([('type_tax_use', '=', 'purchase'), ('name', '=', 'IVA Adicional 20%')], limit=1)
       if tax and tax.account_id:
-        invoice_tax_id = self.pool['account.invoice.tax'].create(cr, uid, {
+        invoice_tax_id = self.env['account.invoice.tax'].create({
           'invoice_id': ref('demo_despacho_1'),
           'name': tax.name,
           'tax_id': tax.id,
@@ -105,4 +102,5 @@
           'sequence': 99,
         })
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: demo_despacho_1}
+  !python {model: account.invoice, id: demo_despacho_1}:
+    self.action_invoice_open()

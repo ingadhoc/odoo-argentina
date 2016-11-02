@@ -1,8 +1,7 @@
 # payment parcial de gritti
 -
   !python {model: ir.model.data} : |
-      payment_journal_id = self.pool['account.journal'].search(cr, uid, [('type', '=', 'bank')], limit=1)
-      payment_journal = self.pool['account.journal'].browse(cr, uid, payment_journal_id)
+      payment_journal = self.env['account.journal'].search([('type', '=', 'bank')], limit=1)
       if payment_journal and payment_journal.inbound_payment_method_ids:
         payment_vals = {
           'partner_id': ref('l10n_ar_partner.res_partner_gritti_agrimensura'),
@@ -13,13 +12,12 @@
           'amount': 500.0,
           'payment_method_id': payment_journal.inbound_payment_method_ids[0].id,
         }
-        payment_id = self.pool['account.payment'].create(cr, uid, payment_vals)
-        self.pool['account.payment'].post(cr, uid, payment_id)
+        payment = self.env['account.payment'].create(payment_vals)
+        payment.post()
 # payment total de consumidor final
 -
   !python {model: ir.model.data} : |
-      payment_journal_id = self.pool['account.journal'].search(cr, uid, [('type', '=', 'cash')], limit=1)
-      payment_journal = self.pool['account.journal'].browse(cr, uid, payment_journal_id)
+      payment_journal = self.env['account.journal'].search([('type', '=', 'cash')], limit=1)
       if payment_journal and payment_journal.inbound_payment_method_ids:
         payment_vals = {
           'partner_id': ref('l10n_ar_partner.par_cfa'),
@@ -30,13 +28,12 @@
           'amount': 776.82,
           'payment_method_id': payment_journal.inbound_payment_method_ids[0].id,
         }
-        payment_id = self.pool['account.payment'].create(cr, uid, payment_vals)
-        self.pool['account.payment'].post(cr, uid, payment_id)
+        payment = self.env['account.payment'].create(payment_vals)
+        payment.post()
 # payment a cuenta de cerro castor
 -
   !python {model: ir.model.data} : |
-      payment_journal_id = self.pool['account.journal'].search(cr, uid, [('type', '=', 'bank')], limit=1)
-      payment_journal = self.pool['account.journal'].browse(cr, uid, payment_journal_id)
+      payment_journal = self.env['account.journal'].search([('type', '=', 'bank')], limit=1)
       if payment_journal and payment_journal.inbound_payment_method_ids:
         payment_vals = {
           'partner_id': ref('l10n_ar_partner.res_partner_cerrocastor'),
@@ -46,13 +43,12 @@
           'amount': 1000.0,
           'payment_method_id': payment_journal.inbound_payment_method_ids[0].id,
         }
-        payment_id = self.pool['account.payment'].create(cr, uid, payment_vals)
-        self.pool['account.payment'].post(cr, uid, payment_id)
+        payment = self.env['account.payment'].create(payment_vals)
+        payment.post()
 # payment factura a asustek
 -
   !python {model: ir.model.data} : |
-      payment_journal_id = self.pool['account.journal'].search(cr, uid, [('type', '=', 'bank')], limit=1)
-      payment_journal = self.pool['account.journal'].browse(cr, uid, payment_journal_id)
+      payment_journal = self.env['account.journal'].search([('type', '=', 'bank')], limit=1)
       if payment_journal and payment_journal.outbound_payment_method_ids:
         payment_vals = {
           'partner_id': ref('base.res_partner_1'),
@@ -63,13 +59,12 @@
           'amount': 8254.20,
           'payment_method_id': payment_journal.outbound_payment_method_ids[0].id,
         }
-        payment_id = self.pool['account.payment'].create(cr, uid, payment_vals)
-        self.pool['account.payment'].post(cr, uid, payment_id)
+        payment = self.env['account.payment'].create(payment_vals)
+        payment.post()
 # payment parcial a odoo
 -
   !python {model: ir.model.data} : |
-      payment_journal_id = self.pool['account.journal'].search(cr, uid, [('type', '=', 'cash')], limit=1)
-      payment_journal = self.pool['account.journal'].browse(cr, uid, payment_journal_id)
+      payment_journal = self.env['account.journal'].search([('type', '=', 'cash')], limit=1)
       if payment_journal and payment_journal.outbound_payment_method_ids:
         payment_vals = {
           'partner_id': ref('l10n_ar_partner.res_partner_odoo'),
@@ -80,13 +75,12 @@
           'amount': 2000.0,
           'payment_method_id': payment_journal.outbound_payment_method_ids[0].id,
         }
-        payment_id = self.pool['account.payment'].create(cr, uid, payment_vals)
-        self.pool['account.payment'].post(cr, uid, payment_id)
+        payment = self.env['account.payment'].create(payment_vals)
+        payment.post()
 # payment a cuenta deltapc
 -
   !python {model: ir.model.data} : |
-      payment_journal_id = self.pool['account.journal'].search(cr, uid, [('type', '=', 'bank')], limit=1)
-      payment_journal = self.pool['account.journal'].browse(cr, uid, payment_journal_id)
+      payment_journal = self.env['account.journal'].search([('type', '=', 'bank')], limit=1)
       if payment_journal and payment_journal.outbound_payment_method_ids:
         payment_vals = {
           'partner_id': ref('base.res_partner_4'),
@@ -96,5 +90,5 @@
           'amount': 1000.0,
           'payment_method_id': payment_journal.outbound_payment_method_ids[0].id,
         }
-        payment_id = self.pool['account.payment'].create(cr, uid, payment_vals)
-        self.pool['account.payment'].post(cr, uid, payment_id)
+        payment = self.env['account.payment'].create(payment_vals)
+        payment.post()

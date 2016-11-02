@@ -58,11 +58,6 @@
             <field name="taxes_id" search="[('type_tax_use', '=', 'sale'), ('tax_group_id', '=', 'IVA 10.5%')]"/>
             <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'IVA 10.5%')]"/>
         </record>
-        <record id="product.product_product_26" model="product.product">
-            <field name="name">Laptop S3450 (IVA 10,5)</field>
-            <field name="taxes_id" search="[('type_tax_use', '=', 'sale'), ('tax_group_id', '=', 'IVA 10.5%')]"/>
-            <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'IVA 10.5%')]"/>
-        </record>
         <record id="product.product_product_27" model="product.product">
             <field name="name">Laptop Customized (IVA 10,5)</field>
             <field name="taxes_id" search="[('type_tax_use', '=', 'sale'), ('tax_group_id', '=', 'IVA 10.5%')]"/>

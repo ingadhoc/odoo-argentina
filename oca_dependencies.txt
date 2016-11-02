@@ -14,4 +14,4 @@
 # To provide both the URL and a branch, use:
 # sale-workflow https://github.com/OCA/sale-workflow branchname
 oca-partner-contact https://github.com/OCA/partner-contact
-ingadhoc-account-financial-tools https://github.com/ingadhoc/account-financial-tools
+ingadhoc-account-financial-tools https://github.com/ingadhoc/account-financial-tools 9.0

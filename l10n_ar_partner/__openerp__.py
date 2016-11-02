@@ -4,9 +4,6 @@
     'category': 'Localization/Argentina',
     'depends': [
         'partner_identification',
-        # this is for demo data, for fiscal position data on account
-        # and also beacuse it is essential for argentinian use
-        'l10n_ar_states',
     ],
     'installable': True,
     'license': 'AGPL-3',

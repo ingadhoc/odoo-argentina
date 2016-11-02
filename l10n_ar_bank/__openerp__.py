@@ -3,7 +3,7 @@
  'author': 'OpenERP - Team de Localizaci\xc3\xb3n Argentina',
  'category': 'Localization/Argentina',
  'demo_xml': [],
- 'depends': ['base', 'l10n_ar_states'],
+ 'depends': ['base'],
  'description': '\n\nBanks of Argentina\n\n==================\n\n\n\nSpanish'
  '\n\n-------\n\n\n\nListado de entidades financieras habilitadas por el BCRA.'
  '\n\n\n\nEste m\xc3\xb3dulo le permite tener a disposici\xc3\xb3n el listado'

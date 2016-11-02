@@ -8,7 +8,7 @@
     document_number: 25095454
     street: Av. Rivadavia
     city: Capital Federal
-    state_id: l10n_ar_states.C
+    state_id: base.state_ar_c
     country_id: base.ar
     zip: 1407
 
@@ -24,7 +24,7 @@
     vat: ar30681521077
     street: Azcuenaga 770
     city: Capital Federal
-    state_id: l10n_ar_states.C
+    state_id: base.state_ar_c
     country_id: base.ar
     zip: 1029
 
@@ -50,7 +50,7 @@
     vat: ar30712007288
     street: Castillo 1336 12A 
     city: Capital Federal
-    state_id: l10n_ar_states.C
+    state_id: base.state_ar_c
     country_id: base.ar
     zip: 1414
 
@@ -91,7 +91,7 @@
     vat: ar30571421352
     street: Pigmentos 10
     city: Capital Federal
-    state_id: l10n_ar_states.C
+    state_id: base.state_ar_c
     country_id: base.ar
     zip: 1001
 
@@ -145,7 +145,7 @@
     vat: ar30642332771
     street: Roca Julio A. Pte. Av. 733, 5
     city: Capital Federal
-    state_id: l10n_ar_states.C
+    state_id: base.state_ar_c
     country_id: base.ar
     zip: 1067
 
@@ -184,7 +184,7 @@
     vat: ar33707348629
     street: Urquiza 494
     city: Parana
-    state_id: l10n_ar_states.E
+    state_id: base.state_ar_e
     country_id: base.ar
     zip: 3100
 
@@ -223,7 +223,7 @@
     vat: ar23250954549
     street: Av. Rivadavia
     city: Capital Federal
-    state_id: l10n_ar_states.C
+    state_id: base.state_ar_c
     country_id: base.ar
     zip: 1407
 

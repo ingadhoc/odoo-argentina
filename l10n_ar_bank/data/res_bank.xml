@@ -84,7 +84,7 @@
             <field name='street2'>piso 1</field>
             <field name='zip'>1638</field>
             <field name='city'>Vicente López</field>
-            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4796-8600</field>
             <field name='fax'>011-4796-8641</field>
@@ -261,7 +261,7 @@
             <field name='street2'></field>
             <field name='zip'></field>
             <field name='city'>La Plata</field>
-            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4347-0000</field>
             <field name='email'>atencionalclienteBPBA@bapropagos.com.ar</field>
@@ -350,7 +350,7 @@
             <field name='street2'></field>
             <field name='zip'>B1640GJA</field>
             <field name='city'>Martínez</field>
-            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>-4003-7275</field>
             <field name='fax'>-4003-6923</field>
@@ -410,7 +410,7 @@
             <field name='street2'></field>
             <field name='zip'>B1900AVM</field>
             <field name='city'>La Plata</field>
-            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0221-4232403</field>
             <field name='fax'>0221-422-9111</field>
@@ -719,7 +719,7 @@
             <field name='street2'></field>
             <field name='zip'></field>
             <field name='city'>La Plata</field>
-            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4341-1000</field>
             <field name='fax'>011-4342-8962</field>
@@ -791,7 +791,7 @@
             <field name='street2'></field>
             <field name='zip'>1672</field>
             <field name='city'>Villa Lynch</field>
-            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4512-6000</field>
             <field name='fax'>011-4754-9399</field>
@@ -877,7 +877,7 @@
             <field name='street2'></field>
             <field name='zip'>B1610BKK</field>
             <field name='city'>Ricardo Rojas</field>
-            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>-4510-8325</field>
             <field name='fax'>-4510-8004</field>
@@ -1187,7 +1187,7 @@
             <field name='street2'></field>
             <field name='zip'></field>
             <field name='city'>General Pacheco</field>
-            <field name='state' ref='l10n_ar_states.B'/>
+            <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4317-9000</field>
             <field name='fax'>011-4317-9001</field>

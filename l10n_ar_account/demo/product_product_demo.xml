@@ -3,7 +3,7 @@
     <data noupdate="0">
 
     <!-- Creamos productos para distintos casos de uso -->
-        <record id="product_product_exento" model="product.product">
+        <record id="l10n_ar_account.product_product_exento" model="product.product">
             <field name="name">Libro "Desarrollo en Odoo" (IVA exento)</field>
             <field name="categ_id" ref="product.product_category_5"/>
             <field name="standard_price">100.0</field>
@@ -15,7 +15,7 @@
             <field name="taxes_id" search="[('type_tax_use', '=', 'sale'), ('tax_group_id', '=', 'IVA Exento')]"/>
             <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'IVA Exento')]"/>
         </record>
-        <record id="product_product_cero" model="product.product">
+        <record id="l10n_ar_account.product_product_cero" model="product.product">
             <field name="name">Animales y vegetales no industrializados (IVA cero)</field>
             <field name="categ_id" ref="product.product_category_5"/>
             <field name="standard_price">200.0</field>
@@ -27,7 +27,7 @@
             <field name="taxes_id" search="[('type_tax_use', '=', 'sale'), ('tax_group_id', '=', 'IVA 0%')]"/>
             <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'IVA 0%')]"/>
         </record>
-        <record id="product_product_no_gravado" model="product.product">
+        <record id="l10n_ar_account.product_product_no_gravado" model="product.product">
             <field name="name">Conceptos no gravados (IVA NG)</field>
             <field name="categ_id" ref="product.product_category_5"/>
             <field name="standard_price">50.0</field>
@@ -39,7 +39,7 @@
             <field name="taxes_id" search="[('type_tax_use', '=', 'sale'), ('tax_group_id', '=', 'IVA No Gravado')]"/>
             <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'IVA No Gravado')]"/>
         </record>
-        <record id="product_product_telefonia" model="product.product">
+        <record id="l10n_ar_account.product_product_telefonia" model="product.product">
             <field name="name">Servicio de telefonía (IVA 27)</field>
             <field name="categ_id" ref="product.product_category_5"/>
             <field name="standard_price">250.0</field>

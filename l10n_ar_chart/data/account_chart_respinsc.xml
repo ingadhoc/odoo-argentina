@@ -16,28 +16,28 @@
             <!-- 1.1.04.01 (iva) --> 
 
                 <record model="account.account.template" id="ri_retencion_iva_sufrida">
-                    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
                     <field name="code">1.1.04.01.010</field>
                     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
                     <field name="name">Retención IVA Sufrida</field>
                 </record>
 
                 <record model="account.account.template" id="ri_percepcion_iva_sufrida">
-                    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
                     <field name="code">1.1.04.01.020</field>
                     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
                     <field name="name">Percepción IVA Sufrida</field>
                 </record>
 
                 <record model="account.account.template" id="ri_iva_credito_fiscal">
-                    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
                     <field name="code">1.1.04.01.030</field>
                     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
                     <field name="name">IVA crédito fiscal</field>
                 </record>
 
                 <record model="account.account.template" id="ri_iva_saldo_tecnico_favor">
-                    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
                     <field name="code">1.1.04.01.040</field>
                     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
                     <field name="name">IVA saldo técnico a favor</field>
@@ -47,35 +47,35 @@
             <!-- 2.1.02.01 (SICORE Ganancias e IVA)  -->
 
                 <record model="account.account.template" id="ri_retencion_ganancias_aplicada">
-                    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
                     <field name="code">2.1.02.01.010</field>
                     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
                     <field name="name">Retención ganancias aplicada</field>
                 </record>
 
                 <record model="account.account.template" id="ri_percepcion_ganancias_aplicada">
-                    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
                     <field name="code">2.1.02.01.020</field>
                     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
                     <field name="name">Percepción ganancias aplicada </field>
                 </record>
 
                 <record model="account.account.template" id="ri_retencion_iva_aplicada">
-                    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
                     <field name="code">2.1.02.01.030</field>
                     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
                     <field name="name">Retención IVA aplicada</field>
                 </record>
 
                 <record model="account.account.template" id="ri_percepcion_iva_aplicada">
-                    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
                     <field name="code">2.1.02.01.040</field>
                     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
                     <field name="name">Percepción IVA aplicada</field>
                 </record>
 
                 <record model="account.account.template" id="ri_retencion_ganancias_a_pagar">
-                    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
                     <field name="code">2.1.02.01.050</field>
                     <field name="user_type_id" ref="account.data_account_type_payable"/>
                     <field name="name">Retención/Percepción ganancias a pagar</field>
@@ -83,7 +83,7 @@
                 </record>
 
                 <record model="account.account.template" id="ri_retencion_iva_a_pagar">
-                    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
                     <field name="code">2.1.02.02.060</field>
                     <field name="user_type_id" ref="account.data_account_type_payable"/>
                     <field name="name">Retención/Percepción IVA a pagar</field>
@@ -94,14 +94,14 @@
             <!-- (IVA) --> 
 
             <record model="account.account.template" id="ri_iva_debito_fiscal">
-                <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
                 <field name="code">2.1.02.00.010</field>
                 <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
                 <field name="name">IVA débito fiscal</field>
             </record>
 
             <record model="account.account.template" id="ri_iva_saldo_a_pagar">
-                <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
                 <field name="code">2.1.02.00.020</field>
                 <field name="user_type_id" ref="account.data_account_type_payable"/>
                 <field name="name">IVA saldo a pagar</field>

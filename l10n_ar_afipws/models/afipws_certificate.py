@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 
 class afipws_certificate(models.Model):
     _name = "afipws.certificate"
-    _rec_name = "display_name"
+    _rec_name = "alias_id"
 
     alias_id = fields.Many2one(
         'afipws.certificate_alias',
@@ -45,10 +45,10 @@ class afipws_certificate(models.Model):
         select=True,
         readonly=True,
         default='draft',
-        help='* The \'Draft\' state is used when a user is creating a new pair key. Warning: everybody can see the key.\
-        \n* The \'Waiting\' state is used when a request has send to Certificate Authority and is waiting for response.\
-        \n* The \'Confirmed\' state is used when a certificate is valid.\
-        \n* The \'Canceled\' state is used when the key is not more used. You cant use this key again.')
+        help='* The \'Draft\' state is used when a user is creating a new pair key. Warning: everybody can see the key.'
+        '\n* The \'Waiting\' state is used when a request has send to Certificate Authority and is waiting for response.'
+        '\n* The \'Confirmed\' state is used when a certificate is valid.'
+        '\n* The \'Canceled\' state is used when the key is not more used. You cant use this key again.')
     request_file = fields.Binary(
         _('Download Signed Certificate Request'),
         compute='get_request_file',
@@ -59,16 +59,6 @@ class afipws_certificate(models.Model):
         readonly=True,
         compute='get_request_file',
         )
-    display_name = fields.Char(
-        string=_('Name'),
-        compute='_compute_display_name',
-        )
-
-    @api.one
-    @api.depends('create_date', 'alias_id.display_name')
-    def _compute_display_name(self):
-        names = [self.alias_id.display_name, self.create_date]
-        self.display_name = ' / '.join(filter(None, names))
 
     @api.one
     @api.depends('csr')

@@ -84,6 +84,8 @@ install:
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
   - mv /home/travis/odoo-9.0/addons/account /home/travis/build/ingadhoc/odoo-argentina
+  - mv /home/travis/odoo-9.0/addons/account_cancel /home/travis/build/ingadhoc/odoo-argentina
+  - mv /home/travis/dependencies/ingadhoc-account-financial-tools/account_document /home/travis/build/ingadhoc/odoo-argentina
 
 script:
   - travis_run_tests

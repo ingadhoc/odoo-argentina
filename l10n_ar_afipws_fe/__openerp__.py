@@ -33,7 +33,8 @@
     ],
     'demo': [
         'demo/account_journal_demo.yml',
-        'demo/account_invoice_demo.yml',
+        '../l10n_ar_account/demo/account_customer_invoice_demo.yml',
+        'demo/account_journal_demo_without_doc.yml',
     ],
     'test': [
     ],

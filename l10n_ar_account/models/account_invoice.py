@@ -5,6 +5,7 @@
 ##############################################################################
 from openerp import models, fields, api, _
 from openerp.exceptions import UserError
+from dateutil.relativedelta import relativedelta
 import re
 import logging
 _logger = logging.getLogger(__name__)
@@ -446,3 +447,14 @@ class AccountInvoice(models.Model):
         if fiscal_position:
             self.fiscal_position_id = fiscal_position
         return res
+
+    @api.one
+    @api.constrains('date_invoice')
+    def set_date_afip(self):
+        if self.date_invoice:
+            date_invoice = fields.Datetime.from_string(self.date_invoice)
+            if not self.afip_service_start:
+                self.afip_service_start = date_invoice + relativedelta(day=1)
+            if not self.afip_service_end:
+                self.afip_service_end = date_invoice + \
+                    relativedelta(day=1, days=-1, months=+1)

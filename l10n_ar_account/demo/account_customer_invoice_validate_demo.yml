@@ -1,0 +1,17 @@
+-
+   We split validation so that when this demo data is loaded by electronic
+   invoice we dont validate it
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_1}
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_2}
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_3}
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_4}
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_5}
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_7}
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_8}

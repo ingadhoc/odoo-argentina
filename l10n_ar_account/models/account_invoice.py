@@ -102,6 +102,8 @@ class AccountInvoice(models.Model):
     # pero entendemos que podrian ser necesarios para otros tipos, por ahora
     # solo lo vamos a hacer requerido si el punto de venta es del tipo
     # electronico
+    # TODO mejorar, este concepto deberia quedar fijo y no poder modificarse
+    # una vez validada, cosa que pasaria por ej si cambias el producto
     afip_concept = fields.Selection(
         compute='_get_concept',
         # store=True,
@@ -113,10 +115,14 @@ class AccountInvoice(models.Model):
         string="AFIP concept",
     )
     afip_service_start = fields.Date(
-        string='Service Start Date'
+        string='Service Start Date',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
     afip_service_end = fields.Date(
-        string='Service End Date'
+        string='Service End Date',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
 
     @api.one
@@ -184,12 +190,12 @@ class AccountInvoice(models.Model):
         # decidimos obtener esto solamente para comprobantes con doc number
         str_number = self.document_number or False
         if str_number:
-            if self.document_type_id.code in [33, 99, 331, 332]:
+            if self.document_type_id.code in ['33', '99', '331', '332']:
                 point_of_sale = '0'
                 # leave only numbers and convert to integer
                 invoice_number = str_number
             # despachos de importacion
-            elif self.document_type_id.code == 66:
+            elif self.document_type_id.code == '66':
                 point_of_sale = '0'
                 invoice_number = '0'
             elif "-" in str_number:
@@ -233,7 +239,7 @@ class AccountInvoice(models.Model):
                 afip_concept = '2'
             if product_types.issubset(consumible):
                 afip_concept = '1'
-            if self.document_type_id.code in [19, 20, 21]:
+            if self.document_type_id.code in ['19', '20', '21']:
                 # TODO verificar esto, como par expo no existe 3 y existe 4
                 # (otros), considermaos que un mixto seria el otros
                 if afip_concept == '3':

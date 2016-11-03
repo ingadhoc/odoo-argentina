@@ -105,5 +105,3 @@ class AccountJournalDocumentType(models.Model):
             msg = _('OK! Local and remote next number match!') + msg
         title = _('Last Invoice %s\n' % last)
         return {'msg': (title + msg), 'result': last}
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

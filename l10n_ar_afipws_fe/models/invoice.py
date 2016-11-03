@@ -127,14 +127,17 @@ class AccountInvoice(models.Model):
             cae_due = ''.join(
                 [c for c in str(self.afip_auth_code_due or '') if c.isdigit()])
             barcode = ''.join(
-                [str(self.company_id.cuit),
-                    "%02d" % int(self.document_type_id.code),
-                    "%04d" % int(self.journal_id.point_of_sale_number),
+                [str(self.company_id.partner_id.vat[2:]),
+                    "%02d" % int(self.afip_document_class_id.afip_code),
+                    "%04d" % int(self.journal_id.point_of_sale_id.number),
                     str(self.afip_auth_code), cae_due])
             barcode = barcode + self.verification_digit_modulo10(barcode)
         self.afip_barcode = barcode
+        self.afip_barcode_img = self._make_image_I25(barcode)
 
-        # Generate the required barcode Interleaved of 7 image using PIL
+    @api.model
+    def _make_image_I25(self, barcode):
+        "Generate the required barcode Interleaved of 7 image using PIL"
         image = False
         if barcode:
             # create the helper:
@@ -149,7 +152,7 @@ class AccountInvoice(models.Model):
             image = output.getvalue()
             image = output.getvalue().encode("base64")
             output.close()
-        self.afip_barcode_img = image
+        return image
 
     @api.model
     def verification_digit_modulo10(self, code):
@@ -398,9 +401,17 @@ print "Observaciones:", wscdc.Obs
             imp_total = str("%.2f" % abs(inv.amount_total))
             # ImpTotConc es el iva no gravado
             imp_tot_conc = str("%.2f" % abs(inv.vat_untaxed_base_amount))
-            imp_neto = str("%.2f" % abs(inv.vat_taxable_amount))
+            # tal vez haya una mejor forma, la idea es que para facturas c
+            # no se pasa iva. Probamos hacer que vat_taxable_amount
+            # incorpore a los imp cod 0, pero en ese caso termina reportando
+            # iva y no lo queremos
+            if inv.document_type_id.document_letter_id.name == 'C':
+                imp_neto = str("%.2f" % abs(inv.amount_untaxed))
+            else:
+                imp_neto = str("%.2f" % abs(inv.vat_taxable_amount))
             imp_iva = str("%.2f" % abs(inv.vat_amount))
-            imp_subtotal = str("%.2f" % abs(inv.amount_untaxed))
+            # se usaba para wsca..
+            # imp_subtotal = str("%.2f" % abs(inv.amount_untaxed))
             imp_trib = str("%.2f" % abs(inv.other_taxes_amount))
             imp_op_ex = str("%.2f" % abs(inv.vat_exempt_base_amount))
             moneda_id = inv.currency_id.afip_code
@@ -465,16 +476,16 @@ print "Observaciones:", wscdc.Obs
                     fecha_serv_desde, fecha_serv_hasta,
                     moneda_id, moneda_ctz
                 )
-            elif afip_ws == 'wsmtxca':
-                ws.CrearFactura(
-                    concepto, tipo_doc, nro_doc, doc_afip_code, pos_number,
-                    cbt_desde, cbt_hasta, imp_total, imp_tot_conc, imp_neto,
-                    imp_subtotal,   # difference with wsfe
-                    imp_trib, imp_op_ex, fecha_cbte, fecha_venc_pago,
-                    fecha_serv_desde, fecha_serv_hasta,
-                    moneda_id, moneda_ctz,
-                    obs_generales   # difference with wsfe
-                )
+            # elif afip_ws == 'wsmtxca':
+            #     ws.CrearFactura(
+            #         concepto, tipo_doc, nro_doc, doc_afip_code, pos_number,
+            #         cbt_desde, cbt_hasta, imp_total, imp_tot_conc, imp_neto,
+            #         imp_subtotal,   # difference with wsfe
+            #         imp_trib, imp_op_ex, fecha_cbte, fecha_venc_pago,
+            #         fecha_serv_desde, fecha_serv_hasta,
+            #         moneda_id, moneda_ctz,
+            #         obs_generales   # difference with wsfe
+            #     )
             elif afip_ws == 'wsfex':
                 ws.CrearFactura(
                     doc_afip_code, pos_number, cbte_nro, fecha_cbte,
@@ -502,7 +513,7 @@ print "Observaciones:", wscdc.Obs
                     _logger.info(
                         'Adding TAX %s' % tax.tax_id.tax_group_id.name)
                     ws.AgregarTributo(
-                        tax.tax_id.tax_group_id.afip_code,
+                        tax.tax_id.tax_group_id.application_code,
                         tax.tax_id.tax_group_id.name,
                         "%.2f" % abs(tax.base),
                         # "%.2f" % abs(tax.base_amount),

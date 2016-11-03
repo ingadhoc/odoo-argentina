@@ -10,6 +10,9 @@
     'depends': [
         'account_document',
         'l10n_ar_partner',
+        # para guardar el link entre facturas y NC
+        # el modulo tiene errores en los test (probado solo con odoo y tmb)
+        # 'account_invoice_refund_link',
         # no es una dependencia en si (salvo para datos demo) pero si es
         # necesario por como implemenamos la localizacion
         # 'account_invoice_tax_wizard',
@@ -34,7 +37,6 @@
         # data_account_type
         # 'data/account_financial_report_data.xml',
         # 'data/account_payment_term.xml',
-        'wizard/account_invoice_refund_view.xml',
         'view/res_partner_view.xml',
         'view/res_company_view.xml',
         'view/afip_menuitem.xml',
@@ -66,4 +68,3 @@
     'application': False,
     'post_init_hook': 'post_init_hook',
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

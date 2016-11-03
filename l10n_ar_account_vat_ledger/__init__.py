@@ -4,4 +4,5 @@
 # directory
 ##############################################################################
 from . import account
+from . import account_invoice
 from . import account_vat_report

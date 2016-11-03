@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==============
-Provides the configuration for whole business suite according to Argentinian Localization.
-==============
+===================================================
+Provides configuration for Argentinian Localization
+===================================================
 
 Este modulo basicamente hace:
 1. Poner como dato demo a la companía como pais "Argentina" para que todos los tests y planes de cuenta que se instalan sean de argentina

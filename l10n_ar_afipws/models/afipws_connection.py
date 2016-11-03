@@ -142,4 +142,3 @@ class AfipwsConnection(models.Model):
         """
         _logger.info('Getting ws %s from libraries ' % afip_ws)
         return False
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

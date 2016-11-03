@@ -36,7 +36,7 @@
 
         <!-- Cerro Castor - Customer -->
         <record id="l10n_ar_partner.res_partner_cerrocastor" model="res.partner">
-            <field name='afip_responsability_type_id' ref='res_IVARI'/>
+            <field name='afip_responsability_type_id' ref='res_IVA_LIB'/>
         </record>
 
     <!-- partners originales de odoo -->

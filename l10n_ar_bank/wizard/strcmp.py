@@ -46,5 +46,3 @@ if __name__ == "__main__":
     import unittest
     runner = unittest.TextTestRunner()
     runner.run(test_suite())
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

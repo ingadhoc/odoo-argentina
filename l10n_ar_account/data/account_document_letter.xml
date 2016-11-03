@@ -28,7 +28,7 @@
         <record model='account.document.letter' id='dl_e'>
             <field name='name'>E</field>
             <field name='issuer_ids' eval="[(6, 0, [ref('res_IVARI'), ref('res_RM')])]"/>
-            <field name='receptor_ids' eval="[(6, 0, [ref('res_CLI_EXT'), ref('res_EXT'), ref('res_IVARI')])]"/>
+            <field name='receptor_ids' eval="[(6, 0, [ref('res_CLI_EXT'), ref('res_EXT'), ref('res_IVA_LIB')])]"/>
             <field name="taxes_included" eval="True"/>
             <!-- <field name='included_tax_group_ids' eval="[(6, 0, [ref('tax_group_vat_taxes'), ref('account.tax_group_taxes')])]"/> -->
         </record>

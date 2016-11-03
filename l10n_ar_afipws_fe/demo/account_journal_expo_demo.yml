@@ -3,8 +3,9 @@
     type: 'sale'
     use_documents: True
     afip_ws: 'wsfex'
-    # we dont want same number as before
-    point_of_sale_number: !eval int(time.strftime('%S')) + 12
+    # simply way to generate random number greater greater thant 10 (no same point of sale as other, and different from others so it can be used for demo)
+    point_of_sale_number: !eval int(time.strftime('%S')) + 10
     point_of_sale_type: 'electronic'
     company_id: base.main_company
+    # less sequence than withotu document journals
     sequence: 3

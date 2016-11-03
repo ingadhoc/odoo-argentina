@@ -49,4 +49,3 @@ Hide Sale Receipt, Purchase recepit and Sale receipts analysis menus
     'auto_install': False,
     'application': False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

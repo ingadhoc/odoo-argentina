@@ -9,4 +9,3 @@ from . import afip
 from . import account_voucher
 from . import res_partner
 from . import account_invoice_tax
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

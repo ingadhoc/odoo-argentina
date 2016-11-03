@@ -34,4 +34,3 @@
           'wizard/wiz_l10n_ar_bank.xml'],
  'version': '9.0.1.0.0',
  'website': 'https://launchpad.net/~openerp-l10n-ar-localization'}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

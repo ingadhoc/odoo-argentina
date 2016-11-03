@@ -54,5 +54,3 @@ def geocode(input_string, **args):
         response = pickle.load(open(tmpfilename))
 
     return response
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

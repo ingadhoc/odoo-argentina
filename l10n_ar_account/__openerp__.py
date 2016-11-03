@@ -67,4 +67,3 @@
     'application': False,
     'post_init_hook': 'post_init_hook',
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -14,5 +14,3 @@ class argentinian_base_configuration(osv.osv_memory):
             "Show Unit Price w/ Taxes On sale Order Lines",
             implied_group='l10n_ar_sale.sale_price_unit_with_tax',),
     }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

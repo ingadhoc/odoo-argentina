@@ -15,4 +15,3 @@
 # sale-workflow https://github.com/OCA/sale-workflow branchname
 oca-partner-contact https://github.com/OCA/partner-contact
 ingadhoc-account-financial-tools https://github.com/ingadhoc/account-financial-tools 9.0
-oca-account-invoicing https://github.com/oca/account-invoicing 9.0

@@ -13,7 +13,7 @@ class AccountInvoiceRefund(models.TransientModel):
     @api.multi
     def compute_refund(self, mode='refund'):
         res = super(AccountInvoiceRefund, self).compute_refund(mode=mode)
-        if res:
+        if isinstance(res, dict):
             domain = res.get('domain', [])
             refund_invoices = self.env['account.invoice'].search(domain)
             # invoice = self.env['account.invoice'].browse(invoice_ids)

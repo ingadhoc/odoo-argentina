@@ -63,10 +63,7 @@ env:
   matrix:
   - LINT_CHECK="1"
   - TRANSIFEX="1"
-  # we include account so that is not pre-installed because it raise an error
-  # running test with account already installed (i also happends with odoo default modules)
-  # we should find another way instead of include
-  - TESTS="1" ODOO_REPO="odoo/odoo" INCLUDE="account"
+  - TESTS="1" ODOO_REPO="odoo/odoo"
 # either use the two lines above or the two below. Don't change the default if
 # it's not necessary (it is only necessary if modules in your repository can't
 # be installed in the same database. And you get a huge speed penalty in your
@@ -81,6 +78,11 @@ install:
   - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
+  # if we are on TESTS then we copy this modules because if not account is pre-nstalled an it launches l10n_ar_chart installation, and then later on l10n_ar_chart re-install we have errors (native odoo errors)
+  # running test with account already installed (i also happends with odoo default modules)
+  - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/account ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/account_cancel ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-financial-tools/account_document ~/build/ingadhoc/odoo-argentina; fi
 
 script:
   - travis_run_tests

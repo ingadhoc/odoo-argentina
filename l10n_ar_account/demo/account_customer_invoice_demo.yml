@@ -68,7 +68,7 @@
   !python {model: ir.model.data} : |
       position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
       if position_id:
-          self._update(cr, uid, 'account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position_id[0]}, 'demo_invoice_3')
+          self.pool['account.invoice'].write(cr, uid, ref('demo_invoice_3'), {'fiscal_position_id': position_id[0]})
 # -
 #   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_3}
 -
@@ -94,7 +94,7 @@
   !python {model: ir.model.data} : |
       position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
       if position_id:
-          self._update(cr, uid, 'account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position_id[0]}, 'demo_invoice_4')
+          self.pool['account.invoice'].write(cr, uid, ref('demo_invoice_4'), {'fiscal_position_id': position_id[0]})
 # -
 #   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_4}
 -
@@ -138,7 +138,7 @@
   !python {model: ir.model.data} : |
       position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
       if position_id:
-          self._update(cr, uid, 'account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position_id[0]}, 'demo_invoice_5')
+          self.pool['account.invoice'].write(cr, uid, ref('demo_invoice_5'), {'fiscal_position_id': position_id[0]})
 # -
 #   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_5}
 -

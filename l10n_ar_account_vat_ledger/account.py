@@ -5,6 +5,8 @@
 ##############################################################################
 from openerp import models, fields, api, _
 import openerp.addons.decimal_precision as dp
+import logging
+_logger = logging.getLogger(__name__)
 
 
 # TODO mejorar y usar los signos de tax codes para todo (o signo del impuesto)
@@ -35,6 +37,8 @@ class afip_document_class(models.Model):
     def _get_amounts(self):
         """
         """
+        _logger.info('Getting amounts for document class %s(%s)' % (
+            self.name, self.id))
         vat_ledger_id = self._context.get('vat_ledger_id', False)
         if vat_ledger_id:
             vat_ledger = self.env['account.vat.ledger'].browse(vat_ledger_id)
@@ -88,6 +92,8 @@ class account_tax_code(models.Model):
         amount_untaxed = False
         amount_tax = False
         amount_total = False
+        _logger.info('Getting amounts for tax code %s(%s)' % (
+            self.name, self.id))
         vat_ledger_id = self._context.get('vat_ledger_id', False)
         if vat_ledger_id:
             vat_ledger = self.env['account.vat.ledger'].browse(vat_ledger_id)
@@ -161,6 +167,8 @@ class afip_responsability(models.Model):
         amount_untaxed = False
         amount_tax = False
         amount_total = False
+        _logger.info('Getting amounts for responsability %s(%s)' % (
+            self.name, self.id))
         vat_ledger_id = self._context.get('vat_ledger_id', False)
         if vat_ledger_id:
             vat_ledger = self.env['account.vat.ledger'].browse(vat_ledger_id)

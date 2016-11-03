@@ -505,7 +505,7 @@ print "Observaciones:", wscdc.Obs
                     _logger.info(
                         'Adding TAX %s' % tax.tax_id.tax_group_id.name)
                     ws.AgregarTributo(
-                        tax.tax_id.tax_group_id.afip_code,
+                        tax.tax_id.tax_group_id.application_code,
                         tax.tax_id.tax_group_id.name,
                         "%.2f" % abs(tax.base),
                         # "%.2f" % abs(tax.base_amount),

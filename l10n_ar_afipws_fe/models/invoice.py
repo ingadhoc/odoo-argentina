@@ -127,14 +127,17 @@ class AccountInvoice(models.Model):
             cae_due = ''.join(
                 [c for c in str(self.afip_auth_code_due or '') if c.isdigit()])
             barcode = ''.join(
-                [str(self.company_id.cuit),
-                    "%02d" % int(self.document_type_id.code),
-                    "%04d" % int(self.journal_id.point_of_sale_number),
+                [str(self.company_id.partner_id.vat[2:]),
+                    "%02d" % int(self.afip_document_class_id.afip_code),
+                    "%04d" % int(self.journal_id.point_of_sale_id.number),
                     str(self.afip_auth_code), cae_due])
             barcode = barcode + self.verification_digit_modulo10(barcode)
         self.afip_barcode = barcode
+        self.afip_barcode_img = self._make_image_I25(barcode)
 
-        # Generate the required barcode Interleaved of 7 image using PIL
+    @api.model
+    def _make_image_I25(self, barcode):
+        "Generate the required barcode Interleaved of 7 image using PIL"
         image = False
         if barcode:
             # create the helper:
@@ -149,7 +152,7 @@ class AccountInvoice(models.Model):
             image = output.getvalue()
             image = output.getvalue().encode("base64")
             output.close()
-        self.afip_barcode_img = image
+        return image
 
     @api.model
     def verification_digit_modulo10(self, code):

@@ -80,9 +80,9 @@ install:
   - travis_install_nightly
   # if we are on TESTS then we copy this modules because if not account is pre-nstalled an it launches l10n_ar_chart installation, and then later on l10n_ar_chart re-install we have errors (native odoo errors)
   # running test with account already installed (i also happends with odoo default modules)
-  - if [ "${TESTS}" == "1"  ]; then mv /home/travis/odoo-9.0/addons/account /home/travis/build/ingadhoc/odoo-argentina; fi
-  - if [ "${TESTS}" == "1"  ]; then mv /home/travis/odoo-9.0/addons/account_cancel /home/travis/build/ingadhoc/odoo-argentina; fi
-  - if [ "${TESTS}" == "1"  ]; then mv /home/travis/dependencies/ingadhoc-account-financial-tools/account_document /home/travis/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/account ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/account_cancel ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-financial-tools/account_document ~/build/ingadhoc/odoo-argentina; fi
 
 script:
   - travis_run_tests

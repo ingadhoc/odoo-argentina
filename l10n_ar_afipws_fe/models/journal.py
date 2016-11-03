@@ -57,7 +57,8 @@ class AccountJournal(models.Model):
     @api.multi
     def get_journal_letter(self, counterpart_partner=False):
         """Function to be inherited by afip ws fe"""
-        letters = super(AccountJournal, self).get_journal_letter()
+        letters = super(AccountJournal, self).get_journal_letter(
+            counterpart_partner=counterpart_partner)
         # filter only for sales journals
 
         if self.type != 'sale':

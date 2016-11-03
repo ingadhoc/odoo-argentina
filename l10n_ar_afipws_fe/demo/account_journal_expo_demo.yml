@@ -1,0 +1,10 @@
+-
+  !record {model: account.journal, id: sales_journal_3}:
+    type: 'sale'
+    use_documents: True
+    afip_ws: 'wsfex'
+    # we dont want same number as before
+    point_of_sale_number: !eval int(time.strftime('%S')) + 12
+    point_of_sale_type: 'electronic'
+    company_id: base.main_company
+    sequence: 3

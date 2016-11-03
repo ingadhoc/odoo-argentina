@@ -32,6 +32,8 @@
         'security/ir.model.access.csv',
     ],
     'demo': [
+        'demo/account_journal_expo_demo.yml',
+        '../l10n_ar_account/demo/account_customer_expo_invoice_demo.yml',
         'demo/account_journal_demo.yml',
         '../l10n_ar_account/demo/account_customer_invoice_demo.yml',
         'demo/account_journal_demo_without_doc.yml',

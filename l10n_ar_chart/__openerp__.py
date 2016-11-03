@@ -20,6 +20,7 @@
     'demo': [
         '../l10n_ar_account/demo/product_product_demo.xml',
         '../l10n_ar_account/demo/account_customer_invoice_demo.yml',
+        '../l10n_ar_account/demo/account_customer_expo_invoice_demo.yml',
         '../l10n_ar_account/demo/account_customer_invoice_validate_demo.yml',
         '../l10n_ar_account/demo/account_customer_refund_demo.yml',
         '../l10n_ar_account/demo/account_supplier_invoice_demo.yml',

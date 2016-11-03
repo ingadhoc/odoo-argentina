@@ -1,0 +1,38 @@
+-
+   Invoice to cerro castor, fiscal position changes taxes to exempt
+   La cargamos aparte para poder cambiar el diario cuando la volvamos a cargar
+   con fe
+-
+  !record {model: account.invoice, id: demo_invoice_6}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_cerrocastor
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    afip_incoterm_id: l10n_ar_account.incoterm_exw
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
+        product_id: product.product_product_49
+        price_unit: 642.0
+        quantity: 5
+      - name: 'Servicio de telefonía (IVA 27)'
+        product_id: l10n_ar_account.product_product_telefonia
+        price_unit: 250.0
+        quantity: 1.0
+      - name: 'Laptop E5023 (IVA 10,5)'
+        product_id: product.product_product_25
+        price_unit: 3245.0
+        quantity: 2.0
+      - name: 'Conceptos no gravados (IVA NG)'
+        product_id: l10n_ar_account.product_product_no_gravado
+        price_unit: 50.0
+        quantity: 10.0
+      - name: 'Animales y vegetales no industrializados (IVA cero)'
+        product_id: l10n_ar_account.product_product_cero
+        price_unit: 200.0
+        quantity: 1.0
+      - name: 'Libro "Desarrollo en Odoo" (IVA exento)'
+        product_id: l10n_ar_account.product_product_exento
+        price_unit: 100.0
+        quantity: 1.0

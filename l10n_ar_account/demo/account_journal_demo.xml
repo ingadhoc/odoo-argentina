@@ -8,14 +8,14 @@
             <field name="name">Customer Invoices without Documents</field>
             <field name="code">AINV</field>
             <field name="type">sale</field>
-            <field name="sequence" eval="3"/>
+            <field name="sequence" eval="4"/>
         </record>
 
         <record id="expenses_journal" model="account.journal">
             <field name="name">Vendor Bills without Documents</field>
             <field name="code">AEXJ</field>
             <field name="type">purchase</field>
-            <field name="sequence" eval="3"/>
+            <field name="sequence" eval="4"/>
         </record>
     </data>
 </openerp> 

@@ -230,8 +230,8 @@
             <field name="sequence">4</field>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
-            <field name="account_id" ref="ri_percepcion_ganancias_sufrida"/>
-            <field name="refund_account_id" ref="ri_percepcion_ganancias_sufrida"/>
+            <field name="account_id" ref="base_percepcion_ganancias_sufrida"/>
+            <field name="refund_account_id" ref="base_percepcion_ganancias_sufrida"/>
             <field name="type_tax_use">purchase</field>
             <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_ganancias_sufrida"/>
         </record>

@@ -66,7 +66,9 @@ env:
   # we include account so that is not pre-installed because it raise an error
   # running test with account already installed (i also happends with odoo default modules)
   # we should find another way instead of include
-  - TESTS="1" ODOO_REPO="odoo/odoo" INCLUDE="account"
+  # we need to force of include every module that is installed by dep of account
+  - TESTS="1" ODOO_REPO="odoo/odoo"
+  # - TESTS="1" ODOO_REPO="odoo/odoo" INCLUDE="account"
 # either use the two lines above or the two below. Don't change the default if
 # it's not necessary (it is only necessary if modules in your repository can't
 # be installed in the same database. And you get a huge speed penalty in your
@@ -81,6 +83,7 @@ install:
   - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
+  - mv /home/travis/odoo-9.0/addons/account /home/travis/build/ingadhoc/odoo-argentina
 
 script:
   - travis_run_tests

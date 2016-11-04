@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-import l10n_ar_bank
+from . import l10n_ar_bank

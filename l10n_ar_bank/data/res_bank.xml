@@ -702,7 +702,7 @@
             <field name='active'>1</field>
             <field name='street'>Esmeralda 83</field>
             <field name='street2'></field>
-            <field name='zip'>C1035ABA</field>
+            <field name='zip'>C1035CABA</field>
             <field name='city'>Buenos Aires</field>
             <field name='state' ref='l10n_ar_states.CABA'/>
             <field name='country' ref='base.ar'/>

@@ -32,7 +32,7 @@
             <field name='currency_id' ref='base.ARS'/>
             <field name='partner_id' ref='partner_mono'/>
             <field name='name'>Monotributista</field>
-            <!-- <field name="logo" type="base64" file="l10n_ar_invoice/demo/monotributista.png"/> -->
+            <!-- <field name="logo" type="base64" file="l10n_ar_account/demo/monotributista.png"/> -->
         </record>
 
     <!-- Users -->
@@ -42,7 +42,7 @@
         </record>
         <record id="base.user_root" model="res.users">
             <field name="company_ids" eval="[(4,ref('company_mono'))]"/>
-            <!-- <field name="company_ids" eval="[(4,ref('l10n_ar_invoice.company_ri')),(4,ref('l10n_ar_invoice.company_mono'))]"/> -->
+            <!-- <field name="company_ids" eval="[(4,ref('l10n_ar_account.company_ri')),(4,ref('l10n_ar_account.company_mono'))]"/> -->
             <!-- <field name="groups_id" eval="[(4, ref('base.group_multi_company'))]"/> -->
         </record>
     </data>

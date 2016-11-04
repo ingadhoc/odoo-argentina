@@ -35,7 +35,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Activities" action="act_afip_activity" id="menu_action_afip_activity" sequence="30" parent="l10n_ar_invoice.menu_afip_config"/>
+        <menuitem name="Activities" action="act_afip_activity" id="menu_action_afip_activity" sequence="30" parent="l10n_ar_account.menu_afip_config"/>
 
     </data>
 </openerp>

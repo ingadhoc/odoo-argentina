@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, _
+from openerp import models, fields, api
 from pyafipws.padron import PadronAFIP
-from openerp.exceptions import Warning
+# from openerp.exceptions import UserError
 # import os
 import base64
 import logging
@@ -72,6 +72,8 @@ class ResPartner(models.Model):
     def update_constancia_from_padron_afip(self):
         self.ensure_one()
         cuit = self.cuit
+        # cuit = self.cuit_required
+
         # descarga de constancia
         # basedir = os.path.join(os.getcwd(), 'cache')
         # tmpfilename = os.path.join(basedir, "constancia.pdf")
@@ -98,7 +100,7 @@ class ResPartner(models.Model):
     @api.multi
     def get_data_from_padron_afip(self):
         self.ensure_one()
-        cuit = self.cuit
+        cuit = self.cuit_required
         padron = PadronAFIP()
         padron.Consultar(cuit)
 
@@ -161,17 +163,17 @@ class ResPartner(models.Model):
                 vals['state_id'] = state.id
 
         if imp_iva == 'NI' and padron.monotributo == 'S':
-            vals['responsability_id'] = self.env.ref(
-                'l10n_ar_invoice.res_RM').id
+            vals['afip_responsability_type_id'] = self.env.ref(
+                'l10n_ar_account.res_RM').id
         elif imp_iva == 'AC':
-            vals['responsability_id'] = self.env.ref(
-                'l10n_ar_invoice.res_IVARI').id
+            vals['afip_responsability_type_id'] = self.env.ref(
+                'l10n_ar_account.res_IVARI').id
         elif imp_iva == 'EX':
-            vals['responsability_id'] = self.env.ref(
-                'l10n_ar_invoice.res_IVAE').id
+            vals['afip_responsability_type_id'] = self.env.ref(
+                'l10n_ar_account.res_IVAE').id
         else:
             _logger.info(
-                "We couldn't infer the responsability_id from padron, you"
+                "We couldn't infer the AFIP responsability from padron, you"
                 "must set it manually.")
 
         return vals

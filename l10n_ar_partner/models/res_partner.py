@@ -18,6 +18,9 @@ class ResPartner(models.Model):
     cuit = fields.Char(
         compute='_compute_cuit',
     )
+    cuit_required = fields.Char(
+        compute='_compute_cuit_required',
+    )
     main_id_number = fields.Char(
         compute='_compute_main_id_number',
         inverse='_set_main_id_number',
@@ -30,14 +33,18 @@ class ResPartner(models.Model):
     )
 
     @api.one
+    def _compute_cuit_required(self):
+        if not self.cuit:
+            raise UserError(_('No CUIT cofigured for partner %s') % (
+                self.name))
+        self.cuit_required = self.cuit
+
+    @api.one
     def _compute_cuit(self):
         cuit = self.id_numbers.search([
             ('partner_id', '=', self.id),
             ('category_id.afip_code', '=', '80'),
         ], limit=1)
-        if not cuit or not cuit.name:
-            raise UserError(_('No CUIT cofigured for partner %s') % (
-                self.name))
         self.cuit = cuit.name
 
     @api.multi

@@ -11,12 +11,12 @@
             <!-- <field name="amount" eval="0.10"/> -->
             <field name="non_taxable_minimum" eval="400"/>
             <field name="non_taxable_amount" eval="0"/>
-            <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iibb_cf"/>
-            <field name="ref_tax_code_id" ref="l10n_ar_invoice.ri_tax_code_iibb_cf"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_retencion_iibb_cf"/>
-            <field name="ref_account_id" ref="l10n_ar_invoice.ri_retencion_iibb_cf"/>
+            <field name="tax_code_id" ref="l10n_ar_account.ri_tax_code_iibb_cf"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_account.ri_tax_code_iibb_cf"/>
+            <field name="account_id" ref="l10n_ar_account.ri_retencion_iibb_cf"/>
+            <field name="ref_account_id" ref="l10n_ar_account.ri_retencion_iibb_cf"/>
             <field name="type_tax_use">payment</field>
-            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="company_id" ref="l10n_ar_account.company_ri"/>
             <field name="ref_tax_sign" eval="-1"/>
         </record>
 
@@ -28,12 +28,12 @@
             <!-- <field name="accumulated_payments">month</field> -->
             <!-- <field name="amount" eval="0.10"/> -->
             <!-- <field name="non_taxable_minimum" eval="0"/> -->
-            <field name="tax_code_id" ref="l10n_ar_invoice.ri_tax_code_ganancias_ret_aplicada"/>
-            <field name="ref_tax_code_id" ref="l10n_ar_invoice.ri_tax_code_ganancias_ret_aplicada"/>
-            <field name="account_id" ref="l10n_ar_invoice.ri_retencion_ganancias_aplicada"/>
-            <field name="ref_account_id" ref="l10n_ar_invoice.ri_retencion_ganancias_aplicada"/>
+            <field name="tax_code_id" ref="l10n_ar_account.ri_tax_code_ganancias_ret_aplicada"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_account.ri_tax_code_ganancias_ret_aplicada"/>
+            <field name="account_id" ref="l10n_ar_account.ri_retencion_ganancias_aplicada"/>
+            <field name="ref_account_id" ref="l10n_ar_account.ri_retencion_ganancias_aplicada"/>
             <field name="type_tax_use">payment</field>
-            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="company_id" ref="l10n_ar_account.company_ri"/>
             <field name="ref_tax_sign" eval="-1"/>
         </record>
 

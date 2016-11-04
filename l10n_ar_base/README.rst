@@ -13,7 +13,7 @@ Este modulo basicamente hace:
 Algunas ideas en torno a esta localización:
 ===========================================
     Se usan los reportes de Aeroo porque son facilmente customizables para cada Cliente
-    El módulo l10n_ar_invoice tiene toda la lógica de impuestos y tipos de documentos de la afip, probablemente sea mejor renombrarloa l10n_ar_afip o l10n_ar_documents o l10n_ar_account
+    El módulo l10n_ar_account tiene toda la lógica de impuestos y tipos de documentos de la afip, probablemente sea mejor renombrarloa l10n_ar_afip o l10n_ar_documents o l10n_ar_account
     Respecto a los impuestos y como identificamos si son IVA, iibb, drei, retencion, percepcion, etc. Si bien todavía no lo usamos, la idea es hacerlo por un ilike al nombre donde
         Si el nombre del padre tiene "IVA" es IVA
         Si el nombre del padre tiene "IIBB" es IIBB

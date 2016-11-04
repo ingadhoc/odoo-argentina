@@ -7,6 +7,9 @@
             <field name="inherit_id" ref="base.view_partner_form" />
             <field name="model">res.partner</field>
             <field type="xml" name="arch">
+                <form>
+                    <field name="cuit" invisible="1"/>
+                </form>
                 <field name="website" position="after">
                     <label for="main_id_number" string="Main Identification"/>
                     <div class="address_format">

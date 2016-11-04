@@ -84,6 +84,18 @@
         <field name="image" type="base64" file="l10n_ar_partner/demo/odoo_logo.jpg"/>
     </record>
 
+    <!-- Telecom -->
+    <record id="res_partner_telecom" model="res.partner">
+        <field name="name">TELECOm</field>
+        <field eval="1" name="supplier"/>
+        <field name="is_company">1</field>
+        <!-- la idea es sincronizarlo con afip padron -->
+        <field name='main_id_category_id' ref="dt_CUIT"/>
+        <field name='main_id_number'>30639453738</field>
+        <!-- TODO agregar -->
+        <!-- <field name="image" type="base64" file="l10n_ar_partner/demo/odoo_logo.jpg"/> -->
+    </record>
+
     <!-- Odoo -->
     <record id="res_partner_expresso" model="res.partner">
         <field name="name">Expresso</field>

@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* l10n_ar_invoice
+#	* l10n_ar_account
 #
 msgid ""
 msgstr ""
@@ -15,8 +15,8 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: l10n_ar_invoice
-#: model:email.template,body_html:l10n_ar_invoice.email_template_edi_invoice
+#. module: l10n_ar_account
+#: model:email.template,body_html:l10n_ar_account.email_template_edi_invoice
 msgid "\n"
 "<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "\n"
@@ -85,84 +85,84 @@ msgid "\n"
 "            "
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:email.template,subject:l10n_ar_invoice.email_template_edi_invoice
+#. module: l10n_ar_account
+#: model:email.template,subject:l10n_ar_account.email_template_edi_invoice
 msgid "${object.company_id.name|safe} Invoice (Ref ${object.document_number or 'n/a'})"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice:l10n_ar_invoice.view_invoice_form
+#. module: l10n_ar_account
+#: view:account.invoice:l10n_ar_account.view_invoice_form
 msgid "- Next Number:"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.payment.term,name:l10n_ar_invoice.payment_term_0_30_60
-#: model:account.payment.term,note:l10n_ar_invoice.payment_term_0_30_60
+#. module: l10n_ar_account
+#: model:account.payment.term,name:l10n_ar_account.payment_term_0_30_60
+#: model:account.payment.term,note:l10n_ar_account.payment_term_0_30_60
 msgid "0/30/60 Días"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.payment.term,name:l10n_ar_invoice.payment_term_30_60
-#: model:account.payment.term,note:l10n_ar_invoice.payment_term_30_60
+#. module: l10n_ar_account
+#: model:account.payment.term,name:l10n_ar_account.payment_term_30_60
+#: model:account.payment.term,note:l10n_ar_account.payment_term_30_60
 msgid "30/60 Días"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.payment.term,name:l10n_ar_invoice.payment_term_30_60_90
-#: model:account.payment.term,note:l10n_ar_invoice.payment_term_30_60_90
+#. module: l10n_ar_account
+#: model:account.payment.term,name:l10n_ar_account.payment_term_30_60_90
+#: model:account.payment.term,note:l10n_ar_account.payment_term_30_60_90
 msgid "30/60/90 Días"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.payment.term,name:l10n_ar_invoice.payment_term_6_cuotas
-#: model:account.payment.term,note:l10n_ar_invoice.payment_term_6_cuotas
+#. module: l10n_ar_account
+#: model:account.payment.term,name:l10n_ar_account.payment_term_6_cuotas
+#: model:account.payment.term,note:l10n_ar_account.payment_term_6_cuotas
 msgid "6 Cuotas"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.payment.term,name:l10n_ar_invoice.payment_term_7
-#: model:account.payment.term,note:l10n_ar_invoice.payment_term_7
+#. module: l10n_ar_account
+#: model:account.payment.term,name:l10n_ar_account.payment_term_7
+#: model:account.payment.term,note:l10n_ar_account.payment_term_7
 msgid "7 Días"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.payment.term,name:l10n_ar_invoice.payment_term_90
-#: model:account.payment.term,note:l10n_ar_invoice.payment_term_90
+#. module: l10n_ar_account
+#: model:account.payment.term,name:l10n_ar_account.payment_term_90
+#: model:account.payment.term,note:l10n_ar_account.payment_term_90
 msgid "90 Días"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account.type,name:l10n_ar_invoice.data_account_type_receivable_no_current
+#. module: l10n_ar_account
+#: model:account.account.type,name:l10n_ar_account.data_account_type_receivable_no_current
 msgid "A cobrar (no corriente)"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account.type,name:l10n_ar_invoice.data_account_type_payable_no_current
+#. module: l10n_ar_account
+#: model:account.account.type,name:l10n_ar_account.data_account_type_payable_no_current
 msgid "A pagar (no corriente)"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_activo
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_activo
 msgid "ACTIVO"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_activo_corriente
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_activo_corriente
 msgid "ACTIVO CORRIENTE"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_activo_no_corriente
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_activo_no_corriente
 msgid "ACTIVO NO CORRIENTE"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.ui.menu,name:l10n_ar_invoice.menu_afip_config
-#: view:res.currency:l10n_ar_invoice.view_currency_form
+#. module: l10n_ar_account
+#: model:ir.ui.menu,name:l10n_ar_account.menu_afip_config
+#: view:res.currency:l10n_ar_account.view_currency_form
 msgid "AFIP"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.fiscal.position,afip_code:0
 #: field:account.tax.code,afip_code:0
 #: field:account.tax.code.template,afip_code:0
@@ -172,103 +172,103 @@ msgstr ""
 msgid "AFIP Code"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:afip.document_class:l10n_ar_invoice.view_afip_document_class_form
-#: view:afip.document_class:l10n_ar_invoice.view_afip_document_class_tree
-#: model:ir.actions.act_window,name:l10n_ar_invoice.act_afip_document_class
+#. module: l10n_ar_account
+#: view:afip.document_class:l10n_ar_account.view_afip_document_class_form
+#: view:afip.document_class:l10n_ar_account.view_afip_document_class_tree
+#: model:ir.actions.act_window,name:l10n_ar_account.act_afip_document_class
 msgid "AFIP Document Class"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.actions.act_window,name:l10n_ar_invoice.act_afip_document_letter
+#. module: l10n_ar_account
+#: model:ir.actions.act_window,name:l10n_ar_account.act_afip_document_letter
 msgid "AFIP Document Letter"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:afip.document_letter:l10n_ar_invoice.view_afip_document_letter_form
-#: view:afip.document_letter:l10n_ar_invoice.view_afip_document_letter_tree
+#. module: l10n_ar_account
+#: view:afip.document_letter:l10n_ar_account.view_afip_document_letter_form
+#: view:afip.document_letter:l10n_ar_account.view_afip_document_letter_tree
 msgid "AFIP Document class"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:afip.incoterm:l10n_ar_invoice.view_afip_incoterm_form
-#: view:afip.incoterm:l10n_ar_invoice.view_afip_incoterm_tree
-#: model:ir.actions.act_window,name:l10n_ar_invoice.act_afip_incoterm
+#. module: l10n_ar_account
+#: view:afip.incoterm:l10n_ar_account.view_afip_incoterm_form
+#: view:afip.incoterm:l10n_ar_account.view_afip_incoterm_tree
+#: model:ir.actions.act_window,name:l10n_ar_account.act_afip_incoterm
 msgid "AFIP Incoterms"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:afip.document_type:l10n_ar_invoice.view_afip_document_type_form
-#: view:afip.document_type:l10n_ar_invoice.view_afip_document_type_tree
-#: model:ir.actions.act_window,name:l10n_ar_invoice.act_afip_document_type
+#. module: l10n_ar_account
+#: view:afip.document_type:l10n_ar_account.view_afip_document_type_form
+#: view:afip.document_type:l10n_ar_account.view_afip_document_type_tree
+#: model:ir.actions.act_window,name:l10n_ar_account.act_afip_document_type
 msgid "AFIP Partner Document type"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:afip.point_of_sale:l10n_ar_invoice.view_afip_point_of_sale_form
-#: view:afip.point_of_sale:l10n_ar_invoice.view_afip_point_of_sale_tree
-#: model:ir.actions.act_window,name:l10n_ar_invoice.act_afip_point_of_sale
+#. module: l10n_ar_account
+#: view:afip.point_of_sale:l10n_ar_account.view_afip_point_of_sale_form
+#: view:afip.point_of_sale:l10n_ar_account.view_afip_point_of_sale_tree
+#: model:ir.actions.act_window,name:l10n_ar_account.act_afip_point_of_sale
 msgid "AFIP Point Of Sale"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:res.company,point_of_sale_ids:0
 msgid "AFIP Point of Sales"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:afip.responsability:l10n_ar_invoice.view_afip_responsability_form
-#: view:afip.responsability:l10n_ar_invoice.view_afip_responsability_tree
-#: model:ir.actions.act_window,name:l10n_ar_invoice.act_afip_responsability
+#. module: l10n_ar_account
+#: view:afip.responsability:l10n_ar_account.view_afip_responsability_form
+#: view:afip.responsability:l10n_ar_account.view_afip_responsability_tree
+#: model:ir.actions.act_window,name:l10n_ar_account.act_afip_responsability
 msgid "AFIP Responsability"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_afip_responsability
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_afip_responsability
 msgid "AFIP Responsability Type"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_afip_document_type
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_afip_document_type
 msgid "AFIP document types"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_ajustes_de_capital
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_ajustes_de_capital
 msgid "AJUSTES DE CAPITAL"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_amortizaciones
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_amortizaciones
 msgid "AMORTIZACIONES"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_amortizacion_acumulada_bs_uso
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_amortizacion_acumulada_bs_uso
 msgid "AMORTIZACIONES ACUMULADAS BIENES DE USO"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_aportes_de_los_propietarios
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_aportes_de_los_propietarios
 msgid "APORTES DE LOS PROPIETARIOS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_aportes_no_capitalizados
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_aportes_no_capitalizados
 msgid "APORTES NO CAPITALIZADOS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_account_move
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_move
 msgid "Account Entry"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_pago_acreedores
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_pago_acreedores
 msgid "Acreedores varios"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.document_class,active:0
 #: field:afip.document_letter,active:0
 #: field:afip.document_type,active:0
@@ -276,465 +276,465 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.financial.report,name:l10n_ar_invoice.account_financial_report_current_assets
+#. module: l10n_ar_account
+#: model:account.financial.report,name:l10n_ar_account.account_financial_report_current_assets
 msgid "Activos Corrientes"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.financial.report,name:l10n_ar_invoice.account_financial_report_no_current_assets
+#. module: l10n_ar_account
+#: model:account.financial.report,name:l10n_ar_account.account_financial_report_no_current_assets
 msgid "Activos No Corrientes"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:product.uom,afip_code:0
 #: field:res.country,afip_code:0
 msgid "Afip Code"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_afip_document_class
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_afip_document_class
 msgid "Afip Document Class"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.document_letter,afip_document_class_ids:0
 msgid "Afip Document Classes"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_afip_document_letter
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_afip_document_letter
 msgid "Afip Document letter"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_afip_incoterm
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_afip_incoterm
 msgid "Afip Incoterm"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_afip_point_of_sale
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_afip_point_of_sale
 msgid "Afip Point Of Sale"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_ajuste_por_redondeo
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_ajuste_por_redondeo
 msgid "Ajuste por redondeo"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_resultados_no_asignados
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_resultados_no_asignados
 msgid "Ajuste resultados ejercicios anteriores"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.create.wizard,update_posted:0
 msgid "Allow Cancelling"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_alquileres_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_alquileres_a_pagar
 msgid "Alquileres a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_alquileres_administrativas
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_alquileres_administrativas
 msgid "Alquileres administracion"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_alquileres_comerciales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_alquileres_comerciales
 msgid "Alquileres comerciales"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_alquileres_produccion
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_alquileres_produccion
 msgid "Alquileres produccion"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_amortizacion_muebles_y_utiles
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_amortizacion_muebles_y_utiles
 msgid "Amortizacion muebles y útiles"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_amortizacion_rodados
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_amortizacion_rodados
 msgid "Amortizacion rodados"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_amortizaciones_instalaciones
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_amortizaciones_instalaciones
 msgid "Amortizaciones instalaciones"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_amortizaciones_equipos_computacion
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_amortizaciones_equipos_computacion
 msgid "Amortizaciones maquinaria y equipos"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_amortizacion_acumulada_instalaciones
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_amortizacion_acumulada_instalaciones
 msgid "Amortización acumulada instalaciones"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_amortizacion_acumulada_maq_y_equipos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_amortizacion_acumulada_maq_y_equipos
 msgid "Amortización acumulada maquinarias y equipos"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_amortizacion_acumulada_muebles_utiles
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_amortizacion_acumulada_muebles_utiles
 msgid "Amortización acumulada muebles y útiles"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_amortizacion_acumulada_rodados
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_amortizacion_acumulada_rodados
 msgid "Amortización rodados"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_anticipo_impuestos_ganancias
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_anticipo_impuestos_ganancias
 msgid "Anticipo impuestos a las ganancias"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_aportes_no_capitalizados_2
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_aportes_no_capitalizados_2
 msgid "Aportes no capitalizados"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.tax.code,application:0
 #: field:account.tax.code.template,application:0
 msgid "Application"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/account.py:123
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/account.py:123
 #, python-format
 msgid "Application Code"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_articulos_libreria
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_articulos_libreria
 msgid "Artículos librería administracion"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_autonomos_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_autonomos_a_pagar
 msgid "Autonomos a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:94
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:94
 #, python-format
 msgid "Available Journal Document Classes"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:121
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/account_journal_create_wizard.py:121
 #, python-format
 msgid "BAN"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_bancarias
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_bancarias
 msgid "BANCARIAS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_bancos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_bancos
 msgid "BANCOS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_bienes_de_cambio
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_bienes_de_cambio
 msgid "BIENES DE CAMBIO"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_bienes_de_uso
-#: model:account.account,name:l10n_ar_invoice.ri_bienes_de_uso_2
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_bienes_de_uso
+#: model:account.account,name:l10n_ar_account.ri_bienes_de_uso_2
 msgid "BIENES DE USO"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:122
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/account_journal_create_wizard.py:122
 #, python-format
 msgid "Banco"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_banco_1
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_banco_1
 msgid "Banco x cuenta corriente xxxxx"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.journal.create.wizard,type:0
 msgid "Bank"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.journal,name:l10n_ar_invoice.bank_journal
+#. module: l10n_ar_account
+#: model:account.journal,name:l10n_ar_account.bank_journal
 msgid "Bank Journal - (test)"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:account.invoice.line.report,ean13:0
 msgid "Barcode"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_beneficios_al_personal
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_beneficios_al_personal
 msgid "Beneficios al personal"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:125
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/account_journal_create_wizard.py:125
 #, python-format
 msgid "CAJ"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_caja
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_caja
 msgid "CAJAS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_capital_social
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_capital_social
 msgid "CAPITAL SOCIAL"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:135
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/account_journal_create_wizard.py:135
 #, python-format
 msgid "COM"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_comunes
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_comunes
 msgid "COMUNES"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_creditos_comerciales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_creditos_comerciales
 msgid "CRÉDITOS COMERCIALES"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_creditos_impuestos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_creditos_impuestos
 msgid "CRÉDITOS POR IMPUESTOS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_cuentas_particulares
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_cuentas_particulares
 msgid "CUENTAS PARTICULARES"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:res.country,cuit_otro:0
 msgid "CUIT otro"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:res.country,cuit_fisica:0
 msgid "CUIT persona fisica"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:res.country,cuit_juridica:0
 msgid "CUIT persona juridica"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_cadeteria_y_correo
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_cadeteria_y_correo
 msgid "Cadetería y correo adminsitracion"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:126
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/account_journal_create_wizard.py:126
 #, python-format
 msgid "Caja"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_caja_eur
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_caja_eur
 msgid "Caja EUR"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_caja_usd
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_caja_usd
 msgid "Caja USD"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_caja_pesos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_caja_pesos
 msgid "Caja pesos"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.journal.create.wizard:l10n_ar_invoice.view_account_journal_create_wizard_form
+#. module: l10n_ar_account
+#: view:account.journal.create.wizard:l10n_ar_account.view_account_journal_create_wizard_form
 msgid "Cancel"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.invoice.line.report,state:0
 msgid "Cancelled"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_ajustes_de_capital_2
-#: model:account.account,name:l10n_ar_invoice.ri_capital
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_ajustes_de_capital_2
+#: model:account.account,name:l10n_ar_account.ri_capital
 msgid "Capital susctipto"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_cargas_sociales_produccion
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_cargas_sociales_produccion
 msgid "Cargas Sociales"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_cargas_sociales_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_cargas_sociales_a_pagar
 msgid "Cargas sociales a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_cargas_sociales_administrativas
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_cargas_sociales_administrativas
 msgid "Cargas sociales administrativas"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_cargas_sociales_comerciales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_cargas_sociales_comerciales
 msgid "Cargas sociales comerciales"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.journal.create.wizard,type:0
 msgid "Cash"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.journal,name:l10n_ar_invoice.cash_journal
+#. module: l10n_ar_account
+#: model:account.journal,name:l10n_ar_account.cash_journal
 msgid "Cash Journal - (test)"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,product_category_id:0
 msgid "Category"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:account.invoice.line.report,customer:0
 msgid "Check this box if this contact is a customer."
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:account.invoice.line.report,supplier:0
 msgid "Check this box if this contact is a supplier. If it's not checked,purchase people will not see it when encoding a purchase order."
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:account.journal.create.wizard,update_posted:0
 msgid "Check this box if you want to allow the cancellation the entries related to this journals or of the invoice related to this journals"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.journal.create.wizard,type:0
 msgid "Cheque Emitido"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.journal.create.wizard,type:0
 msgid "Cheque de Tercero"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_cheques_diferidos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_cheques_diferidos
 msgid "Cheques diferidos"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.document_type,code:0
 #: field:afip.incoterm,afip_code:0
 #: field:afip.responsability,code:0
 msgid "Code"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: sql_constraint:afip.responsability:0
 msgid "Code must be unique!"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_comisiones_comerciales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_comisiones_comerciales
 msgid "Comisiones"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_comisiones_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_comisiones_a_pagar
 msgid "Comisiones a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_res_company
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_res_company
 msgid "Companies"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 #: field:account.invoice.line.report,company_id:0
 #: field:afip.point_of_sale,company_id:0
 msgid "Company"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.create.wizard,company_id:0
 msgid "Company id"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:681
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:681
 #, python-format
 msgid "Compose Email"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:136
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/account_journal_create_wizard.py:136
 #, python-format
 msgid "Compras"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.journal.create.wizard:l10n_ar_invoice.view_account_journal_create_wizard_form
+#. module: l10n_ar_account
+#: view:account.journal.create.wizard:l10n_ar_account.view_account_journal_create_wizard_form
 msgid "Confirm"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_costo_de_mercaderia_vendida
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_costo_de_mercaderia_vendida
 msgid "Costo de mercadería vendida"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:310
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:310
 #, python-format
 msgid "Could not get invoice number and point of sale for invoice id %i"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_res_country
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_res_country
 msgid "Country"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:res.company:l10n_ar_invoice.view_company_inherit_form
+#. module: l10n_ar_account
+#: view:res.company:l10n_ar_account.view_company_inherit_form
 msgid "Create"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.journal.create.wizard:l10n_ar_invoice.view_account_journal_create_wizard_form
+#. module: l10n_ar_account
+#: view:account.journal.create.wizard:l10n_ar_account.view_account_journal_create_wizard_form
 msgid "Create Journals"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.afip_document_class,create_uid:0
 #: field:account.journal.create.wizard,create_uid:0
 #: field:afip.document_class,create_uid:0
@@ -746,7 +746,7 @@ msgstr ""
 msgid "Created by"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.afip_document_class,create_date:0
 #: field:account.journal.create.wizard,create_date:0
 #: field:afip.document_class,create_date:0
@@ -758,102 +758,102 @@ msgstr ""
 msgid "Created on"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:afip.document_class,document_type:0
 msgid "Credit Notes"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_cta_particular_socio_x
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_cta_particular_socio_x
 msgid "Cta particular socio x"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.create.wizard,currency_id:0
-#: model:ir.model,name:l10n_ar_invoice.model_res_currency
+#: model:ir.model,name:l10n_ar_account.model_res_currency
 msgid "Currency"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice,currency_rate:0
 msgid "Currency Rate"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,customer:0
 msgid "Customer"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.invoice.line.report,type:0
 msgid "Customer Invoice"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.invoice.line.report,type:0
 msgid "Customer Refund"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_deudas_comerciales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_deudas_comerciales
 msgid "DEUDAS COMERCIALES"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_deudas_comerciales_largo_plazo
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_deudas_comerciales_largo_plazo
 msgid "DEUDAS COMERCIALES A LARGO PLAZO"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_deudas_fiscales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_deudas_fiscales
 msgid "DEUDAS FISCALES"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_deudas_sociales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_deudas_sociales
 msgid "DEUDAS SOCIALES"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_disponibilidades
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_disponibilidades
 msgid "DISPONIBILIDADES"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_documentadas
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_documentadas
 msgid "DOCUMENTADAS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_drei_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_drei_a_pagar
 msgid "DREI a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,date_invoice:0
 msgid "Date Invoice"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/report/invoice_analysis.py:40
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/report/invoice_analysis.py:40
 #, python-format
 msgid "Date Invoice from"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/report/invoice_analysis.py:42
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/report/invoice_analysis.py:42
 #, python-format
 msgid "Date Invoice to"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.create.wizard,allow_date:0
 msgid "Date in Period"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:res.company,overdue_msg:l10n_ar_invoice.company_mono
-#: model:res.company,overdue_msg:l10n_ar_invoice.company_ri
+#. module: l10n_ar_account
+#: model:res.company,overdue_msg:l10n_ar_account.company_mono
+#: model:res.company,overdue_msg:l10n_ar_account.company_ri
 msgid "Dear Sir/Madam,\n"
 "\n"
 "Our records indicate that some payments on your account are still due. Please find details below.\n"
@@ -864,126 +864,126 @@ msgid "Dear Sir/Madam,\n"
 "Best Regards,"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:afip.document_class,document_type:0
 msgid "Debit Notes"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.create.wizard,default_credit_account_id:0
 msgid "Default Credit Account"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.create.wizard,default_debit_account_id:0
 msgid "Default Debit Account"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:res.company,invoice_vat_discrimination_default:0
 msgid "Definie behaviour on invoices reports. Discrimination or not will depend in partner and company responsability and AFIP letters setup:            * If No Discriminate Default, if no match found it won't discriminate by default            * If Discriminate Default, if no match found it would discriminate by default            "
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_descuentos_obtenidos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_descuentos_obtenidos
 msgid "Descuentos obtenidos"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_deudas_misc
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_deudas_misc
 msgid "Deudas misc"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_proveedores_largo_plazo
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_proveedores_largo_plazo
 msgid "Deudas proveedores a largo plazo"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_deudores_morosos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_deudores_morosos
 msgid "Deudores morosos"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_deudores_por_ventas
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_deudores_por_ventas
 msgid "Deudores por ventas"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_deudores_varios
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_deudores_varios
 msgid "Deudores varios"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_diferencias_de_cambio
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_diferencias_de_cambio
 msgid "Diferencias de cambio"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,discount:0
 msgid "Discount (%)"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,discount_amount:0
 msgid "Discount Amount"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:89
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:89
 #, python-format
 msgid "Discriminate VAT on Invoices?"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:87
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:87
 #, python-format
 msgid "Discriminate VAT?"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.move.line:l10n_ar_invoice.view_account_move_line_filter
+#. module: l10n_ar_account
+#: view:account.move.line:l10n_ar_account.view_account_move_line_filter
 msgid "Document Class"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_document_class
+#. module: l10n_ar_account
+#: model:ir.ui.menu,name:l10n_ar_account.menu_action_afip_document_class
 msgid "Document Classes"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.document_class,doc_code_prefix:0
 msgid "Document Code Prefix"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.document_class,document_letter_id:0
 msgid "Document Letter"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_document_letter
+#. module: l10n_ar_account
+#: model:ir.ui.menu,name:l10n_ar_account.menu_action_afip_document_letter
 msgid "Document Letters"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice,afip_document_number:0
 #: field:account.move,afip_document_number:0
 #: field:account.move,document_number:0
 #: field:account.move.line,document_number:0
-#: code:addons/l10n_ar_invoice/models/account.py:176
-#: code:addons/l10n_ar_invoice/models/invoice.py:137
+#: code:addons/l10n_ar_account/models/account.py:176
+#: code:addons/l10n_ar_account/models/invoice.py:137
 #, python-format
 msgid "Document Number"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.point_of_sale,document_sequence_type:0
 msgid "Document Sequence Type"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice:l10n_ar_invoice.view_account_invoice_filter
+#. module: l10n_ar_account
+#: view:account.invoice:l10n_ar_account.view_account_invoice_filter
 #: field:account.invoice,afip_document_class_id:0
 #: field:account.invoice,journal_document_class_id:0
 #: field:account.journal.afip_document_class,afip_document_class_id:0
@@ -993,299 +993,299 @@ msgstr ""
 msgid "Document Type"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:res.partner,document_number:0
 msgid "Document number"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:res.partner,document_type_id:0
 msgid "Document type"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.journal:l10n_ar_invoice.view_account_journal_ar_form
+#. module: l10n_ar_account
+#: view:account.journal:l10n_ar_account.view_account_journal_ar_form
 msgid "Documents"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal,journal_document_class_ids:0
-#: code:addons/l10n_ar_invoice/models/afip.py:71
-#: view:afip.point_of_sale:l10n_ar_invoice.view_afip_point_of_sale_form
+#: code:addons/l10n_ar_account/models/afip.py:71
+#: view:afip.point_of_sale:l10n_ar_account.view_afip_point_of_sale_form
 #, python-format
 msgid "Documents Classes"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.invoice.line.report,state:0
 msgid "Done"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 #: selection:account.invoice.line.report,state:0
 msgid "Draft"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Draft Invoices"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice:l10n_ar_invoice.view_invoice_form
+#. module: l10n_ar_account
+#: view:account.invoice:l10n_ar_account.view_invoice_form
 msgid "Draft Refund"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,date_due:0
 msgid "Due Date"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,ean13:0
 msgid "EAN13"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.afip_document_class,sequence_id:0
 msgid "Entry Sequence"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:595
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:595
 #, python-format
 msgid "Error!. Please define sequence on the journal related documents to this invoice."
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice_line.py:119
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice_line.py:119
 #, python-format
 msgid "Exempt Amount"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.fiscal.position,name:l10n_ar_invoice.fiscal_position_zona_franca
+#. module: l10n_ar_account
+#: model:account.fiscal.position,name:l10n_ar_account.fiscal_position_zona_franca
 msgid "Exportaciones a la zona franca"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.fiscal.position,name:l10n_ar_invoice.fiscal_position_exportaciones_al_exterior
+#. module: l10n_ar_account
+#: model:account.fiscal.position,name:l10n_ar_account.fiscal_position_exportaciones_al_exterior
 msgid "Exportaciones al exterior"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_iibb_ba_facturado
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_iibb_ba_facturado
 msgid "Fac IIBB BS AS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_iibb_cf_facturado
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_iibb_cf_facturado
 msgid "Fac IIBB CABA"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_iibb_co_facturado
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_iibb_co_facturado
 msgid "Fac IIBB Cordoba"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_iibb_sf_facturado
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_iibb_sf_facturado
 msgid "Fac IIBB Santa Fé"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.journal,name:l10n_ar_invoice.sales_journal
+#. module: l10n_ar_account
+#: model:account.journal,name:l10n_ar_account.sales_journal
 msgid "Factura Ventas 0001"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_cf_facturado
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_cf_facturado
 msgid "Facturado IIBB Capital Federal"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_ba_facturado
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_ba_facturado
 msgid "Facturado IIBB Prov. Buenos Aires"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_co_facturado
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_co_facturado
 msgid "Facturado IIBB Prov. Córdoba"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_sf_facturado
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_sf_facturado
 msgid "Facturado IIBB Prov. Santa Fé"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.journal,name:l10n_ar_invoice.expenses_journal
+#. module: l10n_ar_account
+#: model:account.journal,name:l10n_ar_account.expenses_journal
 msgid "Facturas Compras"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.payment.term,name:l10n_ar_invoice.payment_term_fin_mes
-#: model:account.payment.term,note:l10n_ar_invoice.payment_term_fin_mes
+#. module: l10n_ar_account
+#: model:account.payment.term,name:l10n_ar_account.payment_term_fin_mes
+#: model:account.payment.term,note:l10n_ar_account.payment_term_fin_mes
 msgid "Fin de mes"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_account_fiscal_position
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_fiscal_position
 msgid "Fiscal Position"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 #: field:account.invoice.line.report,fiscalyear_id:0
 msgid "Fiscal Year"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_fondo_fijo
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_fondo_fijo
 msgid "Fondo fijo"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:afip.point_of_sale:l10n_ar_invoice.view_afip_point_of_sale_form
+#. module: l10n_ar_account
+#: view:afip.point_of_sale:l10n_ar_account.view_afip_point_of_sale_form
 msgid "For eg. 'Expo'"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:afip.point_of_sale:l10n_ar_invoice.view_afip_point_of_sale_form
+#. module: l10n_ar_account
+#: view:afip.point_of_sale:l10n_ar_account.view_afip_point_of_sale_form
 msgid "For eg. 'Rosario'"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_creditos_impuestos_ganancias
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_creditos_impuestos_ganancias
 msgid "GANANCIAS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_ganancias_reservadas
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_ganancias_reservadas
 msgid "GANANCIAS RESERVADAS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_gastos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_gastos
 msgid "GASTOS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_gastos_comerciales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_gastos_comerciales
 msgid "GASTOS COMERCIALES"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_gastos_de_administracion
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_gastos_de_administracion
 msgid "GASTOS DE ADMINISTRACION"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_gastos_de_produccion
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_gastos_de_produccion
 msgid "GASTOS DE PRODUCCION"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_gastos_fiscales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_gastos_fiscales
 msgid "GASTOS FISCALES"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_gastos_no_operativos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_gastos_no_operativos
 msgid "GASTOS NO OPERATIVOS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_gastos_operativos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_gastos_operativos
 msgid "GASTOS OPERATIVOS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_ret_per_ganancias_aplicada
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_ret_per_ganancias_aplicada
 msgid "Ganacias Ret/Perc Aplicadas"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_ret_per_ganancias_sufrida
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_ret_per_ganancias_sufrida
 msgid "Ganacias Ret/Perc Sufridas"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_ganancias
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_ganancias_vista
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_ganancias
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_ganancias_vista
 msgid "Ganancias"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_gastos_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_gastos_a_pagar
 msgid "Gastos a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_gastos_de_construccion
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_gastos_de_construccion
 msgid "Gastos de construccion"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_gastos_de_eventos_comerciales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_gastos_de_eventos_comerciales
 msgid "Gastos de eventos comerciales"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_gastos_varios_administrativas
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_gastos_varios_administrativas
 msgid "Gastos varios administracion"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_gastos_varios_comerciales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_gastos_varios_comerciales
 msgid "Gastos varios comerciales"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_gastos_operativos_generales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_gastos_operativos_generales
 msgid "Gastos varios produccion"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_giro_en_descubierto
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_giro_en_descubierto
 msgid "Giro en descubierto"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.tax.code,tax:0
 #: selection:account.tax.code.template,tax:0
 #: field:res.partner,iibb:0
 msgid "Gross Income"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,price_gross_subtotal:0
 msgid "Gross Subtotal"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice:l10n_ar_invoice.view_account_invoice_filter
-#: view:account.move.line:l10n_ar_invoice.view_account_move_line_filter
+#. module: l10n_ar_account
+#: view:account.invoice:l10n_ar_account.view_account_invoice_filter
+#: view:account.move.line:l10n_ar_account.view_account_move_line_filter
 msgid "Group By"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Group By..."
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.create.wizard,group_invoice_lines:0
 msgid "Group Invoice Lines"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_honorarios_administrativas
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_honorarios_administrativas
 msgid "Honorarios profesionales administracion"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,id:0
 #: field:account.journal.afip_document_class,id:0
 #: field:account.journal.create.wizard,id:0
@@ -1298,472 +1298,472 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_cf
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_cf
 msgid "IIBB Capital Federal"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_ba
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_ba
 msgid "IIBB Prov. Buenos Aires"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_co
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_co
 msgid "IIBB Prov. Córdoba"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_sf
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_sf
 msgid "IIBB Prov. Santa Fé"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_impuestos_nacionales
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_impuestos_nacionales
 msgid "IMPUESTOS NACIONALES"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_impuestos_provinciales
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_impuestos_provinciales
 msgid "IMPUESTOS PROVINCIALES"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_ingresos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_ingresos
 msgid "INGRESOS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_creditos_iibb_cf
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_creditos_iibb_cf
 msgid "INGRESOS BRUTOS CAPITAL FEDERAL"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_creditos_iibb_ba
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_creditos_iibb_ba
 msgid "INGRESOS BRUTOS PROV. BUENOS AIRES"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_creditos_iibb_co
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_creditos_iibb_co
 msgid "INGRESOS BRUTOS PROV. CORDOBA"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_creditos_iibb_sf
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_creditos_iibb_sf
 msgid "INGRESOS BRUTOS PROV. SANTA FÉ"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_ingresos_financieros
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_ingresos_financieros
 msgid "INGRESOS FINANCIEROS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_ingresos_operativos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_ingresos_operativos
 msgid "INGRESOS OPERATIVOS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_ventas
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_ventas
 msgid "INGRESOS POR VENTAS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_intangibles
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_intangibles
 msgid "INTANGIBLES"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_creditos_impuestos_iva
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_creditos_impuestos_iva
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva
 msgid "IVA"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_compras0
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_compras0
 msgid "IVA Compra 0%"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_compras_exento
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_compras_exento
 msgid "IVA Compra Exento"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_compras_no_gravado
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_compras_no_gravado
 msgid "IVA Compra No Gravado"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_0_compras
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_0_compras
 msgid "IVA Compras 0%"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_10_compras
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_compras10
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_10_compras
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_compras10
 msgid "IVA Compras 10.5%"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_21_compras
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_compras21
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_21_compras
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_compras21
 msgid "IVA Compras 21%"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_27_compras
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_compras27
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_27_compras
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_compras27
 msgid "IVA Compras 27%"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_compras_adicional
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_compras_adicional
 msgid "IVA Compras Adicional"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_exento_compras
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_exento_compras
 msgid "IVA Compras Exento"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_no_gravado_compras
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_no_gravado_compras
 msgid "IVA Compras No Gravado"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_ret_per_iva_aplicada
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_ret_per_iva_aplicada
 msgid "IVA Ret/Perc Aplicadas"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_ret_per_iva_sufrida
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_ret_per_iva_sufrida
 msgid "IVA Ret/Perc Sufridas"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_saldo_a_favor
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_saldo_a_favor
 msgid "IVA Saldo a Favor"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_0_ventas
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_venta0
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_0_ventas
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_venta0
 msgid "IVA Ventas 0%"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_10_ventas
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_venta10
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_10_ventas
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_venta10
 msgid "IVA Ventas 10.5%"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_21_ventas
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_venta21
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_21_ventas
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_venta21
 msgid "IVA Ventas 21%"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_27_ventas
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_venta27
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_27_ventas
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_venta27
 msgid "IVA Ventas 27%"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_exento_ventas
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_venta_exento
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_exento_ventas
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_venta_exento
 msgid "IVA Ventas Exento"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_no_gravado_ventas
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_venta_no_gravado
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_no_gravado_ventas
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_venta_no_gravado
 msgid "IVA Ventas No Gravado"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_iva_credito_fiscal
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_iva_credito_fiscal
 msgid "IVA crédito fiscal"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_iva_debito_fiscal
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_iva_debito_fiscal
 msgid "IVA débito fiscal"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_iva_saldo_a_favor
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_iva_saldo_a_favor
 msgid "IVA saldo a favor"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_iva_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_iva_a_pagar
 msgid "IVA saldo a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:afip.document_letter,vat_discriminated:0
 msgid "If True, the vat will be discriminated on invoice report."
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:afip.responsability,vat_tax_required_on_sales_invoices:0
 msgid "If True, then a vay tax is mandatory on each sale invoice for companies of this responsability"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:account.journal.create.wizard,allow_date:0
 msgid "If checked, the entry won't be created if the entry date is not included into the selected period"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:account.journal.create.wizard,default_credit_account_id:0
 #: help:account.journal.create.wizard,default_debit_account_id:0
 msgid "If not configured for bank/cash journals it will be created"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:552
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:552
 #, python-format
 msgid "If there you have choose a tax with 0, exempt or untaxed, you must choose a fiscal position with afip code in %s. Invoice id %i"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:account.journal.create.wizard,group_invoice_lines:0
 msgid "If this box is checked, the system will try to group the accounting lines when generating them from invoices."
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_a_cuenta_impuestos_ganancias_a_favor
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_imp_ganancias_a_favor
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_a_cuenta_impuestos_ganancias_a_favor
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_imp_ganancias_a_favor
 msgid "Impuesto a las Ganancias a favor"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_impuesto_ganancias_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_impuesto_ganancias_a_pagar
 msgid "Impuesto a las ganancias a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_impuestos_a_las_ganancias
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_impuestos_a_las_ganancias
 msgid "Impuestos a las ganancias"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_impuestos_transacciones_bancarias
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_impuestos_transacciones_bancarias
 msgid "Impuestos a los débitos bancarios"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_impuestos_iibb_cf
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_impuestos_iibb_cf
 msgid "Impuestos ingresos brutos CABA"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_impuestos_iibb_ba
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_impuestos_iibb_ba
 msgid "Impuestos ingresos brutos Prov. Bs. As."
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_impuestos_iibb_co
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_impuestos_iibb_co
 msgid "Impuestos ingresos brutos Prov. Córdoba"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_impuestos_iibb_sf
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_impuestos_iibb_sf
 msgid "Impuestos ingresos brutos Prov. Santa Fé"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:afip.document_class,document_type:0
 msgid "In Document"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice,afip_incoterm_id:0
 msgid "Incoterm"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_incoterm
+#. module: l10n_ar_account
+#: model:ir.ui.menu,name:l10n_ar_account.menu_action_afip_incoterm
 msgid "Incoterms"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_iibb_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_iibb_a_pagar
 msgid "Ingresos brutos a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_instalaciones
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_instalaciones
 msgid "Instalaciones"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_resultado_intereses_ganados
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_resultado_intereses_ganados
 msgid "Intereses ganados"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_intereses_y_recargos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_intereses_y_recargos
 msgid "Intereses y recargos"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.tax.code,application:0
 #: selection:account.tax.code.template,application:0
 msgid "Internal Taxes"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:247
-#: model:ir.model,name:l10n_ar_invoice.model_account_invoice
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:247
+#: model:ir.model,name:l10n_ar_account.model_account_invoice
 #, python-format
 msgid "Invoice"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.actions.act_window,name:l10n_ar_invoice.action_account_invoice_line_report_all
-#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_account_invoice_line_report_all
+#. module: l10n_ar_account
+#: model:ir.actions.act_window,name:l10n_ar_account.action_account_invoice_line_report_all
+#: model:ir.ui.menu,name:l10n_ar_account.menu_action_account_invoice_line_report_all
 msgid "Invoice Analysis"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:537
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:537
 #, python-format
 msgid "Invoice ID %i shouldn't have any vat tax"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:524
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:524
 #, python-format
 msgid "Invoice ID: %i\n"
 "Invoice subtotal (%.2f) is different from invoice base vat amount (%.2f)"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_account_invoice_line
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_invoice_line
 msgid "Invoice Line"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:26
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:26
 #, python-format
 msgid "Invoice Number"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,state:0
 msgid "Invoice State"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,amount_total:0
 msgid "Invoice Total"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:res.company,invoice_vat_discrimination_default:0
 msgid "Invoice VAT discrimination default"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.journal.create.wizard,invoice_subtype:0
 msgid "Invoice and Refund"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:email.template,report_name:l10n_ar_invoice.email_template_edi_invoice
+#. module: l10n_ar_account
+#: model:email.template,report_name:l10n_ar_account.email_template_edi_invoice
 msgid "Invoice_${(object.document_number or '').replace('/','_')}_${object.state == 'draft' and 'draft' or ''}"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Invoiced"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:afip.document_class,document_type:0
 msgid "Invoices"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_graph
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_graph
 msgid "Invoices Analysis"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_tree
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_tree
 msgid "Invoices Line Analysis"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_account_invoice_line_report
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_invoice_line_report
 msgid "Invoices Statistics"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:486
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:486
 #, python-format
 msgid "Invoices ids %s amount is cero!"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.responsability,issued_letter_ids:0
 msgid "Issued Document Letters"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.document_letter,issuer_ids:0
 msgid "Issuers"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:afip.document_class,document_type:0
 msgid "It defines some behaviours on different places:        * invoice: used on sale and purchase journals. Auto selected if not        debit_note specified on context.        * debit_note: used on sale and purchase journals but with lower        priority than invoices.        * credit_note: used on sale_refund and purchase_refund journals.        * ticket: automatically loaded for purchase journals but only loaded        on sales journals if point_of_sale is fiscal_printer        * receipt_invoice: mean to be used as invoices but not automatically        loaded because it is not usually used        * ticket: automatically loaded for purchase journals but not loaded        on sales journals. Also can be selected on partners, to be available        it must be selected on partner.        "
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 #: field:account.invoice.line.report,journal_id:0
 #: field:account.journal.afip_document_class,journal_id:0
-#: model:ir.model,name:l10n_ar_invoice.model_account_journal
+#: model:ir.model,name:l10n_ar_account.model_account_journal
 msgid "Journal"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.journal.afip_document_class:l10n_ar_invoice.view_journal_afip_document_class_form
-#: view:account.journal.afip_document_class:l10n_ar_invoice.view_journal_afip_document_class_tree
+#. module: l10n_ar_account
+#: view:account.journal.afip_document_class:l10n_ar_account.view_journal_afip_document_class_form
+#: view:account.journal.afip_document_class:l10n_ar_account.view_journal_afip_document_class_tree
 msgid "Journal AFIP Documents"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_account_journal_afip_document_class
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_journal_afip_document_class
 msgid "Journal Afip Documents"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_account_move_line
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_move_line
 msgid "Journal Items"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Journal Type"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:afip.point_of_sale:l10n_ar_invoice.view_afip_point_of_sale_form
+#. module: l10n_ar_account
+#: view:afip.point_of_sale:l10n_ar_account.view_afip_point_of_sale_form
 #: field:afip.point_of_sale,journal_ids:0
-#: view:res.company:l10n_ar_invoice.view_company_inherit_form
+#: view:res.company:l10n_ar_account.view_company_inherit_form
 #: field:res.company,journal_ids:0
 msgid "Journals"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.afip_document_class,write_uid:0
 #: field:account.journal.create.wizard,write_uid:0
 #: field:afip.document_class,write_uid:0
@@ -1775,7 +1775,7 @@ msgstr ""
 msgid "Last Updated by"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.afip_document_class,write_date:0
 #: field:account.journal.create.wizard,write_date:0
 #: field:afip.document_class,write_date:0
@@ -1787,53 +1787,53 @@ msgstr ""
 msgid "Last Updated on"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_mantenimiento_y_limpieza
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_mantenimiento_y_limpieza
 msgid "Mantenimiento y limpieza adminsitracion"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:afip.point_of_sale,type:0
 msgid "Manual"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_maq_y_equipos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_maq_y_equipos
 msgid "Maquinarias y equipos"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_materiales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_materiales
 msgid "Materiales"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_mercaderia
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_mercaderia
 msgid "Mercaderia"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:res.currency:l10n_ar_invoice.view_currency_form
+#. module: l10n_ar_account
+#: view:res.currency:l10n_ar_account.view_currency_form
 msgid "Miscellaneous"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_movilidad_y_viaticos_comerciales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_movilidad_y_viaticos_comerciales
 msgid "Movilidad y viáticos comerciales"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_muebles_y_utiles
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_muebles_y_utiles
 msgid "Muebles y útiles"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.tax.code,application:0
 #: selection:account.tax.code.template,application:0
 msgid "Municipal Taxes"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.document_class,name:0
 #: field:afip.document_letter,name:0
 #: field:afip.document_type,name:0
@@ -1842,152 +1842,152 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.create.wizard,name_sufix:0
 msgid "Name Sufix"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: sql_constraint:afip.document_letter:0
 #: sql_constraint:afip.responsability:0
 msgid "Name must be unique!"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.document_class,report_name:0
 msgid "Name on Reports"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:afip.document_class,report_name:0
 msgid "Name that will be printed in reports, for example \"CREDIT NOTE\""
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.tax.code,application:0
 #: selection:account.tax.code.template,application:0
 msgid "National Taxes"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice_line.py:99
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice_line.py:99
 #, python-format
 msgid "Net Price"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:225
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/account_journal_create_wizard.py:225
 #, python-format
 msgid "No Parent Account Found for Bank/Cash Accounts!"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.fiscal.position,name:l10n_ar_invoice.fiscal_position_no_gravado
+#. module: l10n_ar_account
+#: model:account.fiscal.position,name:l10n_ar_account.fiscal_position_no_gravado
 msgid "No gravado"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:84
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:84
 #, python-format
 msgid "Not VAT Taxes"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.journal,name:l10n_ar_invoice.refund_sales_journal
+#. module: l10n_ar_account
+#: model:account.journal,name:l10n_ar_account.refund_sales_journal
 msgid "Nota de Crédito Ventas 0001"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.journal,name:l10n_ar_invoice.refund_expenses_journal
+#. module: l10n_ar_account
+#: model:account.journal,name:l10n_ar_account.refund_expenses_journal
 msgid "Notas de Crédito Compras"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,number:0
 #: field:afip.point_of_sale,number:0
-#: view:res.partner:l10n_ar_invoice.view_res_partner_form
+#: view:res.partner:l10n_ar_account.view_res_partner_form
 msgid "Number"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: sql_constraint:afip.point_of_sale:0
 msgid "Number Must be Unique per Company!"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_otras_deudas
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_otras_deudas
 msgid "OTRAS DEUDAS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_otros_creditos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_otros_creditos
 msgid "OTROS CRÉDITOS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_otros_gastos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_otros_gastos
 msgid "OTROS GASTOS "
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_otros_ingresos
-#: model:account.account,name:l10n_ar_invoice.ri_otros_ingresos_2
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_otros_ingresos
+#: model:account.account,name:l10n_ar_account.ri_otros_ingresos_2
 msgid "OTROS INGRESOS"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:account.journal,point_of_sale_id:0
 msgid "On use documents and sales journals is mandatory, con purchase journal is optional and only used to easily manage journals"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:afip.point_of_sale,type:0
 msgid "Online"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.journal.create.wizard,invoice_subtype:0
 msgid "Only Invoice"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.journal.create.wizard,invoice_subtype:0
 msgid "Only Refund"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.invoice.line.report,state:0
 msgid "Open"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Open and Paid Invoices"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.fiscal.position,name:l10n_ar_invoice.fiscal_position_operaciones_de_canje
+#. module: l10n_ar_account
+#: model:account.fiscal.position,name:l10n_ar_account.fiscal_position_operaciones_de_canje
 msgid "Operaciones de Canje"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.fiscal.position,name:l10n_ar_invoice.fiscal_position_operaciones_exentas
+#. module: l10n_ar_account
+#: model:account.fiscal.position,name:l10n_ar_account.fiscal_position_operaciones_exentas
 msgid "Operaciones exentas"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:648
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:648
 #, python-format
 msgid "Operation Type Error"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:649
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:649
 #, python-format
 msgid "Operation Type Must be \"Sale\" or \"Purchase\""
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.tax.code,tax:0
 #: selection:account.tax.code,type:0
 #: selection:account.tax.code.template,tax:0
@@ -1995,1023 +1995,1023 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:res.partner,other_afip_document_class_ids:0
 msgid "Other AFIP Documents"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:account.tax.code,application:0
 #: help:account.tax.code.template,application:0
 msgid "Other Taxes According AFIP"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:69
-#: code:addons/l10n_ar_invoice/models/invoice_line.py:114
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:69
+#: code:addons/l10n_ar_account/models/invoice_line.py:114
 #, python-format
 msgid "Other Taxes Amount"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.tax.code,application:0
 #: selection:account.tax.code.template,application:0
 msgid "Others"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_otras_deudas_documentadas
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_otras_deudas_documentadas
 msgid "Otras deudas documentadas"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:afip.point_of_sale,document_sequence_type:0
 msgid "Own Sequence"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_pasivo
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_pasivo
 msgid "PASIVO"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_pasivo_corriente
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_pasivo_corriente
 msgid "PASIVO CORRIENTE"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_pasivo_no_corriente
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_pasivo_no_corriente
 msgid "PASIVO NO CORRIENTE"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_patrimonio_neto
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_patrimonio_neto
 msgid "PATRIMONIO NETO"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_provisiones_varias
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_provisiones_varias
 msgid "PREVISIONES VARIAS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 #: field:account.invoice.line.report,partner_id:0
-#: model:ir.model,name:l10n_ar_invoice.model_res_partner
+#: model:ir.model,name:l10n_ar_account.model_res_partner
 msgid "Partner"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_document_type
+#. module: l10n_ar_account
+#: model:ir.ui.menu,name:l10n_ar_account.menu_action_afip_document_type
 msgid "Partner Document Types"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.financial.report,name:l10n_ar_invoice.account_financial_report_no_current_liability0
+#. module: l10n_ar_account
+#: model:account.financial.report,name:l10n_ar_account.account_financial_report_no_current_liability0
 msgid "Pasivos No Corrientes"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.financial.report,name:l10n_ar_invoice.account_financial_report_equity
+#. module: l10n_ar_account
+#: model:account.financial.report,name:l10n_ar_account.account_financial_report_equity
 msgid "Patrimonio Neto"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_iibb_co_percepcion
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_iibb_co_percepcion
 msgid "Per IIBB Cordoba"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_iibb_sf_percepcion
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_iibb_sf_percepcion
 msgid "Per IIBB Santa Fé"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_iibb_ba_percepcion
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_iibb_ba_percepcion
 msgid "Perc IIBB BS AS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_iva_percepcion
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_iva_percepcion
 msgid "Percepciones IVA Sufrida"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_percepcion_iibb_cf
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_percepcion_iibb_cf
 msgid "Percepciones ingresos brutos capital federal"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_percepcion_iibb_ba
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_percepcion_iibb_ba
 msgid "Percepciones ingresos brutos p. buenos aires"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_percepcion_iibb_co
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_percepcion_iibb_co
 msgid "Percepciones ingresos brutos p. córdoba"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_percepcion_iibb_sf
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_percepcion_iibb_sf
 msgid "Percepciones ingresos brutos p. santa fé"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_ganancias_percepcion_ventas
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_ganancias_percepcion_ventas
 msgid "Percepción Ganancias Aplicada"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_ganancias_percepcion_compras
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_ganancias_percepcion_compras
 msgid "Percepción Ganancias Sufrida"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_cf_percepcion
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_cf_percepcion
 msgid "Percepción IIBB Capital Federal"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_ba_percepcion
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_ba_percepcion
 msgid "Percepción IIBB Prov. Buenos Aires"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_co_percepcion
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_co_percepcion
 msgid "Percepción IIBB Prov. Córdoba"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_sf_percepcion
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_sf_percepcion
 msgid "Percepción IIBB Prov. Santa Fé"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_percepcion_ventas
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_percepcion_iva_aplicada
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_percepcion_ventas
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_percepcion_iva_aplicada
 msgid "Percepción IVA Aplicada"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_vat_percepcion_compras
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_vat_percepcion_compras
 msgid "Percepción IVA Sufrida"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_percepcion_iva_aplicada
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_percepcion_iva_aplicada
 msgid "Percepción IVA aplicada"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_compras_percepcion
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_compras_percepcion
 msgid "Percepción IVA sufrida"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_a_cuenta_impuestos_ganancias
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_a_cuenta_impuestos_ganancias
 msgid "Percepción Impuesto a las Ganancias Sufrida"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_ganancias_per_aplicada
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_ganancias_per_aplicada
 msgid "Percepción de Ganancias Aplicada"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_ganancias_per_sufrida
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_ganancias_per_sufrida
 msgid "Percepción de Ganancias Sufrida"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_iibb_cf_percepcion
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_iibb_cf_percepcion
 msgid "Percepción de Ingresos Brutos CABA"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_percepcion_ganancias_aplicada
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_percepcion_ganancias_aplicada
 msgid "Percepción ganancias aplicada "
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.tax.code,type:0
 #: selection:account.tax.code.template,type:0
 msgid "Perception"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 #: field:account.invoice.line.report,period_id:0
 msgid "Period"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_a_root
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_a_root
 msgid "Plan de Cuentas"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_chart_root
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_chart_root
 msgid "Plan de Impuestos de Argentina para Responsables Inscriptos"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:653
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:653
 #, python-format
 msgid "Please, set your company responsability in the company partner before continue."
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.create.wizard,point_of_sale_id:0
-#: code:addons/l10n_ar_invoice/models/invoice.py:30
+#: code:addons/l10n_ar_account/models/invoice.py:30
 #, python-format
 msgid "Point Of Sale"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_point_of_sale
+#. module: l10n_ar_account
+#: model:ir.ui.menu,name:l10n_ar_account.menu_action_afip_point_of_sale
 msgid "Point Of Sales"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal,point_of_sale_id:0
 msgid "Point of sale"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.point_of_sale,prefix:0
 msgid "Prefix"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:afip.document_class,doc_code_prefix:0
 msgid "Prefix for Documents Codes on Invoices         and Account Moves. For eg. 'FA ' will build 'FA 0001-0000001' Document Number"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:afip.point_of_sale,type:0
 msgid "Preprinted"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_prestamos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_prestamos
 msgid "Prestamos"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_provision_sac_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_provision_sac_a_pagar
 msgid "Prevision SAC a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_provision_sac_cargas_sociales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_provision_sac_cargas_sociales
 msgid "Prevision cargas sociales a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_provision_gastos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_provision_gastos
 msgid "Prevision gastos"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_prevision_despidos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_prevision_despidos
 msgid "Previsión Despidos"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice:l10n_ar_invoice.view_invoice_form
+#. module: l10n_ar_account
+#: view:account.invoice:l10n_ar_account.view_invoice_form
 msgid "Print Invoice"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.invoice.line.report,state:0
 msgid "Pro-forma"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 #: field:account.invoice.line.report,product_id:0
 msgid "Product"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Product Category"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_product_uom
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_product_uom
 msgid "Product Unit of Measure"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,name_template:0
 msgid "Product by text"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.tax.code,tax:0
 #: selection:account.tax.code.template,tax:0
 msgid "Profits"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_pago_proveedores
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_pago_proveedores
 msgid "Proveedores"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.tax.code,application:0
 #: selection:account.tax.code.template,application:0
 msgid "Provincial Taxes"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_publicidad
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_publicidad
 msgid "Publicidad"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.journal.create.wizard,type:0
 msgid "Purchase"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Purchase Invoice"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Purchase Refund"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,quantity:0
 msgid "Quantity"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:131
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/account_journal_create_wizard.py:131
 #, python-format
 msgid "RCO"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_resultados
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_resultados
 msgid "RESULTADOS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_ret_per_aplicada
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_ret_per_aplicada
 msgid "RETENCIONES Y PERCEPCIONES APLICADAS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:141
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/account_journal_create_wizard.py:141
 #, python-format
 msgid "RVE"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:afip.document_class,document_type:0
 msgid "Receipt Invoice"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.responsability,received_letter_ids:0
 msgid "Received Document Letters"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.document_letter,receptor_ids:0
 msgid "Receptors"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_recupero_de_gastos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_recupero_de_gastos
 msgid "Recupero de gastos"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:132
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/account_journal_create_wizard.py:132
 #, python-format
 msgid "Reembolso Compras"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:142
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/account_journal_create_wizard.py:142
 #, python-format
 msgid "Reembolso Ventas"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:res.partner:l10n_ar_invoice.view_res_partner_form
+#. module: l10n_ar_account
+#: view:res.partner:l10n_ar_account.view_res_partner_form
 msgid "Reference/Name fantasy"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.journal:l10n_ar_invoice.view_account_journal_ar_form
+#. module: l10n_ar_account
+#: view:account.journal:l10n_ar_account.view_account_journal_ar_form
 msgid "Refresh Documents"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:249
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:249
 #, python-format
 msgid "Refund"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice:l10n_ar_invoice.view_invoice_form
+#. module: l10n_ar_account
+#: view:account.invoice:l10n_ar_account.view_invoice_form
 msgid "Refund Invoice"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_reserva_estatuitaria
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_reserva_estatuitaria
 msgid "Reserva estatuitaria"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_futuras_inversiones
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_futuras_inversiones
 msgid "Reserva futuras inversiones"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_reserva_legal
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_reserva_legal
 msgid "Reserva legal"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.ui.menu,name:l10n_ar_invoice.menu_action_afip_responsability
+#. module: l10n_ar_account
+#: model:ir.ui.menu,name:l10n_ar_account.menu_action_afip_responsability
 msgid "Responsabilities"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice,responsability_id:0
 msgid "Responsability"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:res.partner,responsability_id:0
 msgid "Responsability"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_resultado_acumulados
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_resultado_acumulados
 msgid "Resultado acumlados"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_resultado_invesiones_financieras
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_resultado_invesiones_financieras
 msgid "Resultado de inversiones financieras"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_resultado_del_ejercicio
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_resultado_del_ejercicio
 msgid "Resultado del ejercicio"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_resultado_venta_bienes_de_uso
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_resultado_venta_bienes_de_uso
 msgid "Resultado venta bienes de uso"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_iibb_ba_retencion
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_iibb_ba_retencion
 msgid "Ret IIBB BS AS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_iibb_cf_retencion
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_iibb_cf_retencion
 msgid "Ret IIBB CABA"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_iibb_co_retencion
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_iibb_co_retencion
 msgid "Ret IIBB Cordoba"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax,name:l10n_ar_invoice.ri_tax_iibb_sf_retencion
+#. module: l10n_ar_account
+#: model:account.tax,name:l10n_ar_account.ri_tax_iibb_sf_retencion
 msgid "Ret IIBB Santa Fé"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_cf_retencion
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_cf_retencion
 msgid "Retención IIBB Capital Federal"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_ba_retencion
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_ba_retencion
 msgid "Retención IIBB Prov. Buenos Aires"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_co_retencion
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_co_retencion
 msgid "Retención IIBB Prov. Córdoba"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iibb_sf_retencion
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iibb_sf_retencion
 msgid "Retención IIBB Prov. Santa Fé"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_retencion_iva_aplicada
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_retencion_iva_aplicada
 msgid "Retención IVA Aplicada"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_iva_retencion
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_iva_compras_retencion
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_iva_retencion
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_iva_compras_retencion
 msgid "Retención IVA Sufrida"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_retencion_iva_aplicada
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_retencion_iva_aplicada
 msgid "Retención IVA aplicada"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_ganancias_ret_aplicada
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_ganancias_ret_aplicada
 msgid "Retención de Ganancias Aplicada"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.tax.code,name:l10n_ar_invoice.ri_tax_code_ganancias_ret_sufrida
+#. module: l10n_ar_account
+#: model:account.tax.code,name:l10n_ar_account.ri_tax_code_ganancias_ret_sufrida
 msgid "Retención de Ganancias Sufrida"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_retencion_ganancias_aplicada
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_retencion_ganancias_aplicada
 msgid "Retención ganancias aplicada "
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_retencion_impuestos_ganancias
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_retencion_impuestos_ganancias
 msgid "Retención impuestos a las ganancias Sufrida"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_retencion_iibb_cf
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_retencion_iibb_cf
 msgid "Retención ingresos brutos capital federal"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_retencion_iibb_ba
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_retencion_iibb_ba
 msgid "Retención ingresos brutos p. buenos aires"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_retencion_iibb_co
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_retencion_iibb_co
 msgid "Retención ingresos brutos p. córdoba"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_retencion_iibb_sf
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_retencion_iibb_sf
 msgid "Retención ingresos brutos p. santa fé"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_retencion_iva_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_retencion_iva_a_pagar
 msgid "Retención/Percepción IVA a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_retencion_ganancias_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_retencion_ganancias_a_pagar
 msgid "Retención/Percepción ganancias a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_rodados
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_rodados
 msgid "Rodados"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_saldo_libre_disponibilidad
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_saldo_libre_disponibilidad
 msgid "Saldo Libre Disponibilidad"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.journal.create.wizard,type:0
 msgid "Sale"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Sale Invoice"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Sale Refund"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 #: field:account.invoice.line.report,user_id:0
 msgid "Salesman"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:afip.point_of_sale,document_sequence_type:0
 msgid "Same Invoice Sequence"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_seguros_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_seguros_a_pagar
 msgid "Seguros a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_seguros
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_seguros
 msgid "Seguros adminsitracion"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.afip_document_class,sequence:0
 msgid "Sequence"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice,afip_service_end:0
 msgid "Service End Date"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice,afip_service_start:0
 msgid "Service Start Date"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_servicios_agua_luz_etc
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_servicios_agua_luz_etc
 msgid "Servicios de luz, agua, etc. administracion"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_servicios_agua_luz_etc_comerciales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_servicios_agua_luz_etc_comerciales
 msgid "Servicios de luz, agua, etc. comerciales"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_servicios_agua_luz_etc_produccion
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_servicios_agua_luz_etc_produccion
 msgid "Servicios de luz, agua, etc. produccion"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:res.partner,other_afip_document_class_ids:0
 msgid "Set here if this partner can issue other documents further        than invoices, credit notes and debit notes"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_software
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_software
 msgid "Software"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:436
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:436
 #, python-format
 msgid "Some invoices have a journal that require a document but not document type has been selected.\n"
 "Invoices ids: %s"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:505
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:505
 #, python-format
 msgid "Some purchase invoices don't have supplier nunmber.\n"
 "Invoices ids: %s"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:res.partner,start_date:0
 msgid "Start-up Date"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_search
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_search
 msgid "State"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,price_subtotal:0
-#: code:addons/l10n_ar_invoice/models/invoice.py:40
-#: code:addons/l10n_ar_invoice/models/invoice_line.py:104
+#: code:addons/l10n_ar_account/models/invoice.py:40
+#: code:addons/l10n_ar_account/models/invoice_line.py:104
 #, python-format
 msgid "Subtotal"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal.create.wizard,invoice_subtype:0
 msgid "Subtype"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_sueldos_a_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_sueldos_a_pagar
 msgid "Sueldos a pagar"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_haberes_administrativos
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_haberes_administrativos
 msgid "Sueldos y SAC administrativos"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_haberes_comerciales
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_haberes_comerciales
 msgid "Sueldos y SAC comerciales"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_haberes_produccion
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_haberes_produccion
 msgid "Sueldos y SAC operativos"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.point_of_sale,sufix:0
 msgid "Sufix"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,supplier:0
 msgid "Supplier"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.invoice.line.report,type:0
-#: code:addons/l10n_ar_invoice/models/invoice.py:248
+#: code:addons/l10n_ar_account/models/invoice.py:248
 #, python-format
 msgid "Supplier Invoice"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: sql_constraint:account.invoice:0
-#: code:addons/l10n_ar_invoice/models/invoice.py:424
+#: code:addons/l10n_ar_account/models/invoice.py:424
 #, python-format
 msgid "Supplier Invoice Number must be unique per Supplier and Company!"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.invoice.line.report,type:0
-#: code:addons/l10n_ar_invoice/models/invoice.py:250
+#: code:addons/l10n_ar_account/models/invoice.py:250
 #, python-format
 msgid "Supplier Refund"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.tax.code,type:0
 #: selection:account.tax.code.template,type:0
 msgid "TAX"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_transitorias
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_transitorias
 msgid "TRANSITORIAS"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_tarjeta_de_credito_pagar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_tarjeta_de_credito_pagar
 msgid "Tarjeta de crédito a pagar xxxxx"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri__tarjetas_de_credito_cobrar
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri__tarjetas_de_credito_cobrar
 msgid "Tarjetas de crédito a cobrar xxxxx"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.tax.code,tax:0
 #: field:account.tax.code.template,tax:0
-#: code:addons/l10n_ar_invoice/models/invoice.py:35
-#: code:addons/l10n_ar_invoice/models/invoice.py:74
+#: code:addons/l10n_ar_account/models/invoice.py:35
+#: code:addons/l10n_ar_account/models/invoice.py:74
 #, python-format
 msgid "Tax"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_account_tax_code
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_tax_code
 msgid "Tax Code"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.model,name:l10n_ar_invoice.model_account_tax_code_template
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_tax_code_template
 msgid "Tax Code Template"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/account.py:351
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/account.py:351
 #, python-format
 msgid "The company of the point of sale and of the                 journal must be the same!"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:account.journal.afip_document_class,sequence_id:0
 msgid "This field contains the information related to the numbering of the documents entries of this document type."
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:afip.document_class,document_type:0
 msgid "Ticket"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice.line.report:l10n_ar_invoice.view_account_invoice_line_report_tree
+#. module: l10n_ar_account
+#: view:account.invoice.line.report:l10n_ar_account.view_account_invoice_line_report_tree
 msgid "Total"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_transferencias_internas
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_transferencias_internas
 msgid "Transferencias Internas"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account.type,name:l10n_ar_invoice.data_account_type_transitory
+#. module: l10n_ar_account
+#: model:account.account.type,name:l10n_ar_account.data_account_type_transitory
 msgid "Transitory"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,type:0
 #: field:account.journal.create.wizard,type:0
 #: field:account.tax.code,type:0
 #: field:account.tax.code.template,type:0
 #: field:afip.point_of_sale,type:0
-#: view:res.partner:l10n_ar_invoice.view_res_partner_form
+#: view:res.partner:l10n_ar_account.view_res_partner_form
 msgid "Type"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,price_unit:0
-#: code:addons/l10n_ar_invoice/models/invoice_line.py:94
+#: code:addons/l10n_ar_account/models/invoice_line.py:94
 #, python-format
 msgid "Unit Price"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:res.company,use_argentinian_localization:0
 msgid "Use Argentinian Localization?"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:account.journal,use_documents:0
 #: field:account.journal.create.wizard,use_documents:0
 msgid "Use Documents?"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: help:afip.point_of_sale,document_sequence_type:0
 msgid "Use own sequence or invoice sequence on Debit and Credit Notes?"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.tax.code,tax:0
 #: selection:account.tax.code.template,tax:0
 msgid "VAT"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:58
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:58
 #, python-format
 msgid "VAT Amount"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:64
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:64
 #, python-format
 msgid "VAT Base Amount"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:52
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:52
 #, python-format
 msgid "VAT Exempt Amount"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.responsability,vat_tax_required_on_sales_invoices:0
 msgid "VAT Tax Required on Sales Invoices?"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:79
-#: code:addons/l10n_ar_invoice/models/invoice_line.py:89
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:79
+#: code:addons/l10n_ar_account/models/invoice_line.py:89
 #, python-format
 msgid "VAT Taxes"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:46
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:46
 #, python-format
 msgid "VAT Untaxed"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:146
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/account_journal_create_wizard.py:146
 #, python-format
 msgid "VEN"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_valores
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_valores
 msgid "Valores en cartera"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice_line.py:109
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice_line.py:109
 #, python-format
 msgid "Vat Amount"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: field:afip.document_letter,vat_discriminated:0
 msgid "Vat Discriminated on Invoices?"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_venta_de_mercaderia
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_venta_de_mercaderia
 msgid "Venta de mercaderia"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:account.account,name:l10n_ar_invoice.ri_venta_de_servicios_misc
+#. module: l10n_ar_account
+#: model:account.account,name:l10n_ar_account.ri_venta_de_servicios_misc
 msgid "Venta servicios misc"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/wizard/account_journal_create_wizard.py:147
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/account_journal_create_wizard.py:147
 #, python-format
 msgid "Ventas"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.tax.code,type:0
 #: selection:account.tax.code.template,type:0
 msgid "View"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:account.tax.code,type:0
 #: selection:account.tax.code.template,type:0
 msgid "Withholding"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:res.company,invoice_vat_discrimination_default:0
 msgid "Yes, Discriminate Default"
 msgstr ""
 
-#. module: l10n_ar_invoice
+#. module: l10n_ar_account
 #: selection:res.company,invoice_vat_discrimination_default:0
 msgid "Yes, No Discriminate Default"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:469
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:469
 #, python-format
 msgid "You are using argentinian localization and there are some invoices with taxes that don't have tax code, tax code is required to generate this report. Invoies ids: %s"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:478
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:478
 #, python-format
 msgid "You are using argentinian localization and there are some tax codes that are not configured. Tax codes ids: %s"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: code:addons/l10n_ar_invoice/models/invoice.py:652
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/invoice.py:652
 #, python-format
 msgid "Your company has not setted any responsability"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice:l10n_ar_invoice.view_account_invoice_filter
+#. module: l10n_ar_account
+#: view:account.invoice:l10n_ar_account.view_account_invoice_filter
 msgid "['|','|','|','|', ('afip_document_number','ilike',self), ('number','ilike',self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', self)]"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: model:ir.actions.act_window,name:l10n_ar_invoice.action_account_journal_create_wizard
+#. module: l10n_ar_account
+#: model:ir.actions.act_window,name:l10n_ar_account.action_account_journal_create_wizard
 msgid "account.journal.create.wizard"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.journal:l10n_ar_invoice.view_account_journal_tree
+#. module: l10n_ar_account
+#: view:account.journal:l10n_ar_account.view_account_journal_tree
 msgid "false"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.journal.create.wizard:l10n_ar_invoice.view_account_journal_create_wizard_form
+#. module: l10n_ar_account
+#: view:account.journal.create.wizard:l10n_ar_account.view_account_journal_create_wizard_form
 msgid "or"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice:l10n_ar_invoice.view_invoice_form
-#: view:account.invoice:l10n_ar_invoice.view_supplier_invoice_form
+#. module: l10n_ar_account
+#: view:account.invoice:l10n_ar_account.view_invoice_form
+#: view:account.invoice:l10n_ar_account.view_supplier_invoice_form
 msgid "{'readonly':['|','|',('state','!=','draft'),('afip_document_number','!=',False),('internal_number','!=',False)]}"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:res.partner.bank:l10n_ar_invoice.view_partner_bank_form_inherit
+#. module: l10n_ar_account
+#: view:res.partner.bank:l10n_ar_account.view_partner_bank_form_inherit
 msgid "{'required': [('company_id','!=', False)]}"
 msgstr ""
 
-#. module: l10n_ar_invoice
-#: view:account.invoice:l10n_ar_invoice.view_supplier_invoice_form
+#. module: l10n_ar_account
+#: view:account.invoice:l10n_ar_account.view_supplier_invoice_form
 msgid "{'required':[('use_documents','=',True)]}"
 msgstr ""
 

@@ -33,7 +33,7 @@ msgid "Add CBU on bank account information"
 msgstr "Add CBU on bank account information"
 
 #. module: l10n_ar_base
-#: field:argentinian.base.config.settings,module_l10n_ar_invoice_sale:0
+#: field:argentinian.base.config.settings,module_l10n_ar_account_sale:0
 msgid "Add availabilty to use VAT included or not on sales"
 msgstr "Add availabilty to use VAT included or not on sales"
 
@@ -108,7 +108,7 @@ msgid "Argentinian VAT validation"
 msgstr "Argentinian VAT validation"
 
 #. module: l10n_ar_base
-#: field:argentinian.base.config.settings,module_l10n_ar_invoice:0
+#: field:argentinian.base.config.settings,module_l10n_ar_account:0
 msgid "Argentinian invoicing and other documents Management"
 msgstr "Argentinian invoicing and other documents Management"
 
@@ -223,17 +223,17 @@ msgid "Installs the l10n_ar_hide_receipts module. "
 msgstr "Installs the l10n_ar_hide_receipts module. "
 
 #. module: l10n_ar_base
-#: help:argentinian.base.config.settings,module_l10n_ar_invoice:0
+#: help:argentinian.base.config.settings,module_l10n_ar_account:0
 msgid ""
-"Installs the l10n_ar_invoice module. It creates some clases to manage afip "
+"Installs the l10n_ar_account module. It creates some clases to manage afip "
 "functionality, for example document class, journal class, document letters, "
 "vat categories, etc."
-msgstr "Installs the l10n_ar_invoice module. It creates some clases to manage afip functionality, for example document class, journal class, document letters, vat categories, etc."
+msgstr "Installs the l10n_ar_account module. It creates some clases to manage afip functionality, for example document class, journal class, document letters, vat categories, etc."
 
 #. module: l10n_ar_base
-#: help:argentinian.base.config.settings,module_l10n_ar_invoice_sale:0
-msgid "Installs the l10n_ar_invoice_sale module."
-msgstr "Installs the l10n_ar_invoice_sale module."
+#: help:argentinian.base.config.settings,module_l10n_ar_account_sale:0
+msgid "Installs the l10n_ar_account_sale module."
+msgstr "Installs the l10n_ar_account_sale module."
 
 #. module: l10n_ar_base
 #: help:argentinian.base.config.settings,module_l10n_ar_partner_title:0

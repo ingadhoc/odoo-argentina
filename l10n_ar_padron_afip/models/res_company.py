@@ -3,7 +3,7 @@ from openerp import models, fields, api, _
 import openerp.tools as tools
 from pyafipws.iibb import IIBB
 # from pyafipws.padron import PadronAFIP
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 import logging
 from dateutil.relativedelta import relativedelta
 _logger = logging.getLogger(__name__)
@@ -66,11 +66,11 @@ class ResCompany(models.Model):
         cuit = self.partner_id.document_number
 
         if not cuit:
-            raise Warning(_(
+            raise UserError(_(
                 'You must configure CUIT con company %s related partner') % (
                     self.name))
         if not self.arba_cit:
-            raise Warning(_(
+            raise UserError(_(
                 'You must configure ARBA CIT on company %s') % (
                     self.name))
 
@@ -97,7 +97,7 @@ class ResCompany(models.Model):
         from_date = date + relativedelta(day=1)
         to_date = date + relativedelta(day=1, days=-1, months=+1)
 
-        cuit = partner.cuit
+        cuit = partner.cuit_required
 
         _logger.info(
             'Getting ARBA data for cuit %s from date %s to date %s' % (
@@ -109,12 +109,12 @@ class ResCompany(models.Model):
             cuit)
 
         if ws.Excepcion:
-            raise Warning("%s\nExcepcion: %s" % (
+            raise UserError("%s\nExcepcion: %s" % (
                 ws.Traceback, ws.Excepcion))
 
         # ' Hubo error general de ARBA?
         if ws.CodigoError:
-            raise Warning("%s\nError %s: %s" % (
+            raise UserError("%s\nError %s: %s" % (
                 ws.MensajeError, ws.TipoError, ws.CodigoError))
 
         # ' Datos generales de la respuesta:'

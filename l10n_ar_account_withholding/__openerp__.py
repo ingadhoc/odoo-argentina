@@ -27,13 +27,14 @@
         'reports/certificado_de_retencion_report.xml',
         'views/account_tax_withholding_view.xml',
         'views/account_voucher_view.xml',
-        'security/ir.model.access.csv',
-        'security/security.xml',
         'views/res_company_view.xml',
         'views/afip_tabla_ganancias_escala_view.xml',
         'views/afip_tabla_ganancias_alicuotasymontos_view.xml',
         'views/account_voucher_withholding_view.xml',
         'views/res_partner_view.xml',
+        'security/ir.model.access.csv',
+        'security/security.xml',
+        'wizard/account_withholding_sicore_wizard_view.xml',
         'data/tabla_ganancias_data.xml',
     ],
     'demo': [
@@ -42,7 +43,7 @@
     ],
     'depends': [
         'account_voucher_withholding_automatic',
-        # 'l10n_ar_account',
+        'l10n_ar_account',
         # para ganancias
         'report_aeroo',
         'l10n_ar_padron_afip',

@@ -39,36 +39,42 @@ class AccountVoucher(models.Model):
         related='company_id.regimenes_ganancias_ids',
         readonly=True,
     )
+    # For new API onchange
+    partner_id_copy = fields.Many2one(
+        related='partner_id'
+    )
 
-    @api.multi
-    def onchange_partner_id(
-            self, partner_id, journal_id, amount, currency_id, ttype, date):
-        """
-        Because view onchange overwrite api onchange, we call it from here
-        """
-        vals = super(AccountVoucher, self).onchange_partner_id(
-            partner_id, journal_id, amount, currency_id, ttype, date)
-        if 'value' not in vals:
-            vals['value'] = {}
-        partner = self.env['res.partner'].browse(partner_id)
-        default_regimen = partner.default_regimen_ganancias_id
-        if default_regimen:
-            vals['value']['regimen_ganancias_id'] = default_regimen.id
-        return vals
-
-    @api.onchange('retencion_ganancias')
+    @api.onchange('retencion_ganancias', 'partner_id_copy')
     def change_retencion_ganancias(self):
+        def_regimen = False
         if self.retencion_ganancias == 'nro_regimen':
-            self.regimen_ganancias_id = (
-                self.partner_id.default_regimen_ganancias_id or
-                self.company_regimenes_ganancias_ids[0])
-        else:
-            self.regimen_ganancias_id = False
+            cia_regs = self.company_regimenes_ganancias_ids
+            partner_regimen = self.partner_id.default_regimen_ganancias_id
+            if partner_regimen and partner_regimen in cia_regs:
+                def_regimen = partner_regimen
+            elif cia_regs:
+                def_regimen = cia_regs[0]
+        self.regimen_ganancias_id = def_regimen
 
     @api.onchange('company_regimenes_ganancias_ids')
     def change_company_regimenes_ganancias(self):
         if self.company_regimenes_ganancias_ids and self.type == 'payment':
             self.retencion_ganancias = 'nro_regimen'
+
+    @api.model
+    def create(self, vals):
+        """
+        para casos donde se paga desde algun otro lugar (por ej. liquidador de
+        impuestos), seteamos no aplica si no hay nada seteado
+        """
+        voucher = super(AccountVoucher, self).create(vals)
+        if (
+                voucher.company_regimenes_ganancias_ids and
+                voucher.type == 'payment' and
+                not voucher.retencion_ganancias and
+                not voucher.regimen_ganancias_id):
+            voucher.retencion_ganancias = 'no_aplica'
+        return voucher
 
     @api.multi
     def compute_withholdings(self):

@@ -197,7 +197,6 @@ class AccountInvoice(models.Model):
         """
         res = super(AccountInvoice, self).invoice_validate()
         self.check_afip_auth_verify_required()
-        raise Warning('asdas')
         self.do_pyafipws_request_cae()
         # self._cr.commit()
         return res

@@ -20,6 +20,7 @@
     'external_dependencies': {
     },
     'data': [
+        'data/menuitem.xml',
         'data/product_data.xml',
         'data/base_validator_data.xml',
         'data/afip_responsability_type.xml',

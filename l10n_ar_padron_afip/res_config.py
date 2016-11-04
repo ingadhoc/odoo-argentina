@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from openerp import models, api, _
 from pyafipws.padron import PadronAFIP
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 
 
-class argentinian_base_configuration(models.TransientModel):
-    _inherit = 'argentinian.base.config.settings'
+class AccountConfigSsettings(models.TransientModel):
+    _inherit = 'account.config.settings'
 
     @api.multi
     def refresh_taxes_from_padron(self):
@@ -35,7 +35,7 @@ class argentinian_base_configuration(models.TransientModel):
         elif resource_type == 'conceptos':
             model = 'afip.concept'
         else:
-            raise Warning(_('Resource Type %s not implemented!') % (
+            raise UserError(_('Resource Type %s not implemented!') % (
                 resource_type))
         padron = PadronAFIP()
         separator = ';'

@@ -42,7 +42,7 @@
     ],
     'depends': [
         'account_voucher_withholding_automatic',
-        # 'l10n_ar_invoice',
+        # 'l10n_ar_account',
         # para ganancias
         'report_aeroo',
         'l10n_ar_padron_afip',

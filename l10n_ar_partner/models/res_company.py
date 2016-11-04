@@ -14,6 +14,9 @@ class ResCompany(models.Model):
     cuit = fields.Char(
         related='partner_id.cuit'
     )
+    cuit_required = fields.Char(
+        related='partner_id.cuit_required'
+    )
 
     @api.model
     def create(self, vals):

@@ -38,7 +38,7 @@
             <field name="view_mode">tree</field>
         </record>
 
-        <menuitem name="Escalas Ganancias" action="act_afip_tabla_ganancias_escala" id="menu_action_afip_tabla_ganancias_escala" sequence="95" parent="l10n_ar_invoice.menu_afip_config"/>
+        <menuitem name="Escalas Ganancias" action="act_afip_tabla_ganancias_escala" id="menu_action_afip_tabla_ganancias_escala" sequence="95" parent="l10n_ar_account.menu_afip_config"/>
 
     </data>
 </openerp>

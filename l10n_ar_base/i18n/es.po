@@ -34,7 +34,7 @@ msgid "Add CBU on bank account information"
 msgstr "Añade el CBU en la información de la cuenta del banco"
 
 #. module: l10n_ar_base
-#: field:argentinian.base.config.settings,module_l10n_ar_invoice_sale:0
+#: field:argentinian.base.config.settings,module_l10n_ar_account_sale:0
 msgid "Add availabilty to use VAT included or not on sales"
 msgstr ""
 
@@ -109,7 +109,7 @@ msgid "Argentinian VAT validation"
 msgstr ""
 
 #. module: l10n_ar_base
-#: field:argentinian.base.config.settings,module_l10n_ar_invoice:0
+#: field:argentinian.base.config.settings,module_l10n_ar_account:0
 msgid "Argentinian invoicing and other documents Management"
 msgstr ""
 
@@ -224,16 +224,16 @@ msgid "Installs the l10n_ar_hide_receipts module. "
 msgstr ""
 
 #. module: l10n_ar_base
-#: help:argentinian.base.config.settings,module_l10n_ar_invoice:0
+#: help:argentinian.base.config.settings,module_l10n_ar_account:0
 msgid ""
-"Installs the l10n_ar_invoice module. It creates some clases to manage afip "
+"Installs the l10n_ar_account module. It creates some clases to manage afip "
 "functionality, for example document class, journal class, document letters, "
 "vat categories, etc."
 msgstr ""
 
 #. module: l10n_ar_base
-#: help:argentinian.base.config.settings,module_l10n_ar_invoice_sale:0
-msgid "Installs the l10n_ar_invoice_sale module."
+#: help:argentinian.base.config.settings,module_l10n_ar_account_sale:0
+msgid "Installs the l10n_ar_account_sale module."
 msgstr ""
 
 #. module: l10n_ar_base

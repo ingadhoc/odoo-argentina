@@ -1,3 +1,13 @@
 -
   !python {model: account.chart.template, id: l10nar_ri_chart_template}: |
     self[0].try_loading_for_current_company()
+# por alguna razón da error en los tests (seguramente porque no son compatibles con multicompania los tests)
+# -
+#   !python {model: res.users, id: base.user_root}: |
+#     self[0].company_id = ref('l10n_ar_account.company_mono')
+# -
+#   !python {model: account.chart.template, id: l10nar_base_chart_template}: |
+#     self[0].try_loading_for_current_company()
+# -
+#   !python {model: res.users, id: base.user_root}: |
+#     self[0].company_id = ref('base.main_company')

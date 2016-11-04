@@ -7,5 +7,43 @@
             <field name='afip_responsability_type_id' ref='res_IVARI'/>
             <field name="start_date" eval="time.strftime('%Y-%m')+'-1'"/>
         </record>
+
+        <record id="partner_mono" model="res.partner">
+            <field name='afip_responsability_type_id' ref='res_RM'/>
+            <field name='vat'>AR20222222223</field>
+            <field name='main_id_category_id' ref="l10n_ar_partner.dt_CUIT"/>
+            <field name='main_id_number'>20222222223</field>
+            <field name='name'>Monotributista</field>
+            <field name="street">Calle Falsa 123</field>
+            <field name="city">Rosario</field>
+            <field name="country_id" ref="base.ar"/>
+            <field name="state_id" ref="l10n_ar_states.CBA"/>
+            <field name="zip">2000</field>
+            <field name="phone">+1 555 123 8069</field>
+            <field name="email">info@yourcompany.example.com</field>
+            <field name="website">www.example.com</field>
+            <field name="supplier" eval="True"/>
+            <field name="start_date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <!-- <field name="image" type="base64" file="base/static/img/main_partner-image.png"/> -->
+        </record>
+
+        <record id="company_mono" model="res.company">
+            <field name='parent_id' ref='base.main_company'/>
+            <field name='currency_id' ref='base.ARS'/>
+            <field name='partner_id' ref='partner_mono'/>
+            <field name='name'>Monotributista</field>
+            <!-- <field name="logo" type="base64" file="l10n_ar_invoice/demo/monotributista.png"/> -->
+        </record>
+
+    <!-- Users -->
+        <record id="base.user_demo" model="res.users">
+            <field name="company_ids" eval="[(4,ref('company_mono'))]"/>
+            <!-- <field name="groups_id" eval="[(4, ref('base.group_multi_company'))]"/> -->
+        </record>
+        <record id="base.user_root" model="res.users">
+            <field name="company_ids" eval="[(4,ref('company_mono'))]"/>
+            <!-- <field name="company_ids" eval="[(4,ref('l10n_ar_invoice.company_ri')),(4,ref('l10n_ar_invoice.company_mono'))]"/> -->
+            <!-- <field name="groups_id" eval="[(4, ref('base.group_multi_company'))]"/> -->
+        </record>
     </data>
 </openerp>

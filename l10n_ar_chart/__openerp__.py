@@ -10,6 +10,7 @@
     ],
     'test': [],
     'data': [
+        'data/account_chart_base.xml',
         'data/account_chart_template.xml',
         'data/account_chart_respinsc.xml',
         'data/account_tax_template.xml',
@@ -18,6 +19,7 @@
         'data/menuitem.xml',
     ],
     'demo': [
+        # TODO los productos se podrian cargar directamente en l10n_ar_account
         '../l10n_ar_account/demo/product_product_demo.xml',
         '../l10n_ar_account/demo/account_customer_invoice_demo.yml',
         '../l10n_ar_account/demo/account_customer_expo_invoice_demo.yml',

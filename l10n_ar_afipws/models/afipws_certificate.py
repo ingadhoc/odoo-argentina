@@ -16,7 +16,7 @@ _logger = logging.getLogger(__name__)
 
 class AfipwsCertificate(models.Model):
     _name = "afipws.certificate"
-    _rec_name = "display_name"
+    _rec_name = "alias_id"
 
     alias_id = fields.Many2one(
         'afipws.certificate_alias',
@@ -66,16 +66,6 @@ class AfipwsCertificate(models.Model):
         readonly=True,
         compute='get_request_file',
     )
-    display_name = fields.Char(
-        string='Name',
-        compute='_compute_display_name',
-    )
-
-    @api.one
-    @api.depends('create_date', 'alias_id.display_name')
-    def _compute_display_name(self):
-        names = [self.alias_id.display_name, self.create_date]
-        self.display_name = ' / '.join(filter(None, names))
 
     @api.one
     @api.depends('csr')

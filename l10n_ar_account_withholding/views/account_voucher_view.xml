@@ -10,6 +10,7 @@
             <field name="arch" type="xml">
                 <form>
                     <field name="company_regimenes_ganancias_ids" invisible="1"/>
+                    <field name="partner_id_copy" invisible="1"/>
                 </form>
                 <field name="company_id" position="after">
                     <label for="retencion_ganancias" attrs="{'invisible': [('company_regimenes_ganancias_ids', '=', [(6, False, [])])]}"/>

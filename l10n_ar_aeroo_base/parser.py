@@ -5,6 +5,9 @@
 ##############################################################################
 import conversor
 from openerp.report.report_sxw import rml_parse
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 
 class Parser(rml_parse):

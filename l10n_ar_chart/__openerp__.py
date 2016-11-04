@@ -16,7 +16,6 @@
         'data/account_tax_template.xml',
         'data/account_fiscal_template.xml',
         'data/account_chart_template.yml',
-        'data/menuitem.xml',
     ],
     'demo': [
         # TODO los productos se podrian cargar directamente en l10n_ar_account

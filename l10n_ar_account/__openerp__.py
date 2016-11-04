@@ -15,7 +15,7 @@
         # 'account_invoice_refund_link',
         # no es una dependencia en si (salvo para datos demo) pero si es
         # necesario por como implemenamos la localizacion
-        # 'account_invoice_tax_wizard',
+        'account_invoice_tax_wizard',
     ],
     'external_dependencies': {
     },

@@ -2,9 +2,9 @@
 <openerp>
     <data noupdate="True">
 
-        <record model="res.country.state" id="CBA">
+        <record model="res.country.state" id="CABA">
             <field name="name">Ciudad Autónoma de Buenos Aires</field>
-            <field name="code">ABA</field>
+            <field name="code">CABA</field>
             <field name="country_id" ref="base.ar"/>
             <field name="afip_code">0</field>
         </record>

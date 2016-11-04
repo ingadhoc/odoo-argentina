@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, _
 import openerp.tools as tools
-from pyafipws.iibb import IIBB
-# from pyafipws.padron import PadronAFIP
+try:
+    from pyafipws.iibb import IIBB
+except ImportError:
+    IIBB = None
 from openerp.exceptions import UserError
 import logging
 from dateutil.relativedelta import relativedelta

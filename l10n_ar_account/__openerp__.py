@@ -12,10 +12,10 @@
         'l10n_ar_partner',
         # para guardar el link entre facturas y NC
         # el modulo tiene errores en los test (probado solo con odoo y tmb)
-        # 'account_invoice_refund_link',
+        'account_invoice_refund_link',
         # no es una dependencia en si (salvo para datos demo) pero si es
         # necesario por como implemenamos la localizacion
-        'account_invoice_tax_wizard',
+        # 'account_invoice_tax_wizard',
     ],
     'external_dependencies': {
     },

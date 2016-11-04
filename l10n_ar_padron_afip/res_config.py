@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from openerp import models, api, _
-from pyafipws.padron import PadronAFIP
+try:
+    from pyafipws.padron import PadronAFIP
+except ImportError:
+    PadronAFIP = None
 from openerp.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)

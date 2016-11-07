@@ -42,13 +42,12 @@ Argentinian Like Invoice Aeroo Report
         'report_configuration_defaults_data.xml',
         'invoice_report.xml',
         'invoice_template.xml',
-        'report_view.xml',
     ],
     'demo': [
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

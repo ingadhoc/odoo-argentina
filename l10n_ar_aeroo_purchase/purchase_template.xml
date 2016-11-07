@@ -2,15 +2,13 @@
 <openerp>
     <data>
 
-    
-
-    <record id="purchase.email_template_edi_purchase_done" model="email.template">
+<!--     <record id="purchase.email_template_edi_purchase_done" model="email.template">
         <field name="report_template" ref="l10n_ar_aeroo_purchase.action_aeroo_report_ar_purchase_order"/>
     </record>
 
     <record id="purchase.email_template_edi_purchase" model="email.template">
         <field name="report_template" ref="l10n_ar_aeroo_purchase.action_aeroo_report_ar_purchase_order"/>
-    </record>
+    </record> -->
 
     </data>
 

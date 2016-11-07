@@ -85,6 +85,7 @@ install:
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-financial-tools/account_document ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-reporting-engine/report_extended_purchase ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-reporting-engine/report_extended_account ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-reporting-engine/report_extended_sale ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/oca-account-financial-tools/currency_rate_update ~/build/ingadhoc/odoo-argentina; fi
   # - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/oca-account-invoicing/account_invoice_refund_link ~/build/ingadhoc/odoo-argentina; fi
 

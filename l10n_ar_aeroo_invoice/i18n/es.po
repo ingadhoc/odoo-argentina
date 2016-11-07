@@ -24,6 +24,6 @@ msgid "Argentinian Aeroo Invoice"
 msgstr "Factura Argentina de Aeroo"
 
 #. module: l10n_ar_aeroo_invoice
-#: field:ir.actions.report.xml,afip_document_class_ids:0
+#: field:ir.actions.report.xml,document_type_ids:0
 msgid "Document Types"
 msgstr "Tipos de documentos"

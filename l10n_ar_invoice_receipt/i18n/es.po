@@ -30,6 +30,6 @@ msgid "Account Voucher Receiptbook"
 msgstr "Talonario de Recibo"
 
 #. module: l10n_ar_account_receipt
-#: field:account.voucher.receiptbook,afip_document_class_id:0
+#: field:account.voucher.receiptbook,document_type_id:0
 msgid "Afip Document Class"
 msgstr "Clase de Documento Afip"

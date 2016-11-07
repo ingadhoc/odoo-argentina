@@ -69,7 +69,7 @@ class account_vat_ledger(models.Model):
         'account.tax.code',
         string=_("Other Tax Codes"),
         compute="_get_data")
-    responsability_ids = fields.Many2many(
+    afip_responsability_type_ids = fields.Many2many(
         'afip.responsability',
         string=_("Responsabilities"),
         compute="_get_data")
@@ -79,7 +79,7 @@ class account_vat_ledger(models.Model):
     # cambiar periodo de una cia hija con usuario distinto a admin
     # @api.depends('journal_ids', 'period_id')
     def _get_data(self):
-        self.responsability_ids = self.env['afip.responsability'].search([])
+        self.afip_responsability_type_ids = self.env['afip.responsability'].search([])
 
         invoices_domain = [
             # ('state', 'not in', ['draft', 'cancel']),
@@ -92,7 +92,7 @@ class account_vat_ledger(models.Model):
         # Get invoices
         invoices = self.env['account.invoice'].search(
             invoices_domain, order='date_invoice, afip_document_number')
-        self.document_class_ids = invoices.mapped('afip_document_class_id')
+        self.document_class_ids = invoices.mapped('document_type_id')
         self.invoice_ids = invoices
 
         self.vat_tax_code_ids = invoices.mapped(

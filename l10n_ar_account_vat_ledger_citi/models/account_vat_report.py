@@ -211,7 +211,7 @@ class account_vat_ledger(models.Model):
     def get_citi_invoices(self):
         self.ensure_one()
         return self.env['account.invoice'].search([
-            ('afip_document_class_id.export_to_citi', '=', True),
+            ('document_type_id.export_to_citi', '=', True),
             ('id', 'in', self.invoice_ids.ids)])
 
     @api.one
@@ -245,7 +245,7 @@ class account_vat_ledger(models.Model):
                 fields.Date.from_string(inv.date_invoice).strftime('%Y%m%d'),
 
                 # Campo 2: Tipo de Comprobante.
-                "{:0>3d}".format(inv.afip_document_class_id.afip_code),
+                "{:0>3d}".format(inv.document_type_id.afip_code),
 
                 # Campo 3: Punto de Venta
                 self.get_point_of_sale(inv),
@@ -266,7 +266,7 @@ class account_vat_ledger(models.Model):
                 row.append("{:0>20d}".format(inv.invoice_number))
             else:
                 # Campo 5: Despacho de importación
-                if inv.afip_document_class_id.afip_code == 66:
+                if inv.document_type_id.afip_code == 66:
                     row.append((inv.afip_document_number or inv.number or '').rjust(
                         16, '0'))
                 else:
@@ -420,7 +420,7 @@ class account_vat_ledger(models.Model):
         inv = invoice
         row = [
             # Campo 1: Tipo de Comprobante
-            "{:0>3d}".format(inv.afip_document_class_id.afip_code),
+            "{:0>3d}".format(inv.document_type_id.afip_code),
 
             # Campo 2: Punto de Venta
             self.get_point_of_sale(inv),
@@ -464,7 +464,7 @@ class account_vat_ledger(models.Model):
     def get_REGINFO_CV_ALICUOTAS(self):
         res = []
         for inv in self.get_citi_invoices().filtered(
-                lambda r: r.afip_document_class_id.afip_code != 66):
+                lambda r: r.document_type_id.afip_code != 66):
             vat_taxes = inv.vat_tax_ids.filtered(
                 lambda r: r.tax_code_id.afip_code in [3, 4, 5, 6, 8, 9])
 
@@ -489,7 +489,7 @@ class account_vat_ledger(models.Model):
     def get_REGINFO_CV_COMPRAS_IMPORTACIONES(self):
         res = []
         for inv in self.get_citi_invoices().filtered(
-                lambda r: r.afip_document_class_id.afip_code == 66):
+                lambda r: r.document_type_id.afip_code == 66):
             vat_taxes = inv.vat_tax_ids.filtered(
                 lambda r: r.tax_code_id.afip_code in [3, 4, 5, 6, 8, 9])
 

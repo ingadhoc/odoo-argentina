@@ -15,6 +15,10 @@ class Parser(rml_parse):
     def __init__(self, cr, uid, name, context):
         super(self.__class__, self).__init__(cr, uid, name, context)
 
+        print 'aaaaaaaa'
+        print 'aaaaaaaa'
+        print 'aaaaaaaa'
+        print 'aaaaaaaa'
         # We search for the report
         report_obj = self.pool['ir.actions.report.xml']
         report_id = report_obj.search(
@@ -35,6 +39,7 @@ class Parser(rml_parse):
             self.localcontext.update(
                 {report_conf_line.name: key_value})
             keys[report_conf_line.name] = key_value
+        print 'keys', keys
         self.localcontext.update(
             {'keys': keys})
 

@@ -283,7 +283,7 @@ msgid "Afip Document Class"
 msgstr "Clase de Documento Afip"
 
 #. module: l10n_ar_account
-#: field:afip.document_letter,afip_document_class_ids:0
+#: field:afip.document_letter,document_type_ids:0
 msgid "Afip Document Classes"
 msgstr "Clases de Documento Afip"
 
@@ -730,10 +730,10 @@ msgstr "Tipo de Sequencia de Documento"
 
 #. module: l10n_ar_account
 #: view:account.invoice:l10n_ar_account.view_account_invoice_filter
-#: field:account.invoice,afip_document_class_id:0
+#: field:account.invoice,document_type_id:0
 #: field:account.invoice,document_type:0
 #: field:account.invoice,journal_document_class_id:0
-#: field:account.journal.afip_document_class,afip_document_class_id:0
+#: field:account.journal.afip_document_class,document_type_id:0
 #: field:account.move,document_class_id:0
 #: field:account.move.line,document_class_id:0
 #: field:afip.document_class,document_type:0
@@ -1554,7 +1554,7 @@ msgid "Other"
 msgstr "Otro"
 
 #. module: l10n_ar_account
-#: field:res.partner,other_afip_document_class_ids:0
+#: field:res.partner,other_document_type_ids:0
 msgid "Other AFIP Documents"
 msgstr "Otros Documentos de AFIP"
 
@@ -1887,14 +1887,14 @@ msgstr "Responsabilidades"
 
 #. module: l10n_ar_account
 #: field:account.invoice,formated_vat:0
-#: field:account.invoice,responsability_id:0
-#: field:res.company,responsability_id:0
+#: field:account.invoice,afip_responsability_type_id:0
+#: field:res.company,afip_responsability_type_id:0
 #: view:res.partner:l10n_ar_account.view_res_partner_filter
 msgid "Responsability"
 msgstr "Responsabilidad"
 
 #. module: l10n_ar_account
-#: field:res.partner,responsability_id:0
+#: field:res.partner,afip_responsability_type_id:0
 msgid "Resposability"
 msgstr "Responsabilidad"
 
@@ -2020,7 +2020,7 @@ msgid "Servicios"
 msgstr "Servicios"
 
 #. module: l10n_ar_account
-#: help:res.partner,other_afip_document_class_ids:0
+#: help:res.partner,other_document_type_ids:0
 msgid ""
 "Set here if this partner can issue other documents further        than "
 "invoices, credit notes and debit notes"

@@ -55,7 +55,7 @@ class afip_document_class(models.Model):
     def get_amounts(self, vat_ledger):
         domain = [
             ('state', 'not in', ['draft', 'cancel']),
-            ('afip_document_class_id', '=', self.id),
+            ('document_type_id', '=', self.id),
             ('journal_id', 'in', vat_ledger.journal_ids.ids),
             ('period_id', '=', vat_ledger.period_id.id)
         ]
@@ -115,7 +115,7 @@ class account_tax_code(models.Model):
                 ('invoice_id.journal_id.type', 'in', journal_type))
         if responsability:
             taxes_domain.append(
-                ('invoice_id.responsability_id', '=', responsability.id))
+                ('invoice_id.afip_responsability_type_id', '=', responsability.id))
         # invoice_taxes = self.env['account.invoice.tax'].search(
         #     taxes_domain)
         invoice_taxes = self.env['account.invoice.tax'].search(
@@ -182,7 +182,7 @@ class afip_responsability(models.Model):
     def get_amounts(self, vat_ledger, tax_code=False):
         domain = [
             ('state', 'not in', ['draft', 'cancel']),
-            ('responsability_id', '=', self.id),
+            ('afip_responsability_type_id', '=', self.id),
             # TODO we should use vat_ledger.invoice_ids
             ('journal_id', 'in', vat_ledger.journal_ids.ids),
             ('period_id', '=', vat_ledger.period_id.id)

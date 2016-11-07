@@ -19,7 +19,7 @@ class AccountTaxWithholding(models.Model):
         self.ensure_one()
         if self.base_amount_type == 'untaxed_amount':
             invoice = voucher_line.move_line_id.invoice
-            doc_letter = invoice.afip_document_class_id.document_letter_id.name
+            doc_letter = invoice.document_type_id.document_letter_id.name
             # if we receive B invoices, then we take out 21 of vat
             # this use of case if when company is except on vat for eg.
             if doc_letter == 'B':

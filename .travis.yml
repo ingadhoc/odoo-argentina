@@ -86,6 +86,8 @@ install:
   # todos estos por culpa de los report aeroo
   - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/sale ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/purchase ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/stock_account ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-stock/stock_voucher ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-reporting-engine/report_extended_purchase ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-reporting-engine/report_extended_account ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-reporting-engine/report_extended_sale ~/build/ingadhoc/odoo-argentina; fi

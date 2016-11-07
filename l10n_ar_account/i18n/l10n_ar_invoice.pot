@@ -298,7 +298,7 @@ msgid "Afip Document Class"
 msgstr ""
 
 #. module: l10n_ar_account
-#: field:afip.document_letter,afip_document_class_ids:0
+#: field:afip.document_letter,document_type_ids:0
 msgid "Afip Document Classes"
 msgstr ""
 
@@ -984,9 +984,9 @@ msgstr ""
 
 #. module: l10n_ar_account
 #: view:account.invoice:l10n_ar_account.view_account_invoice_filter
-#: field:account.invoice,afip_document_class_id:0
+#: field:account.invoice,document_type_id:0
 #: field:account.invoice,journal_document_class_id:0
-#: field:account.journal.afip_document_class,afip_document_class_id:0
+#: field:account.journal.afip_document_class,document_type_id:0
 #: field:account.move,document_class_id:0
 #: field:account.move.line,document_class_id:0
 #: field:afip.document_class,document_type:0
@@ -1996,7 +1996,7 @@ msgid "Other"
 msgstr ""
 
 #. module: l10n_ar_account
-#: field:res.partner,other_afip_document_class_ids:0
+#: field:res.partner,other_document_type_ids:0
 msgid "Other AFIP Documents"
 msgstr ""
 
@@ -2446,12 +2446,12 @@ msgid "Responsabilities"
 msgstr ""
 
 #. module: l10n_ar_account
-#: field:account.invoice,responsability_id:0
+#: field:account.invoice,afip_responsability_type_id:0
 msgid "Responsability"
 msgstr ""
 
 #. module: l10n_ar_account
-#: field:res.partner,responsability_id:0
+#: field:res.partner,afip_responsability_type_id:0
 msgid "Responsability"
 msgstr ""
 
@@ -2658,7 +2658,7 @@ msgid "Servicios de luz, agua, etc. produccion"
 msgstr ""
 
 #. module: l10n_ar_account
-#: help:res.partner,other_afip_document_class_ids:0
+#: help:res.partner,other_document_type_ids:0
 msgid "Set here if this partner can issue other documents further        than invoices, credit notes and debit notes"
 msgstr ""
 

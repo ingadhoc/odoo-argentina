@@ -14,7 +14,7 @@ class account_voucher_line(models.Model):
         digits=dp.get_precision('Account'),
         compute='_get_signed_amount',
         string=_('Signed Amount'),
-        )
+    )
 
     @api.one
     def _get_signed_amount(self):

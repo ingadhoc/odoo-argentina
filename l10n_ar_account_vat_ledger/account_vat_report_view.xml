@@ -55,7 +55,7 @@
                                         <field name="date_invoice"/>
                                         <field name="document_number"/>
                                         <field name="commercial_partner_id"/>
-                                        <field name="responsability_id"/>
+                                        <field name="afip_responsability_type_id"/>
                                         <field name="formated_vat"/>
                                         <!-- remove  sum="Total" because credits are not negative -->
                                         <field name="amount_untaxed"/>
@@ -75,8 +75,8 @@
                                         <field name="amount_total" sum="Total"/>
                                     </tree>
                                 </field>
-                                <label for="responsability_ids"/>
-                                <field name="responsability_ids" context="{'vat_ledger_id': active_id}">
+                                <label for="afip_responsability_type_ids"/>
+                                <field name="afip_responsability_type_ids" context="{'vat_ledger_id': active_id}">
                                     <tree>
                                         <field name="name"/>
                                         <field name="amount_untaxed" sum="Total"/>

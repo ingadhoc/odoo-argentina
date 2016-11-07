@@ -3,7 +3,7 @@
 <data>
 <template id="report_invoice_document" inherit_id="account.report_invoice_document" name="Argentina Invoice">
         <xpath expr="//span[@t-field='o.number']" position="replace">
-            <span t-field="o.journal_document_class_id.afip_document_class_id.document_letter_id.name"/>
+            <span t-field="o.journal_document_class_id.document_type_id.document_letter_id.name"/>
         </xpath>
         <xpath expr="//span[@t-field='l.price_unit']" position="replace">
             <span t-field="l.printed_price_unit"/>  

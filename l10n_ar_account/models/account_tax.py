@@ -67,7 +67,7 @@ class AccountFiscalPositionTemplate(models.Model):
     afip_responsability_type_ids = fields.Many2many(
         'afip.responsability.type',
         'afip_reponsbility_account_fiscal_pos_temp_rel',
-        'position_id', 'responsability_id',
+        'position_id', 'afip_responsability_type_id',
         'AFIP Responsabilities',
         help='Add this fiscalposition if partner has one of this '
         'responsabilities'
@@ -102,7 +102,7 @@ class AccountFiscalPosition(models.Model):
     afip_responsability_type_ids = fields.Many2many(
         'afip.responsability.type',
         'afip_reponsbility_account_fiscal_pos_rel',
-        'position_id', 'responsability_id',
+        'position_id', 'afip_responsability_type_id',
         'AFIP Responsabilities',
         help='Add this fiscalposition if partner has one of this '
         'responsabilities'
@@ -114,7 +114,7 @@ class AccountFiscalPosition(models.Model):
             zipcode=False, afip_responsability_type_id=False):
         """
         We use similar code than _get_fpos_by_region but we use
-        "partner_responsability_id" insted of vat_required
+        "afip_responsability_type_id" insted of vat_required
         """
 
         base_domain = [

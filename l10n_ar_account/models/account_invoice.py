@@ -24,6 +24,9 @@ class AccountInvoice(models.Model):
     document_letter_id = fields.Many2one(
         related='document_type_id.document_letter_id',
     )
+    taxes_included = fields.Boolean(
+        related='document_letter_id.taxes_included',
+    )
     afip_responsability_type_id = fields.Many2one(
         'afip.responsability.type',
         string='AFIP Responsability Type',

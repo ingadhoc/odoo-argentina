@@ -114,7 +114,7 @@ class AccountFiscalPosition(models.Model):
             zipcode=False, afip_responsability_type_id=False):
         """
         We use similar code than _get_fpos_by_region but we use
-        "partner_afip_responsability_type_id" insted of vat_required
+        "afip_responsability_type_id" insted of vat_required
         """
 
         base_domain = [

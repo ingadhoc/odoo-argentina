@@ -31,7 +31,6 @@ hay un campo "vat discriminated", abajo de posición fiscal, donde se
     'data': [
         'security/invoice_sale_security.xml',
         'views/sale_view.xml',
-        'report/invoice_report_view.xml',
         'views/res_company_view.xml',
         # 'res_config_view.xml',
     ],

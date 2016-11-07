@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_company_inherit_form">
+            <field name="name">res.company.form.inherit</field>
+            <field name="inherit_id" ref="sale.view_company_inherit_form2"/>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                 <field name="sale_note" position="before">
+                    <group colspan="2">
+                        <field name="sale_allow_vat_no_discrimination"/>
+                    </group>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

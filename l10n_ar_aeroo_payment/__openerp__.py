@@ -32,11 +32,11 @@ Argentinian Like Voucher Aeroo Report
 =====================================
     """,
     'depends': [
-        'report_extended_voucher',
-        'account_check',
-        'account_voucher_withholding',
+        'report_extended_account',
+        'l10n_ar_account',
         'l10n_ar_aeroo_base',
-        'l10n_ar_account_voucher',
+        # 'account_check',
+        # 'account_voucher_withholding',
     ],
     'external_dependencies': {
     },

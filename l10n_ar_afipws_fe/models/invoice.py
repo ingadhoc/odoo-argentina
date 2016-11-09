@@ -502,21 +502,23 @@ print "Observaciones:", wscdc.Obs
                     if vat.tax_code_id.afip_code in [1, 2]:
                         continue
                     _logger.info('Adding VAT %s' % vat.tax_code_id.name)
+                    # use instaed of "base_x" so it is not converted to
+                    # company currency
                     ws.AgregarIva(
                         vat.tax_code_id.afip_code,
-                        "%.2f" % abs(vat.base_amount),
-                        "%.2f" % abs(vat.tax_amount),
+                        "%.2f" % abs(vat.base),
+                        "%.2f" % abs(vat.amount),
                     )
                 for tax in inv.not_vat_tax_ids:
                     _logger.info('Adding TAX %s' % tax.tax_code_id.name)
                     ws.AgregarTributo(
                         tax.tax_code_id.application_code,
                         tax.tax_code_id.name,
-                        "%.2f" % abs(tax.base_amount),
+                        "%.2f" % abs(tax.base),
                         # como no tenemos la alicuota pasamos cero, en v9
                         # podremos pasar la alicuota
                         0,
-                        "%.2f" % abs(tax.tax_amount),
+                        "%.2f" % abs(tax.amount),
                     )
 
             CbteAsoc = inv.get_related_invoices_data()

@@ -13,7 +13,7 @@ import traceback
 _logger = logging.getLogger(__name__)
 
 try:
-    from pyafipws.soap import SoapFault
+    from pysimplesoap.client import SoapFault
 except ImportError:
     _logger.debug('Can not `from pyafipws.soap import SoapFault`.')
 

@@ -4,6 +4,7 @@
 # directory
 ##############################################################################
 import conversor
+import datetime
 from openerp.report.report_sxw import rml_parse
 import sys
 reload(sys)
@@ -80,6 +81,7 @@ class Parser(rml_parse):
             'number_to_string': self.number_to_string,
             'partner_address': self.partner_address,
             'net_price': self.net_price,
+            'datetime': datetime,
             'context': context,
         })
 

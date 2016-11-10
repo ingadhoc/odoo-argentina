@@ -91,21 +91,29 @@ class AccountJournal(models.Model):
     def get_journal_letter(self, counterpart_partner=False):
         """Function to be inherited by others"""
         self.ensure_one()
-        responsability = self.company_id.afip_responsability_type_id
-        if self.type == 'sale':
+        return self._get_journal_letter(
+            journal_type=self.type,
+            company=self.company_id,
+            counterpart_partner=counterpart_partner)
+
+    @api.model
+    def _get_journal_letter(
+            self, journal_type, company, counterpart_partner=False):
+        responsability = company.afip_responsability_type_id
+        if journal_type == 'sale':
             resp_field = 'issuer_ids'
-        elif self.type == 'purchase':
+        elif journal_type == 'purchase':
             resp_field = 'receptor_ids'
         else:
             raise UserError('Letters not implemented for journal type %s' % (
-                self.type))
+                journal_type))
         letters = self.env['account.document.letter'].search([
             '|', (resp_field, 'in', responsability.id),
             (resp_field, '=', False)])
 
         if counterpart_partner:
             counterpart_resp = counterpart_partner.afip_responsability_type_id
-            if self.type == 'sale':
+            if journal_type == 'sale':
                 letters = letters.filtered(
                     lambda x: not x.receptor_ids or
                     counterpart_resp in x.receptor_ids)

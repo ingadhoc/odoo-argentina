@@ -75,6 +75,7 @@ class AccountJournal(models.Model):
     def get_name_and_code_suffix(self):
         self.ensure_one()
         point_of_sale_type = self.point_of_sale_type
+        name = ""
         if point_of_sale_type == 'manual':
             name = 'Manual'
         elif point_of_sale_type == 'preprinted':

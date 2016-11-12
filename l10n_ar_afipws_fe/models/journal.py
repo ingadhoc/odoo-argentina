@@ -30,6 +30,13 @@ class AccountJournal(models.Model):
         'AFIP WS',
     )
 
+    @api.multi
+    def get_name_and_code_suffix(self):
+        name = super(AccountJournal, self).get_name_and_code_suffix()
+        if self.afip_ws == 'wsfex':
+            name += ' Exportación'
+        return name
+
     @api.model
     def create(self, vals):
         journal = super(AccountJournal, self).create(vals)

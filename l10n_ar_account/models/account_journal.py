@@ -69,11 +69,13 @@ class AccountJournal(models.Model):
                 self.use_documents and
                 not self.sequence_id
         ):
-            (self.name, self.code) = self.get_name_and_code(
-                self.point_of_sale_type, self.point_of_sale_number)
+            (self.name, self.code) = self.get_name_and_code()
 
-    @api.model
-    def get_name_and_code(self, point_of_sale_type, point_of_sale_number):
+    @api.multi
+    def get_name_and_code_suffix(self):
+        self.ensure_one()
+        point_of_sale_type = self.point_of_sale_type
+        name = ""
         if point_of_sale_type == 'manual':
             name = 'Manual'
         elif point_of_sale_type == 'preprinted':
@@ -82,6 +84,13 @@ class AccountJournal(models.Model):
             name = 'Online'
         elif point_of_sale_type == 'electronic':
             name = 'Electronica'
+        return name
+
+    @api.multi
+    def get_name_and_code(self):
+        self.ensure_one()
+        point_of_sale_number = self.point_of_sale_number
+        name = self.get_name_and_code_suffix()
         name = '%s %s %04d' % (
             'Ventas', name, point_of_sale_number)
         code = 'V%04d' % (point_of_sale_number)

@@ -14,6 +14,7 @@
     'external_dependencies': {
     },
     'data': [
+        'data/res_currency_data.xml',
     ],
     'demo': [
         'demo/res_company.xml',

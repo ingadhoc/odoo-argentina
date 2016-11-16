@@ -126,7 +126,7 @@ class AfipwsConnection(models.Model):
         wsdl = self.afip_ws_url + '?WSDL'
         # connect to the webservice and call to the test method
         ws.Conectar("", wsdl or "", "")
-        cuit = self.company_id.cuit_required
+        cuit = self.company_id.cuit_required()
         ws.Cuit = cuit
         ws.Token = self.token.encode('ascii')
         ws.Sign = self.sign.encode('ascii')

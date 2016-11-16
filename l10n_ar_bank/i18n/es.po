@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * l10n_ar_chart
+# * l10n_ar_bank
 # 
 # Translators:
 # Javier Diez <jd@adhoc.com.ar>, 2016
@@ -18,7 +18,23 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: l10n_ar_chart
-#: model:ir.actions.client,name:l10n_ar_chart.action_client_l10n_ar_menu
-msgid "Open Account Dashboard Menu"
-msgstr "Abrir menú panel de control de cuenta"
+#. module: l10n_ar_bank
+#: model:ir.model,name:l10n_ar_bank.model_res_partner_bank
+msgid "Bank Accounts"
+msgstr "Cuentas Bancarias"
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_partner_bank_cbu
+msgid "CBU"
+msgstr "CBU"
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,help:l10n_ar_bank.field_res_partner_bank_cbu
+msgid "Código Bancario Único Argentino"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: code:addons/l10n_ar_bank/l10n_ar_bank.py:21
+#, python-format
+msgid "El CBU \"%s\" no es válido"
+msgstr ""

@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Javier Diez <jd@adhoc.com.ar>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: odoo-argentina (8.0)\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-24 13:24+0000\n"
-"PO-Revision-Date: 2016-05-24 21:08+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
+"POT-Creation-Date: 2016-11-13 17:16+0000\n"
+"PO-Revision-Date: 2016-11-13 17:16+0000\n"
+"Last-Translator: Javier Diez <jd@adhoc.com.ar>, 2016\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -19,12 +20,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_ar_currency_update
-#: view:currency.rate.update.service:l10n_ar_currency_update.currency_rate_update_form
+#: model:ir.ui.view,arch_db:l10n_ar_currency_update.currency_rate_update_form
 msgid "Base Rate"
 msgstr "taza Base"
 
 #. module: l10n_ar_currency_update
-#: code:addons/l10n_ar_currency_update/models/currency_rate_update.py:76
+#: code:addons/l10n_ar_currency_update/models/currency_rate_update.py:55
 #, python-format
 msgid "Base currency rate should be 1.00!"
 msgstr "La taza base debe ser 1.00!"
@@ -35,28 +36,28 @@ msgid "Currency Rate Update"
 msgstr "Actualización de taza de cambio"
 
 #. module: l10n_ar_currency_update
-#: code:addons/l10n_ar_currency_update/models/currency_rate_update.py:79
+#: code:addons/l10n_ar_currency_update/models/currency_rate_update.py:58
 #, python-format
 msgid "For AFIP WS base currency must be ARS!"
 msgstr "Para el WS AFIP la moneda base debe ser ARS!"
 
 #. module: l10n_ar_currency_update
-#: view:currency.rate.update.service:l10n_ar_currency_update.currency_rate_update_form
+#: model:ir.ui.view,arch_db:l10n_ar_currency_update.currency_rate_update_form
 msgid "New Rate ="
 msgstr "Nueva Taza = "
 
 #. module: l10n_ar_currency_update
-#: field:currency.rate.update.service,rate_perc:0
+#: model:ir.model.fields,field_description:l10n_ar_currency_update.field_currency_rate_update_service_rate_perc
 msgid "Rate Perc."
 msgstr "Porcentaje"
 
 #. module: l10n_ar_currency_update
-#: field:currency.rate.update.service,rate_surcharge:0
+#: model:ir.model.fields,field_description:l10n_ar_currency_update.field_currency_rate_update_service_rate_surcharge
 msgid "Rate Surcharge"
 msgstr "Fijo"
 
 #. module: l10n_ar_currency_update
-#: code:addons/l10n_ar_currency_update/models/currency_rate_update.py:74
+#: code:addons/l10n_ar_currency_update/models/currency_rate_update.py:52
 #, python-format
-msgid "There is no base currency set!"
-msgstr "No hay moneda base configurada!"
+msgid "There is no main currency defined!"
+msgstr "¡No hay una moneda principal definida!"

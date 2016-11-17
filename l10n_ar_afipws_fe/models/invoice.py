@@ -127,9 +127,9 @@ class AccountInvoice(models.Model):
             cae_due = ''.join(
                 [c for c in str(self.afip_auth_code_due or '') if c.isdigit()])
             barcode = ''.join(
-                [str(self.company_id.partner_id.vat[2:]),
-                    "%02d" % int(self.document_type_id.afip_code),
-                    "%04d" % int(self.journal_id.point_of_sale_id.number),
+                [str(self.company_id.cuit),
+                    "%02d" % int(self.document_type_id.code),
+                    "%04d" % int(self.journal_id.point_of_sale_number),
                     str(self.afip_auth_code), cae_due])
             barcode = barcode + self.verification_digit_modulo10(barcode)
         self.afip_barcode = barcode

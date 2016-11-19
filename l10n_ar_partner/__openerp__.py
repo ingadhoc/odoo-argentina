@@ -7,6 +7,8 @@
         # this is for demo data, for fiscal position data on account
         # and also beacuse it is essential for argentinian use
         'l10n_ar_states',
+        # for the sales config
+        'base_setup',
     ],
     'installable': True,
     'license': 'AGPL-3',
@@ -19,6 +21,8 @@
         'views/res_company_view.xml',
         'views/res_partner_id_category_view.xml',
         'views/res_partner_id_number_view.xml',
+        'sale_config_view.xml',
+        'security/security.xml',
     ],
     'demo': [
         'demo/partner_demo.xml',

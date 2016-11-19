@@ -2,6 +2,24 @@
 <openerp>
     <data>
 
+        <record id="view_res_partner_filter" model="ir.ui.view">
+            <field name="name">partner_documents.view_partner_filter</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter" />
+            <!-- <field name="inherit_id" ref="base.view_partner_form" /> -->
+            <field name="model">res.partner</field>
+            <field type="xml" name="arch">
+                <!-- we add it here because name_search is only used on m2o fields -->
+
+                <!-- we can use this way or the second one -->
+                <!-- <field name="name" position="attributes">
+                    <attribute name="filter_domain">['|','|','|',('display_name','ilike',self),('ref','=',self),('email','ilike',self),('id_numbers','ilike',self)]</attribute>
+                </field> -->
+                <field name="name" position="after">
+                    <field name="id_numbers"/>
+                </field>
+            </field>
+        </record>
+
         <record id="view_partner_form" model="ir.ui.view">
             <field name="name">partner_documents.view_partner_form</field>
             <field name="inherit_id" ref="partner_identification.view_partner_form" />

@@ -83,3 +83,19 @@ class ResPartner(models.Model):
                         'category_id': category_id.id,
                         'name': name
                     })
+
+    @api.model
+    def name_search(self, name, args=None, operator='ilike', limit=100):
+        """
+        we search by id, if we found we return this results, else we do
+        default search
+        """
+        if not args:
+            args = []
+        if name:
+            recs = self.search(
+                [('id_numbers', operator, name)] + args, limit=limit)
+            if recs:
+                return recs.name_get()
+        return super(ResPartner, self).name_search(
+            name, args=args, operator=operator, limit=limit)

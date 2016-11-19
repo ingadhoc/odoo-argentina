@@ -8,6 +8,7 @@ Títulos de Personería y Tipos de documentos Arentinos
 Descripción funcional:
 #. Agregado de tipos de documentos argentinos para identificar partners
 #. Agregado de Títulos de personería comunmente utilizados en argentina (SA, SRL, Doctor, etc)
+#. Por defecto se puede utilizar un solo documento por partner pero si quiere utilizar más puede activar esta opción en "Ventas / Configuración / Configuración / Partners / Permitir Múltiples Números de Identificación en partners"
 
 Descripción técnica:
 #. Hacemos algunas mejoras al módulo de partner identifications:

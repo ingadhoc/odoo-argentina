@@ -76,8 +76,8 @@ dc_aa_dj_pos,740,101,AJUSTE ANUAL PROVENIENTE DE LA  D J  DEL IVA  POSITIVO,,,,,
 dc_aa_dj_neg,750,102,AJUSTE ANUAL PROVENIENTE DE LA  D J  DEL IVA  NEGATIVO,,,,,argentina,
 dc_na,760,103,NOTA DE ASIGNACION,,,,,argentina,
 dc_nca,770,104,NOTA DE CREDITO DE ASIGNACION,,,,,argentina,
-dc_recibo_x,780,,RECIBOS X,dl_x,RECIBO,inbound_payment_voucher,RE-X ,argentina,validator_numero_factura
+dc_recibo_x,780,,RECIBOS X,dl_x,RECIBO,customer_payment,RE-X ,argentina,validator_numero_factura
 dc_remito_x,790,,REMITOS X,dl_x,REMITO,,RM-X ,argentina,validator_numero_factura
-dc_orden_pago_x,800,,ORDEN DE PAGO X,dl_x,ORDEN DE PAGO,outbound_payment_voucher,OP-X ,argentina,validator_numero_factura
+dc_orden_pago_x,800,,ORDEN DE PAGO X,dl_x,ORDEN DE PAGO,supplier_payment,OP-X ,argentina,validator_numero_factura
 fa_exterior,195,,FACTURAS Y COMPROBANTES DEL EXTERIOR,dl_i,,invoice,FA-I ,argentina,
 nc_exterior,196,,NOTAS DE CREDITO Y REEMBOLSOS DEL EXTERIOR,dl_i,,credit_note,NC-I ,argentina,

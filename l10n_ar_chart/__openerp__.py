@@ -26,7 +26,8 @@
         '../l10n_ar_account/demo/account_customer_refund_demo.yml',
         '../l10n_ar_account/demo/account_supplier_invoice_demo.yml',
         '../l10n_ar_account/demo/account_supplier_refund_demo.yml',
-        '../l10n_ar_account/demo/account_payment_demo.yml',
+        # todo ver si usamos esto o un demo con el de groups
+        # '../l10n_ar_account/demo/account_payment_demo.yml',
         '../l10n_ar_account/demo/account_other_docs_demo.yml',
         # we add this file only fot tests run by odoo
         '../l10n_ar_account/demo/account_journal_demo.xml',

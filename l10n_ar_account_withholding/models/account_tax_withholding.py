@@ -35,7 +35,7 @@ class AccountTaxWithholding(models.Model):
         base_amount = vals['withholdable_base_amount']
         if self.type == 'arba_ws':
             if voucher.partner_id.gross_income_type == 'no_liquida':
-                vals['computed_withholding_amount'] = 0.0
+                vals['period_withholding_amount'] = 0.0
             else:
                 date = (
                     voucher.date and fields.Date.from_string(voucher.date) or
@@ -47,7 +47,7 @@ class AccountTaxWithholding(models.Model):
                 amount = base_amount * (alicuota)
                 vals['comment'] = "%s x %s" % (
                     base_amount, alicuota)
-                vals['computed_withholding_amount'] = amount
+                vals['period_withholding_amount'] = amount
         elif self.type == 'tabla_ganancias':
             regimen = voucher.regimen_ganancias_id
             imp_ganancias_padron = voucher.partner_id.imp_ganancias_padron
@@ -71,6 +71,7 @@ class AccountTaxWithholding(models.Model):
                     base_amount = 0.0
                 else:
                     base_amount -= non_taxable_amount
+                vals['withholdable_base_amount'] = base_amount
                 if regimen.porcentaje_inscripto == -1:
                     escala = self.env['afip.tabla_ganancias.escala'].search([
                         ('importe_desde', '<', base_amount),
@@ -102,5 +103,5 @@ class AccountTaxWithholding(models.Model):
                 # no corresponde, no impuesto
                 amount = 0.0
             vals['description'] = regimen.codigo_de_regimen
-            vals['computed_withholding_amount'] = amount
+            vals['period_withholding_amount'] = amount
         return vals

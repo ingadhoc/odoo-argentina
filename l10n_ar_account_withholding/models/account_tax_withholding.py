@@ -71,7 +71,7 @@ class AccountTaxWithholding(models.Model):
                     base_amount = 0.0
                 else:
                     base_amount -= non_taxable_amount
-                vals['base_amount'] = base_amount
+                vals['withholdable_base_amount'] = base_amount
                 if regimen.porcentaje_inscripto == -1:
                     escala = self.env['afip.tabla_ganancias.escala'].search([
                         ('importe_desde', '<', base_amount),

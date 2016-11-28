@@ -7,6 +7,8 @@
     'depends': [
         # for afip_code on fiscal position and other tax modifications
         'l10n_ar_account',
+        'account_withholding',
+        'account_check',
     ],
     'test': [],
     'data': [
@@ -14,6 +16,7 @@
         'data/account_chart_template.xml',
         'data/account_chart_respinsc.xml',
         'data/account_tax_template.xml',
+        'data/account_tax_withholding_template.xml',
         'data/account_fiscal_template.xml',
         'data/account_chart_template.yml',
     ],

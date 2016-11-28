@@ -104,7 +104,23 @@
             <field name="application">national_taxes</field>
         </record>
 
-    <!-- Ganancias -->
+    <!-- Retención IVA -->
+
+        <record model="account.tax.group" id="tax_group_retencion_iva_sufrida">
+            <field name="name">Retención IVA sufrida</field>
+            <field name="tax">vat</field>
+            <field name="type">withholding</field>
+            <field name="application">national_taxes</field>
+        </record>
+
+        <record model="account.tax.group" id="tax_group_retencion_iva_aplicada">
+            <field name="name">Retención IVA aplicada</field>
+            <field name="tax">vat</field>
+            <field name="type">withholding</field>
+            <field name="application">national_taxes</field>
+        </record>
+
+    <!-- Percepción Ganancias -->
         <record model="account.tax.group" id="tax_group_percepcion_ganancias_sufrida">
             <field name="name">Percepción Ganancias sufrida</field>
             <field name="tax">profits</field>
@@ -119,7 +135,22 @@
             <field name="application">national_taxes</field>
         </record>
 
-    <!-- IIBB -->
+    <!-- Retención Ganancias -->
+        <record model="account.tax.group" id="tax_group_retencion_ganancias_sufrida">
+            <field name="name">Retención Ganancias sufrida</field>
+            <field name="tax">profits</field>
+            <field name="type">withholding</field>
+            <field name="application">national_taxes</field>
+        </record>
+
+        <record model="account.tax.group" id="tax_group_retencion_ganancias_aplicada">
+            <field name="name">Retención Ganancias aplicada</field>
+            <field name="tax">profits</field>
+            <field name="type">withholding</field>
+            <field name="application">national_taxes</field>
+        </record>
+
+    <!-- Percepción IIBB -->
     <!-- Vamos a tratar de que la info de que provincia esté en el impuesto u otro lugar -->
         <record model="account.tax.group" id="tax_group_percepcion_iibb_sufrida">
             <field name="name">Percepción IIBB sufrida</field>
@@ -132,6 +163,22 @@
             <field name="name">Percepción IIBB aplicada</field>
             <field name="tax">gross_income</field>
             <field name="type">perception</field>
+            <field name="application">national_taxes</field>
+        </record>
+
+    <!-- Retención IIBB -->
+
+        <record model="account.tax.group" id="tax_group_retencion_iibb_sufrida">
+            <field name="name">Retención IIBB sufrida</field>
+            <field name="tax">gross_income</field>
+            <field name="type">withholding</field>
+            <field name="application">national_taxes</field>
+        </record>
+
+        <record model="account.tax.group" id="tax_group_retencion_iibb_aplicada">
+            <field name="name">Retención IIBB aplicada</field>
+            <field name="tax">gross_income</field>
+            <field name="type">withholding</field>
             <field name="application">national_taxes</field>
         </record>
 

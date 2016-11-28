@@ -29,7 +29,6 @@ class AccountJournal(models.Model):
         _point_of_sale_types_selection,
         'Point Of Sale Type',
         default='manual',
-        required=True,
     )
     point_of_sale_number = fields.Integer(
         'Point Of Sale Number',

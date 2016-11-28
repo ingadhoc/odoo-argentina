@@ -83,9 +83,9 @@ install:
   - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/account ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/account_cancel ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-financial-tools/account_document ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-payment/account_check ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-payment/account_withholding ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/account-financial-tools/currency_rate_update ~/build/ingadhoc/odoo-argentina; fi
-  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/account-payment/account_check ~/build/ingadhoc/odoo-argentina; fi
-  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/account-payment/account_withholding ~/build/ingadhoc/odoo-argentina; fi
 
 script:
   - travis_run_tests

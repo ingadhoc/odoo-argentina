@@ -8,6 +8,7 @@
         # for afip_code on fiscal position and other tax modifications
         'l10n_ar_account',
         'account_withholding',
+        'account_check',
     ],
     'test': [],
     'data': [

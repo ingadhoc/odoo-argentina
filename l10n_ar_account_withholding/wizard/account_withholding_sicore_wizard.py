@@ -148,7 +148,7 @@ class account_debt_report_wizard(models.TransientModel):
         # save file
         self.write({
             'txt_filename': 'SICORE_%s_%s_%s.txt' % (
-                re.sub('[^\d\w]', '', self.company_id.name),
+                re.sub(r'[^\d\w]', '', self.company_id.name),
                 self.from_date, self.to_date),
             'txt_binary': base64.encodestring(content)
         })

@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, _
 import openerp.tools as tools
-from pyafipws.iibb import IIBB
+try:
+    from pyafipws.iibb import IIBB
+except ImportError:
+    IIBB = None
 # from pyafipws.padron import PadronAFIP
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -71,7 +74,7 @@ class ResCompany(models.Model):
         cuit = self.partner_id.cuit_required()
 
         if not self.arba_cit:
-            raise Warning(_(
+            raise UserError(_(
                 'You must configure ARBA CIT on company %s') % (
                     self.name))
 
@@ -112,7 +115,7 @@ class ResCompany(models.Model):
             cuit)
 
         if ws.Excepcion:
-            raise Warning("%s\nExcepcion: %s" % (
+            raise UserError("%s\nExcepcion: %s" % (
                 ws.Traceback, ws.Excepcion))
 
         # ' Hubo error general de ARBA?
@@ -122,12 +125,12 @@ class ResCompany(models.Model):
                 # on same period
                 _logger.info('CUIT %s not present on padron ARBA' % cuit)
             else:
-                raise Warning("%s\nError %s: %s" % (
+                raise UserError("%s\nError %s: %s" % (
                     ws.MensajeError, ws.TipoError, ws.CodigoError))
 
         # no ponemos esto, si no viene alicuota es porque es cero entonces
         # if not ws.AlicuotaRetencion or not ws.AlicuotaPercepcion:
-        #     raise Warning('No pudimos obtener la AlicuotaRetencion')
+        #     raise UserError('No pudimos obtener la AlicuotaRetencion')
 
         # ' Datos generales de la respuesta:'
         data = {

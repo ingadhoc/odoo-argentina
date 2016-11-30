@@ -8,8 +8,7 @@ import calendar
 import base64
 import re
 from dateutil.relativedelta import relativedelta
-from openerp import api, fields, models, _
-from openerp.exceptions import Warning
+from openerp import api, fields, models
 
 
 class account_debt_report_wizard(models.TransientModel):
@@ -77,7 +76,12 @@ class account_debt_report_wizard(models.TransientModel):
             }
         }
 
-    @api.depends('company_id', 'tax_withholding_type', 'tax_withholding_id', 'to_date', 'from_date')
+    @api.depends(
+        'company_id',
+        'tax_withholding_type',
+        'tax_withholding_id',
+        'to_date',
+        'from_date')
     def _compute_withholding_ids(self):
         self.ensure_one()
         # search withholdings
@@ -102,8 +106,8 @@ class account_debt_report_wizard(models.TransientModel):
         content = ''
         for wh in self.withholding_ids:
             # Codigo del Comprobante         [ 2]
-            content += (wh.type == 'receipt' and '02') or (wh.type ==
-                                                           'payment' and '06') or '00'
+            content += (wh.type == 'receipt' and '02') or (
+                wh.type == 'payment' and '06') or '00'
             # Fecha Emision Comprobante      [10] (dd/mm/yyyy)
             content += fields.Date.from_string(
                 wh.voucher_id.date).strftime('%d/%m/%Y')
@@ -143,7 +147,9 @@ class account_debt_report_wizard(models.TransientModel):
             content += '\r\n'
         # save file
         self.write({
-            'txt_filename': 'SICORE_%s_%s_%s.txt' % (re.sub('[^\d\w]', '', self.company_id.name), self.from_date, self.to_date),
+            'txt_filename': 'SICORE_%s_%s_%s.txt' % (
+                re.sub('[^\d\w]', '', self.company_id.name),
+                self.from_date, self.to_date),
             'txt_binary': base64.encodestring(content)
         })
         return {
@@ -152,7 +158,8 @@ class account_debt_report_wizard(models.TransientModel):
             'res_model': 'l10n_ar_account_withholding.sicore_wizard',
             'view_mode': 'form',
             'view_type': 'form',
-            'view_id': self.env.ref('l10n_ar_account_withholding.sicore_wizard_form_download').id,
+            'view_id': self.env.ref(
+                'l10n_ar_account_withholding.sicore_wizard_form_download').id,
             'context': self.env.context,
             'target': 'new',
         }

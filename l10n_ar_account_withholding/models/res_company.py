@@ -68,12 +68,8 @@ class ResCompany(models.Model):
         Method to be called
         """
         self.ensure_one()
-        cuit = self.partner_id.document_number
+        cuit = self.partner_id.cuit_required()
 
-        if not cuit:
-            raise Warning(_(
-                'You must configure CUIT on company %s related partner') % (
-                    self.name))
         if not self.arba_cit:
             raise Warning(_(
                 'You must configure ARBA CIT on company %s') % (
@@ -104,10 +100,7 @@ class ResCompany(models.Model):
         # to_date = date + relativedelta(
         #     day=1, days=-1, months=+1).strftime('%Y%m%d')
 
-        cuit = partner.document_number
-        if not cuit:
-            raise Warning(('La empresa %s no tiene configurado el CUIT') % (
-                partner.name))
+        cuit = partner.cuit_required()
 
         _logger.info(
             'Getting ARBA data for cuit %s from date %s to date %s' % (

@@ -6,5 +6,5 @@
 from . import res_company
 from . import account_tax
 from . import afip
-from . import account_voucher
+from . import account_payment_group
 from . import res_partner

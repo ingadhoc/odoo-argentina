@@ -6,9 +6,9 @@
 from openerp import models, api, fields
 
 
-class AccountVoucher(models.Model):
+class AccountPaymentGroup(models.Model):
 
-    _inherit = "account.voucher"
+    _inherit = "account.payment.group"
 
     # @api.model
     # def _get_regimen_ganancias(self):
@@ -39,17 +39,14 @@ class AccountVoucher(models.Model):
         related='company_id.regimenes_ganancias_ids',
         readonly=True,
     )
-    # For new API onchange
-    partner_id_copy = fields.Many2one(
-        related='partner_id'
-    )
 
-    @api.onchange('retencion_ganancias', 'partner_id_copy')
+    @api.onchange('retencion_ganancias', 'commercial_partner_id')
     def change_retencion_ganancias(self):
         def_regimen = False
         if self.retencion_ganancias == 'nro_regimen':
             cia_regs = self.company_regimenes_ganancias_ids
-            partner_regimen = self.partner_id.default_regimen_ganancias_id
+            partner_regimen = (
+                self.commercial_partner_id.default_regimen_ganancias_id)
             if partner_regimen and partner_regimen in cia_regs:
                 def_regimen = partner_regimen
             elif cia_regs:
@@ -58,7 +55,9 @@ class AccountVoucher(models.Model):
 
     @api.onchange('company_regimenes_ganancias_ids')
     def change_company_regimenes_ganancias(self):
-        if self.company_regimenes_ganancias_ids and self.type == 'payment':
+        if (
+                self.company_regimenes_ganancias_ids and
+                self.partner_type == 'supplier'):
             self.retencion_ganancias = 'nro_regimen'
 
     @api.model
@@ -67,29 +66,11 @@ class AccountVoucher(models.Model):
         para casos donde se paga desde algun otro lugar (por ej. liquidador de
         impuestos), seteamos no aplica si no hay nada seteado
         """
-        voucher = super(AccountVoucher, self).create(vals)
+        payment_group = super(AccountPaymentGroup, self).create(vals)
         if (
-                voucher.company_regimenes_ganancias_ids and
-                voucher.type == 'payment' and
-                not voucher.retencion_ganancias and
-                not voucher.regimen_ganancias_id):
-            voucher.retencion_ganancias = 'no_aplica'
-        return voucher
-
-    @api.multi
-    def compute_withholdings(self):
-        for voucher in self:
-            self.env['account.tax.withholding'].search([
-                ('type_tax_use', 'in', [self.type, 'all']),
-                ('company_id', '=', self.company_id.id),
-            ]).create_voucher_withholdings(voucher)
-
-    @api.multi
-    def action_confirm(self):
-        res = super(AccountVoucher, self).action_confirm()
-        self.search([
-            ('type', '=', 'payment'),
-            ('journal_id.automatic_withholdings', '=', True),
-            ('id', 'in', self.ids),
-        ]).compute_withholdings()
-        return res
+                payment_group.company_regimenes_ganancias_ids and
+                payment_group.partner_type == 'supplier' and
+                not payment_group.retencion_ganancias and
+                not payment_group.regimen_ganancias_id):
+            payment_group.retencion_ganancias = 'no_aplica'
+        return payment_group

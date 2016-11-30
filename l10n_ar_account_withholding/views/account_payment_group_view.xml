@@ -3,16 +3,15 @@
     <data> 
 
         <!-- Supplier Receipt Form  -->
-        <record id="view_vendor_payment_form" model="ir.ui.view">
-            <field name="name">account.voucher.form.receipts.pay.inherit</field>
-            <field name="model">account.voucher</field>
-            <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+        <record id="view_account_payment_group_form" model="ir.ui.view">
+            <field name="name">account.payment.group.form</field>
+            <field name="model">account.payment.group</field>
+            <field name="inherit_id" ref="account_payment_group.view_account_payment_group_form"/>
             <field name="arch" type="xml">
                 <form>
                     <field name="company_regimenes_ganancias_ids" invisible="1"/>
-                    <field name="partner_id_copy" invisible="1"/>
                 </form>
-                <field name="company_id" position="after">
+                <field name="communication" position="after">
                     <label for="retencion_ganancias" attrs="{'invisible': [('company_regimenes_ganancias_ids', '=', [(6, False, [])])]}"/>
                     <div attrs="{'invisible': [('company_regimenes_ganancias_ids', '=', [(6, False, [])])]}">
                         <field name="retencion_ganancias" class="oe_inline" attrs="{'required': [('company_regimenes_ganancias_ids', '!=', [(6, False, [])])]}"/>

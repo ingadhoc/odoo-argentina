@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 import datetime
 
 
-class AccountTaxWithholding(models.Model):
-    _inherit = "account.tax.withholding"
+class AccountTax(models.Model):
+    _inherit = "account.tax"
 
-    type = fields.Selection(
+    withholding_type = fields.Selection(
         selection_add=([
             ('arba_ws', 'WS Arba'),
             ('tabla_ganancias', 'Tabla Ganancias'),
@@ -15,49 +15,39 @@ class AccountTaxWithholding(models.Model):
     )
 
     @api.multi
-    def get_withholdable_factor(self, voucher_line):
-        self.ensure_one()
-        if self.base_amount_type == 'untaxed_amount':
-            invoice = voucher_line.move_line_id.invoice
-            doc_letter = invoice.document_type_id.document_letter_id.name
-            # if we receive B invoices, then we take out 21 of vat
-            # this use of case if when company is except on vat for eg.
-            if doc_letter == 'B':
-                factor = 1.0 / 1.21
-                return factor
-        return super(AccountTaxWithholding, self).get_withholdable_factor(
-            voucher_line)
-
-    @api.multi
-    def get_withholding_vals(self, voucher):
-        vals = super(AccountTaxWithholding, self).get_withholding_vals(
-            voucher)
+    def get_withholding_vals(self, payment_group):
+        vals = super(AccountTax, self).get_withholding_vals(
+            payment_group)
         base_amount = vals['withholdable_base_amount']
-        if self.type == 'arba_ws':
-            if voucher.partner_id.gross_income_type == 'no_liquida':
+        commercial_partner = payment_group.commercial_partner_id
+        if self.withholding_type == 'arba_ws':
+            if commercial_partner.gross_income_type == 'no_liquida':
                 vals['period_withholding_amount'] = 0.0
             else:
-                date = (
-                    voucher.date and fields.Date.from_string(voucher.date) or
+                payment_date = (
+                    payment_group.payment_date and fields.Date.from_string(
+                        payment_group.payment_date) or
                     datetime.date.today())
-                alicuota = voucher.partner_id.get_arba_alicuota_retencion(
-                    voucher.company_id,
-                    date,
+                alicuota = commercial_partner.get_arba_alicuota_retencion(
+                    payment_group.company_id,
+                    payment_date,
                 )
                 amount = base_amount * (alicuota)
                 vals['comment'] = "%s x %s" % (
                     base_amount, alicuota)
                 vals['period_withholding_amount'] = amount
-        elif self.type == 'tabla_ganancias':
-            regimen = voucher.regimen_ganancias_id
-            imp_ganancias_padron = voucher.partner_id.imp_ganancias_padron
-            if voucher.retencion_ganancias != 'nro_regimen' or not regimen:
+        elif self.withholding_type == 'tabla_ganancias':
+            regimen = payment_group.regimen_ganancias_id
+            imp_ganancias_padron = commercial_partner.imp_ganancias_padron
+            if (
+                    payment_group.retencion_ganancias != 'nro_regimen' or
+                    not regimen):
                 # if amount zero then we dont create withholding
                 amount = 0.0
             elif not imp_ganancias_padron:
-                raise Warning(
+                raise UserError(
                     'El partner %s no tiene configurada inscripcion en '
-                    'impuesto a las ganancias' % voucher.partner_id.name)
+                    'impuesto a las ganancias' % commercial_partner.name)
             elif imp_ganancias_padron == 'EX':
                 # if amount zero then we dont create withholding
                 amount = 0.0
@@ -78,7 +68,7 @@ class AccountTaxWithholding(models.Model):
                         ('importe_hasta', '>=', base_amount),
                     ], limit=1)
                     if not escala:
-                        raise Warning(
+                        raise UserError(
                             'No se encontro ninguna escala para el monto'
                             ' %s' % (base_amount))
                     amount = escala.importe_fijo

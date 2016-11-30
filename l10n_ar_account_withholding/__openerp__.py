@@ -42,7 +42,7 @@
         'demo/demo.xml',
     ],
     'depends': [
-        'account_voucher_withholding_automatic',
+        'account_withholding_automatic',
         'l10n_ar_account',
         # para ganancias
         'report_aeroo',
@@ -51,8 +51,8 @@
     'external_dependencies': {
         'python': ['pyafipws'],
     },
-    'installable': False,
-    'name': 'Argentinian Withholding Management',
+    'installable': True,
+    'name': 'Automatic Argentinian Withholdings on Payments',
     'test': [],
     'version': '9.0.1.0.0',
 }

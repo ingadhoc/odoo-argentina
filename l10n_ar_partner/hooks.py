@@ -15,7 +15,12 @@ column_renames = {
 
 
 def pre_init_hook(cr):
-    openupgrade.rename_columns(cr, column_renames)
+    if (
+            openupgrade.column_exists(
+                cr, 'res_partner', 'document_type_id') and
+            not openupgrade.column_exists(
+                cr, 'res_partner', 'main_id_category_id')):
+        openupgrade.rename_columns(cr, column_renames)
     fix_data_on_l10n_ar_partner(cr)
 
 

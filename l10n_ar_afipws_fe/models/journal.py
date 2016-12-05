@@ -10,7 +10,6 @@ from openerp.addons.l10n_ar_account.models import account_journal
 
 _logger = logging.getLogger(__name__)
 
-account_journal.AccountJournal
 old_selection = account_journal.AccountJournal._point_of_sale_types_selection
 new_selection = old_selection.append(('electronic', 'Electronic'))
 account_journal.AccountJournal._point_of_sale_types_selection = new_selection

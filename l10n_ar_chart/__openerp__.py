@@ -7,6 +7,10 @@
     'depends': [
         # for afip_code on fiscal position and other tax modifications
         'l10n_ar_account',
+        # this is not a real dependency but it is a depedency for demo data
+        # and, in fact, we always installe afipws_fe, so for now we force this
+        # depedency
+        'l10n_ar_afipws_fe',
         'account_withholding',
         'account_check',
     ],
@@ -36,6 +40,12 @@
         '../l10n_ar_account/demo/account_journal_demo.xml',
         # '../account/demo/account_bank_statement.yml',
         # '../account/demo/account_invoice_demo.yml',
+        # electronic invoice demo data
+        '../l10n_ar_afipws_fe/demo/account_journal_expo_demo.yml',
+        '../l10n_ar_account/demo/account_customer_expo_invoice_demo.yml',
+        '../l10n_ar_afipws_fe/demo/account_journal_demo.yml',
+        '../l10n_ar_account/demo/account_customer_invoice_demo.yml',
+        '../l10n_ar_afipws_fe/demo/account_journal_demo_without_doc.yml',
     ],
     'installable': True,
     'images': [

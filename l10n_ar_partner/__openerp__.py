@@ -16,7 +16,6 @@
     'data': [
         'data/res_partner_title_data.xml',
         'data/res_partner_id_category_data.xml',
-        'data/res_partner_data.xml',
         'views/res_partner_view.xml',
         'views/res_company_view.xml',
         'views/res_partner_id_category_view.xml',
@@ -29,4 +28,5 @@
     ],
     'version': '9.0.1.0.0',
     'post_init_hook': 'post_init_hook',
+    'pre_init_hook': 'pre_init_hook',
 }

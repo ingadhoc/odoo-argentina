@@ -6,18 +6,6 @@ try:
 except ImportError:
     openupgrade = None
 
-
-model_renames = [
-    # modelos renombrados en l10n_ar_invoice
-    # a l10n_ar_partner
-]
-
-
-table_renames = [
-    ('afip_document_type', 'res_partner_id_category'),
-]
-
-
 # campos renombrados en l10n_ar_invoice
 column_renames = {
     'res_partner': [
@@ -27,12 +15,8 @@ column_renames = {
 
 
 def pre_init_hook(cr):
-    openupgrade.rename_models(cr, model_renames)
-    openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
     fix_data_on_l10n_ar_partner(cr)
-    # pool = RegistryManager.get(cr.dbname)
-    # lang_read = pool['res.lang'].search_read()
 
 
 def fix_data_on_l10n_ar_partner(cr):

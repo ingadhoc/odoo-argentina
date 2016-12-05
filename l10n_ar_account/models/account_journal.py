@@ -29,7 +29,8 @@ class AccountJournal(models.Model):
         ('preprinted', 'Preprinted'),
         ('online', 'Online'),
         # Agregados por otro modulo
-        # ('electronic', 'Electronic'),
+        # para evitar errores con migracion, luego vemos
+        ('electronic', 'Electronic'),
         # ('fiscal_printer', 'Fiscal Printer'),
     ]
 

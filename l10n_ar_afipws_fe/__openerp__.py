@@ -13,6 +13,9 @@
         # TODO improove this, we add this dependency because of demo data only
         # becuase demo data needs de chart account installed, we should
         # take this data tu l10n_ar_chart and set electronic if available
+        # we try adding this demo data on l10n_ar_chart but if done, we should
+        # add dependency to this module and also duplicate invoice data so
+        # it does not use same id
         'l10n_ar_chart',
     ],
     'external_dependencies': {

@@ -66,6 +66,7 @@
                     <field name="afip_document_number" invisible="1"/>
                     <field name="internal_number" invisible="1"/>
                     <field name="use_argentinian_localization" invisible="1"/>
+                    <field name="afip_document_class_id" invisible="1"/>
                     <field name="document_type" invisible="1"/>
                 </form>
 
@@ -144,6 +145,7 @@
                     <field name="afip_document_number" invisible="1"/>
                     <field name="internal_number" invisible="1"/>
                     <field name="use_argentinian_localization" invisible="1"/>
+                    <field name="afip_document_class_id" invisible="1"/>
                     <field name="document_type" invisible="1"/>
                 </form>
 

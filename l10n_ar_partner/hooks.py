@@ -30,7 +30,8 @@ def fix_data_on_l10n_ar_partner(cr):
     new_name = 'l10n_ar_partner'
 
     l10n_ar_partner_data_models = [
-        'res.partner',
+        # 'res.partner', al final este es de l10n_ar_account y lo arregla
+        # account_document
         'res.partner.id_category',
         'res.partner.title',
     ]

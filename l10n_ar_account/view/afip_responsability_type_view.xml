@@ -37,9 +37,7 @@
             <field name="res_model">afip.responsability.type</field>
         </record>
 
-        <menuitem name="Responsability Types" action="action_afip_responsability_type" id="menu_afip_responsability_type" sequence="40" parent="account.account_account_menu"/>
+        <menuitem name="Responsability Types" action="action_afip_responsability_type" id="menu_afip_responsability_type" sequence="10" parent="menu_afip_config"/>
 
     </data>
 </openerp>
-<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
-     -->

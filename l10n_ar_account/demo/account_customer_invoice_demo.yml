@@ -138,7 +138,7 @@
 -
   !record {model: account.invoice, id: demo_invoice_8}:
     company_id: base.main_company
-    partner_id: l10n_ar_partner.par_cfa
+    partner_id: l10n_ar_account.par_cfa
     user_id: base.user_demo
     reference_type: none
     payment_term_id: account.account_payment_term

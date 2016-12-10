@@ -10,20 +10,29 @@ from openerp.exceptions import UserError
 class AccountJournal(models.Model):
     _inherit = "account.journal"
 
-    @api.model
-    def _get_point_of_sale_types(self):
-        return [
-            ('manual', 'Manual'),
-            ('preprinted', 'Preprinted'),
-            ('online', 'Online'),
-            # Agregados por otro modulo
-            # ('electronic', 'Electronic'),
-            # ('fiscal_printer', 'Fiscal Printer'),
-        ]
+    # @api.model
+    # def _get_point_of_sale_types(self):
+    #     return [
+    #         ('manual', 'Manual'),
+    #         ('preprinted', 'Preprinted'),
+    #         ('online', 'Online'),
+    #         # Agregados por otro modulo
+    #         ('electronic', 'Electronic'),
+    #         # ('fiscal_printer', 'Fiscal Printer'),
+    #     ]
 
-    _point_of_sale_types_selection = (
-        lambda self, *args, **kwargs: self._get_point_of_sale_types(
-            *args, **kwargs))
+    # _point_of_sale_types_selection = (
+    #     lambda self, *args, **kwargs: self._get_point_of_sale_types(
+    #         *args, **kwargs))
+    _point_of_sale_types_selection = [
+        ('manual', 'Manual'),
+        ('preprinted', 'Preprinted'),
+        ('online', 'Online'),
+        # Agregados por otro modulo
+        # para evitar errores con migracion, luego vemos
+        ('electronic', 'Electronic'),
+        # ('fiscal_printer', 'Fiscal Printer'),
+    ]
 
     point_of_sale_type = fields.Selection(
         _point_of_sale_types_selection,

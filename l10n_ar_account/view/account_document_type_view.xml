@@ -38,7 +38,14 @@
             </field>
         </record>
 
+
+        <record model="ir.actions.act_window" id="action_document_type_argentina">
+            <field name="name">Document Types</field>
+            <field name="res_model">account.document.type</field>
+            <field name="context">{'search_default_localization': 'argentina'}</field>
+        </record>
+
+        <menuitem action="action_document_type_argentina" id="menu_document_type_argentina" sequence="5" parent="menu_afip_config"/>
+
     </data>
 </openerp>
-<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
-     -->

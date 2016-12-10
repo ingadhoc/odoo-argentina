@@ -37,9 +37,7 @@
             <field name="res_model">account.document.letter</field>
         </record>
 
-        <menuitem action="action_document_letter" id="menu_document_letter" sequence="30" parent="account.account_account_menu"/>
+        <menuitem action="action_document_letter" id="menu_document_letter" sequence="15" parent="menu_afip_config"/>
 
     </data>
 </openerp>
-<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
-     -->

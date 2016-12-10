@@ -18,7 +18,7 @@
 -
   !record {model: account.invoice, id: demo_invoice_9}:
     company_id: base.main_company
-    partner_id: l10n_ar_partner.par_cfa
+    partner_id: l10n_ar_account.par_cfa
     user_id: base.user_demo
     reference_type: none
     document_number: '0001-00000001'
@@ -41,7 +41,7 @@
 -
   !record {model: account.invoice, id: demo_despacho_1}:
     company_id: base.main_company
-    partner_id: l10n_ar_partner.partner_afip
+    partner_id: l10n_ar_account.partner_afip
     user_id: base.user_demo
     reference_type: none
     document_number: '16052IC04000605L'

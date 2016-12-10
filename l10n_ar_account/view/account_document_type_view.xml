@@ -32,9 +32,9 @@
                 <field name='code' position="after">
                     <field name='document_letter_id'/>
                 </field>
-                <filter name="internal_type" position="after">
+                <group>
                     <filter string="Document Letter" name="document_letter_id" context="{'group_by':'document_letter_id'}"/>
-                </filter>
+                </group>
             </field>
         </record>
 

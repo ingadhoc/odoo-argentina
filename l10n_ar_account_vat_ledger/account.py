@@ -113,48 +113,46 @@ class AcountDocumentType(models.Model):
 #         self.amount_tax = amount_tax
 #         self.amount_total = amount_total
 
-#     @api.model
-#     def get_amounts(
-#             self, vat_ledger, responsability=False, journal_type=None):
-#         taxes_domain = [
-#             ('invoice_id', 'in', vat_ledger.invoice_ids.ids),
-#             ('invoice_id.state', '!=', 'cancel'),
-#             ('tax_id.id', '=', self.id)]
-#         if journal_type:
-#             taxes_domain.append(
-#                 ('invoice_id.journal_id.type', 'in', journal_type))
-#         if responsability:
-#             taxes_domain.append(
-#                 ('invoice_id.responsability_id', '=', responsability.id))
-#         # invoice_taxes = self.env['account.invoice.tax'].search(
-#         #     taxes_domain)
-#         invoice_taxes = self.env['account.invoice.tax'].search(
-#             taxes_domain +
-#             [('invoice_id.type', 'in', ['in_invoice', 'out_invoice'])])
-#         refund_invoice_taxes = self.env['account.invoice.tax'].search(
-#             taxes_domain +
-#             [('invoice_id.type', 'in', ['in_refund', 'out_refund'])])
-#         # we use base_amount and tax_amount instad of base and amount because
-#         # we want them in local currency
-#         # usamos valor absoluto porque si el impuesto se configura con signo
-#         # negativo, por ej. para notas de credito, nosotros igual queremos
-#         # llevarlo positivo
-#         # TODO mejorarlo, no hace falta si lo disenamos bien, el tema es que
-#         # algunos usan regitrando esto como negativo y otros como positivo
-#         # el tema en realidad es que en el reporte queremos mostrarlo positivo
-#         # tendriamos que hacer alg otipo:
-#         # for invoice_tax in invoice_taxes:
-#         #     amount_untaxed += invoice_tax.base_amount * invoice_tax
-#         # amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount')))
-#         # amount_tax = abs(sum(invoice_taxes.mapped('tax_amount')))
-#         amount_untaxed = abs(sum(invoice_taxes.mapped('base'))) - abs(
-#             sum(refund_invoice_taxes.mapped('base')))
-#         # amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount'))) - abs(
-#         #     sum(refund_invoice_taxes.mapped('base_amount')))
-#         amount_tax = abs(sum(invoice_taxes.mapped('tax_amount'))) - abs(
-#             sum(refund_invoice_taxes.mapped('tax_amount')))
-#         amount_total = amount_untaxed + amount_tax
-#         return (amount_untaxed, amount_tax, amount_total)
+    # @api.model
+    # def get_amounts(
+    #         self, vat_ledger, responsability=False, journal_type=None):
+    #     taxes_domain = [
+    #         ('invoice_id', 'in', vat_ledger.invoice_ids.ids),
+    #         ('invoice_id.state', '!=', 'cancel'),
+    #         ('tax_id.id', '=', self.id)]
+    #     if journal_type:
+    #         taxes_domain.append(
+    #             ('invoice_id.journal_id.type', 'in', journal_type))
+    #     if responsability:
+    #         taxes_domain.append(
+    #             ('invoice_id.responsability_id', '=', responsability.id))
+    #     # invoice_taxes = self.env['account.invoice.tax'].search(
+    #     #     taxes_domain)
+    #     invoice_taxes = self.env['account.invoice.tax'].search(
+    #         taxes_domain +
+    #         [('invoice_id.type', 'in', ['in_invoice', 'out_invoice'])])
+    #     refund_invoice_taxes = self.env['account.invoice.tax'].search(
+    #         taxes_domain +
+    #         [('invoice_id.type', 'in', ['in_refund', 'out_refund'])])
+    #     # we use base_amount and tax_amount instad of base and amount because
+    #     # we want them in local currency
+    #     # usamos valor absoluto porque si el impuesto se configura con signo
+    #     # negativo, por ej. para notas de credito, nosotros igual queremos
+    #     # llevarlo positivo
+    #     # TODO mejorarlo, no hace falta si lo disenamos bien, el tema es que
+    #     # algunos usan regitrando esto como negativo y otros como positivo
+    #     # el tema en realidad es que en el reporte queremos mostrarlo
+    #     # positivo tendriamos que hacer alg otipo:
+    #     # for invoice_tax in invoice_taxes:
+    #     #     amount_untaxed += invoice_tax.base_amount * invoice_tax
+    #     # amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount')))
+    #     # amount_tax = abs(sum(invoice_taxes.mapped('tax_amount')))
+    #     amount_untaxed = abs(sum(invoice_taxes.mapped('base'))) - abs(
+    #         sum(refund_invoice_taxes.mapped('base')))
+    #     amount_tax = abs(sum(invoice_taxes.mapped('tax_amount'))) - abs(
+    #         sum(refund_invoice_taxes.mapped('tax_amount')))
+    #     amount_total = amount_untaxed + amount_tax
+    #     return (amount_untaxed, amount_tax, amount_total)
 
 
 class AfipResponsabilityType(models.Model):

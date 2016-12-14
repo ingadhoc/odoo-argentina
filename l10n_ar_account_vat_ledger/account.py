@@ -4,7 +4,6 @@
 # directory
 ##############################################################################
 from openerp import models, fields, api, _
-import openerp.addons.decimal_precision as dp
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -21,24 +20,26 @@ class AccountTax(models.Model):
 class AcountDocumentType(models.Model):
     _inherit = 'account.document.type'
 
-    amount_untaxed = fields.Float(
-        string=_('Untaxed'),
-        digits=dp.get_precision('Account'),
-        compute='_get_amounts',)
-    other_taxes_amount = fields.Float(
-        compute="_get_amounts",
-        digits=dp.get_precision('Account'),
-        string=_('Other Taxes Amount')
+    amount_untaxed = fields.Monetary(
+        string='Untaxed',
+        compute='_get_amounts',
     )
-    vat_amount = fields.Float(
+    other_taxes_amount = fields.Monetary(
         compute="_get_amounts",
-        digits=dp.get_precision('Account'),
-        string=_('VAT Amount')
+        string='Other Taxes Amount'
     )
-    amount_total = fields.Float(
-        string=_('Total'),
-        digits=dp.get_precision('Account'),
-        compute='_get_amounts',)
+    vat_amount = fields.Monetary(
+        compute="_get_amounts",
+        string='VAT Amount'
+    )
+    amount_total = fields.Monetary(
+        string='Total',
+        compute='_get_amounts',
+    )
+    currency_id = fields.Many2one(
+        'res.currency',
+        compute='_get_amounts'
+    )
 
     @api.one
     def _get_amounts(self):
@@ -53,6 +54,7 @@ class AcountDocumentType(models.Model):
                 amount_untaxed, vat_amount,
                 other_taxes_amount, amount_total
             ) = self.get_amounts(vat_ledger)
+            self.currency_id = vat_ledger.company_id.currency_id
             self.amount_untaxed = amount_untaxed
             self.vat_amount = vat_amount
             self.other_taxes_amount = other_taxes_amount

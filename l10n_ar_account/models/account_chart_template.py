@@ -83,14 +83,16 @@ class AccountChartTemplate(models.Model):
                         'afip_ws', False)
                     point_of_sale_number = self._context.get(
                         'point_of_sale_number', 1)
-                    name, code = self.env['account.journal'].get_name_and_code(
-                        point_of_sale_type, point_of_sale_number)
-                    vals_journal['name'] = name
-                    vals_journal['code'] = code
                     if afip_ws:
                         vals_journal['afip_ws'] = afip_ws
                     vals_journal['point_of_sale_number'] = point_of_sale_number
                     vals_journal['point_of_sale_type'] = point_of_sale_type
+                    new_journal = self.env['account.journal'].new(vals_journal)
+                    new_journal.change_to_set_name_and_code()
+                    name = new_journal.name
+                    code = new_journal.code
+                    vals_journal['name'] = name
+                    vals_journal['code'] = code
         return journal_data
 
     # @api.model

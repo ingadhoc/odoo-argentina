@@ -6,7 +6,13 @@
 from openerp import models, api, fields, _
 import logging
 from openerp.exceptions import UserError
+from openerp.addons.l10n_ar_account.models import account_journal
+
 _logger = logging.getLogger(__name__)
+
+old_selection = account_journal.AccountJournal._point_of_sale_types_selection
+new_selection = old_selection.append(('electronic', 'Electronic'))
+account_journal.AccountJournal._point_of_sale_types_selection = new_selection
 
 
 class AccountJournal(models.Model):
@@ -30,6 +36,13 @@ class AccountJournal(models.Model):
         'AFIP WS',
     )
 
+    @api.multi
+    def get_name_and_code_suffix(self):
+        name = super(AccountJournal, self).get_name_and_code_suffix()
+        if self.afip_ws == 'wsfex':
+            name += ' Exportación'
+        return name
+
     @api.model
     def create(self, vals):
         journal = super(AccountJournal, self).create(vals)
@@ -41,11 +54,11 @@ class AccountJournal(models.Model):
                     'Could not sincronize local and remote numbers')
         return journal
 
-    @api.model
-    def _get_point_of_sale_types(self):
-        types = super(AccountJournal, self)._get_point_of_sale_types()
-        types.append(['electronic', _('Electronic')])
-        return types
+    # @api.model
+    # def _get_point_of_sale_types(self):
+    #     types = super(AccountJournal, self)._get_point_of_sale_types()
+    #     types.append(['electronic', _('Electronic')])
+    #     return types
 
     @api.one
     @api.constrains('point_of_sale_type', 'afip_ws')

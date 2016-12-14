@@ -15,6 +15,10 @@ class ResCompany(models.Model):
         related='partner_id.cuit'
     )
 
+    @api.multi
+    def cuit_required(self):
+        return self.partner_id.cuit_required()
+
     @api.model
     def create(self, vals):
         """

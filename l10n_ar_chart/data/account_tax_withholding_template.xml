@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data noupdate="0">
+
+    <!-- Retenciones ganancias -->
+        <record id="ri_tax_retencion_ganancias_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="name">Retención Ganancias Sufrida</field>
+            <field name="description">Ret Ganancias S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="account_id" ref="base_retencion_ganancias_sufrida"/>
+            <field name="refund_account_id" ref="base_retencion_ganancias_sufrida"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_ganancias_sufrida"/>
+        </record>
+
+        <record id="ri_tax_retencion_ganancias_aplicada" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="name">Retención Ganancias Aplicada</field>
+            <field name="description">Ret Ganancias A</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="account_id" ref="ri_retencion_ganancias_aplicada"/>
+            <field name="refund_account_id" ref="ri_retencion_ganancias_aplicada"/>
+            <field name="type_tax_use">supplier</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_ganancias_aplicada"/>
+        </record>
+
+    <!-- Retenciones iva -->
+        <record id="ri_tax_retencion_iva_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="name">Retención IVA Sufrida</field>
+            <field name="description">Ret IVA S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="account_id" ref="ri_retencion_iva_sufrida"/>
+            <field name="refund_account_id" ref="ri_retencion_iva_sufrida"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iva_sufrida"/>
+        </record>
+
+        <record id="ri_tax_retencion_iva_aplicada" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="name">Retención IVA Aplicada</field>
+            <field name="description">Ret IVA A</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="account_id" ref="ri_retencion_iva_aplicada"/>
+            <field name="refund_account_id" ref="ri_retencion_iva_aplicada"/>
+            <field name="type_tax_use">supplier</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iva_aplicada"/>
+        </record>
+
+    <!-- Retenciones IIBB -->
+        <record id="ri_tax_retencion_iibb_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="name">Retención IIBB Sufrida</field>
+            <field name="description">Ret IIBB S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <!-- <field name="account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
+            <!-- <field name="refund_account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iibb_sufrida"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_aplicada" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="name">Retención IIBB Aplicada</field>
+            <field name="description">Ret IIBB A</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <!-- <field name="account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
+            <!-- <field name="refund_account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
+            <field name="type_tax_use">supplier</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iibb_aplicada"/>
+        </record>
+
+  </data>
+</openerp>

@@ -34,9 +34,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Incoterms" action="act_afip_incoterm" id="menu_action_afip_incoterm" sequence="90" parent="menu_afip_config"/>
+        <menuitem name="Incoterms" action="act_afip_incoterm" id="menu_action_afip_incoterm" sequence="20" parent="menu_afip_config"/>
 
     </data>
 </openerp>
-<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
-     -->

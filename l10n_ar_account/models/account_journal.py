@@ -10,26 +10,34 @@ from openerp.exceptions import UserError
 class AccountJournal(models.Model):
     _inherit = "account.journal"
 
-    @api.model
-    def _get_point_of_sale_types(self):
-        return [
-            ('manual', 'Manual'),
-            ('preprinted', 'Preprinted'),
-            ('online', 'Online'),
-            # Agregados por otro modulo
-            # ('electronic', 'Electronic'),
-            # ('fiscal_printer', 'Fiscal Printer'),
-        ]
+    # @api.model
+    # def _get_point_of_sale_types(self):
+    #     return [
+    #         ('manual', 'Manual'),
+    #         ('preprinted', 'Preprinted'),
+    #         ('online', 'Online'),
+    #         # Agregados por otro modulo
+    #         ('electronic', 'Electronic'),
+    #         # ('fiscal_printer', 'Fiscal Printer'),
+    #     ]
 
-    _point_of_sale_types_selection = (
-        lambda self, *args, **kwargs: self._get_point_of_sale_types(
-            *args, **kwargs))
+    # _point_of_sale_types_selection = (
+    #     lambda self, *args, **kwargs: self._get_point_of_sale_types(
+    #         *args, **kwargs))
+    _point_of_sale_types_selection = [
+        ('manual', 'Manual'),
+        ('preprinted', 'Preprinted'),
+        ('online', 'Online'),
+        # Agregados por otro modulo
+        # para evitar errores con migracion, luego vemos
+        ('electronic', 'Electronic'),
+        # ('fiscal_printer', 'Fiscal Printer'),
+    ]
 
     point_of_sale_type = fields.Selection(
         _point_of_sale_types_selection,
         'Point Of Sale Type',
         default='manual',
-        required=True,
     )
     point_of_sale_number = fields.Integer(
         'Point Of Sale Number',
@@ -69,11 +77,13 @@ class AccountJournal(models.Model):
                 self.use_documents and
                 not self.sequence_id
         ):
-            (self.name, self.code) = self.get_name_and_code(
-                self.point_of_sale_type, self.point_of_sale_number)
+            (self.name, self.code) = self.get_name_and_code()
 
-    @api.model
-    def get_name_and_code(self, point_of_sale_type, point_of_sale_number):
+    @api.multi
+    def get_name_and_code_suffix(self):
+        self.ensure_one()
+        point_of_sale_type = self.point_of_sale_type
+        name = ""
         if point_of_sale_type == 'manual':
             name = 'Manual'
         elif point_of_sale_type == 'preprinted':
@@ -82,6 +92,13 @@ class AccountJournal(models.Model):
             name = 'Online'
         elif point_of_sale_type == 'electronic':
             name = 'Electronica'
+        return name
+
+    @api.multi
+    def get_name_and_code(self):
+        self.ensure_one()
+        point_of_sale_number = self.point_of_sale_number
+        name = self.get_name_and_code_suffix()
         name = '%s %s %04d' % (
             'Ventas', name, point_of_sale_number)
         code = 'V%04d' % (point_of_sale_number)
@@ -91,21 +108,29 @@ class AccountJournal(models.Model):
     def get_journal_letter(self, counterpart_partner=False):
         """Function to be inherited by others"""
         self.ensure_one()
-        responsability = self.company_id.afip_responsability_type_id
-        if self.type == 'sale':
+        return self._get_journal_letter(
+            journal_type=self.type,
+            company=self.company_id,
+            counterpart_partner=counterpart_partner)
+
+    @api.model
+    def _get_journal_letter(
+            self, journal_type, company, counterpart_partner=False):
+        responsability = company.afip_responsability_type_id
+        if journal_type == 'sale':
             resp_field = 'issuer_ids'
-        elif self.type == 'purchase':
+        elif journal_type == 'purchase':
             resp_field = 'receptor_ids'
         else:
             raise UserError('Letters not implemented for journal type %s' % (
-                self.type))
+                journal_type))
         letters = self.env['account.document.letter'].search([
             '|', (resp_field, 'in', responsability.id),
             (resp_field, '=', False)])
 
         if counterpart_partner:
             counterpart_resp = counterpart_partner.afip_responsability_type_id
-            if self.type == 'sale':
+            if journal_type == 'sale':
                 letters = letters.filtered(
                     lambda x: not x.receptor_ids or
                     counterpart_resp in x.receptor_ids)

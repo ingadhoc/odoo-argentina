@@ -3,17 +3,16 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, api
+from openerp import fields, models
+from openerp.addons.account_document.models.res_company import ResCompany
+
+localizations = ResCompany._localization_selection
+new_selection = localizations.append(('argentina', 'Argentina'))
+ResCompany._localization_selection = new_selection
 
 
 class ResCompany(models.Model):
     _inherit = "res.company"
-
-    @api.model
-    def _get_localizations(self):
-        localizations = super(ResCompany, self)._get_localizations()
-        localizations.append(['argentina', 'Argentina'])
-        return localizations
 
     gross_income_number = fields.Char(
         related='partner_id.gross_income_number',

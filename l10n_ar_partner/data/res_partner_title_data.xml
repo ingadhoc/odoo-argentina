@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+    <data noupdate="True">
 
         <record model="res.partner.title" id="sa">
             <field name="name">Sociedad Anónima</field>

@@ -83,10 +83,16 @@ install:
   - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/account ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/account_cancel ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-financial-tools/account_document ~/build/ingadhoc/odoo-argentina; fi
-  # - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/oca-account-invoicing/account_invoice_refund_link ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-payment/account_check ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-payment/account_withholding ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-payment/account_withholding_automatic ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-payment/account_payment_group ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/account-financial-tools/currency_rate_update ~/build/ingadhoc/odoo-argentina; fi
 
 script:
   - travis_run_tests
 
 after_success:
+  # enable aeroo docs conversion
+  - if [[ "${OCA_RUNBOT}" == "1" ]]; then psql openerp_test -c "INSERT INTO ir_config_parameter (key, value) VALUES ('aeroo.docs_host', 'runbot.adhoc.com.ar'), ('aeroo.docs_port', '8989'), ('aeroo.docs_enabled', 'True')"; fi
   - travis_after_tests_success

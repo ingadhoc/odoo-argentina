@@ -13,7 +13,7 @@ import traceback
 _logger = logging.getLogger(__name__)
 
 try:
-    from pyafipws.soap import SoapFault
+    from pysimplesoap.client import SoapFault
 except ImportError:
     _logger.debug('Can not `from pyafipws.soap import SoapFault`.')
 
@@ -127,9 +127,9 @@ class AccountInvoice(models.Model):
             cae_due = ''.join(
                 [c for c in str(self.afip_auth_code_due or '') if c.isdigit()])
             barcode = ''.join(
-                [str(self.company_id.partner_id.vat[2:]),
-                    "%02d" % int(self.afip_document_class_id.afip_code),
-                    "%04d" % int(self.journal_id.point_of_sale_id.number),
+                [str(self.company_id.cuit),
+                    "%02d" % int(self.document_type_id.code),
+                    "%04d" % int(self.journal_id.point_of_sale_number),
                     str(self.afip_auth_code), cae_due])
             barcode = barcode + self.verification_digit_modulo10(barcode)
         self.afip_barcode = barcode
@@ -264,7 +264,7 @@ print "Observaciones:", wscdc.Obs
             doc_tipo_receptor = receptor_doc_code or '99'
             doc_nro_receptor = (
                 receptor_doc_code and receptor.document_number or "0")
-            afip_doc_class = inv.afip_document_class_id
+            afip_doc_class = inv.document_type_id
             if (
                     afip_doc_class.document_letter_id.name in ['A', 'M'] and
                     doc_tipo_receptor != '80' or not doc_nro_receptor):

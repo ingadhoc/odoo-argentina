@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api
 # from openerp.exceptions import UserError
+from openerp.addons.l10n_ar_account.models import account_journal
 
 
 class AccountConfigSettings(models.TransientModel):
     _inherit = 'account.config.settings'
 
-    _point_of_sale_types_selection = (
-        lambda self, *args, **kwargs: self.env[
-            'account.journal']._get_point_of_sale_types(*args, **kwargs))
+    # _point_of_sale_types_selection = (
+    #     lambda self, *args, **kwargs: self.env[
+    #         'account.journal']._get_point_of_sale_types(*args, **kwargs))
 
     point_of_sale_type = fields.Selection(
-        _point_of_sale_types_selection,
+        account_journal.AccountJournal._point_of_sale_types_selection,
         'Point Of Sale Type',
         default='manual',
     )

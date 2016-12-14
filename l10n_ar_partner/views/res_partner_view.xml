@@ -2,11 +2,34 @@
 <openerp>
     <data>
 
-        <record id="view_partner_form" model="ir.ui.view">
-            <field name="name">partner_documents.view_partner_form</field>
-            <field name="inherit_id" ref="base.view_partner_form" />
+        <record id="view_res_partner_filter" model="ir.ui.view">
+            <field name="name">partner_documents.view_partner_filter</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter" />
+            <!-- <field name="inherit_id" ref="base.view_partner_form" /> -->
             <field name="model">res.partner</field>
             <field type="xml" name="arch">
+                <!-- we add it here because name_search is only used on m2o fields -->
+
+                <!-- we can use this way or the second one -->
+                <!-- <field name="name" position="attributes">
+                    <attribute name="filter_domain">['|','|','|',('display_name','ilike',self),('ref','=',self),('email','ilike',self),('id_numbers','ilike',self)]</attribute>
+                </field> -->
+                <field name="name" position="after">
+                    <field name="id_numbers"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="name">partner_documents.view_partner_form</field>
+            <field name="inherit_id" ref="partner_identification.view_partner_form" />
+            <!-- <field name="inherit_id" ref="base.view_partner_form" /> -->
+            <field name="model">res.partner</field>
+            <field type="xml" name="arch">
+
+                <form>
+                    <field name="cuit" invisible="1"/>
+                </form>
                 <field name="website" position="after">
                     <label for="main_id_number" string="Main Identification"/>
                     <div class="address_format">
@@ -14,6 +37,11 @@
                         <field name="main_id_number" placeholder="Number" style="width: 53%"/>
                     </div>
                 </field>
+
+              <page name="id_numbers" position="attributes">
+                <attribute name="groups">l10n_ar_partner.group_multiple_id_numbers</attribute>
+              </page>
+
             </field>
         </record>
 

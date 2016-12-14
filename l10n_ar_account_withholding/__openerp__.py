@@ -25,24 +25,24 @@
     'category': 'Accounting & Finance',
     'data': [
         'reports/certificado_de_retencion_report.xml',
-        'views/account_tax_withholding_view.xml',
-        'views/account_voucher_view.xml',
-        'security/ir.model.access.csv',
-        'security/security.xml',
+        'views/account_payment_group_view.xml',
         'views/res_company_view.xml',
         'views/afip_tabla_ganancias_escala_view.xml',
         'views/afip_tabla_ganancias_alicuotasymontos_view.xml',
-        'views/account_voucher_withholding_view.xml',
+        'views/account_payment_view.xml',
         'views/res_partner_view.xml',
+        'security/ir.model.access.csv',
+        'security/security.xml',
+        # 'wizard/account_withholding_sicore_wizard_view.xml',
         'data/tabla_ganancias_data.xml',
     ],
     'demo': [
         'demo/ir_parameter.xml',
-        'demo/demo.xml',
+        # 'demo/demo.xml',
     ],
     'depends': [
-        'account_voucher_withholding_automatic',
-        # 'l10n_ar_invoice',
+        'account_withholding_automatic',
+        'l10n_ar_account',
         # para ganancias
         'report_aeroo',
         'l10n_ar_padron_afip',
@@ -50,8 +50,8 @@
     'external_dependencies': {
         'python': ['pyafipws'],
     },
-    'installable': False,
-    'name': 'Argentinian Withholding Management',
+    'installable': True,
+    'name': 'Automatic Argentinian Withholdings on Payments',
     'test': [],
     'version': '9.0.1.0.0',
 }

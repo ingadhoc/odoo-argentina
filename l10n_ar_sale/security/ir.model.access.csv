@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_account_tax_code_all,account.tax.code.all,account.model_account_tax_code,,1,0,0,0

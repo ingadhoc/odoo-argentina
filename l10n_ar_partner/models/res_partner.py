@@ -18,6 +18,12 @@ class ResPartner(models.Model):
     cuit = fields.Char(
         compute='_compute_cuit',
     )
+    # no podemos hacerlo asi porque cuando se pide desde algun lugar
+    # quiere computar para todos los partners y da error para los que no
+    # tienen por mas que no lo pedimos
+    # cuit_required = fields.Char(
+    #     compute='_compute_cuit_required',
+    # )
     main_id_number = fields.Char(
         compute='_compute_main_id_number',
         inverse='_set_main_id_number',
@@ -29,15 +35,20 @@ class ResPartner(models.Model):
         comodel_name='res.partner.id_category',
     )
 
+    @api.multi
+    def cuit_required(self):
+        self.ensure_one()
+        if not self.cuit:
+            raise UserError(_('No CUIT cofigured for partner %s') % (
+                self.name))
+        return self.cuit
+
     @api.one
     def _compute_cuit(self):
         cuit = self.id_numbers.search([
             ('partner_id', '=', self.id),
             ('category_id.afip_code', '=', '80'),
         ], limit=1)
-        if not cuit or not cuit.name:
-            raise UserError(_('No CUIT cofigured for partner %s') % (
-                self.name))
         self.cuit = cuit.name
 
     @api.multi
@@ -72,3 +83,19 @@ class ResPartner(models.Model):
                         'category_id': category_id.id,
                         'name': name
                     })
+
+    @api.model
+    def name_search(self, name, args=None, operator='ilike', limit=100):
+        """
+        we search by id, if we found we return this results, else we do
+        default search
+        """
+        if not args:
+            args = []
+        if name:
+            recs = self.search(
+                [('id_numbers', operator, name)] + args, limit=limit)
+            if recs:
+                return recs.name_get()
+        return super(ResPartner, self).name_search(
+            name, args=args, operator=operator, limit=limit)

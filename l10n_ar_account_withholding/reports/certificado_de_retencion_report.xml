@@ -4,9 +4,9 @@
 
 <!-- Printed Invoice -->
 <record id="action_aeroo_certificado_de_retencion_report" model="ir.actions.report.xml">
-    <field name="name">Certificado de Retención </field>
+    <field name="name">Certificado de Retención</field>
     <field name="type">ir.actions.report.xml</field>
-    <field name="model">account.voucher.withholding</field>
+    <field name="model">account.payment</field>
     <field name="report_name">certificado_de_retencion_reportreport</field>
     <field name="report_type">aeroo</field>
     <field name="in_format">oo-odt</field>

@@ -30,7 +30,8 @@ class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
     # no gravado en iva
-    cc_vat_untaxed = fields.Monetary(
+    # cc_vat_untaxed = fields.Monetary(
+    cc_vat_untaxed_base_amount = fields.Monetary(
         compute="_get_currency_values",
         string='Company Cur. VAT Untaxed',
     )
@@ -72,7 +73,7 @@ class AccountInvoice(models.Model):
             self.cc_amount_untaxed = self.amount_untaxed
             self.cc_amount_tax = self.amount_tax
             self.cc_amount_total = self.amount_total
-            self.cc_vat_untaxed = self.vat_untaxed
+            self.cc_vat_untaxed_base_amount = self.vat_untaxed_base_amount
             self.cc_vat_amount = self.vat_amount
             self.cc_other_taxes_amount = self.other_taxes_amount
             self.currency_rate = 1.0
@@ -88,8 +89,8 @@ class AccountInvoice(models.Model):
                 self.amount_tax * currency_rate)
             self.cc_amount_total = currency.round(
                 self.amount_total * currency_rate)
-            self.cc_vat_untaxed = currency.round(
-                self.vat_untaxed * currency_rate)
+            self.cc_vat_untaxed_base_amount = currency.round(
+                self.vat_untaxed_base_amount * currency_rate)
             self.cc_vat_amount = currency.round(
                 self.vat_amount * currency_rate)
             self.cc_other_taxes_amount = currency.round(

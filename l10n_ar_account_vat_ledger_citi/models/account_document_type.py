@@ -8,8 +8,8 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class afip_document_class(models.Model):
-    _inherit = "afip.document_class"
+class AccountDocumentType(models.Model):
+    _inherit = "account.document.type"
 
     export_to_citi = fields.Boolean(
         help='Set True if this document type and can be imported on citi'

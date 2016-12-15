@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_document_type_form" model="ir.ui.view">
+            <field name="name">account.document.type.form</field>
+            <field name="model">account.document.type</field>
+            <field name="inherit_id" ref="account_document.view_document_type_form"/>
+            <field name="arch" type="xml">
+                <group>
+                    <field name="export_to_citi"/>
+                </group>
+            </field>
+        </record>
+
+        <record id="view_document_type_tree" model="ir.ui.view">
+            <field name="name">account.document.type.tree</field>
+            <field name="model">account.document.type</field>
+            <field name="inherit_id" ref="account_document.view_document_type_tree"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="export_to_citi"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</openerp>

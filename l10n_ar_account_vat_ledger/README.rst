@@ -3,8 +3,7 @@
 
 Argentinian VAT Ledger Management
 =================================
-Creates Sale and Purchase VAT report menus in
-"accounting/period processing/VAT Ledger"
+Creates Sale and Purchase VAT report menus in "Accounting/Reporting/Argentina Statements"
 
 Configuration
 =============

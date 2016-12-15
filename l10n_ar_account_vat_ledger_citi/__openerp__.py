@@ -13,11 +13,10 @@
     'external_dependencies': {
     },
     "data": [
-        'security/security.xml',
-        'security/ir.model.access.csv',
         'views/account_vat_report_view.xml',
-        'views/afip_document_class_view.xml',
-        'data/afip.document_class.csv',
+        'views/account_document_type_view.xml',
+        'data/account.document.type.csv',
+        # 'data/account_document_type_data.csv',
     ],
     'demo': [
     ],
@@ -25,7 +24,7 @@
     ],
     'images': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': False,
 }

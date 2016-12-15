@@ -226,5 +226,5 @@ class account_vat_ledger(models.Model):
 
     @api.multi
     def action_print(self):
-        self.ensure_one
+        self.ensure_one()
         return self.env['report'].get_action(self, 'report_account_vat_ledger')

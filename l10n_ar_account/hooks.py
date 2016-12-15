@@ -33,16 +33,22 @@ def post_init_hook(cr, registry):
                 'document_sequence_type': document_sequence_type,
             })
 
-    # TODO borrar o activar, por ahora modificamos openugprade directamente
-    # porque borra los account_voucher y perdemos la data
-    # migrate voucher data (usamos mismo where que migrador)
-    if table_exists(cr, 'account_voucher'):
+    # TODO choose:
+    # odoo migration delete vouchers that where moved to payments so we make
+    # a copy of voucher table and get data from thisone. Beacuse
+    # account_payment ids and account_voucher ids does not match, we search
+    # by move_id
+    if table_exists(cr, 'account_voucher_copy'):
         for payment_id in registry['account.payment'].search(cr, 1, []):
+            move_ids = registry['account.move'].search(
+                cr, 1, [('line_ids.payment_id', '=', payment_id)], limit=1)
+            if not move_ids:
+                continue
             cr.execute("""
                 SELECT receiptbook_id, afip_document_number
-                FROM account_voucher
-                WHERE id = %s
-                """, (payment_id,))
+                FROM account_voucher_copy
+                WHERE move_id = %s
+                """, (move_ids[0],))
             recs = cr.fetchall()
             if recs:
                 receiptbook_id, document_number = recs[0]
@@ -50,3 +56,19 @@ def post_init_hook(cr, registry):
                     'receiptbook_id': receiptbook_id,
                     'document_number': document_number,
                 })
+
+    # este era el script para openupgrade
+    # if table_exists(cr, 'account_voucher'):
+    #     for payment_id in registry['account.payment'].search(cr, 1, []):
+    #         cr.execute("""
+    #             SELECT receiptbook_id, afip_document_number
+    #             FROM account_voucher
+    #             WHERE id = %s
+    #             """, (payment_id,))
+    #         recs = cr.fetchall()
+    #         if recs:
+    #             receiptbook_id, document_number = recs[0]
+    #             registry['account.payment'].write(cr, 1, [payment_id], {
+    #                 'receiptbook_id': receiptbook_id,
+    #                 'document_number': document_number,
+    #             })

@@ -81,7 +81,8 @@ class account_vat_ledger(models.Model):
     def format_amount(self, amount, padding=15, decimals=2, invoice=False):
         # get amounts on correct sign despite conifiguration on taxes and tax
         # codes
-        # TODO remove this and perhups invoice argument (we always send invoice)
+        # TODO
+        # remove this and perhups invoice argument (we always send invoice)
         # for invoice refund we dont change sign (we do this before)
         # if invoice:
         #     amount = abs(amount)

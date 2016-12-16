@@ -254,8 +254,13 @@ class AccountInvoice(models.Model):
         self.ensure_one()
         if self.localization == 'argentina':
             commercial_partner = self.partner_id.commercial_partner_id
-            currency_rate = self.currency_id.compute(
-                1., self.company_id.currency_id)
+            currency = self.currency_id.with_context(
+                date=self.date_invoice or fields.Date.context_today(self))
+            if self.company_id.currency_id == currency:
+                currency_rate = 1.0
+            else:
+                currency_rate = currency.compute(
+                    1., self.company_id.currency_id)
             return {
                 'afip_responsability_type_id': (
                     commercial_partner.afip_responsability_type_id.id),

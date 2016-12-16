@@ -15,6 +15,14 @@ def post_init_hook(cr, registry):
     :param openerp.modules.registry.RegistryManager registry:
         Database registry, using v7 api.
     """
+    ar_invoice_ids = registry['account.invoice'].search(
+        cr, 1, [('localization', '=', 'argentina')])
+    for invoice_id in ar_invoice_ids:
+        vals = registry['account.invoice'].get_localization_invoice_vals(
+            cr, 1, invoice_id)
+        registry['account.invoice'].write(
+            cr, 1, invoice_id, {'currency_rate': vals.get('currency_rate')})
+
     # we don not force dependency on openupgradelib, only if available we try
     # o un de hook
     if not table_exists:

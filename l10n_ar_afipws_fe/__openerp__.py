@@ -9,11 +9,11 @@
     'summary': '',
     'depends': [
         'l10n_ar_afipws',
-        # 'l10n_ar_account',
+        'l10n_ar_account',
         # TODO improove this, we add this dependency because of demo data only
         # becuase demo data needs de chart account installed, we should
         # take this data tu l10n_ar_chart and set electronic if available
-        'l10n_ar_chart',
+        # 'l10n_ar_chart',
     ],
     'external_dependencies': {
     },

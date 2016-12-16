@@ -24,7 +24,7 @@
             </field>
         </record>
 
-        <record id="view_document_type_filter" model="ir.ui.view">
+        <!-- record id="view_document_type_filter" model="ir.ui.view">
             <field name="name">account.document.type.filter</field>
             <field name="model">account.document.type</field>
             <field name="inherit_id" ref="account_document.view_document_type_filter"/>
@@ -36,7 +36,7 @@
                     <filter string="Document Letter" name="document_letter_id" context="{'group_by':'document_letter_id'}"/>
                 </filter>
             </field>
-        </record>
+        </record -->
 
     </data>
 </openerp>

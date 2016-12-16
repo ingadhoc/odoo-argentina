@@ -161,6 +161,7 @@ class AfipwsCertificateAlias(models.Model):
         # TODO reemplazar todo esto por las funciones nativas de pyafipws
         k = crypto.PKey()
         k.generate_key(crypto.TYPE_RSA, key_length)
+        
         self.key = crypto.dump_privatekey(crypto.FILETYPE_PEM, k)
 
     @api.multi

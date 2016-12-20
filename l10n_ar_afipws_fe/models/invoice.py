@@ -517,7 +517,7 @@ print "Observaciones:", wscdc.Obs
             if CbteAsoc:
                 ws.AgregarCmpAsoc(
                     CbteAsoc.document_type_id.code,
-                    CbteAsoc.point_of_sale,
+                    CbteAsoc.journal_id.point_of_sale_number,
                     CbteAsoc.invoice_number,
                 )
 

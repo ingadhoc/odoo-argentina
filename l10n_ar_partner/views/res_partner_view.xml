@@ -32,9 +32,9 @@
                 </form>
                 <field name="website" position="after">
                     <label for="main_id_number" string="Main Identification"/>
-                    <div class="address_format">
-                        <field name="main_id_category_id" options="{'no_open': True, 'no_create': True}" placeholder="Category" style="width: 45%"/>
-                        <field name="main_id_number" placeholder="Number" style="width: 53%"/>
+                    <div>
+                        <field name="main_id_category_id" options="{'no_open': True, 'no_create': True}" placeholder="Category" class="oe_inline"/> - 
+                        <field name="main_id_number" placeholder="Number" class="oe_inline"/>
                     </div>
                 </field>
 

@@ -26,7 +26,7 @@
     'demo': [
         'demo/partner_demo.xml',
     ],
-    'version': '9.0.1.0.0',
+    'version': '9.0.1.1.0',
     'post_init_hook': 'post_init_hook',
     'pre_init_hook': 'pre_init_hook',
 }

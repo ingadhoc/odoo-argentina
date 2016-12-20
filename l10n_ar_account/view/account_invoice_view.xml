@@ -9,6 +9,7 @@
             <field name="arch" type="xml">
                 <form>
                     <field name="point_of_sale_type" invisible="1"/>
+                    <field name="document_letter_name" invisible="1"/>
                 </form>
                 <div groups="base.group_multi_currency" position="after">
                     <field name="currency_rate" attrs="{'invisible': [('currency_rate', '=', False)]}"/>
@@ -20,11 +21,15 @@
 
                 <field name="payment_term_id" position="after">
                     <!-- if poitn of sale = false then not argentina journal -->
-                    <field name="afip_incoterm_id" attrs="{'invisible': [('point_of_sale_type', '=', False)]}"/>
+                    <field name="afip_incoterm_id" attrs="{'invisible': [('document_letter_name', '!=', 'E')]}"/>
+                    <!-- <field name="afip_incoterm_id" attrs="{'invisible': [('point_of_sale_type', '=', False)]}"/> -->
 
                     <field name='afip_concept' attrs="{'invisible':[('point_of_sale_type', 'not in', ['online', 'electronic'])]}"/>
-                    <field name='afip_service_start' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])]}"/>
-                    <field name='afip_service_end' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])]}"/>
+
+                    <label for="afip_service_start" attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])]}" string="Service Date"/>
+                    <div attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])]}" >
+                        <field name="afip_service_start" class="oe_inline"/> to <field name="afip_service_end" class="oe_inline"/>
+                    </div>
                 </field>   
             </field>
         </record>

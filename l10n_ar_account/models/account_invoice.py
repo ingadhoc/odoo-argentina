@@ -24,6 +24,9 @@ class AccountInvoice(models.Model):
     document_letter_id = fields.Many2one(
         related='document_type_id.document_letter_id',
     )
+    document_letter_name = fields.Char(
+        related='document_letter_id.name'
+    )
     taxes_included = fields.Boolean(
         related='document_letter_id.taxes_included',
     )
@@ -260,7 +263,7 @@ class AccountInvoice(models.Model):
                 currency_rate = 1.0
             else:
                 currency_rate = currency.compute(
-                    1., self.company_id.currency_id)
+                    1., self.company_id.currency_id, round=False)
             return {
                 'afip_responsability_type_id': (
                     commercial_partner.afip_responsability_type_id.id),

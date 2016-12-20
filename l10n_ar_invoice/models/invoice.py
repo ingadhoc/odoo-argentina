@@ -325,10 +325,13 @@ class account_invoice(models.Model):
     def _get_taxes_and_prices(self):
         """
         """
-
+        # we add and r.base because if not base amount no tax, this is used
+        # for eg, in invoice validation againsta afip, if invoice amount is
+        # cero, we should report any tax
         vat_taxes = self.tax_line.filtered(
             lambda r: (
-                r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat'))
+                r.tax_code_id.type == 'tax' and r.tax_code_id.tax == 'vat' and
+                r.base))
         vat_amount = sum(
             vat_taxes.mapped('amount'))
         vat_base_amount = sum(
@@ -660,12 +663,13 @@ class account_invoice(models.Model):
                     unconfigured_tax_codes.ids)))
 
         # Check invoice with amount
-        invoices_without_amount = self.search([
-            ('id', 'in', argentinian_invoices.ids),
-            ('amount_total', '=', 0.0)])
-        if invoices_without_amount:
-            raise Warning(_('Invoices ids %s amount is cero!') % (
-                invoices_without_amount.ids))
+        # this is not a required constraint
+        # invoices_without_amount = self.search([
+        #     ('id', 'in', argentinian_invoices.ids),
+        #     ('amount_total', '=', 0.0)])
+        # if invoices_without_amount:
+        #     raise Warning(_('Invoices ids %s amount is cero!') % (
+        #         invoices_without_amount.ids))
 
         # Check invoice requiring vat
 

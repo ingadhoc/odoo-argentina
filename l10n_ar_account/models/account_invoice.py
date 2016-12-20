@@ -139,9 +139,11 @@ class AccountInvoice(models.Model):
             lambda r: (
                 r.tax_id.tax_group_id.type == 'tax' and
                 r.tax_id.tax_group_id.tax == 'vat'))
+        # we add and "r.base" because only if a there is a base amount it is
+        # considered taxable, this is used for eg to validate invoices on afip
         vat_taxables = vat_taxes.filtered(
             lambda r: (
-                r.tax_id.tax_group_id.afip_code not in [0, 1, 2]))
+                r.tax_id.tax_group_id.afip_code not in [0, 1, 2]) and r.base)
 
         vat_amount = sum(vat_taxes.mapped('amount'))
         self.vat_tax_ids = vat_taxes

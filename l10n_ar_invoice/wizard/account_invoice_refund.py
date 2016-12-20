@@ -80,7 +80,10 @@ class account_invoice_refund(models.TransientModel):
             period = self.env['account.period'].with_context(
                 company_id=invoice.company_id.id).find(date)[:1]
             self.period = period.id
-        res = super(account_invoice_refund, self).compute_refund(data_refund)
+        # we send debit note so that if we create a refund from a refund
+        # it try to choose a debit note document class
+        res = super(account_invoice_refund, self.with_context(
+            document_type='debit_note')).compute_refund(data_refund)
         domain = res.get('domain', [])
         refund_invoices = invoice.search(domain)
         origin = invoice.number

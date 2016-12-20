@@ -412,7 +412,7 @@ print "Observaciones:", wscdc.Obs
                 incoterms_ds = inv.afip_incoterm_id.name
             else:
                 incoterms = incoterms_ds = None
-            if int(doc_afip_code) in [19, 20, 21] and tipo_expo == 1:
+            if int(doc_afip_code) in [19] and tipo_expo == 1:
                 permiso_existente = "N" or "S"     # not used now
             else:
                 permiso_existente = ""

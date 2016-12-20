@@ -885,3 +885,23 @@ class account_invoice(models.Model):
             if not self.afip_service_end:
                 self.afip_service_end = date_invoice + \
                     relativedelta(day=1, days=-1, months=+1)
+
+    @api.multi
+    @api.constrains('type', 'afip_document_class_id')
+    def check_invoice_type_document_type(self):
+        for rec in self:
+            document_type = rec.document_type
+            invoice_type = rec.type
+            if not document_type:
+                continue
+            elif document_type in [
+                    'debit_note', 'invoice'] and invoice_type in [
+                    'out_refund', 'in_refund']:
+                raise Warning(_(
+                    'You can not use a document class of type %s with a '
+                    'refund invoice') % document_type)
+            elif document_type == 'credit_note' and invoice_type in [
+                    'out_invoice', 'in_invoice']:
+                raise Warning(_(
+                    'You can not use a document class of type %s with a '
+                    'invoice') % document_type)

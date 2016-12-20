@@ -24,9 +24,13 @@ class account_invoice_refund(models.TransientModel):
     @api.onchange('invoice_id')
     def _onchange_invoice(self):
         journal_type = False
-        if self.invoice_id.type == 'out_refund' or 'out_invoice':
+        if self.invoice_id.type == 'out_refund':
+            journal_type = 'sale'
+        elif self.invoice_id.type == 'out_invoice':
             journal_type = 'sale_refund'
-        elif self.invoice_id.type == 'in_refund' or 'in_invoice':
+        elif self.invoice_id.type == 'in_refund':
+            journal_type = 'purchase'
+        elif self.invoice_id.type == 'in_invoice':
             journal_type = 'purchase_refund'
         # return {'domain': {'journal_id': price}}
         journals = self.env['account.journal'].search(
@@ -44,8 +48,8 @@ class account_invoice_refund(models.TransientModel):
                  ('company_id', '=', self.invoice_id.company_id.id),
                  ('point_of_sale_id', '=', point_of_sale.id),
                  ], limit=1)
-            if not journal and journals:
-                journal = journals[0]
+        if not journal and journals:
+            journal = journals[0]
         if journal:
             self.journal_id = journal.id
         return {'domain': {

@@ -5,11 +5,14 @@ try:
     from openupgradelib import openupgrade
 except ImportError:
     openupgrade = None
+import logging
+_logger = logging.getLogger(__name__)
 
 # campos renombrados en l10n_ar_invoice
 column_renames = {
     'res_partner': [
         ('document_type_id', 'main_id_category_id'),
+        ('document_number', 'main_id_number'),
     ],
 }
 
@@ -65,9 +68,25 @@ def post_init_hook(cr, registry):
         return False
     # write en vez de sql para que genere los campos por defecto necesarios
     if openupgrade.column_exists(cr, 'res_partner', 'document_number'):
-        cr.execute(
-            'select id, document_number, main_id_category_id from res_partner')
-        for partner_id, document_number, main_id_category_id in cr.fetchall():
-            if main_id_category_id and document_number:
-                registry['res.partner'].write(
-                    cr, 1, [partner_id], {'main_id_number': document_number})
+        # we make this so it ise much faster
+        openupgrade.logged_query(cr, """
+            INSERT into res_partner_id_number
+                (partner_id, category_id, name, sequence, create_uid,
+                    write_uid, create_date, write_date, active)
+            SELECT id, main_id_category_id, document_number, 10, 1, 1,
+                create_date, write_date, true
+                FROM res_partner
+                WHERE main_id_category_id is not null
+                    and document_number is not null
+            """,)
+    # cr.execute(
+    #     'select id, document_number, main_id_category_id from res_partner')
+    # for partner_id, document_number, main_id_category_id in cr.fetchall():
+    #     if main_id_category_id and document_number:
+    #         try:
+    #             registry['res.partner'].write(
+    #                 cr, 1, [partner_id], {
+    #                     'main_id_number': document_number})
+    #         except:
+    #             _logger.error(
+    #                 'Could not set document on partner_id %s' % partner_id)

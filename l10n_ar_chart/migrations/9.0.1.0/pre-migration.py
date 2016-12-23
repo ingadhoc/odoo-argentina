@@ -14,6 +14,7 @@ def uninstall_depreceated_chart_modules(cr):
         ('state', 'in', ('installed', 'to install', 'to upgrade'))]
     ids = ir_module_module.search(cr, SUPERUSER_ID, domain)
     ir_module_module.module_uninstall(cr, SUPERUSER_ID, ids)
+    ir_module_module.unlink(cr, SUPERUSER_ID, ids)
 
 
 @openupgrade.migrate()

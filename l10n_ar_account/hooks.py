@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 try:
     from openupgradelib.openupgrade_tools import table_exists
+    from openupgradelib import openupgrade
 except ImportError:
     table_exists = None
 
@@ -80,3 +81,39 @@ def post_init_hook(cr, registry):
     #                 'receiptbook_id': receiptbook_id,
     #                 'document_number': document_number,
     #             })
+    merge_refund_journals_to_normal(cr, registry)
+
+
+def merge_refund_journals_to_normal(cr, registry):
+    if openupgrade.column_exists(cr, 'account_journal', 'old_type'):
+        openupgrade.logged_query(cr, """
+            SELECT
+                id, point_of_sale_number, old_type, company_id
+            FROM
+                account_journal
+            WHERE old_type in ('sale_refund', 'purchase_refund')
+            """,)
+        journals_read = cr.fetchall()
+        for journal_read in journals_read:
+            (
+                from_journal_id,
+                point_of_sale_number,
+                old_type,
+                company_id) = journal_read
+            new_type = 'sale'
+            if old_type == 'purchase_refund':
+                new_type = 'purchase'
+            journals = registry['account.journal'].search(cr, 1, [
+                ('point_of_sale_number', '=', point_of_sale_number),
+                ('type', '=', new_type),
+                ('id', '!=', from_journal_id),
+                ('company_id', '=', company_id),
+            ])
+            # we only merge journals if we have one coincidence
+            if len(journals) == 1:
+                from_journal = registry['account.journal'].browse(
+                    cr, 1, from_journal_id)
+                to_journal = registry['account.journal'].browse(
+                    cr, 1, journals[0])
+                registry['account.journal'].merge_journals(
+                    cr, 1, from_journal, to_journal)

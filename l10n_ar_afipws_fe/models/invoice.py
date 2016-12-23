@@ -255,15 +255,15 @@ print "Observaciones:", wscdc.Obs
             else:
                 issuer = inv.company_id.partner_id
                 receptor = inv.commercial_partner_id
-            issuer_doc_code = str(issuer.document_type_id.afip_code)
-            cuit_emisor = issuer.document_number
+            issuer_doc_code = str(issuer.main_id_category_id.afip_code)
+            cuit_emisor = issuer.main_id_number
             if issuer_doc_code != '80' or not cuit_emisor:
                 raise Warning(_('Issuer must have a CUIT configured'))
 
-            receptor_doc_code = str(receptor.document_type_id.afip_code)
+            receptor_doc_code = str(receptor.main_id_category_id.afip_code)
             doc_tipo_receptor = receptor_doc_code or '99'
             doc_nro_receptor = (
-                receptor_doc_code and receptor.document_number or "0")
+                receptor_doc_code and receptor.main_id_number or "0")
             afip_doc_class = inv.document_type_id
             if (
                     afip_doc_class.document_letter_id.name in ['A', 'M'] and

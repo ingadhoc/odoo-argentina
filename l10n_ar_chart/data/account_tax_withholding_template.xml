@@ -13,7 +13,7 @@
             <field name="account_id" ref="base_retencion_ganancias_sufrida"/>
             <field name="refund_account_id" ref="base_retencion_ganancias_sufrida"/>
             <field name="type_tax_use">customer</field>
-            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_ganancias_sufrida"/>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_ganancias"/>
         </record>
 
         <record id="ri_tax_retencion_ganancias_aplicada" model="account.tax.template">
@@ -26,7 +26,7 @@
             <field name="account_id" ref="ri_retencion_ganancias_aplicada"/>
             <field name="refund_account_id" ref="ri_retencion_ganancias_aplicada"/>
             <field name="type_tax_use">supplier</field>
-            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_ganancias_aplicada"/>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_ganancias"/>
         </record>
 
     <!-- Retenciones iva -->
@@ -40,7 +40,7 @@
             <field name="account_id" ref="ri_retencion_iva_sufrida"/>
             <field name="refund_account_id" ref="ri_retencion_iva_sufrida"/>
             <field name="type_tax_use">customer</field>
-            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iva_sufrida"/>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iva"/>
         </record>
 
         <record id="ri_tax_retencion_iva_aplicada" model="account.tax.template">
@@ -53,7 +53,7 @@
             <field name="account_id" ref="ri_retencion_iva_aplicada"/>
             <field name="refund_account_id" ref="ri_retencion_iva_aplicada"/>
             <field name="type_tax_use">supplier</field>
-            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iva_aplicada"/>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iva"/>
         </record>
 
     <!-- Retenciones IIBB -->
@@ -67,7 +67,7 @@
             <!-- <field name="account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
             <!-- <field name="refund_account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
             <field name="type_tax_use">customer</field>
-            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iibb_sufrida"/>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iibb"/>
         </record>
 
         <record id="ri_tax_retencion_iibb_aplicada" model="account.tax.template">
@@ -80,7 +80,7 @@
             <!-- <field name="account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
             <!-- <field name="refund_account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
             <field name="type_tax_use">supplier</field>
-            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iibb_aplicada"/>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iibb"/>
         </record>
 
   </data>

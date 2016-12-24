@@ -82,6 +82,7 @@ def post_init_hook(cr, registry):
     #                 'document_number': document_number,
     #             })
     merge_refund_journals_to_normal(cr, registry)
+    map_tax_groups_to_taxes(cr, registry)
 
 
 def merge_refund_journals_to_normal(cr, registry):
@@ -127,7 +128,7 @@ def map_tax_groups_to_taxes(cr, registry):
             openupgrade.column_exists(cr, 'account_tax', 'tax_code_id') and
             openupgrade.table_exists(cr, 'account_tax_code')):
         openupgrade.logged_query(cr, """
-            SELECT at.id as tax_id, application, afip_code, type
+            SELECT at.id as tax_id, application, afip_code, tax, type
             FROM account_tax at
             INNER JOIN account_tax_code as atc on at.tax_code_id = atc.id
             """,)
@@ -137,15 +138,18 @@ def map_tax_groups_to_taxes(cr, registry):
                 tax_id,
                 application,
                 afip_code,
+                tax,
                 type
             ) = tax_read
             domain = [
                 ('application', '=', application),
+                ('tax', '=', tax),
                 ('type', '=', type),
             ]
-            if afip_code:
+            # because only vat and type tax should have afip_code
+            if afip_code and tax == 'vat' and type == 'tax':
                 domain += [('afip_code', '=', afip_code)]
-            tax_group_ids = registry['account.tax.group'].search(cr, 1, )
+            tax_group_ids = registry['account.tax.group'].search(cr, 1, domain)
             # we only assign tax group if we found one
             if len(tax_group_ids) == 1:
                 registry['account.tax'].write(

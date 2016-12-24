@@ -82,6 +82,7 @@ def post_init_hook(cr, registry):
     #                 'document_number': document_number,
     #             })
     merge_refund_journals_to_normal(cr, registry)
+    map_tax_groups_to_taxes(cr, registry)
 
 
 def merge_refund_journals_to_normal(cr, registry):
@@ -103,12 +104,15 @@ def merge_refund_journals_to_normal(cr, registry):
             new_type = 'sale'
             if old_type == 'purchase_refund':
                 new_type = 'purchase'
-            journals = registry['account.journal'].search(cr, 1, [
-                ('point_of_sale_number', '=', point_of_sale_number),
+            domain = [
                 ('type', '=', new_type),
                 ('id', '!=', from_journal_id),
                 ('company_id', '=', company_id),
-            ])
+            ]
+            if point_of_sale_number:
+                domain += [('point_of_sale_number', '=', point_of_sale_number)]
+
+            journals = registry['account.journal'].search(cr, 1, domain)
             # we only merge journals if we have one coincidence
             if len(journals) == 1:
                 from_journal = registry['account.journal'].browse(
@@ -117,3 +121,42 @@ def merge_refund_journals_to_normal(cr, registry):
                     cr, 1, journals[0])
                 registry['account.journal'].merge_journals(
                     cr, 1, from_journal, to_journal)
+
+
+def map_tax_groups_to_taxes(cr, registry):
+    if (
+            openupgrade.column_exists(cr, 'account_tax', 'tax_code_id') and
+            openupgrade.table_exists(cr, 'account_tax_code')):
+        # we make an union to add tax without tax code but with base code
+        openupgrade.logged_query(cr, """
+            SELECT at.id as tax_id, application, afip_code, tax, type
+            FROM account_tax at
+            INNER JOIN account_tax_code as atc on at.tax_code_id = atc.id
+            UNION
+            SELECT at.id as tax_id, application, afip_code, tax, type
+            FROM account_tax at
+            INNER JOIN account_tax_code as atc on at.base_code_id = atc.id and
+            at.tax_code_id is null
+            """,)
+        taxes_read = cr.fetchall()
+        for tax_read in taxes_read:
+            (
+                tax_id,
+                application,
+                afip_code,
+                tax,
+                type
+            ) = tax_read
+            domain = [
+                ('application', '=', application),
+                ('tax', '=', tax),
+                ('type', '=', type),
+            ]
+            # because only vat and type tax should have afip_code
+            if afip_code and tax == 'vat' and type == 'tax':
+                domain += [('afip_code', '=', afip_code)]
+            tax_group_ids = registry['account.tax.group'].search(cr, 1, domain)
+            # we only assign tax group if we found one
+            if len(tax_group_ids) == 1:
+                registry['account.tax'].write(
+                    cr, 1, tax_id, {'tax_group_id': tax_group_ids[0]})

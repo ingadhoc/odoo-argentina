@@ -127,10 +127,16 @@ def map_tax_groups_to_taxes(cr, registry):
     if (
             openupgrade.column_exists(cr, 'account_tax', 'tax_code_id') and
             openupgrade.table_exists(cr, 'account_tax_code')):
+        # we make an union to add tax without tax code but with base code
         openupgrade.logged_query(cr, """
             SELECT at.id as tax_id, application, afip_code, tax, type
             FROM account_tax at
             INNER JOIN account_tax_code as atc on at.tax_code_id = atc.id
+            UNION
+            SELECT at.id as tax_id, application, afip_code, tax, type
+            FROM account_tax at
+            INNER JOIN account_tax_code as atc on at.base_code_id = atc.id and
+            at.tax_code_id is null
             """,)
         taxes_read = cr.fetchall()
         for tax_read in taxes_read:

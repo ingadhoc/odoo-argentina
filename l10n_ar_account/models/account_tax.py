@@ -18,7 +18,7 @@ class AccountTaxGroup(models.Model):
         ('perception', 'Perception'),
         ('withholding', 'Withholding'),
         ('other', 'Other'),
-        ('view', 'View'),
+        # ('view', 'View'),
     ])
     tax = fields.Selection([
         ('vat', 'VAT'),

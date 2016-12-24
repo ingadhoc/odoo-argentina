@@ -7,6 +7,7 @@
             <field name="sequence">10</field>
         </record> -->
     <!-- IVAS -->
+    <!-- no los unificamos porque deberíamos mover afip_code a tax y deberiamos hacer que se setee en cada impuesto, pero si es neccesario lo podemos hacer sin problemas pero deberiamos cambiar varias cosas del codigo -->
         <record model="account.tax.group" id="tax_group_iva_no_corresponde">
             <field name="name">IVA No Corresponde</field>
             <field name="afip_code">0</field>

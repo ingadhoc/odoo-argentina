@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from openerp import models, api, _
+from odoo import models, api, _
 from pyafipws.padron import PadronAFIP
-from openerp.exceptions import Warning
+from odoo.exceptions import Warning
 import logging
 _logger = logging.getLogger(__name__)
 

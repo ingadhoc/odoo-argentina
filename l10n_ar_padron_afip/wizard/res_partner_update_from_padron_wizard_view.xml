@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data>
         <!-- the sequence of the configuration sub menu is 30 -->
         <!-- <menuitem id='root_menu' name='Tools' parent='base.menu_base_partner' sequence="25"/> -->
@@ -84,4 +84,4 @@
 
     </data>
 
-</openerp>
+</odoo>

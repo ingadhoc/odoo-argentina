@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 
         <record id="view_afip_point_of_sale_form" model="ir.ui.view">
@@ -55,6 +55,6 @@
         <menuitem name="Point Of Sales" action="act_afip_point_of_sale" id="menu_action_afip_point_of_sale" sequence="10" parent="menu_afip_config"/>
 
     </data>
-</openerp>
+</odoo>
 <!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
      -->

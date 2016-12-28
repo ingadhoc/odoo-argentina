@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data noupdate="True">
         <record model='afip.document_letter' id='dl_a'>
             <field name='name'>A</field>
@@ -43,4 +43,4 @@
             <field name='receptor_ids' eval="[(6, 0, [ref('res_IVARI'), ref('res_IVANR'), ref('res_RM'), ref('res_IVARNI'), ref('res_IVAE')])]"/>
         </record>
     </data>
-</openerp>
+</odoo>

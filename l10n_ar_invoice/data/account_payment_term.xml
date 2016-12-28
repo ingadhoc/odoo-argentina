@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data noupdate="True">
     <!-- TODO perhups make a wizard that helps you changing base currency -->
         <record id='payment_term_30_60_90' model='account.payment.term'>
@@ -135,5 +135,5 @@
         </record> 
 
     </data>
-</openerp>
+</odoo>
  

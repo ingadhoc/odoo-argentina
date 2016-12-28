@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data noupdate="True">
         <record model='account.fiscal.position' id='fiscal_position_zona_franca'>
             <field name='afip_code'>Z</field>
@@ -26,4 +26,4 @@
             <field name='name'>Operaciones de Canje</field>
         </record>
     </data>
-</openerp>
+</odoo>

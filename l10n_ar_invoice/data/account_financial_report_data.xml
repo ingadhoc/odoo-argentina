@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="1">
         <!-- 
             Financial Reports
@@ -61,5 +61,5 @@
             <field name="parent_id" ref="account.account_financial_report_balancesheet0"/>
         </record>
     </data>
-</openerp>
+</odoo>
 

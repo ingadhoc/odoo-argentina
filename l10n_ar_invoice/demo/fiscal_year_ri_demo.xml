@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
         <!-- because we want this module to be re initeable, we dont upload with company because it raise an error, we set admin to each company, uplad data and then send backu to main company  -->
         <record id="base.user_root" model="res.users">
@@ -136,4 +136,4 @@
         </record>
 
     </data>
-</openerp>
+</odoo>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
     <!-- RI Sale invoices -->
         <!-- With IVA 21 -->
@@ -203,4 +203,4 @@
         <workflow action="invoice_open" model="account.invoice" ref="demo_ri_refund_0"/>
 
     </data>
-</openerp>
+</odoo>

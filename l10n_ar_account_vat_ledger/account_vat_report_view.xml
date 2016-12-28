@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<openerp>
+<odoo>
 	<data>
         <record model='ir.ui.view' id='account_vat_ledger_tree'>
             <field name='name'>Account VAT Ledger</field> 
@@ -143,4 +143,4 @@
                   parent="account_vat_ledger_parent_menu"
                   sequence="10"/>                          
 	</data>
-</openerp>
+</odoo>

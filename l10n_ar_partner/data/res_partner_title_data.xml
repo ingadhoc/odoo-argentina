@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
+    <data noupdate="1">
 
         <record model="res.partner.title" id="sa">
             <field name="name">Sociedad Anónima</field>
@@ -68,4 +68,4 @@
         </record>
 
     </data>
-</openerp>
+</odoo>

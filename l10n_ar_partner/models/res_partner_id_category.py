@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import api, models, fields
-from openerp.osv import expression
+from odoo import api, models, fields
+from odoo.osv import expression
 
 
 class ResPartnerIdCategory(models.Model):

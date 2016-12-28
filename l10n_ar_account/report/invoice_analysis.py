@@ -22,9 +22,9 @@ class AccountInvoiceLineReport(models.Model):
         'Gross Subtotal', readonly=True, group_operator="sum")
     discount_amount = fields.Float(
         'Discount Amount', readonly=True, group_operator="sum")
-    period_id = fields.Many2one('account.period', 'Period', readonly=True)
-    fiscalyear_id = fields.Many2one(
-        'account.fiscalyear', 'Fiscal Year', readonly=True)
+    # period_id = fields.Many2one('account.period', 'Period', readonly=True)
+    # fiscalyear_id = fields.Many2one(
+    #     'account.fiscalyear', 'Fiscal Year', readonly=True)
     date_due = fields.Date('Due Date', readonly=True)
     number = fields.Char(string='Number', size=128, readonly=True)
     state = fields.Selection([
@@ -35,6 +35,8 @@ class AccountInvoiceLineReport(models.Model):
         ('paid', 'Done'),
         ('cancel', 'Cancelled')
     ], 'Invoice State', readonly=True)
+    document_type_id = fields.Many2one('account.document.type', readonly=True)
+    date = fields.Date('Accounting Date', readonly=True)
     date_invoice = fields.Date('Date Invoice', readonly=True)
     date_invoice_from = fields.Date(
         compute=lambda *a, **k: {}, method=True, string="Date Invoice from")
@@ -42,7 +44,7 @@ class AccountInvoiceLineReport(models.Model):
         compute=lambda *a, **k: {}, method=True, string="Date Invoice to")
     amount_total = fields.Float(
         'Invoice Total', readonly=True, group_operator="sum")
-    ean13 = fields.Char('EAN13', size=13, help='Barcode', readonly=True)
+    barcode = fields.Char('Barcode', size=13, readonly=True)
     product_id = fields.Many2one('product.product', 'Product', readonly=True)
     name_template = fields.Char(
         string="Product by text", size=128, readonly=True)
@@ -64,6 +66,7 @@ class AccountInvoiceLineReport(models.Model):
         ('in_refund', 'Supplier Refund'),
     ], 'Type', readonly=True)
     user_id = fields.Many2one('res.users', 'Salesman', readonly=True)
+    state_id = fields.Many2one('res.country.state', 'State', readonly=True)
     company_id = fields.Many2one('res.company', 'Company', readonly=True)
     product_category_id = fields.Many2one(
         'product.category', 'Category', readonly=True)
@@ -111,37 +114,40 @@ class AccountInvoiceLineReport(models.Model):
         "account_invoice_line"."partner_id" AS "partner_id",--n
         "account_invoice_line"."product_id" AS  "product_id", --n
         "account_invoice"."date_due" AS "date_due",
-        COALESCE("account_invoice"."afip_document_number",
+        COALESCE("account_invoice"."document_number",
         "account_invoice"."number") AS "number",
         "account_invoice"."journal_id" AS "journal_id",--n
         "account_invoice"."user_id" AS "user_id",--n
         "account_invoice"."company_id" AS "company_id",--n
         "account_invoice"."type" AS "type",
+        "account_invoice"."state_id" AS "state_id",--n
 
+        "account_invoice"."document_type_id" AS "document_type_id",
         "account_invoice"."state" AS "state",
+        "account_invoice"."date" AS "date",
         "account_invoice"."date_invoice" AS "date_invoice",
 
         "account_invoice"."amount_total" AS "amount_total",
-        "product_product"."ean13" AS "ean13",
+        "product_product"."barcode" AS "barcode",
         "product_product"."name_template" AS "name_template",
 
 
         "product_template"."categ_id" as "product_category_id", --n
         "res_partner"."customer" AS "customer",
-        "res_partner"."supplier" AS "supplier",
-        "account_invoice"."period_id" AS "period_id",
-        "account_period"."fiscalyear_id" AS "fiscalyear_id"
+        "res_partner"."supplier" AS "supplier"
+        -- "account_invoice"."period_id" AS "period_id",
+        -- "account_period"."fiscalyear_id" AS "fiscalyear_id"
 
-        FROM "public"."account_invoice_line" "account_invoice_line"
-        INNER JOIN "public"."account_invoice" "account_invoice"
+        FROM "account_invoice_line" "account_invoice_line"
+        INNER JOIN "account_invoice" "account_invoice"
         ON ("account_invoice_line"."invoice_id" = "account_invoice"."id")
-        LEFT JOIN "public"."product_product" "product_product"
+        LEFT JOIN "product_product" "product_product"
         ON ("account_invoice_line"."product_id" = "product_product"."id")
-        INNER JOIN "public"."res_partner" "res_partner"
+        INNER JOIN "res_partner" "res_partner"
         ON ("account_invoice"."partner_id" = "res_partner"."id")
-        LEFT JOIN "public"."product_template" "product_template"
+        LEFT JOIN "product_template" "product_template"
         ON ("product_product"."product_tmpl_id" = "product_template"."id")
-        INNER JOIN "public"."account_period" "account_period"
-        ON ("account_invoice"."period_id" = "account_period"."id")
+        -- INNER JOIN "public"."account_period" "account_period"
+        -- ON ("account_invoice"."period_id" = "account_period"."id")
         ORDER BY number ASC
               )""")

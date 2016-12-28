@@ -17,3 +17,4 @@ from . import account_invoice_tax
 from . import account_invoice
 from . import product_uom
 from . import account_chart_template
+from . import product_template

@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <tree colors="blue:state == 'draft';gray:state in ('cancel','paid');black:state in ('proforma','proforma2')" string="Invoices Line Analysis">
                 <field name="number"/>
+                <!-- <field name="date"/> -->
                 <field name="date_invoice"/>
                 <field name="journal_id"/>
                 <field name="account_analytic_id"/>
@@ -70,18 +71,20 @@
                 <field name="company_id"/>
                 <field name="state_id"/>
                 <field name="user_id" />
-                <field name="period_id" />
-                <field name="fiscalyear_id" />
+                <!-- <field name="period_id" /> -->
+                <!-- <field name="fiscalyear_id" /> -->
                 <field name="product_id"/>
+                <field name="document_type_id"/>
                 <field name="product_category_id" filter_domain="[('product_category_id', 'child_of', self)]"/>
                 <field name="partner_id"/>
                 <!-- <field name="partner_category_ids"/> -->
                 <group expand="1" string="Group By...">
                     <filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>
                     <filter string="Salesman" name='user' context="{'group_by':'user_id'}"/>
-                    <filter string="Period" name='period_id' context="{'group_by':'period_id'}"/>
-                    <filter string="Fiscal Year" name='fiscalyear_id' context="{'group_by':'fiscalyear_id'}"/>
+                    <!-- <filter string="Period" name='period_id' context="{'group_by':'period_id'}"/> -->
+                    <!-- <filter string="Fiscal Year" name='fiscalyear_id' context="{'group_by':'fiscalyear_id'}"/> -->
                     <filter string="State" context="{'group_by':'state_id'}"/>
+                    <filter string="Document Type" context="{'group_by':'document_type_id'}"/>
                     <filter string="Product" context="{'group_by':'product_id'}"/>
                     <filter string="Product Category" name="category_product" context="{'group_by':'product_category_id'}"/>
                     <filter string="State" icon="terp-stock_effects-object-colorize" context="{'group_by':'state'}"/>
@@ -101,11 +104,11 @@
         <field name="name">Invoices Lines Analysis</field>
         <field name="res_model">account.invoice.line.report</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,graph</field>
+        <field name="view_mode">tree,pivot,graph</field>
         <field name="context">{}</field>
     </record>
 
-    <menuitem action="action_account_invoice_line_report_all" id="menu_action_account_invoice_line_report_all" name="Invoices Lines Analysis" parent="account.menu_finance_reporting" sequence="0"/>
+    <menuitem action="action_account_invoice_line_report_all" id="menu_action_account_invoice_line_report_all" name="Invoices Lines Analysis" parent="account.account_reports_business_intelligence_menu" sequence="10"/>
 
     </data>
 </openerp>

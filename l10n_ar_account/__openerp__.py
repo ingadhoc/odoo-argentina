@@ -51,9 +51,10 @@
         'view/afip_responsability_type_view.xml',
         'view/account_document_letter_view.xml',
         'view/account_document_type_view.xml',
+        'view/product_template_view.xml',
         'res_config_view.xml',
         # TODO migrar
-        # 'report/invoice_analysis.xml',
+        'report/invoice_analysis.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [

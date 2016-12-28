@@ -420,20 +420,20 @@ class AccountInvoice(models.Model):
                     ', '.join(unconfigured_tax_groups.mapped(
                         lambda x: '%s (%s)' % (x.name, x.id))))))
 
-        # self.env['account.invoice.line'].search([
-        #     ('invoice_id', 'in', argentinian_invoices.ids),
-        #     ('invoice_line_tax_ids.tax_group_id', 'in',
-        #         argentinian_invoices.ids),
-        #     ])
-        # for invoice in argentinian_invoices:
-        #     # we check vat base amount is equal to amount untaxed
-        #     # usamos una precision de 0.1 porque en algunos casos no pudimos
-        #     # arreglar pbñe,as de redondedo
-        #     # TODO usar round
-        #     if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
-        #         raise UserError(_(
-        #             "Invoice with ID %i has some lines without vat Tax ") % (
-        #                 invoice.id))
+        self.env['account.invoice.line'].search([
+            ('invoice_id', 'in', argentinian_invoices.ids),
+            ('invoice_line_tax_ids.tax_group_id', 'in',
+                argentinian_invoices.ids),
+        ])
+        for invoice in argentinian_invoices:
+            # we check vat base amount is equal to amount untaxed
+            # usamos una precision de 0.1 porque en algunos casos no pudimos
+            # arreglar pbñe,as de redondedo
+            # TODO usar round
+            if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
+                raise UserError(_(
+                    "Invoice with ID %i has some lines without vat Tax ") % (
+                        invoice.id))
 
         # Check except vat invoice
         afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']

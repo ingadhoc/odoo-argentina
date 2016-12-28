@@ -326,10 +326,14 @@ print "Observaciones:", wscdc.Obs
             if inv.afip_auth_code and inv.afip_auth_code_due:
                 continue
 
+            if inv.journal_id.point_of_sale_type != 'electronic':
+                continue
             afip_ws = inv.journal_id.afip_ws
             # Ignore invoice if not ws on point of sale
             if not afip_ws:
-                continue
+                raise UserError(_(
+                    'If you use electronic journals (invoice id %s) you need '
+                    'configure AFIP WS on the journal') % (inv.id))
 
             # get the electronic invoice type, point of sale and afip_ws:
             commercial_partner = inv.commercial_partner_id

@@ -27,20 +27,16 @@ class res_partner(osv.osv):
             res.remove('vat_subjected')
         return res
 
-    def _get_formated_vat(self, cr, uid, ids, name, args, context=None):
+    def _get_formated_vat(self):
         """
         Retorna el CUIT formateado en forma oficial (XX-XXXXXXXX-X).
         """
         res = {}
-        for partner in self.browse(cr, uid, ids):
+        for partner in self.browse():
             res[partner.id] = self.format_vat_ar(partner.vat)
         return res
 
-    _columns = {
-        'formated_vat': fields.function(
-            _get_formated_vat, method=True,
-            string='Printeable VAT', type="char"),
-    }
+    formated_vat = fields.Chars(compute=_get_formated_vat, string='Printeable VAT')
 
     def format_vat_ar(self, vat):
         cuit_parse = _re_ar_vat.match(vat) if vat else None

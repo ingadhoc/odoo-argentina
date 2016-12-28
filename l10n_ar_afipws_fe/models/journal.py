@@ -3,7 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, api
+from openerp import models, api, fields
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -26,3 +26,10 @@ class account_journal(models.Model):
             letters = letters.filtered(
                 lambda r: r.name == 'E')
         return letters
+
+    # only to make migration easier, we already start the other fields, thisone
+    # was missing
+    afip_ws = fields.Selection(
+        related='point_of_sale_id.afip_ws',
+        store=True,
+    )

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data noupdate="True">
         <record model='product.uom' forcecreate="False" id='product.product_uom_cm'>
             <field name='afip_code'>20</field>
@@ -59,4 +59,4 @@
             <field name='afip_code'>7</field>
         </record> 
     </data>
-</openerp>    
+</odoo>    

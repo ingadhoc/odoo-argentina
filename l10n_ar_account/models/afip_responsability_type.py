@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import fields, models
-# from openerp.exceptions import UserError
+from odoo import fields, models
+# from odoo.exceptions import UserError
 
 
 class AfipresponsabilityType(models.Model):

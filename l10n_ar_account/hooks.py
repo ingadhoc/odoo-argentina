@@ -29,18 +29,20 @@ def post_init_hook(cr, registry):
     if not table_exists:
         return False
     # write en vez de sql para que genere los campos por defecto necesarios
-    query = (
-        "SELECT aj.id, apos.number, apos.document_sequence_type, apos.type "
-        "FROM account_journal aj INNER JOIN afip_point_of_sale apos "
-        "ON aj.point_of_sale_id = apos.id")
-    if table_exists(cr, 'afip_point_of_sale'):
-        cr.execute(query)
-        for journal_id, number, document_sequence_type, type in cr.fetchall():
-            registry['account.journal'].write(cr, 1, [journal_id], {
-                'point_of_sale_type': type,
-                'point_of_sale_number': number,
-                'document_sequence_type': document_sequence_type,
-            })
+    # we where using this but we decide to make it easier and change on v8
+    # using related fields
+    # query = (
+    #     "SELECT aj.id, apos.number, apos.document_sequence_type, apos.type "
+    #     "FROM account_journal aj INNER JOIN afip_point_of_sale apos "
+    #     "ON aj.point_of_sale_id = apos.id")
+    # if table_exists(cr, 'afip_point_of_sale'):
+    #     cr.execute(query)
+    #     for journal_id, number, doc_sequence_type, type in cr.fetchall():
+    #         registry['account.journal'].write(cr, 1, [journal_id], {
+    #             'point_of_sale_type': type,
+    #             'point_of_sale_number': number,
+    #             'document_sequence_type': doc_sequence_type,
+    #         })
 
     # TODO choose:
     # odoo migration delete vouchers that where moved to payments so we make

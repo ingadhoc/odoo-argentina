@@ -30,7 +30,7 @@ class AccountJournal(models.Model):
         ('online', 'Online'),
         # Agregados por otro modulo
         # para evitar errores con migracion, luego vemos
-        ('electronic', 'Electronic'),
+        # ('electronic', 'Electronic'),
         # ('fiscal_printer', 'Fiscal Printer'),
     ]
 

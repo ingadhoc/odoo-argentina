@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (C), 2012, OpenERP - Team de Localización Argentina.
+ https://launchpad.net/~openerp-l10n-ar-localization
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<openerp>
+    <data>
+
+        <record model="res.country.state" id="demo_CBA">
+            <field name="name">Ciudad Autónoma de Buenos Aires</field>
+            <field name="code">ABA</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">0</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_B">
+            <field name="name">Buenos Aires</field>
+            <field name="code">B</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">1</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_X">
+            <field name="name">Córdoba</field>
+            <field name="code">X</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">3</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_S">
+            <field name="name">Santa Fe</field>
+            <field name="code">S</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">12</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_C">
+            <field name="name">Capital Federal</field>
+            <field name="code">C</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">0</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_M">
+            <field name="name">Mendoza</field>
+            <field name="code">M</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">7</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_T">
+            <field name="name">Tucumán</field>
+            <field name="code">T</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">14</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_E">
+            <field name="name">Entre Ríos</field>
+            <field name="code">E</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">5</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_A">
+            <field name="name">Salta</field>
+            <field name="code">A</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">9</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_N">
+            <field name="name">Misiones</field>
+            <field name="code">N</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">19</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_H">
+            <field name="name">Chaco</field>
+            <field name="code">H</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">16</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_W">
+            <field name="name">Corrientes</field>
+            <field name="code">W</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">4</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_G">
+            <field name="name">Santiago del Estero</field>
+            <field name="code">G</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">13</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_Y">
+            <field name="name">Jujuy</field>
+            <field name="code">Y</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">6</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_J">
+            <field name="name">San Juan</field>
+            <field name="code">J</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">10</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_R">
+            <field name="name">Río Negro</field>
+            <field name="code">R</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">22</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_P">
+            <field name="name">Formosa</field>
+            <field name="code">P</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">18</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_Q">
+            <field name="name">Neuquén</field>
+            <field name="code">Q</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">20</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_U">
+            <field name="name">Chubut</field>
+            <field name="code">U</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">17</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_D">
+            <field name="name">San Luis</field>
+            <field name="code">D</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">11</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_K">
+            <field name="name">Catamarca</field>
+            <field name="code">K</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">2</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_F">
+            <field name="name">La Rioja</field>
+            <field name="code">F</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">8</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_L">
+            <field name="name">La Pampa</field>
+            <field name="code">L</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">21</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_Z">
+            <field name="name">Santa Cruz</field>
+            <field name="code">Z</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">23</field> -->
+        </record>
+
+        <record model="res.country.state" id="demo_V">
+            <field name="name">Tierra del Fuego</field>
+            <field name="code">V</field>
+            <field name="country_id" ref="base.ar"/>
+            <!-- <field name="afip_code">24</field> -->
+        </record>
+
+    </data>
+</openerp>

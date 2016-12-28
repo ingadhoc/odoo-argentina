@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_invoice_filter" model="ir.ui.view">
+            <field name="name">l10n_ar.invoice.search</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <field name="number" position="attributes">
+                    <attribute name="filter_domain">['|','|','|','|', ('afip_document_number','ilike',self), ('number','ilike',self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', self)]</attribute>
+                </field>
+                <field name="partner_id" position="after">
+                    <field name="afip_document_class_id"/>
+                </field>
+                <group string="Group By">
+                    <filter string="Document Type" domain="[]" context="{'group_by':'afip_document_class_id'}"/>
+                    <filter string="State" domain="[]" context="{'group_by':'state_id'}"/>
+                </group>
+            </field>
+        </record>
+
+        <record id="invoice_tree" model="ir.ui.view">
+            <field name="name">l10n_ar.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="reference"/>
+                </field>
+                <field name="origin" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="number" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="number" position="after">
+                    <field name="afip_document_class_id" invisible="1"/>
+                    <field name="document_number"/>
+                </field>
+            </field>
+        </record>
+            
+        <!-- add document number on paymentrs tree view. We make it in a separete view because portal users cant see this tag -->
+        <record id="view_invoice_payment_doc_number_form" model="ir.ui.view">
+            <field name="name">l10n_ar.invoice.payment_doc_number.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="groups_id" eval="[(4, ref('base.group_user'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree[@string='Payments']//field[@name='move_id']" position="after">
+                    <field name="document_number"/>
+                </xpath>
+            </field>
+        </record>       
+
+        <record id="view_invoice_form" model="ir.ui.view">
+            <field name="name">l10n_ar.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="available_journal_document_class_ids" invisible="1"/>
+                    <field name="point_of_sale_type" invisible="1"/>
+                    <field name="use_documents" invisible="1"/>
+                    <field name="afip_document_number" invisible="1"/>
+                    <field name="internal_number" invisible="1"/>
+                    <field name="use_argentinian_localization" invisible="1"/>
+                    <field name="afip_document_class_id" invisible="1"/>
+                    <field name="document_type" invisible="1"/>
+                </form>
+
+                <button string="Print" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('sent','=',True), ('state', 'not in', ['open','paid'])]}</attribute>
+                </button>
+                <button string="Print Invoice" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('sent','=',False), ('state', 'not in', ['open','paid'])]}</attribute>
+                </button>
+
+                <xpath expr="//page[@string='Other Info']//field[@name='company_id']" position="after">
+                    <field name="vat_discriminated"/>
+                    <field name="responsability_id" states="open,paid"/>
+                </xpath>
+
+                <div groups="base.group_multi_currency" position="inside">
+                    <field name="currency_rate" class="oe_inline"/>
+                </div>
+
+                <field name="fiscal_position" position="after">
+                    <field name="reference"/>
+                    <field name="afip_incoterm_id"/>
+                    <field name='afip_concept' attrs="{'invisible':[('point_of_sale_type', 'not in', ['online', 'electronic'])]}"/>
+                    <field name='afip_service_start' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])]}"/>
+                    <field name='afip_service_end' attrs="{'invisible':[('afip_concept','not in',['2', '3', '4'])]}"/>
+                </field>
+                <xpath expr="//page[@string='Other Info']//field[@name='name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <field name="number" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="number" position="after">
+                    <field name="document_number" class="oe_inline"/>
+                </field>
+
+                <!-- Esto es por un mini bug de odoo ya que no se deberia poder cabmiar de diario y que se mantenga secuencia o numeraion de otro diario, hay que exigir borrar los numeros  -->
+                <field name="journal_id" position="attributes">
+                    <attribute name="attrs">{'readonly':['|','|',('state','!=','draft'),('afip_document_number','!=',False),('internal_number','!=',False)]}</attribute>
+                </field>
+
+                <field name="journal_id" position="after">
+                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)],'readonly':['|',('state','!=','draft'),('afip_document_number','!=',False)]}" domain="[('id','in',available_journal_document_class_ids[0][2])]"/>
+                </field>    
+
+                <label string="Draft Refund" position="after">
+                        <label string="- Next Number: " attrs="{'invisible': ['|',('document_number','!=',False),('state','!=','draft')]}" class="oe_inline"/>
+                        <field name="next_invoice_number" attrs="{'invisible': ['|',('document_number','!=',False),('state','!=','draft')]}" class="oe_inline"/>
+                </label>
+           
+            </field>
+        </record>
+
+        <!-- add document number on paymentrs tree view. We make it in a separete view because portal users cant see this tag -->
+        <record id="view_invoice_supplier_payment_doc_number_form" model="ir.ui.view">
+            <field name="name">l10n_ar.invoice.payment_doc_number.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="groups_id" eval="[(4, ref('base.group_user'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree[@string='Payments']//field[@name='move_id']" position="after">
+                    <field name="document_number"/>
+                </xpath>
+            </field>
+        </record>      
+
+        <record id="view_supplier_invoice_form" model="ir.ui.view">
+            <field name="name">l10n_ar.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="available_journal_document_class_ids" invisible="1"/>
+                    <field name="use_documents" invisible="1"/>
+                    <field name="afip_document_number" invisible="1"/>
+                    <field name="internal_number" invisible="1"/>
+                    <field name="use_argentinian_localization" invisible="1"/>
+                    <field name="afip_document_class_id" invisible="1"/>
+                    <field name="document_type" invisible="1"/>
+                </form>
+
+                <field name="supplier_invoice_number" position="attributes">
+                    <attribute name="attrs">{'required':[('use_documents','=',True)]}</attribute>
+                </field>
+
+                <field name="number" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="payment_term" position="after">
+                    <field name="responsability_id" states="open,paid"/>
+                </field>
+                <field name="number" position="after">
+                    <field name="document_number" class="oe_inline"/>
+                </field>
+
+                <field name="check_total" position="before">
+                    <field name="currency_rate" groups="base.group_multi_currency" />
+                </field>
+
+                <!-- Esto es por un mini bug de odoo ya que no se deberia poder cabmiar de diario y que se mantenga secuencia o numeraion de otro diario, hay que exigir borrar los numeros  -->
+                <field name="journal_id" position="attributes">
+                    <attribute name="attrs">{'readonly':['|','|',('state','!=','draft'),('afip_document_number','!=',False),('internal_number','!=',False)]}</attribute>
+                </field>
+
+                <field name="journal_id" position="after">
+                    <field name="journal_document_class_id" attrs="{'invisible':[('use_documents','=',False)],'required':[('use_documents','=',True)],'readonly':['|',('state','!=','draft'),('afip_document_number','!=',False)]}" domain="[('id','in',available_journal_document_class_ids[0][2])]"/>
+                </field>    
+
+            </field>
+        </record>
+
+    </data>
+</openerp>

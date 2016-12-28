@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_afip_document_class_form" model="ir.ui.view">
+            <field name="name">afip.document_class.form</field>
+            <field name="model">afip.document_class</field>
+            <field name="arch" type="xml">
+                <form string="AFIP Document Class">
+                    <group>
+                        <field name="name"/>
+                        <field name='afip_code'/>
+                        <field name='doc_code_prefix'/>
+                        <field name='document_letter_id'/>
+                        <field name='report_name'/>
+                        <field name='document_type'/>
+                        <field name='active'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_afip_document_class_tree" model="ir.ui.view">
+            <field name="name">afip.document_class.tree</field>
+            <field name="model">afip.document_class</field>
+            <field name="arch" type="xml">
+                <tree string="AFIP Document Class">
+                    <field name="name"/>
+                    <field name="afip_code"/>
+                    <field name="doc_code_prefix"/>
+                    <field name="document_letter_id"/>
+                    <field name='report_name'/>
+                    <field name='document_type'/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_afip_document_class">
+            <field name="name">AFIP Document Class</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">afip.document_class</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Document Classes" action="act_afip_document_class" id="menu_action_afip_document_class" sequence="50" parent="menu_afip_config"/>
+
+    </data>
+</openerp>
+<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
+     -->

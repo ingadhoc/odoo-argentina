@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_afip_responsability_manager,afip.responsability.manager,model_afip_responsability,account.group_account_manager,1,1,1,1
+access_afip_responsability_user,afip.responsability.user,model_afip_responsability,,1,0,0,0
+access_afip_document_type_manager,afip.document_type.manager,model_afip_document_type,account.group_account_manager,1,1,1,1
+access_afip_document_type_user,afip.document_type.user,model_afip_document_type,,1,0,0,0
+access_afip_document_class_manager,afip.document_class.manager,model_afip_document_class,account.group_account_manager,1,1,1,1
+access_afip_document_class_user,afip.document_class.user,model_afip_document_class,,1,0,0,0
+access_afip_document_letter_manager,afip.document_letter.manager,model_afip_document_letter,account.group_account_manager,1,1,1,1
+access_afip_document_letter_user,afip.document_letter.user,model_afip_document_letter,,1,0,0,0
+access_journal_afip_document_class_manager,journal_afip_document_class.manager,model_account_journal_afip_document_class,account.group_account_manager,1,1,1,1
+access_journal_afip_document_class_user,journal_afip_document_class.user,model_account_journal_afip_document_class,,1,0,0,0
+access_afip_point_of_sale.manager,afip.point_of_sale.manager,model_afip_point_of_sale,account.group_account_manager,1,1,1,1
+access_afip_point_of_sale.user,afip.point_of_sale.user,model_afip_point_of_sale,,1,0,0,0
+access_afip_incoterm.manager,afip.incoterm.manager,model_afip_incoterm,account.group_account_manager,1,1,1,1
+access_afip_incoterm.user,afip.incoterm.user,model_afip_incoterm,,1,0,0,0
+account_invoice_line_report,account.invoice.line.report,model_account_invoice_line_report,account.group_account_invoice,1,0,0,0

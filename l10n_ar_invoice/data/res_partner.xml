@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="True">
+        <record model='res.partner' id='par_cfa'>
+            <field name='name'>Consumidor Final Anónimo</field>
+            <field name='responsability_id' ref='res_CF'/>
+            <field name='document_type_id' ref='dt_Sigd'/>
+            <field name='document_number'>0</field>
+        </record>
+        <record id="partner_afip" model="res.partner">
+            <field name="name">AFIP</field>
+            <field name="is_company" eval="True"/>
+            <field name="customer" eval="True"/>
+            <field name="supplier" eval="True"/>
+            <field name="document_number">33693450239</field>
+            <field name='document_type_id' ref="dt_CUIT"/>
+            <field name='vat'>AR33693450239</field>
+        </record>
+    </data>
+</openerp>
+ 

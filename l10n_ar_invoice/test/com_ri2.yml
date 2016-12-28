@@ -1,0 +1,72 @@
+- Setup wizard to select argentine chart
+- !record {model: account.installer, id: acc_wiz_ivari2 }:
+        company_id: com_ivari2
+        charts: l10n_ar_chart_generic
+
+- Execute wizard to create generic chart.
+- !python {model: account.installer }: |
+    self.view_init(cr, uid, [ref("acc_wiz_ivari2")], {})
+    self.execute(cr, uid, [ref("acc_wiz_ivari2")], {})
+
+- Setup wizard to create generic chart.
+- !record {model: wizard.multi.charts.accounts, id: cha_wiz_ivari2 }:
+        chart_template_id: l10n_ar_chart_generic.ri_l10nAR_chart_template
+        company_id: com_ivari2
+        bank_accounts_id: []
+        code_digits: 8
+        currency_id: 1
+
+- Execute wizard to create generic chart.
+- !python {model: wizard.multi.charts.accounts }: |
+    r = self.onchange_company_id(cr, uid, [ref("cha_wiz_ivari2")], ref("com_ivari2"))
+    self.write(cr, uid, [ref("cha_wiz_ivari2")], r['value'])
+    r = self.onchange_chart_template_id(cr, uid, [ref("cha_wiz_ivari2")], ref("l10n_ar_chart_generic.ri_l10nAR_chart_template"))
+    self.write(cr, uid, [ref("cha_wiz_ivari2")], r['value'])
+    self.execute(cr, uid, [ref("cha_wiz_ivari2")], {})
+
+- Check if chart has been created.
+- !assert {model: wizard.multi.charts.accounts, id: cha_wiz_ivari2, string: Select VAT taxes }:
+  - sale_tax.id == ref("l10n_ar_chart_generic.ri_tax_vat_21_ventas")
+  - purchase_tax.id == ref("l10n_ar_chart_generic.ri_tax_vat_21_compras")
+
+- Setup wizard to create journals for responsable inscripto
+- !record {model: l10n_ar_invoice.config, id: inv_wiz_ivari2 }:
+        company_id: com_ivari2
+        cuit: 20111111112
+        iibb: 1248845-03
+        start_date: 2011-09-01
+        do_export: True
+        remove_old_journals: True
+        responsability_id: !ref {model: afip.responsability, search: "[('name','=','IVA Responsable Inscripto')]"}
+
+- Execute Wizard to create journals for responsable inscripto
+- !python {model: l10n_ar_invoice.config }: |
+    self.view_init(cr, uid, [ref("inv_wiz_ivari2")], {})
+    self.update_journals(cr, uid, [ref("inv_wiz_ivari2")], {})
+    self.execute(cr, uid, [ref("inv_wiz_ivari2")], {})
+
+- Check if exists journals associated to this company
+- !python {model: account.journal }: |
+    journal_ids = self.search(cr, uid, [('company_id.name','=','Coop. Trab. Moldeo Interactive Ltda.')])
+    expected_journals = 3 * 3 * 2 + 2 # # tipos de documentos, # Clase de Journals, Ventas y Compras, u'Miscellaneous Journal', u'Opening Entries Journal'
+    if (len(journal_ids)!=expected_journals):
+        print [ a.name for a in self.browse(cr, uid, journal_ids) ]
+        raise AssertionError, 'Error in journals creation for Resp. Insc.. Expected %i, exists %i.' % (expected_journals, len(journal_ids))
+
+    journal_ids = self.search(cr, uid, [('company_id.name','=','Melanoma SA.')])
+    expected_journals = 3 * 3 * 2 + 3 + 2 # # tipos de documentos, # Clase de Journals, Ventas y Compras, Ventas de Exportación, u'Miscellaneous Journal', u'Opening Entries Journal'
+    if (len(journal_ids)!=expected_journals):
+        print [ a.name for a in self.browse(cr, uid, journal_ids) ]
+        raise AssertionError, 'Error in journals creation for Resp. Insc.. Expected %i, exists %i.' % (expected_journals, len(journal_ids))
+
+- Check if exists periods associated to this company
+- !python {model: account.period }: |
+    period_ids = self.search(cr, uid, [('company_id.name','=','Melanoma SA.')])
+    expected_periods=13
+    if (len(period_ids)!=expected_periods):
+        print [ a.name for a in self.browse(cr, uid, period_ids) ]
+        raise AssertionError, 'Error in period creation for Resp. Insc.. Expected %i, exists %i.' % (expected_periods, len(period_ids))
+
+#
+# El responsable inscripto esta listo para facturar !!!
+#

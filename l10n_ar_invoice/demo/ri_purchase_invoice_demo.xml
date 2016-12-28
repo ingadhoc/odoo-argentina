@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    <!-- RI Purchase invoices -->
+        <!-- With IVA 21 -->
+        <record id="demo_ri_pur_invoice_0" model="account.invoice">
+            <field name="payment_term" ref="account.account_payment_term"/>
+            <field name="journal_id" ref="expenses_journal"/>
+            <field name="account_id" ref="ri_pago_proveedores"/>
+            <field name="currency_id" ref="base.ARS"/>
+            <field name="user_id" ref="base.user_demo"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">in_invoice</field>
+            <field name="date_invoice" eval="time.strftime('%Y-%m')+'-01'"/>
+            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="currency_id" ref="base.ARS"/>
+            <field name="supplier_invoice_number">0002-00000282</field>
+        </record>
+         <record id="demo_ri_pur_invoice_0_line_rpanrearpanelshe0" model="account.invoice.line">
+            <field name="invoice_id" ref="demo_ri_pur_invoice_0"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="price_unit" eval="10.0" />
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_21_compras'))]"/>
+            <field name="account_id" ref="ri_mercaderia"/>
+            <field name="product_id" ref="product.product_product_39"/>
+            <field name="quantity" eval="1.0" />
+            <field name="name">Toner Cartridge</field>
+        </record>
+       <record id="demo_ri_pur_invoice_0_line_rckrackcm0" model="account.invoice.line">
+            <field name="invoice_id" ref="demo_ri_pur_invoice_0"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="price_unit" eval="4.0"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_21_compras'))]"/>
+            <field name="account_id" ref="ri_mercaderia"/>
+            <field name="product_id" ref="product.product_product_43"/>
+            <field name="quantity" eval="1.0" />
+            <field name="name">Zed+ Antivirus</field>
+        </record>
+        <function model="account.invoice" name="button_reset_taxes" eval="[ref('demo_ri_pur_invoice_0')]"/>
+        <workflow action="invoice_open" model="account.invoice" ref="demo_ri_pur_invoice_0"/>
+
+        <!-- With IVA 21 and no gravado -->
+        <record id="demo_ri_pur_invoice_1" model="account.invoice">
+            <field name="payment_term" ref="account.account_payment_term"/>
+            <field name="journal_id" ref="expenses_journal"/>
+            <field name="account_id" ref="ri_pago_proveedores"/>
+            <field name="currency_id" ref="base.ARS"/>
+            <field name="user_id" ref="base.user_demo"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">in_invoice</field>
+            <field name="date_invoice" eval="time.strftime('%Y-%m')+'-02'"/>
+            <field name="partner_id" ref="base.res_partner_1"/>
+            <field name="fiscal_position" ref="l10n_ar_invoice.fiscal_position_no_gravado"/>
+            <field name="currency_id" ref="base.ARS"/>
+            <field name="supplier_invoice_number">0002-00002151</field>
+        </record>
+         <record id="demo_ri_pur_invoice_1_line_rpanrearpanelshe0" model="account.invoice.line">
+            <field name="invoice_id" ref="demo_ri_pur_invoice_1"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="price_unit" eval="10.0" />
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_21_compras'))]"/>
+            <field name="account_id" ref="ri_mercaderia"/>
+            <field name="product_id" ref="product.product_product_39"/>
+            <field name="quantity" eval="1.0" />
+            <field name="name">Toner Cartridge</field>
+        </record>
+       <record id="demo_ri_pur_invoice_1_line_rckrackcm0" model="account.invoice.line">
+            <field name="invoice_id" ref="demo_ri_pur_invoice_1"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="price_unit" eval="4.0"/>
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_no_gravado_compras'))]"/>
+            <field name="account_id" ref="ri_mercaderia"/>
+            <field name="product_id" ref="product.product_product_43"/>
+            <field name="quantity" eval="1.0" />
+            <field name="name">Zed+ Antivirus</field>
+        </record>
+        <function model="account.invoice" name="button_reset_taxes" eval="[ref('demo_ri_pur_invoice_1')]"/>
+        <workflow action="invoice_open" model="account.invoice" ref="demo_ri_pur_invoice_1"/>
+
+        <!-- A monotributista -->
+        <record id="demo_ri_pur_invoice_2" model="account.invoice">
+            <field name="journal_id" ref="expenses_journal"/>
+            <field name="account_id" ref="ri_pago_proveedores"/>
+            <field name="user_id" ref="base.user_demo"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">in_invoice</field> 
+            <field name="date_invoice" eval="time.strftime('%Y-%m')+'-07'"/>
+            <field name="partner_id" ref="l10n_ar_invoice.partner_mono"/>
+            <field name="currency_id" ref="base.ARS"/>
+            <field name="supplier_invoice_number">0001-00001123</field>
+        </record>
+         <record id="demo_ri_pur_invoice_2_line_rpanrearpanelshe0" model="account.invoice.line">
+            <field name="invoice_id" ref="demo_ri_pur_invoice_2"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="price_unit" eval="20.0" />
+            <field name="account_id" ref="ri_mercaderia"/>
+            <field name="product_id" ref="product.product_product_39"/>
+            <field name="quantity" eval="1.0" />
+            <field name="name">Toner Cartridge</field>
+        </record>
+        <function model="account.invoice" name="button_reset_taxes" eval="[ref('demo_ri_pur_invoice_2')]"/>
+        <workflow action="invoice_open" model="account.invoice" ref="demo_ri_pur_invoice_2"/>
+
+        <!-- A RI con percepcion IVA e iva 27 -->
+        <record id="demo_ri_pur_invoice_3" model="account.invoice">
+            <!-- <field name="payment_term" ref="account.account_payment_term"/> -->
+            <field name="journal_id" ref="expenses_journal"/>
+            <field name="account_id" ref="ri_pago_proveedores"/>
+            <field name="user_id" ref="base.user_demo"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">in_invoice</field> 
+            <field name="date_invoice" eval="time.strftime('%Y-%m')+'-12'"/>
+            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="currency_id" ref="base.ARS"/>
+            <field name="supplier_invoice_number">0001-00000343</field>
+        </record>
+         <record id="demo_ri_pur_invoice_3_line_rpanrearpanelshe0" model="account.invoice.line">
+            <field name="invoice_id" ref="demo_ri_pur_invoice_3"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="price_unit" eval="20.0" />
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_27_compras'))]"/>
+            <field name="account_id" ref="ri_mercaderia"/>
+            <field name="product_id" ref="product.product_product_39"/>
+            <field name="quantity" eval="1.0" />
+            <field name="name">Toner Cartridge</field>
+        </record>
+        <record id="demo_ri_pur_invoice_3_tax_line" model="account.invoice.tax">
+            <field name="invoice_id" ref="demo_ri_pur_invoice_3"/>
+            <!-- <field name="base_amount" eval="20" /> -->
+            <!-- <field name="base_code_id" ref=""/> -->
+            <field name="name">Percepcion IVA</field>
+            <field name="tax_code_id" ref="ri_tax_code_iva_compras_percepcion"/>
+            <field name="account_id" ref="ri_iva_percepcion"/>
+            <field name="amount" eval="5"/>
+            <field name="tax_amount" eval="5"/>
+        </record>
+        <function model="account.invoice" name="button_reset_taxes" eval="[ref('demo_ri_pur_invoice_3')]"/>
+        <workflow action="invoice_open" model="account.invoice" ref="demo_ri_pur_invoice_3"/>
+
+        <!-- A RI con percepcion Ganacias e iva 21 -->
+        <record id="demo_ri_pur_invoice_4" model="account.invoice">
+            <field name="user_id" ref="base.user_demo"/>
+            <field name="journal_id" ref="expenses_journal"/>
+            <field name="account_id" ref="ri_pago_proveedores"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">in_invoice</field> 
+            <field name="date_invoice" eval="time.strftime('%Y-%m')+'-15'"/>
+            <field name="partner_id" ref="base.res_partner_13"/>
+            <field name="currency_id" ref="base.ARS"/>
+            <field name="supplier_invoice_number">0001-00000353</field>
+        </record>
+         <record id="demo_ri_pur_invoice_4_line_rpanrearpanelshe0" model="account.invoice.line">
+            <field name="invoice_id" ref="demo_ri_pur_invoice_4"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="price_unit" eval="35.0" />
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_10_compras'))]"/>
+            <field name="account_id" ref="ri_mercaderia"/>
+            <field name="product_id" ref="product.product_product_39"/>
+            <field name="quantity" eval="2.0" />
+            <field name="name">Toner Cartridge</field>
+        </record>
+        <record id="demo_ri_pur_invoice_4_tax_line" model="account.invoice.tax">
+            <field name="invoice_id" ref="demo_ri_pur_invoice_4"/>
+            <!-- <field name="base_amount" eval="20" /> -->
+            <!-- <field name="base_code_id" ref=""/> -->
+            <field name="name">Percepcion Ganacias</field>
+            <field name="tax_code_id" ref="ri_tax_code_ganancias_per_sufrida"/>
+            <field name="account_id" ref="ri_a_cuenta_impuestos_ganancias"/>
+            <field name="amount" eval="7"/>
+            <field name="tax_amount" eval="7"/>
+        </record>
+        <function model="account.invoice" name="button_reset_taxes" eval="[ref('demo_ri_pur_invoice_4')]"/>
+        <workflow action="invoice_open" model="account.invoice" ref="demo_ri_pur_invoice_4"/>
+
+    <!-- RI purchase refund  -->
+        <!-- A RI con percepcion Ganacias e iva 21 -->
+        <record id="demo_ri_pur_refund_4" model="account.invoice">
+            <field name="journal_id" ref="refund_expenses_journal"/>
+            <field name="account_id" ref="ri_pago_proveedores"/>
+            <field name="user_id" ref="base.user_demo"/>
+            <field name="company_id" ref="l10n_ar_invoice.company_ri"/>
+            <field name="type">in_refund</field> 
+            <field name="date_invoice" eval="time.strftime('%Y-%m')+'-15'"/>
+            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="currency_id" ref="base.ARS"/>
+            <field name="supplier_invoice_number">0001-00000123</field>
+        </record>
+         <record id="demo_ri_pur_refund_4_line_rpanrearpanelshe0" model="account.invoice.line">
+            <field name="invoice_id" ref="demo_ri_pur_refund_4"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="price_unit" eval="35.0" />
+            <field name="invoice_line_tax_id" eval="[(4, ref('ri_tax_vat_10_compras'))]"/>
+            <field name="account_id" ref="ri_mercaderia"/>
+            <field name="product_id" ref="product.product_product_39"/>
+            <field name="quantity" eval="2.0" />
+            <field name="name">Toner Cartridge</field>
+        </record>
+        <record id="demo_ri_pur_refund_4_tax_line" model="account.invoice.tax">
+            <field name="invoice_id" ref="demo_ri_pur_refund_4"/>
+            <!-- <field name="base_amount" eval="20" /> -->
+            <!-- <field name="base_code_id" ref=""/> -->
+            <field name="name">Percepcion Ganacias</field>
+            <field name="tax_code_id" ref="ri_tax_code_ganancias_per_sufrida"/>
+            <field name="account_id" ref="ri_a_cuenta_impuestos_ganancias"/>
+            <field name="amount" eval="7"/>
+            <field name="tax_amount" eval="-7"/>
+        </record>
+        <function model="account.invoice" name="button_reset_taxes" eval="[ref('demo_ri_pur_refund_4')]"/>
+        <workflow action="invoice_open" model="account.invoice" ref="demo_ri_pur_refund_4"/>
+
+    </data>
+</openerp>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    <!-- Partners for companies -->
+        <record id="partner_ri" model="res.partner">
+            <field name='responsability_id' ref='res_IVARI'/>
+            <field name='vat'>AR30111111118</field>
+            <field name='document_type_id' ref="dt_CUIT"/>
+            <field name='document_number'>30111111118</field>
+            <field name='name'>Responsable Inscripto SA</field>
+            <field name="street">Calle Falsa 456</field>
+            <field name="city">Rosario</field>
+            <field name="country_id" ref="base.ar"/>
+            <field name="state_id" ref="demo_S"/>
+            <field name="zip">2000</field>
+            <field name="phone">+1 555 123 8069</field>
+            <field name="email">info@yourcompany.example.com</field>
+            <field name="website">www.example.com</field>
+            <field name="supplier" eval="True"/>
+            <field name="start_date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <!-- <field name="image" type="base64" file="base/static/img/main_partner-image.png"/> -->
+        </record>
+        <record id="partner_mono" model="res.partner">
+            <field name='responsability_id' ref='res_RM'/>
+            <field name='vat'>AR20222222223</field>
+            <field name='document_type_id' ref="dt_CUIT"/>
+            <field name='document_number'>20222222223</field>
+            <field name='name'>Monotributista</field>
+            <field name="street">Calle Falsa 123</field>
+            <field name="city">Rosario</field>
+            <field name="country_id" ref="base.ar"/>
+            <field name="state_id" ref="demo_CBA"/>
+            <field name="zip">2000</field>
+            <field name="phone">+1 555 123 8069</field>
+            <field name="email">info@yourcompany.example.com</field>
+            <field name="website">www.example.com</field>
+            <field name="supplier" eval="True"/>
+            <field name="start_date" eval="time.strftime('%Y-%m')+'-1'"/>
+            <!-- <field name="image" type="base64" file="base/static/img/main_partner-image.png"/> -->
+        </record>
+
+    <!-- Companies -->
+        <record id="base.main_company" model="res.company">
+            <field name="use_argentinian_localization" eval="False"/>
+        </record>
+        <record id="company_ri" model="res.company">
+            <field name='parent_id' ref='base.main_company'/>
+            <field name='currency_id' ref='base.ARS'/>
+            <field name='partner_id' ref='partner_ri'/>
+            <field name='name'>Responsable Inscripto SA</field>
+            <field name="use_argentinian_localization" eval="True"/>
+            <field name="logo" type="base64" file="l10n_ar_invoice/demo/responsable_inscripto.png"/>
+        </record>
+        <record id="company_mono" model="res.company">
+            <field name='parent_id' ref='base.main_company'/>
+            <field name='currency_id' ref='base.ARS'/>
+            <field name='partner_id' ref='partner_mono'/>
+            <field name="use_argentinian_localization" eval="True"/>
+            <field name='name'>Monotributista</field>
+            <field name="logo" type="base64" file="l10n_ar_invoice/demo/monotributista.png"/>
+        </record>
+
+    <!-- Users -->
+        <record id="base.user_demo" model="res.users">
+            <field name="company_ids" eval="[(4,ref('l10n_ar_invoice.company_ri')),(4,ref('l10n_ar_invoice.company_mono'))]"/>
+            <field name="groups_id" eval="[(4, ref('base.group_multi_company'))]"/>
+        </record>
+        <record id="base.user_root" model="res.users">
+            <field name="company_ids" eval="[(4,ref('l10n_ar_invoice.company_ri')),(4,ref('l10n_ar_invoice.company_mono'))]"/>
+            <field name="groups_id" eval="[(4, ref('base.group_multi_company'))]"/>
+        </record>
+    </data>
+</openerp>

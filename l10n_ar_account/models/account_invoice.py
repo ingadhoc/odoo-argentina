@@ -14,6 +14,11 @@ _logger = logging.getLogger(__name__)
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
+    state_id = fields.Many2one(
+        related='commercial_partner_id.state_id',
+        store=True,
+        readonly=True,
+    )
     currency_rate = fields.Float(
         string='Currency Rate',
         copy=False,

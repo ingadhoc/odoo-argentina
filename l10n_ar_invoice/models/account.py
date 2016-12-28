@@ -301,6 +301,19 @@ class account_journal(models.Model):
     use_documents = fields.Boolean(
         'Use Documents?'
         )
+    # this is to make migration easier
+    point_of_sale_type = fields.Selection(
+        related='point_of_sale_id.type',
+        store=True,
+    )
+    point_of_sale_number = fields.Integer(
+        related='point_of_sale_id.number',
+        store=True,
+    )
+    document_sequence_type = fields.Selection(
+        related='point_of_sale_id.document_sequence_type',
+        store=True,
+    )
 
     @api.onchange('company_id', 'type')
     def change_company(self):

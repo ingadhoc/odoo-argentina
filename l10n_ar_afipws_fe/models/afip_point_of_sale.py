@@ -12,9 +12,9 @@ _logger = logging.getLogger(__name__)
 class afip_point_of_sale(models.Model):
     _inherit = 'afip.point_of_sale'
 
-    type = fields.Selection(
-        selection_add=[('electronic', _('Electronic'))],
-        )
+    # type = fields.Selection(
+    #     selection_add=[('electronic', _('Electronic'))],
+    #     )
     afip_ws = fields.Selection([
         ('wsfe', 'Mercado interno -sin detalle- RG2485 (WSFEv1)'),
         ('wsmtxca', 'Mercado interno -con detalle- RG2904 (WSMTXCA)'),

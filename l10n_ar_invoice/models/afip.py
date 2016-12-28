@@ -34,7 +34,8 @@ class afip_point_of_sale(models.Model):
         ('preprinted', 'Preprinted'),
         ('online', 'Online'),
         # Agregados por otro modulo
-        # ('electronic', 'Electronic'),
+        # lo agregamos para facilitar migracion
+        ('electronic', 'Electronic'),
         # ('fiscal_printer', 'Fiscal Printer'),
         ],
         'Type',

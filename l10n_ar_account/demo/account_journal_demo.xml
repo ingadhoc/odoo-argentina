@@ -10,6 +10,8 @@
             <field name="code">AINV</field>
             <field name="type">sale</field>
             <field name="sequence" eval="4"/>
+            <!-- they are only for test data -->
+            <field name="show_on_dashboard" eval="False"/>
         </record>
 
         <record id="expenses_journal" model="account.journal">
@@ -18,6 +20,8 @@
             <field name="code">AEXJ</field>
             <field name="type">purchase</field>
             <field name="sequence" eval="4"/>
+            <!-- they are only for test data -->
+            <field name="show_on_dashboard" eval="False"/>
         </record>
     </data>
 </openerp> 

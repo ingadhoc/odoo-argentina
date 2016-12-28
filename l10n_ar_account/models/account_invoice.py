@@ -420,20 +420,26 @@ class AccountInvoice(models.Model):
                     ', '.join(unconfigured_tax_groups.mapped(
                         lambda x: '%s (%s)' % (x.name, x.id))))))
 
-        self.env['account.invoice.line'].search([
+        vat_taxes = self.env['account.tax'].search([
+            ('tax_group_id.type', '=', 'tax'),
+            ('tax_group_id.tax', '=', 'vat')])
+        lines_without_vat = self.env['account.invoice.line'].search([
             ('invoice_id', 'in', argentinian_invoices.ids),
-            ('invoice_line_tax_ids.tax_group_id', 'in',
-                argentinian_invoices.ids),
-        ])
-        for invoice in argentinian_invoices:
-            # we check vat base amount is equal to amount untaxed
-            # usamos una precision de 0.1 porque en algunos casos no pudimos
-            # arreglar pbñe,as de redondedo
-            # TODO usar round
-            if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
-                raise UserError(_(
-                    "Invoice with ID %i has some lines without vat Tax ") % (
-                        invoice.id))
+            ('invoice_line_tax_ids', 'not in', vat_taxes.ids)])
+        if lines_without_vat:
+            raise UserError(_(
+                "Invoice with ID %s has some lines without vat Tax ") % (
+                    lines_without_vat.mapped('invoice_id').ids))
+        # for invoice in argentinian_invoices:
+        #     # TODO usar round
+        #     # TODO tal vez debamos usar esto para un chequeo de suma de
+        #     # importes y demas, tener en cuenta caso de importaciones
+        #     # tal como esta este chequeo da error si se agregan impuestos
+        #     # manuales
+        #     if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
+        #         raise UserError(_(
+        #             "Invoice with ID %i has some lines without vat Tax ") % (
+        #                 invoice.id))
 
         # Check except vat invoice
         afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']

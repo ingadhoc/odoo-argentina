@@ -28,12 +28,15 @@ class AccountInvoice(models.Model):
     )
     document_letter_id = fields.Many2one(
         related='document_type_id.document_letter_id',
+        readonly=True,
     )
     document_letter_name = fields.Char(
-        related='document_letter_id.name'
+        related='document_letter_id.name',
+        readonly=True,
     )
     taxes_included = fields.Boolean(
         related='document_letter_id.taxes_included',
+        readonly=True,
     )
     afip_responsability_type_id = fields.Many2one(
         'afip.responsability.type',

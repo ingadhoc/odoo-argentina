@@ -18,9 +18,11 @@
         'data/account_tax_template.xml',
         'data/account_tax_withholding_template.xml',
         'data/account_fiscal_template.xml',
-        'data/account_chart_template.yml',
+        # we try to loda this only in demo data
+        # 'data/account_chart_template.yml',
     ],
     'demo': [
+        'data/account_chart_template.yml',
         # TODO los productos se podrian cargar directamente en l10n_ar_account
         '../l10n_ar_account/demo/product_product_demo.xml',
         '../l10n_ar_account/demo/account_customer_invoice_demo.yml',

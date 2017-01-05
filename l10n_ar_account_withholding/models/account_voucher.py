@@ -68,10 +68,14 @@ class AccountVoucher(models.Model):
         impuestos), seteamos no aplica si no hay nada seteado
         """
         voucher = super(AccountVoucher, self).create(vals)
+        # al final chequeamos sin viene o no el valor en vals para que si
+        # se crea desde interfaz (retencion_ganancias viene False), y fue
+        # al proposito, entonces no forcemos setear nada
         if (
                 voucher.company_regimenes_ganancias_ids and
                 voucher.type == 'payment' and
-                not voucher.retencion_ganancias and
+                'retencion_ganancias' not in vals and
+                # not voucher.retencion_ganancias and
                 not voucher.regimen_ganancias_id):
             voucher.retencion_ganancias = 'no_aplica'
         return voucher

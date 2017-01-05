@@ -476,7 +476,9 @@ class AccountInvoice(models.Model):
     def _onchange_partner_id(self):
         res = super(AccountInvoice, self)._onchange_partner_id()
         fiscal_position = self.env[
-            'account.fiscal.position'].get_fiscal_position(self.partner_id.id)
+            'account.fiscal.position'].with_context(
+                force_company=self.company_id.id).get_fiscal_position(
+                self.partner_id.id)
         if fiscal_position:
             self.fiscal_position_id = fiscal_position
         return res

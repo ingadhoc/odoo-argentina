@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<odoo>
+<openerp>
 <data>
     <record id="report_account_vat_ledger" model="ir.actions.report.xml">
         <field name="name">Account Vat Ledger</field>
@@ -15,4 +15,4 @@
         <field name="tml_source">file</field>
     </record>
 </data>
-</odoo>
+</openerp>

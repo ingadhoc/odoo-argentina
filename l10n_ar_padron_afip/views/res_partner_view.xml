@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<openerp>
     <data>
-        <record model="ir.ui.view" id="view_partner_form">
+        <record model="ir.ui.view" id="view_partner_fiscal_data_form">
             <field name="name">res.partner.form.inherit</field>
-            <field name="inherit_id" ref="l10n_ar_invoice.view_res_partner_form"/>
+            <field name="inherit_id" ref="l10n_ar_account.view_res_partner_form"/>
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
                 <group name="afip_col_1">
@@ -20,17 +20,20 @@
                     <field name="actividades_padron" widget="many2many_tags"/>
                     <field name="impuestos_padron" widget="many2many_tags"/>
                 </group>
-<!--                 <page name="fiscal_data">
-                    <group>
-                        <group>
-                        </group>
-                    </group>
-                </page> -->
-                <field name="document_number" position="after">
-                    <button name="%(action_partner_update)d" string="Update From AFIP" class="oe_link oe_inline" type="action" attrs="{'invisible': ['|', ('document_number', '=', False), ('document_type_id', '=', False)]}"/>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_partner_update_form">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="inherit_id" ref="l10n_ar_partner.view_partner_form"/>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <field name="main_id_number" position="after">
+                    <button name="%(action_partner_update)d" string="Update From AFIP" class="oe_link oe_inline" type="action" attrs="{'invisible': [('cuit', '=', False)]}"/>
+                    <!-- <button name="%(action_partner_update)d" string="Update From AFIP" class="oe_link oe_inline" type="action" attrs="{'invisible': ['|', ('main_id_number', '=', False), ('main_id_category_id', '=', False)]}"/> -->
                     <!-- <button name="update_data_from_padron_afip" string="Update From AFIP" class="oe_link oe_inline" type="object"/> -->
                 </field>
             </field>
         </record>
     </data>
-</odoo>
+</openerp>

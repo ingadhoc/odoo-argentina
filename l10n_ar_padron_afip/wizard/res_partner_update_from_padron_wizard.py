@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from odoo import models, api, fields, _
+from openerp import models, api, fields, _
 from ast import literal_eval
-from odoo.exceptions import Warning
+from openerp.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -27,9 +27,10 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
 
     @api.model
     def get_partners(self):
+        # TODO deberiamos buscar de otro manera estos partners
         domain = [
-            ('document_number', '!=', False),
-            ('document_type_id.afip_code', '=', 80),
+            # ('document_number', '!=', False),
+            ('main_id_category_id.afip_code', '=', 80),
         ]
         active_ids = self._context.get('active_ids', [])
         if active_ids:
@@ -48,7 +49,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
             res['state'] = 'selection'
             partners = self.get_partners()
             if not partners:
-                raise Warning(_(
+                raise UserError(_(
                     'No se encontró ningún partner con CUIT para actualizar'))
             res['partner_id'] = partners[0].id
         return res
@@ -71,7 +72,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
             'empleador_padron',
             'integrante_soc_padron',
             'last_update_padron',
-            'responsability_id',
+            'afip_responsability_type_id',
             # 'constancia',
         ]
         return [
@@ -155,7 +156,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
                     new_value = new_value and new_value.title()
                 if key in ('impuestos_padron', 'actividades_padron'):
                     old_value = old_value.ids
-                elif key in ('state_id', 'responsability_id'):
+                elif key in ('state_id', 'afip_responsability_type_id'):
                     old_value = old_value.id
                 if key in fields_names and old_value != new_value:
                     line_vals = {
@@ -168,7 +169,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
                     lines.append((0, False, line_vals))
             self.field_ids = lines
 
-    # @mute_logger('odoo.osv.expression', 'odoo.models')
+    # @mute_logger('openerp.osv.expression', 'openerp.models')
     @api.multi
     def _update(self):
         self.ensure_one()

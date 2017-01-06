@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<openerp>
     <data>
 
-        <!-- Base Config Settings Form View -->
-        <record id="view_argentinian_base_configuration" model="ir.ui.view">
-            <field name="name">argentinian.base.settings</field>
-            <field name="model">argentinian.base.config.settings</field>
-            <field name="inherit_id" ref="l10n_ar_base.view_argentinian_base_configuration"/>
+        <record id="view_account_config_settings" model="ir.ui.view">
+            <field name="name">account.config.settings.form.inherit</field>
+            <field name="model">account.config.settings</field>
+            <field name="inherit_id" ref="account.view_account_config_settings"/>
             <field name="arch" type="xml">
-                <label for="module_l10n_ar_padron_afip" position="after">
-                    <div>
-                        <button name="refresh_activities_from_padron" string="Refresh Activities From AFIP" type="object" class="oe_link"/>
-                    </div>
-                    <div>
-                        <button name="refresh_taxes_from_padron" string="Refresh Taxes From AFIP" type="object" class="oe_link"/>
-                    </div>
-                    <div>
-                        <button name="refresh_concepts_from_padron" string="Refresh Concepts From AFIP" type="object" class="oe_link"/>
-                    </div>
-                </label>
+                <group name="bank_cash" position="after">
+                    <group name="argentina_data" string="Argentina Data">
+                        <label for="id" string="Refresh from Padron AFIP"/>
+                        <div>
+                            <div>
+                                <button name="refresh_activities_from_padron" string="Activities" type="object" class="oe_link"/>
+                            </div>
+                            <div>
+                                <button name="refresh_taxes_from_padron" string="Taxes" type="object" class="oe_link"/>
+                            </div>
+                            <div>
+                                <button name="refresh_concepts_from_padron" string="Concepts" type="object" class="oe_link"/>
+                            </div>
+                        </div>
+                    </group>
+                </group>
             </field>
         </record>
 
-
     </data>
-</odoo>
+</openerp>

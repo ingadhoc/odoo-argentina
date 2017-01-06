@@ -4,4 +4,4 @@
 # directory
 ##############################################################################
 from . import account_vat_report
-from . import afip_document_class
+from . import account_document_type

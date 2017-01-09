@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Listado de Bancos Argentinos",
-    'version': '9.0.1.0.0',
+    'version': '9.0.1.1.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Moldeo Interactive',

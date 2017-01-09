@@ -1126,6 +1126,7 @@
             <field name="deferred_check_account_id" ref="base_cheques_diferidos"/>
             <field name="rejected_check_account_id" ref="base_cheques_rechazados"/>
             <field name="holding_check_account_id" ref="base_valores_en_cartera"/>
+            <field name="opening_clousure_account_id" ref="base_contrapartida_auxiliar"/>
         </record>
 
     </data>

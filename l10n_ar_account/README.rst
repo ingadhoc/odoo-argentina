@@ -4,7 +4,7 @@
 Módulo base de Contabilidad Argentina
 =====================================
 
-TODO
+#. Create a purchases journals for "Liquidación de Impuestos", "Asientos de Apertura / Cierre" and "Sueldos y Jornales" on chart account installation
 
 Configuration
 =============

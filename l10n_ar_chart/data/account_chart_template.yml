@@ -1,6 +1,6 @@
 -
   !python {model: account.chart.template, id: l10nar_ri_chart_template}: |
-    self[0].try_loading_for_current_company()
+    self[0].with_context(with_bank_journal=True).try_loading_for_current_company()
 # por alguna razón da error en los tests (seguramente porque no son compatibles con multicompania los tests)
 # -
 #   !python {model: res.users, id: base.user_root}: |

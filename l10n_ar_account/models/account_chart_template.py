@@ -30,7 +30,10 @@ class WizardMultiChartsAccounts(models.TransientModel):
     @api.multi
     def _create_bank_journals_from_o2m(self, company, acc_template_ref):
         # on argentinian localization we prefer to create banks manually
-        if company.localization == 'argentina':
+        # for tests, demo data requires a bank journal to be loaded, we
+        # send this on context
+        if company.localization == 'argentina' and not self._context.get(
+                'with_bank_journal'):
             for rec in self.bank_account_ids:
                 if rec.account_type == 'bank':
                     rec.unlink()
@@ -41,6 +44,12 @@ class WizardMultiChartsAccounts(models.TransientModel):
 
 class AccountChartTemplate(models.Model):
     _inherit = 'account.chart.template'
+
+    opening_clousure_account_id = fields.Many2one(
+        'account.account.template',
+        string='Opening / Closure Account',
+        domain=[('internal_type', '=', 'other'), ('deprecated', '=', False)],
+    )
 
     @api.multi
     def generate_fiscal_position(
@@ -110,16 +119,21 @@ class AccountChartTemplate(models.Model):
                     vals_journal['code'] = code
 
         # add more journals commonly used in argentina localization
+        opening_clousure_account_id = acc_template_ref.get(
+            self.opening_clousure_account_id.id)
         journals = [
-            ('Compras (Liquidación de Impuestos)', 'LIMP', 'purchase'),
-            ('Compras (Sueldos y Jornales)', 'SYJ', 'purchase'),
-            ('Asientos de Apertura / Cierre', 'A/C', 'general'),
+            ('Liquidación de Impuestos', 'LIMP', 'general', False),
+            ('Sueldos y Jornales', 'SYJ', 'general', False),
+            ('Asientos de Apertura / Cierre', 'A/C', 'general',
+                opening_clousure_account_id),
         ]
-        for name, code, type in journals:
+        for name, code, type, default_account_id in journals:
             journal_data.append({
                 'type': type,
                 'name': name,
                 'code': code,
+                'default_credit_account_id': default_account_id,
+                'default_debit_account_id': default_account_id,
                 'company_id': company.id,
                 'show_on_dashboard': False,
                 'update_posted': True,

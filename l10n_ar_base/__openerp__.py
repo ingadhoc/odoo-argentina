@@ -15,9 +15,11 @@
     },
     'data': [
         'data/res_currency_data.xml',
+        'data/res_company_data.xml',
     ],
     'demo': [
-        'demo/res_company.xml',
+        'demo/res_currency_demo.xml',
+        'demo/res_company_demo.xml',
     ],
     'test': [
     ],

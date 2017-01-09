@@ -1,20 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="1">
-        <!-- set ars as base currency and update usd and eur currency for 11/11/2016 -->
+        <!-- update symbol to common use in argentina -->
+        <record id="base.USD" model="res.currency">
+            <field name="symbol">USD</field>
+        </record>
 
-<!-- TODO Ver como cargarlo sin que rompa los tests de odoo -->
-<!-- como por ahora no podemos hacer ars la base, seteamos rate para que ars quede bien respecto al USD -->
-        <record id="base.rateARS" model="res.currency.rate">
-            <field name="rate">23.29</field>
+        <!-- in argentina we are used to position of symbol before -->
+        <record id="base.ARS" model="res.currency">
+            <field name="position">before</field>
+            <!-- no matter we create database for argentina, ars currency is deactivated -->
+            <field name="active" eval="True"/>
         </record>
-<!--          <record id="base.rateARS" model="res.currency.rate">
-            <field name="rate">1.00</field>
+
+        <record id="base.EUR" model="res.currency">
+            <field name="position">before</field>
         </record>
-        <record id="base.rateUSD" model="res.currency.rate">
-            <field name="rate">0.065789</field>
-        </record>
-        <record id="base.rateEUR" model="res.currency.rate">
-            <field name="rate">0.058823</field>
-        </record> -->
     </data>
 </openerp>

@@ -16,14 +16,12 @@ def ar_auto_install_l10n(cr, registry):
     country_code = registry['res.users'].browse(
         cr, SUPERUSER_ID, SUPERUSER_ID, {}).company_id.country_id.code
     if country_code and country_code == 'AR':
-        # we dont want to install any chart, we want user to choose
-        return False
-        # module_ids = registry['ir.module.module'].search(
-        #     cr, SUPERUSER_ID, [
-        #         ('name', '=', 'l10n_ar_chart'),
-        #         ('state', '=', 'uninstalled')])
-        # registry['ir.module.module'].button_install(
-        #     cr, SUPERUSER_ID, module_ids, {})
+        module_ids = registry['ir.module.module'].search(
+            cr, SUPERUSER_ID, [
+                ('name', '=', 'l10n_ar_chart'),
+                ('state', '=', 'uninstalled')])
+        registry['ir.module.module'].button_install(
+            cr, SUPERUSER_ID, module_ids, {})
     else:
         return old_auto_install_l10n(cr, registry)
 

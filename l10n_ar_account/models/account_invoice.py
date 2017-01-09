@@ -323,7 +323,10 @@ class AccountInvoice(models.Model):
                 if invoice_type in ['out_refund', 'in_refund']:
                     domain += [
                         ('document_type_id.internal_type',
-                            '=', 'credit_note')]
+                            # '=', 'credit_note')]
+                            # TODO, check if we need to add tickets and others
+                            # also
+                            'in', ['credit_note', 'in_document'])]
                 # else, none credit notes
                 else:
                     domain += [

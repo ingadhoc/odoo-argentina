@@ -82,4 +82,3 @@ dc_orden_pago_x,800,,ORDEN DE PAGO X,dl_x,ORDEN DE PAGO,supplier_payment,OP-X ,a
 fa_exterior,195,,FACTURAS Y COMPROBANTES DEL EXTERIOR,dl_i,,invoice,FA-I ,argentina,
 nc_exterior,196,,NOTAS DE CREDITO Y REEMBOLSOS DEL EXTERIOR,dl_i,,credit_note,NC-I ,argentina,
 fa_sin_comprobante,198,,COMPRAS VARIAS SIN COMPROBANTE,dl_x,,invoice,FA-X ,argentina,
-nc_sin_comprobante,199,,REEMBOLSOS VARIOS SIN COMPROBANTE,dl_x,,credit_note,NC-X ,argentina,

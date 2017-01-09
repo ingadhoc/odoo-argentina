@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- we set argentinian company so that ar chart is automatically loaded on runbot and travis, on common install you choose it while creating database -->
+        <record id="base.main_company" model="res.company">
+            <field name="country_id" ref="base.ar"/>
+            <!-- this is already done in data -->
+            <!-- <field name="currency_id" ref="base.ARS"/> -->
+        </record>
+
+    </data>
+</openerp>

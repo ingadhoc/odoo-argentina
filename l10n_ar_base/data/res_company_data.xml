@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- no matter if we create database setting country argentina, eur currency is setted to main company, we should check if this module is installed on a clean db or not before making this change, or at least check if company is argentinian -->
+        <record id="base.main_company" model="res.company">
+            <field name="currency_id" ref="base.ARS"/>
+        </record>
+
+    </data>
+</openerp>

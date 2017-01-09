@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Módulo base de Contabilidad Argentina",
-    'version': '9.0.1.2.0',
+    'version': '9.0.1.3.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Moldeo Interactive',
@@ -10,6 +10,7 @@
     'depends': [
         'account_document',
         'l10n_ar_partner',
+        'l10n_ar_bank',
         # para guardar el link entre facturas y NC
         # el modulo tiene errores en los test (probado solo con odoo y tmb)
         # 'account_invoice_refund_link',

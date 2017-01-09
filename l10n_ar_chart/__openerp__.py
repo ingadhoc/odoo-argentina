@@ -42,5 +42,5 @@
     'installable': True,
     'images': [
     ],
-    'version': '9.0.1.0.0',
+    'version': '9.0.1.1.0',
 }

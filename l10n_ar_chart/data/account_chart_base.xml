@@ -610,12 +610,12 @@
         <!-- 2.1.04 (Bancarias) --> 
 
 
-            <record model="account.account.template" id="base_tarjeta_de_credito_pagar_x">
+<!--             <record model="account.account.template" id="base_tarjeta_de_credito_pagar_x">
                 <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                 <field name="code">2.1.04.00.010</field>
                 <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
                 <field name="name">Tarjeta de crédito a pagar xxxxx</field>
-            </record>
+            </record> -->
 
             <record model="account.account.template" id="base_giro_en_descubierto">
                 <field name="chart_template_id" ref="l10nar_base_chart_template"/>

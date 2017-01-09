@@ -43,6 +43,16 @@ class AccountJournal(models.Model):
         'Point Of Sale Number',
     )
 
+    # to make bank account creation easier
+    bank_cbu = fields.Char(
+        related='bank_account_id.cbu'
+    )
+
+    def set_bank_account(self, acc_number, bank_id=None):
+        return super(AccountJournal, self.with_context(
+            default_cbu=self.bank_cbu)).set_bank_account(
+            acc_number, bank_id=bank_id)
+
     # TODO revisar esta constraint porque nos da error al migrar, sobre todo
     # porque los refund journals pasaron a ser journals comunes
     # @api.one

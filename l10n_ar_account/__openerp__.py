@@ -10,6 +10,7 @@
     'depends': [
         'account_document',
         'l10n_ar_partner',
+        'l10n_ar_bank',
         # para guardar el link entre facturas y NC
         # el modulo tiene errores en los test (probado solo con odoo y tmb)
         # 'account_invoice_refund_link',

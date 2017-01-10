@@ -258,7 +258,8 @@ class account_vat_ledger(models.Model):
                         sum(inv.tax_line_ids.filtered(lambda r: (
                             r.tax_id.tax_group_id.type == 'perception' and
                             r.tax_id.tax_group_id.tax == 'vat' and
-                            r.tax_id.tax_group_id.application == 'national_taxes')
+                            r.tax_id.tax_group_id.application \
+                            == 'national_taxes')
                         ).mapped('amount')), invoice=inv),
 
                     # Campo 12: Importe de operaciones exentas
@@ -277,7 +278,8 @@ class account_vat_ledger(models.Model):
                         sum(inv.tax_line_ids.filtered(lambda r: (
                             r.tax_id.tax_group_id.type == 'perception' and
                             r.tax_id.tax_group_id.tax == 'vat' and
-                            r.tax_id.tax_group_id.application == 'national_taxes')
+                            r.tax_id.tax_group_id.application \
+                            == 'national_taxes')
                         ).mapped(
                             'amount')), invoice=inv),
                 ]
@@ -296,7 +298,8 @@ class account_vat_ledger(models.Model):
                 self.format_amount(
                     sum(inv.tax_line_ids.filtered(lambda r: (
                         r.tax_id.tax_group_id.type == 'perception' and
-                        r.tax_id.tax_group_id.application == 'provincial_taxes')
+                        r.tax_id.tax_group_id.application \
+                        == 'provincial_taxes')
                     ).mapped('amount')), invoice=inv),
 
                 # Campo 15: Importe de percepciones de impuestos municipales
@@ -309,7 +312,8 @@ class account_vat_ledger(models.Model):
                 # Campo 16: Importe de impuestos internos
                 self.format_amount(
                     sum(inv.tax_line_ids.filtered(
-                        lambda r: r.tax_id.tax_group_id.application == 'internal_taxes'
+                        lambda r: r.tax_id.tax_group_id.application \
+                        == 'internal_taxes'
                     ).mapped('amount')), invoice=inv),
 
                 # Campo 17: Código de Moneda
@@ -337,7 +341,8 @@ class account_vat_ledger(models.Model):
                     # Campo 21: Otros Tributos
                     self.format_amount(
                         sum(inv.tax_line_ids.filtered(
-                            lambda r: r.tax_id.tax_group_id.application == 'others'
+                            lambda r: r.tax_id.tax_group_id.application \
+                            == 'others'
                         ).mapped('amount')), invoice=inv),
 
                     # Campo 22: vencimiento comprobante (no figura en
@@ -364,7 +369,8 @@ class account_vat_ledger(models.Model):
                     # Campo 22: Otros Tributos
                     self.format_amount(
                         sum(inv.tax_line_ids.filtered(lambda r: (
-                            r.tax_id.tax_group_id.application == 'others')).mapped(
+                            r.tax_id.tax_group_id.application \
+                            == 'others')).mapped(
                             'amount')), invoice=inv),
 
                     # TODO implementar estos 3
@@ -439,7 +445,8 @@ class account_vat_ledger(models.Model):
         for inv in self.get_citi_invoices().filtered(
                 lambda r: r.document_type_id.code != '66'):
             vat_taxes = inv.vat_tax_ids.filtered(
-                lambda r: r.tax_id.tax_group_id.afip_code in [3, 4, 5, 6, 8, 9])
+                lambda r: r.tax_id.tax_group_id.afip_code in [
+                    3, 4, 5, 6, 8, 9])
 
             # if only exempt or no gravado, we add one line with 0, 0, 0
             if not vat_taxes and inv.vat_tax_ids.filtered(
@@ -464,7 +471,8 @@ class account_vat_ledger(models.Model):
         for inv in self.get_citi_invoices().filtered(
                 lambda r: r.document_type_id.code == '66'):
             vat_taxes = inv.vat_tax_ids.filtered(
-                lambda r: r.tax_id.tax_group_id.afip_code in [3, 4, 5, 6, 8, 9])
+                lambda r: r.tax_id.tax_group_id.afip_code in [
+                    3, 4, 5, 6, 8, 9])
 
             # we group by afip_code
             for afip_code in vat_taxes.mapped('tax_id.tax_group_id.afip_code'):

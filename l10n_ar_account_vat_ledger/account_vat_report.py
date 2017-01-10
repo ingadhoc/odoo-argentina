@@ -13,7 +13,7 @@ class account_vat_ledger(models.Model):
     _name = "account.vat.ledger"
     _description = "Account VAT Ledger"
     _inherit = ['mail.thread']
-    # _order = 'period_id desc'
+    _order = 'date_from desc'
 
     company_id = fields.Many2one(
         'res.company',

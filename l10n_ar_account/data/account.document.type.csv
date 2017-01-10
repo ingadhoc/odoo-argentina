@@ -27,9 +27,9 @@ dc_b_rg1415,250,35,"COMPROBANTES B DEL ANEXO I, APARTADO A, INC. F), RG N° 1415
 dc_c_rg1415,260,36,"COMPROBANTES C DEL Anexo I, Apartado A, INC.F), R.G. N° 1415",dl_c,,,,argentina,
 dc_nd_rg1415,270,37,NOTAS DE DEBITO O DOCUMENTO EQUIVALENTE QUE CUMPLAN CON LA R.G. N° 1415,,,,,argentina,
 dc_nc_rg1415,280,38,NOTAS DE CREDITO O DOCMENTO EQUIVALENTE QUE CUMPLAN CON LA R.G. N° 1415,,,,,argentina,
-dc_a_o_rg1415,290,39,OTROS COMPROBANTES A QUE CUMPLEN CON LA R G  1415,dl_a,,,,argentina,
-dc_b_o_rg1415,300,40,OTROS COMPROBANTES B QUE CUMPLAN CON LA R.G. N° 1415,dl_b,,,,argentina,
-dc_c_o_rg1415,310,41,OTROS COMPROBANTES C QUE CUMPLAN CON LA R.G. N° 1415,dl_c,,,,argentina,
+dc_a_o_rg1415,290,39,OTROS COMPROBANTES A QUE CUMPLEN CON LA R G  1415,dl_a,,in_document,,argentina,
+dc_b_o_rg1415,300,40,OTROS COMPROBANTES B QUE CUMPLAN CON LA R.G. N° 1415,dl_b,,in_document,,argentina,
+dc_c_o_rg1415,310,41,OTROS COMPROBANTES C QUE CUMPLAN CON LA R.G. N° 1415,dl_c,,in_document,,argentina,
 dc_a_rf,320,50,RECIBO FACTURA A  REGIMEN DE FACTURA DE CREDITO,dl_a,,,,argentina,
 dc_m_f,330,51,FACTURAS M,dl_m,FACTURA,invoice,FA-M ,argentina,validator_numero_factura
 dc_m_nd,340,52,NOTAS DE DEBITO M,dl_m,NOTA DE DEBITO,debit_note,ND-C ,argentina,validator_numero_factura
@@ -81,4 +81,3 @@ dc_remito_x,790,,REMITOS X,dl_x,REMITO,,RM-X ,argentina,validator_numero_factura
 dc_orden_pago_x,800,,ORDEN DE PAGO X,dl_x,ORDEN DE PAGO,supplier_payment,OP-X ,argentina,validator_numero_factura
 fa_exterior,195,,FACTURAS Y COMPROBANTES DEL EXTERIOR,dl_i,,invoice,FA-I ,argentina,
 nc_exterior,196,,NOTAS DE CREDITO Y REEMBOLSOS DEL EXTERIOR,dl_i,,credit_note,NC-I ,argentina,
-fa_sin_comprobante,198,,COMPRAS VARIAS SIN COMPROBANTE,dl_x,,invoice,FA-X ,argentina,

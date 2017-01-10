@@ -29,6 +29,6 @@
     'name': 'VAT Localization Argentina',
     'test': ['test/l10n_ar_base_vat.yml'],
     'data': [],
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'website': 'https://launchpad.net/~openerp-l10n-ar-localization'}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Argentinian VAT Ledger Management",
-    'version': '9.0.1.0.0',
+    'version': '9.0.1.1.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Moldeo Interactive',
@@ -20,8 +20,8 @@
     "data": [
         'account_vat_report_view.xml',
         'report/account_vat_ledger_report.xml',
-        # 'security/security.xml',
-        # 'security/ir.model.access.csv',
+        'security/security.xml',
+        'security/ir.model.access.csv',
     ],
     'demo': [
     ],

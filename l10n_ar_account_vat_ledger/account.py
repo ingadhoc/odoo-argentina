@@ -82,77 +82,81 @@ class AcountDocumentType(models.Model):
         return (amount_untaxed, vat_amount, other_taxes_amount, amount_total)
 
 
-# class account_tax_code(models.Model):
-#     _inherit = 'account.tax.group'
+class account_tax(models.Model):
+    _inherit = 'account.tax'
 
-#     amount_untaxed = fields.Float(
-#         string=_('Untaxed'),
-#         compute='_get_amounts',)
-#     amount_tax = fields.Float(
-#         string=_('Tax'),
-#         compute='_get_amounts',)
-#     amount_total = fields.Float(
-#         string=_('Total'),
-#         compute='_get_amounts',)
+    amount_untaxed = fields.Float(
+        string='Untaxed',
+        compute='_get_amounts',
+    )
+    amount_tax = fields.Float(
+        string='Tax',
+        compute='_get_amounts',
+    )
+    amount_total = fields.Float(
+        string='Total',
+        compute='_get_amounts',
+    )
 
-#     @api.one
-#     def _get_amounts(self):
-#         """
-#         """
-#         amount_untaxed = False
-#         amount_tax = False
-#         amount_total = False
-#         _logger.info('Getting amounts for tax group %s(%s)' % (
-#             self.name, self.id))
-#         vat_ledger_id = self._context.get('vat_ledger_id', False)
-#         if vat_ledger_id:
-#             vat_ledger = self.env['account.vat.ledger'].browse(vat_ledger_id)
-#             (amount_untaxed, amount_tax, amount_total) = self.get_amounts(
-#                 vat_ledger)
-#         self.amount_untaxed = amount_untaxed
-#         self.amount_tax = amount_tax
-#         self.amount_total = amount_total
+    @api.one
+    def _get_amounts(self):
+        """
+        """
+        amount_untaxed = False
+        amount_tax = False
+        amount_total = False
+        _logger.info('Getting amounts for tax %s(%s)' % (
+            self.name, self.id))
+        vat_ledger_id = self._context.get('vat_ledger_id', False)
+        if vat_ledger_id:
+            vat_ledger = self.env['account.vat.ledger'].browse(vat_ledger_id)
+            (amount_untaxed, amount_tax, amount_total) = self.get_amounts(
+                vat_ledger)
+        self.amount_untaxed = amount_untaxed
+        self.amount_tax = amount_tax
+        self.amount_total = amount_total
 
-    # @api.model
-    # def get_amounts(
-    #         self, vat_ledger, responsability=False, journal_type=None):
-    #     taxes_domain = [
-    #         ('invoice_id', 'in', vat_ledger.invoice_ids.ids),
-    #         ('invoice_id.state', '!=', 'cancel'),
-    #         ('tax_id.id', '=', self.id)]
-    #     if journal_type:
-    #         taxes_domain.append(
-    #             ('invoice_id.journal_id.type', 'in', journal_type))
-    #     if responsability:
-    #         taxes_domain.append(
-    #             ('invoice_id.responsability_id', '=', responsability.id))
-    #     # invoice_taxes = self.env['account.invoice.tax'].search(
-    #     #     taxes_domain)
-    #     invoice_taxes = self.env['account.invoice.tax'].search(
-    #         taxes_domain +
-    #         [('invoice_id.type', 'in', ['in_invoice', 'out_invoice'])])
-    #     refund_invoice_taxes = self.env['account.invoice.tax'].search(
-    #         taxes_domain +
-    #         [('invoice_id.type', 'in', ['in_refund', 'out_refund'])])
-    #     # we use base_amount and tax_amount instad of base and amount because
-    #     # we want them in local currency
-    #     # usamos valor absoluto porque si el impuesto se configura con signo
-    #     # negativo, por ej. para notas de credito, nosotros igual queremos
-    #     # llevarlo positivo
-    #     # TODO mejorarlo, no hace falta si lo disenamos bien, el tema es que
-    #     # algunos usan regitrando esto como negativo y otros como positivo
-    #     # el tema en realidad es que en el reporte queremos mostrarlo
-    #     # positivo tendriamos que hacer alg otipo:
-    #     # for invoice_tax in invoice_taxes:
-    #     #     amount_untaxed += invoice_tax.base_amount * invoice_tax
-    #     # amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount')))
-    #     # amount_tax = abs(sum(invoice_taxes.mapped('tax_amount')))
-    #     amount_untaxed = abs(sum(invoice_taxes.mapped('base'))) - abs(
-    #         sum(refund_invoice_taxes.mapped('base')))
-    #     amount_tax = abs(sum(invoice_taxes.mapped('tax_amount'))) - abs(
-    #         sum(refund_invoice_taxes.mapped('tax_amount')))
-    #     amount_total = amount_untaxed + amount_tax
-    #     return (amount_untaxed, amount_tax, amount_total)
+    @api.model
+    def get_amounts(
+            self, vat_ledger, responsability=False, invoice_type=None):
+        taxes_domain = [
+            ('invoice_id', 'in', vat_ledger.invoice_ids.ids),
+            ('invoice_id.state', '!=', 'cancel'),
+            ('tax_id.id', '=', self.id)]
+        if invoice_type:
+            taxes_domain.append(
+                ('invoice_id.type', 'in', invoice_type))
+        if responsability:
+            taxes_domain.append(
+                ('invoice_id.afip_responsability_type_id',
+                    '=', responsability.id))
+        # invoice_taxes = self.env['account.invoice.tax'].search(
+        #     taxes_domain)
+        invoice_taxes = self.env['account.invoice.tax'].search(
+            taxes_domain +
+            [('invoice_id.type', 'in', ['in_invoice', 'out_invoice'])])
+        refund_invoice_taxes = self.env['account.invoice.tax'].search(
+            taxes_domain +
+            [('invoice_id.type', 'in', ['in_refund', 'out_refund'])])
+        # we use base_amount and tax_amount instad of base and amount because
+        # we want them in local currency
+        # usamos valor absoluto porque si el impuesto se configura con signo
+        # negativo, por ej. para notas de credito, nosotros igual queremos
+        # llevarlo positivo
+        # TODO mejorarlo, no hace falta si lo disenamos bien, el tema es que
+        # algunos usan regitrando esto como negativo y otros como positivo
+        # el tema en realidad es que en el reporte queremos mostrarlo
+        # positivo tendriamos que hacer alg otipo:
+        # for invoice_tax in invoice_taxes:
+        #     amount_untaxed += invoice_tax.base_amount * invoice_tax
+        # amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount')))
+        # amount_tax = abs(sum(invoice_taxes.mapped('tax_amount')))
+        amount_untaxed = abs(sum(invoice_taxes.mapped('base'))) - abs(
+            sum(refund_invoice_taxes.mapped('base')))
+        amount_tax = abs(sum(invoice_taxes.mapped('amount'))) - abs(
+            sum(refund_invoice_taxes.mapped('amount')))
+        amount_total = amount_untaxed + amount_tax
+        return (amount_untaxed, amount_tax, amount_total)
 
 
 class AfipResponsabilityType(models.Model):

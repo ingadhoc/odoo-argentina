@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-    <record id="report_account_vat_ledger" model="ir.actions.report.xml">
+    <record id="report_account_vat_ledger" context="{'no_key_lines':True}" model="ir.actions.report.xml">
         <field name="name">Account Vat Ledger</field>
         <field name="type">ir.actions.report.xml</field>
         <field name="model">account.vat.ledger</field>
@@ -13,6 +13,8 @@
         <field name="parser_loc"></field>
         <field name="parser_state">default</field>
         <field name="tml_source">file</field>
+        <field name="download_filename">Libro IVA ${o.type == 'purchase' and 'Compras' or 'Ventas'} ${o.date_to}.xls</field>
     </record>
+
 </data>
 </openerp>

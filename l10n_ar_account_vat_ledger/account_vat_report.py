@@ -41,6 +41,18 @@ class account_vat_ledger(models.Model):
         string='End Date',
         required=True,
     )
+    date_range_id = fields.Many2one(
+        'date.range',
+        'Date range'
+    )
+
+    @api.onchange('date_range_id')
+    def onchange_date_range_id(self):
+        if self.date_range_id:
+            self.date_from = self.date_range_id.date_start
+            self.date_to = self.date_range_id.date_end
+        else:
+            self.date_from = self.date_to = None
     # period_id = fields.Many2one(
     #     'account.period', 'Period', required=True,
     #     readonly=True, states={'draft': [('readonly', False)]},)
@@ -95,6 +107,16 @@ class account_vat_ledger(models.Model):
         string="Document Classes",
         compute="_get_data"
     )
+    vat_tax_ids = fields.Many2many(
+        'account.tax',
+        string="VAT Taxes",
+        compute="_get_data"
+    )
+    other_tax_ids = fields.Many2many(
+        'account.tax',
+        string="Other Taxes",
+        compute="_get_data"
+    )
     # vat_tax_code_ids = fields.Many2many(
     #     'account.tax.code',
     #     string="VAT Tax Codes",
@@ -136,6 +158,10 @@ class account_vat_ledger(models.Model):
         self.document_type_ids = invoices.mapped('document_type_id')
         self.invoice_ids = invoices
 
+        self.vat_tax_ids = invoices.mapped(
+            'vat_tax_ids.tax_id')
+        self.other_tax_ids = invoices.mapped(
+            'not_vat_tax_ids.tax_id')
         # self.vat_tax_code_ids = invoices.mapped(
         #     'vat_tax_ids.tax_code_id')
         # self.other_tax_code_ids = invoices.mapped(
@@ -182,9 +208,9 @@ class account_vat_ledger(models.Model):
         # fiscalyears = self.env['account.fiscalyear'].search(domain, limit=1)
         # self.fiscalyear_id = fiscalyears
         if self.type == 'sale':
-            domain = [('type', 'in', ['sale', 'sale_refund'])]
+            domain = [('type', '=', 'sale')]
         elif self.type == 'purchase':
-            domain = [('type', 'in', ['purchase', 'purchase_refund'])]
+            domain = [('type', '=', 'purchase')]
         domain += [
             ('use_documents', '=', True),
             ('company_id', '=', self.company_id.id),

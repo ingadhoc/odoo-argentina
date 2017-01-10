@@ -36,6 +36,7 @@
         	                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                                 <!-- <field name="fiscalyear_id" domain="[('company_id','=',company_id)]"/> -->
                                 <!-- <field name="period_id" domain="[('fiscalyear_id','=',fiscalyear_id)]"/> -->
+                                <field name="date_range_id" class="oe_edit_only"/>
                                 <field name="date_from"/>
                                 <field name="date_to"/>
         	                    <field name="presented_ledger"/>
@@ -52,16 +53,18 @@
                             </page>
                             <page string="Invoices" name="invoices">
                                 <field name="invoice_ids">
-<!--                                     <tree default_order="date_invoice">
+                                    <tree default_order="date_invoice">
                                         <field name="state" invisible="1"/>
                                         <field name="date_invoice"/>
                                         <field name="document_number"/>
                                         <field name="commercial_partner_id"/>
                                         <field name="afip_responsability_type_id"/>
-                                        <field name="amount_untaxed" sum="Total" />
-                                        <field name="amount_tax" sum="Total" />
-                                        <field name="amount_total" sum="Total" />
-                                    </tree> -->
+                                        <field name="main_id_number"/>
+                                        <field name="amount_untaxed_signed" sum="Total" />
+                                        <!-- TODO add amount_tax_signed -->
+                                        <!-- <field name="amount_tax" sum="Total" /> -->
+                                        <field name="amount_total_signed" sum="Total"/>
+                                    </tree>
                                 </field>
                             </page>
                             <page string="Summary" name="summary">
@@ -85,22 +88,22 @@
                                         <field name="amount_total" sum="Total"/>
                                     </tree>
                                 </field>
-<!--                                 <label for="vat_tax_code_ids"/>
-                                <field name="vat_tax_code_ids" context="{'vat_ledger_id': active_id}">
+                                <label for="vat_tax_ids"/>
+                                <field name="vat_tax_ids" context="{'vat_ledger_id': active_id}">
                                     <tree>
                                         <field name="name"/>
                                         <field name="amount_untaxed" sum="Total"/>
                                         <field name="amount_tax" sum="Total"/>
                                     </tree>
-                                </field> -->
-<!--                                 <label for="other_tax_code_ids"/>
-                                <field name="other_tax_code_ids" context="{'vat_ledger_id': active_id}">
+                                </field>
+                                <label for="other_tax_ids"/>
+                                <field name="other_tax_ids" context="{'vat_ledger_id': active_id}">
                                     <tree>
                                         <field name="name"/>
                                         <field name="amount_untaxed" sum="Total"/>
                                         <field name="amount_tax" sum="Total"/>
                                     </tree>
-                                </field> -->
+                                </field>
                             </page>
     	                    <page string="Notes" name="notes">
     	                        <field name="note"/>

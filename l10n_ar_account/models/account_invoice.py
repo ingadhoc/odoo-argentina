@@ -14,6 +14,10 @@ _logger = logging.getLogger(__name__)
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
+    main_id_number = fields.Char(
+        related='commercial_partner_id.main_id_number',
+        readonly=True,
+    )
     state_id = fields.Many2one(
         related='commercial_partner_id.state_id',
         store=True,

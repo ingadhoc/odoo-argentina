@@ -151,10 +151,10 @@ class account_tax(models.Model):
         #     amount_untaxed += invoice_tax.base_amount * invoice_tax
         # amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount')))
         # amount_tax = abs(sum(invoice_taxes.mapped('tax_amount')))
-        amount_untaxed = abs(sum(invoice_taxes.mapped('base'))) - abs(
-            sum(refund_invoice_taxes.mapped('base')))
-        amount_tax = abs(sum(invoice_taxes.mapped('amount'))) - abs(
-            sum(refund_invoice_taxes.mapped('amount')))
+        amount_untaxed = abs(sum(invoice_taxes.mapped('cc_base'))) - abs(
+            sum(refund_invoice_taxes.mapped('cc_base')))
+        amount_tax = abs(sum(invoice_taxes.mapped('cc_amount'))) - abs(
+            sum(refund_invoice_taxes.mapped('cc_amount')))
         amount_total = amount_untaxed + amount_tax
         return (amount_untaxed, amount_tax, amount_total)
 
@@ -204,10 +204,10 @@ class AfipResponsabilityType(models.Model):
             domain + [('type', 'in', ['in_invoice', 'out_invoice'])])
         refund_invoices = self.env['account.invoice'].search(
             domain + [('type', 'in', ['in_refund', 'out_refund'])])
-        amount_untaxed = sum(invoices.mapped('amount_untaxed')) - sum(
-            refund_invoices.mapped('amount_untaxed'))
-        amount_tax = sum(invoices.mapped('amount_tax')) - sum(
-            refund_invoices.mapped('amount_tax'))
-        amount_total = sum(invoices.mapped('amount_total')) - sum(
-            refund_invoices.mapped('amount_total'))
+        amount_untaxed = sum(invoices.mapped('cc_amount_untaxed')) - sum(
+            refund_invoices.mapped('cc_amount_untaxed'))
+        amount_tax = sum(invoices.mapped('cc_amount_tax')) - sum(
+            refund_invoices.mapped('cc_amount_tax'))
+        amount_total = sum(invoices.mapped('cc_amount_total')) - sum(
+            refund_invoices.mapped('cc_amount_total'))
         return (amount_untaxed, amount_tax, amount_total)

@@ -16,7 +16,6 @@
         'views/account_vat_report_view.xml',
         'views/account_document_type_view.xml',
         'data/account.document.type.csv',
-        # 'data/account_document_type_data.csv',
     ],
     'demo': [
     ],

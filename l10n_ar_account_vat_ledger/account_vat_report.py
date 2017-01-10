@@ -36,14 +36,20 @@ class account_vat_ledger(models.Model):
     date_from = fields.Date(
         string='Start Date',
         required=True,
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
     date_to = fields.Date(
         string='End Date',
         required=True,
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
     date_range_id = fields.Many2one(
         'date.range',
-        'Date range'
+        'Date range',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
 
     @api.onchange('date_range_id')

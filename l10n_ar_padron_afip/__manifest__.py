@@ -40,7 +40,7 @@
         'l10n_ar_account',
     ],
     'external_dependencies': {
-        'python': ['pyafipws'],
+        #'python': ['pyafipws'],
     },
     'installable': True,
     'name': 'Padron AFIP Argentino',

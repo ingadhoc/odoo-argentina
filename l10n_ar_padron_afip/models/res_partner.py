@@ -101,7 +101,7 @@ class ResPartner(models.Model):
     @api.multi
     def get_data_from_padron_afip(self):
         self.ensure_one()
-        cuit = self.cuit_required()
+        cuit = self.cuit
         padron = PadronAFIP()
         padron.Consultar(cuit)
 

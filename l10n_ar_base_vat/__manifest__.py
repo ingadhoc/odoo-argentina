@@ -19,12 +19,12 @@
 #
 ##############################################################################
 {
-    'active': False,
+#    'active': False,
     'author': 'OpenERP - Team de Localizaci\xc3\xb3n Argentina',
     'category': 'Localization/Argentina',
     'depends': ['base_vat'],
     'description': '\n\nFunci\xc3\xb3n de validaci\xc3\xb3n del CUIT seg\xc3\xban la AFIP.\n\n\n\nIncluye:\n\n - Funci\xc3\xb3n de validaci\xc3\xb3n del CUIT seg\xc3\xban la AFIP.\n\n',
-    'installable': False,
+    'installable': True,
     'license': 'AGPL-3',
     'name': 'VAT Localization Argentina',
     'test': ['test/l10n_ar_base_vat.yml'],

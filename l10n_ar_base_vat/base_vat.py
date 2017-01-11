@@ -3,13 +3,13 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp.osv import fields, osv
-from openerp import api
+#from openerp.osv import osv
+from odoo import fields, models, api
 import re
 _re_ar_vat = re.compile('ar(\d\d)(\d*)(\d)', re.IGNORECASE)
 
 
-class res_partner(osv.osv):
+class res_partner(models.Model):
     _inherit = 'res.partner'
 
     @api.model
@@ -36,7 +36,7 @@ class res_partner(osv.osv):
             res[partner.id] = self.format_vat_ar(partner.vat)
         return res
 
-    formated_vat = fields.Chars(compute=_get_formated_vat, string='Printeable VAT')
+    formated_vat = fields.Char(compute=_get_formated_vat, string='Printeable VAT')
 
     def format_vat_ar(self, vat):
         cuit_parse = _re_ar_vat.match(vat) if vat else None

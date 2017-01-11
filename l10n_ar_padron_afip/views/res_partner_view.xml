@@ -29,7 +29,7 @@
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
                 <field name="main_id_number" position="after">
-                    <button name="%(action_partner_update)d" string="Update From AFIP" class="oe_link oe_inline" type="action" attrs="{'invisible': [('cuit', '=', False)]}"/>
+                    <button name="%(action_partner_update)d" string="Update From AFIP" class="oe_link oe_inline" type="action"/> <!-- attrs="{'invisible': [('cuit', '=', False)]}"/-->
                     <!-- <button name="%(action_partner_update)d" string="Update From AFIP" class="oe_link oe_inline" type="action" attrs="{'invisible': ['|', ('main_id_number', '=', False), ('main_id_category_id', '=', False)]}"/> -->
                     <!-- <button name="update_data_from_padron_afip" string="Update From AFIP" class="oe_link oe_inline" type="object"/> -->
                 </field>

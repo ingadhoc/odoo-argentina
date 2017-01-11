@@ -37,13 +37,13 @@
     'depends': [
         # 'base',
         # 'l10n_ar_base',
-        'l10n_ar_invoice',
+        'l10n_ar_account',
     ],
     'external_dependencies': {
         'python': ['pyafipws'],
     },
-    'installable': False,
+    'installable': True,
     'name': 'Padron AFIP Argentino',
     'test': [],
-    'version': '10.0.1.0.0',
+    'version': '9.0.1.0.0',
 }

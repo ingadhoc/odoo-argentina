@@ -12,6 +12,49 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
+class AccountInvoiceTax(models.Model):
+    _inherit = 'account.invoice.tax'
+
+    invoice_id = fields.Many2one(
+        auto_join=True
+    )
+    cc_base = fields.Float(
+        digits=dp.get_precision('Account'),
+        string='Company Cur. Base',
+        compute="_get_currency_values",
+    )
+    cc_amount = fields.Float(
+        digits=dp.get_precision('Account'),
+        string='Company Cur. Amount',
+        compute="_get_currency_values",
+    )
+
+    @api.one
+    @api.depends('invoice_id.currency_id')
+    def _get_currency_values(self):
+        # TODO si traer el rate de esta manera no resulta (por ej. porque
+        # borran una linea de rate), entonces podemos hacerlo desde el move
+        # mas o menos como hace account_invoice_currency o viendo el total de
+        # debito o credito de ese mismo
+        currency = self.invoice_id.currency_id.with_context(
+            date=self.invoice_id.date_invoice or
+            fields.Date.context_today(self))
+        if not currency:
+            return False
+        if self.company_id.currency_id == currency:
+            self.cc_base = self.base
+            self.cc_amount = self.amount
+        else:
+            currency_rate = currency.compute(
+                1.0, self.company_id.currency_id, round=False)
+            # otra alternativa serua usar currency.compute con round true
+            # para cada uno de estos valores
+            self.cc_base = currency.round(
+                self.base * currency_rate)
+            self.cc_amount = currency.round(
+                self.amount * currency_rate)
+
+
 class account_invoice(models.Model):
     _inherit = "account.invoice"
     _order = "afip_document_number desc, number desc, id desc"

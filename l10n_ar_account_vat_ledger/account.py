@@ -124,6 +124,9 @@ class account_tax_code(models.Model):
         refund_invoice_taxes = self.env['account.invoice.tax'].search(
             taxes_domain +
             [('invoice_id.type', 'in', ['in_refund', 'out_refund'])])
+        # al final usamos cc_base y cc_amount porque base_amount
+        # no se actualiza necesariamente, sobre todo si se cambia cotizacion
+        # luego de cargar factura y con impuestos cargados manualmente
         # we use base_amount and tax_amount instad of base and amount because
         # we want them in local currency
         # usamos valor absoluto porque si el impuesto se configura con signo
@@ -137,10 +140,10 @@ class account_tax_code(models.Model):
         #     amount_untaxed += invoice_tax.base_amount * invoice_tax
         # amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount')))
         # amount_tax = abs(sum(invoice_taxes.mapped('tax_amount')))
-        amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount'))) - abs(
-            sum(refund_invoice_taxes.mapped('base_amount')))
-        amount_tax = abs(sum(invoice_taxes.mapped('tax_amount'))) - abs(
-            sum(refund_invoice_taxes.mapped('tax_amount')))
+        amount_untaxed = abs(sum(invoice_taxes.mapped('cc_amount'))) - abs(
+            sum(refund_invoice_taxes.mapped('cc_amount')))
+        amount_tax = abs(sum(invoice_taxes.mapped('cc_amount'))) - abs(
+            sum(refund_invoice_taxes.mapped('cc_amount')))
         amount_total = amount_untaxed + amount_tax
         return (amount_untaxed, amount_tax, amount_total)
 

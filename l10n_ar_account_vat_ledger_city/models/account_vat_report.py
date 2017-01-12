@@ -467,9 +467,9 @@ class account_vat_ledger(models.Model):
                     lambda x: x.tax_code_id.afip_code == afip_code)
                 res.append(''.join(self.get_tax_row(
                     inv,
-                    sum(taxes.mapped('base_amount')),
+                    sum(taxes.mapped('amount')),
                     afip_code,
-                    sum(taxes.mapped('tax_amount')),
+                    sum(taxes.mapped('amount')),
                     )))
         self.REGINFO_CV_ALICUOTAS = '\r\n'.join(res)
 
@@ -485,8 +485,8 @@ class account_vat_ledger(models.Model):
             for afip_code in vat_taxes.mapped('tax_code_id.afip_code'):
                 taxes = vat_taxes.filtered(
                     lambda x: x.tax_code_id.afip_code == afip_code)
-                base_amount = sum(taxes.mapped('base_amount'))
-                tax_amount = sum(taxes.mapped('tax_amount'))
+                base_amount = sum(taxes.mapped('amount'))
+                tax_amount = sum(taxes.mapped('amount'))
                 row = [
                     # Campo 1: Despacho de importación.
                     (inv.afip_document_number or inv.number or '').rjust(

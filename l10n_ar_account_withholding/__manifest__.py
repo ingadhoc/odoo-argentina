@@ -41,14 +41,14 @@
         'demo/demo.xml',
     ],
     'depends': [
-        #'account_voucher_withholding_automatic',
+        'account_withholding_automatic',
         # 'l10n_ar_invoice',
         # para ganancias
         #'report_aeroo',
         'l10n_ar_padron_afip',
     ],
     'external_dependencies': {
-        'python': ['pyafipws'],
+#        'python': ['pyafipws'],
     },
     'installable': True,
     'name': 'Argentinian Withholding Management',

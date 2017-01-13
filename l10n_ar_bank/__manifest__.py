@@ -30,7 +30,7 @@
  'test': ['test/l10n_ar_banks_wizard.yml'],
  'data': ['data/res_bank.xml',
           'l10n_ar_bank.xml',
-          'l10n_ar_bank_menu.xml',
+#          'l10n_ar_bank_menu.xml',
           'wizard/wiz_l10n_ar_bank.xml'],
  'version': '10.0.1.0.0',
  'website': 'https://launchpad.net/~openerp-l10n-ar-localization'}

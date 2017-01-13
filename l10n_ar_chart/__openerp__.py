@@ -34,7 +34,9 @@
         # todo ver si usamos esto o un demo con el de groups
         # '../l10n_ar_account/demo/account_payment_demo.yml',
         '../l10n_ar_account/demo/account_other_docs_demo.yml',
-        # we add this file only fot tests run by odoo
+        # we add this file only fot tests run by odoo, we could use
+        # an yml testing if config.options['test_enable'] and only load it
+        # in that case
         '../l10n_ar_account/demo/account_journal_demo.xml',
         # '../account/demo/account_bank_statement.yml',
         # '../account/demo/account_invoice_demo.yml',

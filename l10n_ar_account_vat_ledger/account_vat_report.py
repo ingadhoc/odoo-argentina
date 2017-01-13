@@ -184,10 +184,17 @@ class account_vat_ledger(models.Model):
             ledger_type = _('Sales')
         elif self.type == 'purchase':
             ledger_type = _('Purchases')
-        name = _("%s VAT Ledger %s/%s") % (
+
+        lang = self.env['res.lang']
+        date_format = lang.browse(lang._lang_get(
+            self._context.get('lang', 'en_US'))).date_format
+
+        name = _("%s VAT Ledger %s - %s") % (
             ledger_type,
-            self.date_from,
-            self.date_to,
+            self.date_from and fields.Date.from_string(
+                self.date_from).strftime(date_format) or '',
+            self.date_to and fields.Date.from_string(
+                self.date_to).strftime(date_format) or '',
         )
         if self.reference:
             name = "%s - %s" % (name, self.reference)

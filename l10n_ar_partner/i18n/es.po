@@ -4,14 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Javier Diez <jd@adhoc.com.ar>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-13 17:16+0000\n"
-"PO-Revision-Date: 2016-11-13 17:16+0000\n"
-"Last-Translator: Javier Diez <jd@adhoc.com.ar>, 2016\n"
+"POT-Creation-Date: 2017-01-10 23:26+0000\n"
+"PO-Revision-Date: 2017-01-10 23:26+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +19,118 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_ar_partner
+#: model:ir.ui.view,arch_db:l10n_ar_partner.view_res_partner_filter
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<!-- we add it here because name_search is only used on m2o fields -->\n"
+"\n"
+"                <!-- we can use this way or the second one -->\n"
+"                <!-- <field name=\"name\" position=\"attributes\">\n"
+"                    <attribute name=\"filter_domain\">['|','|','|',('display_name','ilike',self),('ref','=',self),('email','ilike',self),('id_numbers','ilike',self)]</attribute>\n"
+"                </field> -->\n"
+"                <field name=\"name\" position=\"after\">\n"
+"                    <field name=\"id_numbers\"/>\n"
+"                </field>\n"
+"            "
+msgstr ""
+
+#. module: l10n_ar_partner
+#: model:ir.ui.view,arch_db:l10n_ar_partner.view_company_inherit_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<data><field name=\"vat\" position=\"attributes\">\n"
+"                    <!-- todavia no esta instalado account_documents por lo caul no tenemos el campo localization, ademas, por ahora reemplazamos logica de vat-->\n"
+"                    <attribute name=\"invisible\">1</attribute>\n"
+"                </field>\n"
+"                <field name=\"vat\" position=\"before\">\n"
+"                    <label for=\"main_id_number\" string=\"Main Identification\"/>\n"
+"                    <div class=\"address_format\">\n"
+"                        <field name=\"main_id_category_id\" options=\"{'no_open': True, 'no_create': True}\" placeholder=\"Category\" style=\"width: 45%\"/>\n"
+"                        <field name=\"main_id_number\" placeholder=\"Number\" style=\"width: 53%\"/>\n"
+"                    </div>\n"
+"                </field>\n"
+"            </data>"
+msgstr ""
+
+#. module: l10n_ar_partner
+#: model:ir.ui.view,arch_db:l10n_ar_partner.view_partner_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<data><form>\n"
+"                    <field name=\"cuit\" invisible=\"1\"/>\n"
+"                </form>\n"
+"                <field name=\"website\" position=\"after\">\n"
+"                    <label for=\"main_id_number\" string=\"Main Identification\"/>\n"
+"                    <div>\n"
+"                        <field name=\"main_id_category_id\" options=\"{'no_open': True, 'no_create': True}\" placeholder=\"Category\" class=\"oe_inline\"/> - \n"
+"                        <field name=\"main_id_number\" placeholder=\"Number\" class=\"oe_inline\"/>\n"
+"                    </div>\n"
+"                </field>\n"
+"\n"
+"              <page name=\"id_numbers\" position=\"attributes\">\n"
+"                <attribute name=\"groups\">l10n_ar_partner.group_multiple_id_numbers</attribute>\n"
+"              </page>\n"
+"\n"
+"            </data>"
+msgstr ""
+
+#. module: l10n_ar_partner
+#: model:ir.ui.view,arch_db:l10n_ar_partner.view_sale_config_settings
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<div id=\"main\" position=\"inside\">\n"
+"                    <group string=\"Partners\">\n"
+"                        <field name=\"group_multiple_id_numbers\"/>\n"
+"                    </group>\n"
+"                </div>\n"
+"            "
+msgstr ""
+
+#. module: l10n_ar_partner
+#: model:ir.ui.view,arch_db:l10n_ar_partner.view_partner_id_numbers_tree
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"category_id\" position=\"before\">\n"
+"            <field name=\"sequence\" widget=\"handle\"/>\n"
+"        </field>\n"
+"    "
+msgstr ""
+
+#. module: l10n_ar_partner
+#: model:ir.ui.view,arch_db:l10n_ar_partner.view_partner_id_category_tree
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"name\" position=\"before\">\n"
+"            <field name=\"sequence\" widget=\"handle\"/>\n"
+"            <field name=\"afip_code\"/>\n"
+"        </field>\n"
+"    "
+msgstr ""
+
+#. module: l10n_ar_partner
+#: model:ir.ui.view,arch_db:l10n_ar_partner.view_partner_id_category_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"name\" position=\"before\">\n"
+"            <field name=\"sequence\"/>\n"
+"            <field name=\"afip_code\"/>\n"
+"        </field>\n"
+"    "
+msgstr ""
+
+#. module: l10n_ar_partner
+#: model:ir.ui.view,arch_db:l10n_ar_partner.view_partner_id_numbers_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"name\" position=\"before\">\n"
+"            <field name=\"sequence\"/>\n"
+"        </field>\n"
+"    "
+msgstr ""
+
+#. module: l10n_ar_partner
 #: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner_id_category_afip_code
+#: field:res.partner.id_category,afip_code:0
 msgid "AFIP Code"
 msgstr "Código de AFIP"
 
@@ -28,6 +138,13 @@ msgstr "Código de AFIP"
 #: model:res.partner.id_category,name:l10n_ar_partner.dt_AN
 msgid "Acta nacimiento"
 msgstr ""
+
+#. module: l10n_ar_partner
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_sale_config_settings_group_multiple_id_numbers
+#: model:res.groups,name:l10n_ar_partner.group_multiple_id_numbers
+#: field:sale.config.settings,group_multiple_id_numbers:0
+msgid "Allow Multiple Id Numbers on Partners"
+msgstr "Permitir Múltiples Identificaciones en Partners"
 
 #. module: l10n_ar_partner
 #: model:res.partner.id_category,name:l10n_ar_partner.dt_CDI
@@ -165,12 +282,6 @@ msgid "CI extranjera"
 msgstr ""
 
 #. module: l10n_ar_partner
-#: model:ir.ui.view,arch_db:l10n_ar_partner.view_company_inherit_form
-#: model:ir.ui.view,arch_db:l10n_ar_partner.view_partner_form
-msgid "Category"
-msgstr "Categoría"
-
-#. module: l10n_ar_partner
 #: model:res.partner.id_category,name:l10n_ar_partner.dt_CdM
 msgid "Certificado de Migración"
 msgstr ""
@@ -193,13 +304,8 @@ msgstr ""
 #. module: l10n_ar_partner
 #: model:ir.model.fields,field_description:l10n_ar_partner.field_res_company_cuit
 #: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner_cuit
+#: field:res.company,cuit:0 field:res.partner,cuit:0
 msgid "Cuit"
-msgstr ""
-
-#. module: l10n_ar_partner
-#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_company_cuit_required
-#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner_cuit_required
-msgid "Cuit required"
 msgstr ""
 
 #. module: l10n_ar_partner
@@ -233,6 +339,16 @@ msgid "Documento Nacional de Identidad"
 msgstr ""
 
 #. module: l10n_ar_partner
+#: model:ir.model.fields,help:l10n_ar_partner.field_sale_config_settings_group_multiple_id_numbers
+#: help:sale.config.settings,group_multiple_id_numbers:0
+msgid ""
+"If you allow multiple Id Numbers, then a new tab for 'Id NUmbers' will be "
+"added on partner form view"
+msgstr ""
+"Si permite múltiples identificaciones, una nueva pestaña \"Números de "
+"Identificación\" se va a mostrar en la vista formulario de Partners"
+
+#. module: l10n_ar_partner
 #: model:res.partner.title,shortcut:l10n_ar_partner.ing
 msgid "Ing."
 msgstr ""
@@ -263,20 +379,17 @@ msgid "Licenciado"
 msgstr ""
 
 #. module: l10n_ar_partner
-#: model:ir.ui.view,arch_db:l10n_ar_partner.view_company_inherit_form
-#: model:ir.ui.view,arch_db:l10n_ar_partner.view_partner_form
-msgid "Main Identification"
-msgstr "Identificación principal"
-
-#. module: l10n_ar_partner
 #: model:ir.model.fields,field_description:l10n_ar_partner.field_res_company_main_id_category_id
 #: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner_main_id_category_id
+#: field:res.company,main_id_category_id:0
+#: field:res.partner,main_id_category_id:0
 msgid "Main Identification Category"
 msgstr "Categoría de identificación principal"
 
 #. module: l10n_ar_partner
 #: model:ir.model.fields,field_description:l10n_ar_partner.field_res_company_main_id_number
 #: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner_main_id_number
+#: field:res.company,main_id_number:0 field:res.partner,main_id_number:0
 msgid "Main Identification Number"
 msgstr "Número de identificación principal"
 
@@ -291,16 +404,10 @@ msgid "Médico"
 msgstr ""
 
 #. module: l10n_ar_partner
-#: code:addons/l10n_ar_partner/models/res_partner.py:38
+#: code:addons/l10n_ar_partner/models/res_partner.py:42
 #, python-format
 msgid "No CUIT cofigured for partner %s"
 msgstr "No hay CUIT configurado en el partner %s"
-
-#. module: l10n_ar_partner
-#: model:ir.ui.view,arch_db:l10n_ar_partner.view_company_inherit_form
-#: model:ir.ui.view,arch_db:l10n_ar_partner.view_partner_form
-msgid "Number"
-msgstr "Number"
 
 #. module: l10n_ar_partner
 #: model:ir.model,name:l10n_ar_partner.model_res_partner
@@ -335,6 +442,8 @@ msgstr ""
 #. module: l10n_ar_partner
 #: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner_id_category_sequence
 #: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner_id_number_sequence
+#: field:res.partner.id_category,sequence:0
+#: field:res.partner.id_number,sequence:0
 msgid "Sequence"
 msgstr "Secuencia"
 
@@ -406,14 +515,4 @@ msgstr ""
 #. module: l10n_ar_partner
 #: model:res.partner.id_category,name:l10n_ar_partner.dt_ET
 msgid "en trámite"
-msgstr ""
-
-#. module: l10n_ar_partner
-#: model:ir.model,name:l10n_ar_partner.model_res_partner_id_category
-msgid "res.partner.id_category"
-msgstr ""
-
-#. module: l10n_ar_partner
-#: model:ir.model,name:l10n_ar_partner.model_res_partner_id_number
-msgid "res.partner.id_number"
 msgstr ""

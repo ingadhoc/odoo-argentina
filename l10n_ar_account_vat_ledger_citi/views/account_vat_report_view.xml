@@ -13,13 +13,17 @@
                 <notebook>
                     <page string="CITI" name="CITI">
                         <button name="compute_citi_data" type="object" string="Compute Citi Data" states="draft"/>
-                        <group col="4">
+                        <group>
                             <field name="vouchers_filename" invisible="1"/>
                             <field name="aliquots_filename" invisible="1"/>
                             <field name="import_aliquots_filename" invisible="1"/>
-                            <field name="vouchers_file" filename="vouchers_filename"/>
-                            <field name="aliquots_file" filename="aliquots_filename"/>
-                            <field name="import_aliquots_file" filename="import_aliquots_filename"/>
+                            <group>
+                                <field name="vouchers_file" filename="vouchers_filename"/>
+                            </group>
+                            <group>
+                                <field name="aliquots_file" filename="aliquots_filename"/>
+                                <field name="import_aliquots_file" filename="import_aliquots_filename"/>
+                            </group>
                         </group>
                         <group col="1">
                             <!-- <field name="REGINFO_CV_CABECERA"/> -->

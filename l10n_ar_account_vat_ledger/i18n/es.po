@@ -22,8 +22,8 @@ msgstr ""
 #. module: l10n_ar_account_vat_ledger
 #: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:187
 #, python-format
-msgid "%s VAT Ledger %s/%s"
-msgstr "Libro IVA %s %s/%s"
+msgid "%s VAT Ledger %s-%s"
+msgstr "Libro IVA %s %s-%s"
 
 #. module: l10n_ar_account_vat_ledger
 #: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form

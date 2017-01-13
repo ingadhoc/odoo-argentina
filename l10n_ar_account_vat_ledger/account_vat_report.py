@@ -160,7 +160,7 @@ class account_vat_ledger(models.Model):
         # Get invoices
         invoices = self.env['account.invoice'].search(
             # invoices_domain, order='date_invoice, afip_document_number')
-            invoices_domain)
+            invoices_domain, order='date_invoice asc')
         self.document_type_ids = invoices.mapped('document_type_id')
         self.invoice_ids = invoices
 

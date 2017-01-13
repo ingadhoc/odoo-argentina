@@ -56,7 +56,7 @@
                                     <tree default_order="date_invoice">
                                         <field name="state" invisible="1"/>
                                         <field name="date_invoice"/>
-                                        <field name="document_number"/>
+                                        <field name="display_name"/>
                                         <field name="commercial_partner_id"/>
                                         <field name="afip_responsability_type_id"/>
                                         <field name="main_id_number"/>

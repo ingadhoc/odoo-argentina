@@ -156,6 +156,10 @@ class account_vat_ledger(models.Model):
 
     @api.model
     def get_point_of_sale(self, invoice):
+        # this invalidate cache is to fix that when we request pos number
+        # all invoices of the vat ledger, no matter citi export or not,
+        # are requested to compute pos number
+        invoice.invalidate_cache()
         return "{:0>5d}".format(invoice.point_of_sale_number)
 
     @api.multi
@@ -163,7 +167,7 @@ class account_vat_ledger(models.Model):
         self.ensure_one()
         return self.env['account.invoice'].search([
             ('document_type_id.export_to_citi', '=', True),
-            ('id', 'in', self.invoice_ids.ids)])
+            ('id', 'in', self.invoice_ids.ids)], order='date_invoice asc')
 
     @api.one
     def get_REGINFO_CV_CBTE(self):
@@ -191,8 +195,9 @@ class account_vat_ledger(models.Model):
             cant_alicuotas = len(inv.vat_tax_ids.filtered(
                 lambda r: r.tax_id.tax_group_id.afip_code in [3, 4, 5, 6, 8, 9]
             ).mapped('tax_id.tax_group_id.afip_code'))
+            # iva no corresponde no suma
             if not cant_alicuotas and inv.vat_tax_ids.filtered(
-                    lambda r: r.tax_id.tax_group_id.afip_code in [0, 1, 2]):
+                    lambda r: r.tax_id.tax_group_id.afip_code in [1, 2]):
                 cant_alicuotas = 1
 
             row = [
@@ -449,8 +454,9 @@ class account_vat_ledger(models.Model):
                     3, 4, 5, 6, 8, 9])
 
             # if only exempt or no gravado, we add one line with 0, 0, 0
+            # no corresponde no lo llevamos
             if not vat_taxes and inv.vat_tax_ids.filtered(
-                    lambda r: r.tax_id.tax_group_id.afip_code in [0, 1, 2]):
+                    lambda r: r.tax_id.tax_group_id.afip_code in [1, 2]):
                 res.append(''.join(self.get_tax_row(inv, 0.0, 3, 0.0)))
 
             # we group by afip_code

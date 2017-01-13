@@ -196,7 +196,7 @@ class AccountInvoice(models.Model):
         self.not_vat_tax_ids = not_vat_taxes
         self.other_taxes_amount = other_taxes_amount
 
-    @api.one
+    @api.multi
     @api.depends('document_number', 'number')
     def _get_invoice_number(self):
         """ Funcion que calcula numero de punto de venta y numero de factura
@@ -208,31 +208,32 @@ class AccountInvoice(models.Model):
         # comprobantes de compra
 
         # decidimos obtener esto solamente para comprobantes con doc number
-        str_number = self.document_number or False
-        if str_number:
-            if self.document_type_id.code in ['33', '99', '331', '332']:
-                point_of_sale = '0'
-                # leave only numbers and convert to integer
-                invoice_number = str_number
-            # despachos de importacion
-            elif self.document_type_id.code == '66':
-                point_of_sale = '0'
-                invoice_number = '0'
-            elif "-" in str_number:
-                splited_number = str_number.split('-')
-                invoice_number = splited_number.pop()
-                point_of_sale = splited_number.pop()
-            elif "-" not in str_number and len(str_number) == 12:
-                point_of_sale = str_number[:4]
-                invoice_number = str_number[-8:]
-            else:
-                raise UserError(_(
-                    'Could not get invoice number and point of sale for '
-                    'invoice id %i') % (self.id))
-            self.invoice_number = int(
-                re.sub("[^0-9]", "", invoice_number))
-            self.point_of_sale_number = int(
-                re.sub("[^0-9]", "", point_of_sale))
+        for rec in self:
+            str_number = rec.document_number or False
+            if str_number:
+                if rec.document_type_id.code in ['33', '99', '331', '332']:
+                    point_of_sale = '0'
+                    # leave only numbers and convert to integer
+                    invoice_number = str_number
+                # despachos de importacion
+                elif rec.document_type_id.code == '66':
+                    point_of_sale = '0'
+                    invoice_number = '0'
+                elif "-" in str_number:
+                    splited_number = str_number.split('-')
+                    invoice_number = splited_number.pop()
+                    point_of_sale = splited_number.pop()
+                elif "-" not in str_number and len(str_number) == 12:
+                    point_of_sale = str_number[:4]
+                    invoice_number = str_number[-8:]
+                else:
+                    raise UserError(_(
+                        'Could not get invoice number and point of sale for '
+                        'invoice id %i') % (rec.id))
+                rec.invoice_number = int(
+                    re.sub("[^0-9]", "", invoice_number))
+                rec.point_of_sale_number = int(
+                    re.sub("[^0-9]", "", point_of_sale))
 
     @api.one
     @api.depends(

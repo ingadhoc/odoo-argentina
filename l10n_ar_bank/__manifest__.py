@@ -24,7 +24,7 @@
  '\n\n\n\nfrom the CLI.\n\n\n\n',
  'external_dependencies': {'python': ['BeautifulSoup', 'geopy']},
  'init_xml': [],
- 'installable': False,
+ 'installable': True,
  'license': 'AGPL-3',
  'name': 'Banks of Argentina',
  'test': ['test/l10n_ar_banks_wizard.yml'],

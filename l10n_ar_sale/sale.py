@@ -113,14 +113,14 @@ class sale_order(models.Model):
     @api.one
     @api.depends(
         'partner_id',
-        'partner_id.responsability_id',
+        'partner_id.afip_responsability_type_id',
         'company_id',
-        'company_id.partner_id.responsability_id',)
+        'company_id.partner_id.afip_responsability_type_id',)
     def get_vat_discriminated(self):
         vat_discriminated = True
         if self.company_id.sale_allow_vat_no_discrimination:
             letters = self.env['afip.document_letter']
-            if self.company_id.partner_id.responsability_id:
+            if self.company_id.partner_id.afip_responsability_type_id:
                 letter_ids = self.env['account.invoice'].get_valid_document_letters(
                     self.partner_id.id, 'sale', self.company_id.id)
                 if letter_ids:
@@ -134,9 +134,9 @@ class sale_order(models.Model):
     @api.one
     @api.depends(
         'partner_id',
-        'partner_id.responsability_id',
+        'partner_id.afip_responsability_type_id',
         'company_id',
-        'company_id.partner_id.responsability_id',)
+        'company_id.partner_id.afip_responsability_type_id',)
     def get_taxes(self):
         self.tax_line = self.env['account.tax']
         tax_ids = []

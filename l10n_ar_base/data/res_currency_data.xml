@@ -4,6 +4,8 @@
         <!-- update symbol to common use in argentina -->
         <record id="base.USD" model="res.currency">
             <field name="symbol">USD</field>
+            <!-- because we change ars, we need to change here -->
+            <field name="rounding" eval="0.001"/>
         </record>
 
         <!-- in argentina we are used to position of symbol before -->
@@ -17,6 +19,8 @@
 
         <record id="base.EUR" model="res.currency">
             <field name="position">before</field>
+            <!-- because we change ars, we need to change here -->
+            <field name="rounding" eval="0.001"/>
         </record>
     </data>
 </openerp>

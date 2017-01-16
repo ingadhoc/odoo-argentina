@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="True">
+    <data noupdate="0">
 
         <record model="res.country.state" id="CABA">
             <field name="name">Ciudad Autónoma de Buenos Aires</field>

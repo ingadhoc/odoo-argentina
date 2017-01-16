@@ -2,7 +2,7 @@
 <openerp>
   <data > 
     
-        <record id="view_bank_cbu_filter" model="ir.ui.view">
+        <!-- record id="view_bank_cbu_filter" model="ir.ui.view">
             <field name="name">partner.bank.select</field>
             <field name="model">res.partner.bank</field>
             <field name="inherit_id" ref="base.view_partner_bank_search"/>
@@ -11,7 +11,7 @@
                 <filter name="cbu"/>
               </filter>
             </field>
-        </record>
+        </record -->
 
         <record id="view__bank_form" model="ir.ui.view">
           <field name="model">res.partner.bank</field>

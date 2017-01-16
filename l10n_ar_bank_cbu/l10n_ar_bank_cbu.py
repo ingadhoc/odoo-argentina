@@ -3,12 +3,9 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp.osv import fields, osv
+from odoo import models, api, fields
 
-
-class Bank(osv.osv):
+class Bank(models.Model)::
     _inherit = 'res.partner.bank'
-    _columns = {
-        'cbu': fields.char('CBU',
-                           help="Key Bank Uniform"),
-    }
+
+    cbu = fields.char('CBU', help="Key Bank Uniform"),

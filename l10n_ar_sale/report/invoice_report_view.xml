@@ -7,10 +7,10 @@
 			<field name="inherit_id" ref="account.view_account_invoice_report_search" />
 			<field name="arch" type="xml">
 				<search>
-					<field name="afip_document_class_id"/>
+					<field name="document_type_id"/>
 				</search>
 				<filter name="user" position="after">
-					<filter domain="[]" string="Document Type" context="{'group_by':'afip_document_class_id'}"/>
+					<filter domain="[]" string="Document Type" context="{'group_by':'document_type_id'}"/>
 				</filter>
 			</field>
 		</record>

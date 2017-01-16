@@ -6,7 +6,7 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <field name="fiscal_position" position="after">
+                <field name="date_order" position="after">
                     <field name="vat_discriminated"/>
                 </field>
                 <xpath expr="//field[@name='order_line']/tree//field[@name='tax_id']" position="after">

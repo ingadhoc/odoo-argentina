@@ -13,7 +13,7 @@
     'external_dependencies': {
     },
     'data': [
-        'data/res_country_state.xml',
+        #'data/res_country_state.xml',
     ],
     'demo': [
     ],
@@ -21,7 +21,7 @@
     ],
     'images': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

@@ -9,6 +9,8 @@
         <!-- in argentina we are used to position of symbol before -->
         <record id="base.ARS" model="res.currency">
             <field name="position">before</field>
+            <!-- we need a rounding of 3 digits because of possible errors on taxes rounding when using discounts, you can replicate with 6 lines of 3.52 with 45% discount using electronic invoice. We have also try using round globally of odoo but it does not work ok on base calculation of account.invoice.tax -->
+            <field name="rounding" eval="0.001"/>
             <!-- no matter we create database for argentina, ars currency is deactivated -->
             <field name="active" eval="True"/>
         </record>

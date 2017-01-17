@@ -15,6 +15,7 @@ from . import res_currency
 from . import res_company
 from . import account_invoice_tax
 from . import account_invoice
+from . import account_invoice_line
 from . import product_uom
 from . import account_chart_template
 from . import product_template

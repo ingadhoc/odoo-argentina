@@ -345,13 +345,7 @@ print "Observaciones:", wscdc.Obs
             # authenticate against AFIP:
             ws = inv.company_id.get_connection(afip_ws).connect()
 
-            # get the last invoice number registered in AFIP
-            if afip_ws == "wsfe" or afip_ws == "wsmtxca":
-                ws_invoice_number = ws.CompUltimoAutorizado(
-                    doc_afip_code, pos_number)
-            elif afip_ws == 'wsfex':
-                ws_invoice_number = ws.GetLastCMP(
-                    doc_afip_code, pos_number)
+            if afip_ws == 'wsfex':
                 if not country:
                     raise UserError(_(
                         'For WS "%s" country is required on partner' % (
@@ -367,7 +361,9 @@ print "Observaciones:", wscdc.Obs
                         'Country: %s' % (
                             afip_ws, country.name)))
 
-            ws_next_invoice_number = int(ws_invoice_number) + 1
+            ws_next_invoice_number = int(
+                inv.journal_document_type_id.get_pyafipws_last_invoice(
+                )['result']) + 1
             # verify that the invoice is the next one to be registered in AFIP
             if inv.invoice_number != ws_next_invoice_number:
                 raise UserError(_(
@@ -499,10 +495,37 @@ print "Observaciones:", wscdc.Obs
                     obs_generales, forma_pago, incoterms,
                     idioma_cbte, incoterms_ds
                 )
+            elif afip_ws == 'wsbfe':
+                zona = 1  # Nacional (la unica devuelta por afip)
+                # los responsables no inscriptos no se usan mas
+                impto_liq_rni = 0.0
+                imp_iibb = sum(inv.tax_line_ids.filtered(lambda r: (
+                    r.tax_id.tax_group_id.type == 'perception' and
+                    r.tax_id.tax_group_id.application == 'provincial_taxes')
+                ).mapped('amount'))
+                imp_perc_mun = sum(inv.tax_line_ids.filtered(lambda r: (
+                    r.tax_id.tax_group_id.type == 'perception' and
+                    r.tax_id.tax_group_id.application == 'municipal_taxes')
+                ).mapped('amount'))
+                imp_internos = sum(inv.tax_line_ids.filtered(
+                    lambda r: r.tax_id.tax_group_id.application == 'others'
+                ).mapped('amount'))
+                imp_perc = sum(inv.tax_line_ids.filtered(lambda r: (
+                    r.tax_id.tax_group_id.type == 'perception' and
+                    # r.tax_id.tax_group_id.tax != 'vat' and
+                    r.tax_id.tax_group_id.application == 'national_taxes')
+                ).mapped('amount'))
+
+                ws.CrearFactura(
+                    tipo_doc, nro_doc, zona, doc_afip_code, pos_number,
+                    cbte_nro, fecha_cbte, imp_total, imp_neto, imp_iva,
+                    imp_tot_conc, impto_liq_rni, imp_op_ex, imp_perc, imp_iibb,
+                    imp_perc_mun, imp_internos, moneda_id, moneda_ctz
+                )
 
             # TODO ver si en realidad tenemos que usar un vat pero no lo
             # subimos
-            if afip_ws != 'wsfex':
+            if afip_ws not in ['wsfex', 'wsbfe']:
                 for vat in inv.vat_taxable_ids:
                     _logger.info(
                         'Adding VAT %s' % vat.tax_id.tax_group_id.name)
@@ -540,47 +563,47 @@ print "Observaciones:", wscdc.Obs
             # wsfe do not require detail
             if afip_ws != 'wsfe':
                 for line in inv.invoice_line_ids:
-                    codigo = line.product_id.code
+                    codigo = line.product_id.default_code
                     # unidad de referencia del producto si se comercializa
                     # en una unidad distinta a la de consumo
                     if not line.uom_id.afip_code:
                         raise UserError(_(
                             'Not afip code con producto UOM %s' % (
                                 line.uom_id.name)))
-                    cod_mtx = line.uom_id.afip_code
+                    # cod_mtx = line.uom_id.afip_code
                     ds = line.name
                     qty = line.quantity
                     umed = line.uom_id.afip_code
                     precio = line.price_unit
                     importe = line.price_subtotal
                     bonif = line.discount or None
-                    if afip_ws == 'wsmtxca':
+                    if afip_ws in ['wsmtxca', 'wsbfe']:
                         if not line.product_id.uom_id.afip_code:
                             raise Warning(_(
                                 'Not afip code con producto UOM %s' % (
                                     line.product_id.uom_id.name)))
-                        u_mtx = (
-                            line.product_id.uom_id.afip_code or
-                            line.uom_id.afip_code)
-                        # dummy true to avoid pylint error
-                        if True:
-                            raise Warning(
-                                _('WS wsmtxca Not implemented yet'))
-                        # TODO en las lineas no tenemos vat_tax_ids todavia
-                        if self.invoice_id.type in (
-                                'out_invoice', 'in_invoice'):
-                            iva_id = line.vat_tax_ids.tax_code_id.afip_code
-                        else:
-                            iva_id = line.vat_tax_ids.ref_tax_code_id.afip_code
-                        vat_taxes_amounts = line.vat_tax_ids.compute_all(
-                            line.price_unit, line.quantity,
+                        # u_mtx = (
+                        #     line.product_id.uom_id.afip_code or
+                        #     line.uom_id.afip_code)
+                        iva_id = line.vat_tax_id.tax_group_id.afip_code
+                        vat_taxes_amounts = line.vat_tax_id.compute_all(
+                            line.price_unit, inv.currency_id, line.quantity,
                             product=line.product_id,
                             partner=inv.partner_id)
-                        imp_iva = vat_taxes_amounts[
-                            'total_included'] - vat_taxes_amounts['total']
-                        ws.AgregarItem(
-                            u_mtx, cod_mtx, codigo, ds, qty, umed,
-                            precio, bonif, iva_id, imp_iva, importe + imp_iva)
+                        imp_iva = sum(
+                            [x['amount'] for x in vat_taxes_amounts['taxes']])
+                        if afip_ws == 'wsmtxca':
+                            raise Warning(
+                                _('WS wsmtxca Not implemented yet'))
+                            # ws.AgregarItem(
+                            #     u_mtx, cod_mtx, codigo, ds, qty, umed,
+                            #     precio, bonif, iva_id, imp_iva,
+                            #     importe + imp_iva)
+                        elif afip_ws == 'wsbfe':
+                            sec = ""  # Código de la Secretaría (TODO usar)
+                            ws.AgregarItem(
+                                codigo, sec, ds, qty, umed, precio, bonif,
+                                iva_id, importe + imp_iva)
                     elif afip_ws == 'wsfex':
                         ws.AgregarItem(
                             codigo, ds, qty, umed, precio, importe,
@@ -599,6 +622,9 @@ print "Observaciones:", wscdc.Obs
                 elif afip_ws == 'wsfex':
                     ws.Authorize(inv.id)
                     vto = ws.FchVencCAE
+                elif afip_ws == 'wsbfe':
+                    ws.Authorize(inv.id)
+                    vto = ws.Vencimiento
             except SoapFault as fault:
                 msg = 'Falla SOAP %s: %s' % (
                     fault.faultcode, fault.faultstring)

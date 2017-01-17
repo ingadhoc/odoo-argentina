@@ -130,6 +130,10 @@ class AfipwsConnection(models.Model):
         ws.Cuit = cuit
         ws.Token = self.token.encode('ascii')
         ws.Sign = self.sign.encode('ascii')
+        # TODO till this this PR is accepted
+        ws.Obs = ''
+        ws.Errores = []
+
         _logger.info(
             'Connection getted with url "%s", cuit "%s"' % (
                 wsdl, ws.Cuit))

@@ -34,6 +34,8 @@ class ResCurrency(models.Model):
             ret = ws.GetParamMon(sep=" ")
         elif afip_ws == 'wsfe':
             ret = ws.ParamGetTiposMonedas(sep=" ")
+        elif afip_ws == 'wsbfe':
+            ret = ws.GetParamMon()
         else:
             raise UserError(_('AFIP WS %s not implemented') % (
                 afip_ws))
@@ -46,7 +48,8 @@ class ResCurrency(models.Model):
         raise UserError(self.get_pyafipws_currency_rate()[1])
 
     @api.multi
-    def get_pyafipws_currency_rate(self, afip_ws='wsfex', company=False):
+    # def get_pyafipws_currency_rate(self, afip_ws='wsfex', company=False):
+    def get_pyafipws_currency_rate(self, afip_ws='wsfe', company=False):
         self.ensure_one()
         # if not company, then we search one that uses argentinian localization
         if not company:
@@ -62,8 +65,13 @@ class ResCurrency(models.Model):
 
         ws = company.get_connection(afip_ws).connect()
 
+        # deberia implementarse igual para wsbfe pero nos da un error
+        # BFEGetPARAM_Ctz not found in WSDL
+        # if afip_ws in ["wsfex", 'wsbfe']:
         if afip_ws == "wsfex":
             rate = ws.GetParamCtz(self.afip_code)
+        elif afip_ws == "wsfe":
+            rate = ws.ParamGetCotizacion(self.afip_code)
         else:
             raise UserError(_('AFIP WS %s not implemented') % (
                 afip_ws))

@@ -46,6 +46,14 @@ class AccountJournalDocumentType(models.Model):
             attributes = [
                 'PuntoVenta', 'CbteNro', 'FechaCbte', 'ImpTotal', 'CAE',
                 'Vencimiento', 'FchVencCAE', 'Resultado', 'XmlResponse']
+        elif afip_ws == 'wsbfe':
+            ws.GetCMP(
+                document_type,
+                self.journal_id.point_of_sale_number,
+                document_number)
+            attributes = [
+                'PuntoVenta', 'CbteNro', 'FechaCbte', 'ImpTotal', 'ImptoLiq',
+                'CAE', 'Vencimiento', 'FchVencCAE', 'Resultado', 'XmlResponse']
         else:
             raise UserError(_('AFIP WS %s not implemented') % afip_ws)
         msg = ''
@@ -88,7 +96,7 @@ class AccountJournalDocumentType(models.Model):
         if afip_ws in ("wsfe", "wsmtxca"):
             last = ws.CompUltimoAutorizado(
                 document_type, self.journal_id.point_of_sale_number)
-        elif afip_ws == "wsfex":
+        elif afip_ws in ["wsfex", 'wsbfe']:
             last = ws.GetLastCMP(
                 document_type, self.journal_id.point_of_sale_number)
         else:

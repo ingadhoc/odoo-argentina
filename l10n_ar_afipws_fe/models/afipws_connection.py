@@ -41,6 +41,9 @@ class AfipwsConnection(models.Model):
         elif afip_ws == "wscdc":
             from pyafipws.wscdc import WSCDC
             ws = WSCDC()
+        elif afip_ws == "wsbfe":
+            from pyafipws.wsbfev1 import WSBFEv1
+            ws = WSBFEv1()
         return ws
 
     @api.model
@@ -64,13 +67,12 @@ class AfipwsConnection(models.Model):
                 afip_ws_url = (
                     'https://wswhomo.afip.gov.ar/wsfexv1/service.asmx')
         elif afip_ws == 'wsbfe':
-            raise UserError('AFIP WS %s Not implemented yet' % afip_ws)
-            # if environment_type == 'production':
-            #     afip_ws_url = (
-            #         'https://servicios1.afip.gov.ar/wsbfe/service.asmx')
-            # else:
-            #     afip_ws_url = (
-            #         'https://wswhomo.afip.gov.ar/wsbfe/service.asmx')
+            if environment_type == 'production':
+                afip_ws_url = (
+                    'https://servicios1.afip.gov.ar/wsbfev1/service.asmx')
+            else:
+                afip_ws_url = (
+                    'https://wswhomo.afip.gov.ar/wsbfev1/service.asmx')
         elif afip_ws == 'wsmtxca':
             raise UserError('AFIP WS %s Not implemented yet' % afip_ws)
             # if environment_type == 'production':

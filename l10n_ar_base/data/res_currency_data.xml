@@ -5,7 +5,7 @@
         <record id="base.USD" model="res.currency">
             <field name="symbol">USD</field>
             <!-- because we change ars, we need to change here -->
-            <!-- tests are broken by this change, only do this change for customers that requires it -->
+            <!-- tests are broken by this change, only do this change for customers that requires it, it would be better to use company round per invoice -->
             <!-- <field name="rounding" eval="0.001"/> -->
         </record>
 

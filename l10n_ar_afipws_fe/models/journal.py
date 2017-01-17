@@ -145,8 +145,12 @@ class AccountJournal(models.Model):
         ws = self.company_id.get_connection(afip_ws).connect()
         if afip_ws == 'wsfex':
             ret = ws.GetParamPtosVenta()
-        else:
+        elif afip_ws == 'wsfe':
             ret = ws.ParamGetPtosVenta(sep=" ")
+        else:
+            raise UserError(_(
+                'Get point of sale for ws %s is not implemented yet') % (
+                afip_ws))
         msg = (_(" %s %s") % (
             '. '.join(ret), " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
         title = _('Enabled Point Of Sales on AFIP\n')
@@ -161,10 +165,52 @@ class AccountJournal(models.Model):
         ws = self.company_id.get_connection(afip_ws).connect()
         if afip_ws == 'wsfex':
             ret = ws.GetParamTipoCbte(sep=",")
-        else:
+        elif afip_ws == 'wsfe':
             ret = ws.ParamGetTiposCbte(sep=",")
+        elif afip_ws == 'wsbfe':
+            ret = ws.GetParamTipoCbte()
+        else:
+            raise UserError(_(
+                'Get document types for ws %s is not implemented yet') % (
+                afip_ws))
         msg = (_(
             "Authorized Document Clases on AFIP\n%s\n. \nObservations: %s") % (
+            '\n '.join(ret), ".\n".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
+        raise UserError(msg)
+
+    @api.multi
+    def get_pyafipws_zonas(self):
+        self.ensure_one()
+        afip_ws = self.afip_ws
+        if not afip_ws:
+            raise UserError(_('No AFIP WS selected'))
+        ws = self.company_id.get_connection(afip_ws).connect()
+        if afip_ws == 'wsbfe':
+            ret = ws.GetParamZonas()
+        else:
+            raise UserError(_(
+                'Get zonas for ws %s is not implemented yet') % (
+                afip_ws))
+        msg = (_(
+            "Zonas on AFIP\n%s\n. \nObservations: %s") % (
+            '\n '.join(ret), ".\n".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
+        raise UserError(msg)
+
+    @api.multi
+    def get_pyafipws_NCM(self):
+        self.ensure_one()
+        afip_ws = self.afip_ws
+        if not afip_ws:
+            raise UserError(_('No AFIP WS selected'))
+        ws = self.company_id.get_connection(afip_ws).connect()
+        if afip_ws == 'wsbfe':
+            ret = ws.GetParamNCM()
+        else:
+            raise UserError(_(
+                'Get NCM for ws %s is not implemented yet') % (
+                afip_ws))
+        msg = (_(
+            "Zonas on AFIP\n%s\n. \nObservations: %s") % (
             '\n '.join(ret), ".\n".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
         raise UserError(msg)
 

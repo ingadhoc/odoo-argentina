@@ -38,6 +38,7 @@
                                 <div>
                                     <field name="gross_income_type" class="oe_inline"/>
                                     <field name="gross_income_number" placeholder="Number..." class="oe_inline" attrs="{'invisible': [('gross_income_type', 'not in', ['multilateral', 'local'])], 'required': [('gross_income_type', 'in', ['multilateral', 'local'])]}"/>
+                                    <field name="gross_income_jurisdiction_ids" widget="many2many_tags" placeholder="Other Jurisdictions" class="oe_inline" attrs="{'invisible': [('gross_income_type', '!=', 'multilateral')]}"/>
                                 </div>
                             </group>
                             <group name="others_col_2">

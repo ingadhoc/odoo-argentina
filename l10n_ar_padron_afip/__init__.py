@@ -6,3 +6,4 @@
 from . import models
 from . import wizard
 from . import res_config
+from .hooks import post_init_hook

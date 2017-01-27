@@ -6,13 +6,14 @@
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="model">res.company</field>
             <field name="arch" type="xml">
-                 <field name="name" position="before">
-                    <group colspan="2">
-                        <field name="sale_allow_vat_no_discrimination"/>
-                    </group>
-                </field>
+                <notebook position="inside">
+                    <page string="Sale VAT Configuration" name="salevatconf">
+                        <group name="salevat">
+                            <field name="sale_allow_vat_no_discrimination"/>
+                        </group>
+                    </page>
+                </notebook>
             </field>
         </record>
-
     </data>
 </openerp>

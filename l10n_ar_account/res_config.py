@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api
-# from openerp.exceptions import UserError
+from openerp import models, fields, api, _
+from openerp.exceptions import UserError
 from openerp.addons.l10n_ar_account.models import account_journal
 
 
@@ -24,6 +24,16 @@ class AccountConfigSettings(models.TransientModel):
     afip_responsability_type_id = fields.Many2one(
         related='company_id.afip_responsability_type_id',
     )
+
+    @api.multi
+    @api.constrains('point_of_sale_number', 'point_of_sale_type')
+    def check_pos_number(self):
+        """
+        Esta constriant es porque los campos integer se muestran requeridos
+        pero por defecto toma cero y cero pasa bien
+        """
+        if self.point_of_sale_type and not self.point_of_sale_number:
+            raise UserError(_('Debe indicar un número de punto de venta'))
 
     @api.multi
     def set_chart_of_accounts(self):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Factura Electrónica Argentina",
-    'version': '9.0.1.1.0',
+    'version': '9.0.1.2.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA, Moldeo Interactive',
@@ -29,6 +29,7 @@
         'views/account_journal_view.xml',
         'views/product_uom_view.xml',
         'views/res_currency_view.xml',
+        'views/menuitem.xml',
         'res_config_view.xml',
         'views/res_company_view.xml',
         'data/afip.wsfe_error.csv',

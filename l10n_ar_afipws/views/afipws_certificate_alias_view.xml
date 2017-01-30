@@ -35,21 +35,25 @@
                     </header>
                     <sheet string="AFIP Certificates">
                         <group>
-                            <field name="type"/>
-                            <field name="service_type"/>
-                            <field name="service_provider_cuit" attrs="{'invisible':[('service_type','!=','outsourced')],'required':[('service_type','=','outsourced')]}"/>
-                            <field name="company_id"/>
-                            <field name="company_cuit" attrs="{'invisible':[('service_type','!=','in_house')],'required':[('service_type','=','in_house')]}"/>
-                            <field name="common_name"/>
-                            <field name="country_id"/>
-                            <field name="state_id"/>
-                            <field name="city"/>
+                            <group>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="type"/>
+                                <field name="service_type" groups="base.group_no_one"/>
+                                <field name="service_provider_cuit" attrs="{'invisible':[('service_type','!=','outsourced')],'required':[('service_type','=','outsourced')]}"/>
+                                <field name="company_cuit" attrs="{'invisible':[('service_type','!=','in_house')],'required':[('service_type','=','in_house')]}"/>
+                            </group>
+                            <group>
+                                <field name="common_name"/>
+                                <field name="country_id"/>
+                                <field name="state_id"/>
+                                <field name="city"/>
+                            </group>
                         </group>
                         <notebook>
                             <page string="Ceritificates">
                                 <field name="certificate_ids"/>
                             </page>
-                            <page string="Key">
+                            <page string="Key" groups="base.group_no_one">
                                 <field name="key"/>
                             </page>
                         </notebook  >
@@ -96,4 +100,3 @@
 
     </data>
 </openerp>
-<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4 -->

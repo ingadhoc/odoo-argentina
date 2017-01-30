@@ -26,20 +26,12 @@ class AccountConfigSettings(models.TransientModel):
     )
 
     @api.multi
-    @api.constrains('point_of_sale_number', 'point_of_sale_type')
-    def check_pos_number(self):
-        """
-        Esta constriant es porque los campos integer se muestran requeridos
-        pero por defecto toma cero y cero pasa bien
-        """
-        if self.point_of_sale_type and not self.point_of_sale_number:
-            raise UserError(_('Debe indicar un número de punto de venta'))
-
-    @api.multi
     def set_chart_of_accounts(self):
         """
         We send this value in context because to use them on journals creation
         """
+        if self.point_of_sale_type and not self.point_of_sale_number:
+            raise UserError(_('Debe indicar un número de punto de venta'))
         return super(AccountConfigSettings, self.with_context(
             sale_use_documents=self.sale_use_documents,
             purchase_use_documents=self.purchase_use_documents,

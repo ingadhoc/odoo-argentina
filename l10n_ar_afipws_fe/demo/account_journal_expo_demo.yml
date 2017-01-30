@@ -1,5 +1,5 @@
 -
-  !record {model: account.journal, id: sales_journal_3}:
+  !record {model: account.journal, id: sales_journal_3, context: '{"set_point_of_sale_name": True}'}
     type: 'sale'
     use_documents: True
     afip_ws: 'wsfex'

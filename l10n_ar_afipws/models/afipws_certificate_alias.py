@@ -48,6 +48,7 @@ class AfipwsCertificateAlias(models.Model):
         required=True,
         states={'draft': [('readonly', False)]},
         readonly=True,
+        default=lambda self: self.env.user.company_id,
     )
     country_id = fields.Many2one(
         'res.country', 'Country',

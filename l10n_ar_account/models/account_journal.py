@@ -81,6 +81,8 @@ class AccountJournal(models.Model):
         """
         We only set name and code if not sequence_id
         """
+        if not self._context.get('set_point_of_sale_name'):
+            return {}
         if (
                 self.type == 'sale' and
                 self.localization == 'argentina' and

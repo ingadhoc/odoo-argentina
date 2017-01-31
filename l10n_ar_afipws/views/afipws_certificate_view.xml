@@ -7,19 +7,15 @@
             <field name="arch" type="xml">
                 <form string="AFIP Certificates">
                     <header>
-                        <button name="action_request"
-                            type="object"
-                            states="draft"
-                            string="Request"
-                            />
                         <button name="%(action_upload_certificate)d"
                             type="action"
-                            states="waiting"
+                            states="draft"
+                            class="oe_highlight"
                             string="Upload Certificate"
                             />
                         <button name="action_confirm"
                             type="object"
-                            states="waiting"
+                            states="draft"
                             string="Confirm"
                             />
                         <button name="action_to_draft"
@@ -29,17 +25,17 @@
                             />
                         <button name="action_cancel"
                             type="object"
-                            states="draft,waiting,confirmed"
+                            states="draft,confirmed"
                             string="Cancel"
                             />
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet string="AFIP Certificates">
                         <group>
-                            <field name="csr"/>
+                            <field name="csr" groups="base.group_no_one"/>
                             <field name="request_filename" invisible="1"/>
                             <field name="request_file" filename="request_filename"/>
-                            <field name="crt"/>
+                            <field name="crt" groups="base.group_no_one"/>
                         </group>
                     </sheet>
                 </form>

@@ -15,12 +15,30 @@
                     <attribute name="attrs">{'required': [('localization', '=', 'argentina')]}</attribute>
                 </field>
 
+                <!-- hacemos otros campos requeridos si cia argentina -->
+                <field name="state_id" position="attributes">
+                    <attribute name="attrs">{'required': [('localization', '=', 'argentina')]}</attribute>
+                </field>
+                <field name="country_id" position="attributes">
+                    <attribute name="attrs">{'required': [('localization', '=', 'argentina')]}</attribute>
+                </field>
+                <field name="city" position="attributes">
+                    <attribute name="attrs">{'required': [('localization', '=', 'argentina')]}</attribute>
+                </field>
+                <field name="street" position="attributes">
+                    <attribute name="attrs">{'required': [('localization', '=', 'argentina')]}</attribute>
+                </field>
+                <field name="zip" position="attributes">
+                    <attribute name="attrs">{'required': [('localization', '=', 'argentina')]}</attribute>
+                </field>
+
                 <field name="vat" position="after">
                     <field name="afip_responsability_type_id" options="{'no_open': True, 'no_create': True}" attrs="{'required': [('localization', '=', 'argentina')], 'invisible': [('localization', '!=', 'argentina')]}"/>
                     <label for="gross_income_number" string="Gross Income" attrs="{'invisible': [('localization', '!=', 'argentina')]}"/>
                     <div attrs="{'invisible': [('localization', '!=', 'argentina')]}">
                         <field name="gross_income_type" attrs="{'required': [('localization', '=', 'argentina')]}" class="oe_inline"/>
                         <field name="gross_income_number" placeholder="Number..." class="oe_inline" attrs="{'invisible': [('gross_income_type', 'in', [False, 'no_liquida'])], 'required': [('gross_income_type', 'not in', [False, 'no_liquida'])]}"/>
+                        <field name="gross_income_jurisdiction_ids" widget="many2many_tags" placeholder="Other Jurisdictions" class="oe_inline" attrs="{'invisible': [('gross_income_type', '!=', 'multilateral')], 'required': [('gross_income_type', '=', 'multilateral')]}"/>
                     </div>
                     <field name="start_date" attrs="{'required': [('localization', '=', 'argentina')], 'invisible': [('localization', '!=', 'argentina')]}"/>
                 </field>

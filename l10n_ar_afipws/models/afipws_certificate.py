@@ -35,12 +35,11 @@ class AfipwsCertificate(models.Model):
         'Certificate',
         readonly=True,
         states={
-            'draft': [('readonly', False)], 'waiting': [('readonly', False)]},
+            'draft': [('readonly', False)]},
         help='Certificate in PEM format.'
     )
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('waiting', 'Waiting'),
         ('confirmed', 'Confirmed'),
         ('cancel', 'Cancelled'),
     ],
@@ -50,8 +49,6 @@ class AfipwsCertificate(models.Model):
         default='draft',
         help="* The 'Draft' state is used when a user is creating a new pair "
         "key. Warning: everybody can see the key."
-        "\n* The 'Waiting' state is used when a request has send to "
-        "Certificate Authority and is waiting for response."
         "\n* The 'Confirmed' state is used when a certificate is valid."
         "\n* The 'Canceled' state is used when the key is not more used. You "
         "cant use this key again."
@@ -85,11 +82,6 @@ class AfipwsCertificate(models.Model):
     @api.multi
     def action_cancel(self):
         self.write({'state': 'cancel'})
-        return True
-
-    @api.multi
-    def action_request(self):
-        self.write({'state': 'waiting'})
         return True
 
     @api.multi

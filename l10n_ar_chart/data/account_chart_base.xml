@@ -720,7 +720,7 @@
         <record model="account.account.template" id="base_resultado_del_ejercicio">
             <field name="chart_template_id" ref="l10nar_base_chart_template"/>
             <field name="code">3.3.00.00.010</field>
-            <field name="user_type_id" ref="account.data_account_type_equity"/>
+            <field name="user_type_id" ref="account.data_unaffected_earnings"/>
             <field name="name">Resultado del ejercicio</field>
         </record>
 

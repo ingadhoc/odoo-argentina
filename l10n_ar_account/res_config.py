@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api
-# from openerp.exceptions import UserError
+from openerp import models, fields, api, _
+from openerp.exceptions import UserError
 from openerp.addons.l10n_ar_account.models import account_journal
 
 
@@ -30,6 +30,8 @@ class AccountConfigSettings(models.TransientModel):
         """
         We send this value in context because to use them on journals creation
         """
+        if self.point_of_sale_type and not self.point_of_sale_number:
+            raise UserError(_('Debe indicar un número de punto de venta'))
         return super(AccountConfigSettings, self.with_context(
             sale_use_documents=self.sale_use_documents,
             purchase_use_documents=self.purchase_use_documents,

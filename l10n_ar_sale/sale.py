@@ -24,7 +24,7 @@ class sale_order_line(models.Model):
         price = self.price_unit * (1 - (self.discount or 0.0) / 100.0)
 
         price_unit_without_tax = self.tax_id.compute_all(
-            self.price_unit, 1, product=self.product_id,
+            price_unit=self.price_unit, quantity=1, product=self.product_id,
             partner=self.order_id.partner_id)
 
         price_unit_with_tax = price_unit_without_tax['total_included']

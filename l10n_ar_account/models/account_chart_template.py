@@ -97,30 +97,6 @@ class AccountChartTemplate(models.Model):
         journal_data = super(
             AccountChartTemplate, self)._prepare_all_journals(
             acc_template_ref, company, journals_dict)
-        # if argentinian chart, we set use_argentinian_localization for company
-        if company.localization == 'argentina':
-            for vals_journal in journal_data:
-                # for sale journals we use get_name_and_code function
-                if vals_journal['type'] == 'sale':
-                    point_of_sale_type = self._context.get(
-                        'point_of_sale_type', 'manual')
-                    # for compatibility with afip_ws
-                    afip_ws = self._context.get(
-                        'afip_ws', False)
-                    point_of_sale_number = self._context.get(
-                        'point_of_sale_number', 1)
-                    if afip_ws:
-                        vals_journal['afip_ws'] = afip_ws
-                    vals_journal['point_of_sale_number'] = point_of_sale_number
-                    vals_journal['point_of_sale_type'] = point_of_sale_type
-                    new_journal = self.env['account.journal'].new(vals_journal)
-                    new_journal.with_context(
-                        set_point_of_sale_name=True
-                    ).change_to_set_name_and_code()
-                    name = new_journal.name
-                    code = new_journal.code
-                    vals_journal['name'] = name
-                    vals_journal['code'] = code
 
         # add more journals commonly used in argentina localization
         # TODO we should move this to another module beacuse not only
@@ -155,9 +131,9 @@ class AccountChartTemplate(models.Model):
                     # context
                     if not self._context.get('create_point_of_sale_type'):
                         continue
-                    # TODO esto en realidad no esta implementado
-                    # porque no estamos mandando nunca el
-                    # create_point_of_sale_type
+                    # TODO esto en realidad se esta usando solamente en demo
+                    # al instalar plan de cuentas, se podria usar tmb desde
+                    # config como haciamos antes
                     point_of_sale_type = self._context.get(
                         'point_of_sale_type', 'manual')
                     # for compatibility with afip_ws

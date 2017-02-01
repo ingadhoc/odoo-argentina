@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Módulo base de Contabilidad Argentina",
-    'version': '9.0.1.4.0',
+    'version': '9.0.1.5.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Moldeo Interactive',
@@ -54,7 +54,6 @@
         'view/account_document_type_view.xml',
         'view/product_template_view.xml',
         'res_config_view.xml',
-        # TODO migrar
         'report/invoice_analysis.xml',
         'security/ir.model.access.csv',
     ],

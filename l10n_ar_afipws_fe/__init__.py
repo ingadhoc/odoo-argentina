@@ -5,4 +5,5 @@
 ##############################################################################
 from . import wizard
 from . import models
-from . import res_config
+# TODO ver si lo implementamos o no
+# from . import res_config

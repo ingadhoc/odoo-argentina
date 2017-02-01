@@ -32,11 +32,13 @@ class WizardMultiChartsAccounts(models.TransientModel):
         # on argentinian localization we prefer to create banks manually
         # for tests, demo data requires a bank journal to be loaded, we
         # send this on context
+        # NEW: we also prefer to create cashbox manually
         if company.localization == 'argentina' and not self._context.get(
                 'with_bank_journal'):
             for rec in self.bank_account_ids:
-                if rec.account_type == 'bank':
-                    rec.unlink()
+                rec.unlink()
+                # if rec.account_type == 'bank':
+                #     rec.unlink()
         return super(
             WizardMultiChartsAccounts, self)._create_bank_journals_from_o2m(
             company, acc_template_ref)
@@ -95,32 +97,10 @@ class AccountChartTemplate(models.Model):
         journal_data = super(
             AccountChartTemplate, self)._prepare_all_journals(
             acc_template_ref, company, journals_dict)
-        # if argentinian chart, we set use_argentinian_localization for company
-        if company.localization == 'argentina':
-            for vals_journal in journal_data:
-                # for sale journals we use get_name_and_code function
-                if vals_journal['type'] == 'sale':
-                    point_of_sale_type = self._context.get(
-                        'point_of_sale_type', 'manual')
-                    # for compatibility with afip_ws
-                    afip_ws = self._context.get(
-                        'afip_ws', False)
-                    point_of_sale_number = self._context.get(
-                        'point_of_sale_number', 1)
-                    if afip_ws:
-                        vals_journal['afip_ws'] = afip_ws
-                    vals_journal['point_of_sale_number'] = point_of_sale_number
-                    vals_journal['point_of_sale_type'] = point_of_sale_type
-                    new_journal = self.env['account.journal'].new(vals_journal)
-                    new_journal.with_context(
-                        set_point_of_sale_name=True
-                    ).change_to_set_name_and_code()
-                    name = new_journal.name
-                    code = new_journal.code
-                    vals_journal['name'] = name
-                    vals_journal['code'] = code
 
         # add more journals commonly used in argentina localization
+        # TODO we should move this to another module beacuse not only
+        # argentina use this
         opening_clousure_account_id = acc_template_ref.get(
             self.opening_clousure_account_id.id)
         journals = [
@@ -140,6 +120,41 @@ class AccountChartTemplate(models.Model):
                 'show_on_dashboard': False,
                 'update_posted': True,
             })
+
+        # if argentinian chart, we set use_argentinian_localization for company
+        if company.localization == 'argentina':
+            new_journal_data = []
+            for vals_journal in journal_data:
+                # for sale journals we use get_name_and_code function
+                if vals_journal['type'] == 'sale':
+                    # we only create point of sale if explicitly sent in
+                    # context
+                    if not self._context.get('create_point_of_sale_type'):
+                        continue
+                    # TODO esto en realidad no esta implementado
+                    # porque no estamos mandando nunca el
+                    # create_point_of_sale_type
+                    point_of_sale_type = self._context.get(
+                        'point_of_sale_type', 'manual')
+                    # for compatibility with afip_ws
+                    afip_ws = self._context.get(
+                        'afip_ws', False)
+                    point_of_sale_number = self._context.get(
+                        'point_of_sale_number', 1)
+                    if afip_ws:
+                        vals_journal['afip_ws'] = afip_ws
+                    vals_journal['point_of_sale_number'] = point_of_sale_number
+                    vals_journal['point_of_sale_type'] = point_of_sale_type
+                    new_journal = self.env['account.journal'].new(vals_journal)
+                    new_journal.with_context(
+                        set_point_of_sale_name=True
+                    ).change_to_set_name_and_code()
+                    name = new_journal.name
+                    code = new_journal.code
+                    vals_journal['name'] = name
+                    vals_journal['code'] = code
+                new_journal_data.append(vals_journal)
+            return new_journal_data
         return journal_data
 
     # @api.model

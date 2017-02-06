@@ -7,11 +7,6 @@
             <field name="model">res.company</field>
             <field name="arch" type="xml">
                 <notebook position="inside">
-                    <page string="TAX Configuration" name="taxconfigurationafip">
-                        <group name="account_grp">
-                            <field name="regimenes_ganancias_ids" widget="many2many_tags"/>
-                        </group>
-                    </page>
                     <page string="ARBA WS" name="arbaws">
                         <group>
                             <field name="arba_cit"/>

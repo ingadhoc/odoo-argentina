@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_account_config_settings" model="ir.ui.view">
+            <field name="name">account.config.settings.form.inherit</field>
+            <field name="model">account.config.settings</field>
+            <field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="arch" type="xml">
+                <group name="bank_cash" position="after">
+                    <group name="taxincomeregimes" string="Tax Income Regimes">
+                        <label for="id" string="TAX Income Regimes"/>
+                            <div>
+                                <field name="regimenes_ganancias_ids"/>
+                            </div>
+                    </group>
+                </group>
+            </field>
+        </record>
+
+    </data>
+</odoo>

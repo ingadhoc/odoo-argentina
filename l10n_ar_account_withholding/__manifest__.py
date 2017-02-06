@@ -35,7 +35,6 @@
 #        'views/account_voucher_withholding_view.xml',
         'views/res_partner_view.xml',
         'views/res_config.xml',
-
         'data/tabla_ganancias_data.xml',
     ],
     'demo': [

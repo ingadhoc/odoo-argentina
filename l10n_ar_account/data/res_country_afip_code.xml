@@ -109,6 +109,9 @@
         <record model='res.country' forcecreate="False" id='base.md'>
             <field name='afip_code'>443</field>
         </record>
+        <record model='res.country' forcecreate="False" id='base.es'>
+            <field name='afip_code'>410</field>
+        </record>
         <record model='res.country' forcecreate="False" id='base.mc'>
             <field name='afip_code'>421</field>
         </record>

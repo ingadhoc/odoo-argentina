@@ -355,7 +355,8 @@ class account_vat_ledger(models.Model):
                     # informa
                     (inv.document_type_id.code in ['81', '82', '83'] and
                         '00000000' or
-                        fields.Date.from_string(inv.date_due).strftime(
+                        fields.Date.from_string(
+                            inv.date_due or inv.date_invoice).strftime(
                             '%Y%m%d')),
                 ]
             else:

@@ -387,7 +387,7 @@ print "Observaciones:", wscdc.Obs
 
             # due and billing dates only for concept "services"
             if int(concepto) != 1:
-                fecha_venc_pago = inv.date_due
+                fecha_venc_pago = inv.date_due or inv.date_invoice
                 fecha_serv_desde = inv.afip_service_start
                 fecha_serv_hasta = inv.afip_service_end
                 if afip_ws != 'wsmtxca':

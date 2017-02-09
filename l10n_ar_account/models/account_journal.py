@@ -37,7 +37,7 @@ class AccountJournal(models.Model):
     point_of_sale_type = fields.Selection(
         _point_of_sale_types_selection,
         'Point Of Sale Type',
-        default='manual',
+        # default='manual',
     )
     point_of_sale_number = fields.Integer(
         'Point Of Sale Number',
@@ -85,8 +85,8 @@ class AccountJournal(models.Model):
             return {}
         if (
                 self.type == 'sale' and
-                self.localization == 'argentina' and
-                self.use_documents and
+                # self.localization == 'argentina' and
+                # self.use_documents and
                 not self.sequence_id
         ):
             (self.name, self.code) = self.get_name_and_code()
@@ -110,9 +110,12 @@ class AccountJournal(models.Model):
     def get_name_and_code(self):
         self.ensure_one()
         point_of_sale_number = self.point_of_sale_number
-        name = self.get_name_and_code_suffix()
-        name = '%s %s %04d' % (
-            'Ventas', name, point_of_sale_number)
+        name = 'Ventas'
+        sufix = self.get_name_and_code_suffix()
+        if sufix:
+            name += ' ' + sufix
+        if point_of_sale_number:
+            name += ' %04d' % (point_of_sale_number)
         code = 'V%04d' % (point_of_sale_number)
         return (name, code)
 

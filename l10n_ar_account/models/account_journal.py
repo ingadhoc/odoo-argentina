@@ -140,7 +140,7 @@ class AccountJournal(models.Model):
             raise UserError('Letters not implemented for journal type %s' % (
                 journal_type))
         letters = self.env['account.document.letter'].search([
-            '|', (resp_field, 'in', responsability.id),
+            '|', (resp_field, '=', responsability.id),
             (resp_field, '=', False)])
 
         if counterpart_partner:

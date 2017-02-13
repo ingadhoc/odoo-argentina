@@ -29,7 +29,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
     def get_partners(self):
         # TODO deberiamos buscar de otro manera estos partners
         domain = [
-            # ('document_number', '!=', False),
+            ('main_id_number', '!=', False),
             ('main_id_category_id.afip_code', '=', 80),
         ]
         active_ids = self._context.get('active_ids', [])
@@ -149,7 +149,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
             lines = []
             # partner_vals.pop('constancia')
             for key, new_value in partner_vals.iteritems():
-                old_value = getattr(partner, key)
+                old_value = partner[key]
                 if new_value == '':
                     new_value = False
                 if self.title_case and key in ('name', 'city', 'street'):
@@ -158,7 +158,8 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
                     old_value = old_value.ids
                 elif key in ('state_id', 'afip_responsability_type_id'):
                     old_value = old_value.id
-                if key in fields_names and old_value != new_value:
+                if new_value and key in fields_names and \
+                        old_value != new_value:
                     line_vals = {
                         'wizard_id': self.id,
                         'field': key,

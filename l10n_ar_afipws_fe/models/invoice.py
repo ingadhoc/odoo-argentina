@@ -322,8 +322,8 @@ print "Observaciones:", wscdc.Obs
     def do_pyafipws_request_cae(self):
         "Request to AFIP the invoices' Authorization Electronic Code (CAE)"
         for inv in self:
-            # Ignore invoices with cae
-            if inv.afip_auth_code and inv.afip_auth_code_due:
+            # Ignore invoices with cae (do not check date)
+            if inv.afip_auth_code:
                 continue
 
             if inv.journal_id.point_of_sale_type != 'electronic':

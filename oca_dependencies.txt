@@ -14,7 +14,9 @@
 # To provide both the URL and a branch, use:
 # sale-workflow https://github.com/OCA/sale-workflow branchname
 partner-contact
-account-financial-tools
+# account-financial-tools instala connector y nos mata la performance de runbot
+# account-financial-tools
+server-tools
 #ingadhoc-account-financial-tools https://github.com/ingadhoc/account-financial-tools
 ingadhoc-account-payment https://github.com/ingadhoc/account-payment
 ingadhoc-aeroo_reports https://github.com/ingadhoc/aeroo_reports

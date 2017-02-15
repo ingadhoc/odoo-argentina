@@ -13,8 +13,6 @@
         "l10n_ar_account",
         "report_custom_filename",
         "date_range",
-        # si agregamos account_fiscal_year vamos a requerir proyecto
-        # financial-tools que requiere connector y mata performance de runbot
         # "account_fiscal_year",
     ],
     'external_dependencies': {

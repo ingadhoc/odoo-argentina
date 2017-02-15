@@ -98,21 +98,22 @@ class account_vat_ledger(models.Model):
     @api.depends(
         'REGINFO_CV_CBTE', 'REGINFO_CV_ALICUOTAS', 'type', 'period_id.name')
     def get_files(self):
+        # segun vimos aca la afip espera "ISO-8859-1" en vez de utf-8
         if self.REGINFO_CV_ALICUOTAS:
             self.aliquots_filename = _('Alicuots_%s_%s.txt') % (
                 self.type, self.period_id.name)
             self.aliquots_file = base64.encodestring(
-                self.REGINFO_CV_ALICUOTAS.encode('utf-8'))
+                self.REGINFO_CV_ALICUOTAS.encode('ISO-8859-1'))
         if self.REGINFO_CV_COMPRAS_IMPORTACIONES:
             self.import_aliquots_filename = _('Import_Alicuots_%s_%s.txt') % (
                 self.type, self.period_id.name)
             self.import_aliquots_file = base64.encodestring(
-                self.REGINFO_CV_COMPRAS_IMPORTACIONES.encode('utf-8'))
+                self.REGINFO_CV_COMPRAS_IMPORTACIONES.encode('ISO-8859-1'))
         if self.REGINFO_CV_CBTE:
             self.vouchers_filename = _('Vouchers_%s_%s.txt') % (
                 self.type, self.period_id.name)
             self.vouchers_file = base64.encodestring(
-                self.REGINFO_CV_CBTE.encode('utf-8'))
+                self.REGINFO_CV_CBTE.encode('ISO-8859-1'))
 
     @api.one
     def compute_citi_data(self):
@@ -276,8 +277,9 @@ class account_vat_ledger(models.Model):
                 self.get_partner_document_number(inv.commercial_partner_id),
 
                 # Campo 8: Apellido y Nombre del comprador.
-                inv.commercial_partner_id.name.encode(
-                    'ascii', 'ignore').ljust(30, ' ')[:30],
+                inv.commercial_partner_id.name.ljust(30, ' ')[:30],
+                # inv.commercial_partner_id.name.encode(
+                #     'ascii', 'replace').ljust(30, ' ')[:30],
 
                 # Campo 9: Importe Total de la Operación.
                 self.format_amount(inv.amount_total, invoice=inv),

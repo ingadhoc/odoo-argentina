@@ -104,6 +104,8 @@ class account_vat_ledger(models.Model):
     )
     def get_files(self):
         # segun vimos aca la afip espera "ISO-8859-1" en vez de utf-8
+        # http://www.planillasutiles.com.ar/2015/08/
+        # como-descargar-los-archivos-de.html
         if self.REGINFO_CV_ALICUOTAS:
             self.aliquots_filename = _('Alicuots_%s_%s.txt') % (
                 self.type,

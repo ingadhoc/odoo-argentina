@@ -232,7 +232,7 @@ class account_vat_ledger(models.Model):
                 # Campo 5: Despacho de importación
                 if inv.document_type_id.code == '66':
                     row.append(
-                        (inv.afip_document_number or inv.number or '').rjust(
+                        (inv.document_number or inv.number or '').rjust(
                             16, '0'))
                 else:
                     row.append(''.rjust(16, ' '))
@@ -490,7 +490,7 @@ class account_vat_ledger(models.Model):
                 amount = sum(taxes.mapped('amount'))
                 row = [
                     # Campo 1: Despacho de importación.
-                    (inv.afip_document_number or inv.number or '').rjust(
+                    (inv.document_number or inv.number or '').rjust(
                         16, '0'),
 
                     # Campo 2: Importe Neto Gravado

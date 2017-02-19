@@ -44,12 +44,23 @@ class ResPartner(models.Model):
         return self.cuit
 
     @api.one
+    @api.depends(
+        'id_numbers.category_id.afip_code',
+        'id_numbers.name',
+        'main_id_number',
+        'main_id_category_id',
+    )
     def _compute_cuit(self):
         cuit = self.id_numbers.search([
             ('partner_id', '=', self.id),
-            ('category_id.afip_code', '=', '80'),
+            ('category_id.afip_code', '=', 80),
         ], limit=1)
-        self.cuit = cuit.name
+        # agregamos esto para el caso en donde el registro todavia no se creo
+        # queremos el cuit para que aparezca el boton de refrescar de afip
+        if not cuit and self.main_id_category_id.afip_code == 80:
+            self.cuit = self.main_id_number
+        else:
+            self.cuit = cuit.name
 
     @api.multi
     @api.depends(

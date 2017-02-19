@@ -46,11 +46,12 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
                 context.get('active_model') == 'res.partner' and
                 context.get('active_ids')
         ):
-            res['state'] = 'selection'
             partners = self.get_partners()
             if not partners:
                 raise UserError(_(
                     'No se encontró ningún partner con CUIT para actualizar'))
+            elif len(partners) == 1:
+                res['state'] = 'selection'
             res['partner_id'] = partners[0].id
         return res
 

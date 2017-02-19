@@ -5,7 +5,7 @@
         <!-- <menuitem id='root_menu' name='Tools' parent='base.menu_base_partner' sequence="25"/> -->
 
         <record model="ir.actions.act_window" id="action_base_partner_update_from_padron">
-            <field name="name">Update Partners From Padron AFP</field>
+            <field name="name">Update Partners From Padron AFIP</field>
             <field name="res_model">res.partner.update.from.padron.wizard</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>

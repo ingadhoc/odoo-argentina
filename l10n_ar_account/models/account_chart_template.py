@@ -29,8 +29,10 @@ class WizardMultiChartsAccounts(models.TransientModel):
 
     @api.multi
     def _create_bank_journals_from_o2m(self, company, acc_template_ref):
+        # hacemos que se cree diario de retenciones si modulo instaldo
         if company.localization == 'argentina':
             self = self.with_context(create_withholding_journal=True)
+
         # al final esto lo hacemos como customizacion
         # on argentinian localization we prefer to create banks manually
         # for tests, demo data requires a bank journal to be loaded, we

@@ -24,24 +24,26 @@ class AccountTaxTemplate(models.Model):
         return vals
 
 
-# al final esto lo hacemos como customizacion
-# class WizardMultiChartsAccounts(models.TransientModel):
-#     _inherit = 'wizard.multi.charts.accounts'
+class WizardMultiChartsAccounts(models.TransientModel):
+    _inherit = 'wizard.multi.charts.accounts'
 
-#     @api.multi
-#     def _create_bank_journals_from_o2m(self, company, acc_template_ref):
-#         # on argentinian localization we prefer to create banks manually
-#         # for tests, demo data requires a bank journal to be loaded, we
-#         # send this on context
-#         # NEW: we also prefer to create cashbox manually
-#         if company.localization == 'argentina' and not self._context.get(
-#                 'with_bank_journal'):
-#             for rec in self.bank_account_ids:
-#                 if rec.account_type == 'bank':
-#                     rec.unlink()
-#         return super(
-#             WizardMultiChartsAccounts, self)._create_bank_journals_from_o2m(
-#             company, acc_template_ref)
+    @api.multi
+    def _create_bank_journals_from_o2m(self, company, acc_template_ref):
+        if company.localization == 'argentina':
+            self = self.with_context(create_withholding_journal=True)
+        # al final esto lo hacemos como customizacion
+        # on argentinian localization we prefer to create banks manually
+        # for tests, demo data requires a bank journal to be loaded, we
+        # send this on context
+        # NEW: we also prefer to create cashbox manually
+        # if company.localization == 'argentina' and not self._context.get(
+        #         'with_bank_journal'):
+        #     for rec in self.bank_account_ids:
+        #         if rec.account_type == 'bank':
+        #             rec.unlink()
+        return super(
+            WizardMultiChartsAccounts, self)._create_bank_journals_from_o2m(
+            company, acc_template_ref)
 
 
 class AccountChartTemplate(models.Model):

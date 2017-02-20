@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, _
-import openerp.tools as tools
+# import openerp.tools as tools
 try:
     from pyafipws.iibb import IIBB
 except ImportError:

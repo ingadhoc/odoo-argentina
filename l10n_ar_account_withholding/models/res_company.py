@@ -34,18 +34,21 @@ class ResCompany(models.Model):
         * 'test' or 'develop' -->  homologation
         * other or no parameter -->  production
         """
-        parameter_env_type = self.env[
-            'ir.config_parameter'].get_param('arba.ws.env.type')
-        if parameter_env_type == 'production':
-            environment_type = 'production'
-        elif parameter_env_type == 'homologation':
-            environment_type = 'homologation'
-        else:
-            server_mode = tools.config.get('server_mode')
-            if not server_mode or server_mode == 'production':
-                environment_type = 'production'
-            else:
-                environment_type = 'homologation'
+        # como no se dispone de claves de homologacion usamos produccion
+        # siempre
+        environment_type = 'production'
+        # parameter_env_type = self.env[
+        #     'ir.config_parameter'].get_param('arba.ws.env.type')
+        # if parameter_env_type == 'production':
+        #     environment_type = 'production'
+        # elif parameter_env_type == 'homologation':
+        #     environment_type = 'homologation'
+        # else:
+        #     server_mode = tools.config.get('server_mode')
+        #     if not server_mode or server_mode == 'production':
+        #         environment_type = 'production'
+        #     else:
+        #         environment_type = 'homologation'
         _logger.info(
             'Running arba WS on %s mode' % environment_type)
         return environment_type

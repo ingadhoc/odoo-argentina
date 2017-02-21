@@ -52,7 +52,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
                     'No se encontró ningún partner con CUIT para actualizar'))
             elif len(partners) == 1:
                 res['state'] = 'selection'
-            res['partner_id'] = partners[0].id
+                res['partner_id'] = partners[0].id
         return res
 
     @api.model
@@ -187,14 +187,10 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
 
     @api.multi
     def automatic_process_cb(self):
-        self.start_process_cb()
-        self.refresh()
-
         for partner in self.partner_ids:
-            self._update()
-            partner = self.partner_ids[0]
             self.partner_id = partner.id
             self.change_partner()
+            self._update()
 
         self.write({'state': 'finished'})
         return {

@@ -355,9 +355,9 @@ class account_vat_ledger(models.Model):
                         ).mapped('amount')), invoice=inv),
 
                     # Campo 22: vencimiento comprobante (no figura en
-                    # instructivo pero si en aplicativo) para tique no se
-                    # informa
-                    (inv.document_type_id.code in ['81', '82', '83'] and
+                    # instructivo pero si en aplicativo) para tique y factura
+                    # de exportacion no se informa
+                    (inv.document_type_id.code in ['81', '82', '83', '19'] and
                         '00000000' or
                         fields.Date.from_string(
                             inv.date_due or inv.date_invoice).strftime(

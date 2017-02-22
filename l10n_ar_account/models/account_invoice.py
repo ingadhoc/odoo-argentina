@@ -4,7 +4,7 @@
 # directory
 ##############################################################################
 from openerp import models, fields, api, _
-from openerp.exceptions import UserError
+from openerp.exceptions import ValidationError
 from dateutil.relativedelta import relativedelta
 import re
 import logging
@@ -227,7 +227,7 @@ class AccountInvoice(models.Model):
                     point_of_sale = str_number[:4]
                     invoice_number = str_number[-8:]
                 else:
-                    raise UserError(_(
+                    raise ValidationError(_(
                         'Could not get invoice number and point of sale for '
                         'invoice id %i') % (rec.id))
                 rec.invoice_number = int(
@@ -375,6 +375,34 @@ class AccountInvoice(models.Model):
         }
 
     @api.multi
+    @api.constrains('document_number', 'partner_id', 'company_id')
+    def _check_document_number_unique(self):
+        for rec in self.filtered(lambda x: x.localization == 'argentina'):
+            if rec.document_number:
+                domain = [
+                    ('type', '=', rec.type),
+                    ('document_number', '=', self.document_number),
+                    ('document_type_id', '=', rec.document_type_id.id),
+                    ('company_id', '=', self.company_id.id),
+                    ('id', '!=', self.id)
+                ]
+                msg = (
+                    'Error en factura con id %s: El numero de comprobante (%s)'
+                    ' debe ser unico por tipo de documento')
+                if rec.type in ['out_invoice', 'out_refund']:
+                    # si es factura de cliente entonces tiene que ser numero
+                    # unico por compania y tipo de documento
+                    rec.search(domain)
+                else:
+                    # si es factura de proveedor debe ser unica por proveedor
+                    domain += [
+                        ('partner_id.commercial_partner_id', '=',
+                            rec.commercial_partner_id.id)]
+                    msg += ' y proveedor'
+                if rec.search(domain):
+                    raise ValidationError(msg % (rec.id, rec.document_number))
+
+    @api.multi
     def action_move_create(self):
         """
         We add currency rate on move creation so it can be used by electronic
@@ -406,7 +434,7 @@ class AccountInvoice(models.Model):
         without_responsability = argentinian_invoices.filtered(
             lambda x: not x.commercial_partner_id.afip_responsability_type_id)
         if without_responsability:
-            raise UserError(_(
+            raise ValidationError(_(
                 'The following invoices has a partner without AFIP '
                 'responsability: %s' % without_responsability.ids))
 
@@ -415,7 +443,7 @@ class AccountInvoice(models.Model):
         wihtout_tax_id = argentinian_invoices.mapped('tax_line_ids').filtered(
             lambda r: not r.tax_id)
         if wihtout_tax_id:
-            raise UserError(_(
+            raise ValidationError(_(
                 "Some Invoice Tax Lines don't have a tax_id asociated, please "
                 "correct them or try to refresh invoice "))
 
@@ -425,7 +453,7 @@ class AccountInvoice(models.Model):
         unconfigured_tax_groups = tax_groups.filtered(
             lambda r: not r.type or not r.tax or not r.application)
         if unconfigured_tax_groups:
-            raise UserError(_(
+            raise ValidationError(_(
                 "You are using argentinian localization and there are some tax"
                 " groups that are not configured. Tax Groups (id): %s" % (
                     ', '.join(unconfigured_tax_groups.mapped(
@@ -438,7 +466,7 @@ class AccountInvoice(models.Model):
             ('invoice_id', 'in', argentinian_invoices.ids),
             ('invoice_line_tax_ids', 'not in', vat_taxes.ids)])
         if lines_without_vat:
-            raise UserError(_(
+            raise ValidationError(_(
                 "Invoice with ID %s has some lines without vat Tax ") % (
                     lines_without_vat.mapped('invoice_id').ids))
         # for invoice in argentinian_invoices:
@@ -448,7 +476,7 @@ class AccountInvoice(models.Model):
         #     # tal como esta este chequeo da error si se agregan impuestos
         #     # manuales
         #     if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
-        #         raise UserError(_(
+        #         raise ValidationError(_(
         #             "Invoice with ID %i has some lines without vat Tax ") % (
         #                 invoice.id))
 
@@ -461,7 +489,7 @@ class AccountInvoice(models.Model):
                     special_vat_taxes and
                     invoice.fiscal_position_id.afip_code
                     not in afip_exempt_codes):
-                raise UserError(_(
+                raise ValidationError(_(
                     "If you have choose a 0, exempt or untaxed 'tax', "
                     "you must choose a fiscal position with afip code in %s.\n"
                     "* Invoice id %i" % (afip_exempt_codes, invoice.id))

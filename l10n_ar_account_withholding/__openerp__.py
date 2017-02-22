@@ -54,5 +54,5 @@
     'installable': True,
     'name': 'Argentinian Withholding Management',
     'test': [],
-    'version': '8.0.1.3.0',
+    'version': '8.0.1.4.0',
 }

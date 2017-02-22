@@ -381,10 +381,10 @@ class AccountInvoice(models.Model):
             if rec.document_number:
                 domain = [
                     ('type', '=', rec.type),
-                    ('document_number', '=', self.document_number),
+                    ('document_number', '=', rec.document_number),
                     ('document_type_id', '=', rec.document_type_id.id),
-                    ('company_id', '=', self.company_id.id),
-                    ('id', '!=', self.id)
+                    ('company_id', '=', rec.company_id.id),
+                    ('id', '!=', rec.id)
                 ]
                 msg = (
                     'Error en factura con id %s: El numero de comprobante (%s)'

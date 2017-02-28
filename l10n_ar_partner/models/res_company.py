@@ -27,8 +27,8 @@ class ResCompany(models.Model):
         #    company.partner_id.main_id_number = main_id_number
         #return company
     @api.multi
-	    def cuit_required(self):
-	        return self.partner_id.cuit_required()
+    def cuit_required(self):
+        return self.partner_id.cuit_required()
 
     @api.onchange('main_id_category_id')
     def change_main_id_category(self):

@@ -28,6 +28,14 @@ class ResPartner(models.Model):
         string="Main Identification Category",
         comodel_name='res.partner.id_category',
     )
+    
+    @api.multi
+    def cuit_required(self):
+        self.ensure_one()
+        if not self.cuit:
+            raise UserError(_('No CUIT cofigured for partner %s') % (
+                self.name))
+        return self.cuit
 
     @api.one
     def _compute_cuit(self):

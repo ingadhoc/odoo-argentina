@@ -420,7 +420,7 @@ class AccountInvoice(models.Model):
                     invoice.fiscal_position_id.afip_code
                     not in afip_exempt_codes):
                 raise UserError(_(
-                    str(special_vat_taxes)
+                    str(special_vat_taxes)+
                     "If you have choose a 0, exempt or untaxed 'tax', "
                     "you must choose a fiscal position with afip code in %s.\n"
                     "* Invoice id %i" % (afip_exempt_codes, invoice.id))

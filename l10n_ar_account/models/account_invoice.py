@@ -413,7 +413,7 @@ class AccountInvoice(models.Model):
         for invoice in argentinian_invoices:
             valid_all_tax_lines = 0
             for tax in invoice.tax_line_ids: # Certificate Alla lines
-                valid_all_tax_lines += tax.base
+                valid_all_tax_lines += tax.amount
                 
             if valid_all_tax_lines == 0:
                 special_vat_taxes = invoice.tax_line_ids.filtered(

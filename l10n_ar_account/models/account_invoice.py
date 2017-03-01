@@ -400,31 +400,29 @@ class AccountInvoice(models.Model):
         #     ('invoice_line_tax_ids.tax_group_id', 'in',
         #         argentinian_invoices.ids),
         #     ])
-        # for invoice in argentinian_invoices:
-        #     # we check vat base amount is equal to amount untaxed
-        #     # usamos una precision de 0.1 porque en algunos casos no pudimos
-        #     # arreglar pbñe,as de redondedo
-        #     # TODO usar round
-        #     if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
-        #         raise UserError(_(
-        #             "Invoice with ID %i has some lines without vat Tax ") % (
-        #                 invoice.id))
-
-        # Check except vat invoice
-        afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
         for invoice in argentinian_invoices:
-            special_vat_taxes = invoice.tax_line_ids.filtered(
-                lambda r: r.tax_id.tax_group_id.afip_code in [1, 2, 3])
-            if (
-                    special_vat_taxes and
-                    invoice.fiscal_position_id.afip_code
-                    not in afip_exempt_codes):
-                raise UserError(_(
-                    str(invoice.tax_line_ids)+
-                    "If you have choose a 0, exempt or untaxed 'tax', "
-                    "you must choose a fiscal position with afip code in %s.\n"
-                    "* Invoice id %i" % (afip_exempt_codes, invoice.id))
-                )
+             # we check vat base amount is equal to amount untaxed
+             # usamos una precision de 0.1 porque en algunos casos no pudimos
+             # arreglar pbñe,as de redondedo
+             # TODO usar round
+            if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
+                raise UserError(_("Invoice with ID %i has some lines without vat Tax ") % (invoice.id))
+
+#        # Check except vat invoice
+#        afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
+#        for invoice in argentinian_invoices:
+#            special_vat_taxes = invoice.tax_line_ids.filtered(
+#                lambda r: r.tax_id.tax_group_id.afip_code in [1, 2, 3])
+#            if (
+#                    special_vat_taxes and
+#                    invoice.fiscal_position_id.afip_code
+#                    not in afip_exempt_codes):
+#                
+#                raise UserError(_(
+#                    "If you have choose a 0, exempt or untaxed 'tax', "
+#                    "you must choose a fiscal position with afip code in %s.\n"
+#                    "* Invoice id %i" % (afip_exempt_codes, invoice.id))
+#                )
 
     # TODO check if we can remove this. If we import or get demo data
     # tax_id is not loaded on tax lines, we couldn't find the error

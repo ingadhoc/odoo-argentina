@@ -290,7 +290,7 @@ class AccountInvoice(models.Model):
                     '|',
                     ('document_type_id.document_letter_id', 'in', letters.ids),
                     ('document_type_id.document_letter_id', '=', False),
-                    ('document_type_id','in', other_document_types.ids),
+                    ('document_type_id.document_letter_id','in', other_document_types.ids),
                 ]
 
                 # if invoice_type is refund, only credit notes
@@ -324,7 +324,7 @@ class AccountInvoice(models.Model):
 
             domain = [
                 ('journal_id', '=', journal.id),
-                ('document_type_id',
+                ('document_type_id.document_letter_id',
                     'in', other_document_types.ids),
             ]
             other_journal_document_types = self.env[

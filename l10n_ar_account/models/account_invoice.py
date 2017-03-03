@@ -273,7 +273,8 @@ class AccountInvoice(models.Model):
                     journal, invoice_type, partner)
 
         commercial_partner = partner.commercial_partner_id
-        other_document_types = (partner.afip_responsability_type_id.issued_letter_ids)
+        responsability_letter_ids = partner.afip_responsability_type_id.issued_letter_ids.ids
+        responsability_letter_ids += partner.afip_responsability_type_id.received_letter_ids.ids
         
         journal_document_types = journal_document_type = self.env[
             'account.journal.document.type']
@@ -290,7 +291,7 @@ class AccountInvoice(models.Model):
                     '|',
                     ('document_type_id.document_letter_id', 'in', letters.ids),
                     ('document_type_id.document_letter_id', '=', False),
-                    ('document_type_id.document_letter_id','in', other_document_types.ids),
+                    ('document_type_id.document_letter_id','in', responsability_letter_ids),
                 ]
 
                 # if invoice_type is refund, only credit notes
@@ -320,12 +321,12 @@ class AccountInvoice(models.Model):
                     journal_document_type = journal_document_types[0]
 
         if invoice_type == 'in_invoice':
-            other_document_types = (partner.afip_responsability_type_id.issued_letter_ids)
+            other_document_types = (commercial_partner.other_document_type_ids)
 
             domain = [
                 ('journal_id', '=', journal.id),
                 ('document_type_id.document_letter_id',
-                    'in', other_document_types.ids),
+                    'in', responsability_letter_ids),
             ]
             other_journal_document_types = self.env[
                 'account.journal.document.type'].search(domain)

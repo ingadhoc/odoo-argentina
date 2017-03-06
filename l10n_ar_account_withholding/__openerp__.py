@@ -45,7 +45,10 @@
         'account_voucher_withholding_automatic',
         'l10n_ar_invoice',
         # para ganancias
-        'report_aeroo',
+        # requerimos l10n_ar_aeroo_base porque usaos las lineas y tmb
+        # lo del logo
+        'l10n_ar_aeroo_base',
+        # 'report_aeroo',
         'l10n_ar_padron_afip',
     ],
     'external_dependencies': {
@@ -54,5 +57,5 @@
     'installable': True,
     'name': 'Argentinian Withholding Management',
     'test': [],
-    'version': '8.0.1.4.0',
+    'version': '8.0.1.5.0',
 }

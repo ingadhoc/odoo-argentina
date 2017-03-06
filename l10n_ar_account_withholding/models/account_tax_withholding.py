@@ -111,6 +111,7 @@ class AccountTaxWithholding(models.Model):
             elif imp_ganancias_padron == 'NC':
                 # no corresponde, no impuesto
                 amount = 0.0
-            vals['description'] = regimen.codigo_de_regimen
+            vals['description'] = "%s - %s" % (
+                regimen.codigo_de_regimen, regimen.concepto_referencia)
             vals['period_withholding_amount'] = amount
         return vals

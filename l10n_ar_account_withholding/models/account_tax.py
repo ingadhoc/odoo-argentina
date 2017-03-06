@@ -15,6 +15,21 @@ class AccountTax(models.Model):
     )
 
     @api.multi
+    def get_period_payments_domain(self, payment_group):
+        previos_payment_groups_domain, previos_payments_domain = super(
+            AccountTax, self).get_period_payments_domain(payment_group)
+        if self.withholding_type == 'tabla_ganancias':
+            previos_payment_groups_domain += [
+                ('regimen_ganancias_id', '=',
+                    payment_group.regimen_ganancias_id.id)]
+            previos_payments_domain += [
+                ('payment_group_id.regimen_ganancias_id', '=',
+                    payment_group.regimen_ganancias_id.id)]
+        return (
+            previos_payment_groups_domain,
+            previos_payments_domain)
+
+    @api.multi
     def get_withholding_vals(self, payment_group):
         vals = super(AccountTax, self).get_withholding_vals(
             payment_group)
@@ -92,6 +107,7 @@ class AccountTax(models.Model):
             elif imp_ganancias_padron == 'NC':
                 # no corresponde, no impuesto
                 amount = 0.0
-            vals['description'] = regimen.codigo_de_regimen
+            vals['description'] = "%s - %s" % (
+                regimen.codigo_de_regimen, regimen.concepto_referencia)
             vals['period_withholding_amount'] = amount
         return vals

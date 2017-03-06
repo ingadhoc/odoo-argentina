@@ -545,7 +545,8 @@ print "Observaciones:", wscdc.Obs
                     umed = line.uos_id.afip_code
                     precio = line.price_unit
                     importe = line.price_subtotal
-                    bonif = line.discount or None
+                    # calculamos bonificacion haciendo teorico menos importe
+                    bonif = line.discount and (precio * qty - importe) or None
                     if afip_ws == 'wsmtxca':
                         if not line.product_id.uom_id.afip_code:
                             raise Warning(_('Not afip code con producto UOM %s' % (

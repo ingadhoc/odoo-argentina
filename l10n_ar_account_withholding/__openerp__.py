@@ -44,10 +44,11 @@
         'account_withholding_automatic',
         'l10n_ar_account',
         # para ganancias
-        # requerimos l10n_ar_aeroo_base porque usaos las lineas y tmb
-        # lo del logo
-        'l10n_ar_aeroo_base',
-        # 'report_aeroo',
+        # deberiamos requerir l10n_ar_aeroo_base pero preferimos no hacerlo
+        # para no sumar dependencinas. Se deberia requerir porque el reporte
+        # usa las lineas
+        # 'l10n_ar_aeroo_base',
+        'report_aeroo',
         'l10n_ar_padron_afip',
     ],
     'external_dependencies': {

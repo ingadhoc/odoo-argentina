@@ -71,7 +71,7 @@ class AccountTax(models.Model):
                 # alicuota inscripto
                 non_taxable_amount = (
                     regimen.montos_no_sujetos_a_retencion)
-                vals['non_taxable_amount'] = non_taxable_amount
+                vals['withholding_non_taxable_amount'] = non_taxable_amount
                 if base_amount < non_taxable_amount:
                     base_amount = 0.0
                 else:
@@ -107,7 +107,8 @@ class AccountTax(models.Model):
             elif imp_ganancias_padron == 'NC':
                 # no corresponde, no impuesto
                 amount = 0.0
-            vals['description'] = "%s - %s" % (
+            # TODO, tal vez sea mejor utilizar otro campo?
+            vals['communication'] = "%s - %s" % (
                 regimen.codigo_de_regimen, regimen.concepto_referencia)
             vals['period_withholding_amount'] = amount
         return vals

@@ -166,3 +166,30 @@
         product_id: product.product_product_49
         price_unit: 1000.0
         quantity: 5
+-
+   Invoice to ADHOC con muchas lineas para probar rounding, con 4 ya daria error
+-
+  !record {model: account.invoice, id: demo_invoice_11}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_adhoc
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Support Services 1'
+        product_id: product.product_product_2
+        price_unit: 1.12
+        quantity: 1
+      - name: 'Support Services 2'
+        product_id: product.product_product_2
+        price_unit: 1.12
+        quantity: 1
+      - name: 'Support Services 3'
+        product_id: product.product_product_2
+        price_unit: 1.12
+        quantity: 1
+      - name: 'Support Services 4'
+        product_id: product.product_product_2
+        price_unit: 1.12
+        quantity: 1

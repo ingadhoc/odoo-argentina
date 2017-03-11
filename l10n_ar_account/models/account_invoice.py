@@ -495,7 +495,11 @@ class AccountInvoice(models.Model):
                     "* Invoice id %i" % (afip_exempt_codes, invoice.id))
                 )
 
-    # TODO check if we can remove this. If we import or get demo data
+    # TODO sacamos esto porque no era muy lindo y daba algunos errores con
+    # el account_fix, hicimos que los datos demo hagan el compute tax
+    # habria que ver una mejor forma de hacerlo para que tambien ande bien si
+    # se importa desde interfaz
+    # If we import or get demo data
     # tax_id is not loaded on tax lines, we couldn't find the error
     # so we add this to fix it
     # @api.one

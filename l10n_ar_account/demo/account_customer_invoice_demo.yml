@@ -19,6 +19,10 @@
         price_unit: 642.0
         quantity: 1
 -
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_1}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_1')).id]"
+-
    Invoice to CMR with vat 21, 27 and 10,5
 -
   !record {model: account.invoice, id: demo_invoice_2}:
@@ -42,6 +46,10 @@
         price_unit: 3245.0
         quantity: 2.0
 -
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_2}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_2')).id]"
+-
    Invoice to ADHOC with vat cero and 21 (requires fiscal position, setted manually)
 -
   !record {model: account.invoice, id: demo_invoice_3}:
@@ -60,6 +68,10 @@
         product_id: l10n_ar_account.product_product_cero
         price_unit: 200.0
         quantity: 1.0
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_3}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_3')).id]"
 -
   !python {model: ir.model.data} : |
       position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
@@ -89,6 +101,10 @@
       position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
       if position_id:
           self.pool['account.invoice'].write(cr, uid, ref('demo_invoice_4'), {'fiscal_position_id': position_id[0]})
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_4}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_4')).id]"
 -
    Invoice to ADHOC with all type of taxes (requires fiscal position, setted manually)
 -
@@ -125,6 +141,10 @@
         price_unit: 100.0
         quantity: 1.0
 -
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_5}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_5')).id]"
+-
   We add fiscal position
 -
   !python {model: ir.model.data} : |
@@ -149,6 +169,10 @@
         price_unit: 642.0
         quantity: 1
 -
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_8}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_8')).id]"
+-
   La invoice 9 es ticket z y esta en otro archivo
 -
    Invoice to ADHOC in USD and vat 21
@@ -166,6 +190,10 @@
         product_id: product.product_product_49
         price_unit: 1000.0
         quantity: 5
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_10}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_10')).id]"
 -
    Invoice to ADHOC con muchas lineas para probar rounding, con 4 ya daria error
 -
@@ -193,3 +221,7 @@
         product_id: product.product_product_2
         price_unit: 1.12
         quantity: 1
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_11}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_11')).id]"

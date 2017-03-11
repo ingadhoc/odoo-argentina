@@ -44,6 +44,10 @@
         price_unit: 100.0
         quantity: 1.0
 -
+  !function {model: account.invoice, name: compute_taxes, id: demo_sup_invoice_1}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_sup_invoice_1')).id]"
+-
   !workflow {model: account.invoice, action: invoice_open, ref: demo_sup_invoice_1}
 -
    Invoice from Asustek with vat 21, 27 and 10,5
@@ -69,6 +73,10 @@
         product_id: product.product_product_25
         price_unit: 2145.0
         quantity: 2.0
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_sup_invoice_2}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_sup_invoice_2')).id]"
 -
   !workflow {model: account.invoice, action: invoice_open, ref: demo_sup_invoice_2}
 -
@@ -97,6 +105,10 @@
       if position_id:
           self._update(cr, uid, 'account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position_id[0]}, 'demo_sup_invoice_3')
 -
+  !function {model: account.invoice, name: compute_taxes, id: demo_sup_invoice_3}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_sup_invoice_3')).id]"
+-
   !workflow {model: account.invoice, action: invoice_open, ref: demo_sup_invoice_3}
 -
    Invoice to Asustek with vat exempt and 21 (requires fiscal position, setted manually)
@@ -123,6 +135,10 @@
       position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
       if position_id:
           self._update(cr, uid, 'account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position_id[0]}, 'demo_sup_invoice_4')
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_sup_invoice_4}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_sup_invoice_4')).id]"
 -
   !workflow {model: account.invoice, action: invoice_open, ref: demo_sup_invoice_4}
 -
@@ -169,6 +185,10 @@
       if position_id:
           self._update(cr, uid, 'account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position_id[0]}, 'demo_sup_invoice_5')
 -
+  !function {model: account.invoice, name: compute_taxes, id: demo_sup_invoice_5}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_sup_invoice_5')).id]"
+-
   !workflow {model: account.invoice, action: invoice_open, ref: demo_sup_invoice_5}
 -
    Importacion de servicios a odoo, fiscal position changes tax to no corresponde
@@ -187,5 +207,9 @@
         product_id: product.product_product_2
         price_unit: 2642.0
         quantity: 1
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_sup_invoice_6}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_sup_invoice_6')).id]"
 -
   !workflow {model: account.invoice, action: invoice_open, ref: demo_sup_invoice_6}

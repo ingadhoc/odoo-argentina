@@ -498,13 +498,13 @@ class AccountInvoice(models.Model):
     # TODO check if we can remove this. If we import or get demo data
     # tax_id is not loaded on tax lines, we couldn't find the error
     # so we add this to fix it
-    @api.one
-    @api.constrains('invoice_line_ids')
-    def update_taxes_fix(self):
-        context = dict(self._context)
-        if context.get('constraint_update_taxes'):
-            return True
-        self.with_context(constraint_update_taxes=True).compute_taxes()
+    # @api.one
+    # @api.constrains('invoice_line_ids')
+    # def update_taxes_fix(self):
+    #     context = dict(self._context)
+    #     if context.get('constraint_update_taxes'):
+    #         return True
+    #     self.with_context(constraint_update_taxes=True).compute_taxes()
 
     # we add fiscal position with fp method instead of directly from partner
     # TODO. this should go in a PR to ODOO

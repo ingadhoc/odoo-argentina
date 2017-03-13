@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="base.main_company" model="res.company">
+            <!-- we need round globally to report taxes ok to afip -->
+            <field name="tax_calculation_rounding_method">round_globally</field>
+        </record>
+
+    </data>
+</openerp>

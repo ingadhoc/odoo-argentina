@@ -37,6 +37,10 @@
         price_unit: 100.0
         quantity: 1.0
 -
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_6}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_6')).id]"
+-
    Export invoice to expresso, fiscal position changes tax to exempt
 -
   !record {model: account.invoice, id: demo_invoice_7}:
@@ -72,3 +76,7 @@
         product_id: l10n_ar_account.product_product_exento
         price_unit: 100.0
         quantity: 1.0
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_7}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_7')).id]"

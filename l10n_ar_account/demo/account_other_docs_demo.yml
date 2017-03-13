@@ -30,6 +30,10 @@
         price_unit: 10000.0
         quantity: 1
 -
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_9}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_9')).id]"
+-
   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_9}
 -
    Set the context for supplier invoices because the 'type' field is readonly in invoice form views, so it value won't be considered by the yaml import
@@ -60,6 +64,10 @@
         product_id: l10n_ar_account.product_product_servicio_de_guarda
         price_unit: 524.78
         quantity: 1
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_despacho_1}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_despacho_1')).id]"
 -
   We should improove this and search tax by other thing than name
 -

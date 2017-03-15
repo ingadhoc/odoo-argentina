@@ -317,7 +317,7 @@ class AccountInvoice(models.Model):
                             ('document_type_id.internal_type',
                                 '=', internal_type)])
                     _logger.critical("The context type "+str(journal_document_type))
-                else
+                else:
                     
                     # For domain, we search all documents
                     journal_document_types = journal_document_types.search(domain)

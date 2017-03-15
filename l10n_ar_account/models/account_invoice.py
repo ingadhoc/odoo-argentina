@@ -313,7 +313,7 @@ class AccountInvoice(models.Model):
                          [
                             ('document_type_id.internal_type',
                                 '=', internal_type)], limit=1)
-                    _logger.critical("The name "+str(journal_document_type.name))
+                    _logger.critical("The name "+str(journal_document_type))
                 # For domain, we search all documents
                 journal_document_types = journal_document_types.search(domain)
 

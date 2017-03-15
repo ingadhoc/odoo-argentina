@@ -313,13 +313,14 @@ class AccountInvoice(models.Model):
                          [
                             ('document_type_id.internal_type',
                                 '=', internal_type)], limit=1)
-                    _logger.critical("The name "+str(journal_document_type))
+                    _logger.critical("The context type "+str(journal_document_type))
+                    
                 # For domain, we search all documents
                 journal_document_types = journal_document_types.search(domain)
 
                 # If not specific document type found, we choose another one
-                if not journal_document_type and journal_document_types:
-                    journal_document_type = journal_document_types[0]
+                #if not journal_document_type and journal_document_types:
+                #    journal_document_type = journal_document_types[0]
 
         if invoice_type == 'in_invoice':
             other_document_types = (commercial_partner.other_document_type_ids)

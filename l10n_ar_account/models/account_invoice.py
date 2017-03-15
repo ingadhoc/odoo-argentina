@@ -310,10 +310,10 @@ class AccountInvoice(models.Model):
                 internal_type = self._context.get('internal_type', False)
                 if internal_type:
                     journal_document_type = journal_document_type.search(
-                        domain + [
+                         [
                             ('document_type_id.internal_type',
                                 '=', internal_type)], limit=1)
-                    _logger.critical("The name "+str(internal_type))
+                    _logger.critical("The name "+str(journal_document_type.name))
                 # For domain, we search all documents
                 journal_document_types = journal_document_types.search(domain)
 

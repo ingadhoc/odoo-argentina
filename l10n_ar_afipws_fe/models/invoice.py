@@ -275,7 +275,7 @@ print "Observaciones:", wscdc.Obs
                     ))
 
             cbte_nro = inv.invoice_number
-            pto_vta = inv.point_of_sale
+            pto_vta = inv.point_of_sale_number
             cbte_tipo = afip_doc_class.afip_code
             if not pto_vta or not cbte_nro or not cbte_tipo:
                 raise Warning(_(
@@ -417,55 +417,6 @@ print "Observaciones:", wscdc.Obs
             moneda_id = inv.currency_id.afip_code
             moneda_ctz = inv.currency_rate
 
-            # # foreign trade data: export permit, country code, etc.:
-            if inv.afip_incoterm_id:
-                incoterms = inv.afip_incoterm_id.afip_code
-                incoterms_ds = inv.afip_incoterm_id.name
-            else:
-                incoterms = incoterms_ds = None
-            if int(doc_afip_code) in [19, 20, 21] and tipo_expo == 1:
-                permiso_existente = "N" or "S"     # not used now
-            else:
-                permiso_existente = ""
-            obs_generales = inv.comment
-            if inv.payment_term_id:
-                forma_pago = inv.payment_term_id.name
-                obs_comerciales = inv.payment_term_id.name
-            else:
-                forma_pago = obs_comerciales = None
-            idioma_cbte = 1     # invoice language: spanish / español
-
-            # customer data (foreign trade):
-            nombre_cliente = commercial_partner.name
-            # If argentinian and cuit, then use cuit
-            if country.code == 'AR' and tipo_doc == 80 and nro_doc:
-                id_impositivo = nro_doc
-                cuit_pais_cliente = None
-            # If not argentinian and vat, use vat
-            elif country.code != 'AR' and nro_doc:
-                id_impositivo = nro_doc
-                cuit_pais_cliente = None
-            # else use cuit pais cliente
-            else:
-                id_impositivo = None
-                if commercial_partner.is_company:
-                    cuit_pais_cliente = country.cuit_juridica
-                else:
-                    cuit_pais_cliente = country.cuit_fisica
-                if not cuit_pais_cliente:
-                    raise UserError(_(
-                        'No vat defined for the partner and also no CUIT set '
-                        'on country'))
-
-            domicilio_cliente = " - ".join([
-                commercial_partner.name or '',
-                commercial_partner.street or '',
-                commercial_partner.street2 or '',
-                commercial_partner.zip or '',
-                commercial_partner.city or '',
-            ])
-            pais_dst_cmp = commercial_partner.country_id.afip_code
-
             # create the invoice internally in the helper
             if afip_ws == 'wsfe':
                 ws.CrearFactura(
@@ -477,6 +428,7 @@ print "Observaciones:", wscdc.Obs
                     moneda_id, moneda_ctz
                 )
             # elif afip_ws == 'wsmtxca':
+            #     obs_generales = inv.comment
             #     ws.CrearFactura(
             #         concepto, tipo_doc, nro_doc, doc_afip_code, pos_number,
             #         cbt_desde, cbt_hasta, imp_total, imp_tot_conc, imp_neto,
@@ -487,6 +439,56 @@ print "Observaciones:", wscdc.Obs
             #         obs_generales   # difference with wsfe
             #     )
             elif afip_ws == 'wsfex':
+                # # foreign trade data: export permit, country code, etc.:
+                if inv.afip_incoterm_id:
+                    incoterms = inv.afip_incoterm_id.afip_code
+                    incoterms_ds = inv.afip_incoterm_id.name
+                else:
+                    incoterms = incoterms_ds = None
+                if int(doc_afip_code) in [19, 20, 21] and tipo_expo == 1:
+                    permiso_existente = "N" or "S"     # not used now
+                else:
+                    permiso_existente = ""
+                obs_generales = inv.comment
+
+                if inv.payment_term_id:
+                    forma_pago = inv.payment_term_id.name
+                    obs_comerciales = inv.payment_term_id.name
+                else:
+                    forma_pago = obs_comerciales = None
+
+                idioma_cbte = 1     # invoice language: spanish / español
+
+                # customer data (foreign trade):
+                nombre_cliente = commercial_partner.name
+                # If argentinian and cuit, then use cuit
+                if country.code == 'AR' and tipo_doc == 80 and nro_doc:
+                    id_impositivo = nro_doc
+                    cuit_pais_cliente = None
+                # If not argentinian and vat, use vat
+                elif country.code != 'AR' and nro_doc:
+                    id_impositivo = nro_doc
+                    cuit_pais_cliente = None
+                # else use cuit pais cliente
+                else:
+                    id_impositivo = None
+                    if commercial_partner.is_company:
+                        cuit_pais_cliente = country.cuit_juridica
+                    else:
+                        cuit_pais_cliente = country.cuit_fisica
+                    if not cuit_pais_cliente:
+                        raise UserError(_(
+                            'No vat defined for the partner and also no CUIT '
+                            'set on country'))
+
+                domicilio_cliente = " - ".join([
+                    commercial_partner.name or '',
+                    commercial_partner.street or '',
+                    commercial_partner.street2 or '',
+                    commercial_partner.zip or '',
+                    commercial_partner.city or '',
+                ])
+                pais_dst_cmp = commercial_partner.country_id.afip_code
                 ws.CrearFactura(
                     doc_afip_code, pos_number, cbte_nro, fecha_cbte,
                     imp_total, tipo_expo, permiso_existente, pais_dst_cmp,
@@ -555,7 +557,7 @@ print "Observaciones:", wscdc.Obs
             if CbteAsoc:
                 ws.AgregarCmpAsoc(
                     CbteAsoc.document_type_id.code,
-                    CbteAsoc.point_of_sale,
+                    CbteAsoc.point_of_sale_number,
                     CbteAsoc.invoice_number,
                 )
 

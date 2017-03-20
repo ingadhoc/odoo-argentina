@@ -9,6 +9,7 @@
                 <div id="main" position="inside">
                     <group string="Partners">
                         <field name="group_multiple_id_numbers"/>
+                        <field name="unique_id_numbers"/>
                     </group>
                 </div>
             </field>

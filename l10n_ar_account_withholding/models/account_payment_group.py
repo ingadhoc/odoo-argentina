@@ -60,6 +60,13 @@ class AccountPaymentGroup(models.Model):
                 self.partner_type == 'supplier'):
             self.retencion_ganancias = 'nro_regimen'
 
+    @api.onchange('commercial_partner_id')
+    def on_change_commercial_partner_id_retencion_g(self):
+        if (
+                self.company_regimenes_ganancias_ids and
+                self.partner_type == 'supplier'):
+            self.retencion_ganancias = 'nro_regimen'
+
     @api.model
     def create(self, vals):
         """
@@ -73,4 +80,10 @@ class AccountPaymentGroup(models.Model):
                 not payment_group.retencion_ganancias and
                 not payment_group.regimen_ganancias_id):
             payment_group.retencion_ganancias = 'no_aplica'
+        elif (
+                payment_group.company_regimenes_ganancias_ids and
+                payment_group.partner_type == 'supplier' and
+                not payment_group.retencion_ganancias):
+            payment_group.retencion_ganancias = 'nro_regimen'
+
         return payment_group

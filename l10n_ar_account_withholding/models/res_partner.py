@@ -28,8 +28,20 @@ class ResPartner(models.Model):
 
     @api.multi
     def get_arba_alicuota_percepcion(self):
-        company = self._context.get('invoice_company')
-        invoice_date = self._context.get('invoice_date')
+        if hasattr(self, 'company_id'):
+            company = self.company_id
+        else:
+            company = self._context.get('invoice_company')
+
+        if hasattr(self, 'date_invoice'):
+            invoice_date = self._context.get('date_invoice')
+        elif hasattr(self, 'invoice_date'):
+            invoice_date = self._context.get('invoice_date')
+        else:
+            invoice_date = fields.Date.today()
+
+        # company = self._context.get('invoice_company')
+        # invoice_date = self._context.get('invoice_date')
         if invoice_date and company:
             date = datetime.strptime(invoice_date, '%Y-%m-%d')
             arba = self.get_arba_data(company, date)

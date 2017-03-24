@@ -448,6 +448,25 @@ class AccountInvoice(models.Model):
             return True
         self.with_context(constraint_update_taxes=True).compute_taxes()
 
+    @api.onchange('document_number')
+    def onchange_document_number(self):
+        if self.type not in ['in_invoice', 'in_refund']:
+            return
+
+        number = ''
+        sep = ' '
+        document_number = self.document_number
+        if '-' in document_number:
+            sep = '-'
+        elements = document_number.split(sep)
+        if len(elements) == 2:
+            if (len(elements[0]) <= 4) and (len(elements[0]) <= 8):
+                number = '%s-%s' % (elements[0].zfill(4), elements[1].zfill(8))
+        else:
+            number = document_number
+
+        self.document_number = number
+
     # we add fiscal position with fp method instead of directly from partner
     # TODO. this should go in a PR to ODOO
     @api.onchange('partner_id', 'company_id')

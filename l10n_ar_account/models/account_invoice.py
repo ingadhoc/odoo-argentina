@@ -275,7 +275,7 @@ class AccountInvoice(models.Model):
         commercial_partner = partner.commercial_partner_id
         responsability_letter_ids = partner.afip_responsability_type_id.issued_letter_ids.ids
         responsability_letter_ids += partner.afip_responsability_type_id.received_letter_ids.ids
-        
+
         journal_document_types = journal_document_type = self.env[
             'account.journal.document.type']
 
@@ -291,7 +291,7 @@ class AccountInvoice(models.Model):
                     '|',
                     ('document_type_id.document_letter_id', 'in', letters.ids),
                     ('document_type_id.document_letter_id', '=', False),
-                    ('document_type_id.document_letter_id','in', responsability_letter_ids),
+                    ('document_type_id.document_letter_id', 'in', responsability_letter_ids),
                 ]
 
                 # if invoice_type is refund, only credit notes
@@ -310,15 +310,15 @@ class AccountInvoice(models.Model):
                 internal_type = self._context.get('internal_type', False)
                 if internal_type:
                     journal_document_type = journal_document_type.search(
-                         [
+                        [
                             ('document_type_id.internal_type',
-                                '=', internal_type)], limit=1)
-                    journal_document_types = journal_document_types.search(domain+[
-                            ('document_type_id.internal_type',
-                                '=', internal_type)])
-                    _logger.critical("The context type "+str(journal_document_type))
+                             '=', internal_type)], limit=1)
+                    journal_document_types = journal_document_types.search(domain + [
+                        ('document_type_id.internal_type',
+                         '=', internal_type)])
+                    _logger.critical("The context type " + str(journal_document_type))
                 else:
-                    
+
                     # For domain, we search all documents
                     journal_document_types = journal_document_types.search(domain)
 
@@ -409,11 +409,11 @@ class AccountInvoice(models.Model):
         #     ('invoice_line_tax_ids.tax_group_id', 'in',
         #         argentinian_invoices.ids),
         #     ])
-        #for invoice in argentinian_invoices:
-             # we check vat base amount is equal to amount untaxed
-             # usamos una precision de 0.1 porque en algunos casos no pudimos
-             # arreglar pbñe,as de redondedo
-             # TODO usar round
+        # for invoice in argentinian_invoices:
+            # we check vat base amount is equal to amount untaxed
+            # usamos una precision de 0.1 porque en algunos casos no pudimos
+            # arreglar pbñe,as de redondedo
+            # TODO usar round
        #     if abs(invoice.vat_base_amount - invoice.amount_untaxed) > 0.1:
        #         raise UserError(_("Invoice with ID %i has some lines without vat Tax ") % (invoice.id))
 
@@ -421,9 +421,9 @@ class AccountInvoice(models.Model):
         afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
         for invoice in argentinian_invoices:
             valid_all_tax_lines = 0
-            for tax in invoice.tax_line_ids: # Certificate Alla lines
+            for tax in invoice.tax_line_ids:  # Certificate Alla lines
                 valid_all_tax_lines += tax.amount
-                
+
             if valid_all_tax_lines == 0:
                 special_vat_taxes = invoice.tax_line_ids.filtered(
                     lambda r: r.tax_id.tax_group_id.afip_code in [1, 2, 3])
@@ -447,6 +447,25 @@ class AccountInvoice(models.Model):
         if context.get('constraint_update_taxes'):
             return True
         self.with_context(constraint_update_taxes=True).compute_taxes()
+
+    @api.onchange('document_number')
+    def onchange_document_number(self):
+        if self.type not in ['in_invoice', 'in_refund']:
+            return
+
+        number = ''
+        sep = ' '
+        document_number = self.document_number
+        if '-' in document_number:
+            sep = '-'
+        elements = document_number.split(sep)
+        if len(elements) == 2:
+            if (len(elements[0]) <= 4) and (len(elements[0]) <= 8):
+                number = '%s-%s' % (elements[0].zfill(4), elements[1].zfill(8))
+        else:
+            number = document_number
+
+        self.document_number = number
 
     # we add fiscal position with fp method instead of directly from partner
     # TODO. this should go in a PR to ODOO

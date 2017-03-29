@@ -3,7 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from pyafipws.pyi25 import PyI25
+from .pyi25 import PyI25
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 from cStringIO import StringIO as StringIO
@@ -13,7 +13,7 @@ import traceback
 _logger = logging.getLogger(__name__)
 
 try:
-    from pyafipws.soap import SoapFault
+    from pysimplesoap.client import SoapFault
 except ImportError:
     _logger.debug('Can not `from pyafipws.soap import SoapFault`.')
 

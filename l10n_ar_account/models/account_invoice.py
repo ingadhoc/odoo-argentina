@@ -450,7 +450,7 @@ class AccountInvoice(models.Model):
 
     @api.onchange('document_number')
     def onchange_document_number(self):
-        if self.type not in ['in_invoice', 'in_refund']:
+        if self.type not in ['in_invoice', 'in_refund'] or not self.document_number:
             return
 
         number = ''

@@ -211,7 +211,7 @@ class AccountInvoice(models.Model):
                         'invoice', 'debit_note', 'credit_note',
                         'receipt_invoice'] and
                     not inv.afip_auth_verify_result):
-                raise Warning(_(
+                raise UserError(_(
                     'You can not validate invoice as AFIP authorization '
                     'verification is required'))
 
@@ -245,7 +245,7 @@ print "Observaciones:", wscdc.Obs
             cbte_modo = inv.afip_auth_mode
             cod_autorizacion = inv.afip_auth_code
             if not cbte_modo or not cod_autorizacion:
-                raise Warning(_(
+                raise UserError(_(
                     'AFIP authorization mode and Code are required!'))
 
             # get issuer and receptor depending on supplier or customer invoice
@@ -255,20 +255,18 @@ print "Observaciones:", wscdc.Obs
             else:
                 issuer = inv.company_id.partner_id
                 receptor = inv.commercial_partner_id
-            issuer_doc_code = str(issuer.main_id_category_id.afip_code)
-            cuit_emisor = issuer.main_id_number
-            if issuer_doc_code != '80' or not cuit_emisor:
-                raise Warning(_('Issuer must have a CUIT configured'))
+
+            cuit_emisor = issuer.cuit_required()
 
             receptor_doc_code = str(receptor.main_id_category_id.afip_code)
             doc_tipo_receptor = receptor_doc_code or '99'
             doc_nro_receptor = (
                 receptor_doc_code and receptor.main_id_number or "0")
-            afip_doc_class = inv.document_type_id
+            doc_type = inv.document_type_id
             if (
-                    afip_doc_class.document_letter_id.name in ['A', 'M'] and
+                    doc_type.document_letter_id.name in ['A', 'M'] and
                     doc_tipo_receptor != '80' or not doc_nro_receptor):
-                    raise Warning(_(
+                    raise UserError(_(
                         'Para Comprobantes tipo A o tipo M:\n'
                         '*  el documento del receptor debe ser CUIT\n'
                         '*  el documento del Receptor es obligatorio\n'
@@ -276,14 +274,14 @@ print "Observaciones:", wscdc.Obs
 
             cbte_nro = inv.invoice_number
             pto_vta = inv.point_of_sale_number
-            cbte_tipo = afip_doc_class.afip_code
+            cbte_tipo = doc_type.code
             if not pto_vta or not cbte_nro or not cbte_tipo:
-                raise Warning(_(
+                raise UserError(_(
                     'Point of sale and document number and document type '
                     'are required!'))
             cbte_fch = inv.date_invoice
             if not cbte_fch:
-                raise Warning(_('Invoice Date is required!'))
+                raise UserError(_('Invoice Date is required!'))
             cbte_fch = cbte_fch.replace("-", "")
             imp_total = str("%.2f" % abs(inv.amount_total))
 
@@ -311,7 +309,7 @@ print "Observaciones:", wscdc.Obs
                         sys.exc_type,
                         sys.exc_value)[0]
             if msg:
-                raise Warning(_('AFIP Verification Error. %s' % msg))
+                raise UserError(_('AFIP Verification Error. %s' % msg))
 
             inv.write({
                 'afip_auth_verify_result': ws.Resultado,
@@ -582,7 +580,7 @@ print "Observaciones:", wscdc.Obs
                     bonif = line.discount and (precio * qty - importe) or None
                     if afip_ws in ['wsmtxca', 'wsbfe']:
                         if not line.product_id.uom_id.afip_code:
-                            raise Warning(_(
+                            raise UserError(_(
                                 'Not afip code con producto UOM %s' % (
                                     line.product_id.uom_id.name)))
                         # u_mtx = (
@@ -596,7 +594,7 @@ print "Observaciones:", wscdc.Obs
                         imp_iva = sum(
                             [x['amount'] for x in vat_taxes_amounts['taxes']])
                         if afip_ws == 'wsmtxca':
-                            raise Warning(
+                            raise UserError(
                                 _('WS wsmtxca Not implemented yet'))
                             # ws.AgregarItem(
                             #     u_mtx, cod_mtx, codigo, ds, qty, umed,

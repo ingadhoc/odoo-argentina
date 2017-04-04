@@ -7,7 +7,13 @@
             <field name="inherit_id" ref="l10n_ar_account.view_account_config_settings"/>
             <field name="model">account.config.settings</field>
             <field name="arch" type="xml">
-                <form/>
+                <div name="customer_payments" position="after">
+                    <label for="afip_invoicing" string="AFIP" attrs="{'invisible':[('localization', '!=', 'argentina')]}"/>
+                    <div name="afip_invoicing" attrs="{'invisible':[('localization', '!=', 'argentina')]}">
+                        <label for="afip_auth_verify_type"/>
+                        <field name="afip_auth_verify_type" class="oe_inline"/>
+                    </div>
+                </div>
                 <!-- TODO implementar o borrar vista -->
                 <!-- <div name="point_of_sale_type" position="after">
                     <div name="afip_ws">

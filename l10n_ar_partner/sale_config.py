@@ -19,7 +19,8 @@ class SaleConfiguration(models.TransientModel):
     unique_id_numbers = fields.Boolean(
         "Restrict Id Numbers to be Unique",
         help="If you set it True, then we will check that partner Id Numbers "
-        "(for eg. cuit, dni, etc) are unique",
+        "(for eg. cuit, dni, etc) are unique. Same number for partners in a "
+        "child/parent relation are still allowed",
     )
 
     @api.multi

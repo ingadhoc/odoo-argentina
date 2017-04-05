@@ -20,9 +20,17 @@ class ResPartnerIdNumber(models.Model):
                 "l10n_ar_partner.unique_id_numbers", 'False')):
             return True
         for rec in self:
+            # we allow same number in related partners
+            related_partners = rec.partner_id.search([
+                '|', ('id', 'parent_of', rec.partner_id.id),
+                ('id', 'child_of', rec.partner_id.id)])
             if rec.search([
                     ('name', '=', rec.name),
                     ('category_id', '=', rec.category_id.id),
+                    # por ahora no queremos la condicion de igual cia
+                    # ('company_id', '=', rec.company_id.id),
+                    ('partner_id', 'not in', related_partners.ids),
                     ('id', '!=', rec.id)]):
                 raise UserError(_(
-                    'Id Number must be unique per id category'))
+                    'Id Number must be unique per id category!\nSame number '
+                    'is only allowed for partner with parent/child relation'))

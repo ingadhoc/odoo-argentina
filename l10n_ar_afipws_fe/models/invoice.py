@@ -191,14 +191,10 @@ class AccountInvoice(models.Model):
         """
         The last thing we do is request the cae because if an error occurs
         after cae requested, the invoice has been already validated on afip
-        We want to add a inv._cr.commit() after sucesfuul cae request because
-        we dont want to loose cae data because of a raise error on next steps
-        but it doesn work as expected
         """
         res = super(AccountInvoice, self).invoice_validate()
         self.check_afip_auth_verify_required()
         self.do_pyafipws_request_cae()
-        # self._cr.commit()
         return res
 
     @api.multi
@@ -659,3 +655,10 @@ print "Observaciones:", wscdc.Obs
                 'afip_xml_request': ws.XmlRequest,
                 'afip_xml_response': ws.XmlResponse,
             })
+            # si obtuvimos el cae hacemos el commit porque estoya no se puede
+            # volver atras
+            # otra alternativa seria escribir con otro cursor el cae y que
+            # la factura no quede validada total si tiene cae no se vuelve a
+            # solicitar. Lo mismo podriamos usar para grabar los mensajes de
+            # afip de respuesta
+            inv._cr.commit()

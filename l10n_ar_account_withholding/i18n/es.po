@@ -4,13 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Andres L <aleibrecht@gmail.com>, 2017
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-10 23:26+0000\n"
-"PO-Revision-Date: 2017-01-10 23:26+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-04-06 17:48+0000\n"
+"PO-Revision-Date: 2017-04-06 17:48+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,6 +59,29 @@ msgid ""
 "                </group>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><field name=\"imp_ganancias_padron\" position=\"after\">\n"
+"                    <field name=\"default_regimen_ganancias_id\"/>\n"
+"                </field>\n"
+"                <group name=\"others_col_1\">\n"
+"                    <field name=\"drei\"/>\n"
+"                </group>\n"
+"                <group name=\"others\" position=\"after\">\n"
+"                    <label for=\"arba_alicuot_ids\"/>\n"
+"                    <field name=\"arba_alicuot_ids\">\n"
+"                        <tree editable=\"bottom\">\n"
+"                            <field name=\"company_id\" groups=\"base.group_multi_company\"/>\n"
+"                            <field name=\"from_date\"/>\n"
+"                            <field name=\"to_date\"/>\n"
+"                            <field name=\"numero_comprobante\"/>\n"
+"                            <field name=\"alicuota_percepcion\"/>\n"
+"                            <field name=\"alicuota_retencion\"/>\n"
+"                            <field name=\"grupo_percepcion\"/>\n"
+"                            <field name=\"grupo_retencion\"/>\n"
+"                        </tree>\n"
+"                    </field>\n"
+"                </group>\n"
+"            </data>"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.ui.view,arch_db:l10n_ar_account_withholding.view_account_payment_group_form
@@ -74,6 +99,18 @@ msgid ""
 "                </field>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><form>\n"
+"                    <field name=\"company_regimenes_ganancias_ids\" invisible=\"1\"/>\n"
+"                </form>\n"
+"                <field name=\"communication\" position=\"after\">\n"
+"                    <label for=\"retencion_ganancias\" attrs=\"{'invisible': [('company_regimenes_ganancias_ids', '=', [])]}\"/>\n"
+"                    <div attrs=\"{'invisible': [('company_regimenes_ganancias_ids', '=', [])]}\">\n"
+"                        <field name=\"retencion_ganancias\" class=\"oe_inline\" attrs=\"{'required': [('company_regimenes_ganancias_ids', '!=', []), ('state', 'in', [('draft', 'confirmed')])]}\"/>\n"
+"                        <field name=\"regimen_ganancias_id\" class=\"oe_inline\" attrs=\"{'invisible': [('retencion_ganancias', '!=', 'nro_regimen')], 'required': [('retencion_ganancias', '=', 'nro_regimen'), ('company_regimenes_ganancias_ids', '!=', []), ('state', 'in', [('draft', 'confirmed')])]}\" domain=\"[('id', 'in', company_regimenes_ganancias_ids and company_regimenes_ganancias_ids[0][2] or [])]\" options=\"{&quot;no_open&quot;: True, &quot;no_create&quot;: True}\"/>\n"
+"                    </div>\n"
+"                </field>\n"
+"            </data>"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.ui.view,arch_db:l10n_ar_account_withholding.view_company_inherit_form
@@ -91,6 +128,18 @@ msgid ""
 "                </notebook>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><group name=\"account_grp\">\n"
+"                    <field name=\"regimenes_ganancias_ids\" widget=\"many2many_tags\"/>\n"
+"                </group>\n"
+"                <notebook>\n"
+"                    <page string=\"ARBA WS\" name=\"arbaws\">\n"
+"                        <group>\n"
+"                            <field name=\"arba_cit\"/>\n"
+"                        </group>\n"
+"                    </page>\n"
+"                </notebook>\n"
+"            </data>"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.ui.view,arch_db:l10n_ar_account_withholding.view_afip_tabla_ganancias_alicuotasymontos_tree
@@ -106,6 +155,16 @@ msgid ""
 "                </tree>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"AFIP tax\" editable=\"top\">\n"
+"                    <field name=\"codigo_de_regimen\"/>\n"
+"                    <field name=\"anexo_referencia\"/>\n"
+"                    <field name=\"concepto_referencia\"/>\n"
+"                    <field name=\"porcentaje_inscripto\"/>\n"
+"                    <field name=\"porcentaje_no_inscripto\"/>\n"
+"                    <field name=\"montos_no_sujetos_a_retencion\"/>\n"
+"                </tree>\n"
+"            "
 
 #. module: l10n_ar_account_withholding
 #: model:ir.ui.view,arch_db:l10n_ar_account_withholding.view_afip_tabla_ganancias_escala_tree
@@ -120,17 +179,33 @@ msgid ""
 "                </tree>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"Impuesto AFIP\" editable=\"top\">\n"
+"                    <field name=\"importe_desde\"/>\n"
+"                    <field name=\"importe_hasta\"/>\n"
+"                    <field name=\"importe_fijo\"/>\n"
+"                    <field name=\"porcentaje\"/>\n"
+"                    <field name=\"importe_excedente\"/>\n"
+"                </tree>\n"
+"            "
 
 #. module: l10n_ar_account_withholding
-#: model:ir.ui.view,arch_db:l10n_ar_account_withholding.account
+#: model:ir.ui.view,arch_db:l10n_ar_account_withholding.view_account_payment_from_group_tree
+#: model:ir.ui.view,arch_db:l10n_ar_account_withholding.view_account_payment_tree
 msgid ""
 "<?xml version=\"1.0\"?>\n"
 "<tree>\n"
 "                    <field name=\"payment_method_code\" invisible=\"1\"/>\n"
-"                    <button name=\"273\" string=\"Print\" type=\"action\" attrs=\"{'invisible': [('payment_method_code', '!=', 'withholding'), ('partner_type', '!=', 'supplier')]}\"/>\n"
+"                    <button name=\"268\" string=\"Print\" type=\"action\" attrs=\"{'invisible': [('payment_method_code', '!=', 'withholding'), ('partner_type', '!=', 'supplier')]}\"/>\n"
 "                </tree>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree>\n"
+"                    <field name=\"payment_method_code\" invisible=\"1\"/>\n"
+"                    <button name=\"268\" string=\"Print\" type=\"action\" attrs=\"{'invisible': [('payment_method_code', '!=', 'withholding'), ('partner_type', '!=', 'supplier')]}\"/>\n"
+"                </tree>\n"
+"            "
 
 #. module: l10n_ar_account_withholding
 #: field:afip.tabla_ganancias.escala,importe_hasta:0
@@ -181,7 +256,7 @@ msgstr "Anexo referencia"
 #. module: l10n_ar_account_withholding
 #: model:ir.actions.report.xml,name:l10n_ar_account_withholding.action_aeroo_certificado_de_retencion_report
 msgid "Certificado de Retención"
-msgstr ""
+msgstr "Certificado de Retención"
 
 #. module: l10n_ar_account_withholding
 #: field:afip.tabla_ganancias.alicuotasymontos,codigo_de_regimen:0
@@ -393,7 +468,7 @@ msgstr "Régimen ganancias"
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_default_regimen_ganancias_id
 #: field:res.partner,default_regimen_ganancias_id:0
 msgid "Regimen Ganancias por Defecto"
-msgstr ""
+msgstr "Régimen Ganancias por Defecto"
 
 #. module: l10n_ar_account_withholding
 #: field:account.payment.group,company_regimenes_ganancias_ids:0
@@ -427,7 +502,7 @@ msgid "To date"
 msgstr "A fecha"
 
 #. module: l10n_ar_account_withholding
-#: code:addons/l10n_ar_account_withholding/models/res_company.py:77
+#: code:addons/l10n_ar_account_withholding/models/res_company.py:80
 #, python-format
 msgid "You must configure ARBA CIT on company %s"
 msgstr "Debe configurar el CIT de ARA en la compañía %s"

@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Javier Diez <jd@adhoc.com.ar>, 2016
+# Andres L <aleibrecht@gmail.com>, 2017
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-10 23:26+0000\n"
-"PO-Revision-Date: 2017-01-10 23:26+0000\n"
-"Last-Translator: Javier Diez <jd@adhoc.com.ar>, 2016\n"
+"POT-Creation-Date: 2017-04-06 17:48+0000\n"
+"PO-Revision-Date: 2017-04-06 17:48+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,17 +37,72 @@ msgid ""
 "                    <attribute name=\"attrs\">{'required': [('localization', '=', 'argentina')]}</attribute>\n"
 "                </field>\n"
 "\n"
+"                <!-- hacemos otros campos requeridos si cia argentina -->\n"
+"                <field name=\"state_id\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('localization', '=', 'argentina')]}</attribute>\n"
+"                </field>\n"
+"                <field name=\"country_id\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('localization', '=', 'argentina')]}</attribute>\n"
+"                </field>\n"
+"                <field name=\"city\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('localization', '=', 'argentina')]}</attribute>\n"
+"                </field>\n"
+"                <field name=\"street\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('localization', '=', 'argentina')]}</attribute>\n"
+"                </field>\n"
+"                <field name=\"zip\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('localization', '=', 'argentina')]}</attribute>\n"
+"                </field>\n"
+"\n"
 "                <field name=\"vat\" position=\"after\">\n"
 "                    <field name=\"afip_responsability_type_id\" options=\"{'no_open': True, 'no_create': True}\" attrs=\"{'required': [('localization', '=', 'argentina')], 'invisible': [('localization', '!=', 'argentina')]}\"/>\n"
 "                    <label for=\"gross_income_number\" string=\"Gross Income\" attrs=\"{'invisible': [('localization', '!=', 'argentina')]}\"/>\n"
 "                    <div attrs=\"{'invisible': [('localization', '!=', 'argentina')]}\">\n"
 "                        <field name=\"gross_income_type\" attrs=\"{'required': [('localization', '=', 'argentina')]}\" class=\"oe_inline\"/>\n"
 "                        <field name=\"gross_income_number\" placeholder=\"Number...\" class=\"oe_inline\" attrs=\"{'invisible': [('gross_income_type', 'in', [False, 'no_liquida'])], 'required': [('gross_income_type', 'not in', [False, 'no_liquida'])]}\"/>\n"
+"                        <field name=\"gross_income_jurisdiction_ids\" widget=\"many2many_tags\" placeholder=\"Other Jurisdictions\" class=\"oe_inline\" attrs=\"{'invisible': [('gross_income_type', '!=', 'multilateral')], 'required': [('gross_income_type', '=', 'multilateral')]}\"/>\n"
 "                    </div>\n"
 "                    <field name=\"start_date\" attrs=\"{'required': [('localization', '=', 'argentina')], 'invisible': [('localization', '!=', 'argentina')]}\"/>\n"
 "                </field>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><!-- extendemos l10n_ar_partner para hacer obligatorio si cia argentina -->\n"
+"                <field name=\"main_id_category_id\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('localization', '=', 'argentina')]}</attribute>\n"
+"                </field>\n"
+"                <field name=\"main_id_number\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('localization', '=', 'argentina')]}</attribute>\n"
+"                </field>\n"
+"\n"
+"                <!-- hacemos otros campos requeridos si cia argentina -->\n"
+"                <field name=\"state_id\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('localization', '=', 'argentina')]}</attribute>\n"
+"                </field>\n"
+"                <field name=\"country_id\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('localization', '=', 'argentina')]}</attribute>\n"
+"                </field>\n"
+"                <field name=\"city\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('localization', '=', 'argentina')]}</attribute>\n"
+"                </field>\n"
+"                <field name=\"street\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('localization', '=', 'argentina')]}</attribute>\n"
+"                </field>\n"
+"                <field name=\"zip\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('localization', '=', 'argentina')]}</attribute>\n"
+"                </field>\n"
+"\n"
+"                <field name=\"vat\" position=\"after\">\n"
+"                    <field name=\"afip_responsability_type_id\" options=\"{'no_open': True, 'no_create': True}\" attrs=\"{'required': [('localization', '=', 'argentina')], 'invisible': [('localization', '!=', 'argentina')]}\"/>\n"
+"                    <label for=\"gross_income_number\" string=\"Gross Income\" attrs=\"{'invisible': [('localization', '!=', 'argentina')]}\"/>\n"
+"                    <div attrs=\"{'invisible': [('localization', '!=', 'argentina')]}\">\n"
+"                        <field name=\"gross_income_type\" attrs=\"{'required': [('localization', '=', 'argentina')]}\" class=\"oe_inline\"/>\n"
+"                        <field name=\"gross_income_number\" placeholder=\"Number...\" class=\"oe_inline\" attrs=\"{'invisible': [('gross_income_type', 'in', [False, 'no_liquida'])], 'required': [('gross_income_type', 'not in', [False, 'no_liquida'])]}\"/>\n"
+"                        <field name=\"gross_income_jurisdiction_ids\" widget=\"many2many_tags\" placeholder=\"Other Jurisdictions\" class=\"oe_inline\" attrs=\"{'invisible': [('gross_income_type', '!=', 'multilateral')], 'required': [('gross_income_type', '=', 'multilateral')]}\"/>\n"
+"                    </div>\n"
+"                    <field name=\"start_date\" attrs=\"{'required': [('localization', '=', 'argentina')], 'invisible': [('localization', '!=', 'argentina')]}\"/>\n"
+"                </field>\n"
+"            </data>"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_res_partner_filter
@@ -60,6 +116,14 @@ msgid ""
 "                </filter>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><field name=\"category_id\" position=\"after\">\n"
+"                    <field name=\"afip_responsability_type_id\"/>\n"
+"                </field>\n"
+"                <filter name=\"salesperson\" position=\"before\">\n"
+"                    <filter string=\"Tipo de Responsabilidad AFIP\" context=\"{'group_by': 'afip_responsability_type_id'}\"/>\n"
+"                </filter>\n"
+"            </data>"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_document_type_filter
@@ -73,6 +137,14 @@ msgid ""
 "                </group>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><field name=\"code\" position=\"after\">\n"
+"                    <field name=\"document_letter_id\"/>\n"
+"                </field>\n"
+"                <group>\n"
+"                    <filter string=\"Letra de Documento\" name=\"document_letter_id\" context=\"{'group_by':'document_letter_id'}\"/>\n"
+"                </group>\n"
+"            </data>"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_position_form
@@ -86,6 +158,14 @@ msgid ""
 "                </field>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><field name=\"name\" position=\"after\">\n"
+"                    <field name=\"afip_code\"/>\n"
+"                </field>\n"
+"                <field name=\"vat_required\" position=\"replace\">\n"
+"                    <field name=\"afip_responsability_type_ids\" widget=\"many2many_tags\" attrs=\"{'invisible': [('auto_apply', '!=', True)]}\"/>\n"
+"                </field>\n"
+"            </data>"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_res_partner_form
@@ -121,6 +201,7 @@ msgid ""
 "                                <div>\n"
 "                                    <field name=\"gross_income_type\" class=\"oe_inline\"/>\n"
 "                                    <field name=\"gross_income_number\" placeholder=\"Number...\" class=\"oe_inline\" attrs=\"{'invisible': [('gross_income_type', 'not in', ['multilateral', 'local'])], 'required': [('gross_income_type', 'in', ['multilateral', 'local'])]}\"/>\n"
+"                                    <field name=\"gross_income_jurisdiction_ids\" widget=\"many2many_tags\" placeholder=\"Other Jurisdictions\" class=\"oe_inline\" attrs=\"{'invisible': [('gross_income_type', '!=', 'multilateral')]}\"/>\n"
 "                                </div>\n"
 "                            </group>\n"
 "                            <group name=\"others_col_2\">\n"
@@ -131,6 +212,47 @@ msgid ""
 "\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><field name=\"ref\" position=\"replace\">\n"
+"                </field>\n"
+"\n"
+"                <field name=\"parent_id\" position=\"after\">\n"
+"                    <field name=\"ref\" placeholder=\"Reference/Name fantasy\"/>\n"
+"                </field>\n"
+"\n"
+"                <field name=\"website\" position=\"after\">\n"
+"                    <field name=\"afip_responsability_type_id\" options=\"{'no_open': True, 'no_create': True}\" attrs=\"{'invisible': [('is_company','=',False), ('parent_id','!=',False)]}\"/>\n"
+"                </field>\n"
+"\n"
+"                <page name=\"accounting\" position=\"after\">\n"
+"                    <page string=\"Fiscal Data\" name=\"fiscal_data\" attrs=\"{'invisible': [('is_company','=',False),('parent_id','!=',False)]}\">\n"
+"                        <!-- add other documents -->\n"
+"                        <group string=\"AFIP\" name=\"afip\">\n"
+"                            <group name=\"afip_col_1\">\n"
+"                                <field name=\"start_date\"/>\n"
+"                            </group>\n"
+"                            <group name=\"afip_col_2\">\n"
+"                            </group>\n"
+"                        </group>\n"
+"                        <!-- TODO agregar esto -->\n"
+"                        <!-- <label for=\"other_document_type_ids\"/> -->\n"
+"                        <!-- <field name=\"other_document_type_ids\"/> -->\n"
+"                        <group string=\"Others\" name=\"others\">\n"
+"                            <group name=\"others_col_1\">\n"
+"                                <label for=\"gross_income_number\" string=\"Gross Income\"/>\n"
+"                                <div>\n"
+"                                    <field name=\"gross_income_type\" class=\"oe_inline\"/>\n"
+"                                    <field name=\"gross_income_number\" placeholder=\"Number...\" class=\"oe_inline\" attrs=\"{'invisible': [('gross_income_type', 'not in', ['multilateral', 'local'])], 'required': [('gross_income_type', 'in', ['multilateral', 'local'])]}\"/>\n"
+"                                    <field name=\"gross_income_jurisdiction_ids\" widget=\"many2many_tags\" placeholder=\"Other Jurisdictions\" class=\"oe_inline\" attrs=\"{'invisible': [('gross_income_type', '!=', 'multilateral')]}\"/>\n"
+"                                </div>\n"
+"                            </group>\n"
+"                            <group name=\"others_col_2\">\n"
+"                            </group>\n"
+"                        </group>\n"
+"                    </page>\n"
+"                </page>\n"
+"\n"
+"            </data>"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_invoice_form
@@ -162,6 +284,32 @@ msgid ""
 "                </field>   \n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><form>\n"
+"                    <field name=\"point_of_sale_type\" invisible=\"1\"/>\n"
+"                    <field name=\"document_letter_name\" invisible=\"1\"/>\n"
+"                </form>\n"
+"                <div groups=\"base.group_multi_currency\" position=\"after\">\n"
+"                    <field name=\"currency_rate\" attrs=\"{'invisible': [('currency_rate', '=', False)]}\"/>\n"
+"                </div>\n"
+"\n"
+"                <field name=\"journal_id\" position=\"after\">\n"
+"                    <field name=\"afip_responsability_type_id\" states=\"open,paid\"/>\n"
+"                </field>\n"
+"\n"
+"                <field name=\"payment_term_id\" position=\"after\">\n"
+"                    <!-- if poitn of sale = false then not argentina journal -->\n"
+"                    <field name=\"afip_incoterm_id\" attrs=\"{'invisible': [('document_letter_name', '!=', 'E')]}\"/>\n"
+"                    <!-- <field name=\"afip_incoterm_id\" attrs=\"{'invisible': [('point_of_sale_type', '=', False)]}\"/> -->\n"
+"\n"
+"                    <field name=\"afip_concept\" attrs=\"{'invisible':[('point_of_sale_type', 'not in', ['online', 'electronic'])]}\"/>\n"
+"\n"
+"                    <label for=\"afip_service_start\" attrs=\"{'invisible':[('afip_concept','not in',['2', '3', '4'])]}\" string=\"Fecha del Servicio\"/>\n"
+"                    <div attrs=\"{'invisible':[('afip_concept','not in',['2', '3', '4'])]}\">\n"
+"                        <field name=\"afip_service_start\" class=\"oe_inline\"/> to <field name=\"afip_service_end\" class=\"oe_inline\"/>\n"
+"                    </div>\n"
+"                </field>   \n"
+"            </data>"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_bank_journal_form
@@ -173,13 +321,20 @@ msgid ""
 "                </div>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div class=\"oe_title\">\n"
+"                    <label for=\"bank_cbu\" class=\"oe_edit_only\"/>\n"
+"                    <h2><field name=\"bank_cbu\"/></h2>\n"
+"                </div>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_config_settings
 msgid ""
 "<?xml version=\"1.0\"?>\n"
 "<div name=\"sale_use_documents\" position=\"after\">\n"
-"                    <div name=\"afip_responsability_type_id\">\n"
+"                    <!-- TODO implementar o borrar vista -->\n"
+"                    <!-- <div name=\"afip_responsability_type_id\">\n"
 "                        <label for=\"afip_responsability_type_id\" attrs=\"{'invisible':['|', ('localization', '!=', 'argentina'), ('has_chart_of_accounts','!=',False)]}\"/>\n"
 "                        <field name=\"afip_responsability_type_id\" class=\"oe_inline\" attrs=\"{'invisible':['|', ('localization', '!=', 'argentina'), ('has_chart_of_accounts','!=',False)], 'required':[('localization', '=', 'argentina'), ('sale_use_documents', '=', True), ('has_chart_of_accounts', '=', False)]}\"/>\n"
 "                    </div>\n"
@@ -190,10 +345,27 @@ msgid ""
 "                    <div name=\"point_of_sale_number\">\n"
 "                        <label for=\"point_of_sale_number\" attrs=\"{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)]}\"/>\n"
 "                        <field name=\"point_of_sale_number\" class=\"oe_inline\" attrs=\"{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)], 'required':[('localization', '=', 'argentina'), ('sale_use_documents', '=', True), ('has_chart_of_accounts', '=', False)]}\"/>\n"
-"                    </div>\n"
+"                    </div> -->\n"
 "                </div>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<div name=\"sale_use_documents\" position=\"after\">\n"
+"                    <!-- TODO implementar o borrar vista -->\n"
+"                    <!-- <div name=\"afip_responsability_type_id\">\n"
+"                        <label for=\"afip_responsability_type_id\" attrs=\"{'invisible':['|', ('localization', '!=', 'argentina'), ('has_chart_of_accounts','!=',False)]}\"/>\n"
+"                        <field name=\"afip_responsability_type_id\" class=\"oe_inline\" attrs=\"{'invisible':['|', ('localization', '!=', 'argentina'), ('has_chart_of_accounts','!=',False)], 'required':[('localization', '=', 'argentina'), ('sale_use_documents', '=', True), ('has_chart_of_accounts', '=', False)]}\"/>\n"
+"                    </div>\n"
+"                    <div name=\"point_of_sale_type\">\n"
+"                        <label for=\"point_of_sale_type\" attrs=\"{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)]}\"/>\n"
+"                        <field name=\"point_of_sale_type\" class=\"oe_inline\" attrs=\"{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)], 'required':[('localization', '=', 'argentina'), ('sale_use_documents', '=', True), ('has_chart_of_accounts', '=', False)]}\"/>\n"
+"                    </div>\n"
+"                    <div name=\"point_of_sale_number\">\n"
+"                        <label for=\"point_of_sale_number\" attrs=\"{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)]}\"/>\n"
+"                        <field name=\"point_of_sale_number\" class=\"oe_inline\" attrs=\"{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)], 'required':[('localization', '=', 'argentina'), ('sale_use_documents', '=', True), ('has_chart_of_accounts', '=', False)]}\"/>\n"
+"                    </div> -->\n"
+"                </div>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_res_country_form
@@ -208,6 +380,14 @@ msgid ""
 "                </field>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"code\" position=\"after\">\n"
+"                    <field name=\"afip_code\"/>\n"
+"                    <field name=\"cuit_fisica\"/>\n"
+"                    <field name=\"cuit_juridica\"/>\n"
+"                    <field name=\"cuit_otro\"/>\n"
+"                </field>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_document_type_form
@@ -219,6 +399,11 @@ msgid ""
 "                </field>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"doc_code_prefix\" position=\"after\">\n"
+"                    <field name=\"document_letter_id\"/>\n"
+"                </field>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_supplier_invoice_form
@@ -229,6 +414,11 @@ msgid ""
 "                </field>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"journal_id\" position=\"after\">\n"
+"                    <field name=\"afip_responsability_type_id\" states=\"open,paid\"/>\n"
+"                </field>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_position_template_form
@@ -253,6 +443,25 @@ msgid ""
 "                </field>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"name\" position=\"after\">\n"
+"                    <field name=\"afip_code\"/>\n"
+"                    <!-- TODO this should be added in odoo core -->\n"
+"                    <field name=\"auto_apply\"/>\n"
+"                    <field name=\"afip_responsability_type_ids\" widget=\"many2many_tags\" attrs=\"{'invisible': [('auto_apply', '!=', True)]}\"/>\n"
+"                    <field name=\"country_group_id\" attrs=\"{'invisible': [('auto_apply', '!=', True)]}\"/>\n"
+"                    <field name=\"country_id\" attrs=\"{'invisible': [('auto_apply', '!=', True)]}\"/>\n"
+"                    <field name=\"state_ids\" widget=\"many2many_tags\" domain=\"[('country_id', '=', country_id)]\" attrs=\"{'invisible': ['|', ('auto_apply', '!=', True), ('country_id', '=', False)]}\"/>\n"
+"                    <label for=\"zip_from\" string=\"Rango de Cod. Postal\" attrs=\"{'invisible': ['|', ('auto_apply', '!=', True), ('country_id', '=', False)]}\"/>\n"
+"                    <div attrs=\"{'invisible': ['|', ('auto_apply', '!=', True), ('country_id', '=', False)]}\">\n"
+"                        <span> From </span>\n"
+"                        <field name=\"zip_from\" class=\"oe_inline\"/>\n"
+"                        <div class=\"oe_edit_only\"/>\n"
+"                        <span> To </span>\n"
+"                        <field name=\"zip_to\" class=\"oe_inline\"/>\n"
+"                    </div>\n"
+"                </field>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_currency_form
@@ -263,6 +472,11 @@ msgid ""
 "                </field>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"name\" position=\"after\">\n"
+"                    <field name=\"afip_code\"/>\n"
+"                </field>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.product_uom_form_view
@@ -273,6 +487,11 @@ msgid ""
 "                </field>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"rounding\" position=\"after\">\n"
+"                    <field name=\"afip_code\"/>\n"
+"                </field>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_journal_form
@@ -284,6 +503,12 @@ msgid ""
 "                </field>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"type\" position=\"after\">\n"
+"                    <field name=\"point_of_sale_type\" attrs=\"{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('use_documents', '=', False), ('type', '!=', 'sale')], 'required':[('localization', '=', 'argentina'), ('use_documents', '=', True), ('type', '=', 'sale')]}\"/>\n"
+"                    <field name=\"point_of_sale_number\" attrs=\"{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('use_documents', '=', False), ('type', '!=', 'sale')], 'required':[('localization', '=', 'argentina'), ('use_documents', '=', True), ('type', '=', 'sale')]}\"/>\n"
+"                </field>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_afip_incoterm_form
@@ -297,6 +522,14 @@ msgid ""
 "                </form>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Incoterms AFIP\">\n"
+"                    <group>\n"
+"                        <field name=\"afip_code\"/>\n"
+"                        <field name=\"name\"/>\n"
+"                    </group>\n"
+"                </form>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_afip_responsability_type_form
@@ -315,6 +548,19 @@ msgid ""
 "                </form>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Tipo de Responsabilidad AFIP\">\n"
+"                    <group>\n"
+"                        <field name=\"name\"/>\n"
+"                        <field name=\"code\"/>\n"
+"                        <field name=\"issued_letter_ids\"/>\n"
+"                        <field name=\"received_letter_ids\"/>\n"
+"                        <!-- TODO analizar -->\n"
+"                        <!-- <field name='subjected_tax_group_ids'/> -->\n"
+"                        <field name=\"active\"/>\n"
+"                    </group>\n"
+"                </form>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_document_letter_form
@@ -333,6 +579,19 @@ msgid ""
 "                </form>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Letra del Documento\">\n"
+"                    <group>\n"
+"                        <field name=\"name\"/>                    \n"
+"                        <field name=\"active\"/>                    \n"
+"                        <field name=\"issuer_ids\"/>\n"
+"                        <field name=\"receptor_ids\"/>\n"
+"                        <field name=\"taxes_included\"/>\n"
+"                        <!-- <field name=\"included_tax_group_ids\" widget=\"many2many_tags\"/> -->\n"
+"                        <field name=\"document_type_ids\" colspan=\"4\"/>\n"
+"                    </group>\n"
+"                </form>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_graph
@@ -346,6 +605,14 @@ msgid ""
 "             </graph>\n"
 "         "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<graph string=\"Análisis de Facturas\" type=\"pivot\" stacked=\"True\">\n"
+"             <!-- <graph string=\"Invoices Analysis\" type=\"bar\"> -->\n"
+"                 <!-- <field name=\"month\" type=\"row\"/> -->\n"
+"                 <!-- <field name=\"month\" type=\"col\"/> -->\n"
+"                 <!-- <field name=\"price_subtotal\"/> -->\n"
+"             </graph>\n"
+"         "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_filter
@@ -356,6 +623,11 @@ msgid ""
 "                </group>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<group position=\"inside\">\n"
+"                    <filter string=\"Estado\" domain=\"[]\" context=\"{'group_by':'state_id'}\"/>\n"
+"                </group>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
@@ -402,6 +674,47 @@ msgid ""
 "            </search>\n"
 "        "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<search string=\"Análisis de Líneas de Facturas\">\n"
+"                <filter string=\"Factura de Venta\" domain=\"[('type','=','out_invoice')]\"/>\n"
+"                <filter string=\"Reembolso de Venta\" domain=\"[('type','=','out_refund')]\"/>\n"
+"                <filter string=\"Factura de Compra\" domain=\"[('type','=','in_invoice')]\"/>\n"
+"                <filter string=\"Reembolso de Compra\" domain=\"[('type','=','in_refund')]\"/>\n"
+"                <separator/>\n"
+"                <field name=\"name_template\"/>\n"
+"                <filter string=\"Borrador\" domain=\"[('state','in',['draft','proforma','proforma2'])]\" help=\"Facturas Borrador\"/>\n"
+"                <filter string=\"Invoiced\" name=\"current\" domain=\"[('state','not in', ('draft','cancel'))]\" help=\"Facturas Abiertas y Pagadas\"/>\n"
+"                <field name=\"date_invoice_from\" filter_domain=\"[('date_invoice','&gt;=',self)]\"/>\n"
+"                <field name=\"date_invoice_to\" filter_domain=\"[('date_invoice','&lt;=',self)]\"/>\n"
+"                <field name=\"company_id\"/>\n"
+"                <field name=\"state_id\"/>\n"
+"                <field name=\"user_id\"/>\n"
+"                <!-- <field name=\"period_id\" /> -->\n"
+"                <!-- <field name=\"fiscalyear_id\" /> -->\n"
+"                <field name=\"product_id\"/>\n"
+"                <field name=\"document_type_id\"/>\n"
+"                <field name=\"product_category_id\" filter_domain=\"[('product_category_id', 'child_of', self)]\"/>\n"
+"                <field name=\"partner_id\"/>\n"
+"                <!-- <field name=\"partner_category_ids\"/> -->\n"
+"                <group expand=\"1\" string=\"Group By...\">\n"
+"                    <filter string=\"Partner\" name=\"partner\" context=\"{'group_by':'partner_id'}\"/>\n"
+"                    <filter string=\"Vendedor\" name=\"user\" context=\"{'group_by':'user_id'}\"/>\n"
+"                    <!-- <filter string=\"Periodo\" name='period_id' context=\"{'group_by':'period_id'}\"/> -->\n"
+"                    <!-- <filter string=\"Año Fiscal\" name='fiscalyear_id' context=\"{'group_by':'fiscalyear_id'}\"/> -->\n"
+"                    <filter string=\"Estado\" context=\"{'group_by':'state_id'}\"/>\n"
+"                    <filter string=\"Tipo de Documento\" context=\"{'group_by':'document_type_id'}\"/>\n"
+"                    <filter string=\"Producto\" context=\"{'group_by':'product_id'}\"/>\n"
+"                    <filter string=\"Producto Category\" name=\"category_product\" context=\"{'group_by':'product_category_id'}\"/>\n"
+"                    <filter string=\"Estado\" icon=\"terp-stock_effects-object-colorize\" context=\"{'group_by':'state'}\"/>\n"
+"                    <filter string=\"Tipo de Diario\" icon=\"terp-stock_symbol-selection\" context=\"{'group_by':'type'}\"/>\n"
+"                    <filter string=\"Diario\" icon=\"terp-folder-orange\" context=\"{'group_by':'journal_id'}\"/>\n"
+"                    <filter string=\"Compañia\" icon=\"terp-go-home\" context=\"{'group_by':'company_id'}\"/>\n"
+"                    <!-- <filter string=\"Semana\" name=\"week\" icon=\"terp-go-month\" context=\"{'group_by':'week'}\" help=\"Agrupar facturas por semana\"/> -->\n"
+"                    <!-- <filter string=\"Mes\" name=\"month\" icon=\"terp-go-month\" context=\"{'group_by':'month'}\" help=\"Agrupar facturas por Mes\"/> -->\n"
+"                    <!-- <filter string=\"Año\" name=\"year\" icon=\"terp-go-year\" context=\"{'group_by':'year'}\" help=\"Agrupar facturas por Año\"/> -->\n"
+"                </group> \n"
+"            </search>\n"
+"        "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_tree
@@ -431,6 +744,30 @@ msgid ""
 "            </tree>\n"
 "        "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree colors=\"blue:state == 'draft';gray:state in ('cancel','paid');black:state in ('proforma','proforma2')\" string=\"Análisis de Línea de Facturas\">\n"
+"                <field name=\"number\"/>\n"
+"                <!-- <field name=\"date\"/> -->\n"
+"                <field name=\"date_invoice\"/>\n"
+"                <field name=\"journal_id\"/>\n"
+"                <field name=\"account_analytic_id\"/>\n"
+"                <field name=\"state_id\" invisible=\"1\"/>\n"
+"                <field name=\"type\" invisible=\"1\"/>\n"
+"                <field name=\"partner_id\"/>\n"
+"                <field name=\"product_id\"/>\n"
+"                <field name=\"price_unit\"/>\n"
+"                <field name=\"quantity\" sum=\"Total\"/>\n"
+"                <field name=\"price_gross_subtotal\" sum=\"Total\"/>\n"
+"                <field name=\"discount\"/>\n"
+"                <field name=\"discount_amount\" sum=\"Total\"/>\n"
+"                <field name=\"price_subtotal\" sum=\"Total\"/>\n"
+"                <field name=\"date_due\" invisible=\"1\"/>\n"
+"                <field name=\"state\"/>\n"
+"                <field name=\"user_id\" invisible=\"0\"/>\n"
+"                <field name=\"company_id\" invisible=\"1\"/>\n"
+"                <field name=\"product_category_id\" invisible=\"1\"/>\n"
+"            </tree>\n"
+"        "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_afip_incoterm_tree
@@ -442,6 +779,12 @@ msgid ""
 "                </tree>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"Incoterms AFIP\">\n"
+"                    <field name=\"afip_code\"/>\n"
+"                    <field name=\"name\"/>\n"
+"                </tree>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_afip_responsability_type_tree
@@ -454,6 +797,13 @@ msgid ""
 "                </tree>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"Tipo de Responsabiliadad AFIP\">\n"
+"                    <field name=\"name\"/>\n"
+"                    <field name=\"code\"/>\n"
+"                    <field name=\"active\"/>\n"
+"                </tree>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_document_letter_tree
@@ -466,6 +816,13 @@ msgid ""
 "                </tree>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"Letra del Documento\">\n"
+"                    <field name=\"name\"/>\n"
+"                    <field name=\"taxes_included\"/>\n"
+"                    <!-- <field name=\"included_tax_group_ids\"/> -->\n"
+"                </tree>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.product_uom_tree_view
@@ -476,6 +833,11 @@ msgid ""
 "                </tree>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree>\n"
+"                    <field name=\"afip_code\"/>\n"
+"                </tree>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.product_template_form_view
@@ -486,6 +848,11 @@ msgid ""
 "                </xpath>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<xpath expr=\"//div[@name='button_box']\" position=\"inside\">\n"
+"                   <button class=\"oe_stat_button\" string=\"Informe de Línea de Factura\" name=\"action_invoice_analysis\" type=\"object\" icon=\"fa-bar-chart-o\" groups=\"account.group_account_invoice\"/>\n"
+"                </xpath>\n"
+"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.menu,name:l10n_ar_account.menu_afip_config
@@ -518,10 +885,8 @@ msgid "AFIP Responsabilities"
 msgstr "Responsabilidades AFIP"
 
 #. module: l10n_ar_account
-#: field:account.config.settings,afip_responsability_type_id:0
 #: field:account.invoice,afip_responsability_type_id:0
 #: model:ir.model,name:l10n_ar_account.model_afip_responsability_type
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_config_settings_afip_responsability_type_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_afip_responsability_type_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_res_company_afip_responsability_type_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_afip_responsability_type_id
@@ -596,7 +961,7 @@ msgstr "Cuenta Analítica"
 #. module: l10n_ar_account
 #: model:product.template,name:l10n_ar_account.product_product_cero_product_template
 msgid "Animales y vegetales no industrializados (IVA cero)"
-msgstr ""
+msgstr "Animales y vegetales no industrializados (IVA cero)"
 
 #. module: l10n_ar_account
 #: field:account.tax.group,application:0
@@ -631,7 +996,7 @@ msgstr "Aplicar solo si el pais del envío o la factura coincide."
 #. module: l10n_ar_account
 #: model:product.template,name:l10n_ar_account.product_product_arancel_product_template
 msgid "Arancel"
-msgstr ""
+msgstr "Arancel"
 
 #. module: l10n_ar_account
 #: model:ir.ui.menu,name:l10n_ar_account.account_reports_ar_statements_menu
@@ -721,10 +1086,10 @@ msgstr "Compañía"
 #. module: l10n_ar_account
 #: model:product.template,name:l10n_ar_account.product_product_no_gravado_product_template
 msgid "Conceptos no gravados (IVA NG)"
-msgstr ""
+msgstr "Conceptos no gravados (IVA NG)"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:229
+#: code:addons/l10n_ar_account/models/account_invoice.py:230
 #, python-format
 msgid "Could not get invoice number and point of sale for invoice id %i"
 msgstr ""
@@ -794,7 +1159,7 @@ msgstr "Factura rectificativa de cliente"
 #: help:account.journal,bank_cbu:0
 #: model:ir.model.fields,help:l10n_ar_account.field_account_journal_bank_cbu
 msgid "Código Bancario Único Argentino"
-msgstr ""
+msgstr "Código Bancario Único Argentino"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_drei
@@ -841,9 +1206,15 @@ msgstr ""
 "Saludos cordiales,"
 
 #. module: l10n_ar_account
+#: code:addons/l10n_ar_account/res_config.py:30
+#, python-format
+msgid "Debe indicar un número de punto de venta"
+msgstr "Debe indicar un número de punto de venta"
+
+#. module: l10n_ar_account
 #: model:product.template,name:l10n_ar_account.product_product_quote_despacho_product_template
 msgid "Despacho de importación"
-msgstr ""
+msgstr "Despacho de importación"
 
 #. module: l10n_ar_account
 #: field:account.fiscal.position.template,auto_apply:0
@@ -924,7 +1295,6 @@ msgid "Due Date"
 msgstr "Fecha Vencimiento"
 
 #. module: l10n_ar_account
-#: selection:account.config.settings,point_of_sale_type:0
 #: selection:account.journal,point_of_sale_type:0
 msgid "Electronic"
 msgstr "Electronica"
@@ -965,6 +1335,14 @@ msgid "Gross Income"
 msgstr "Ingreos Brutos"
 
 #. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_company_gross_income_jurisdiction_ids
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_gross_income_jurisdiction_ids
+#: field:res.company,gross_income_jurisdiction_ids:0
+#: field:res.partner,gross_income_jurisdiction_ids:0
+msgid "Gross Income Jurisdictions"
+msgstr "Jurisdicciones de ingresos brutos"
+
+#. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_gross_income_number
 #: field:res.partner,gross_income_number:0
 msgid "Gross Income Number"
@@ -995,60 +1373,60 @@ msgstr "ID"
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iibb
 msgid "IIBB"
-msgstr ""
+msgstr "IIBB"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iva_0
 msgid "IVA 0%"
-msgstr ""
+msgstr "IVA 0%"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iva_10
 msgid "IVA 10.5%"
-msgstr ""
+msgstr "IVA 10.5%"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iva_25
 msgid "IVA 2,5%"
-msgstr ""
+msgstr "IVA 2,5%"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iva_21
 msgid "IVA 21%"
-msgstr ""
+msgstr "IVA 21%"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iva_27
 msgid "IVA 27%"
-msgstr ""
+msgstr "IVA 27%"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iva_5
 msgid "IVA 5%"
-msgstr ""
+msgstr "IVA 5%"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iva_exento
 msgid "IVA Exento"
-msgstr ""
+msgstr "IVA Exento"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iva_gravado
 msgid "IVA Gravado"
-msgstr ""
+msgstr "IVA Gravado"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iva_no_corresponde
 msgid "IVA No Corresponde"
-msgstr ""
+msgstr "IVA No Corresponde"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iva_no_gravado
 msgid "IVA No Gravado"
-msgstr ""
+msgstr "IVA No Gravado"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:466
+#: code:addons/l10n_ar_account/models/account_invoice.py:495
 #, python-format
 msgid ""
 "If you have choose a 0, exempt or untaxed 'tax', you must choose a fiscal position with afip code in %s.\n"
@@ -1079,6 +1457,11 @@ msgid "Invoice"
 msgstr "Factura"
 
 #. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Línea de Factura"
+
+#. module: l10n_ar_account
 #: field:account.invoice,invoice_number:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_invoice_number
 msgid "Invoice Number"
@@ -1102,7 +1485,7 @@ msgid "Invoice Total"
 msgstr "Total Factura"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:440
+#: code:addons/l10n_ar_account/models/account_invoice.py:469
 #, python-format
 msgid "Invoice with ID %s has some lines without vat Tax "
 msgstr "La factura con ID %s tiene algunas líneas sin IVA"
@@ -1138,6 +1521,16 @@ msgid "Journal"
 msgstr "Diario"
 
 #. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/res_partner.py:43
+#, python-format
+msgid ""
+"Jurisdiction %s is considered the main jurisdiction because it is the state "
+"of the company, please remove itfrom the jurisdiction list"
+msgstr ""
+"Jurisdicción %s se considera la jurisdicción principal porque es el estado "
+"de la empresa, por favor, eliminarla de la lista de jurisdicción"
+
+#. module: l10n_ar_account
 #: field:account.document.letter,__last_update:0
 #: field:account.invoice.line.report,__last_update:0
 #: field:afip.incoterm,__last_update:0
@@ -1170,7 +1563,7 @@ msgstr "Última actualización en"
 #. module: l10n_ar_account
 #: model:product.template,name:l10n_ar_account.product_product_exento_product_template
 msgid "Libro \"Desarrollo en Odoo\" (IVA exento)"
-msgstr ""
+msgstr "Libro \"Desarrollo en Odoo\" (IVA exento)"
 
 #. module: l10n_ar_account
 #: selection:res.partner,gross_income_type:0
@@ -1184,10 +1577,9 @@ msgid "Main Identification Number"
 msgstr "Número de identificación principal"
 
 #. module: l10n_ar_account
-#: selection:account.config.settings,point_of_sale_type:0
 #: selection:account.journal,point_of_sale_type:0
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #. module: l10n_ar_account
 #: selection:res.partner,gross_income_type:0
@@ -1239,20 +1631,15 @@ msgid "Number"
 msgstr "Número"
 
 #. module: l10n_ar_account
-#: help:account.config.settings,point_of_sale_number:0
-#: model:ir.model.fields,help:l10n_ar_account.field_account_config_settings_point_of_sale_number
-msgid ""
-"On Argentina Localization with use documents and sales journals  is "
-"mandatory"
-msgstr ""
-"En la Localización Argentina si se utilizan doscumentos en ventas es "
-"obligatorio."
-
-#. module: l10n_ar_account
-#: selection:account.config.settings,point_of_sale_type:0
 #: selection:account.journal,point_of_sale_type:0
 msgid "Online"
-msgstr ""
+msgstr "Online"
+
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/account_invoice_line.py:32
+#, python-format
+msgid "Only one vat tax allowed per line"
+msgstr "Un solo tipo de IVA es admitido por línea de factura"
 
 #. module: l10n_ar_account
 #: selection:account.invoice.line.report,state:0
@@ -1297,22 +1684,22 @@ msgstr "Empresa"
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_percepcion_drei
 msgid "Percepción DREI"
-msgstr ""
+msgstr "Percepción DREI"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_percepcion_ganancias
 msgid "Percepción Ganancias"
-msgstr ""
+msgstr "Percepción Ganancias"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_percepcion_iibb
 msgid "Percepción IIBB"
-msgstr ""
+msgstr "Percepción IIBB"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_percepcion_iva
 msgid "Percepción IVA"
-msgstr ""
+msgstr "Percepción IVA"
 
 #. module: l10n_ar_account
 #: selection:account.tax.group,type:0
@@ -1326,25 +1713,20 @@ msgid "Point Of Sale"
 msgstr "Punto de Venta"
 
 #. module: l10n_ar_account
-#: field:account.config.settings,point_of_sale_number:0
 #: field:account.journal,point_of_sale_number:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_config_settings_point_of_sale_number
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_journal_point_of_sale_number
 msgid "Point Of Sale Number"
 msgstr "Número del Punto de Venta"
 
 #. module: l10n_ar_account
-#: field:account.config.settings,point_of_sale_type:0
 #: field:account.invoice,point_of_sale_type:0
 #: field:account.journal,point_of_sale_type:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_config_settings_point_of_sale_type
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_point_of_sale_type
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_journal_point_of_sale_type
 msgid "Point Of Sale Type"
 msgstr "Tipo del Punto de Venta"
 
 #. module: l10n_ar_account
-#: selection:account.config.settings,point_of_sale_type:0
 #: selection:account.journal,point_of_sale_type:0
 msgid "Preprinted"
 msgstr "Preimpreso"
@@ -1352,7 +1734,7 @@ msgstr "Preimpreso"
 #. module: l10n_ar_account
 #: selection:account.invoice.line.report,state:0
 msgid "Pro-forma"
-msgstr ""
+msgstr "Pro-forma"
 
 #. module: l10n_ar_account
 #: field:account.invoice.line.report,product_id:0
@@ -1422,7 +1804,7 @@ msgstr "Tipos de Responsabilidad"
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_retencion_drei
 msgid "Retención DREI"
-msgstr ""
+msgstr "Retención DREI"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_retencion_ganancias
@@ -1432,12 +1814,12 @@ msgstr "Retención Ganancias"
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_retencion_iibb
 msgid "Retención IIBB"
-msgstr ""
+msgstr "Retención IIBB"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_retencion_iva
 msgid "Retención IVA"
-msgstr ""
+msgstr "Retención IVA"
 
 #. module: l10n_ar_account
 #: field:account.invoice.line.report,user_id:0
@@ -1466,12 +1848,12 @@ msgstr "Fecha Inicio Servicio"
 #. module: l10n_ar_account
 #: model:product.template,name:l10n_ar_account.product_product_servicio_de_guarda_product_template
 msgid "Servicio de Guarda"
-msgstr ""
+msgstr "Servicio de Guarda"
 
 #. module: l10n_ar_account
 #: model:product.template,name:l10n_ar_account.product_product_telefonia_product_template
 msgid "Servicio de telefonía (IVA 27)"
-msgstr ""
+msgstr "Servicio de telefonía (IVA 27%)"
 
 #. module: l10n_ar_account
 #: selection:account.invoice,afip_concept:0
@@ -1479,7 +1861,7 @@ msgid "Servicios"
 msgstr "Servicios"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:417
+#: code:addons/l10n_ar_account/models/account_invoice.py:446
 #, python-format
 msgid ""
 "Some Invoice Tax Lines don't have a tax_id asociated, please correct them or"
@@ -1505,9 +1887,9 @@ msgstr "Provincia"
 
 #. module: l10n_ar_account
 #: field:account.invoice.line.report,price_subtotal:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4219
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4257
 msgid "Subtotal"
-msgstr ""
+msgstr "Subtotal"
 
 #. module: l10n_ar_account
 #: field:account.invoice.line.report,supplier:0
@@ -1533,7 +1915,7 @@ msgstr "IMPUESTO"
 #. module: l10n_ar_account
 #: model:product.template,name:l10n_ar_account.product_product_tasa_estadistica_product_template
 msgid "Tasa Estadística"
-msgstr ""
+msgstr "Tasa Estadística"
 
 #. module: l10n_ar_account
 #: field:account.tax.group,tax:0
@@ -1571,11 +1953,19 @@ msgid "Templates for Taxes"
 msgstr "Plantilla de impuestos"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:408
+#: code:addons/l10n_ar_account/models/account_invoice.py:437
 #, python-format
 msgid "The following invoices has a partner without AFIP responsability: %s"
 msgstr ""
 "Las siguientes facturas tienen un partner sin responsabilidad AFIP: %s"
+
+#. module: l10n_ar_account
+#: model:ir.model.fields,help:l10n_ar_account.field_res_company_gross_income_jurisdiction_ids
+#: model:ir.model.fields,help:l10n_ar_account.field_res_partner_gross_income_jurisdiction_ids
+#: help:res.company,gross_income_jurisdiction_ids:0
+#: help:res.partner,gross_income_jurisdiction_ids:0
+msgid "The state of the company is cosidered the main jurisdiction"
+msgstr "El estado de la empresa se considera la jurisdicción principal"
 
 #. module: l10n_ar_account
 #: field:account.invoice.line.report,type:0 field:account.tax.group,type:0
@@ -1585,14 +1975,14 @@ msgid "Type"
 msgstr "Tipo"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_journal.py:179
+#: code:addons/l10n_ar_account/models/account_journal.py:184
 #, python-format
 msgid "Type %s not implemented yet"
 msgstr "El tipo %s no está implementado todavía"
 
 #. module: l10n_ar_account
 #: field:account.invoice.line.report,price_unit:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4218
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4256
 msgid "Unit Price"
 msgstr "Precio unitario"
 
@@ -1639,12 +2029,18 @@ msgid "VAT Untaxed Base Amount"
 msgstr "Importe no gravado de IVA"
 
 #. module: l10n_ar_account
+#: field:account.invoice.line,vat_tax_id:0
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_vat_tax_id
+msgid "Vat tax id"
+msgstr "id de IVA"
+
+#. module: l10n_ar_account
 #: selection:account.tax.group,type:0
 msgid "Withholding"
 msgstr "Retenciones"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:431
+#: code:addons/l10n_ar_account/models/account_invoice.py:460
 #, python-format
 msgid ""
 "You are using argentinian localization and there are some tax groups that "

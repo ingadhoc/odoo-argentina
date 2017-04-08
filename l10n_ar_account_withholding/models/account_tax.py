@@ -37,6 +37,7 @@ class AccountTax(models.Model):
                     base_amount, alicuota)
                 vals['period_withholding_amount'] = amount
         elif self.withholding_type == 'tabla_ganancias':
+            amount = 0.0
             regimen = payment_group.regimen_ganancias_id
             imp_ganancias_padron = commercial_partner.imp_ganancias_padron
             if (
@@ -67,17 +68,18 @@ class AccountTax(models.Model):
                         ('importe_desde', '<', base_amount),
                         ('importe_hasta', '>=', base_amount),
                     ], limit=1)
-                    if not escala:
-                        raise UserError(
-                            'No se encontro ninguna escala para el monto'
-                            ' %s' % (base_amount))
-                    amount = escala.importe_fijo
-                    amount += (escala.porcentaje / 100.0) * (
-                        base_amount - escala.importe_excedente)
-                    vals['comment'] = "%s + (%s x %s)" % (
-                        escala.importe_fijo,
-                        base_amount - escala.importe_excedente,
-                        escala.porcentaje / 100.0)
+                    # if not escala:
+                    #     raise UserError(
+                    #         'No se encontro ninguna escala para el monto'
+                    #         ' %s' % (base_amount))
+                    if escala:
+                        amount = escala.importe_fijo
+                        amount += (escala.porcentaje / 100.0) * (
+                            base_amount - escala.importe_excedente)
+                        vals['comment'] = "%s + (%s x %s)" % (
+                            escala.importe_fijo,
+                            base_amount - escala.importe_excedente,
+                            escala.porcentaje / 100.0)
                 else:
                     amount = base_amount * (
                         regimen.porcentaje_inscripto / 100.0)

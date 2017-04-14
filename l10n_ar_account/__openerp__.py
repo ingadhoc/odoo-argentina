@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Módulo base de Contabilidad Argentina",
-    'version': '9.0.1.6.0',
+    'version': '9.0.1.7.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Moldeo Interactive',
@@ -36,6 +36,7 @@
         'data/account_tax_group.xml',
         'data/res_country_group_data.xml',
         'data/res_company_data.xml',
+        'data/afip_vat_f2002_category_data.xml',
         # TODO analizar y migrar
         # data_account_type
         # 'data/account_financial_report_data.xml',

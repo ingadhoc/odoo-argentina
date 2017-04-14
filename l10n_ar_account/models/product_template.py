@@ -3,12 +3,18 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, api
+from openerp import models, api, fields
 
 
 class ProductTemplate(models.Model):
 
     _inherit = 'product.template'
+
+    vat_f2002_category_id = fields.Many2one(
+        'afip.vat.f2002_category',
+        auto_join=True,
+        string='Categoría IVA f2002',
+    )
 
     @api.multi
     def action_invoice_analysis(self):

@@ -32,6 +32,7 @@ class ResPartner(models.Model):
     afip_responsability_type_id = fields.Many2one(
         'afip.responsability.type',
         'AFIP Responsability Type',
+        auto_join=True,
     )
 
     @api.multi

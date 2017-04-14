@@ -4,19 +4,33 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Andres L <aleibrecht@gmail.com>, 2017
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-10 23:26+0000\n"
-"PO-Revision-Date: 2017-01-10 23:26+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-04-06 17:48+0000\n"
+"PO-Revision-Date: 2017-04-06 17:48+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_ar_afipws
+#: help:afipws.certificate,state:0
+#: model:ir.model.fields,help:l10n_ar_afipws.field_afipws_certificate_state
+msgid ""
+"* The 'Draft' state is used when a user is creating a new pair key. Warning: everybody can see the key.\n"
+"* The 'Confirmed' state is used when a certificate is valid.\n"
+"* The 'Canceled' state is used when the key is not more used. You cant use this key again."
+msgstr ""
+"* El estado \"Borrador\" se utiliza cuando un usuario está creando una nueva clave de par. Advertencia: todo el mundo puede ver la llave.\n"
+"* El estado 'Confirmado' se utiliza cuando un certificado es válido.\n"
+"* El estado \"Cancelado\" se utiliza cuando la clave no se utiliza más. Usted no puede utilizar esta llave otra vez."
 
 #. module: l10n_ar_afipws
 #: help:afipws.certificate_alias,state:0
@@ -31,18 +45,47 @@ msgstr ""
 "* El estado \"Cancelado\" es utilizado cuando la clave no es más utilizada. No puede volver a usar esta clave de nuevo."
 
 #. module: l10n_ar_afipws
-#: help:afipws.certificate,state:0
-#: model:ir.model.fields,help:l10n_ar_afipws.field_afipws_certificate_state
+#: model:ir.ui.view,arch_db:l10n_ar_afipws.view_afipws_certificate_form
 msgid ""
-"* The 'Draft' state is used when a user is creating a new pair key. Warning: everybody can see the key.\n"
-"* The 'Waiting' state is used when a request has send to Certificate Authority and is waiting for response.\n"
-"* The 'Confirmed' state is used when a certificate is valid.\n"
-"* The 'Canceled' state is used when the key is not more used. You cant use this key again."
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"AFIP Certificates\">\n"
+"                    <header>\n"
+"                        <button name=\"121\" type=\"action\" states=\"draft\" class=\"oe_highlight\" string=\"Upload Certificate\"/>\n"
+"                        <button name=\"action_confirm\" type=\"object\" states=\"draft\" string=\"Confirm\"/>\n"
+"                        <button name=\"action_to_draft\" type=\"object\" states=\"cancel\" string=\"To Draft\"/>\n"
+"                        <button name=\"action_cancel\" type=\"object\" states=\"draft,confirmed\" string=\"Cancel\"/>\n"
+"                        <field name=\"state\" widget=\"statusbar\"/>\n"
+"                    </header>\n"
+"                    <sheet string=\"AFIP Certificates\">\n"
+"                        <group>\n"
+"                            <field name=\"csr\" groups=\"base.group_no_one\"/>\n"
+"                            <field name=\"request_filename\" invisible=\"1\"/>\n"
+"                            <field name=\"request_file\" filename=\"request_filename\"/>\n"
+"                            <field name=\"crt\" groups=\"base.group_no_one\"/>\n"
+"                        </group>\n"
+"                    </sheet>\n"
+"                </form>\n"
+"            "
 msgstr ""
-"* El estado \"Borrador\" es utilizado cuando un usuario está creando un par de claves. Advertencia: todos pueden ver la clave.\n"
-"* El estado \"Esperando\" es utilizado cuando se ha enviado una solicitud a la Autoridad del Certificado y está esperando respuesta.\n"
-"* El estado \"Confirmado\" es utilizado cuando un certificado es válido.\n"
-"* El estado \"Cancelado\" es utilizado cuando la clave no es más utilizada. No puede volver a usar esta clave de nuevo."
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"AFIP Certificates\">\n"
+"                    <header>\n"
+"                        <button name=\"121\" type=\"action\" states=\"draft\" class=\"oe_highlight\" string=\"Upload Certificate\"/>\n"
+"                        <button name=\"action_confirm\" type=\"object\" states=\"draft\" string=\"Confirm\"/>\n"
+"                        <button name=\"action_to_draft\" type=\"object\" states=\"cancel\" string=\"To Draft\"/>\n"
+"                        <button name=\"action_cancel\" type=\"object\" states=\"draft,confirmed\" string=\"Cancel\"/>\n"
+"                        <field name=\"state\" widget=\"statusbar\"/>\n"
+"                    </header>\n"
+"                    <sheet string=\"AFIP Certificates\">\n"
+"                        <group>\n"
+"                            <field name=\"csr\" groups=\"base.group_no_one\"/>\n"
+"                            <field name=\"request_filename\" invisible=\"1\"/>\n"
+"                            <field name=\"request_file\" filename=\"request_filename\"/>\n"
+"                            <field name=\"crt\" groups=\"base.group_no_one\"/>\n"
+"                        </group>\n"
+"                    </sheet>\n"
+"                </form>\n"
+"            "
 
 #. module: l10n_ar_afipws
 #: model:ir.ui.view,arch_db:l10n_ar_afipws.view_afipws_certificate_alias_form
@@ -58,21 +101,25 @@ msgid ""
 "                    </header>\n"
 "                    <sheet string=\"AFIP Certificates\">\n"
 "                        <group>\n"
-"                            <field name=\"type\"/>\n"
-"                            <field name=\"service_type\"/>\n"
-"                            <field name=\"service_provider_cuit\" attrs=\"{'invisible':[('service_type','!=','outsourced')],'required':[('service_type','=','outsourced')]}\"/>\n"
-"                            <field name=\"company_id\"/>\n"
-"                            <field name=\"company_cuit\" attrs=\"{'invisible':[('service_type','!=','in_house')],'required':[('service_type','=','in_house')]}\"/>\n"
-"                            <field name=\"common_name\"/>\n"
-"                            <field name=\"country_id\"/>\n"
-"                            <field name=\"state_id\"/>\n"
-"                            <field name=\"city\"/>\n"
+"                            <group>\n"
+"                                <field name=\"company_id\" groups=\"base.group_multi_company\"/>\n"
+"                                <field name=\"type\"/>\n"
+"                                <field name=\"service_type\" groups=\"base.group_no_one\"/>\n"
+"                                <field name=\"service_provider_cuit\" attrs=\"{'invisible':[('service_type','!=','outsourced')],'required':[('service_type','=','outsourced')]}\"/>\n"
+"                                <field name=\"company_cuit\" attrs=\"{'invisible':[('service_type','!=','in_house')],'required':[('service_type','=','in_house')]}\"/>\n"
+"                            </group>\n"
+"                            <group>\n"
+"                                <field name=\"common_name\"/>\n"
+"                                <field name=\"country_id\"/>\n"
+"                                <field name=\"state_id\"/>\n"
+"                                <field name=\"city\"/>\n"
+"                            </group>\n"
 "                        </group>\n"
 "                        <notebook>\n"
 "                            <page string=\"Ceritificates\">\n"
 "                                <field name=\"certificate_ids\"/>\n"
 "                            </page>\n"
-"                            <page string=\"Key\">\n"
+"                            <page string=\"Key\" groups=\"base.group_no_one\">\n"
 "                                <field name=\"key\"/>\n"
 "                            </page>\n"
 "                        </notebook>\n"
@@ -80,31 +127,42 @@ msgid ""
 "                </form>\n"
 "            "
 msgstr ""
-
-#. module: l10n_ar_afipws
-#: model:ir.ui.view,arch_db:l10n_ar_afipws.view_afipws_certificate_form
-msgid ""
 "<?xml version=\"1.0\"?>\n"
 "<form string=\"AFIP Certificates\">\n"
 "                    <header>\n"
-"                        <button name=\"action_request\" type=\"object\" states=\"draft\" string=\"Request\"/>\n"
-"                        <button name=\"121\" type=\"action\" states=\"waiting\" string=\"Upload Certificate\"/>\n"
-"                        <button name=\"action_confirm\" type=\"object\" states=\"waiting\" string=\"Confirm\"/>\n"
+"                        <button name=\"action_confirm\" type=\"object\" states=\"draft\" string=\"Confirm\" class=\"oe_highlight\" help=\"Confirm and generate Key\"/>\n"
+"                        <button name=\"action_create_certificate_request\" type=\"object\" states=\"confirmed\" class=\"oe_highlight\" string=\"Create Certificate Request\"/>\n"
+"                        <button name=\"action_cancel\" type=\"object\" states=\"draft,confirmed\" string=\"Cancel\"/>\n"
 "                        <button name=\"action_to_draft\" type=\"object\" states=\"cancel\" string=\"To Draft\"/>\n"
-"                        <button name=\"action_cancel\" type=\"object\" states=\"draft,waiting,confirmed\" string=\"Cancel\"/>\n"
 "                        <field name=\"state\" widget=\"statusbar\"/>\n"
 "                    </header>\n"
 "                    <sheet string=\"AFIP Certificates\">\n"
 "                        <group>\n"
-"                            <field name=\"csr\"/>\n"
-"                            <field name=\"request_filename\" invisible=\"1\"/>\n"
-"                            <field name=\"request_file\" filename=\"request_filename\"/>\n"
-"                            <field name=\"crt\"/>\n"
+"                            <group>\n"
+"                                <field name=\"company_id\" groups=\"base.group_multi_company\"/>\n"
+"                                <field name=\"type\"/>\n"
+"                                <field name=\"service_type\" groups=\"base.group_no_one\"/>\n"
+"                                <field name=\"service_provider_cuit\" attrs=\"{'invisible':[('service_type','!=','outsourced')],'required':[('service_type','=','outsourced')]}\"/>\n"
+"                                <field name=\"company_cuit\" attrs=\"{'invisible':[('service_type','!=','in_house')],'required':[('service_type','=','in_house')]}\"/>\n"
+"                            </group>\n"
+"                            <group>\n"
+"                                <field name=\"common_name\"/>\n"
+"                                <field name=\"country_id\"/>\n"
+"                                <field name=\"state_id\"/>\n"
+"                                <field name=\"city\"/>\n"
+"                            </group>\n"
 "                        </group>\n"
+"                        <notebook>\n"
+"                            <page string=\"Ceritificates\">\n"
+"                                <field name=\"certificate_ids\"/>\n"
+"                            </page>\n"
+"                            <page string=\"Key\" groups=\"base.group_no_one\">\n"
+"                                <field name=\"key\"/>\n"
+"                            </page>\n"
+"                        </notebook>\n"
 "                    </sheet>\n"
 "                </form>\n"
 "            "
-msgstr ""
 
 #. module: l10n_ar_afipws
 #: model:ir.ui.view,arch_db:l10n_ar_afipws.view_afipws_auth_form
@@ -129,6 +187,25 @@ msgid ""
 "                </form>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Conector AFIP\">\n"
+"                    <sheet string=\"Servidores AFIP\">\n"
+"                        <group>\n"
+"                            <field name=\"afip_ws\"/>\n"
+"                            <field name=\"type\"/>\n"
+"                            <field name=\"batch_sequence_id\"/>\n"
+"                            <field name=\"uniqueid\"/>\n"
+"                            <field name=\"generationtime\"/>\n"
+"                            <field name=\"expirationtime\"/>\n"
+"                            <field name=\"sign\"/>\n"
+"                            <field name=\"token\"/>\n"
+"                            <field name=\"afip_login_url\"/>\n"
+"                            <field name=\"afip_ws_url\"/>\n"
+"                            <field name=\"company_id\"/>\n"
+"                        </group>\n"
+"                    </sheet>\n"
+"                </form>\n"
+"            "
 
 #. module: l10n_ar_afipws
 #: model:ir.ui.view,arch_db:l10n_ar_afipws.view_upload_certificate_form
@@ -147,6 +224,19 @@ msgid ""
 "              </form>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Cargar Certificado\">\n"
+"                <group>\n"
+"                  <field name=\"certificate_id\" invisible=\"1\"/>\n"
+"                  <field name=\"certificate_file\"/>\n"
+"                </group>\n"
+"                <footer>\n"
+"                    <button name=\"action_confirm\" string=\"Confirmar\" type=\"object\" class=\"oe_highlight\"/>\n"
+"                    or\n"
+"                    <button string=\"Cancelar\" class=\"oe_link\" special=\"cancel\"/>\n"
+"                </footer>\n"
+"              </form>\n"
+"            "
 
 #. module: l10n_ar_afipws
 #: model:ir.ui.view,arch_db:l10n_ar_afipws.view_company_inherit_form
@@ -161,6 +251,15 @@ msgid ""
 "                </notebook>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<notebook>\n"
+"                    <page string=\"AFIP WS\" name=\"afipws\">\n"
+"                        <button name=\"122\" string=\"Aliases\" type=\"action\" context=\"{'search_default_company_id': id}\"/>\n"
+"                        <label for=\"connection_ids\"/>\n"
+"                        <field name=\"connection_ids\"/>\n"
+"                    </page>\n"
+"                </notebook>\n"
+"            "
 
 #. module: l10n_ar_afipws
 #: model:ir.ui.view,arch_db:l10n_ar_afipws.view_afipws_certificate_alias_filter
@@ -174,6 +273,14 @@ msgid ""
 "                </search>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<search string=\"Certificados AFIP\">\n"
+"                    <field name=\"type\"/>\n"
+"                    <field name=\"common_name\"/>\n"
+"                    <field name=\"company_id\"/>\n"
+"                    <field name=\"state\"/>\n"
+"                </search>\n"
+"            "
 
 #. module: l10n_ar_afipws
 #: model:ir.ui.view,arch_db:l10n_ar_afipws.view_afipws_certificate_tree
@@ -185,6 +292,12 @@ msgid ""
 "                </tree>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"Certificados AFIP\">\n"
+"                    <field name=\"create_date\"/>\n"
+"                    <field name=\"state\"/>\n"
+"                </tree>\n"
+"            "
 
 #. module: l10n_ar_afipws
 #: model:ir.ui.view,arch_db:l10n_ar_afipws.view_afipws_certificate_alias_tree
@@ -198,6 +311,14 @@ msgid ""
 "                </tree>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"Certificados AFIP\">\n"
+"                    <field name=\"type\"/>\n"
+"                    <field name=\"common_name\"/>\n"
+"                    <field name=\"company_id\"/>\n"
+"                    <field name=\"state\"/>\n"
+"                </tree>\n"
+"            "
 
 #. module: l10n_ar_afipws
 #: model:ir.ui.view,arch_db:l10n_ar_afipws.view_afipws_auth_tree
@@ -214,6 +335,17 @@ msgid ""
 "                </tree>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"Conector AFIP\" create=\"false\" edit=\"false\">\n"
+"                    <field name=\"afip_ws\"/>\n"
+"                    <field name=\"type\"/>\n"
+"                    <field name=\"batch_sequence_id\"/>\n"
+"                    <field name=\"uniqueid\"/>\n"
+"                    <field name=\"generationtime\"/>\n"
+"                    <field name=\"expirationtime\"/>\n"
+"                    <field name=\"company_id\"/>\n"
+"                </tree>\n"
+"            "
 
 #. module: l10n_ar_afipws
 #: model:ir.actions.act_window,name:l10n_ar_afipws.act_afipws_certificate_alias
@@ -284,7 +416,7 @@ msgstr "Secuencia de lote"
 #. module: l10n_ar_afipws
 #: selection:afipws.connection,afip_ws:0
 msgid "Bono Fiscal -con detalle- RG2557 (WSBFE)"
-msgstr ""
+msgstr "Bono Fiscal -con detalle- RG2557 (WSBFE)"
 
 #. module: l10n_ar_afipws
 #: field:afipws.certificate_alias,cuit:0
@@ -306,12 +438,12 @@ msgstr "Certificado"
 
 #. module: l10n_ar_afipws
 #: field:afipws.certificate,alias_id:0
-#: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_certificate_alias_id_2272
+#: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_certificate_alias_id_2274
 msgid "Certificate Alias"
 msgstr "Certificar Alias"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:81
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:78
 #, python-format
 msgid "Certificate Alias must be confirmed first!"
 msgstr "¡El Alias Certificado debe estar confirmado primero!"
@@ -388,7 +520,7 @@ msgstr "Conexiones"
 #. module: l10n_ar_afipws
 #: selection:afipws.connection,afip_ws:0
 msgid "Constatación de Comprobantes (WSCDC)"
-msgstr ""
+msgstr "Constatación de Comprobantes (WSCDC)"
 
 #. module: l10n_ar_afipws
 #: code:addons/l10n_ar_afipws/models/res_company.py:221
@@ -465,7 +597,7 @@ msgstr "Tiempo de expiración"
 #. module: l10n_ar_afipws
 #: selection:afipws.connection,afip_ws:0
 msgid "Exportación -con detalle- RG2758 (WSFEXv1)"
-msgstr ""
+msgstr "Exportación -con detalle- RG2758 (WSFEXv1)"
 
 #. module: l10n_ar_afipws
 #: field:afipws.certificate,request_filename:0
@@ -501,7 +633,7 @@ msgid "In House"
 msgstr "Propio"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:110
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:102
 #, python-format
 msgid "Invalid action! Please, set the certification string to continue."
 msgstr ""
@@ -509,7 +641,7 @@ msgstr ""
 "continuar."
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:115
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:107
 #, python-format
 msgid ""
 "Invalid action! Your certificate string is invalid. Check if you forgot the "
@@ -563,12 +695,12 @@ msgstr "Última actualización en"
 #. module: l10n_ar_afipws
 #: selection:afipws.connection,afip_ws:0
 msgid "Mercado interno -con detalle- RG2904 (WSMTXCA)"
-msgstr ""
+msgstr "Mercado interno -con detalle- RG2904 (WSMTXCA)"
 
 #. module: l10n_ar_afipws
 #: selection:afipws.connection,afip_ws:0
 msgid "Mercado interno -sin detalle- RG2485 (WSFEv1)"
-msgstr ""
+msgstr "Mercado interno -sin detalle- RG2485 (WSFEv1)"
 
 #. module: l10n_ar_afipws
 #: code:addons/l10n_ar_afipws/models/res_company.py:86
@@ -638,7 +770,7 @@ msgstr ""
 #: field:afipws.connection,token:0
 #: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_connection_token
 msgid "Token"
-msgstr ""
+msgstr "Token"
 
 #. module: l10n_ar_afipws
 #: field:afipws.certificate_alias,type:0 field:afipws.connection,type:0
@@ -654,7 +786,7 @@ msgid "Unique ID"
 msgstr "ID Único"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:139
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:131
 #, python-format
 msgid ""
 "Unknown error.\n"
@@ -672,18 +804,13 @@ msgid "Upload Certificate"
 msgstr "Subir Certificado"
 
 #. module: l10n_ar_afipws
-#: selection:afipws.certificate,state:0
-msgid "Waiting"
-msgstr "Esperando"
-
-#. module: l10n_ar_afipws
 #: code:addons/l10n_ar_afipws/models/afipws_connection.py:76
 #, python-format
 msgid "Webservice %s not supported"
 msgstr "Servicio web %s no soportado"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:135
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:127
 #, python-format
 msgid ""
 "Wrong Certificate file format.\n"

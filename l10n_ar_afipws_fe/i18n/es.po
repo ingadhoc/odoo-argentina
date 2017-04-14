@@ -4,13 +4,16 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Andres L <aleibrecht@gmail.com>, 2017
+# Javier Diez <jd@adhoc.com.ar>, 2017
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-10 23:26+0000\n"
-"PO-Revision-Date: 2017-01-10 23:26+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-04-06 17:48+0000\n"
+"PO-Revision-Date: 2017-04-06 17:48+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/journal.py:150
+#: code:addons/l10n_ar_afipws_fe/models/journal.py:154
 #, python-format
 msgid " %s %s"
 msgstr " %s %s"
@@ -68,6 +71,40 @@ msgid ""
 "                </notebook>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><!-- we change button labels for better usability -->\n"
+"                <button name=\"invoice_open\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', False)]}</attribute>\n"
+"                    <attribute name=\"states\"/>\n"
+"                </button>\n"
+"                <button name=\"invoice_open\" position=\"after\">\n"
+"                    <button name=\"invoice_open\" attrs=\"{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', 'production')]}\" string=\"Validar en AFIP\" class=\"oe_highlight\" groups=\"base.group_user\"/>\n"
+"                    <button name=\"invoice_open\" attrs=\"{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', 'homologation')]}\" string=\"Validar en HOMOLOGACION\" class=\"oe_highlight\" groups=\"base.group_user\"/>\n"
+"                </button>\n"
+"\n"
+"                <notebook>\n"
+"                    <page string=\"AFIP\" name=\"afip\" attrs=\"{'invisible': [('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice'])]}\">\n"
+"                        <group>\n"
+"                            <field name=\"afip_auth_verify_type\" invisible=\"1\"/>\n"
+"                            <field name=\"afip_batch_number\" invisible=\"1\"/>\n"
+"                            <field name=\"validation_type\" invisible=\"1\"/>\n"
+"                            <label for=\"afip_auth_code\" string=\"Autorización AFIP\"/>\n"
+"                            <div class=\"oe_inline\">\n"
+"                                <field name=\"afip_auth_mode\" class=\"oe_inline\"/>\n"
+"                                <field name=\"afip_auth_code\" class=\"oe_inline\" attrs=\"{'required': [('afip_auth_mode', '!=', False)]}\" placeholder=\"Código\"/> - \n"
+"                                <field name=\"afip_auth_verify_result\" class=\"oe_inline\"/>\n"
+"                                <button name=\"verify_on_afip\" type=\"object\" attrs=\"{'invisible': ['|', ('afip_auth_mode', '=', False), ('afip_auth_verify_type', '=', 'not_available')]}\" string=\"Constatar\" help=\"Constatar en AFIP\" class=\"oe_inline oe_link\" groups=\"base.group_user\"/>\n"
+"                            </div>\n"
+"                            <field name=\"afip_auth_verify_observation\" attrs=\"{'invisible': [('afip_auth_verify_observation', '=', False)]}\"/>\n"
+"                            <field name=\"afip_auth_code_due\"/>\n"
+"                            <field name=\"afip_result\"/>\n"
+"                            <field name=\"afip_message\"/>\n"
+"                            <field name=\"afip_xml_request\" groups=\"base.group_no_one\"/>\n"
+"                            <field name=\"afip_xml_response\" groups=\"base.group_no_one\"/>\n"
+"                        </group>\n"
+"                    </page>\n"
+"                </notebook>\n"
+"            </data>"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.invoice_supplier_form
@@ -94,6 +131,27 @@ msgid ""
 "                </notebook>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><form>\n"
+"                    <field name=\"afip_auth_verify_type\" invisible=\"1\"/>\n"
+"                </form>\n"
+"                <field name=\"document_number\" position=\"after\">\n"
+"                    <label for=\"afip_auth_code\" string=\"Autorización AFIP\" attrs=\"{'invisible': ['|', ('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice']), ('afip_auth_verify_type', '=', 'not_available')]}\"/>\n"
+"                    <div class=\"oe_inline\" attrs=\"{'invisible': ['|', ('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice']), ('afip_auth_verify_type', '=', 'not_available')]}\">\n"
+"                        <field name=\"afip_auth_mode\" class=\"oe_inline\"/>\n"
+"                        <field name=\"afip_auth_code\" class=\"oe_inline\" attrs=\"{'required': [('afip_auth_mode', '!=', False)]}\" placeholder=\"Código\"/> - \n"
+"                        <field name=\"afip_auth_verify_result\" class=\"oe_inline\"/>\n"
+"                        <button name=\"verify_on_afip\" type=\"object\" attrs=\"{'invisible': [('afip_auth_mode', '=', False)]}\" string=\"Constatar\" help=\"Constatar en AFIP\" class=\"oe_inline oe_link\" groups=\"base.group_user\"/>\n"
+"                    </div>\n"
+"                </field>\n"
+"                <notebook>\n"
+"                    <page string=\"AFIP\" name=\"afip\" attrs=\"{'invisible': ['|', ('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice']), ('afip_auth_verify_type', '=', 'not_available')]}\">\n"
+"                        <group>\n"
+"                            <field name=\"afip_auth_verify_observation\"/>\n"
+"                        </group>\n"
+"                    </page>\n"
+"                </notebook>\n"
+"            </data>"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_account_journal_form
@@ -104,11 +162,13 @@ msgid ""
 "                        <button name=\"action_get_connection\" string=\"Get Connection\" help=\"Get Connection For this webservice and create it if no valid\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
 "                        <button name=\"test_pyafipws_dummy\" string=\"Dummy Test\" help=\"Dummy test to check connection to selected webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
 "                        <button name=\"test_pyafipws_point_of_sales\" string=\"Get Points Of Sale\" help=\"Get Enable Point of Sales for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                        <button name=\"get_pyafipws_cuit_document_classes\" string=\"Get Document Classes\" help=\"Get valid document classes for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                        <button name=\"get_pyafipws_cuit_document_classes\" string=\"Get Document Types\" help=\"Get valid document types for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                        <button name=\"get_pyafipws_zonas\" string=\"Get Zones\" help=\"Get zones for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '!=', 'wsbfe')]}\"/>\n"
+"                        <button name=\"get_pyafipws_NCM\" string=\"Get NCM\" help=\"Obetener códigos del Nomenclador Común del Mercosur\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '!=', 'wsbfe')]}\"/>\n"
 "                        <button name=\"get_pyafipws_currencies\" string=\"Get Currencies\" help=\"Get valid currencies classes for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
 "                        <button name=\"check_document_local_remote_number\" string=\"Check Remote/Local Numbers\" help=\"Check documents local next number against remote Numbers\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
 "                        <button name=\"sync_document_local_remote_number\" string=\"Sync Remote/Local Numbers\" help=\"Sync documents local next number against remote Numbers\" type=\"object\" confirm=\"Warning! this operation can not be undone, all sequences will be syncronized with remote numbers\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                        <button name=\"271\" string=\"Get Currency Rate\" type=\"action\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                        <button name=\"272\" string=\"Get Currency Rate\" type=\"action\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
 "                    </header>\n"
 "                </sheet>\n"
 "                <field name=\"point_of_sale_type\" position=\"after\">\n"
@@ -116,17 +176,44 @@ msgid ""
 "                </field>\n"
 "            </data>"
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><sheet position=\"before\">\n"
+"                    <header>\n"
+"                        <button name=\"action_get_connection\" string=\"Get Connection\" help=\"Get Connection For this webservice and create it if no valid\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                        <button name=\"test_pyafipws_dummy\" string=\"Dummy Test\" help=\"Dummy test to check connection to selected webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                        <button name=\"test_pyafipws_point_of_sales\" string=\"Get Points Of Sale\" help=\"Get Enable Point of Sales for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                        <button name=\"get_pyafipws_cuit_document_classes\" string=\"Get Document Types\" help=\"Get valid document types for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                        <button name=\"get_pyafipws_zonas\" string=\"Get Zones\" help=\"Get zones for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '!=', 'wsbfe')]}\"/>\n"
+"                        <button name=\"get_pyafipws_NCM\" string=\"Get NCM\" help=\"Obetener códigos del Nomenclador Común del Mercosur\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '!=', 'wsbfe')]}\"/>\n"
+"                        <button name=\"get_pyafipws_currencies\" string=\"Get Currencies\" help=\"Get valid currencies classes for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                        <button name=\"check_document_local_remote_number\" string=\"Check Remote/Local Numbers\" help=\"Check documents local next number against remote Numbers\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                        <button name=\"sync_document_local_remote_number\" string=\"Sync Remote/Local Numbers\" help=\"Sync documents local next number against remote Numbers\" type=\"object\" confirm=\"Warning! this operation can not be undone, all sequences will be syncronized with remote numbers\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                        <button name=\"272\" string=\"Get Currency Rate\" type=\"action\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                    </header>\n"
+"                </sheet>\n"
+"                <field name=\"point_of_sale_type\" position=\"after\">\n"
+"                    <field name=\"afip_ws\" attrs=\"{'invisible':[('point_of_sale_type', '!=', 'electronic')], 'required':[('point_of_sale_type', '=', 'electronic')]}\"/>\n"
+"                </field>\n"
+"            </data>"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_account_config_settings
 msgid ""
 "<?xml version=\"1.0\"?>\n"
-"<div name=\"point_of_sale_type\" position=\"after\">\n"
+"<div name=\"customer_payments\" position=\"after\">\n"
+"                    <label for=\"afip_invoicing\" string=\"AFIP\" attrs=\"{'invisible':[('localization', '!=', 'argentina')]}\"/>\n"
+"                    <div name=\"afip_invoicing\" attrs=\"{'invisible':[('localization', '!=', 'argentina')]}\">\n"
+"                        <label for=\"afip_auth_verify_type\"/>\n"
+"                        <field name=\"afip_auth_verify_type\" class=\"oe_inline\"/>\n"
+"                    </div>\n"
+"                </div>\n"
+"                <!-- TODO implementar o borrar vista -->\n"
+"                <!-- <div name=\"point_of_sale_type\" position=\"after\">\n"
 "                    <div name=\"afip_ws\">\n"
 "                        <label for=\"afip_ws\" attrs=\"{'invisible':['|', '|', '|', ('point_of_sale_type', '!=', 'electronic'), ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)]}\"/>\n"
 "                        <field name=\"afip_ws\" class=\"oe_inline\" attrs=\"{'invisible':['|', '|', '|', ('point_of_sale_type', '!=', 'electronic'), ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)], 'required':[('point_of_sale_type', '=', 'electronic'), ('localization', '=', 'argentina'), ('sale_use_documents', '=', True), ('has_chart_of_accounts', '=', False)]}\"/>\n"
 "                    </div>\n"
-"                </div>\n"
+"                </div> -->\n"
 "            "
 msgstr ""
 
@@ -144,6 +231,16 @@ msgid ""
 "                </field>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"afip_code\" position=\"replace\">\n"
+"                    <label for=\"afip_code\"/>\n"
+"                    <div>\n"
+"                        <field name=\"afip_code\" class=\"oe_inline\"/>\n"
+"                        <button name=\"action_get_pyafipws_currency_rate\" string=\"⇒ Obtener Cotización\" type=\"object\" attrs=\"{'invisible':[('afip_code','=',False)]}\" class=\"oe_link\"/>\n"
+"                        <button name=\"action_get_pyafipws_currencies\" string=\"⇒ Obtener Datos de Moneda\" type=\"object\" attrs=\"{'invisible':[('afip_code','!=',False)]}\" class=\"oe_link\"/>\n"
+"                    </div>\n"
+"                </field>\n"
+"            "
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.product_uom_form_view
@@ -158,6 +255,15 @@ msgid ""
 "                </field>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"afip_code\" position=\"replace\">\n"
+"                    <label for=\"afip_code\"/>\n"
+"                    <div>\n"
+"                        <field name=\"afip_code\" class=\"oe_inline\"/>\n"
+"                        <button name=\"action_get_pyafipws_product_uoms\" string=\"Obtener códigos AFIP\" type=\"object\" class=\"oe_link\"/>\n"
+"                    </div>\n"
+"                </field>\n"
+"            "
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.afip_ws_consult_wizard_form
@@ -175,6 +281,18 @@ msgid ""
 "                </form>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Asistente de Consulta de AFIP WS\">\n"
+"                    <group>\n"
+"                        <field name=\"number\"/>\n"
+"                    </group>\n"
+"                    <footer>\n"
+"                        <button string=\"Confirmar\" name=\"confirm\" type=\"object\" class=\"oe_highlight\"/>\n"
+"                        or\n"
+"                        <button string=\"Cancelar\" class=\"oe_link\" special=\"cancel\"/>\n"
+"                    </footer>\n"
+"                </form>\n"
+"            "
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.afip_ws_currency_rate_wizard_form
@@ -192,6 +310,18 @@ msgid ""
 "                </form>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Asistente de Cotizaciones AFIP WS\">\n"
+"                    <group>\n"
+"                        <field name=\"currency_id\"/>\n"
+"                    </group>\n"
+"                    <footer>\n"
+"                        <button string=\"Confirmar\" name=\"confirm\" type=\"object\" class=\"oe_highlight\"/>\n"
+"                        or\n"
+"                        <button string=\"Cancelar\" class=\"oe_link\" special=\"cancel\"/>\n"
+"                    </footer>\n"
+"                </form>\n"
+"            "
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_wsfe_error_form
@@ -204,6 +334,13 @@ msgid ""
 "                </form>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"AFIP Web Service Error\">\n"
+"                    <field name=\"name\"/>\n"
+"                    <field name=\"code\"/>\n"
+"                    <field name=\"description\"/>\n"
+"                </form>\n"
+"            "
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_company_inherit_form
@@ -214,6 +351,11 @@ msgid ""
 "                </group>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<group name=\"account_grp\">\n"
+"                    <field name=\"afip_auth_verify_type\" attrs=\"{'invisible': [('localization', '!=', 'argentina')]}\"/>\n"
+"                </group>\n"
+"            "
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_journal_document_type_form
@@ -222,10 +364,17 @@ msgid ""
 "<header>\n"
 "                    <field name=\"afip_ws\" invisible=\"1\"/>\n"
 "                    <button name=\"action_get_pyafipws_last_invoice\" string=\"Get Last Invoice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                    <button name=\"270\" string=\"Get Document Remote Data\" type=\"action\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                    <button name=\"271\" string=\"Get Document Remote Data\" type=\"action\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
 "                </header>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<header>\n"
+"                    <field name=\"afip_ws\" invisible=\"1\"/>\n"
+"                    <button name=\"action_get_pyafipws_last_invoice\" string=\"Get Last Invoice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                    <button name=\"271\" string=\"Get Document Remote Data\" type=\"action\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                </header>\n"
+"            "
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_wsfe_error_tree
@@ -237,6 +386,12 @@ msgid ""
 "                </tree>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"AFIP Web service Error\">\n"
+"                    <field name=\"name\"/>\n"
+"                    <field name=\"code\"/>\n"
+"                </tree>\n"
+"            "
 
 #. module: l10n_ar_afipws_fe
 #: field:account.invoice,afip_barcode:0
@@ -257,33 +412,32 @@ msgid "AFIP Message"
 msgstr "Mensaje del AFIP"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:617
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:621
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:640
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:644
 #, python-format
 msgid "AFIP Validation Error. %s"
 msgstr "Error de Validación AFIP. %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:314
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:308
 #, python-format
 msgid "AFIP Verification Error. %s"
 msgstr "Error de Verificación en afip AFIP. %s"
 
 #. module: l10n_ar_afipws_fe
-#: field:account.config.settings,afip_ws:0 field:account.journal,afip_ws:0
+#: field:account.journal,afip_ws:0
 #: field:account.journal.document.type,afip_ws:0
-#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_account_config_settings_afip_ws
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_account_journal_afip_ws
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_account_journal_document_type_afip_ws
 msgid "AFIP WS"
 msgstr "WS AFIP"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:50
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:95
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:58
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:103
 #: code:addons/l10n_ar_afipws_fe/models/product_uom.py:36
-#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:38
-#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:68
+#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:40
+#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:76
 #, python-format
 msgid "AFIP WS %s not implemented"
 msgstr "WS AFIP %s no implementado"
@@ -333,13 +487,15 @@ msgid "AFIP authorization mode"
 msgstr "Modo de Autorización AFIP"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:248
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:244
 #, python-format
 msgid "AFIP authorization mode and Code are required!"
 msgstr "El modo y código de autorización de AFIP son requeridos!"
 
 #. module: l10n_ar_afipws_fe
+#: field:account.config.settings,afip_auth_verify_type:0
 #: field:account.invoice,afip_auth_verify_type:0
+#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_account_config_settings_afip_auth_verify_type
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_account_invoice_afip_auth_verify_type
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_res_company_afip_auth_verify_type
 #: field:res.company,afip_auth_verify_type:0
@@ -387,7 +543,7 @@ msgid "Aprobado"
 msgstr "Aprobado"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:40
+#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:42
 #, python-format
 msgid ""
 "Authorized Currencies on AFIP%s\n"
@@ -399,7 +555,7 @@ msgstr ""
 "Observación: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/journal.py:166
+#: code:addons/l10n_ar_afipws_fe/models/journal.py:176
 #, python-format
 msgid ""
 "Authorized Document Clases on AFIP\n"
@@ -454,6 +610,11 @@ msgid "CAI"
 msgstr "CAI"
 
 #. module: l10n_ar_afipws_fe
+#: model:ir.ui.menu,name:l10n_ar_afipws_fe.menu_action_afipws_certificate_alias
+msgid "Certificates"
+msgstr "Certificados"
+
+#. module: l10n_ar_afipws_fe
 #: field:afip.wsfe_error,code:0
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_wsfe_error_code
 msgid "Code"
@@ -492,7 +653,7 @@ msgid "Currency"
 msgstr "Moneda"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:70
+#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:78
 #, python-format
 msgid ""
 "Currency rate for %s: %s.\n"
@@ -518,7 +679,7 @@ msgid "Display Name"
 msgstr "Display Name"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:101
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:109
 #, python-format
 msgid "ERROR! Local (%i) and remote (%i) next number mismatch!\n"
 msgstr "ERROR! El próximo número local (%i) y remoto (%i) no coinciden!\n"
@@ -530,35 +691,61 @@ msgid "Electronic Invoice Errors"
 msgstr "Errores de Factura Electrónica"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/journal.py:152
+#: code:addons/l10n_ar_afipws_fe/models/journal.py:156
 #, python-format
 msgid "Enabled Point Of Sales on AFIP\n"
 msgstr "Puntos de Venta habilitados en AFIP\n"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:376
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:366
 #, python-format
 msgid "Error!Invoice id: %iNext invoice number should be %i and not %i"
 msgstr ""
 "ERROR! Id Factura: %iEl próximo número de factura debería ser %i y no %i"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:367
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:355
 #, python-format
 msgid "For WS \"%s\" country afip code is mandatoryCountry: %s"
 msgstr "Para el WS \"%s\" el código AFIP de pais es obligatorio. Pais: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:362
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:350
 #, python-format
 msgid "For WS \"%s\" country code is mandatoryCountry: %s"
 msgstr "Para el WS \"%s\" el código de pais es obligatorio. Pais: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:357
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:345
 #, python-format
 msgid "For WS \"%s\" country is required on partner"
 msgstr "Para el WS \"%s\" el país es requerido en la empresa"
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/journal.py:209
+#, python-format
+msgid "Get NCM for ws %s is not implemented yet"
+msgstr "La obtención del NCM WS %s aún no esta implementada"
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/journal.py:173
+#, python-format
+msgid "Get document types for ws %s is not implemented yet"
+msgstr ""
+"La obtención de los tipos de documentos por WS %s aún no esta implementada"
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/journal.py:151
+#, python-format
+msgid "Get point of sale for ws %s is not implemented yet"
+msgstr ""
+"La obtención de los Puntos de Venta por WS %s todavía no esta implementada"
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/journal.py:191
+#, python-format
+msgid "Get zonas for ws %s is not implemented yet"
+msgstr "La obtención de zonas por WS %s todavía no esta implementada"
 
 #. module: l10n_ar_afipws_fe
 #: field:afip.ws.consult.wizard,id:0 field:afip.ws.currency_rate.wizard,id:0
@@ -570,7 +757,7 @@ msgid "ID"
 msgstr "ID"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:334
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:328
 #, python-format
 msgid ""
 "If you use electronic journals (invoice id %s) you need configure AFIP WS on"
@@ -585,25 +772,21 @@ msgid "Invoice"
 msgstr "Factura"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:286
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:280
 #, python-format
 msgid "Invoice Date is required!"
 msgstr "La fecha de factura es requerida!"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:52
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:60
 #, python-format
 msgid "Invoice number %s\n"
 msgstr "Número de Factura %s\n"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:261
-#, python-format
-msgid "Issuer must have a CUIT configured"
-msgstr "El emisor debe tener un CUIT configurado"
-
-#. module: l10n_ar_afipws_fe
+#: help:account.config.settings,afip_auth_verify_type:0
 #: help:account.invoice,afip_auth_verify_type:0
+#: model:ir.model.fields,help:l10n_ar_afipws_fe.field_account_config_settings_afip_auth_verify_type
 #: model:ir.model.fields,help:l10n_ar_afipws_fe.field_account_invoice_afip_auth_verify_type
 #: model:ir.model.fields,help:l10n_ar_afipws_fe.field_res_company_afip_auth_verify_type
 #: help:res.company,afip_auth_verify_type:0
@@ -625,7 +808,7 @@ msgid "Journal Document Types Mapping"
 msgstr "Mapeo del Tipo de Documentos del Diario"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:106
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:114
 #, python-format
 msgid "Last Invoice %s\n"
 msgstr "Última Factura %s\n"
@@ -669,21 +852,23 @@ msgstr "Nombre"
 #. module: l10n_ar_afipws_fe
 #: code:addons/l10n_ar_afipws_fe/models/journal.py:128
 #: code:addons/l10n_ar_afipws_fe/models/journal.py:144
-#: code:addons/l10n_ar_afipws_fe/models/journal.py:160
-#: code:addons/l10n_ar_afipws_fe/models/journal.py:182
+#: code:addons/l10n_ar_afipws_fe/models/journal.py:164
+#: code:addons/l10n_ar_afipws_fe/models/journal.py:186
+#: code:addons/l10n_ar_afipws_fe/models/journal.py:204
+#: code:addons/l10n_ar_afipws_fe/models/journal.py:228
 #, python-format
 msgid "No AFIP WS selected"
 msgstr "No se seleccionó WS AFIP"
 
 #. module: l10n_ar_afipws_fe
 #: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:28
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:84
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:92
 #, python-format
 msgid "No AFIP WS selected on point of sale %s"
 msgstr "No se seleccionó WS AFIP en unto de venta %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:61
+#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:64
 #, python-format
 msgid "No AFIP code for currency %s"
 msgstr "No hay código de AFIP para la moneda %s"
@@ -703,13 +888,13 @@ msgstr "No hay un Id del Diario como active_id en el contexto"
 #. module: l10n_ar_afipws_fe
 #: code:addons/l10n_ar_afipws_fe/models/product_uom.py:29
 #: code:addons/l10n_ar_afipws_fe/models/res_currency.py:28
-#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:57
+#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:60
 #, python-format
 msgid "No company found using argentinian localization"
 msgstr "No se encontró compañía utilizando la localización argentina"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:460
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:474
 #, python-format
 msgid "No vat defined for the partner and also no CUIT set on country"
 msgstr ""
@@ -722,8 +907,8 @@ msgid "Not Available"
 msgstr "No Disponible"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:548
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:560
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:567
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:580
 #, python-format
 msgid "Not afip code con producto UOM %s"
 msgstr "No hay código de afip en el UdM %s"
@@ -735,7 +920,7 @@ msgid "Number"
 msgstr "Número"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:105
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:113
 #, python-format
 msgid "OK! Local and remote next number match!"
 msgstr "OK! Números locales y remotos coinciden!"
@@ -747,7 +932,7 @@ msgid "Observado"
 msgstr "Observado"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:271
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:265
 #, python-format
 msgid ""
 "Para Comprobantes tipo A o tipo M:\n"
@@ -759,7 +944,7 @@ msgstr ""
 "*  el documento del Receptor es obligatorio\n"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:281
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:275
 #, python-format
 msgid "Point of sale and document number and document type are required!"
 msgstr ""
@@ -810,13 +995,13 @@ msgid "Validation Type"
 msgstr "Tipo de Validación"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:568
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:594
 #, python-format
 msgid "WS wsmtxca Not implemented yet"
 msgstr "WS wsmtxca aún no implementado"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:214
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:210
 #, python-format
 msgid ""
 "You can not validate invoice as AFIP authorization verification is required"
@@ -829,6 +1014,21 @@ msgstr ""
 #, python-format
 msgid "You can only use an AFIP WS if type is \"Electronic\""
 msgstr "Solo puede utilizar un WS AFIP si el tipo es \"Electrónica\""
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/journal.py:194
+#: code:addons/l10n_ar_afipws_fe/models/journal.py:212
+#, python-format
+msgid ""
+"Zonas on AFIP\n"
+"%s\n"
+". \n"
+"Observations: %s"
+msgstr ""
+"Zonas en AFIP\n"
+"%s\n"
+". \n"
+"Observaciones: %s"
 
 #. module: l10n_ar_afipws_fe
 #: selection:account.invoice,afip_result:0

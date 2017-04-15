@@ -44,7 +44,6 @@ class AccountMoveLine(models.Model):
         _logger.info('Getting tax balance for domain %s' % domain)
         balance = self.env['account.move.line'].\
             read_group(domain, ['balance'], [])[0]['balance']
-        print 'balance', balance
         return balance and -balance or 0.0
 
     @api.model
@@ -96,4 +95,3 @@ class AccountMoveLine(models.Model):
                 '|', ('product_id', '=', False),
                 ('product_id.vat_f2002_category_id', '=', False)]
         return domain
-        # return self.env['account.move.line'].search(domain)

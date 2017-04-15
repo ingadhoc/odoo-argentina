@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-08 14:23+0000\n"
-"PO-Revision-Date: 2017-04-08 14:23+0000\n"
+"POT-Creation-Date: 2017-04-14 16:10+0000\n"
+"PO-Revision-Date: 2017-04-14 16:10+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -22,6 +22,22 @@ msgstr ""
 #: selection:account.invoice,afip_concept:0
 msgid "4-Otros (exportación)"
 msgstr "4-Otros (exportación)"
+
+#. module: l10n_ar_account
+#: model:ir.ui.view,arch_db:l10n_ar_account.product_template_form_view
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<data><!-- <page string=\"Accounting\" groups=\"account.group_account_invoice\"> -->\n"
+"                <group name=\"properties\" position=\"before\">\n"
+"                    <group name=\"afip\">\n"
+"                        <field name=\"vat_f2002_category_id\"/>\n"
+"                    </group>\n"
+"                </group>\n"
+"                <xpath expr=\"//div[@name='button_box']\" position=\"inside\">\n"
+"                   <button class=\"oe_stat_button\" string=\"Invoices Line Report\" name=\"action_invoice_analysis\" type=\"object\" icon=\"fa-bar-chart-o\" groups=\"account.group_account_invoice\"/>\n"
+"                </xpath>\n"
+"            </data>"
+msgstr ""
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_company_inherit_form
@@ -838,21 +854,6 @@ msgstr ""
 "            "
 
 #. module: l10n_ar_account
-#: model:ir.ui.view,arch_db:l10n_ar_account.product_template_form_view
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<xpath expr=\"//div[@name='button_box']\" position=\"inside\">\n"
-"                   <button class=\"oe_stat_button\" string=\"Invoices Line Report\" name=\"action_invoice_analysis\" type=\"object\" icon=\"fa-bar-chart-o\" groups=\"account.group_account_invoice\"/>\n"
-"                </xpath>\n"
-"            "
-msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<xpath expr=\"//div[@name='button_box']\" position=\"inside\">\n"
-"                   <button class=\"oe_stat_button\" string=\"Informe de Línea de Factura\" name=\"action_invoice_analysis\" type=\"object\" icon=\"fa-bar-chart-o\" groups=\"account.group_account_invoice\"/>\n"
-"                </xpath>\n"
-"            "
-
-#. module: l10n_ar_account
 #: model:ir.ui.menu,name:l10n_ar_account.menu_afip_config
 msgid "AFIP"
 msgstr "AFIP"
@@ -1043,6 +1044,12 @@ msgid "Category"
 msgstr "Categoría"
 
 #. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_product_template_vat_f2002_category_id
+#: field:product.template,vat_f2002_category_id:0
+msgid "Categoría IVA f2002"
+msgstr ""
+
+#. module: l10n_ar_account
 #: help:account.invoice.line.report,customer:0
 #: model:ir.model.fields,help:l10n_ar_account.field_account_invoice_line_report_customer
 msgid "Check this box if this contact is a customer."
@@ -1110,9 +1117,11 @@ msgstr "Grupo de países"
 #. module: l10n_ar_account
 #: field:account.document.letter,create_uid:0 field:afip.incoterm,create_uid:0
 #: field:afip.responsability.type,create_uid:0
+#: field:afip.vat.f2002_category,create_uid:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_create_uid
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_create_uid
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_create_uid
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_create_uid
 msgid "Created by"
 msgstr "Creado por"
 
@@ -1120,9 +1129,11 @@ msgstr "Creado por"
 #: field:account.document.letter,create_date:0
 #: field:afip.incoterm,create_date:0
 #: field:afip.responsability.type,create_date:0
+#: field:afip.vat.f2002_category,create_date:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_create_date
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_create_date
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_create_date
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_create_date
 msgid "Created on"
 msgstr "Creado en"
 
@@ -1237,10 +1248,12 @@ msgstr "Importe de Descuento"
 #: field:account.invoice.line.report,display_name:0
 #: field:afip.incoterm,display_name:0
 #: field:afip.responsability.type,display_name:0
+#: field:afip.vat.f2002_category,display_name:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_display_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_display_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_display_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_display_name
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_display_name
 msgid "Display Name"
 msgstr "Display Name"
 
@@ -1361,10 +1374,12 @@ msgstr "Subtotal bruto"
 #. module: l10n_ar_account
 #: field:account.document.letter,id:0 field:account.invoice.line.report,id:0
 #: field:afip.incoterm,id:0 field:afip.responsability.type,id:0
+#: field:afip.vat.f2002_category,id:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_id
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_id
 msgid "ID"
 msgstr "ID"
 
@@ -1519,7 +1534,12 @@ msgid "Journal"
 msgstr "Diario"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/res_partner.py:43
+#: model:ir.model,name:l10n_ar_account.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/res_partner.py:44
 #, python-format
 msgid ""
 "Jurisdiction %s is considered the main jurisdiction because it is the state "
@@ -1533,28 +1553,34 @@ msgstr ""
 #: field:account.invoice.line.report,__last_update:0
 #: field:afip.incoterm,__last_update:0
 #: field:afip.responsability.type,__last_update:0
+#: field:afip.vat.f2002_category,__last_update:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter___last_update
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report___last_update
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm___last_update
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type___last_update
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category___last_update
 msgid "Last Modified on"
 msgstr "Última Modificación en"
 
 #. module: l10n_ar_account
 #: field:account.document.letter,write_uid:0 field:afip.incoterm,write_uid:0
 #: field:afip.responsability.type,write_uid:0
+#: field:afip.vat.f2002_category,write_uid:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_write_uid
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_write_uid
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_write_uid
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
 
 #. module: l10n_ar_account
 #: field:account.document.letter,write_date:0 field:afip.incoterm,write_date:0
 #: field:afip.responsability.type,write_date:0
+#: field:afip.vat.f2002_category,write_date:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_write_date
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_write_date
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_write_date
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_write_date
 msgid "Last Updated on"
 msgstr "Última actualización en"
 
@@ -1592,11 +1618,12 @@ msgstr "Municipal Taxes"
 #. module: l10n_ar_account
 #: field:account.document.letter,name:0
 #: field:account.invoice,document_letter_name:0 field:afip.incoterm,name:0
-#: field:afip.responsability.type,name:0
+#: field:afip.responsability.type,name:0 field:afip.vat.f2002_category,name:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_document_letter_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_name
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_name
 msgid "Name"
 msgstr "Nombre"
 
@@ -1885,7 +1912,7 @@ msgstr "Provincia"
 
 #. module: l10n_ar_account
 #: field:account.invoice.line.report,price_subtotal:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4260
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4269
 msgid "Subtotal"
 msgstr "Subtotal"
 
@@ -1979,8 +2006,14 @@ msgid "Type %s not implemented yet"
 msgstr "El tipo %s no está implementado todavía"
 
 #. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/account_move_line.py:78
+#, python-format
+msgid "Type must be \"base\" or \"tax\""
+msgstr ""
+
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,price_unit:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4259
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4268
 msgid "Unit Price"
 msgstr "Precio unitario"
 
@@ -2046,6 +2079,12 @@ msgid ""
 msgstr ""
 "Está utilizando la localziación argnetina y hay algunos grupos de impuestos "
 "que no están configurados. Grupos de Impuesto (id): %s"
+
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/account_move_line.py:60
+#, python-format
+msgid "You must request tax amounts with tax or tax group"
+msgstr ""
 
 #. module: l10n_ar_account
 #: field:account.fiscal.position.template,zip_from:0

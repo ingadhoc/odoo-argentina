@@ -132,19 +132,19 @@
             <field name="domain">[('type','=','sale')]</field>
 		</record>
 
-        <menuitem id="account_vat_ledger_parent_menu"
+<!--         <menuitem id="account_vat_ledger_parent_menu"
                   name="VAT Ledgers"
                   parent="l10n_ar_account.account_reports_ar_statements_menu"
-                  sequence="30"/>
+                  sequence="30"/> -->
 
         <menuitem id="menu_account_purchase_vat_ledger"
                   action="action_account_purchase_vat_ledger"
-                  parent="account_vat_ledger_parent_menu"
-                  sequence="20"/>
+                  parent="l10n_ar_account.account_reports_ar_statements_menu"
+                  sequence="6"/>
 
         <menuitem id="menu_account_sale_vat_ledger"
                   action="action_account_sale_vat_ledger"
-                  parent="account_vat_ledger_parent_menu"
-                  sequence="10"/>                          
+                  parent="l10n_ar_account.account_reports_ar_statements_menu"
+                  sequence="4"/>                          
 	</data>
 </openerp>

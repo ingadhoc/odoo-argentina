@@ -7,7 +7,7 @@
 #
 # IVA
 #
-        <record id="ri_with_ret_iva_aplicada" model="account.tax.withholding.template">
+        <record id="ri_with_ret_iva_aplicada" model="account.tax.withholding">
             <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
             <field name="description">Ret IVA A</field>
             <field name="name">Retención IVA Aplicada</field>
@@ -15,10 +15,11 @@
             <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_retencion_iva_aplicada"/>
             <field name="account_id" ref="l10n_ar_chart_generic.ri_retencion_iva_a_pagar"/>
             <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_retencion_iva_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
             <field name="type_tax_use">payment</field>
         </record>
 
-        <record id="ri_with_ret_iva_sufrida" model="account.tax.withholding.template">
+        <record id="ri_with_ret_iva_sufrida" model="account.tax.withholding">
             <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
             <field name="description">Ret IVA S</field>
             <field name="name">Retención IVA Sufrida</field>
@@ -26,10 +27,11 @@
             <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iva_compras_retencion"/>
             <field name="account_id" ref="l10n_ar_chart_generic.ri_iva_retencion"/>
             <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iva_retencion"/>
+            <field name="ref_tax_sign">-1</field>
             <field name="type_tax_use">receipt</field>
         </record>
 
-        <record id="ri_with_ret_ganancias_aplicada" model="account.tax.withholding.template">
+        <record id="ri_with_ret_ganancias_aplicada" model="account.tax.withholding">
             <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
             <field name="description">Ret Ganancias A</field>
             <field name="name">Retención Ganancias Aplicada</field>
@@ -37,10 +39,11 @@
             <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_ganancias_ret_aplicada"/>
             <field name="account_id" ref="l10n_ar_chart_generic.ri_retencion_ganancias_a_pagar"/>
             <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_retencion_ganancias_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
             <field name="type_tax_use">payment</field>
         </record>
 
-        <record id="ri_with_ret_ganancias_sufrida" model="account.tax.withholding.template">
+        <record id="ri_with_ret_ganancias_sufrida" model="account.tax.withholding">
             <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
             <field name="description">Ret Ganancias S</field>
             <field name="name">Retención Ganancias Sufrida</field>
@@ -48,8 +51,589 @@
             <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_ganancias_ret_sufrida"/>
             <field name="account_id" ref="l10n_ar_chart_generic.ri_retencion_impuestos_ganancias"/>
             <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_retencion_impuestos_ganancias"/>
+            <field name="ref_tax_sign">-1</field>
             <field name="type_tax_use">receipt</field>
         </record>
+
+	<!-- AGREGADOS -->
+ 
+        <record id="ri_with_ret_iibb_cf_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB CABA A</field>
+            <field name="name">Retención IIBB CABA Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_cf_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_cf_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_cf_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB CABA S</field>
+            <field name="name">Retención IIBB CABA Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_cf_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_cf_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_ba_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Prov. Bs. As. A</field>
+            <field name="name">Retención IIBB Prov. Bs. As. Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ba_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ba_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_ba_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Prov. Bs. As. S</field>
+            <field name="name">Retención IIBB Prov. Bs. As. Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ba_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ba_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_co_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Córdoba A</field>
+            <field name="name">Retención IIBB Córdoba Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_co_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_co_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_co_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Córdoba S</field>
+            <field name="name">Retención IIBB Córdoba Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_co_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_co_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_sf_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Santa Fé A</field>
+            <field name="name">Retención IIBB Santa Fé Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sf_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sf_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_sf_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Santa Fé S</field>
+            <field name="name">Retención IIBB Santa Fé Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sf_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sf_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_md_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Mendoza A</field>
+            <field name="name">Retención IIBB Mendoza Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_md_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_md_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_md_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Mendoza S</field>
+            <field name="name">Retención IIBB Mendoza Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_md_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_md_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_tu_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Tucumán A</field>
+            <field name="name">Retención IIBB Tucumán Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_tu_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_tu_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_tu_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Tucumán S</field>
+            <field name="name">Retención IIBB Tucumán Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_tu_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_tu_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_en_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Entre Ríos A</field>
+            <field name="name">Retención IIBB Entre Ríos Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_en_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_en_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_en_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Entre Ríos S</field>
+            <field name="name">Retención IIBB Entre Ríos Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_en_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_en_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_sa_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Salta A</field>
+            <field name="name">Retención IIBB Salta Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sa_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sa_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_sa_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Salta S</field>
+            <field name="name">Retención IIBB Salta Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sa_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sa_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_mi_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Misiones A</field>
+            <field name="name">Retención IIBB Misiones Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_mi_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_mi_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_mi_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Misiones S</field>
+            <field name="name">Retención IIBB Misiones Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_mi_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_mi_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_ch_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Chaco A</field>
+            <field name="name">Retención IIBB Chaco Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ch_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ch_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_ch_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Chaco S</field>
+            <field name="name">Retención IIBB Chaco Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ch_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ch_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_ct_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Corrientes A</field>
+            <field name="name">Retención IIBB Corrientes Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ct_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ct_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_ct_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Corrientes S</field>
+            <field name="name">Retención IIBB Corrientes Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ct_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ct_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_sg_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Santiago del Estero A</field>
+            <field name="name">Retención IIBB Santiago del Estero Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sg_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sg_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_sg_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Santiago del Estero S</field>
+            <field name="name">Retención IIBB Santiago del Estero Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sg_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sg_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_ju_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Jujuy A</field>
+            <field name="name">Retención IIBB Jujuy Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ju_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ju_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_ju_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Jujuy S</field>
+            <field name="name">Retención IIBB Jujuy Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ju_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ju_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_sj_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB San Juan A</field>
+            <field name="name">Retención IIBB San Juan Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sj_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sj_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_sj_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB San Juan S</field>
+            <field name="name">Retención IIBB San Juan Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sj_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sj_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_rn_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Río Negro A</field>
+            <field name="name">Retención IIBB Río Negro Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_rn_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_rn_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_rn_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Río Negro S</field>
+            <field name="name">Retención IIBB Río Negro Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_rn_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_rn_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_fo_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Formosa A</field>
+            <field name="name">Retención IIBB Formosa Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_fo_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_fo_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_fo_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Formosa S</field>
+            <field name="name">Retención IIBB Formosa Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_fo_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_fo_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_nq_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Neuquén A</field>
+            <field name="name">Retención IIBB Neuquén Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_nq_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_nq_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_nq_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Neuquén S</field>
+            <field name="name">Retención IIBB Neuquén Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_nq_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_nq_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_ct_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Chubut A</field>
+            <field name="name">Retención IIBB Chubut Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ct_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ct_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_ct_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Chubut S</field>
+            <field name="name">Retención IIBB Chubut Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ct_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ct_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_sl_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB San Luis A</field>
+            <field name="name">Retención IIBB San Luis Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sl_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sl_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_sl_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB San Luis S</field>
+            <field name="name">Retención IIBB San Luis Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sl_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sl_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_ca_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Catamarca A</field>
+            <field name="name">Retención IIBB Catamarca Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ca_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ca_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_ca_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Catamarca S</field>
+            <field name="name">Retención IIBB Catamarca Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ca_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_ca_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_lr_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB La Rioja A</field>
+            <field name="name">Retención IIBB La Rioja Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_lr_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_lr_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_lr_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB La Rioja S</field>
+            <field name="name">Retención IIBB La Rioja Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_lr_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_lr_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_lp_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB La Pampa A</field>
+            <field name="name">Retención IIBB La Pampa Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_lp_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_lp_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_lp_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB La Pampa S</field>
+            <field name="name">Retención IIBB La Pampa Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_lp_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_lp_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_sc_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Santa Cruz A</field>
+            <field name="name">Retención IIBB Santa Cruz Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sc_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sc_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_sc_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Santa Cruz S</field>
+            <field name="name">Retención IIBB Santa Cruz Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sc_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_sc_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+ 
+        <record id="ri_with_ret_iibb_tf_aplicada" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Tierra del Fuego A</field>
+            <field name="name">Retención IIBB Tierra del Fuego Aplicada</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_tf_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_tf_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">payment</field>
+        </record>
+
+        <record id="ri_with_ret_iibb_tf_sufrida" model="account.tax.withholding">
+            <field name="chart_template_id" ref="l10n_ar_chart_generic.ri_l10nAR_chart_template"/>
+            <field name="description">Ret IIBB Tierra del Fuego S</field>
+            <field name="name">Retención IIBB Tierra del Fuego Sufrida</field>
+            <field name="tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_tf_retencion"/>
+            <field name="ref_tax_code_id" ref="l10n_ar_chart_generic.ri_tax_code_iibb_tf_retencion"/>
+            <field name="account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_account_id" ref="l10n_ar_chart_generic.ri_iibb_a_pagar"/>
+            <field name="ref_tax_sign">-1</field>
+            <field name="type_tax_use">receipt</field>
+        </record>
+
+	<!-- AGREGADOS TODO append SUSS-->
 
     </data>
 </openerp>

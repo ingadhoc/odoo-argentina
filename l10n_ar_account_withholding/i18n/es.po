@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-24 13:24+0000\n"
-"PO-Revision-Date: 2016-05-24 20:43+0000\n"
+"POT-Creation-Date: 2017-03-14 11:59+0000\n"
+"PO-Revision-Date: 2016-10-27 11:43+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -47,6 +47,11 @@ msgid "ARBA WS"
 msgstr "ARBA WS"
 
 #. module: l10n_ar_account_withholding
+#: model:ir.model,name:l10n_ar_account_withholding.model_l10n_ar_account_withholding_sicore_wizard
+msgid "Account Withholding Export to SICORE Wizard"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_account_tax_withholding
 msgid "Account Withholding Taxes"
 msgstr "Retenciones"
@@ -60,6 +65,13 @@ msgstr "Comprobantes contables"
 #: selection:res.partner,drei:0
 msgid "Activo"
 msgstr "Activo"
+
+#. module: l10n_ar_account_withholding
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form
+msgid ""
+"Además, procure establecer los parámetros de importación de SICORE de la "
+"siguiente manera:"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: field:res.partner.arba_alicuot,alicuota_percepcion:0
@@ -87,9 +99,24 @@ msgid "Anexo referencia"
 msgstr "Anexo referencia"
 
 #. module: l10n_ar_account_withholding
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form
+msgid "Asegúrese de tener bien configurado el"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form
+msgid "Cancel"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
 #: model:ir.actions.report.xml,name:l10n_ar_account_withholding.action_aeroo_certificado_de_retencion_report
 msgid "Certificado de Retención "
 msgstr "Certificado de Retención "
+
+#. module: l10n_ar_account_withholding
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form_download
+msgid "Close"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: field:afip.tabla_ganancias.alicuotasymontos,codigo_de_regimen:0
@@ -112,6 +139,12 @@ msgid "Companies"
 msgstr "Compañías"
 
 #. module: l10n_ar_account_withholding
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form
+#: field:l10n_ar_account_withholding.sicore_wizard,company_id:0
+msgid "Company"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
 #: field:res.partner.arba_alicuot,company_id:0
 msgid "Company id"
 msgstr "Id Compañía"
@@ -122,8 +155,14 @@ msgid "Concepto referencia"
 msgstr "Concepto referencia"
 
 #. module: l10n_ar_account_withholding
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form
+msgid "Confirm"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
 #: field:afip.tabla_ganancias.alicuotasymontos,create_uid:0
 #: field:afip.tabla_ganancias.escala,create_uid:0
+#: field:l10n_ar_account_withholding.sicore_wizard,create_uid:0
 #: field:res.partner.arba_alicuot,create_uid:0
 msgid "Created by"
 msgstr "Creado por"
@@ -131,9 +170,15 @@ msgstr "Creado por"
 #. module: l10n_ar_account_withholding
 #: field:afip.tabla_ganancias.alicuotasymontos,create_date:0
 #: field:afip.tabla_ganancias.escala,create_date:0
+#: field:l10n_ar_account_withholding.sicore_wizard,create_date:0
 #: field:res.partner.arba_alicuot,create_date:0
 msgid "Created on"
 msgstr "Creado en"
+
+#. module: l10n_ar_account_withholding
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form
+msgid "Código de AFIP"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: field:res.partner,drei:0
@@ -141,8 +186,14 @@ msgid "DREI"
 msgstr "DREI"
 
 #. module: l10n_ar_account_withholding
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form
+msgid "Desactivado."
+msgstr ""
+
+#. module: l10n_ar_account_withholding
 #: field:afip.tabla_ganancias.alicuotasymontos,display_name:0
 #: field:afip.tabla_ganancias.escala,display_name:0
+#: field:l10n_ar_account_withholding.sicore_wizard,display_name:0
 #: field:res.partner.arba_alicuot,display_name:0
 msgid "Display Name"
 msgstr "Display Name"
@@ -156,6 +207,19 @@ msgstr "Elija -1 si se debe calcular s/escala"
 #: model:ir.ui.menu,name:l10n_ar_account_withholding.menu_action_afip_tabla_ganancias_escala
 msgid "Escalas Ganancias"
 msgstr "Escalas Ganancias"
+
+#. module: l10n_ar_account_withholding
+#: model:ir.actions.act_window,name:l10n_ar_account_withholding.sicore_wizard_action
+#: model:ir.ui.menu,name:l10n_ar_account_withholding.account_voucher_withholding_sicore_wizard_menu
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form_download
+msgid "Export to SICORE"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
+#: field:l10n_ar_account_withholding.sicore_wizard,from_date:0
+msgid "From"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: field:res.partner.arba_alicuot,from_date:0
@@ -174,7 +238,9 @@ msgstr "Grupo retencion"
 
 #. module: l10n_ar_account_withholding
 #: field:afip.tabla_ganancias.alicuotasymontos,id:0
-#: field:afip.tabla_ganancias.escala,id:0 field:res.partner.arba_alicuot,id:0
+#: field:afip.tabla_ganancias.escala,id:0
+#: field:l10n_ar_account_withholding.sicore_wizard,id:0
+#: field:res.partner.arba_alicuot,id:0
 msgid "ID"
 msgstr "ID"
 
@@ -184,8 +250,19 @@ msgid "Imposibilidad de Retención"
 msgstr "Imposibilidad de Retención"
 
 #. module: l10n_ar_account_withholding
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form
+msgid "Incluye Operaciones con Beneficiarios del Exterior:"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
+#: model:ir.model,name:l10n_ar_account_withholding.model_account_invoice_tax
+msgid "Invoice Tax"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
 #: field:afip.tabla_ganancias.alicuotasymontos,__last_update:0
 #: field:afip.tabla_ganancias.escala,__last_update:0
+#: field:l10n_ar_account_withholding.sicore_wizard,__last_update:0
 #: field:res.partner.arba_alicuot,__last_update:0
 msgid "Last Modified on"
 msgstr "Última Modificación en"
@@ -193,6 +270,7 @@ msgstr "Última Modificación en"
 #. module: l10n_ar_account_withholding
 #: field:afip.tabla_ganancias.alicuotasymontos,write_uid:0
 #: field:afip.tabla_ganancias.escala,write_uid:0
+#: field:l10n_ar_account_withholding.sicore_wizard,write_uid:0
 #: field:res.partner.arba_alicuot,write_uid:0
 msgid "Last Updated by"
 msgstr "Ultima actualización por"
@@ -200,6 +278,7 @@ msgstr "Ultima actualización por"
 #. module: l10n_ar_account_withholding
 #: field:afip.tabla_ganancias.alicuotasymontos,write_date:0
 #: field:afip.tabla_ganancias.escala,write_date:0
+#: field:l10n_ar_account_withholding.sicore_wizard,write_date:0
 #: field:res.partner.arba_alicuot,write_date:0
 msgid "Last Updated on"
 msgstr "Última actualización en"
@@ -240,6 +319,7 @@ msgid "Numero comprobante"
 msgstr "Numero comprobante"
 
 #. module: l10n_ar_account_withholding
+#: field:account.voucher,partner_id_copy:0
 #: model:ir.model,name:l10n_ar_account_withholding.model_res_partner
 msgid "Partner"
 msgstr "Empresa"
@@ -250,14 +330,34 @@ msgid "Partner id"
 msgstr "Id Empresa"
 
 #. module: l10n_ar_account_withholding
+#: selection:l10n_ar_account_withholding.sicore_wizard,tax_withholding_type:0
+msgid "Payment"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
 #: view:account.voucher.withholding:l10n_ar_account_withholding.account_voucher_withholding_tree_view
 msgid "Print"
 msgstr "Imprimir"
 
 #. module: l10n_ar_account_withholding
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form
+msgid "Punto."
+msgstr ""
+
+#. module: l10n_ar_account_withholding
+#: selection:l10n_ar_account_withholding.sicore_wizard,tax_withholding_type:0
+msgid "Receipt"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
 #: field:account.voucher,regimen_ganancias_id:0
 msgid "Regimen Ganancias"
 msgstr "Régimen ganancias"
+
+#. module: l10n_ar_account_withholding
+#: field:res.partner,default_regimen_ganancias_id:0
+msgid "Regimen Ganancias por Defecto"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: field:account.voucher,company_regimenes_ganancias_ids:0
@@ -276,18 +376,63 @@ msgid "S/ Exced. de $"
 msgstr "S/ Exced. de $"
 
 #. module: l10n_ar_account_withholding
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form
+msgid "Separador decimal:"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
+#: field:l10n_ar_account_withholding.sicore_wizard,tax_withholding_type:0
+msgid "Tax withholding type"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
+#: field:l10n_ar_account_withholding.sicore_wizard,to_date:0
+msgid "To"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
 #: field:res.partner.arba_alicuot,to_date:0
 msgid "To date"
 msgstr "A fecha"
 
 #. module: l10n_ar_account_withholding
-#: code:addons/l10n_ar_account_withholding/models/res_company.py:78
+#: field:l10n_ar_account_withholding.sicore_wizard,txt_binary:0
+msgid "Txt binary"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
+#: field:l10n_ar_account_withholding.sicore_wizard,txt_filename:0
+msgid "Txt filename"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
+#: field:l10n_ar_account_withholding.sicore_wizard,tax_withholding_id:0
+msgid "Withholding Tax"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
+#: field:l10n_ar_account_withholding.sicore_wizard,withholding_ids:0
+msgid "Withholdings"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
+#: code:addons/l10n_ar_account_withholding/models/res_company.py:81
 #, python-format
 msgid "You must configure ARBA CIT on company %s"
 msgstr "Debe configurar el CIT de ARA en la compañía %s"
 
 #. module: l10n_ar_account_withholding
-#: code:addons/l10n_ar_account_withholding/models/res_company.py:74
+#: code:addons/l10n_ar_account_withholding/models/res_company.py:77
 #, python-format
 msgid "You must configure CUIT on company %s related partner"
 msgstr "Debe configurar el CUIT en el partner relacionado a la compañía %s"
+
+#. module: l10n_ar_account_withholding
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form
+msgid "or"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
+#: view:l10n_ar_account_withholding.sicore_wizard:l10n_ar_account_withholding.sicore_wizard_form
+msgid "para cada Código de Impuesto que quiera exportar."
+msgstr ""

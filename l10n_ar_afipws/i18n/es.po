@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-05 17:33+0000\n"
-"PO-Revision-Date: 2016-09-05 17:34+0000\n"
+"POT-Creation-Date: 2017-03-14 11:59+0000\n"
+"PO-Revision-Date: 2016-11-03 16:02+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -22,21 +22,21 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_ar_afipws
+#: help:afipws.certificate,state:0
+msgid ""
+"* The 'Draft' state is used when a user is creating a new pair key. Warning: everybody can see the key.\n"
+"* The 'Waiting' state is used when a request has send to Certificate Authority and is waiting for response.\n"
+"* The 'Confirmed' state is used when a certificate is valid.\n"
+"* The 'Canceled' state is used when the key is not more used. You cant use this key again."
+msgstr ""
+
+#. module: l10n_ar_afipws
 #: help:afipws.certificate_alias,state:0
 msgid ""
 "* The 'Draft' state is used when a user is creating a new pair key. Warning: everybody can see the key.        \n"
 "* The 'Confirmed' state is used when the key is completed with public or private key.        \n"
 "* The 'Canceled' state is used when the key is not more used. You cant use this key again."
 msgstr "* El estado 'Borrador' se utiliza cuando un usuario esta creando un par de claves. Cuidado: cualquiera puede ver las claves.        \n* El estado 'Confirmado' es utilizado cuando la clave esta completada con clave pública o privada.        \n* El estado 'Cancelada' es utilizado cuando la clave no es más utilizada. No puede utilizar esta clave nuevamente."
-
-#. module: l10n_ar_afipws
-#: help:afipws.certificate,state:0
-msgid ""
-"* The 'Draft' state is used when a user is creating a new pair key. Warning: everybody can see the key.        \n"
-"* The 'Waiting' state is used when a request has send to Certificate Authority and is waiting for response.        \n"
-"* The 'Confirmed' state is used when a certificate is valid.        \n"
-"* The 'Canceled' state is used when the key is not more used. You cant use this key again."
-msgstr "* El estado 'Borrador' se utiliza cuando un usuario esta creando un par de claves. Cuidado: cualquiera puede ver las claves.     \n* El estado 'Esperando' es utilizado cuando una solicitud se ha enviado a la autoridad de Certificación y se está esperando la respuesta.   \n* El estado 'Confirmado' se utiliza cuando un certificado es válido.        \n* El estado 'Cancelada' es utilizado cuando la clave no es más utilizada. No puede utilizar esta clave nuevamente."
 
 #. module: l10n_ar_afipws
 #: model:ir.actions.act_window,name:l10n_ar_afipws.act_afipws_certificate_alias
@@ -166,7 +166,7 @@ msgid "Certificate Alias"
 msgstr "Certificate Alias"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:84
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:74
 #, python-format
 msgid "Certificate Alias must be confirmed first!"
 msgstr "El Certificate Alias debe ser confirmado primero!"
@@ -285,6 +285,7 @@ msgid "Department"
 msgstr "Departamento"
 
 #. module: l10n_ar_afipws
+#: field:afipws.certificate,display_name:0
 #: field:afipws.certificate_alias,display_name:0
 #: field:afipws.connection,display_name:0
 #: field:afipws.upload_certificate.wizard,display_name:0
@@ -344,13 +345,13 @@ msgid "In House"
 msgstr "Interno"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:113
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:103
 #, python-format
 msgid "Invalid action! Please, set the certification string to continue."
 msgstr "Acción invalida! Por favor, configure la cadena de certificación para continuar."
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:116
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:106
 #, python-format
 msgid ""
 "Invalid action! Your certificate string is invalid. Check if you forgot the "
@@ -400,13 +401,6 @@ msgstr "Mercado interno -con detalle- RG2904 (WSMTXCA)"
 #: selection:afipws.connection,afip_ws:0
 msgid "Mercado interno -sin detalle- RG2485 (WSFEv1)"
 msgstr "Mercado interno -sin detalle- RG2485 (WSFEv1)"
-
-#. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:63
-#: field:afipws.certificate,display_name:0
-#, python-format
-msgid "Name"
-msgstr "Nombre"
 
 #. module: l10n_ar_afipws
 #: code:addons/l10n_ar_afipws/models/res_company.py:87
@@ -490,7 +484,7 @@ msgid "Unique ID"
 msgstr "ID Único"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:136
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:126
 #, python-format
 msgid ""
 "Unknown error.\n"
@@ -517,7 +511,7 @@ msgid "Webservice %s not supported"
 msgstr "Webservice %s no soportado"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:133
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:123
 #, python-format
 msgid ""
 "Wrong Certificate file format.\n"

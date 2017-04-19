@@ -72,30 +72,35 @@ class ResPartner(models.Model):
     @api.multi
     def update_constancia_from_padron_afip(self):
         self.ensure_one()
-        cuit = self.cuit
-        # cuit = self.cuit_required
+        # cuit = self.cuit
+        # # cuit = self.cuit_required
 
-        # descarga de constancia
-        # basedir = os.path.join(os.getcwd(), 'cache')
-        # tmpfilename = os.path.join(basedir, "constancia.pdf")
-        tmpfilename = "/tmp/constancia.pdf"
-        # sie queremos mejora esto podriamos no hardecodearlo con esto
-        # https://bugs.launchpad.net/openobject-addons/+bug/1040901
-        padron = PadronAFIP()
-        padron.DescargarConstancia(cuit, tmpfilename)
-        f = file(tmpfilename, 'r')
-        constancia = base64.b64decode(base64.encodestring(f.read()))
-        f.close()
-        attachments = [
-            ('Constancia %s %s.pdf' % (
-                self.name,
-                fields.Date.context_today(self)),
-                constancia)]
+        # # descarga de constancia
+        # # basedir = os.path.join(os.getcwd(), 'cache')
+        # # tmpfilename = os.path.join(basedir, "constancia.pdf")
+        # tmpfilename = "/tmp/constancia.pdf"
+        # # sie queremos mejora esto podriamos no hardecodearlo con esto
+        # # https://bugs.launchpad.net/openobject-addons/+bug/1040901
+        # padron = PadronAFIP()
+        # padron.DescargarConstancia(cuit, tmpfilename)
+        # f = file(tmpfilename, 'r')
+        # constancia = base64.b64decode(base64.encodestring(f.read()))
+        # f.close()
+        # attachments = [
+        #     ('Constancia %s %s.pdf' % (
+        #         self.name,
+        #         fields.Date.context_today(self)),
+        #         constancia)]
+        # self.message_post(
+        #     subject="Constancia de inscripción actualizada",
+        #     # subject="Actualizacion de datos desde Padron AFIP",
+        #     # body="Datos utilizados:<br/>%s" % vals,
+        #     attachments=attachments)
+        # TODO agregar un if si no se resive attachements y poner este msg
         self.message_post(
-            subject="Constancia de inscripción actualizada",
-            # subject="Actualizacion de datos desde Padron AFIP",
-            # body="Datos utilizados:<br/>%s" % vals,
-            attachments=attachments)
+            subject="No se pudo actualizar la constancia de inscripción",
+            body="Por errores de conexión no se pudo actualizar la constancia",
+        )
 
     @api.multi
     def get_data_from_padron_afip(self):

@@ -82,7 +82,6 @@ class ResPartner(models.Model):
         # sie queremos mejora esto podriamos no hardecodearlo con esto
         # https://bugs.launchpad.net/openobject-addons/+bug/1040901
         padron = PadronAFIP()
-        padron.Consultar(cuit)
         padron.DescargarConstancia(cuit, tmpfilename)
         f = file(tmpfilename, 'r')
         constancia = base64.b64decode(base64.encodestring(f.read()))

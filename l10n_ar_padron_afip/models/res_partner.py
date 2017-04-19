@@ -72,6 +72,7 @@ class ResPartner(models.Model):
     @api.multi
     def update_constancia_from_padron_afip(self):
         self.ensure_one()
+        # DESACTIVAMOS ESTO HASTA ARREGLARLO
         # cuit = self.cuit
         # # cuit = self.cuit_required
 

@@ -404,12 +404,22 @@ print "Observaciones:", wscdc.Obs
 
             # # invoice amount totals:
             imp_total = str("%.2f" % abs(inv.amount_total))
-            # ImpTotConc es el iva no gravado
-            imp_tot_conc = str("%.2f" % abs(inv.vat_untaxed))
-            # en la v9 lo hicimos diferente, aca restamos al vat amount
-            # lo que seria exento y no gravado
-            imp_neto = str("%.2f" % abs(
-                inv.vat_base_amount - inv.vat_untaxed - inv.vat_exempt_amount))
+
+            # ImpTotConc es el iva no gravado, si es Comprobante C debe ser 0.00
+            if doc_afip_code != 11: 
+                imp_tot_conc = str("%.2f" % abs(inv.vat_untaxed))
+            else:
+                imp_tot_conc = "0.00"
+
+            if doc_afip_code != 11: 
+                # en la v9 lo hicimos diferente, aca restamos al vat amount
+                # lo que seria exento y no gravado
+                imp_neto = str("%.2f" % abs(
+                    inv.vat_base_amount - inv.vat_untaxed - inv.vat_exempt_amount))
+            else:
+                # tomado de la v9
+                imp_neto = str("%.2f" % abs(inv.amount_untaxed))
+
             imp_iva = str("%.2f" % abs(inv.vat_amount))
             imp_subtotal = str("%.2f" % abs(inv.amount_untaxed))
             imp_trib = str("%.2f" % abs(inv.other_taxes_amount))

@@ -33,7 +33,7 @@ Liquidacion de Impuestos para Plan Contable General Argentino
 TODO implementar cambios como los hace l10n_ar_chart_generic_withholding
     """,
     'depends': [
-        'l10n_ar_chart_generic',
+        'l10n_ar_chart',
         'account_tax_settlement',
     ],
     'external_dependencies': {

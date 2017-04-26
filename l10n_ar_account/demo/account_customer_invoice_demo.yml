@@ -195,7 +195,7 @@
   - model: account.invoice
     eval: "[obj(ref('demo_invoice_10')).id]"
 -
-   Invoice to ADHOC con muchas lineas para probar rounding, con 4 ya daria error
+   Invoice to ADHOC con muchas lineas para probar rounding "ERROR 1" (ver readme), con 4 ya daria error (precision decimal de monedas y producto en 2)
 -
   !record {model: account.invoice, id: demo_invoice_11}:
     company_id: base.main_company
@@ -225,3 +225,81 @@
   !function {model: account.invoice, name: compute_taxes, id: demo_invoice_11}:
   - model: account.invoice
     eval: "[obj(ref('demo_invoice_11')).id]"
+-
+   Invoice to ADHOC con muchas lineas para probar rounding "ERROR 2" (ver readme), (se requiere usar precision decimal de precio producto en 4 para que de el error)
+-
+  !record {model: account.invoice, id: demo_invoice_12}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_adhoc
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Support Services 1'
+        product_id: product.product_product_2
+        price_unit: 15.7076
+        quantity: 1
+      - name: 'Support Services 2'
+        product_id: product.product_product_2
+        price_unit: 5.3076
+        quantity: 2
+      - name: 'Support Services 3'
+        product_id: product.product_product_2
+        price_unit: 3.5384
+        quantity: 2
+      - name: 'Support Services 4'
+        product_id: product.product_product_2
+        price_unit: 1.6376
+        quantity: 2
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_12}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_12')).id]"
+-
+   Invoice to ADHOC con muchas lineas para probar factura en cero y rounding "ERROR 3" (ver readme), (se requiere usar precision decimal de precio producto en 4 para que de el error)
+-
+  !record {model: account.invoice, id: demo_invoice_13}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_adhoc
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Support Services 1'
+        product_id: product.product_product_2
+        price_unit: 24.3
+        quantity: 3
+      - name: 'Support Services 2'
+        product_id: product.product_product_2
+        price_unit: 260.6
+        quantity: -1
+      - name: 'Support Services 3'
+        product_id: product.product_product_2
+        price_unit: 48.72
+        quantity: 1
+      - name: 'Support Services 4'
+        product_id: product.product_product_2
+        price_unit: 13.666
+        quantity: 1
+      - name: 'Support Services 5'
+        product_id: product.product_product_2
+        price_unit: 11.329
+        quantity: 2
+      - name: 'Support Services 6'
+        product_id: product.product_product_2
+        price_unit: 68.9408
+        quantity: 1
+      - name: 'Support Services 7'
+        product_id: product.product_product_2
+        price_unit: 4.7881
+        quantity: 2
+      - name: 'Support Services 8'
+        product_id: product.product_product_2
+        price_unit: 12.0625
+        quantity: 2
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_13}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_13')).id]"

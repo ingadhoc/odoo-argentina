@@ -4,7 +4,7 @@ try:
     from pyafipws.padron import PadronAFIP
 except ImportError:
     PadronAFIP = None
-import base64
+# import base64
 import logging
 _logger = logging.getLogger(__name__)
 

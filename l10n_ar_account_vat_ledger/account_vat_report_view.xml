@@ -39,7 +39,8 @@
                                 <field name="date_range_id" class="oe_edit_only"/>
                                 <field name="date_from"/>
                                 <field name="date_to"/>
-        	                    <field name="presented_ledger"/>
+                                <field name="presented_ledger_name" invisible="1"/>
+                                <field name="presented_ledger" filename="presented_ledger_name"/>
                             </group>
                             <group>
                                 <field name="first_page"/>

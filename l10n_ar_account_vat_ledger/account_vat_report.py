@@ -86,6 +86,8 @@ class account_vat_ledger(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)]},
     )
+    presented_ledger_name = fields.Char(
+    )
     state = fields.Selection(
         [('draft', 'Draft'), ('presented', 'Presented'), ('cancel', 'Cancel')],
         'State',

@@ -63,7 +63,6 @@ class account_invoice_line_report(models.Model):
         ('out_refund', 'Customer Refund'),
         ('in_refund', 'Supplier Refund'),
     ], 'Type', readonly=True)
-    section_id = fields.Many2one('crm.case.section', 'Sales Team', readonly=True)
     user_id = fields.Many2one('res.users', 'Salesman', readonly=True)
     state_id = fields.Many2one('res.country.state', 'State', readonly=True)
     company_id = fields.Many2one('res.company', 'Company', readonly=True)
@@ -117,7 +116,6 @@ class account_invoice_line_report(models.Model):
                 COALESCE("account_invoice"."afip_document_number", "account_invoice"."number") AS "number",
                 "account_invoice"."journal_id" AS "journal_id",--n
                 "account_invoice"."user_id" AS "user_id",--n
-                "account_invoice"."section_id" AS "section_id",--n
                 "account_invoice"."company_id" AS "company_id",--n
                 "account_invoice"."state_id" AS "state_id",--n
                 "account_invoice"."type" AS "type",

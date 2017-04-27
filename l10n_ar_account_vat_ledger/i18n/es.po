@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-17 11:22+0000\n"
-"PO-Revision-Date: 2017-04-17 11:22+0000\n"
+"POT-Creation-Date: 2017-04-26 21:59+0000\n"
+"PO-Revision-Date: 2017-04-26 21:59+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:192
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:194
 #, python-format
 msgid "%s VAT Ledger %s - %s"
 msgstr "%s Libro de IVA %s - %s"
@@ -47,7 +47,8 @@ msgid ""
 "                                <field name=\"date_range_id\" class=\"oe_edit_only\"/>\n"
 "                                <field name=\"date_from\"/>\n"
 "                                <field name=\"date_to\"/>\n"
-"        \t                    <field name=\"presented_ledger\"/>\n"
+"                                <field name=\"presented_ledger_name\" invisible=\"1\"/>\n"
+"                                <field name=\"presented_ledger\" filename=\"presented_ledger_name\"/>\n"
 "                            </group>\n"
 "                            <group>\n"
 "                                <field name=\"first_page\"/>\n"
@@ -125,103 +126,6 @@ msgid ""
 "\t            </form>\n"
 "\t\t\t"
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<form string=\"Libro de IVA\">\n"
-"                    <field name=\"type\" invisible=\"1\"/>\n"
-"                    <header>\n"
-"                        <button name=\"action_print\" string=\"Imprimir\" states=\"draft\" type=\"object\" class=\"oe_highlight\"/>\n"
-"                        <button name=\"action_print\" string=\"Imprimir\" states=\"cancel,presented\" type=\"object\"/>\n"
-"                        <button name=\"action_present\" string=\"Presentar\" states=\"draft\" type=\"object\" class=\"oe_highlight\"/>\n"
-"                        <button name=\"action_cancel\" string=\"Cancelar\" states=\"draft,presented\" type=\"object\"/>\n"
-"                        <button name=\"action_to_draft\" string=\"A Borrador\" states=\"cancel\" type=\"object\"/>\n"
-"                        <field name=\"state\" widget=\"statusbar\" statusbar_visible=\"draft,presented\"/>\n"
-"                    </header>\n"
-"                    <sheet>\n"
-"                        <group>\n"
-"    \t                   <group>\n"
-"        \t                    <field name=\"company_id\" widget=\"selection\" groups=\"base.group_multi_company\"/>\n"
-"                                <!-- <field name=\"fiscalyear_id\" domain=\"[('company_id','=',company_id)]\"/> -->\n"
-"                                <!-- <field name=\"period_id\" domain=\"[('fiscalyear_id','=',fiscalyear_id)]\"/> -->\n"
-"                                <field name=\"date_range_id\" class=\"oe_edit_only\"/>\n"
-"                                <field name=\"date_from\"/>\n"
-"                                <field name=\"date_to\"/>\n"
-"        \t                    <field name=\"presented_ledger\"/>\n"
-"                            </group>\n"
-"                            <group>\n"
-"                                <field name=\"first_page\"/>\n"
-"                                <field name=\"last_page\"/>\n"
-"                            \t<field name=\"reference\"/>\n"
-"                            </group>\n"
-"    \t                </group>\n"
-"    \t                <notebook>\n"
-"                            <page string=\"Diarios\" name=\"journal_ids\">\n"
-"                                <field name=\"journal_ids\" domain=\"[('type','in',['purchase', 'sale', 'purchase_refund', 'sale_refund']),('company_id', 'child_of', company_id)]\"/>\n"
-"                            </page>\n"
-"                            <page string=\"Invoices\" name=\"invoices\">\n"
-"                                <field name=\"invoice_ids\">\n"
-"                                    <tree default_order=\"date_invoice\">\n"
-"                                        <field name=\"state\" invisible=\"1\"/>\n"
-"                                        <field name=\"date_invoice\"/>\n"
-"                                        <field name=\"display_name\"/>\n"
-"                                        <field name=\"commercial_partner_id\"/>\n"
-"                                        <field name=\"afip_responsability_type_id\"/>\n"
-"                                        <field name=\"main_id_number\"/>\n"
-"                                        <!-- no sumamos porque necesitariamos los cc y que sea signed -->\n"
-"                                        <field name=\"amount_untaxed\"/>\n"
-"                                        <field name=\"amount_tax\"/>\n"
-"                                        <field name=\"amount_total\"/>\n"
-"                                    </tree>\n"
-"                                </field>\n"
-"                            </page>\n"
-"                            <page string=\"Resumen\" name=\"summary\">\n"
-"                                <label for=\"document_type_ids\"/>\n"
-"                                <field name=\"document_type_ids\" context=\"{'vat_ledger_id': active_id}\">\n"
-"                                    <tree>\n"
-"                                        <field name=\"name\"/>\n"
-"                                        <field name=\"amount_untaxed\" sum=\"Total\"/>\n"
-"                                        <field name=\"vat_amount\" sum=\"Total\"/>\n"
-"                                        <field name=\"other_taxes_amount\" sum=\"Total\"/>\n"
-"                                        <field name=\"amount_total\" sum=\"Total\"/>\n"
-"                                        <field name=\"currency_id\" invisible=\"1\"/>\n"
-"                                    </tree>\n"
-"                                </field>\n"
-"                                <label for=\"afip_responsability_type_ids\"/>\n"
-"                                <field name=\"afip_responsability_type_ids\" context=\"{'vat_ledger_id': active_id}\">\n"
-"                                    <tree>\n"
-"                                        <field name=\"name\"/>\n"
-"                                        <field name=\"amount_untaxed\" sum=\"Total\"/>\n"
-"                                        <field name=\"amount_tax\" sum=\"Total\"/>\n"
-"                                        <field name=\"amount_total\" sum=\"Total\"/>\n"
-"                                    </tree>\n"
-"                                </field>\n"
-"                                <label for=\"vat_tax_ids\"/>\n"
-"                                <field name=\"vat_tax_ids\" context=\"{'vat_ledger_id': active_id}\">\n"
-"                                    <tree>\n"
-"                                        <field name=\"name\"/>\n"
-"                                        <field name=\"amount_untaxed\" sum=\"Total\"/>\n"
-"                                        <field name=\"amount_tax\" sum=\"Total\"/>\n"
-"                                    </tree>\n"
-"                                </field>\n"
-"                                <label for=\"other_tax_ids\"/>\n"
-"                                <field name=\"other_tax_ids\" context=\"{'vat_ledger_id': active_id}\">\n"
-"                                    <tree>\n"
-"                                        <field name=\"name\"/>\n"
-"                                        <field name=\"amount_untaxed\" sum=\"Total\"/>\n"
-"                                        <field name=\"amount_tax\" sum=\"Total\"/>\n"
-"                                    </tree>\n"
-"                                </field>\n"
-"                            </page>\n"
-"    \t                    <page string=\"Notas\" name=\"notes\">\n"
-"    \t                        <field name=\"note\"/>\n"
-"    \t                    </page>\n"
-"    \t                </notebook>\n"
-"                    </sheet>\n"
-"                    <div class=\"oe_chatter\">\n"
-"                        <field name=\"message_follower_ids\" widget=\"mail_followers\"/>\n"
-"                        <field name=\"message_ids\" widget=\"mail_thread\"/>\n"
-"                    </div>\n"
-"\t            </form>\n"
-"\t\t\t"
 
 #. module: l10n_ar_account_vat_ledger
 #: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_tree
@@ -551,12 +455,18 @@ msgid "Presented Ledger"
 msgstr "Libro Presentado"
 
 #. module: l10n_ar_account_vat_ledger
+#: field:account.vat.ledger,presented_ledger_name:0
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_presented_ledger_name
+msgid "Presented ledger name"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
 #: selection:account.vat.ledger,type:0
 msgid "Purchase"
 msgstr "Compra"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:186
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:188
 #, python-format
 msgid "Purchases"
 msgstr "Compras"
@@ -579,7 +489,7 @@ msgid "Sale"
 msgstr "Venta"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:184
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:186
 #, python-format
 msgid "Sales"
 msgstr "Ventas"
@@ -620,13 +530,13 @@ msgid "Titile"
 msgstr "Título"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:212
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:214
 #, python-format
 msgid "To set \"Presented\" you must set the \"Last Page\" first"
 msgstr "Para establecer \"Presentado\" primero debe setear la \"Última Página\""
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:208
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:210
 #, python-format
 msgid "To set \"Presented\" you must upload the \"Presented Ledger\" first"
 msgstr "Para establecer \"Presentado\" primero debe subir el \"Libro Presentado\""

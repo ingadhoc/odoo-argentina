@@ -41,7 +41,7 @@
   - model: account.invoice
     eval: "[obj(ref('demo_invoice_6')).id]"
 -
-   Export invoice to expresso, fiscal position changes tax to exempt
+   Export invoice to expresso, fiscal position changes tax to exempt (type 4 because it have services)
 -
   !record {model: account.invoice, id: demo_invoice_7}:
     company_id: base.main_company
@@ -80,3 +80,63 @@
   !function {model: account.invoice, name: compute_taxes, id: demo_invoice_7}:
   - model: account.invoice
     eval: "[obj(ref('demo_invoice_7')).id]"
+-
+   Export invoice to expresso, fiscal position changes tax to exempt (type 1 because only products)
+-
+  !record {model: account.invoice, id: demo_invoice_14}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_expresso
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    afip_incoterm_id: l10n_ar_account.incoterm_exw
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
+        product_id: product.product_product_49
+        price_unit: 642.0
+        quantity: 5
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_14}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_14')).id]"
+-
+   Export invoice to expresso, fiscal position changes tax to exempt (type 2 because only service)
+-
+  !record {model: account.invoice, id: demo_invoice_15}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_expresso
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    afip_incoterm_id: l10n_ar_account.incoterm_exw
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Servicio de telefonía (IVA 27)'
+        product_id: l10n_ar_account.product_product_telefonia
+        price_unit: 250.0
+        quantity: 1.0
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_15}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_15')).id]"
+-
+   Export invoice to expresso, fiscal position changes tax to exempt (type 1 because it have products only, used to test refund of expo)
+-
+  !record {model: account.invoice, id: demo_invoice_16}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_expresso
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    afip_incoterm_id: l10n_ar_account.incoterm_exw
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
+        product_id: product.product_product_49
+        price_unit: 642.0
+        quantity: 5
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_invoice_16}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_invoice_16')).id]"

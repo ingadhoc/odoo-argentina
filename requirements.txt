@@ -7,6 +7,4 @@ fpdf>=1.7.2
 dbf>=0.88.019
 Pillow>=2.0.0
 openupgradelib
-# por fix en request desde server afuera argentina para padron
-git+https://github.com/ingadhoc/pyafipws@master
-#git+https://github.com/reingart/pyafipws@master
+git+https://github.com/reingart/pyafipws@master

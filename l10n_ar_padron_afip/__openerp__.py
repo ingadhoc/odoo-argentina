@@ -46,5 +46,5 @@
     'post_init_hook': 'post_init_hook',
     'name': 'Padron AFIP Argentino',
     'test': [],
-    'version': '9.0.1.0.0',
+    'version': '9.0.1.1.0',
 }

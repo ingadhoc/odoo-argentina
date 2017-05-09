@@ -12,35 +12,38 @@ _logger = logging.getLogger(__name__)
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
+    @api.model
     def get_tax_move_lines_action(
             self, date_from, date_to, tax_or_base='tax', taxes=None,
             tax_groups=None,
             document_types=None, afip_responsability=None,
-            f2002_category=None):
+            f2002_category=None, type_tax_use=None):
         domain = self._get_tax_move_lines_domain(
             date_from, date_to, tax_or_base=tax_or_base, taxes=taxes,
             tax_groups=tax_groups,
             document_types=document_types,
             afip_responsability=afip_responsability,
-            f2002_category=f2002_category)
+            f2002_category=f2002_category,
+            type_tax_use=type_tax_use)
         action = self.env.ref('account.action_account_moves_all_tree')
         vals = action.read()[0]
         vals['context'] = {}
         vals['domain'] = domain
         return vals
 
-    @api.multi
+    @api.model
     def _get_tax_move_lines_balance(
             self, date_from, date_to, tax_or_base='tax', taxes=None,
             tax_groups=None,
             document_types=None, afip_responsability=None,
-            f2002_category=None):
+            f2002_category=None, type_tax_use=None):
         domain = self._get_tax_move_lines_domain(
             date_from, date_to, tax_or_base=tax_or_base, taxes=taxes,
             tax_groups=tax_groups,
             document_types=document_types,
             afip_responsability=afip_responsability,
-            f2002_category=f2002_category)
+            f2002_category=f2002_category,
+            type_tax_use=type_tax_use)
         _logger.info('Getting tax balance for domain %s' % domain)
         balance = self.env['account.move.line'].\
             read_group(domain, ['balance'], [])[0]['balance']
@@ -51,7 +54,7 @@ class AccountMoveLine(models.Model):
             self, date_from, date_to, tax_or_base='tax', taxes=None,
             tax_groups=None,
             document_types=None, afip_responsability=None,
-            f2002_category=None):
+            f2002_category=None, type_tax_use=None):
         """
         Function to be used on reports to get move lines for tax reports
         """
@@ -63,6 +66,9 @@ class AccountMoveLine(models.Model):
         if tax_groups:
             taxes = self.env['account.tax'].search(
                 [('tax_group_id', 'in', tax_groups.ids)])
+
+        if type_tax_use:
+            taxes = taxes.filtered(lambda x: x.type_tax_use == type_tax_use)
 
         domain = [
             ('date', '>=', date_from),

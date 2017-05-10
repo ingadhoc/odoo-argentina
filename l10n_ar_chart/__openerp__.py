@@ -18,7 +18,7 @@
         'data/account_tax_template.xml',
         'data/account_tax_withholding_template.xml',
         'data/account_fiscal_template.xml',
-        # we try to loda this only in demo data
+        # we want user to choose which chart to install
         # 'data/account_chart_template.yml',
     ],
     'demo': [

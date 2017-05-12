@@ -147,7 +147,7 @@
         <!-- Agrolait - Customer -->
     <record id="base.res_partner_2" model="res.partner">
         <field name='main_id_category_id' ref="dt_CUIT"/>
-        <field name='main_id_number'>30111111118</field>
+        <field name='main_id_number'>30111111126</field>
     </record>
 
         <!-- Camptocamp - Supplier/Customer -->

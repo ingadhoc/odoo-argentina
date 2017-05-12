@@ -14,6 +14,7 @@
                         <field name='received_letter_ids'/>
                         <!-- TODO analizar -->
                         <!-- <field name='subjected_tax_group_ids'/> -->
+                        <field name='company_requires_vat'/>
                         <field name='active'/>
                     </group>
                 </form>
@@ -27,6 +28,7 @@
                 <tree string="Afip Responsability Type">
                     <field name="name"/>
                     <field name="code"/>
+                    <field name="company_requires_vat"/>
                     <field name="active"/>
                 </tree>
             </field>

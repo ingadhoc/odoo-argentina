@@ -31,6 +31,10 @@ class ResCompany(models.Model):
     afip_responsability_type_id = fields.Many2one(
         related='partner_id.afip_responsability_type_id',
     )
+    company_requires_vat = fields.Boolean(
+        related='afip_responsability_type_id.company_requires_vat',
+        store=True,
+    )
 
     @api.onchange('localization')
     def change_localization(self):

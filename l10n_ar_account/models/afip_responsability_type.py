@@ -39,6 +39,15 @@ class AfipresponsabilityType(models.Model):
         'letter_id',
         'Received Document Letters'
     )
+    # hacemos esto para que, principalmente, monotributistas y exentos no
+    # requieran iva, otra forma sería poner el impuesto no corresponde, pero
+    # no queremos complicar vista y configuración con un impuesto que no va
+    # a aportar nada
+    company_requires_vat = fields.Boolean(
+        string='Company requires vat?',
+        help='Companies of this type will require VAT tax on every invoice '
+        'line of a journal that use documents'
+    )
 
     _sql_constraints = [('name', 'unique(name)', 'Name must be unique!'),
                         ('code', 'unique(code)', 'Code must be unique!')]

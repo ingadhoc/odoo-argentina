@@ -1,0 +1,23 @@
+<odoo>
+
+    <record model='afip.responsability.type' id='res_IVARI'>
+        <field name='company_requires_vat' eval="True"/>
+    </record>
+
+    <record model='afip.responsability.type' id='res_IVARIFM'>
+        <field name='company_requires_vat' eval="True"/>
+    </record>
+
+    <record model='afip.responsability.type' id='res_IVARNI'>
+        <field name='company_requires_vat' eval="True"/>
+    </record>
+
+    <record model='afip.responsability.type' id='res_IVANR'>
+        <field name='company_requires_vat' eval="True"/>
+    </record>
+
+    <record model='afip.responsability.type' id='res_IVARI_AP'>
+        <field name='company_requires_vat' eval="True"/>
+    </record>
+
+</odoo>

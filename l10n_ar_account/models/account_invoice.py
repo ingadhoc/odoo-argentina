@@ -464,7 +464,9 @@ class AccountInvoice(models.Model):
             ('tax_group_id.tax', '=', 'vat')])
         lines_without_vat = self.env['account.invoice.line'].search([
             ('invoice_id', 'in', argentinian_invoices.ids),
-            ('invoice_line_tax_ids', 'not in', vat_taxes.ids)])
+            ('invoice_line_tax_ids', 'not in', vat_taxes.ids),
+            ('company_id.company_requires_vat', '=', True),
+        ])
         if lines_without_vat:
             raise ValidationError(_(
                 "Invoice with ID %s has some lines without vat Tax ") % (

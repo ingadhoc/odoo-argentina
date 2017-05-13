@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-08 21:44+0000\n"
-"PO-Revision-Date: 2017-05-08 21:44+0000\n"
+"POT-Creation-Date: 2017-05-12 18:36+0000\n"
+"PO-Revision-Date: 2017-05-12 18:36+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -544,24 +544,12 @@ msgid ""
 "                        <field name=\"received_letter_ids\"/>\n"
 "                        <!-- TODO analizar -->\n"
 "                        <!-- <field name='subjected_tax_group_ids'/> -->\n"
+"                        <field name=\"company_requires_vat\"/>\n"
 "                        <field name=\"active\"/>\n"
 "                    </group>\n"
 "                </form>\n"
 "            "
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<form string=\"Tipo de Responsabilidad AFIP\">\n"
-"                    <group>\n"
-"                        <field name=\"name\"/>\n"
-"                        <field name=\"code\"/>\n"
-"                        <field name=\"issued_letter_ids\"/>\n"
-"                        <field name=\"received_letter_ids\"/>\n"
-"                        <!-- TODO analizar -->\n"
-"                        <!-- <field name='subjected_tax_group_ids'/> -->\n"
-"                        <field name=\"active\"/>\n"
-"                    </group>\n"
-"                </form>\n"
-"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_document_letter_form
@@ -794,17 +782,11 @@ msgid ""
 "<tree string=\"Afip Responsability Type\">\n"
 "                    <field name=\"name\"/>\n"
 "                    <field name=\"code\"/>\n"
+"                    <field name=\"company_requires_vat\"/>\n"
 "                    <field name=\"active\"/>\n"
 "                </tree>\n"
 "            "
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<tree string=\"Tipo de Responsabiliadad AFIP\">\n"
-"                    <field name=\"name\"/>\n"
-"                    <field name=\"code\"/>\n"
-"                    <field name=\"active\"/>\n"
-"                </tree>\n"
-"            "
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_document_letter_tree
@@ -1070,10 +1052,28 @@ msgid "Companies"
 msgstr "Compañías"
 
 #. module: l10n_ar_account
+#: help:afip.responsability.type,company_requires_vat:0
+#: model:ir.model.fields,help:l10n_ar_account.field_afip_responsability_type_company_requires_vat
+#: model:ir.model.fields,help:l10n_ar_account.field_res_company_company_requires_vat
+#: help:res.company,company_requires_vat:0
+msgid ""
+"Companies of this type will require VAT tax on every invoice line of a "
+"journal that use documents"
+msgstr ""
+
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,company_id:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_company_id
 msgid "Company"
 msgstr "Compañía"
+
+#. module: l10n_ar_account
+#: field:afip.responsability.type,company_requires_vat:0
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_company_requires_vat
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_company_company_requires_vat
+#: field:res.company,company_requires_vat:0
+msgid "Company requires vat?"
+msgstr ""
 
 #. module: l10n_ar_account
 #: model:product.template,name:l10n_ar_account.product_product_no_gravado_product_template
@@ -1181,6 +1181,7 @@ msgid "Date Invoice to"
 msgstr "Fecha de factura hasta"
 
 #. module: l10n_ar_account
+#: model:res.company,overdue_msg:l10n_ar_account.company_exento
 #: model:res.company,overdue_msg:l10n_ar_account.company_mono
 msgid ""
 "Dear Sir/Madam,\n"
@@ -1426,7 +1427,7 @@ msgid "IVA No Gravado"
 msgstr "IVA No Gravado"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:495
+#: code:addons/l10n_ar_account/models/account_invoice.py:497
 #, python-format
 msgid ""
 "If you have choose a 0, exempt or untaxed 'tax', you must choose a fiscal position with afip code in %s.\n"
@@ -1485,7 +1486,7 @@ msgid "Invoice Total"
 msgstr "Total Factura"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:469
+#: code:addons/l10n_ar_account/models/account_invoice.py:471
 #, python-format
 msgid "Invoice with ID %s has some lines without vat Tax "
 msgstr "La factura con ID %s tiene algunas líneas sin IVA"
@@ -1899,7 +1900,7 @@ msgstr "Provincia"
 
 #. module: l10n_ar_account
 #: field:account.invoice.line.report,price_subtotal:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4269
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4272
 msgid "Subtotal"
 msgstr "Subtotal"
 
@@ -1993,14 +1994,14 @@ msgid "Type %s not implemented yet"
 msgstr "El tipo %s no está implementado todavía"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_move_line.py:77
+#: code:addons/l10n_ar_account/models/account_move_line.py:83
 #, python-format
 msgid "Type must be \"base\" or \"tax\""
 msgstr ""
 
 #. module: l10n_ar_account
 #: field:account.invoice.line.report,price_unit:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4268
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4271
 msgid "Unit Price"
 msgstr "Precio unitario"
 
@@ -2068,7 +2069,7 @@ msgstr ""
 "que no están configurados. Grupos de Impuesto (id): %s"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_move_line.py:59
+#: code:addons/l10n_ar_account/models/account_move_line.py:62
 #, python-format
 msgid "You must request tax amounts with tax or tax group"
 msgstr ""

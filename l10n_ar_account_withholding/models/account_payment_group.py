@@ -60,17 +60,20 @@ class AccountPaymentGroup(models.Model):
                 self.partner_type == 'supplier'):
             self.retencion_ganancias = 'nro_regimen'
 
-    @api.model
-    def create(self, vals):
-        """
-        para casos donde se paga desde algun otro lugar (por ej. liquidador de
-        impuestos), seteamos no aplica si no hay nada seteado
-        """
-        payment_group = super(AccountPaymentGroup, self).create(vals)
-        if (
-                payment_group.company_regimenes_ganancias_ids and
-                payment_group.partner_type == 'supplier' and
-                not payment_group.retencion_ganancias and
-                not payment_group.regimen_ganancias_id):
-            payment_group.retencion_ganancias = 'no_aplica'
-        return payment_group
+    # sacamos esto por ahora ya que no es muy prolijo y nos se esta usando, si
+    # lo llegamos a activar entonces tener en cuenta que en sipreco no queremos
+    # que en borrador se setee ninguna regimen de ganancias
+    # @api.model
+    # def create(self, vals):
+    #     """
+    #     para casos donde se paga desde algun otro lugar (por ej. liquidador
+    #     de impuestos), seteamos no aplica si no hay nada seteado
+    #     """
+    #     payment_group = super(AccountPaymentGroup, self).create(vals)
+    #     if (
+    #             payment_group.company_regimenes_ganancias_ids and
+    #             payment_group.partner_type == 'supplier' and
+    #             not payment_group.retencion_ganancias and
+    #             not payment_group.regimen_ganancias_id):
+    #         payment_group.retencion_ganancias = 'no_aplica'
+    #     return payment_group

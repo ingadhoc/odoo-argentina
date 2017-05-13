@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+
+<!-- SOLO RI por ahora, si se necesita para ex o mono tenemos que hacer nuevas por mapeo de impuestos -->
     <!-- Exportaciones a la zona franca -->
         <record model='account.fiscal.position.template' id='fiscal_position_template_zona_franca'>
             <field name='afip_code'>Z</field>

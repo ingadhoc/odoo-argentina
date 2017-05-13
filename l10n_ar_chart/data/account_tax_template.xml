@@ -2,6 +2,73 @@
 <openerp>
   <data noupdate="0">
 
+<!-- EXENTO -->
+        <record id="ri_tax_percepcion_iva_aplicada" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+            <field name="name">Percepción IVA Aplicada</field>
+            <field name="description">Perc IVA A</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="account_id" ref="ri_percepcion_iva_aplicada"/>
+            <field name="refund_account_id" ref="ri_percepcion_iva_aplicada"/>
+            <field name="type_tax_use">sale</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_iva"/>
+        </record>
+
+        <record id="ri_tax_percepcion_ganancias_aplicada" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+            <field name="name">Percepción Ganancias Aplicada</field>
+            <field name="description">Perc Ganancias A</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="account_id" ref="ri_percepcion_ganancias_aplicada"/>
+            <field name="refund_account_id" ref="ri_percepcion_ganancias_aplicada"/>
+            <field name="type_tax_use">sale</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_ganancias"/>
+        </record>
+
+        <record id="ri_tax_percepcion_ganancias_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+            <field name="name">Percepción Ganancias Sufrida</field>
+            <field name="description">Perc Ganancias S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="account_id" ref="base_percepcion_ganancias_sufrida"/>
+            <field name="refund_account_id" ref="base_percepcion_ganancias_sufrida"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_ganancias"/>
+        </record>
+
+        <record id="ri_tax_percepcion_iibb_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+            <field name="name">Percepción IIBB Sufrida</field>
+            <field name="description">Perc IIBB S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <!-- <field name="account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
+            <!-- <field name="refund_account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
+            <field name="type_tax_use">purchase</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_iibb"/>
+        </record>
+
+        <record id="ri_tax_percepcion_iibb_aplicada" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+            <field name="name">Percepción IIBB Aplicada</field>
+            <field name="description">Perc IIBB A</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <!-- <field name="account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
+            <!-- <field name="refund_account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
+            <field name="type_tax_use">sale</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_iibb"/>
+        </record>
+
+<!-- SOLO RI -->
         <!-- account.tax.template -->
         <record id="ri_tax_vat_no_corresponde_ventas" model="account.tax.template">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
@@ -185,19 +252,6 @@
             <field name="type_tax_use">purchase</field>
         </record>
 
-        <record id="ri_tax_percepcion_iva_aplicada" model="account.tax.template">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="name">Percepción IVA Aplicada</field>
-            <field name="description">Perc IVA A</field>
-            <field name="sequence">4</field>
-            <field name="amount_type">fixed</field>
-            <field eval="0.0" name="amount"/>
-            <field name="account_id" ref="ri_percepcion_iva_aplicada"/>
-            <field name="refund_account_id" ref="ri_percepcion_iva_aplicada"/>
-            <field name="type_tax_use">sale</field>
-            <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_iva"/>
-        </record>
-
         <record id="ri_tax_percepcion_iva_sufrida" model="account.tax.template">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
             <field name="name">Percepción IVA Sufrida</field>
@@ -211,32 +265,6 @@
             <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_iva"/>
         </record>
 
-        <record id="ri_tax_percepcion_ganancias_aplicada" model="account.tax.template">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="name">Percepción Ganancias Aplicada</field>
-            <field name="description">Perc Ganancias A</field>
-            <field name="sequence">4</field>
-            <field name="amount_type">fixed</field>
-            <field eval="0.0" name="amount"/>
-            <field name="account_id" ref="ri_percepcion_ganancias_aplicada"/>
-            <field name="refund_account_id" ref="ri_percepcion_ganancias_aplicada"/>
-            <field name="type_tax_use">sale</field>
-            <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_ganancias"/>
-        </record>
-
-        <record id="ri_tax_percepcion_ganancias_sufrida" model="account.tax.template">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="name">Percepción Ganancias Sufrida</field>
-            <field name="description">Perc Ganancias S</field>
-            <field name="sequence">4</field>
-            <field name="amount_type">fixed</field>
-            <field eval="0.0" name="amount"/>
-            <field name="account_id" ref="base_percepcion_ganancias_sufrida"/>
-            <field name="refund_account_id" ref="base_percepcion_ganancias_sufrida"/>
-            <field name="type_tax_use">purchase</field>
-            <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_ganancias"/>
-        </record>
-
         <record id="ri_tax_ganancias_iva_adicional" model="account.tax.template">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
             <field name="name">IVA Adicional 20%</field>
@@ -248,32 +276,6 @@
             <field name="refund_account_id" ref="ri_percepcion_iva_sufrida"/>
             <field name="type_tax_use">purchase</field>
             <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_iva"/>
-        </record>
-
-        <record id="ri_tax_percepcion_iibb_sufrida" model="account.tax.template">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="name">Percepción IIBB Sufrida</field>
-            <field name="description">Perc IIBB S</field>
-            <field name="sequence">4</field>
-            <field name="amount_type">fixed</field>
-            <field eval="0.0" name="amount"/>
-            <!-- <field name="account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
-            <!-- <field name="refund_account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
-            <field name="type_tax_use">purchase</field>
-            <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_iibb"/>
-        </record>
-
-        <record id="ri_tax_percepcion_iibb_aplicada" model="account.tax.template">
-            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
-            <field name="name">Percepción IIBB Aplicada</field>
-            <field name="description">Perc IIBB A</field>
-            <field name="sequence">4</field>
-            <field name="amount_type">fixed</field>
-            <field eval="0.0" name="amount"/>
-            <!-- <field name="account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
-            <!-- <field name="refund_account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
-            <field name="type_tax_use">sale</field>
-            <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_iibb"/>
         </record>
 
   </data>

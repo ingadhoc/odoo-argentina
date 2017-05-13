@@ -14,6 +14,7 @@
     'data': [
         'data/account_chart_base.xml',
         'data/account_chart_template.xml',
+        'data/account_chart_exento.xml',
         'data/account_chart_respinsc.xml',
         'data/account_tax_template.xml',
         'data/account_tax_withholding_template.xml',
@@ -44,5 +45,5 @@
     'installable': True,
     'images': [
     ],
-    'version': '9.0.1.1.0',
+    'version': '9.0.1.2.0',
 }

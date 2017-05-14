@@ -4,15 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Andres L <aleibrecht@gmail.com>, 2017
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 17:48+0000\n"
-"PO-Revision-Date: 2017-04-06 17:48+0000\n"
-"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2017-05-13 16:56+0000\n"
+"PO-Revision-Date: 2017-05-13 16:56+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -93,24 +91,12 @@ msgid ""
 "                <field name=\"communication\" position=\"after\">\n"
 "                    <label for=\"retencion_ganancias\" attrs=\"{'invisible': [('company_regimenes_ganancias_ids', '=', [])]}\"/>\n"
 "                    <div attrs=\"{'invisible': [('company_regimenes_ganancias_ids', '=', [])]}\">\n"
-"                        <field name=\"retencion_ganancias\" class=\"oe_inline\" attrs=\"{'required': [('company_regimenes_ganancias_ids', '!=', []), ('state', 'in', [('draft', 'confirmed')])]}\"/>\n"
-"                        <field name=\"regimen_ganancias_id\" class=\"oe_inline\" attrs=\"{'invisible': [('retencion_ganancias', '!=', 'nro_regimen')], 'required': [('retencion_ganancias', '=', 'nro_regimen'), ('company_regimenes_ganancias_ids', '!=', []), ('state', 'in', [('draft', 'confirmed')])]}\" domain=\"[('id', 'in', company_regimenes_ganancias_ids and company_regimenes_ganancias_ids[0][2] or [])]\" options=\"{&quot;no_open&quot;: True, &quot;no_create&quot;: True}\"/>\n"
+"                        <field name=\"retencion_ganancias\" class=\"oe_inline\" attrs=\"{'required': [('company_regimenes_ganancias_ids', '!=', []), ('state', 'in', ['draft', 'confirmed'])]}\"/>\n"
+"                        <field name=\"regimen_ganancias_id\" class=\"oe_inline\" attrs=\"{'invisible': [('retencion_ganancias', '!=', 'nro_regimen')], 'required': [('retencion_ganancias', '=', 'nro_regimen'), ('company_regimenes_ganancias_ids', '!=', []), ('state', 'in', ['draft', 'confirmed'])]}\" domain=\"[('id', 'in', company_regimenes_ganancias_ids and company_regimenes_ganancias_ids[0][2] or [])]\" options=\"{&quot;no_open&quot;: True, &quot;no_create&quot;: True}\"/>\n"
 "                    </div>\n"
 "                </field>\n"
 "            </data>"
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<data><form>\n"
-"                    <field name=\"company_regimenes_ganancias_ids\" invisible=\"1\"/>\n"
-"                </form>\n"
-"                <field name=\"communication\" position=\"after\">\n"
-"                    <label for=\"retencion_ganancias\" attrs=\"{'invisible': [('company_regimenes_ganancias_ids', '=', [])]}\"/>\n"
-"                    <div attrs=\"{'invisible': [('company_regimenes_ganancias_ids', '=', [])]}\">\n"
-"                        <field name=\"retencion_ganancias\" class=\"oe_inline\" attrs=\"{'required': [('company_regimenes_ganancias_ids', '!=', []), ('state', 'in', [('draft', 'confirmed')])]}\"/>\n"
-"                        <field name=\"regimen_ganancias_id\" class=\"oe_inline\" attrs=\"{'invisible': [('retencion_ganancias', '!=', 'nro_regimen')], 'required': [('retencion_ganancias', '=', 'nro_regimen'), ('company_regimenes_ganancias_ids', '!=', []), ('state', 'in', [('draft', 'confirmed')])]}\" domain=\"[('id', 'in', company_regimenes_ganancias_ids and company_regimenes_ganancias_ids[0][2] or [])]\" options=\"{&quot;no_open&quot;: True, &quot;no_create&quot;: True}\"/>\n"
-"                    </div>\n"
-"                </field>\n"
-"            </data>"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.ui.view,arch_db:l10n_ar_account_withholding.view_company_inherit_form

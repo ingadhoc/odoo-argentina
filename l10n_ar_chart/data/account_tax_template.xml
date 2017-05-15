@@ -252,6 +252,58 @@
             <field name="type_tax_use">purchase</field>
         </record>
 
+        <record id="ri_tax_vat_25_ventas" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="name">IVA Ventas 2,5%</field>
+            <field name="description">IVA 2,5%</field>
+            <field name="sequence">9</field>
+            <field eval="2.5" name="amount"/>
+            <field name="amount_type">percent</field>
+            <field name="account_id" ref="ri_iva_debito_fiscal"/>
+            <field name="refund_account_id" ref="ri_iva_credito_fiscal"/>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_iva_25"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+        <record id="ri_tax_vat_25_compras" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="name">IVA Compras 2,5%</field>
+            <field name="description">IVA 2,5%</field>
+            <field name="sequence">9</field>
+            <field eval="2.5" name="amount"/>
+            <field name="amount_type">percent</field>
+            <field name="account_id" ref="ri_iva_credito_fiscal"/>
+            <field name="refund_account_id" ref="ri_iva_debito_fiscal"/>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_iva_25"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
+        <record id="ri_tax_vat_5_ventas" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="name">IVA Ventas 5%</field>
+            <field name="description">IVA 5%</field>
+            <field name="sequence">10</field>
+            <field eval="5" name="amount"/>
+            <field name="amount_type">percent</field>
+            <field name="account_id" ref="ri_iva_debito_fiscal"/>
+            <field name="refund_account_id" ref="ri_iva_credito_fiscal"/>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_iva_5"/>
+            <field name="type_tax_use">sale</field>
+        </record>
+
+        <record id="ri_tax_vat_5_compras" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+            <field name="name">IVA Compras 5%</field>
+            <field name="description">IVA 5%</field>
+            <field name="sequence">10</field>
+            <field eval="5" name="amount"/>
+            <field name="amount_type">percent</field>
+            <field name="account_id" ref="ri_iva_credito_fiscal"/>
+            <field name="refund_account_id" ref="ri_iva_debito_fiscal"/>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_iva_5"/>
+            <field name="type_tax_use">purchase</field>
+        </record>
+
         <record id="ri_tax_percepcion_iva_sufrida" model="account.tax.template">
             <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
             <field name="name">Percepción IVA Sufrida</field>

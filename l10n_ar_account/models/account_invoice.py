@@ -42,11 +42,15 @@ class AccountInvoice(models.Model):
         related='document_letter_id.taxes_included',
         readonly=True,
     )
+    # mostly used on reports
     afip_responsability_type_id = fields.Many2one(
         'afip.responsability.type',
         string='AFIP Responsability Type',
-        readonly=True,
-        copy=False,
+        # readonly=True,
+        # copy=False,
+        help='Responsability type from journal entry where it is stored and '
+        'it nevers change',
+        related='move_id.afip_responsability_type_id',
     )
     invoice_number = fields.Integer(
         compute='_get_invoice_number',
@@ -270,8 +274,9 @@ class AccountInvoice(models.Model):
     @api.multi
     def get_localization_invoice_vals(self):
         self.ensure_one()
+        # TODO depreciar esta funcion y convertir a currency_rate campo
+        # calculado que la calcule en funcion a los datos del move
         if self.localization == 'argentina':
-            commercial_partner = self.partner_id.commercial_partner_id
             currency = self.currency_id.with_context(
                 date=self.date_invoice or fields.Date.context_today(self))
             if self.company_id.currency_id == currency:
@@ -280,8 +285,6 @@ class AccountInvoice(models.Model):
                 currency_rate = currency.compute(
                     1., self.company_id.currency_id, round=False)
             return {
-                'afip_responsability_type_id': (
-                    commercial_partner.afip_responsability_type_id.id),
                 'currency_rate': currency_rate,
             }
         else:

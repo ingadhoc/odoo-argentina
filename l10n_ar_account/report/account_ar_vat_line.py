@@ -224,8 +224,9 @@ class AccountArVatLine(models.Model):
             'tg25': tg_25 and tg_25.id or 0,
             'tg5': tg_5 and tg_5.id or 0,
             'tg_per_iva': tg_per_iva and tg_per_iva.id or 0,
-            'tg_iva0': tuple(tg_iva0 and tg_iva0.ids or [0]),
-            'tg_vats': tuple(vat_tax_groups and vat_tax_groups.ids or [0]),
+            # tuple [0, 0] so we dont have error on sql
+            'tg_iva0': tuple(tg_iva0 and tg_iva0.ids or [0, 0]),
+            'tg_vats': tuple(vat_tax_groups and vat_tax_groups.ids or [0, 0]),
         }
         query = """
 SELECT

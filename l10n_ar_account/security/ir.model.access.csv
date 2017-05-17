@@ -7,3 +7,4 @@ access_afip_incoterm_manager,afip.incoterm.manager,model_afip_incoterm,account.g
 access_afip_incoterm_all,afip.incoterm.all,model_afip_incoterm,,1,0,0,0
 account_invoice_line_report,account.invoice.line.report,model_account_invoice_line_report,account.group_account_invoice,1,0,0,0
 access_afip_vat_f2002_category,access_afip_vat_f2002_category,model_afip_vat_f2002_category,,1,0,0,0
+access_account_ar_vat_line,access_account_ar_vat_line,model_account_ar_vat_line,account.group_account_user,1,0,0,0

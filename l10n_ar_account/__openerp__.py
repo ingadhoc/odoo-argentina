@@ -59,6 +59,7 @@
         'res_config_view.xml',
         'report/invoice_analysis.xml',
         'security/ir.model.access.csv',
+        'security/security.xml',
     ],
     'demo': [
         'demo/partner_demo.xml',

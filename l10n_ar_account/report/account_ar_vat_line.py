@@ -215,6 +215,8 @@ class AccountArVatLine(models.Model):
         tg_per_iva = ref('l10n_ar_account.tax_group_percepcion_iva', False)
         # TODO ver si en prox versiones en vez de usar los tax group y ext id
         # usamos labels o algo mas odoo way
+
+        # if external ids not loaded yet, we load a dummy id 0
         vals = {
             'tg21': tg_21 and tg_21.id or 0,
             'tg10': tg_10 and tg_10.id or 0,
@@ -222,8 +224,8 @@ class AccountArVatLine(models.Model):
             'tg25': tg_25 and tg_25.id or 0,
             'tg5': tg_5 and tg_5.id or 0,
             'tg_per_iva': tg_per_iva and tg_per_iva.id or 0,
-            'tg_iva0': tuple(tg_iva0 and tg_iva0.ids or []),
-            'tg_vats': tuple(vat_tax_groups.ids),
+            'tg_iva0': tuple(tg_iva0 and tg_iva0.ids or [0]),
+            'tg_vats': tuple(vat_tax_groups and vat_tax_groups.ids or [0]),
         }
         query = """
 SELECT

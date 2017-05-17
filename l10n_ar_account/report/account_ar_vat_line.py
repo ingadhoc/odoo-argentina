@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import tools, models, fields, api, _
-from ast import literal_eval
+from openerp import tools, models, fields, api
+# from ast import literal_eval
 
 
 class AccountArVatLine(models.Model):
@@ -17,40 +17,23 @@ class AccountArVatLine(models.Model):
     _name = "account.ar.vat.line"
     _description = "Línea de IVA para análisis en localización argentina"
     _auto = False
-    # _rec_name = 'document_number'
-    # _order = 'date asc, date_maturity asc, document_number asc, id'
-    # _depends = {
-    #     'res.partner': [
-    #         'user_id',
-    #     ],
-    #     'account.move': [
-    #         'document_type_id', 'document_number',
-    #     ],
-    #     'account.move.line': [
-    #         'account_id', 'debit', 'credit', 'date_maturity', 'partner_id',
-    #         'amount_currency',
-    #     ],
-    # }
 
     document_type_id = fields.Many2one(
         'account.document.type',
         'Document Type',
         readonly=True
     )
-    # document_number = fields.Char(
-    #     readonly=True,
-    #     string='Document Number',
-    # )
     date = fields.Date(
         readonly=True
     )
     # TODO analizar si lo hacemos related simplemente pero con store, no lo
     # hicimos por posibles temas de performance
-    journal_type = fields.Selection([
+    type = fields.Selection([
         ('purchase', 'Purchase'),
-        ('cash', 'Cash'),
-        ('bank', 'Bank'),
-        ('general', 'Miscellaneous'),
+        ('sale', 'Sale'),
+        # ('cash', 'Cash'),
+        # ('bank', 'Bank'),
+        # ('general', 'Miscellaneous'),
     ],
         # readonly=True
         # related='journal_id.type',
@@ -118,24 +101,6 @@ class AccountArVatLine(models.Model):
         readonly=True,
         string='Perc. IVA',
         help='Percepción de IVA',
-        currency_field='company_currency_id',
-    )
-    per_iibb = fields.Monetary(
-        readonly=True,
-        string='Perc. IIBB',
-        help='Percepción de IIBB',
-        currency_field='company_currency_id',
-    )
-    per_ganancias = fields.Monetary(
-        readonly=True,
-        string='Perc. Gan.',
-        help='Percepción de ganancias',
-        currency_field='company_currency_id',
-    )
-    ret_iva = fields.Monetary(
-        readonly=True,
-        string='Ret. IVA',
-        help='Retención de IVA',
         currency_field='company_currency_id',
     )
     no_gravado_iva = fields.Monetary(
@@ -230,23 +195,34 @@ class AccountArVatLine(models.Model):
         tools.drop_view_if_exists(cr, self._table)
         env = api.Environment(cr, 1, {})
         ref = env.ref
+
+        # TODO tal vez querramos agregar chequeo de que no haya tax groups
+        # tipo vat que no esten en los ref
         vat_tax_groups = env['account.tax.group'].search(
             [('tax', '=', 'vat')])
+        tg_nc = ref('l10n_ar_account.tax_group_iva_no_corresponde', False)
+        tg_ng = ref('l10n_ar_account.tax_group_iva_no_gravado', False)
+        tg_ex = ref('l10n_ar_account.tax_group_iva_exento', False)
+        tg_0 = ref('l10n_ar_account.tax_group_iva_0', False)
+        tg_21 = ref('l10n_ar_account.tax_group_iva_21', False)
+        tg_10 = ref('l10n_ar_account.tax_group_iva_10', False)
+        tg_27 = ref('l10n_ar_account.tax_group_iva_27', False)
+        tg_25 = ref('l10n_ar_account.tax_group_iva_25', False)
+        tg_5 = ref('l10n_ar_account.tax_group_iva_5', False)
+        tg_iva0 = False
+        if tg_nc and tg_ng and tg_ex and tg_0:
+            tg_iva0 = tg_nc + tg_ng + tg_ex + tg_0
+        tg_per_iva = ref('l10n_ar_account.tax_group_percepcion_iva', False)
         # TODO ver si en prox versiones en vez de usar los tax group y ext id
         # usamos labels o algo mas odoo way
         vals = {
-            'tg21': ref('l10n_ar_account.tax_group_iva_21').id,
-            'tg10': ref('l10n_ar_account.tax_group_iva_10').id,
-            'tg27': ref('l10n_ar_account.tax_group_iva_27').id,
-            'tg25': ref('l10n_ar_account.tax_group_iva_25').id,
-            'tg5': ref('l10n_ar_account.tax_group_iva_5').id,
-            'tg_per_iva': ref('l10n_ar_account.tax_group_percepcion_iva').id,
-            'tg_ret_iva': ref('l10n_ar_account.tax_group_retencion_iva').id,
-            'tg_per_iibb': ref('l10n_ar_account.tax_group_percepcion_iibb').id,
-            'tg_per_ganancias': ref(
-                'l10n_ar_account.tax_group_percepcion_ganancias').id,
-            'tg_iva0': tuple(vat_tax_groups.ids),
-            'tg_other': tuple(vat_tax_groups.ids),
+            'tg21': tg_21 and tg_21.id or 0,
+            'tg10': tg_10 and tg_10.id or 0,
+            'tg27': tg_27 and tg_27.id or 0,
+            'tg25': tg_25 and tg_25.id or 0,
+            'tg5': tg_5 and tg_5.id or 0,
+            'tg_per_iva': tg_per_iva and tg_per_iva.id or 0,
+            'tg_iva0': tuple(tg_iva0 and tg_iva0.ids or []),
             'tg_vats': tuple(vat_tax_groups.ids),
         }
         query = """
@@ -263,14 +239,7 @@ SELECT
     am.afip_responsability_type_id,
     am.state,
     am.document_type_id,
-    aj.type as journal_type,
-/*    (CASE
-        WHEN aml.payment_id is not null and ap.partner_type = 'supplier'
-            THEN 'Pago'
-        WHEN aml.payment_id is not null and ap.partner_type = 'customer'
-            THEN 'Cobro'
-        WHEN aml.invoice_id is not null THEN 'Invoice'
-        ELSE 'Other' END) as tipo_doc,*/
+    aj.type,
     sum(CASE WHEN bt.tax_group_id=%(tg21)s THEN balance ELSE 0 END) as base_21,
     sum(CASE WHEN nt.tax_group_id=%(tg21)s THEN balance ELSE 0 END) as iva_21,
     sum(CASE WHEN bt.tax_group_id=%(tg10)s THEN balance ELSE 0 END) as base_10,
@@ -284,15 +253,9 @@ SELECT
     --TODO separar sufido y aplicado o filtrar por tipo de operacion o algo?
     sum(CASE WHEN nt.tax_group_id=%(tg_per_iva)s THEN balance ELSE 0 END)
         as per_iva,
-    sum(CASE WHEN nt.tax_group_id=%(tg_ret_iva)s THEN balance ELSE 0 END)
-        as ret_iva,
-    sum(CASE WHEN nt.tax_group_id=%(tg_per_iibb)s THEN balance ELSE 0 END)
-        as per_iibb,
-    sum(CASE WHEN nt.tax_group_id=%(tg_per_ganancias)s THEN balance ELSE 0 END)
-        as per_ganancias,
     sum(CASE WHEN nt.tax_group_id in %(tg_iva0)s THEN balance ELSE 0 END)
         as no_gravado_iva,
-    sum(CASE WHEN nt.tax_group_id not in %(tg_other)s THEN balance ELSE 0 END)
+    sum(CASE WHEN nt.tax_group_id not in %(tg_vats)s THEN balance ELSE 0 END)
         as otros_impuestos,
     sum(balance) as total
 FROM
@@ -300,9 +263,6 @@ FROM
 LEFT JOIN
     account_move as am
     ON aml.move_id = am.id
-/*LEFT JOIN
-    account_payment as ap
-    ON aml.payment_id = ap.id*/
 /*LEFT JOIN
     res_partner as rp
     ON aml.partner_id = rp.id*/
@@ -325,6 +285,9 @@ LEFT JOIN
     ON amltr.account_tax_id = bt.id
 WHERE
     aa.internal_type not in ('payable', 'receivable') and
+    -- TODO analiza ri registramos cosas de iva en otros diarios que no son
+    -- compras y ventas
+    aj.type in ('sale', 'purchase') and
     (nt.tax_group_id in %(tg_vats)s or bt.tax_group_id in %(tg_vats)s)
 GROUP BY
     aml.id, aj.type, am.state, am.document_type_id,

@@ -5,6 +5,7 @@
 ##############################################################################
 from openerp import fields, models, api, _
 from openerp.exceptions import UserError
+import base64
 try:
     from pyafipws.padron import PadronAFIP
 except ImportError:

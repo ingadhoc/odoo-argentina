@@ -248,6 +248,7 @@ SELECT
     aml.date,
     aml.move_id,
     aml.journal_id,
+    aml.account_id,
     aml.company_id,
     aml.partner_id,
     aml.name,

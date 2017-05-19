@@ -6,6 +6,15 @@ Módulo base de Contabilidad Argentina
 
 #. Create a purchases journals for "Liquidación de Impuestos", "Asientos de Apertura / Cierre" and "Sueldos y Jornales" on chart account installation
 
+Sobre padron afip:
+-----------------
+
+#. If you want to disable Title Case for afip retrived data, you can change or create a paremeter "use_title_case_on_padron_afip" with value False (by default title case is used)
+#. para actualizar tenemos básicamente dos opciones:
+
+    * Desde un partner cualquiera, si el mismo tiene configurado CUIT, entonces puede hacer click en el botón "Actualizar desde AFIP"
+    * Hacerlo masivamente desde ""
+
 Configuration
 =============
 

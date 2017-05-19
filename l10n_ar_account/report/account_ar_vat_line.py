@@ -243,24 +243,34 @@ SELECT
     am.state,
     am.document_type_id,
     aj.type,
-    sum(CASE WHEN bt.tax_group_id=%(tg21)s THEN balance ELSE 0 END) as base_21,
-    sum(CASE WHEN nt.tax_group_id=%(tg21)s THEN balance ELSE 0 END) as iva_21,
-    sum(CASE WHEN bt.tax_group_id=%(tg10)s THEN balance ELSE 0 END) as base_10,
-    sum(CASE WHEN nt.tax_group_id=%(tg10)s THEN balance ELSE 0 END) as iva_10,
-    sum(CASE WHEN bt.tax_group_id=%(tg27)s THEN balance ELSE 0 END) as base_27,
-    sum(CASE WHEN bt.tax_group_id=%(tg27)s THEN balance ELSE 0 END) as iva_27,
-    sum(CASE WHEN bt.tax_group_id=%(tg25)s THEN balance ELSE 0 END) as base_25,
-    sum(CASE WHEN bt.tax_group_id=%(tg25)s THEN balance ELSE 0 END) as iva_25,
-    sum(CASE WHEN nt.tax_group_id=%(tg5)s THEN balance ELSE 0 END) as base_5,
-    sum(CASE WHEN nt.tax_group_id=%(tg5)s THEN balance ELSE 0 END) as iva_5,
+    sum(CASE WHEN bt.tax_group_id=%(tg21)s THEN aml.balance ELSE 0 END)
+        as base_21,
+    sum(CASE WHEN nt.tax_group_id=%(tg21)s THEN aml.balance ELSE 0 END)
+        as iva_21,
+    sum(CASE WHEN bt.tax_group_id=%(tg10)s THEN aml.balance ELSE 0 END)
+        as base_10,
+    sum(CASE WHEN nt.tax_group_id=%(tg10)s THEN aml.balance ELSE 0 END)
+        as iva_10,
+    sum(CASE WHEN bt.tax_group_id=%(tg27)s THEN aml.balance ELSE 0 END)
+        as base_27,
+    sum(CASE WHEN nt.tax_group_id=%(tg27)s THEN aml.balance ELSE 0 END)
+        as iva_27,
+    sum(CASE WHEN bt.tax_group_id=%(tg25)s THEN aml.balance ELSE 0 END)
+        as base_25,
+    sum(CASE WHEN nt.tax_group_id=%(tg25)s THEN aml.balance ELSE 0 END)
+        as iva_25,
+    sum(CASE WHEN bt.tax_group_id=%(tg5)s THEN aml.balance ELSE 0 END)
+        as base_5,
+    sum(CASE WHEN nt.tax_group_id=%(tg5)s THEN aml.balance ELSE 0 END)
+        as iva_5,
     --TODO separar sufido y aplicado o filtrar por tipo de operacion o algo?
-    sum(CASE WHEN nt.tax_group_id=%(tg_per_iva)s THEN balance ELSE 0 END)
+    sum(CASE WHEN nt.tax_group_id=%(tg_per_iva)s THEN aml.balance ELSE 0 END)
         as per_iva,
-    sum(CASE WHEN nt.tax_group_id in %(tg_iva0)s THEN balance ELSE 0 END)
+    sum(CASE WHEN nt.tax_group_id in %(tg_iva0)s THEN aml.balance ELSE 0 END)
         as no_gravado_iva,
-    sum(CASE WHEN nt.tax_group_id not in %(tg_vats)s THEN balance ELSE 0 END)
-        as otros_impuestos,
-    sum(balance) as total
+    sum(CASE WHEN nt.tax_group_id not in %(tg_vats)s THEN aml.balance ELSE
+        0 END) as otros_impuestos,
+    sum(aml.balance) as total
 FROM
     account_move_line aml
 LEFT JOIN

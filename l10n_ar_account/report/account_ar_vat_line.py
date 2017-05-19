@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import tools, models, fields, api
+from openerp import tools, models, fields, api, _
 # from ast import literal_eval
 
 
@@ -188,6 +188,19 @@ class AccountArVatLine(models.Model):
     # name = fields.Char(
     #     compute='_compute_move_lines_data',
     # )
+
+    @api.multi
+    def open_journal_item(self):
+        self.ensure_one()
+        return {
+            'name': _('Journal Item'),
+            'target': 'current',
+            'res_id': self.id,
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'account.move.line',
+            'type': 'ir.actions.act_window',
+        }
 
     # TODO usar en v10
     # @api.model_cr

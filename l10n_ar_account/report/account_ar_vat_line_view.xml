@@ -61,7 +61,7 @@
                 <field name="otros_impuestos" sum="Total"/>
                 <field name="no_gravado_iva" sum="Total"/>
                 <field name="total" sum="Total"/>
-                <button name="open_journal_item" string="Open" type="object" icon="fa-pencil" help="Open journal item"/>
+                <button name="open_journal_item" string="Open" type="object" icon="fa-external-link" help="Open journal item"/>
             </tree>
          </field>
     </record>

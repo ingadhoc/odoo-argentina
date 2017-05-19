@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Módulo base de Contabilidad Argentina",
-    'version': '9.0.1.10.0',
+    'version': '9.0.1.11.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Moldeo Interactive',
@@ -41,6 +41,7 @@
         # data_account_type
         # 'data/account_financial_report_data.xml',
         # 'data/account_payment_term.xml',
+        'report/account_ar_vat_line_view.xml',
         'view/res_partner_view.xml',
         'view/res_company_view.xml',
         'view/afip_menuitem.xml',
@@ -58,6 +59,7 @@
         'res_config_view.xml',
         'report/invoice_analysis.xml',
         'security/ir.model.access.csv',
+        'security/security.xml',
     ],
     'demo': [
         'demo/partner_demo.xml',

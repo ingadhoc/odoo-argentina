@@ -4,16 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Andres L <aleibrecht@gmail.com>, 2017
-# Javier Diez <jd@adhoc.com.ar>, 2017
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 17:48+0000\n"
-"PO-Revision-Date: 2017-04-06 17:48+0000\n"
-"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2017-05-19 17:21+0000\n"
+"PO-Revision-Date: 2017-05-19 17:21+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -168,7 +165,7 @@ msgid ""
 "                        <button name=\"get_pyafipws_currencies\" string=\"Get Currencies\" help=\"Get valid currencies classes for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
 "                        <button name=\"check_document_local_remote_number\" string=\"Check Remote/Local Numbers\" help=\"Check documents local next number against remote Numbers\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
 "                        <button name=\"sync_document_local_remote_number\" string=\"Sync Remote/Local Numbers\" help=\"Sync documents local next number against remote Numbers\" type=\"object\" confirm=\"Warning! this operation can not be undone, all sequences will be syncronized with remote numbers\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                        <button name=\"272\" string=\"Get Currency Rate\" type=\"action\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                        <button name=\"273\" string=\"Get Currency Rate\" type=\"action\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
 "                    </header>\n"
 "                </sheet>\n"
 "                <field name=\"point_of_sale_type\" position=\"after\">\n"
@@ -176,25 +173,6 @@ msgid ""
 "                </field>\n"
 "            </data>"
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<data><sheet position=\"before\">\n"
-"                    <header>\n"
-"                        <button name=\"action_get_connection\" string=\"Get Connection\" help=\"Get Connection For this webservice and create it if no valid\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                        <button name=\"test_pyafipws_dummy\" string=\"Dummy Test\" help=\"Dummy test to check connection to selected webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                        <button name=\"test_pyafipws_point_of_sales\" string=\"Get Points Of Sale\" help=\"Get Enable Point of Sales for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                        <button name=\"get_pyafipws_cuit_document_classes\" string=\"Get Document Types\" help=\"Get valid document types for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                        <button name=\"get_pyafipws_zonas\" string=\"Get Zones\" help=\"Get zones for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '!=', 'wsbfe')]}\"/>\n"
-"                        <button name=\"get_pyafipws_NCM\" string=\"Get NCM\" help=\"Obetener códigos del Nomenclador Común del Mercosur\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '!=', 'wsbfe')]}\"/>\n"
-"                        <button name=\"get_pyafipws_currencies\" string=\"Get Currencies\" help=\"Get valid currencies classes for this webservice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                        <button name=\"check_document_local_remote_number\" string=\"Check Remote/Local Numbers\" help=\"Check documents local next number against remote Numbers\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                        <button name=\"sync_document_local_remote_number\" string=\"Sync Remote/Local Numbers\" help=\"Sync documents local next number against remote Numbers\" type=\"object\" confirm=\"Warning! this operation can not be undone, all sequences will be syncronized with remote numbers\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                        <button name=\"272\" string=\"Get Currency Rate\" type=\"action\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                    </header>\n"
-"                </sheet>\n"
-"                <field name=\"point_of_sale_type\" position=\"after\">\n"
-"                    <field name=\"afip_ws\" attrs=\"{'invisible':[('point_of_sale_type', '!=', 'electronic')], 'required':[('point_of_sale_type', '=', 'electronic')]}\"/>\n"
-"                </field>\n"
-"            </data>"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_account_config_settings
@@ -364,17 +342,10 @@ msgid ""
 "<header>\n"
 "                    <field name=\"afip_ws\" invisible=\"1\"/>\n"
 "                    <button name=\"action_get_pyafipws_last_invoice\" string=\"Get Last Invoice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                    <button name=\"271\" string=\"Get Document Remote Data\" type=\"action\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
+"                    <button name=\"272\" string=\"Get Document Remote Data\" type=\"action\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
 "                </header>\n"
 "            "
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<header>\n"
-"                    <field name=\"afip_ws\" invisible=\"1\"/>\n"
-"                    <button name=\"action_get_pyafipws_last_invoice\" string=\"Get Last Invoice\" type=\"object\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                    <button name=\"271\" string=\"Get Document Remote Data\" type=\"action\" attrs=\"{'invisible':[('afip_ws', '=', False)]}\"/>\n"
-"                </header>\n"
-"            "
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_wsfe_error_tree
@@ -412,8 +383,8 @@ msgid "AFIP Message"
 msgstr "Mensaje del AFIP"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:640
 #: code:addons/l10n_ar_afipws_fe/models/invoice.py:644
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:648
 #, python-format
 msgid "AFIP Validation Error. %s"
 msgstr "Error de Validación AFIP. %s"
@@ -894,7 +865,7 @@ msgid "No company found using argentinian localization"
 msgstr "No se encontró compañía utilizando la localización argentina"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:474
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:478
 #, python-format
 msgid "No vat defined for the partner and also no CUIT set on country"
 msgstr ""
@@ -907,8 +878,8 @@ msgid "Not Available"
 msgstr "No Disponible"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:567
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:580
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:571
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:584
 #, python-format
 msgid "Not afip code con producto UOM %s"
 msgstr "No hay código de afip en el UdM %s"
@@ -995,7 +966,7 @@ msgid "Validation Type"
 msgstr "Tipo de Validación"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:594
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:598
 #, python-format
 msgid "WS wsmtxca Not implemented yet"
 msgstr "WS wsmtxca aún no implementado"

@@ -14,15 +14,16 @@
                 <field name="journal_id"/>
                 <field name="document_type_id"/>
                 <field name="company_id" groups="base.group_multi_company"/>
-                <field name="type"/>
+                <field name="comprobante"/>
+                <!-- <field name="type"/> -->
                 <separator/>
                 <filter name="posted" string="Posted" domain="[('state','=','posted')]" help="Posted Journal Items"/>
                 <separator/>
                 <filter string="This Month" name="this_month" domain="[('date','&lt;=', time.strftime('%Y-%m-%d')),('date','&gt;=',time.strftime('%Y-%m-01'))]"/>
                 <filter string="This Year" name="this_year" domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
                 <separator/>
-                <filter string="IVA Ventas" name="iva_ventas" domain="[('type', '=', 'sale')]" />
-                <filter string="IVA Compras" name="iva_compras" domain="[('type', '=', 'purchase')]" />
+                <filter string="IVA Ventas" name="iva_ventas" domain="[('comprobante', 'in', ['out_invoice', 'out_refund'])]" />
+                <filter string="IVA Compras" name="iva_compras" domain="[('comprobante', 'in', ['in_invoice', 'in_refund'])]" />
                 <separator/>
                 <filter string="With Document Type" name="with_document_type" domain="[('document_type_id','!=', False)]"/>
                 <group expand="0" string="Group By...">
@@ -30,7 +31,8 @@
                     <filter string="AFIP responsability" context="{'group_by': 'afip_responsability_type_id'}"/>
                     <filter string="Date" context="{'group_by': 'date'}"/>
                     <filter string="Partner" context="{'group_by': 'partner_id'}"/>
-                    <filter string="Type" context="{'group_by': 'type'}"/>
+                    <filter string="Comprobante" context="{'group_by': 'comprobante'}"/>
+                    <!-- <filter string="Type" context="{'group_by': 'type'}"/> -->
                     <filter string="Document Type" context="{'group_by': 'document_type_id'}"/>
                     <filter string="Account" context="{'group_by': 'account_id'}"/>
                     <filter string="Company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>

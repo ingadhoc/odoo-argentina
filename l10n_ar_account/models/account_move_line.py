@@ -5,6 +5,7 @@
 ##############################################################################
 from openerp import models, api, _
 from openerp.exceptions import UserError
+from openerp.tools.safe_eval import safe_eval
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -16,15 +17,21 @@ class AccountMoveLine(models.Model):
     def get_tax_move_lines_action(
             self, date_from, date_to, tax_or_base='tax', taxes=None,
             tax_groups=None,
-            document_types=None, afip_responsability=None,
-            f2002_category=None, type_tax_use=None):
+            document_types=None, afip_responsabilities=None,
+            f2002_category=None, activity=None, type_tax_use=None,
+            company_ids=None, credit_or_debit=None, domain=None):
         domain = self._get_tax_move_lines_domain(
             date_from, date_to, tax_or_base=tax_or_base, taxes=taxes,
             tax_groups=tax_groups,
             document_types=document_types,
-            afip_responsability=afip_responsability,
+            afip_responsabilities=afip_responsabilities,
             f2002_category=f2002_category,
-            type_tax_use=type_tax_use)
+            activity=activity,
+            type_tax_use=type_tax_use,
+            company_ids=company_ids,
+            credit_or_debit=credit_or_debit,
+            domain=domain,
+        )
         action = self.env.ref('account.action_account_moves_all_tree')
         vals = action.read()[0]
         vals['context'] = {}
@@ -35,16 +42,21 @@ class AccountMoveLine(models.Model):
     def _get_tax_move_lines_balance(
             self, date_from, date_to, tax_or_base='tax', taxes=None,
             tax_groups=None,
-            document_types=None, afip_responsability=None,
-            f2002_category=None, type_tax_use=None):
+            document_types=None, afip_responsabilities=None,
+            f2002_category=None, activity=None, type_tax_use=None,
+            company_ids=None, credit_or_debit=None, domain=None):
         domain = self._get_tax_move_lines_domain(
             date_from, date_to, tax_or_base=tax_or_base, taxes=taxes,
             tax_groups=tax_groups,
             document_types=document_types,
-            afip_responsability=afip_responsability,
+            afip_responsabilities=afip_responsabilities,
             f2002_category=f2002_category,
-            type_tax_use=type_tax_use)
-        _logger.info('Getting tax balance for domain %s' % domain)
+            activity=activity,
+            type_tax_use=type_tax_use,
+            company_ids=company_ids,
+            credit_or_debit=credit_or_debit,
+            domain=domain,
+        )
         balance = self.env['account.move.line'].\
             read_group(domain, ['balance'], [])[0]['balance']
         return balance and -balance or 0.0
@@ -53,11 +65,14 @@ class AccountMoveLine(models.Model):
     def _get_tax_move_lines_domain(
             self, date_from, date_to, tax_or_base='tax', taxes=None,
             tax_groups=None,
-            document_types=None, afip_responsability=None,
-            f2002_category=None, type_tax_use=None):
+            document_types=None, afip_responsabilities=None,
+            f2002_category=None, activity=None, type_tax_use=None,
+            company_ids=None, credit_or_debit=None, domain=None):
         """
         Function to be used on reports to get move lines for tax reports
         """
+        domain = domain and safe_eval(str(domain)) or []
+
         if not taxes and not tax_groups or taxes and tax_groups:
             raise UserError(_(
                 'You must request tax amounts with tax or tax group'))
@@ -70,7 +85,7 @@ class AccountMoveLine(models.Model):
         if type_tax_use:
             taxes = taxes.filtered(lambda x: x.type_tax_use == type_tax_use)
 
-        domain = [
+        domain += [
             ('date', '>=', date_from),
             ('date', '<=', date_to),
         ]
@@ -86,18 +101,31 @@ class AccountMoveLine(models.Model):
         if document_types:
             domain += [('move_id.document_type_id', 'in', document_types.ids)]
 
-        if afip_responsability:
+        if afip_responsabilities:
             domain += [
-                ('move_id.partner_id.afip_responsability_type_id', '=',
-                    afip_responsability.id)]
+                ('move_id.afip_responsability_type_id', 'in',
+                    afip_responsabilities.ids)]
 
         # if we send False, we want to search thos products without category
-        if f2002_category:
+        if f2002_category is not None:
             domain += [
-                ('product_id.vat_f2002_category_id', '=',
-                    f2002_category.id)]
-        if f2002_category is False:
+                ('account_id.vat_f2002_category_id', '=', f2002_category.id)]
+
+        # if we send False, we want to search thos products without category
+        if activity is not None:
             domain += [
-                '|', ('product_id', '=', False),
-                ('product_id.vat_f2002_category_id', '=', False)]
+                ('account_id.afip_activity_id', '=', activity.id)]
+
+        # usado para discriminar credito/debito fiscal de restitucion (usar
+        # junto con tipo de impuesto)
+        if credit_or_debit:
+            if credit_or_debit == 'credit':
+                domain += [('debit', '=', 0.0)]
+            else:
+                domain += [('credit', '=', 0.0)]
+
+        if company_ids:
+            domain += [('company_id', 'in', company_ids)]
+
+        _logger.debug('Tax domain getted: %s' % domain)
         return domain

@@ -28,17 +28,26 @@ class AccountArVatLine(models.Model):
     )
     # TODO analizar si lo hacemos related simplemente pero con store, no lo
     # hicimos por posibles temas de performance
-    type = fields.Selection([
-        ('purchase', 'Purchase'),
-        ('sale', 'Sale'),
-        # ('cash', 'Cash'),
-        # ('bank', 'Bank'),
-        # ('general', 'Miscellaneous'),
+    comprobante = fields.Selection([
+        ('out_invoice', 'Customer Invoice'),
+        ('in_invoice', 'Vendor Bill'),
+        ('out_refund', 'Customer Refund'),
+        ('in_refund', 'Vendor Refund'),
     ],
-        # readonly=True
-        # related='journal_id.type',
-        readonly=True
+        readonly=True,
     )
+    # TODO idem, tal vez related con store? Performance?
+    # type = fields.Selection([
+    #     ('purchase', 'Purchase'),
+    #     ('sale', 'Sale'),
+    #     # ('cash', 'Cash'),
+    #     # ('bank', 'Bank'),
+    #     # ('general', 'Miscellaneous'),
+    # ],
+    #     # readonly=True
+    #     # related='journal_id.type',
+    #     readonly=True
+    # )
     ref = fields.Char(
         'Partner Reference',
         readonly=True
@@ -133,7 +142,8 @@ class AccountArVatLine(models.Model):
     account_id = fields.Many2one(
         'account.account',
         'Account',
-        readonly=True
+        readonly=True,
+        auto_join=True,
     )
     # TODO idem, tal vez related con store? Performance?
     state = fields.Selection(
@@ -144,23 +154,27 @@ class AccountArVatLine(models.Model):
     journal_id = fields.Many2one(
         'account.journal',
         'Journal',
-        readonly=True
+        readonly=True,
+        auto_join=True,
     )
     partner_id = fields.Many2one(
         'res.partner',
         'Partner',
-        readonly=True
+        readonly=True,
+        auto_join=True,
     )
     # TODO idem, tal vez related con store? Performance?
     afip_responsability_type_id = fields.Many2one(
         'afip.responsability.type',
         string='AFIP Responsability Type',
         readonly=True,
+        auto_join=True,
     )
     company_id = fields.Many2one(
         'res.company',
         'Company',
-        readonly=True
+        readonly=True,
+        auto_join=True,
     )
     company_currency_id = fields.Many2one(
         related='company_id.currency_id',
@@ -169,10 +183,25 @@ class AccountArVatLine(models.Model):
     move_id = fields.Many2one(
         'account.move',
         string='Entry',
+        auto_join=True,
     )
     move_line_id = fields.Many2one(
         'account.move.line',
         string='Journal Item',
+        auto_join=True,
+    )
+    afip_activity_id = fields.Many2one(
+        'afip.activity',
+        'AFIP Activity',
+        help='AFIP activity, used for IVA f2002 report',
+        auto_join=True,
+        readonly=True,
+    )
+    vat_f2002_category_id = fields.Many2one(
+        'afip.vat.f2002_category',
+        auto_join=True,
+        string='Categoría IVA f2002',
+        readonly=True,
     )
     # payment_group_id = fields.Many2one(
     #     'account.payment.group',
@@ -256,7 +285,11 @@ SELECT
     am.afip_responsability_type_id,
     am.state,
     am.document_type_id,
-    aj.type,
+    aa.afip_activity_id,
+    aa.vat_f2002_category_id,
+    /*TODO si agregamos recibos entonces tenemos que mapear valores aca*/
+    ai.type as comprobante,
+    /*aj.type,*/
     sum(CASE WHEN bt.tax_group_id=%(tg21)s THEN aml.balance ELSE 0 END)
         as base_21,
     sum(CASE WHEN nt.tax_group_id=%(tg21)s THEN aml.balance ELSE 0 END)
@@ -290,6 +323,9 @@ FROM
 LEFT JOIN
     account_move as am
     ON aml.move_id = am.id
+LEFT JOIN
+    account_invoice as ai
+    ON aml.invoice_id = ai.id
 /*LEFT JOIN
     res_partner as rp
     ON aml.partner_id = rp.id*/
@@ -317,8 +353,11 @@ WHERE
     aj.type in ('sale', 'purchase') and
     (nt.tax_group_id in %(tg_vats)s or bt.tax_group_id in %(tg_vats)s)
 GROUP BY
-    aml.id, aj.type, am.state, am.document_type_id,
-    am.afip_responsability_type_id
+    aml.id, am.state, am.document_type_id,
+    /*aj.type,*/
+    am.afip_responsability_type_id,
+    aa.afip_activity_id, aa.vat_f2002_category_id,
+    ai.type
     /*move_id, journal_id, aj.type*/
         """ % vals
 

@@ -8,6 +8,21 @@ except ImportError:
     table_exists = None
 
 
+def sync_padron_afip(cr, registry):
+    """
+    Try to sync data from padron
+    """
+    account_config = registry['account.config.settings']
+    account_config_id = account_config.create(
+        cr, 1, {})
+    try:
+        account_config.refresh_taxes_from_padron(cr, 1, account_config_id)
+        account_config.refresh_concepts_from_padron(cr, 1, account_config_id)
+        account_config.refresh_activities_from_padron(cr, 1, account_config_id)
+    except Exception:
+        pass
+
+
 def post_init_hook(cr, registry):
     """Loaded after installing the module.
     This module's DB modifications will be available.
@@ -16,6 +31,7 @@ def post_init_hook(cr, registry):
     :param openerp.modules.registry.RegistryManager registry:
         Database registry, using v7 api.
     """
+    sync_padron_afip(cr, registry)
     ar_invoice_ids = registry['account.invoice'].search(
         cr, 1, [('localization', '=', 'argentina')])
     for invoice_id in ar_invoice_ids:

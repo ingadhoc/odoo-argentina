@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Módulo base de Contabilidad Argentina",
-    'version': '9.0.1.11.0',
+    'version': '9.0.1.12.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Moldeo Interactive',
@@ -19,8 +19,10 @@
         # 'account_invoice_tax_wizard',
     ],
     'external_dependencies': {
+        'python': ['pyafipws'],
     },
     'data': [
+        'wizard/res_partner_update_from_padron_wizard_view.xml',
         'data/menuitem.xml',
         'data/product_data.xml',
         'data/base_validator_data.xml',
@@ -46,6 +48,7 @@
         'view/res_company_view.xml',
         'view/afip_menuitem.xml',
         'view/afip_incoterm_view.xml',
+        'view/account_account_view.xml',
         'view/res_country_view.xml',
         'view/res_currency_view.xml',
         'view/account_fiscal_position_view.xml',
@@ -56,6 +59,9 @@
         'view/account_document_letter_view.xml',
         'view/account_document_type_view.xml',
         'view/product_template_view.xml',
+        'view/afip_activity_view.xml',
+        'view/afip_concept_view.xml',
+        'view/afip_tax_view.xml',
         'res_config_view.xml',
         'report/invoice_analysis.xml',
         'security/ir.model.access.csv',

@@ -28,16 +28,13 @@ class AccountArVatLine(models.Model):
     )
     # TODO analizar si lo hacemos related simplemente pero con store, no lo
     # hicimos por posibles temas de performance
-    type = fields.Selection([
-        ('purchase', 'Purchase'),
-        ('sale', 'Sale'),
-        # ('cash', 'Cash'),
-        # ('bank', 'Bank'),
-        # ('general', 'Miscellaneous'),
+    comprobante = fields.Selection([
+        ('out_invoice', 'Customer Invoice'),
+        ('in_invoice', 'Vendor Bill'),
+        ('out_refund', 'Customer Refund'),
+        ('in_refund', 'Vendor Refund'),
     ],
-        # readonly=True
-        # related='journal_id.type',
-        readonly=True
+        readonly=True,
     )
     ref = fields.Char(
         'Partner Reference',
@@ -130,11 +127,6 @@ class AccountArVatLine(models.Model):
     # amount_currency = fields.Monetary(
     #     readonly=True,
     #     currency_field='currency_id',
-    account_id = fields.Many2one(
-        'account.account',
-        'Account',
-        readonly=True
-    )
     # TODO idem, tal vez related con store? Performance?
     state = fields.Selection(
         [('draft', 'Unposted'), ('posted', 'Posted')],
@@ -144,23 +136,27 @@ class AccountArVatLine(models.Model):
     journal_id = fields.Many2one(
         'account.journal',
         'Journal',
-        readonly=True
+        readonly=True,
+        auto_join=True,
     )
     partner_id = fields.Many2one(
         'res.partner',
         'Partner',
-        readonly=True
+        readonly=True,
+        auto_join=True,
     )
     # TODO idem, tal vez related con store? Performance?
     afip_responsability_type_id = fields.Many2one(
         'afip.responsability.type',
         string='AFIP Responsability Type',
         readonly=True,
+        auto_join=True,
     )
     company_id = fields.Many2one(
         'res.company',
         'Company',
-        readonly=True
+        readonly=True,
+        auto_join=True,
     )
     company_currency_id = fields.Many2one(
         related='company_id.currency_id',
@@ -169,36 +165,19 @@ class AccountArVatLine(models.Model):
     move_id = fields.Many2one(
         'account.move',
         string='Entry',
+        auto_join=True,
     )
-    move_line_id = fields.Many2one(
-        'account.move.line',
-        string='Journal Item',
-    )
-    # payment_group_id = fields.Many2one(
-    #     'account.payment.group',
-    #     'Payment Group',
-    #     compute='_compute_move_lines_data',
-    # )
-    # invoice_id = fields.Many2one(
-    #     'account.invoice',
-    #     'Invoice',
-    #     compute='_compute_move_lines_data',
-    # )
-    # es una concatenacion de los name de los move lines
-    # name = fields.Char(
-    #     compute='_compute_move_lines_data',
-    # )
 
     @api.multi
-    def open_journal_item(self):
+    def open_journal_entry(self):
         self.ensure_one()
         return {
-            'name': _('Journal Item'),
+            'name': _('Journal Entry'),
             'target': 'current',
             'res_id': self.id,
             'view_type': 'form',
             'view_mode': 'form',
-            'res_model': 'account.move.line',
+            'res_model': 'account.move',
             'type': 'ir.actions.act_window',
         }
 
@@ -243,19 +222,19 @@ class AccountArVatLine(models.Model):
         }
         query = """
 SELECT
-    aml.id,
-    aml.id as move_line_id,
-    aml.date,
-    aml.move_id,
-    aml.journal_id,
-    aml.company_id,
-    aml.partner_id,
-    aml.name,
-    aml.ref,
+    am.id,
+    am.id as move_id,
+    am.date,
+    am.journal_id,
+    am.company_id,
+    am.partner_id,
+    am.name,
+    am.ref,
     am.afip_responsability_type_id,
     am.state,
     am.document_type_id,
-    aj.type,
+    /*TODO si agregamos recibos entonces tenemos que mapear valores aca*/
+    ai.type as comprobante,
     sum(CASE WHEN bt.tax_group_id=%(tg21)s THEN aml.balance ELSE 0 END)
         as base_21,
     sum(CASE WHEN nt.tax_group_id=%(tg21)s THEN aml.balance ELSE 0 END)
@@ -289,15 +268,9 @@ FROM
 LEFT JOIN
     account_move as am
     ON aml.move_id = am.id
-/*LEFT JOIN
-    res_partner as rp
-    ON aml.partner_id = rp.id*/
 LEFT JOIN
-    account_account AS aa
-    ON aml.account_id = aa.id
-LEFT JOIN
-    account_journal AS aj
-    ON aml.journal_id = aj.id
+    account_invoice as ai
+    ON aml.invoice_id = ai.id
 LEFT JOIN
     -- nt = net tax
     account_tax AS nt
@@ -310,15 +283,11 @@ LEFT JOIN
     account_tax AS bt
     ON amltr.account_tax_id = bt.id
 WHERE
-    aa.internal_type not in ('payable', 'receivable') and
-    -- TODO analiza ri registramos cosas de iva en otros diarios que no son
-    -- compras y ventas
-    aj.type in ('sale', 'purchase') and
     (nt.tax_group_id in %(tg_vats)s or bt.tax_group_id in %(tg_vats)s)
 GROUP BY
-    aml.id, aj.type, am.state, am.document_type_id,
-    am.afip_responsability_type_id
-    /*move_id, journal_id, aj.type*/
+    am.id, am.state, am.document_type_id,
+    am.afip_responsability_type_id,
+    ai.type
         """ % vals
 
         cr.execute("""CREATE or REPLACE VIEW %s as (%s

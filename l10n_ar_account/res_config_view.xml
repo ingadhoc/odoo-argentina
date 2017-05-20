@@ -9,6 +9,18 @@
             <field name="arch" type="xml">
                 <group name="bank_cash" position="after">
                     <group name="argentina_config" string="Argentina">
+                        <label for="id" string="Refresh from Padron AFIP"/>
+                        <div>
+                            <div>
+                                <button name="refresh_activities_from_padron" string="Activities" type="object" class="oe_link"/>
+                            </div>
+                            <div>
+                                <button name="refresh_taxes_from_padron" string="Taxes" type="object" class="oe_link"/>
+                            </div>
+                            <div>
+                                <button name="refresh_concepts_from_padron" string="Concepts" type="object" class="oe_link"/>
+                            </div>
+                        </div>
                     </group>
                 </group>
                 <div name="sale_use_documents" position="after">

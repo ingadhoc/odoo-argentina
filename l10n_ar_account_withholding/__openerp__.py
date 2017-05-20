@@ -49,7 +49,6 @@
         # usa las lineas
         # 'l10n_ar_aeroo_base',
         'report_aeroo',
-        'l10n_ar_padron_afip',
     ],
     'external_dependencies': {
         'python': ['pyafipws'],
@@ -57,5 +56,5 @@
     'installable': True,
     'name': 'Automatic Argentinian Withholdings on Payments',
     'test': [],
-    'version': '9.0.1.5.0',
+    'version': '9.0.1.6.0',
 }

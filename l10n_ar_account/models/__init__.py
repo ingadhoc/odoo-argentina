@@ -22,3 +22,5 @@ from . import afip_vat_f2002_category
 from . import product_template
 from . import account_move_line
 from . import account_move
+from . import afip_padron
+from . import account_account

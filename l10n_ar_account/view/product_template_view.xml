@@ -7,12 +7,6 @@
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_form_view"/>
             <field name="arch" type="xml">
-                <!-- <page string="Accounting" groups="account.group_account_invoice"> -->
-                <group name="properties" position="before">
-                    <group name="afip">
-                        <field name="vat_f2002_category_id"/>
-                    </group>
-                </group>
                 <xpath expr="//div[@name='button_box']" position="inside">
                    <button class="oe_stat_button" string="Invoices Line Report" name="action_invoice_analysis" type="object" icon="fa-bar-chart-o" groups="account.group_account_invoice"/>
                 </xpath>

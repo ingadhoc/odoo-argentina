@@ -32,9 +32,7 @@
                     <filter string="Date" context="{'group_by': 'date'}"/>
                     <filter string="Partner" context="{'group_by': 'partner_id'}"/>
                     <filter string="Comprobante" context="{'group_by': 'comprobante'}"/>
-                    <!-- <filter string="Type" context="{'group_by': 'type'}"/> -->
                     <filter string="Document Type" context="{'group_by': 'document_type_id'}"/>
-                    <filter string="Account" context="{'group_by': 'account_id'}"/>
                     <filter string="Company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
                </group>
             </search>
@@ -63,7 +61,7 @@
                 <field name="otros_impuestos" sum="Total"/>
                 <field name="no_gravado_iva" sum="Total"/>
                 <field name="total" sum="Total"/>
-                <button name="open_journal_item" string="Open" type="object" icon="fa-external-link" help="Open journal item"/>
+                <button name="open_journal_entry" string="Open" type="object" icon="fa-external-link" help="Open journal entry"/>
             </tree>
          </field>
     </record>

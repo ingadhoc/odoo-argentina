@@ -4,13 +4,16 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Andres L <aleibrecht@gmail.com>, 2017
+# Javier Diez <jd@adhoc.com.ar>, 2017
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-19 17:21+0000\n"
-"PO-Revision-Date: 2017-05-19 17:21+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-05-20 22:17+0000\n"
+"PO-Revision-Date: 2017-05-20 22:17+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,22 +25,6 @@ msgstr ""
 #: selection:account.invoice,afip_concept:0
 msgid "4-Otros (exportación)"
 msgstr "4-Otros (exportación)"
-
-#. module: l10n_ar_account
-#: model:ir.ui.view,arch_db:l10n_ar_account.product_template_form_view
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<data><!-- <page string=\"Accounting\" groups=\"account.group_account_invoice\"> -->\n"
-"                <group name=\"properties\" position=\"before\">\n"
-"                    <group name=\"afip\">\n"
-"                        <field name=\"vat_f2002_category_id\"/>\n"
-"                    </group>\n"
-"                </group>\n"
-"                <xpath expr=\"//div[@name='button_box']\" position=\"inside\">\n"
-"                   <button class=\"oe_stat_button\" string=\"Invoices Line Report\" name=\"action_invoice_analysis\" type=\"object\" icon=\"fa-bar-chart-o\" groups=\"account.group_account_invoice\"/>\n"
-"                </xpath>\n"
-"            </data>"
-msgstr ""
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_company_inherit_form
@@ -182,7 +169,7 @@ msgstr ""
 "            </data>"
 
 #. module: l10n_ar_account
-#: model:ir.ui.view,arch_db:l10n_ar_account.view_res_partner_form
+#: model:ir.ui.view,arch_db:l10n_ar_account.view_partner_property_form
 msgid ""
 "<?xml version=\"1.0\"?>\n"
 "<data><field name=\"ref\" position=\"replace\">\n"
@@ -202,8 +189,18 @@ msgid ""
 "                        <group string=\"AFIP\" name=\"afip\">\n"
 "                            <group name=\"afip_col_1\">\n"
 "                                <field name=\"start_date\"/>\n"
+"                                <field name=\"last_update_padron\"/>\n"
+"                                <field name=\"estado_padron\"/>\n"
+"                                <field name=\"imp_ganancias_padron\"/>\n"
+"                                <field name=\"imp_iva_padron\"/>\n"
+"                                <field name=\"integrante_soc_padron\"/>\n"
+"                                <field name=\"monotributo_padron\"/>\n"
+"                                <field name=\"empleador_padron\"/>\n"
 "                            </group>\n"
 "                            <group name=\"afip_col_2\">\n"
+"                                <field name=\"actividad_monotributo_padron\"/>\n"
+"                                <field name=\"actividades_padron\" widget=\"many2many_tags\"/>\n"
+"                                <field name=\"impuestos_padron\" widget=\"many2many_tags\"/>\n"
 "                            </group>\n"
 "                        </group>\n"
 "                        <!-- TODO agregar esto -->\n"
@@ -226,47 +223,6 @@ msgid ""
 "\n"
 "            </data>"
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<data><field name=\"ref\" position=\"replace\">\n"
-"                </field>\n"
-"\n"
-"                <field name=\"parent_id\" position=\"after\">\n"
-"                    <field name=\"ref\" placeholder=\"Reference/Name fantasy\"/>\n"
-"                </field>\n"
-"\n"
-"                <field name=\"website\" position=\"after\">\n"
-"                    <field name=\"afip_responsability_type_id\" options=\"{'no_open': True, 'no_create': True}\" attrs=\"{'invisible': [('is_company','=',False), ('parent_id','!=',False)]}\"/>\n"
-"                </field>\n"
-"\n"
-"                <page name=\"accounting\" position=\"after\">\n"
-"                    <page string=\"Fiscal Data\" name=\"fiscal_data\" attrs=\"{'invisible': [('is_company','=',False),('parent_id','!=',False)]}\">\n"
-"                        <!-- add other documents -->\n"
-"                        <group string=\"AFIP\" name=\"afip\">\n"
-"                            <group name=\"afip_col_1\">\n"
-"                                <field name=\"start_date\"/>\n"
-"                            </group>\n"
-"                            <group name=\"afip_col_2\">\n"
-"                            </group>\n"
-"                        </group>\n"
-"                        <!-- TODO agregar esto -->\n"
-"                        <!-- <label for=\"other_document_type_ids\"/> -->\n"
-"                        <!-- <field name=\"other_document_type_ids\"/> -->\n"
-"                        <group string=\"Others\" name=\"others\">\n"
-"                            <group name=\"others_col_1\">\n"
-"                                <label for=\"gross_income_number\" string=\"Gross Income\"/>\n"
-"                                <div>\n"
-"                                    <field name=\"gross_income_type\" class=\"oe_inline\"/>\n"
-"                                    <field name=\"gross_income_number\" placeholder=\"Number...\" class=\"oe_inline\" attrs=\"{'invisible': [('gross_income_type', 'not in', ['multilateral', 'local'])], 'required': [('gross_income_type', 'in', ['multilateral', 'local'])]}\"/>\n"
-"                                    <field name=\"gross_income_jurisdiction_ids\" widget=\"many2many_tags\" placeholder=\"Other Jurisdictions\" class=\"oe_inline\" attrs=\"{'invisible': [('gross_income_type', '!=', 'multilateral')]}\"/>\n"
-"                                </div>\n"
-"                            </group>\n"
-"                            <group name=\"others_col_2\">\n"
-"                            </group>\n"
-"                        </group>\n"
-"                    </page>\n"
-"                </page>\n"
-"\n"
-"            </data>"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_invoice_form
@@ -331,6 +287,18 @@ msgid ""
 "<?xml version=\"1.0\"?>\n"
 "<data><group name=\"bank_cash\" position=\"after\">\n"
 "                    <group name=\"argentina_config\" string=\"Argentina\">\n"
+"                        <label for=\"id\" string=\"Refresh from Padron AFIP\"/>\n"
+"                        <div>\n"
+"                            <div>\n"
+"                                <button name=\"refresh_activities_from_padron\" string=\"Activities\" type=\"object\" class=\"oe_link\"/>\n"
+"                            </div>\n"
+"                            <div>\n"
+"                                <button name=\"refresh_taxes_from_padron\" string=\"Taxes\" type=\"object\" class=\"oe_link\"/>\n"
+"                            </div>\n"
+"                            <div>\n"
+"                                <button name=\"refresh_concepts_from_padron\" string=\"Concepts\" type=\"object\" class=\"oe_link\"/>\n"
+"                            </div>\n"
+"                        </div>\n"
 "                    </group>\n"
 "                </group>\n"
 "                <div name=\"sale_use_documents\" position=\"after\">\n"
@@ -391,6 +359,17 @@ msgstr ""
 "            "
 
 #. module: l10n_ar_account
+#: model:ir.ui.view,arch_db:l10n_ar_account.view_account_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"company_id\" position=\"before\">\n"
+"                <field name=\"afip_activity_id\"/>\n"
+"                <field name=\"vat_f2002_category_id\"/>\n"
+"            </field>\n"
+"        "
+msgstr ""
+
+#. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_document_type_form
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_document_type_tree
 msgid ""
@@ -420,6 +399,16 @@ msgstr ""
 "                    <field name=\"afip_responsability_type_id\" states=\"open,paid\"/>\n"
 "                </field>\n"
 "            "
+
+#. module: l10n_ar_account
+#: model:ir.ui.view,arch_db:l10n_ar_account.view_partner_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"main_id_number\" position=\"after\">\n"
+"                    <button name=\"254\" string=\"Update From AFIP\" class=\"oe_link oe_inline\" type=\"action\" attrs=\"{'invisible': [('cuit', '=', False)]}\"/>\n"
+"                </field>\n"
+"            "
+msgstr ""
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_position_template_form
@@ -533,6 +522,75 @@ msgstr ""
 "            "
 
 #. module: l10n_ar_account
+#: model:ir.ui.view,arch_db:l10n_ar_account.view_afip_activity_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"AFIP activity\">\n"
+"                    <group>\n"
+"                        <field name=\"name\"/>\n"
+"                        <field name=\"code\"/>\n"
+"                        <field name=\"active\"/>\n"
+"                    </group>\n"
+"                </form>\n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Actividad AFIP\">\n"
+"                    <group>\n"
+"                        <field name=\"name\"/>\n"
+"                        <field name=\"code\"/>\n"
+"                        <field name=\"active\"/>\n"
+"                    </group>\n"
+"                </form>\n"
+"            "
+
+#. module: l10n_ar_account
+#: model:ir.ui.view,arch_db:l10n_ar_account.view_afip_concept_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"AFIP concepts\">\n"
+"                    <group>\n"
+"                        <field name=\"name\"/>\n"
+"                        <field name=\"code\"/>\n"
+"                        <field name=\"active\"/>\n"
+"                    </group>\n"
+"                </form>\n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Conceptos AFIP\">\n"
+"                    <group>\n"
+"                        <field name=\"name\"/>\n"
+"                        <field name=\"code\"/>\n"
+"                        <field name=\"active\"/>\n"
+"                    </group>\n"
+"                </form>\n"
+"            "
+
+#. module: l10n_ar_account
+#: model:ir.ui.view,arch_db:l10n_ar_account.view_afip_tax_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"AFIP tax\">\n"
+"                    <group>\n"
+"                        <field name=\"name\"/>\n"
+"                        <field name=\"code\"/>\n"
+"                        <field name=\"active\"/>\n"
+"                    </group>\n"
+"                </form>\n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Impuesto AFIP\">\n"
+"                    <group>\n"
+"                        <field name=\"name\"/>\n"
+"                        <field name=\"code\"/>\n"
+"                        <field name=\"active\"/>\n"
+"                    </group>\n"
+"                </form>\n"
+"            "
+
+#. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_afip_responsability_type_form
 msgid ""
 "<?xml version=\"1.0\"?>\n"
@@ -581,6 +639,54 @@ msgstr ""
 "                    </group>\n"
 "                </form>\n"
 "            "
+
+#. module: l10n_ar_account
+#: model:ir.ui.view,arch_db:l10n_ar_account.view_base_partner_update_from_padron_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Update From Padron AFIP\">\n"
+"                    <field name=\"state\" invisible=\"1\"/>\n"
+"                    <header>\n"
+"                        <button name=\"update_selection\" string=\"Update Selection\" class=\"oe_highlight\" type=\"object\" attrs=\"{'invisible': [('state', 'in', ('option', 'finished' ))]}\"/>\n"
+"                        <button name=\"next_cb\" string=\"Skip these partner\" type=\"object\" class=\"oe_link\" attrs=\"{'invisible': [('state', '!=', 'selection')]}\"/>\n"
+"                        <button name=\"start_process_cb\" string=\"Update with Manual Check\" type=\"object\" class=\"oe_highlight\" attrs=\"{'invisible': [('state', '!=', 'option')]}\"/>\n"
+"                        <button name=\"automatic_process_cb\" string=\"Update Automatically\" type=\"object\" class=\"oe_highlight\" confirm=\"Are you sure to execute the automatic update of your partners ?\" attrs=\"{'invisible': [('state', '!=', 'option')]}\"/>\n"
+"                        <span class=\"or_cancel\" attrs=\"{'invisible': [('state', '=', 'finished')]} \">or\n"
+"                            <button string=\"Cancel\" class=\"oe_link oe_inline\" special=\"cancel\"/>\n"
+"                        </span>\n"
+"                        <span class=\"or_cancel\" attrs=\"{'invisible': [('state', '!=', 'finished')]} \">\n"
+"                            <button string=\"Close\" class=\"oe_link oe_inline\" special=\"cancel\"/>\n"
+"                        </span>\n"
+"                    </header>\n"
+"                    <sheet>\n"
+"                        <group attrs=\"{'invisible': [('state', '!=', 'finished')]}\" col=\"1\">\n"
+"                            <h2>There are no more partners to update for this request...</h2>\n"
+"                            <!-- <button name=\"253\" string=\"Update the other partners\" class=\"oe_highlight\"\n"
+"                            type=\"action\"/> -->\n"
+"                        </group>\n"
+"                        <p class=\"oe_grey\" attrs=\"{'invisible': [('state', '!=', ('option'))]}\">\n"
+"                            Only Partners with cuit are going to be updated.<br/>\n"
+"                            Select the list of fields you want to update.\n"
+"                        </p>\n"
+"                        <group attrs=\"{'invisible': [('state', 'not in', ('option',))]}\">\n"
+"                            <field name=\"field_to_update_ids\" widget=\"many2many_tags\" options=\"{'no_create': True}\"/>\n"
+"                            <field name=\"update_constancia\"/>\n"
+"                            <field name=\"title_case\"/>\n"
+"                        </group>\n"
+"                        <group attrs=\"{'invisible': [('state', 'in', ('option', 'finished'))]}\" col=\"1\">\n"
+"                            <field name=\"partner_id\" attrs=\"{'required': [('state', '=', 'selection')]}\"/>\n"
+"                            <field name=\"field_ids\" nolabel=\"1\">\n"
+"                                <tree create=\"false\">\n"
+"                                    <field name=\"field\"/>\n"
+"                                    <field name=\"old_value\"/>\n"
+"                                    <field name=\"new_value\"/>\n"
+"                                </tree>\n"
+"                            </field>\n"
+"                        </group>\n"
+"                    </sheet>\n"
+"                </form>\n"
+"            "
+msgstr ""
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_graph
@@ -742,15 +848,16 @@ msgid ""
 "                <field name=\"journal_id\"/>\n"
 "                <field name=\"document_type_id\"/>\n"
 "                <field name=\"company_id\" groups=\"base.group_multi_company\"/>\n"
-"                <field name=\"type\"/>\n"
+"                <field name=\"comprobante\"/>\n"
+"                <!-- <field name=\"type\"/> -->\n"
 "                <separator/>\n"
 "                <filter name=\"posted\" string=\"Posted\" domain=\"[('state','=','posted')]\" help=\"Posted Journal Items\"/>\n"
 "                <separator/>\n"
 "                <filter string=\"This Month\" name=\"this_month\" domain=\"[('date','&lt;=', time.strftime('%Y-%m-%d')),('date','&gt;=',time.strftime('%Y-%m-01'))]\"/>\n"
 "                <filter string=\"This Year\" name=\"this_year\" domain=\"[('date','&lt;=', time.strftime('%Y-12-31')),('date','&gt;=',time.strftime('%Y-01-01'))]\"/>\n"
 "                <separator/>\n"
-"                <filter string=\"IVA Ventas\" name=\"iva_ventas\" domain=\"[('type', '=', 'sale')]\"/>\n"
-"                <filter string=\"IVA Compras\" name=\"iva_compras\" domain=\"[('type', '=', 'purchase')]\"/>\n"
+"                <filter string=\"IVA Ventas\" name=\"iva_ventas\" domain=\"[('comprobante', 'in', ['out_invoice', 'out_refund'])]\"/>\n"
+"                <filter string=\"IVA Compras\" name=\"iva_compras\" domain=\"[('comprobante', 'in', ['in_invoice', 'in_refund'])]\"/>\n"
 "                <separator/>\n"
 "                <filter string=\"With Document Type\" name=\"with_document_type\" domain=\"[('document_type_id','!=', False)]\"/>\n"
 "                <group expand=\"0\" string=\"Group By...\">\n"
@@ -758,9 +865,8 @@ msgid ""
 "                    <filter string=\"AFIP responsability\" context=\"{'group_by': 'afip_responsability_type_id'}\"/>\n"
 "                    <filter string=\"Date\" context=\"{'group_by': 'date'}\"/>\n"
 "                    <filter string=\"Partner\" context=\"{'group_by': 'partner_id'}\"/>\n"
-"                    <filter string=\"Type\" context=\"{'group_by': 'type'}\"/>\n"
+"                    <filter string=\"Comprobante\" context=\"{'group_by': 'comprobante'}\"/>\n"
 "                    <filter string=\"Document Type\" context=\"{'group_by': 'document_type_id'}\"/>\n"
-"                    <filter string=\"Account\" context=\"{'group_by': 'account_id'}\"/>\n"
 "                    <filter string=\"Company\" context=\"{'group_by': 'company_id'}\" groups=\"base.group_multi_company\"/>\n"
 "               </group>\n"
 "            </search>\n"
@@ -838,6 +944,57 @@ msgstr ""
 "            "
 
 #. module: l10n_ar_account
+#: model:ir.ui.view,arch_db:l10n_ar_account.view_afip_activity_tree
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"AFIP activity\">\n"
+"                    <field name=\"name\"/>\n"
+"                    <field name=\"code\"/>\n"
+"                </tree>\n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"Actividad AFIP\">\n"
+"                    <field name=\"name\"/>\n"
+"                    <field name=\"code\"/>\n"
+"                </tree>\n"
+"            "
+
+#. module: l10n_ar_account
+#: model:ir.ui.view,arch_db:l10n_ar_account.view_afip_concept_tree
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"AFIP concepts\">\n"
+"                    <field name=\"name\"/>\n"
+"                    <field name=\"code\"/>\n"
+"                </tree>\n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"Conceptos AFIP\">\n"
+"                    <field name=\"name\"/>\n"
+"                    <field name=\"code\"/>\n"
+"                </tree>\n"
+"            "
+
+#. module: l10n_ar_account
+#: model:ir.ui.view,arch_db:l10n_ar_account.view_afip_tax_tree
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"AFIP tax\">\n"
+"                    <field name=\"name\"/>\n"
+"                    <field name=\"code\"/>\n"
+"                </tree>\n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"Impuesto AFIP\">\n"
+"                    <field name=\"name\"/>\n"
+"                    <field name=\"code\"/>\n"
+"                </tree>\n"
+"            "
+
+#. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_afip_responsability_type_tree
 msgid ""
 "<?xml version=\"1.0\"?>\n"
@@ -891,7 +1048,7 @@ msgid ""
 "                <field name=\"otros_impuestos\" sum=\"Total\"/>\n"
 "                <field name=\"no_gravado_iva\" sum=\"Total\"/>\n"
 "                <field name=\"total\" sum=\"Total\"/>\n"
-"                <button name=\"open_journal_item\" string=\"Open\" type=\"object\" icon=\"fa-external-link\" help=\"Open journal item\"/>\n"
+"                <button name=\"open_journal_entry\" string=\"Open\" type=\"object\" icon=\"fa-external-link\" help=\"Open journal entry\"/>\n"
 "            </tree>\n"
 "         "
 msgstr ""
@@ -912,9 +1069,30 @@ msgstr ""
 "            "
 
 #. module: l10n_ar_account
+#: model:ir.ui.view,arch_db:l10n_ar_account.product_template_form_view
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<xpath expr=\"//div[@name='button_box']\" position=\"inside\">\n"
+"                   <button class=\"oe_stat_button\" string=\"Invoices Line Report\" name=\"action_invoice_analysis\" type=\"object\" icon=\"fa-bar-chart-o\" groups=\"account.group_account_invoice\"/>\n"
+"                </xpath>\n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<xpath expr=\"//div[@name='button_box']\" position=\"inside\">\n"
+"                   <button class=\"oe_stat_button\" string=\"Informe de Línea de Factura\" name=\"action_invoice_analysis\" type=\"object\" icon=\"fa-bar-chart-o\" groups=\"account.group_account_invoice\"/>\n"
+"                </xpath>\n"
+"            "
+
+#. module: l10n_ar_account
 #: model:ir.ui.menu,name:l10n_ar_account.menu_afip_config
 msgid "AFIP"
 msgstr "AFIP"
+
+#. module: l10n_ar_account
+#: field:account.account,afip_activity_id:0
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_account_afip_activity_id
+msgid "AFIP Activity"
+msgstr ""
 
 #. module: l10n_ar_account
 #: field:account.fiscal.position,afip_code:0
@@ -957,14 +1135,30 @@ msgid "AFIP Responsability Type"
 msgstr "Tipo de Responsabilidad AFIP"
 
 #. module: l10n_ar_account
+#: model:ir.actions.act_window,name:l10n_ar_account.act_afip_activity
+msgid "AFIP activity"
+msgstr "Actividad AFIP"
+
+#. module: l10n_ar_account
+#: help:account.account,afip_activity_id:0
+#: model:ir.model.fields,help:l10n_ar_account.field_account_account_afip_activity_id
+msgid "AFIP activity, used for IVA f2002 report"
+msgstr ""
+
+#. module: l10n_ar_account
 #: field:account.invoice,afip_concept:0
+#: model:ir.actions.act_window,name:l10n_ar_account.act_afip_concept
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_afip_concept
 msgid "AFIP concept"
 msgstr "Concepto AFIP"
 
 #. module: l10n_ar_account
-#: field:account.ar.vat.line,account_id:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_account_id
+#: model:ir.actions.act_window,name:l10n_ar_account.act_afip_tax
+msgid "AFIP tax"
+msgstr "Impuesto AFIP"
+
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_account
 msgid "Account"
 msgstr ""
 
@@ -990,12 +1184,44 @@ msgid "Accounting Date"
 msgstr "Fecha Contable"
 
 #. module: l10n_ar_account
-#: field:account.document.letter,active:0
-#: field:afip.responsability.type,active:0
+#: field:account.document.letter,active:0 field:afip.activity,active:0
+#: field:afip.concept,active:0 field:afip.responsability.type,active:0
+#: field:afip.tax,active:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_active
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_activity_active
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_concept_active
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_active
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_tax_active
 msgid "Active"
 msgstr "Active"
+
+#. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_actividad_monotributo_padron
+#: field:res.partner,actividad_monotributo_padron:0
+msgid "Actividad monotributo padron"
+msgstr "Actividad monotributo padron"
+
+#. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_actividades_padron
+#: field:res.partner,actividades_padron:0
+msgid "Actividades"
+msgstr "Actividades"
+
+#. module: l10n_ar_account
+#: model:ir.ui.menu,name:l10n_ar_account.menu_action_afip_activity
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: l10n_ar_account
+#: selection:res.partner,imp_ganancias_padron:0
+#: selection:res.partner,imp_iva_padron:0
+msgid "Activo"
+msgstr "Activo"
+
+#. module: l10n_ar_account
+#: selection:res.partner,imp_iva_padron:0
+msgid "Activo no alcanzado"
+msgstr "Activo no alcanzado"
 
 #. module: l10n_ar_account
 #: help:account.fiscal.position,afip_responsability_type_ids:0
@@ -1081,6 +1307,11 @@ msgid "Argentina Statements"
 msgstr "Informes Argentinos"
 
 #. module: l10n_ar_account
+#: model:ir.actions.act_window,name:l10n_ar_account.action_partner_update
+msgid "Automatic Update from Padron"
+msgstr "Actualización Automática desde Padron"
+
+#. module: l10n_ar_account
 #: field:account.invoice.line.report,barcode:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_barcode
 msgid "Barcode"
@@ -1122,8 +1353,8 @@ msgid "Category"
 msgstr "Categoría"
 
 #. module: l10n_ar_account
-#: model:ir.model.fields,field_description:l10n_ar_account.field_product_template_vat_f2002_category_id
-#: field:product.template,vat_f2002_category_id:0
+#: field:account.account,vat_f2002_category_id:0
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_account_vat_f2002_category_id
 msgid "Categoría IVA f2002"
 msgstr ""
 
@@ -1144,9 +1375,14 @@ msgstr ""
 "equipo de compras no lo verá cuando esté haciendo una orden de compra."
 
 #. module: l10n_ar_account
+#: field:afip.activity,code:0 field:afip.concept,code:0
 #: field:afip.incoterm,afip_code:0 field:afip.responsability.type,code:0
+#: field:afip.tax,code:0
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_activity_code
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_concept_code
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_afip_code
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_code
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_tax_code
 msgid "Code"
 msgstr "Código"
 
@@ -1187,9 +1423,26 @@ msgid "Company requires vat?"
 msgstr ""
 
 #. module: l10n_ar_account
+#: field:account.ar.vat.line,comprobante:0
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_comprobante
+msgid "Comprobante"
+msgstr ""
+
+#. module: l10n_ar_account
 #: model:product.template,name:l10n_ar_account.product_product_no_gravado_product_template
 msgid "Conceptos no gravados (IVA NG)"
 msgstr "Conceptos no gravados (IVA NG)"
+
+#. module: l10n_ar_account
+#: model:ir.ui.menu,name:l10n_ar_account.menu_action_afip_concept
+msgid "Concepts"
+msgstr "Conceptos"
+
+#. module: l10n_ar_account
+#: model:ir.model.fields,help:l10n_ar_account.field_res_partner_update_from_padron_wizard_title_case
+#: help:res.partner.update.from.padron.wizard,title_case:0
+msgid "Converts retreived text fields to Title Case."
+msgstr "Convierte el texto solicitado a formato de Título con Mayúscula"
 
 #. module: l10n_ar_account
 #: code:addons/l10n_ar_account/models/account_invoice.py:234
@@ -1213,25 +1466,41 @@ msgid "Country Group"
 msgstr "Grupo de países"
 
 #. module: l10n_ar_account
-#: field:account.document.letter,create_uid:0 field:afip.incoterm,create_uid:0
-#: field:afip.responsability.type,create_uid:0
+#: field:account.document.letter,create_uid:0 field:afip.activity,create_uid:0
+#: field:afip.concept,create_uid:0 field:afip.incoterm,create_uid:0
+#: field:afip.responsability.type,create_uid:0 field:afip.tax,create_uid:0
 #: field:afip.vat.f2002_category,create_uid:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_create_uid
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_activity_create_uid
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_concept_create_uid
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_create_uid
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_create_uid
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_tax_create_uid
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_create_uid
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_field_create_uid
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_create_uid
+#: field:res.partner.update.from.padron.field,create_uid:0
+#: field:res.partner.update.from.padron.wizard,create_uid:0
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: l10n_ar_account
 #: field:account.document.letter,create_date:0
+#: field:afip.activity,create_date:0 field:afip.concept,create_date:0
 #: field:afip.incoterm,create_date:0
-#: field:afip.responsability.type,create_date:0
+#: field:afip.responsability.type,create_date:0 field:afip.tax,create_date:0
 #: field:afip.vat.f2002_category,create_date:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_create_date
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_activity_create_date
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_concept_create_date
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_create_date
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_create_date
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_tax_create_date
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_create_date
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_field_create_date
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_create_date
+#: field:res.partner.update.from.padron.field,create_date:0
+#: field:res.partner.update.from.padron.wizard,create_date:0
 msgid "Created on"
 msgstr "Creado en"
 
@@ -1255,11 +1524,13 @@ msgid "Customer"
 msgstr "Cliente"
 
 #. module: l10n_ar_account
+#: selection:account.ar.vat.line,comprobante:0
 #: selection:account.invoice.line.report,type:0
 msgid "Customer Invoice"
 msgstr "Facturas de cliente"
 
 #. module: l10n_ar_account
+#: selection:account.ar.vat.line,comprobante:0
 #: selection:account.invoice.line.report,type:0
 msgid "Customer Refund"
 msgstr "Factura rectificativa de cliente"
@@ -1322,12 +1593,6 @@ msgstr ""
 "Saludos cordiales,"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/res_config.py:30
-#, python-format
-msgid "Debe indicar un número de punto de venta"
-msgstr "Debe indicar un número de punto de venta"
-
-#. module: l10n_ar_account
 #: model:product.template,name:l10n_ar_account.product_product_quote_despacho_product_template
 msgid "Despacho de importación"
 msgstr "Despacho de importación"
@@ -1354,15 +1619,23 @@ msgstr "Importe de Descuento"
 #: field:account.ar.vat.line,display_name:0
 #: field:account.document.letter,display_name:0
 #: field:account.invoice.line.report,display_name:0
+#: field:afip.activity,display_name:0 field:afip.concept,display_name:0
 #: field:afip.incoterm,display_name:0
-#: field:afip.responsability.type,display_name:0
+#: field:afip.responsability.type,display_name:0 field:afip.tax,display_name:0
 #: field:afip.vat.f2002_category,display_name:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_display_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_display_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_display_name
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_activity_display_name
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_concept_display_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_display_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_display_name
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_tax_display_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_display_name
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_field_display_name
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_display_name
+#: field:res.partner.update.from.padron.field,display_name:0
+#: field:res.partner.update.from.padron.wizard,display_name:0
 msgid "Display Name"
 msgstr "Display Name"
 
@@ -1426,16 +1699,62 @@ msgid "Electronic"
 msgstr "Electronica"
 
 #. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_empleador_padron
+#: field:res.partner,empleador_padron:0
+msgid "Empleador padron"
+msgstr "Empleador padron"
+
+#. module: l10n_ar_account
 #: field:account.ar.vat.line,move_id:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_move_id
 msgid "Entry"
 msgstr ""
 
 #. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_estado_padron
+#: field:res.partner,estado_padron:0
+msgid "Estado AFIP"
+msgstr "Estado AFIP"
+
+#. module: l10n_ar_account
+#: selection:res.partner,imp_ganancias_padron:0
+#: selection:res.partner,imp_iva_padron:0
+msgid "Exento"
+msgstr "Exento"
+
+#. module: l10n_ar_account
+#: selection:res.partner,imp_iva_padron:0
+msgid "Exento no alcanzado"
+msgstr "Exento no alcanzado"
+
+#. module: l10n_ar_account
 #: field:account.fiscal.position.template,state_ids:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_fiscal_position_template_state_ids
 msgid "Federal States"
 msgstr "Estados federales"
+
+#. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_field_field
+#: field:res.partner.update.from.padron.field,field:0
+msgid "Field"
+msgstr "Campo"
+
+#. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_field_ids
+#: field:res.partner.update.from.padron.wizard,field_ids:0
+msgid "Fields"
+msgstr "Campos"
+
+#. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_field_to_update_ids
+#: field:res.partner.update.from.padron.wizard,field_to_update_ids:0
+msgid "Fields To Update"
+msgstr "Campos a Actualizar"
+
+#. module: l10n_ar_account
+#: selection:res.partner.update.from.padron.wizard,state:0
+msgid "Finished"
+msgstr "Finalizado"
 
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_account_fiscal_position
@@ -1454,6 +1773,8 @@ msgstr ""
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_ganancias
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_imp_ganancias_padron
+#: field:res.partner,imp_ganancias_padron:0
 msgid "Ganancias"
 msgstr "Ganancias"
 
@@ -1524,14 +1845,23 @@ msgstr "Subtotal bruto"
 
 #. module: l10n_ar_account
 #: field:account.ar.vat.line,id:0 field:account.document.letter,id:0
-#: field:account.invoice.line.report,id:0 field:afip.incoterm,id:0
-#: field:afip.responsability.type,id:0 field:afip.vat.f2002_category,id:0
+#: field:account.invoice.line.report,id:0 field:afip.activity,id:0
+#: field:afip.concept,id:0 field:afip.incoterm,id:0
+#: field:afip.responsability.type,id:0 field:afip.tax,id:0
+#: field:afip.vat.f2002_category,id:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_id
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_activity_id
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_concept_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_id
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_tax_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_id
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_field_id
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_id
+#: field:res.partner.update.from.padron.field,id:0
+#: field:res.partner.update.from.padron.wizard,id:0
 msgid "ID"
 msgstr "ID"
 
@@ -1539,6 +1869,12 @@ msgstr "ID"
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iibb
 msgid "IIBB"
 msgstr "IIBB"
+
+#. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_imp_iva_padron
+#: field:res.partner,imp_iva_padron:0
+msgid "IVA"
+msgstr "IVA"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iva_0
@@ -1615,6 +1951,12 @@ msgstr ""
 "* Id de factura %i"
 
 #. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_impuestos_padron
+#: field:res.partner,impuestos_padron:0
+msgid "Impuestos"
+msgstr "Impuestos"
+
+#. module: l10n_ar_account
 #: field:account.invoice,afip_incoterm_id:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_afip_incoterm_id
 msgid "Incoterm"
@@ -1624,6 +1966,12 @@ msgstr "Incoterm"
 #: model:ir.ui.menu,name:l10n_ar_account.menu_action_afip_incoterm
 msgid "Incoterms"
 msgstr "Incoterms"
+
+#. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_integrante_soc_padron
+#: field:res.partner,integrante_soc_padron:0
+msgid "Integrante Sociedad"
+msgstr "Integrante Sociedad"
 
 #. module: l10n_ar_account
 #: selection:account.tax.group,application:0
@@ -1702,16 +2050,18 @@ msgid "Journal"
 msgstr "Diario"
 
 #. module: l10n_ar_account
-#: field:account.ar.vat.line,move_line_id:0
-#: code:addons/l10n_ar_account/report/account_ar_vat_line.py:196
-#: model:ir.model,name:l10n_ar_account.model_account_move_line
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_move_line_id
+#: code:addons/l10n_ar_account/report/account_ar_vat_line.py:175
 #, python-format
+msgid "Journal Entry"
+msgstr ""
+
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_move_line
 msgid "Journal Item"
 msgstr ""
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/res_partner.py:44
+#: code:addons/l10n_ar_account/models/res_partner.py:217
 #, python-format
 msgid ""
 "Jurisdiction %s is considered the main jurisdiction because it is the state "
@@ -1730,37 +2080,68 @@ msgstr ""
 #: field:account.ar.vat.line,__last_update:0
 #: field:account.document.letter,__last_update:0
 #: field:account.invoice.line.report,__last_update:0
+#: field:afip.activity,__last_update:0 field:afip.concept,__last_update:0
 #: field:afip.incoterm,__last_update:0
 #: field:afip.responsability.type,__last_update:0
+#: field:afip.tax,__last_update:0
 #: field:afip.vat.f2002_category,__last_update:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line___last_update
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter___last_update
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report___last_update
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_activity___last_update
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_concept___last_update
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm___last_update
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type___last_update
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_tax___last_update
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category___last_update
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_field___last_update
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard___last_update
+#: field:res.partner.update.from.padron.field,__last_update:0
+#: field:res.partner.update.from.padron.wizard,__last_update:0
 msgid "Last Modified on"
 msgstr "Última Modificación en"
 
 #. module: l10n_ar_account
-#: field:account.document.letter,write_uid:0 field:afip.incoterm,write_uid:0
-#: field:afip.responsability.type,write_uid:0
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_last_update_padron
+#: field:res.partner,last_update_padron:0
+msgid "Last Update Padron"
+msgstr "Última actualización de Padrón"
+
+#. module: l10n_ar_account
+#: field:account.document.letter,write_uid:0 field:afip.activity,write_uid:0
+#: field:afip.concept,write_uid:0 field:afip.incoterm,write_uid:0
+#: field:afip.responsability.type,write_uid:0 field:afip.tax,write_uid:0
 #: field:afip.vat.f2002_category,write_uid:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_write_uid
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_activity_write_uid
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_concept_write_uid
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_write_uid
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_write_uid
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_tax_write_uid
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_write_uid
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_field_write_uid
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_write_uid
+#: field:res.partner.update.from.padron.field,write_uid:0
+#: field:res.partner.update.from.padron.wizard,write_uid:0
 msgid "Last Updated by"
 msgstr "Última actualización por"
 
 #. module: l10n_ar_account
-#: field:account.document.letter,write_date:0 field:afip.incoterm,write_date:0
-#: field:afip.responsability.type,write_date:0
+#: field:account.document.letter,write_date:0 field:afip.activity,write_date:0
+#: field:afip.concept,write_date:0 field:afip.incoterm,write_date:0
+#: field:afip.responsability.type,write_date:0 field:afip.tax,write_date:0
 #: field:afip.vat.f2002_category,write_date:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_write_date
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_activity_write_date
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_concept_write_date
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_write_date
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_write_date
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_tax_write_date
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_write_date
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_field_write_date
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_write_date
+#: field:res.partner.update.from.padron.field,write_date:0
+#: field:res.partner.update.from.padron.wizard,write_date:0
 msgid "Last Updated on"
 msgstr "Última actualización en"
 
@@ -1791,6 +2172,12 @@ msgid "Manual"
 msgstr "Manual"
 
 #. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_monotributo_padron
+#: field:res.partner,monotributo_padron:0
+msgid "Monotributo"
+msgstr "Monotributo"
+
+#. module: l10n_ar_account
 #: selection:res.partner,gross_income_type:0
 msgid "Multilateral"
 msgstr "Multilateral"
@@ -1802,12 +2189,17 @@ msgstr "Municipal Taxes"
 
 #. module: l10n_ar_account
 #: field:account.document.letter,name:0
-#: field:account.invoice,document_letter_name:0 field:afip.incoterm,name:0
-#: field:afip.responsability.type,name:0 field:afip.vat.f2002_category,name:0
+#: field:account.invoice,document_letter_name:0 field:afip.activity,name:0
+#: field:afip.concept,name:0 field:afip.incoterm,name:0
+#: field:afip.responsability.type,name:0 field:afip.tax,name:0
+#: field:afip.vat.f2002_category,name:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_document_letter_name
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_activity_name
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_concept_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_incoterm_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_name
+#: model:ir.model.fields,field_description:l10n_ar_account.field_afip_tax_name
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_vat_f2002_category_name
 msgid "Name"
 msgstr "Nombre"
@@ -1824,9 +2216,37 @@ msgid "National Taxes"
 msgstr "Impuestos Nacionales"
 
 #. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_field_new_value
+#: field:res.partner.update.from.padron.field,new_value:0
+msgid "New value"
+msgstr "Nuevo valor"
+
+#. module: l10n_ar_account
+#: selection:res.partner,integrante_soc_padron:0
+#: selection:res.partner,monotributo_padron:0
+msgid "No"
+msgstr "No"
+
+#. module: l10n_ar_account
+#: selection:res.partner,imp_ganancias_padron:0
+#: selection:res.partner,imp_iva_padron:0
+msgid "No Inscripto"
+msgstr "No Inscripto"
+
+#. module: l10n_ar_account
 #: selection:res.partner,gross_income_type:0
 msgid "No Liquida"
 msgstr "No Liquida"
+
+#. module: l10n_ar_account
+#: selection:res.partner,imp_iva_padron:0
+msgid "No alcanzado"
+msgstr "No alcanzado"
+
+#. module: l10n_ar_account
+#: selection:res.partner,imp_ganancias_padron:0
+msgid "No corresponde"
+msgstr "No corresponde"
 
 #. module: l10n_ar_account
 #: field:account.ar.vat.line,no_gravado_iva:0
@@ -1843,6 +2263,12 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_account
+#: code:addons/l10n_ar_account/wizard/res_partner_update_from_padron_wizard.py:51
+#, python-format
+msgid "No se encontró ningún partner con CUIT para actualizar"
+msgstr "No se encontró ningún partner con CUIT para actualizar"
+
+#. module: l10n_ar_account
 #: field:account.invoice,not_vat_tax_ids:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_not_vat_tax_ids
 msgid "Not VAT Taxes"
@@ -1853,6 +2279,12 @@ msgstr "Impuestos no IVA"
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_number
 msgid "Number"
 msgstr "Número"
+
+#. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_field_old_value
+#: field:res.partner.update.from.padron.field,old_value:0
+msgid "Old value"
+msgstr "Valor anterior"
 
 #. module: l10n_ar_account
 #: selection:account.journal,point_of_sale_type:0
@@ -1866,6 +2298,12 @@ msgid "Only one vat tax allowed per line"
 msgstr "Un solo tipo de IVA es admitido por línea de factura"
 
 #. module: l10n_ar_account
+#: model:ir.model.fields,help:l10n_ar_account.field_res_partner_update_from_padron_wizard_field_to_update_ids
+#: help:res.partner.update.from.padron.wizard,field_to_update_ids:0
+msgid "Only this fields are going to be retrived and updated"
+msgstr "Solo estos campos van a ser solicitados y actualizados"
+
+#. module: l10n_ar_account
 #: selection:account.invoice.line.report,state:0
 msgid "Open"
 msgstr "Abierta"
@@ -1875,6 +2313,11 @@ msgstr "Abierta"
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_chart_template_opening_clousure_account_id
 msgid "Opening / Closure Account"
 msgstr "Cuenta de Apertura / Cierre"
+
+#. module: l10n_ar_account
+#: selection:res.partner.update.from.padron.wizard,state:0
+msgid "Option"
+msgstr "Opción"
 
 #. module: l10n_ar_account
 #: selection:account.tax.group,tax:0 selection:account.tax.group,type:0
@@ -1918,6 +2361,8 @@ msgstr ""
 #: model:ir.model,name:l10n_ar_account.model_res_partner
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_partner_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_partner_id
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_partner_id
+#: field:res.partner.update.from.padron.wizard,partner_id:0
 msgid "Partner"
 msgstr "Empresa"
 
@@ -1926,6 +2371,12 @@ msgstr "Empresa"
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_ref
 msgid "Partner Reference"
 msgstr ""
+
+#. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_partner_ids
+#: field:res.partner.update.from.padron.wizard,partner_ids:0
+msgid "Partners"
+msgstr "Empresas"
 
 #. module: l10n_ar_account
 #: field:account.ar.vat.line,per_iva:0
@@ -2042,11 +2493,6 @@ msgid "Provincial Taxes"
 msgstr "Impuestos Provinciales"
 
 #. module: l10n_ar_account
-#: selection:account.ar.vat.line,type:0
-msgid "Purchase"
-msgstr "Compra"
-
-#. module: l10n_ar_account
 #: field:account.invoice.line.report,quantity:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_quantity
 msgid "Quantity"
@@ -2063,6 +2509,12 @@ msgstr "Letras de Documentos Recibidas"
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_receptor_ids
 msgid "Receptors"
 msgstr "Receptores"
+
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/res_config.py:69
+#, python-format
+msgid "Resource Type %s not implemented!"
+msgstr "El tipo de recurso %s no esta implementado!"
 
 #. module: l10n_ar_account
 #: model:ir.ui.menu,name:l10n_ar_account.menu_afip_responsability_type
@@ -2098,15 +2550,15 @@ msgid "Retención IVA"
 msgstr "Retención IVA"
 
 #. module: l10n_ar_account
-#: selection:account.ar.vat.line,type:0
-msgid "Sale"
-msgstr "Venta"
-
-#. module: l10n_ar_account
 #: field:account.invoice.line.report,user_id:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_user_id
 msgid "Salesman"
 msgstr "Vendedor"
+
+#. module: l10n_ar_account
+#: selection:res.partner.update.from.padron.wizard,state:0
+msgid "Selection"
+msgstr "Selección"
 
 #. module: l10n_ar_account
 #: field:afip.responsability.type,sequence:0
@@ -2142,6 +2594,12 @@ msgid "Servicios"
 msgstr "Servicios"
 
 #. module: l10n_ar_account
+#: selection:res.partner,integrante_soc_padron:0
+#: selection:res.partner,monotributo_padron:0
+msgid "Si"
+msgstr "Si"
+
+#. module: l10n_ar_account
 #: code:addons/l10n_ar_account/models/account_invoice.py:449
 #, python-format
 msgid ""
@@ -2163,6 +2621,8 @@ msgstr "Fecha Comienzo de Actividades"
 #: field:account.invoice.line.report,state_id:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_state_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_state_id
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_state
+#: field:res.partner.update.from.padron.wizard,state:0
 msgid "State"
 msgstr "Provincia"
 
@@ -2174,7 +2634,7 @@ msgstr ""
 
 #. module: l10n_ar_account
 #: field:account.invoice.line.report,price_subtotal:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4277
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4343
 msgid "Subtotal"
 msgstr "Subtotal"
 
@@ -2217,6 +2677,11 @@ msgid "Tax Group"
 msgstr "Grupo de impuestos"
 
 #. module: l10n_ar_account
+#: model:ir.ui.menu,name:l10n_ar_account.menu_action_afip_tax
+msgid "Taxes"
+msgstr "Impuestos"
+
+#. module: l10n_ar_account
 #: field:account.document.letter,taxes_included:0
 #: field:account.invoice,taxes_included:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_document_letter_taxes_included
@@ -2255,15 +2720,19 @@ msgid "The state of the company is cosidered the main jurisdiction"
 msgstr "El estado de la empresa se considera la jurisdicción principal"
 
 #. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_title_case
+#: field:res.partner.update.from.padron.wizard,title_case:0
+msgid "Title Case"
+msgstr "Título con Mayúscula"
+
+#. module: l10n_ar_account
 #: field:account.ar.vat.line,total:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_total
 msgid "Total"
 msgstr "Total"
 
 #. module: l10n_ar_account
-#: field:account.ar.vat.line,type:0 field:account.invoice.line.report,type:0
-#: field:account.tax.group,type:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_type
+#: field:account.invoice.line.report,type:0 field:account.tax.group,type:0
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_type
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_tax_group_type
 msgid "Type"
@@ -2276,14 +2745,14 @@ msgid "Type %s not implemented yet"
 msgstr "El tipo %s no está implementado todavía"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_move_line.py:83
+#: code:addons/l10n_ar_account/models/account_move_line.py:98
 #, python-format
 msgid "Type must be \"base\" or \"tax\""
 msgstr ""
 
 #. module: l10n_ar_account
 #: field:account.invoice.line.report,price_unit:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4276
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4342
 msgid "Unit Price"
 msgstr "Precio unitario"
 
@@ -2291,6 +2760,18 @@ msgstr "Precio unitario"
 #: selection:account.ar.vat.line,state:0
 msgid "Unposted"
 msgstr ""
+
+#. module: l10n_ar_account
+#: model:ir.actions.act_window,name:l10n_ar_account.action_base_partner_update_from_padron
+#: model:ir.ui.menu,name:l10n_ar_account.menu_base_partner_update_from_padron
+msgid "Update Partners From Padron AFIP"
+msgstr "Actualizar socios de Padrón AFIP"
+
+#. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_update_constancia
+#: field:res.partner.update.from.padron.wizard,update_constancia:0
+msgid "Update constancia"
+msgstr "Actualizar constancia"
 
 #. module: l10n_ar_account
 #: selection:account.tax.group,tax:0
@@ -2346,9 +2827,25 @@ msgid "Vat tax id"
 msgstr "id de IVA"
 
 #. module: l10n_ar_account
+#: selection:account.ar.vat.line,comprobante:0
+msgid "Vendor Bill"
+msgstr ""
+
+#. module: l10n_ar_account
+#: selection:account.ar.vat.line,comprobante:0
+msgid "Vendor Refund"
+msgstr ""
+
+#. module: l10n_ar_account
 #: selection:account.tax.group,type:0
 msgid "Withholding"
 msgstr "Retenciones"
+
+#. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_field_wizard_id
+#: field:res.partner.update.from.padron.field,wizard_id:0
+msgid "Wizard"
+msgstr "Asistente"
 
 #. module: l10n_ar_account
 #: code:addons/l10n_ar_account/models/account_invoice.py:463
@@ -2361,7 +2858,7 @@ msgstr ""
 "que no están configurados. Grupos de Impuesto (id): %s"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_move_line.py:62
+#: code:addons/l10n_ar_account/models/account_move_line.py:77
 #, python-format
 msgid "You must request tax amounts with tax or tax group"
 msgstr ""

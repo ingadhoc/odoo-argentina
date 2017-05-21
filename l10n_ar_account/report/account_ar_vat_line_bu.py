@@ -36,6 +36,18 @@ class AccountArVatLine(models.Model):
     ],
         readonly=True,
     )
+    # TODO idem, tal vez related con store? Performance?
+    # type = fields.Selection([
+    #     ('purchase', 'Purchase'),
+    #     ('sale', 'Sale'),
+    #     # ('cash', 'Cash'),
+    #     # ('bank', 'Bank'),
+    #     # ('general', 'Miscellaneous'),
+    # ],
+    #     # readonly=True
+    #     # related='journal_id.type',
+    #     readonly=True
+    # )
     ref = fields.Char(
         'Partner Reference',
         readonly=True
@@ -127,6 +139,12 @@ class AccountArVatLine(models.Model):
     # amount_currency = fields.Monetary(
     #     readonly=True,
     #     currency_field='currency_id',
+    account_id = fields.Many2one(
+        'account.account',
+        'Account',
+        readonly=True,
+        auto_join=True,
+    )
     # TODO idem, tal vez related con store? Performance?
     state = fields.Selection(
         [('draft', 'Unposted'), ('posted', 'Posted')],
@@ -167,17 +185,49 @@ class AccountArVatLine(models.Model):
         string='Entry',
         auto_join=True,
     )
+    move_line_id = fields.Many2one(
+        'account.move.line',
+        string='Journal Item',
+        auto_join=True,
+    )
+    afip_activity_id = fields.Many2one(
+        'afip.activity',
+        'AFIP Activity',
+        help='AFIP activity, used for IVA f2002 report',
+        auto_join=True,
+        readonly=True,
+    )
+    vat_f2002_category_id = fields.Many2one(
+        'afip.vat.f2002_category',
+        auto_join=True,
+        string='Categoría IVA f2002',
+        readonly=True,
+    )
+    # payment_group_id = fields.Many2one(
+    #     'account.payment.group',
+    #     'Payment Group',
+    #     compute='_compute_move_lines_data',
+    # )
+    # invoice_id = fields.Many2one(
+    #     'account.invoice',
+    #     'Invoice',
+    #     compute='_compute_move_lines_data',
+    # )
+    # es una concatenacion de los name de los move lines
+    # name = fields.Char(
+    #     compute='_compute_move_lines_data',
+    # )
 
     @api.multi
-    def open_journal_entry(self):
+    def open_journal_item(self):
         self.ensure_one()
         return {
-            'name': _('Journal Entry'),
+            'name': _('Journal Item'),
             'target': 'current',
             'res_id': self.id,
             'view_type': 'form',
             'view_mode': 'form',
-            'res_model': 'account.move',
+            'res_model': 'account.move.line',
             'type': 'ir.actions.act_window',
         }
 
@@ -187,10 +237,6 @@ class AccountArVatLine(models.Model):
         tools.drop_view_if_exists(cr, self._table)
         env = api.Environment(cr, 1, {})
         ref = env.ref
-
-        # TODO tal vez chequear que todas las lineas tengan base vat tax
-        # o que sean un tax ya que es obligatorio en loc ar y ademas nos
-        # garantiza que se calcule bien
 
         # TODO tal vez querramos agregar chequeo de que no haya tax groups
         # tipo vat que no esten en los ref
@@ -226,19 +272,24 @@ class AccountArVatLine(models.Model):
         }
         query = """
 SELECT
-    am.id,
-    am.id as move_id,
-    am.date,
-    am.journal_id,
-    am.company_id,
-    am.partner_id,
-    am.name,
-    am.ref,
+    aml.id,
+    aml.id as move_line_id,
+    aml.date,
+    aml.move_id,
+    aml.journal_id,
+    aml.account_id,
+    aml.company_id,
+    aml.partner_id,
+    aml.name,
+    aml.ref,
     am.afip_responsability_type_id,
     am.state,
     am.document_type_id,
+    aa.afip_activity_id,
+    aa.vat_f2002_category_id,
     /*TODO si agregamos recibos entonces tenemos que mapear valores aca*/
     ai.type as comprobante,
+    /*aj.type,*/
     sum(CASE WHEN bt.tax_group_id=%(tg21)s THEN aml.balance ELSE 0 END)
         as base_21,
     sum(CASE WHEN nt.tax_group_id=%(tg21)s THEN aml.balance ELSE 0 END)
@@ -266,8 +317,7 @@ SELECT
         as no_gravado_iva,
     sum(CASE WHEN nt.tax_group_id not in %(tg_vats)s THEN aml.balance ELSE
         0 END) as otros_impuestos,
-    sum(aml.balance) as total,
-    --sum(am.amount) as total
+    sum(aml.balance) as total
 FROM
     account_move_line aml
 LEFT JOIN
@@ -276,9 +326,15 @@ LEFT JOIN
 LEFT JOIN
     account_invoice as ai
     ON aml.invoice_id = ai.id
+/*LEFT JOIN
+    res_partner as rp
+    ON aml.partner_id = rp.id*/
 LEFT JOIN
     account_account AS aa
     ON aml.account_id = aa.id
+LEFT JOIN
+    account_journal AS aj
+    ON aml.journal_id = aj.id
 LEFT JOIN
     -- nt = net tax
     account_tax AS nt
@@ -291,11 +347,18 @@ LEFT JOIN
     account_tax AS bt
     ON amltr.account_tax_id = bt.id
 WHERE
-    aa.internal_type not in ('payable', 'receivable', 'liquidity')
+    aa.internal_type not in ('payable', 'receivable') and
+    -- TODO analiza ri registramos cosas de iva en otros diarios que no son
+    -- compras y ventas
+    aj.type in ('sale', 'purchase') and
+    (nt.tax_group_id in %(tg_vats)s or bt.tax_group_id in %(tg_vats)s)
 GROUP BY
-    am.id, am.state, am.document_type_id,
+    aml.id, am.state, am.document_type_id,
+    /*aj.type,*/
     am.afip_responsability_type_id,
+    aa.afip_activity_id, aa.vat_f2002_category_id,
     ai.type
+    /*move_id, journal_id, aj.type*/
         """ % vals
 
         cr.execute("""CREATE or REPLACE VIEW %s as (%s

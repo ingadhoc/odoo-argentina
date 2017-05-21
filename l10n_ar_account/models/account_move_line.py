@@ -3,7 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, api, _
+from openerp import models, api, fields, _
 from openerp.exceptions import UserError
 from openerp.tools.safe_eval import safe_eval
 import logging
@@ -12,6 +12,15 @@ _logger = logging.getLogger(__name__)
 
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
+
+    # useful to group by this field
+    afip_responsability_type_id = fields.Many2one(
+        related='move_id.afip_responsability_type_id',
+        readonly=True,
+        auto_join=True,
+        # stored required to group by
+        store=True,
+    )
 
     @api.model
     def get_tax_move_lines_action(

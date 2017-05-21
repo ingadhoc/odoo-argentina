@@ -44,6 +44,8 @@
         # 'data/account_financial_report_data.xml',
         # 'data/account_payment_term.xml',
         'report/account_ar_vat_line_view.xml',
+        'view/account_move_line_view.xml',
+        'view/account_move_view.xml',
         'view/res_partner_view.xml',
         'view/res_company_view.xml',
         'view/afip_menuitem.xml',

@@ -262,12 +262,11 @@ SELECT
     --TODO separar sufido y aplicado o filtrar por tipo de operacion o algo?
     sum(CASE WHEN nt.tax_group_id=%(tg_per_iva)s THEN aml.balance ELSE 0 END)
         as per_iva,
-    sum(CASE WHEN nt.tax_group_id in %(tg_iva0)s THEN aml.balance ELSE 0 END)
+    sum(CASE WHEN bt.tax_group_id in %(tg_iva0)s THEN aml.balance ELSE 0 END)
         as no_gravado_iva,
     sum(CASE WHEN nt.tax_group_id not in %(tg_vats)s THEN aml.balance ELSE
         0 END) as otros_impuestos,
-    sum(aml.balance) as total,
-    --sum(am.amount) as total
+    sum(aml.balance) as total
 FROM
     account_move_line aml
 LEFT JOIN

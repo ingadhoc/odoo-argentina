@@ -4,16 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Andres L <aleibrecht@gmail.com>, 2017
-# Javier Diez <jd@adhoc.com.ar>, 2017
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-20 22:17+0000\n"
-"PO-Revision-Date: 2017-05-20 22:17+0000\n"
-"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2017-05-21 21:51+0000\n"
+"PO-Revision-Date: 2017-05-21 21:51+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -169,6 +166,19 @@ msgstr ""
 "            </data>"
 
 #. module: l10n_ar_account
+#: model:ir.ui.view,arch_db:l10n_ar_account.view_account_move_filter
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<data><field name=\"partner_id\" position=\"after\">\n"
+"                <field name=\"afip_responsability_type_id\"/>\n"
+"            </field>\n"
+"            <group>\n"
+"                <filter string=\"AFIP Responsability Type\" domain=\"[]\" context=\"{'group_by':'afip_responsability_type_id'}\"/>\n"
+"            </group>\n"
+"        </data>"
+msgstr ""
+
+#. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_partner_property_form
 msgid ""
 "<?xml version=\"1.0\"?>\n"
@@ -317,6 +327,19 @@ msgid ""
 "                    </div> -->\n"
 "                </div>\n"
 "            </data>"
+msgstr ""
+
+#. module: l10n_ar_account
+#: model:ir.ui.view,arch_db:l10n_ar_account.view_account_move_line_filter
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<data><separator position=\"before\">\n"
+"                <field name=\"afip_responsability_type_id\"/>\n"
+"            </separator>\n"
+"            <group>\n"
+"                <filter string=\"AFIP Responsability Type\" context=\"{'group_by':'afip_responsability_type_id'}\"/>\n"
+"            </group>\n"
+"        </data>"
 msgstr ""
 
 #. module: l10n_ar_account
@@ -1123,10 +1146,12 @@ msgstr "Responsabilidades AFIP"
 #: field:account.ar.vat.line,afip_responsability_type_id:0
 #: field:account.invoice,afip_responsability_type_id:0
 #: field:account.move,afip_responsability_type_id:0
+#: field:account.move.line,afip_responsability_type_id:0
 #: model:ir.model,name:l10n_ar_account.model_afip_responsability_type
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_afip_responsability_type_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_afip_responsability_type_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_move_afip_responsability_type_id
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_move_line_afip_responsability_type_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_res_company_afip_responsability_type_id
 #: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_afip_responsability_type_id
 #: field:res.company,afip_responsability_type_id:0
@@ -2056,7 +2081,9 @@ msgid "Journal Entry"
 msgstr ""
 
 #. module: l10n_ar_account
+#: code:addons/l10n_ar_account/report/account_ar_vat_line_bu.py:225
 #: model:ir.model,name:l10n_ar_account.model_account_move_line
+#, python-format
 msgid "Journal Item"
 msgstr ""
 
@@ -2634,7 +2661,7 @@ msgstr ""
 
 #. module: l10n_ar_account
 #: field:account.invoice.line.report,price_subtotal:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4343
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4345
 msgid "Subtotal"
 msgstr "Subtotal"
 
@@ -2745,14 +2772,14 @@ msgid "Type %s not implemented yet"
 msgstr "El tipo %s no está implementado todavía"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_move_line.py:98
+#: code:addons/l10n_ar_account/models/account_move_line.py:107
 #, python-format
 msgid "Type must be \"base\" or \"tax\""
 msgstr ""
 
 #. module: l10n_ar_account
 #: field:account.invoice.line.report,price_unit:0
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4342
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4344
 msgid "Unit Price"
 msgstr "Precio unitario"
 
@@ -2858,7 +2885,7 @@ msgstr ""
 "que no están configurados. Grupos de Impuesto (id): %s"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_move_line.py:77
+#: code:addons/l10n_ar_account/models/account_move_line.py:86
 #, python-format
 msgid "You must request tax amounts with tax or tax group"
 msgstr ""

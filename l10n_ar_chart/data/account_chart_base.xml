@@ -30,13 +30,14 @@
 
         <!-- 1.1.10 (Caja y bancos, se crea desde los diarios) -->
 
-            <record model="account.account.template" id="base_valores_en_cartera">
+        <!-- al final no la seteamos porque la idea es usar un diario especifico para cheques de terceros -->
+<!--             <record model="account.account.template" id="base_valores_en_cartera">
                 <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                 <field name="code">1.1.01.10.990</field>
                 <field name="user_type_id" ref="account.data_account_type_liquidity"/>
                 <field name="name">Valores en Cartera</field>
             </record>
-
+ -->
         <!-- 1.1.20 (Inversiones) -->
 
         <!-- 1.1.02 (créditos comerciales) -->
@@ -1125,7 +1126,8 @@
             <field name="income_currency_exchange_account_id" ref="base_diferencias_de_cambio"/>
             <field name="deferred_check_account_id" ref="base_cheques_diferidos"/>
             <field name="rejected_check_account_id" ref="base_cheques_rechazados"/>
-            <field name="holding_check_account_id" ref="base_valores_en_cartera"/>
+            <!-- no la seteamos porque la idea es depreciarla y que si se usa cheques de terceros y manual en mismo diario, siempre se use la misma cuenta -->
+            <!-- <field name="holding_check_account_id" ref="base_valores_en_cartera"/> -->
             <field name="opening_clousure_account_id" ref="base_contrapartida_auxiliar"/>
         </record>
 

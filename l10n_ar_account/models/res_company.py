@@ -35,6 +35,11 @@ class ResCompany(models.Model):
         related='afip_responsability_type_id.company_requires_vat',
         store=True,
     )
+    # use globally as default so that if child companies are created they
+    # also use this as default
+    tax_calculation_rounding_method = fields.Selection(
+        default='round_globally',
+    )
 
     @api.onchange('localization')
     def change_localization(self):

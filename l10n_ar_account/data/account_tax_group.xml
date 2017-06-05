@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data noupdate="True">    
-        <!-- rename to Other Taxes and use sequence 10 -->
-        <!-- <record id="account.tax_group_taxes" model="account.tax.group">
-            <field name="name">Other Taxes</field>
-            <field name="sequence">10</field>
-        </record> -->
+        <!-- rename to Other Taxes, use sequence 20 y clasificamos impuesto -->
+        <record id="account.tax_group_taxes" model="account.tax.group">
+            <field name="name">Otros Impuestos</field>
+            <field name="sequence">20</field>
+            <field name="tax">other</field>
+            <field name="type">tax</field>
+            <field name="application">others</field>
+        </record>
+
+        <record model="account.tax.group" id="tax_impuestos_internos">
+            <field name="name">Impuestos Internos</field>
+            <field name="tax">other</field>
+            <field name="type">tax</field>
+            <field name="application">internal_taxes</field>
+            <field name="sequence">15</field>
+        </record>
 
 <!-- impuestos en si -->
 

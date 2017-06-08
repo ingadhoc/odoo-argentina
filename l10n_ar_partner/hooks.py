@@ -67,17 +67,17 @@ def post_init_hook(cr, registry):
     if not openupgrade.column_exists:
         return False
     # write en vez de sql para que genere los campos por defecto necesarios
-    if openupgrade.column_exists(cr, 'res_partner', 'document_number'):
+    if openupgrade.column_exists(cr, 'res_partner', 'main_id_number'):
         # we make this so it ise much faster
         openupgrade.logged_query(cr, """
             INSERT into res_partner_id_number
                 (partner_id, category_id, name, sequence, create_uid,
                     write_uid, create_date, write_date, active)
-            SELECT id, main_id_category_id, document_number, 10, 1, 1,
+            SELECT id, main_id_category_id, main_id_number, 10, 1, 1,
                 create_date, write_date, true
                 FROM res_partner
                 WHERE main_id_category_id is not null
-                    and document_number is not null
+                    and main_id_number is not null
             """,)
     # cr.execute(
     #     'select id, document_number, main_id_category_id from res_partner')

@@ -18,6 +18,7 @@ column_renames = {
 
 
 def pre_init_hook(cr):
+    _logger.info('Running pre init hook')
     if (
             openupgrade.column_exists(
                 cr, 'res_partner', 'document_type_id') and
@@ -28,6 +29,7 @@ def pre_init_hook(cr):
 
 
 def fix_data_on_l10n_ar_partner(cr):
+    _logger.info('Fixing data on l10nar partner')
     # pasamos de a account_account a l10n_ar_partner
     old_name = 'account_document'
     new_name = 'l10n_ar_partner'
@@ -48,6 +50,7 @@ def update_data_module_name(cr, models, old_name, new_name):
     fix data has been assigend to account_account but is loaded by
     l10n_ar_account
     """
+    _logger.info('update_data_module_name')
     for model in models:
         query = ("UPDATE ir_model_data SET module = %s "
                  "WHERE module = %s and model = %s")
@@ -64,11 +67,13 @@ def post_init_hook(cr, registry):
     """
     # we don not force dependency on openupgradelib, only if available we try
     # o un de hook
+    _logger.info('running post_init_hook')
     if not openupgrade.column_exists:
         return False
     # write en vez de sql para que genere los campos por defecto necesarios
     if openupgrade.column_exists(cr, 'res_partner', 'main_id_number'):
         # we make this so it ise much faster
+        _logger.info('creating id numbers records')
         openupgrade.logged_query(cr, """
             INSERT into res_partner_id_number
                 (partner_id, category_id, name, sequence, create_uid,
@@ -79,14 +84,12 @@ def post_init_hook(cr, registry):
                 WHERE main_id_category_id is not null
                     and main_id_number is not null
             """,)
-    # cr.execute(
-    #     'select id, document_number, main_id_category_id from res_partner')
-    # for partner_id, document_number, main_id_category_id in cr.fetchall():
-    #     if main_id_category_id and document_number:
-    #         try:
-    #             registry['res.partner'].write(
-    #                 cr, 1, [partner_id], {
-    #                     'main_id_number': document_number})
-    #         except:
-    #             _logger.error(
-    #                 'Could not set document on partner_id %s' % partner_id)
+        # tambien con este column exists nos damos cuenta si es migracion
+        # si este es el caso y tenia partner_vat_unique tenemos que activar
+        # unique
+        _logger.info('setting id unique if needed')
+        if registry['ir.module.module'].search(cr, 1, [
+                ('name', '=', 'partner_vat_unique'),
+                ('state', '=', 'to upgrade')]):
+            registry['ir.config_parameter'].set_param(
+                cr, 1, "l10n_ar_partner.unique_id_numbers", True)

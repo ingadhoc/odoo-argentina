@@ -87,7 +87,6 @@ def post_init_hook(cr, registry):
         set_company_loc_ar(cr)
         merge_padron_into_account(cr)
         migrate_responsability_type(env)
-        set_iva_no_corresponde(env)
         fix_invoice_without_date(env)
     merge_refund_journals_to_normal(cr, registry)
     map_tax_groups_to_taxes(cr, registry)
@@ -102,31 +101,6 @@ def fix_invoice_without_date(env):
         [('move_id', '!=', False), ('date', '=', False)])
     for invoice in invoices:
         invoice.date = invoice.move_id.date
-
-
-def set_iva_no_corresponde(env):
-    """
-    on v8 we have purchase invioces without vat taxes on lines, now we make it
-    mandatory, we fix that
-    """
-    _logger.info('Setting iva no corresponde')
-    for company in env['res.company'].search([]):
-        tax_group = env.ref('l10n_ar_account.tax_group_iva_no_corresponde')
-        tax = env['account.tax'].search([
-            ('type_tax_use', '=', 'purchase'),
-            ('company_id', '=', company.id),
-            ('tax_group_id', '=', tax_group.id)])
-        # TODO asser len tax = 1
-        if not tax:
-            continue
-        lines = env['account.invoice.line'].search([
-            ('invoice_id.company_id.localization', '=', 'argentina'),
-            ('invoice_line_tax_ids', '=', False),
-            ('company_id', '=', company.id),
-            ('invoice_id.journal_id.use_documents', '=', True),
-            ('invoice_id.type', 'in', ['in_invoice', 'in_refund'])])
-        lines.write({'invoice_line_tax_ids': [(6, False, [tax.id])]})
-        lines.mapped('invoice_id').compute_taxes()
 
 
 def migrate_responsability_type(env):

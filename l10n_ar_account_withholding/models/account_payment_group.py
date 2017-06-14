@@ -36,9 +36,20 @@ class AccountPaymentGroup(models.Model):
                 'confirmed': [('readonly', False)]}
     )
     company_regimenes_ganancias_ids = fields.Many2many(
-        related='company_id.regimenes_ganancias_ids',
-        readonly=True,
+        'afip.tabla_ganancias.alicuotasymontos',
+        compute='_company_regimenes_ganancias',
     )
+
+    @api.multi
+    @api.depends('company_id.regimenes_ganancias_ids')
+    def _company_regimenes_ganancias(self):
+        """
+        Lo hacemos con campo computado y no related para que solo se setee
+        y se exija si es pago de o a proveedor
+        """
+        for rec in self.filtered(lambda x: x.partner_type == 'supplier'):
+            rec.company_regimenes_ganancias_ids = (
+                rec.company_id.regimenes_ganancias_ids)
 
     @api.onchange('retencion_ganancias', 'commercial_partner_id')
     def change_retencion_ganancias(self):
@@ -55,9 +66,8 @@ class AccountPaymentGroup(models.Model):
 
     @api.onchange('company_regimenes_ganancias_ids')
     def change_company_regimenes_ganancias(self):
-        if (
-                self.company_regimenes_ganancias_ids and
-                self.partner_type == 'supplier'):
+        # partner_type == 'supplier' ya lo filtra el company_regimenes_ga...
+        if self.company_regimenes_ganancias_ids:
             self.retencion_ganancias = 'nro_regimen'
 
     # sacamos esto por ahora ya que no es muy prolijo y nos se esta usando, si

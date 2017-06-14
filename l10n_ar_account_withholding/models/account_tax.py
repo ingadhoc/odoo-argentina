@@ -78,9 +78,12 @@ class AccountTax(models.Model):
                     base_amount -= non_taxable_amount
                 vals['withholdable_base_amount'] = base_amount
                 if regimen.porcentaje_inscripto == -1:
+                    # hacemos <= porque si es 0 necesitamos que encuentre
+                    # la primer regla (0 es en el caso en que la no
+                    # imponible sea mayor)
                     escala = self.env['afip.tabla_ganancias.escala'].search([
-                        ('importe_desde', '<', base_amount),
-                        ('importe_hasta', '>=', base_amount),
+                        ('importe_desde', '<=', base_amount),
+                        ('importe_hasta', '>', base_amount),
                     ], limit=1)
                     if not escala:
                         raise UserError(

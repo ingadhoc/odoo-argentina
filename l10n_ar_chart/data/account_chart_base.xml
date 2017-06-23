@@ -599,6 +599,8 @@
                     <field name="code">2.1.03.02.010</field>
                     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
                     <field name="name">Cheques diferidos</field>
+                    <!-- para poder debitar desde extracto -->
+                    <field name="reconcile" eval="True"/>
                 </record>
 
                 <record model="account.account.template" id="base_otras_deudas_documentadas">

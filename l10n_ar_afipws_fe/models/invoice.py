@@ -437,6 +437,8 @@ print "Observaciones:", wscdc.Obs
                 if inv.afip_incoterm_id:
                     incoterms = inv.afip_incoterm_id.afip_code
                     incoterms_ds = inv.afip_incoterm_id.name
+                    # máximo de 20 caracteres admite
+                    incoterms_ds = incoterms_ds and incoterms_ds[:20]
                 else:
                     incoterms = incoterms_ds = None
                 # por lo que verificamos, se pide permiso existente solo

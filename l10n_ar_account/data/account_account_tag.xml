@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="ret_perc_iibb_aplicada" model="account.account.tag">
+        <field name="name">Ret/Perc IIBB Aplicada</field>
+        <field name="applicability">accounts</field>
+    </record>
+
+</odoo>

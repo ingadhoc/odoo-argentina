@@ -126,17 +126,17 @@
 
     <record id="ret_perc_iibb_aplicada" model="account.account.tag">
         <field name="name">Ret/Perc IIBB Aplicada</field>
-        <field name="applicability">accounts</field>
+        <field name="applicability">taxes</field>
     </record>
 
     <record id="ret_perc_ganancias_aplicada" model="account.account.tag">
         <field name="name">Ret/Perc Ganancias Aplicada</field>
-        <field name="applicability">accounts</field>
+        <field name="applicability">taxes</field>
     </record>
 
     <record id="ret_perc_iva_aplicada" model="account.account.tag">
         <field name="name">Ret/Perc IVA Aplicada</field>
-        <field name="applicability">accounts</field>
+        <field name="applicability">taxes</field>
     </record>
 
 </odoo>

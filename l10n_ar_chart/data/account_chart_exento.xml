@@ -21,7 +21,6 @@
                     <field name="code">2.1.02.01.010</field>
                     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
                     <field name="name">Retención ganancias aplicada</field>
-                    <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.ret_perc_ganancias_aplicada')])]"/>
                 </record>
 
                 <record model="account.account.template" id="ri_percepcion_ganancias_aplicada">
@@ -29,7 +28,6 @@
                     <field name="code">2.1.02.01.020</field>
                     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
                     <field name="name">Percepción ganancias aplicada</field>
-                    <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.ret_perc_ganancias_aplicada')])]"/>
                 </record>
 
                 <record model="account.account.template" id="ri_retencion_iva_aplicada">
@@ -37,14 +35,12 @@
                     <field name="code">2.1.02.01.030</field>
                     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
                     <field name="name">Retención IVA aplicada</field>
-                    <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.ret_perc_iva_aplicada')])]"/>
                 </record>
 
                 <record model="account.account.template" id="ri_percepcion_iva_aplicada">
                     <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
                     <field name="code">2.1.02.01.040</field>
                     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
-                    <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.ret_perc_iva_aplicada')])]"/>
                     <field name="name">Percepción IVA aplicada</field>
                 </record>
 
@@ -71,7 +67,6 @@
                     <field name="code">2.1.02.02.010</field>
                     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
                     <field name="name">Retención IIBB aplicada</field>
-                    <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.ret_perc_iibb_aplicada')])]"/>
                 </record>
 
                 <record model="account.account.template" id="ri_percepcion_iibb_aplicada">
@@ -79,7 +74,6 @@
                     <field name="code">2.1.02.02.020</field>
                     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
                     <field name="name">Percepción IIBB aplicada</field>
-                    <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.ret_perc_iibb_aplicada')])]"/>
                 </record>
 
                 <record model="account.account.template" id="ri_retencion_iibb_a_pagar">

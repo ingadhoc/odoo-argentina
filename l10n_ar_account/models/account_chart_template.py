@@ -91,7 +91,7 @@ class AccountChartTemplate(models.Model):
                 })
         return res
 
-    @api.model
+    @api.multi
     def _prepare_all_journals(
             self, acc_template_ref, company, journals_dict=None):
         """

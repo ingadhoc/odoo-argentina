@@ -82,8 +82,8 @@ def post_init_hook(cr, registry):
     # forma horrible de saber si se esta instalando en una bd que viene migrada
     # despues de hacer esto aprendimos a usar el no_version en migrates
     # pero que en realidad tampoco nos anduvo
+    env = Environment(cr, 1, {})
     if openupgrade.column_exists(cr, 'account_journal', 'old_type'):
-        env = Environment(cr, 1, {})
         set_company_loc_ar(cr)
         merge_padron_into_account(cr)
         migrate_responsability_type(env)

@@ -353,7 +353,7 @@ class account_vat_ledger(models.Model):
                 # WARNING. segun la plantilla es 0 si no es ninguna
                 # TODO ver que no se informe un codigo si no correpsonde,
                 # tal vez da error
-                inv.fiscal_position.afip_code or ' ',
+                inv.fiscal_position.afip_code or 0,
                 ]
 
             if self.type == 'sale':

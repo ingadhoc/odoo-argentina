@@ -33,3 +33,5 @@
   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_16}
 -
   !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_17}
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_18}

@@ -1097,6 +1097,7 @@
             <field name="code">4.5.00.00.010</field>
             <field name="user_type_id" ref="account.data_account_type_expenses"/>
             <field name="name">Impuestos a las ganancias</field>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_impuestos_a_las_ganancias')])]"/>
         </record>
 
 <!-- 6 (Transitorias) --> 

@@ -27,10 +27,12 @@
         product_id: l10n_ar_account.product_product_telefonia
         price_unit: 250.0
         quantity: 1.0
-      - name: 'Laptop E5023 (IVA 10,5)'
-        product_id: product.product_product_25
-        price_unit: 3245.0
-        quantity: 2.0
+      # sacamos este producto porque tiene perc de iva y no se puede en comp
+      # b o c
+      # - name: 'Laptop E5023 (IVA 10,5)'
+      #   product_id: product.product_product_25
+      #   price_unit: 3245.0
+      #   quantity: 2.0
       - name: 'Conceptos no gravados (IVA NG)'
         product_id: l10n_ar_account.product_product_no_gravado
         price_unit: 50.0

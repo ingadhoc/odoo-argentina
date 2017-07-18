@@ -54,9 +54,33 @@
 
                 <record model="account.account.template" id="ri_retencion_iva_a_pagar">
                     <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
-                    <field name="code">2.1.02.02.060</field>
+                    <field name="code">2.1.02.01.060</field>
                     <field name="user_type_id" ref="account.data_account_type_payable"/>
                     <field name="name">Retención/Percepción IVA a pagar</field>
+                    <field name="reconcile" eval="True"/>
+                </record>
+
+            <!-- iibb ret/perc aplicadas -->
+
+                <record model="account.account.template" id="ri_retencion_iibb_aplicada">
+                    <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+                    <field name="code">2.1.02.02.010</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+                    <field name="name">Retención IIBB aplicada</field>
+                </record>
+
+                <record model="account.account.template" id="ri_percepcion_iibb_aplicada">
+                    <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+                    <field name="code">2.1.02.02.020</field>
+                    <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+                    <field name="name">Percepción IIBB aplicada</field>
+                </record>
+
+                <record model="account.account.template" id="ri_retencion_iibb_a_pagar">
+                    <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+                    <field name="code">2.1.02.02.030</field>
+                    <field name="user_type_id" ref="account.data_account_type_payable"/>
+                    <field name="name">Retención/Percepción IIBB a pagar</field>
                     <field name="reconcile" eval="True"/>
                 </record>
 

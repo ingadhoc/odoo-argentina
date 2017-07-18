@@ -18,6 +18,16 @@
         product_id: product.product_product_2
         price_unit: 642.0
         quantity: 1
+    # al final no lo hicimos porque necesitamos los ref y no los tenemos
+    # deberiamos hacer un search
+    # simulamos agregado manual de impuestos
+    # tax_line_ids:
+    #   - name: 'Retda dsada'
+    #     tax_id: product.product_product_2
+    #     amount: 642.0
+    #     manual: True
+    #     sequence: 99
+    #     account_id: 99
 -
   !function {model: account.invoice, name: compute_taxes, id: demo_invoice_1}:
   - model: account.invoice
@@ -304,3 +314,19 @@
   - model: account.invoice
     eval: "[obj(ref('demo_invoice_13')).id]"
 # 14, 15 y 16 son de expo
+-
+   Invoice to ADHOC con 100% de descuento (para testear citi)
+-
+  !record {model: account.invoice, id: demo_invoice_17}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_adhoc
+    user_id: base.user_demo
+    reference_type: none
+    payment_term_id: account.account_payment_term
+    type: 'out_invoice'
+    invoice_line_ids:
+      - name: 'Support Services 1'
+        product_id: product.product_product_2
+        discount: 100.0
+        price_unit: 24.3
+        quantity: 3

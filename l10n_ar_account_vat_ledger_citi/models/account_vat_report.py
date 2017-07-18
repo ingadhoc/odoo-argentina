@@ -88,14 +88,16 @@ class account_vat_ledger(models.Model):
         #     amount = abs(amount)
         #     if invoice.type in ['in_refund', 'out_refund']:
         #         amount = -1.0 * amount
-        # if amount < 0:
-        #     template = "-{:0>%dd}" % (padding-1)
-        # else:
-        template = "{:0>%dd}" % (padding)
+        # Al final volvimos a agregar esto, lo necesitabamos por ej si se pasa
+        # base negativa de no gravado
+        if amount < 0:
+            template = "-{:0>%dd}" % (padding - 1)
+        else:
+            template = "{:0>%dd}" % (padding)
         return template.format(
             int(round(abs(amount) * 10**decimals, decimals)))
 
-    @api.one
+    @api.multi
     @api.depends(
         'REGINFO_CV_CBTE',
         'REGINFO_CV_ALICUOTAS',
@@ -103,6 +105,7 @@ class account_vat_ledger(models.Model):
         # 'period_id.name'
     )
     def get_files(self):
+        self.ensure_one()
         # segun vimos aca la afip espera "ISO-8859-1" en vez de utf-8
         # http://www.planillasutiles.com.ar/2015/08/
         # como-descargar-los-archivos-de.html
@@ -131,12 +134,18 @@ class account_vat_ledger(models.Model):
             self.vouchers_file = base64.encodestring(
                 self.REGINFO_CV_CBTE.encode('ISO-8859-1'))
 
-    @api.one
+    @api.multi
     def compute_citi_data(self):
-        # no lo estamos usando
-        # self.get_REGINFO_CV_CABECERA()
-        self.get_REGINFO_CV_CBTE()
-        self.get_REGINFO_CV_ALICUOTAS()
+        alicuotas = self.get_REGINFO_CV_ALICUOTAS()
+        # sacamos todas las lineas y las juntamos
+        lines = []
+        for k, v in alicuotas.items():
+            lines += v
+        self.REGINFO_CV_ALICUOTAS = '\r\n'.join(lines)
+        self.get_REGINFO_CV_CBTE(alicuotas)
+
+        # para esto haria falta tal vez compatibilizarlo con la cantidad
+        # de alicuotas
         if self.type == 'purchase':
             self.get_REGINFO_CV_COMPRAS_IMPORTACIONES()
 
@@ -172,8 +181,9 @@ class account_vat_ledger(models.Model):
             ('document_type_id.export_to_citi', '=', True),
             ('id', 'in', self.invoice_ids.ids)], order='date_invoice asc')
 
-    @api.one
-    def get_REGINFO_CV_CBTE(self):
+    @api.multi
+    def get_REGINFO_CV_CBTE(self, alicuotas):
+        self.ensure_one()
         res = []
         invoices = self.get_citi_invoices()
         invoices.check_argentinian_invoice_taxes()
@@ -188,20 +198,7 @@ class account_vat_ledger(models.Model):
                     "Partners %s") % partners.ids)
 
         for inv in invoices:
-            # only vat taxes with codes 3, 4, 5, 6, 8, 9
-            # segun: http://contadoresenred.com/regimen-de-informacion-de-
-            # compras-y-ventas-rg-3685-como-cargar-la-informacion/
-            # empezamos a contar los codigos 1 (no gravado) y 2 (exento)
-            # si no hay alicuotas, sumamos una de esta con 0, 0, 0 en detalle
-            # usamos mapped por si hay afip codes duplicados (ej. manual y
-            # auto)
-            cant_alicuotas = len(inv.vat_tax_ids.filtered(
-                lambda r: r.tax_id.tax_group_id.afip_code in [3, 4, 5, 6, 8, 9]
-            ).mapped('tax_id.tax_group_id.afip_code'))
-            # iva no corresponde no suma
-            if not cant_alicuotas and inv.vat_tax_ids.filtered(
-                    lambda r: r.tax_id.tax_group_id.afip_code in [1, 2]):
-                cant_alicuotas = 1
+            cant_alicuotas = len(alicuotas.get(inv))
 
             row = [
                 # Campo 1: Fecha de comprobante
@@ -453,35 +450,57 @@ class account_vat_ledger(models.Model):
             ]
         return row
 
-    @api.one
+    @api.multi
     def get_REGINFO_CV_ALICUOTAS(self):
-        res = []
+        """
+        Devolvemos un dict para calcular la cantidad de alicuotas cuando
+        hacemos los comprobantes
+        """
+        self.ensure_one()
+        res = {}
+        # only vat taxes with codes 3, 4, 5, 6, 8, 9
+        # segun: http://contadoresenred.com/regimen-de-informacion-de-
+        # compras-y-ventas-rg-3685-como-cargar-la-informacion/
+        # empezamos a contar los codigos 1 (no gravado) y 2 (exento)
+        # si no hay alicuotas, sumamos una de esta con 0, 0, 0 en detalle
+        # usamos mapped por si hay afip codes duplicados (ej. manual y
+        # auto)
         for inv in self.get_citi_invoices().filtered(
                 lambda r: r.document_type_id.code != '66'):
+            lines = []
+            is_zero = inv.currency_id.is_zero
+            # reportamos como linea de iva si:
+            # * el impuesto es iva cero
+            # * el impuesto es iva 21, 27 etc pero tiene impuesto liquidado,
+            # si no tiene impuesto liquidado (is_zero), entonces se inventa
+            # una linea
             vat_taxes = inv.vat_tax_ids.filtered(
-                lambda r: r.tax_id.tax_group_id.afip_code in [
-                    3, 4, 5, 6, 8, 9])
+                lambda r: r.tax_id.tax_group_id.afip_code == 3 or (
+                    r.tax_id.tax_group_id.afip_code in [
+                        4, 5, 6, 8, 9] and not is_zero(r.amount)))
 
-            # if only exempt or no gravado, we add one line with 0, 0, 0
-            # no corresponde no lo llevamos
             if not vat_taxes and inv.vat_tax_ids.filtered(
-                    lambda r: r.tax_id.tax_group_id.afip_code in [1, 2]):
-                res.append(''.join(self.get_tax_row(inv, 0.0, 3, 0.0)))
+                    lambda r: r.tax_id.tax_group_id.afip_code):
+                lines.append(''.join(self.get_tax_row(inv, 0.0, 3, 0.0)))
 
             # we group by afip_code
             for afip_code in vat_taxes.mapped('tax_id.tax_group_id.afip_code'):
                 taxes = vat_taxes.filtered(
                     lambda x: x.tax_id.tax_group_id.afip_code == afip_code)
-                res.append(''.join(self.get_tax_row(
+                imp_neto = sum(taxes.mapped('base'))
+                imp_liquidado = sum(taxes.mapped('amount'))
+                lines.append(''.join(self.get_tax_row(
                     inv,
-                    sum(taxes.mapped('base')),
+                    imp_neto,
                     afip_code,
-                    sum(taxes.mapped('amount')),
+                    imp_liquidado,
                 )))
-        self.REGINFO_CV_ALICUOTAS = '\r\n'.join(res)
+            res[inv] = lines
+        return res
 
-    @api.one
+    @api.multi
     def get_REGINFO_CV_COMPRAS_IMPORTACIONES(self):
+        self.ensure_one()
         res = []
         for inv in self.get_citi_invoices().filtered(
                 lambda r: r.document_type_id.code == '66'):

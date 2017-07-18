@@ -495,8 +495,24 @@ class AccountInvoice(models.Model):
                     invoice.fiscal_position_id.afip_code
                     not in afip_exempt_codes):
                 raise ValidationError(_(
-                    "If you have choose a 0, exempt or untaxed 'tax', "
+                    "If you have choose a 0, exempt or untaxed 'tax', or "
                     "you must choose a fiscal position with afip code in %s.\n"
+                    "* Invoice id %i" % (afip_exempt_codes, invoice.id))
+                )
+            # esto es, por eje, si hay un producto con 100% de descuento para
+            # única alicuota, entonces el impuesto liquidado da cero y se
+            # obliga reportar con alicuota 0, entonces se exige tmb cod de op.
+            zero_vat_lines = invoice.tax_line_ids.filtered(
+                lambda r: (
+                    (r.tax_id.tax_group_id.afip_code in [4, 5, 6, 8, 9] and
+                        not r.amount)))
+            if (
+                    zero_vat_lines and
+                    invoice.fiscal_position_id.afip_code
+                    not in afip_exempt_codes):
+                raise ValidationError(_(
+                    "Si hay líneas con IVA declarado 0, entonces debe elegir "
+                    "una posición fiscal con código de afip '%s'.\n"
                     "* Invoice id %i" % (afip_exempt_codes, invoice.id))
                 )
 

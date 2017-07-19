@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api
-# from pyafipws.padron import PadronAFIP
 import logging
 from dateutil.relativedelta import relativedelta
-from datetime import datetime
 _logger = logging.getLogger(__name__)
 
 
@@ -29,9 +27,9 @@ class ResPartner(models.Model):
     @api.multi
     def get_arba_alicuota_percepcion(self):
         company = self._context.get('invoice_company')
-        invoice_date = self._context.get('invoice_date')
-        if invoice_date and company:
-            date = datetime.strptime(invoice_date, '%Y-%m-%d')
+        date_invoice = self._context.get('date_invoice')
+        if date_invoice and company:
+            date = fields.Date.from_string(date_invoice)
             arba = self.get_arba_data(company, date)
             return arba.alicuota_percepcion / 100.0
         return 0

@@ -115,3 +115,34 @@ class AccountTax(models.Model):
                 regimen.codigo_de_regimen, regimen.concepto_referencia)
             vals['period_withholding_amount'] = amount
         return vals
+
+    @api.v8
+    def compute_all(
+            self, price_unit, currency=None, quantity=1.0, product=None,
+            partner=None):
+        # ver nota en get_taxes_values
+        try:
+            date_invoice = self._context.date_invoice
+            invoice_company = self._context.invoice_company
+            partner = partner.with_context(
+                invoice_company=invoice_company, date_invoice=date_invoice)
+        except Exception:
+            pass
+        return super(AccountTax, self).compute_all(
+            price_unit, currency=currency, quantity=quantity, product=product,
+            partner=partner)
+
+    def _compute_amount(
+            self, base_amount, price_unit, quantity=1.0, product=None,
+            partner=None):
+        # ver nota en get_taxes_values
+        try:
+            date_invoice = self._context.date_invoice
+            invoice_company = self._context.invoice_company
+            partner = partner.with_context(
+                invoice_company=invoice_company, date_invoice=date_invoice)
+        except Exception:
+            pass
+        return super(AccountTax, self)._compute_amount(
+            base_amount, price_unit, quantity=quantity, product=product,
+            partner=partner)

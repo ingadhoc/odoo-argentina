@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-14 21:32+0000\n"
-"PO-Revision-Date: 2017-06-14 21:32+0000\n"
+"POT-Creation-Date: 2017-07-19 15:32+0000\n"
+"PO-Revision-Date: 2017-07-19 15:32+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -370,6 +370,16 @@ msgstr "ID"
 #: selection:account.payment.group,retencion_ganancias:0
 msgid "Imposibilidad de Retención"
 msgstr "Imposibilidad de Retención"
+
+#. module: l10n_ar_account_withholding
+#: model:ir.model,name:l10n_ar_account_withholding.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_ar_account_withholding
+#: model:ir.model,name:l10n_ar_account_withholding.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Línea de Factura"
 
 #. module: l10n_ar_account_withholding
 #: field:afip.tabla_ganancias.alicuotasymontos,__last_update:0

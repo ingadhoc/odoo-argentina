@@ -4,113 +4,19 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Andres L <aleibrecht@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 17:48+0000\n"
-"PO-Revision-Date: 2017-04-06 17:48+0000\n"
-"Last-Translator: Andres L <aleibrecht@gmail.com>, 2017\n"
+"POT-Creation-Date: 2017-07-20 14:25+0000\n"
+"PO-Revision-Date: 2017-07-20 14:25+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. module: l10n_ar_account_vat_ledger_citi
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger_citi.account_vat_ledger_form
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<data><field name=\"last_page\" position=\"after\">\n"
-"                    <field name=\"prorate_tax_credit\"/>\n"
-"                    <field name=\"prorate_type\" attrs=\"{'invisible':[('prorate_tax_credit','=',False)],'required':[('prorate_tax_credit','=',True)]}\"/>\n"
-"                </field>\n"
-"                <notebook>\n"
-"                    <page string=\"CITI\" name=\"CITI\">\n"
-"                        <button name=\"compute_citi_data\" type=\"object\" string=\"Compute Citi Data\" states=\"draft\"/>\n"
-"                        <group>\n"
-"                            <field name=\"vouchers_filename\" invisible=\"1\"/>\n"
-"                            <field name=\"aliquots_filename\" invisible=\"1\"/>\n"
-"                            <field name=\"import_aliquots_filename\" invisible=\"1\"/>\n"
-"                            <group>\n"
-"                                <field name=\"vouchers_file\" filename=\"vouchers_filename\"/>\n"
-"                            </group>\n"
-"                            <group>\n"
-"                                <field name=\"aliquots_file\" filename=\"aliquots_filename\"/>\n"
-"                                <field name=\"import_aliquots_file\" filename=\"import_aliquots_filename\"/>\n"
-"                            </group>\n"
-"                        </group>\n"
-"                        <group col=\"1\">\n"
-"                            <!-- <field name=\"REGINFO_CV_CABECERA\"/> -->\n"
-"                            <field name=\"REGINFO_CV_CBTE\"/>\n"
-"                            <field name=\"REGINFO_CV_ALICUOTAS\"/>\n"
-"                            <field name=\"REGINFO_CV_COMPRAS_IMPORTACIONES\" attrs=\"{'invisible': [('type', '!=', 'purchase')]}\"/>\n"
-"                        </group>\n"
-"                    </page>\n"
-"                </notebook>\n"
-"            </data>"
-msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<data><field name=\"last_page\" position=\"after\">\n"
-"                    <field name=\"prorate_tax_credit\"/>\n"
-"                    <field name=\"prorate_type\" attrs=\"{'invisible':[('prorate_tax_credit','=',False)],'required':[('prorate_tax_credit','=',True)]}\"/>\n"
-"                </field>\n"
-"                <notebook>\n"
-"                    <page string=\"CITI\" name=\"CITI\">\n"
-"                        <button name=\"compute_citi_data\" type=\"object\" string=\"Computar Datos CITI\" states=\"draft\"/>\n"
-"                        <group>\n"
-"                            <field name=\"vouchers_filename\" invisible=\"1\"/>\n"
-"                            <field name=\"aliquots_filename\" invisible=\"1\"/>\n"
-"                            <field name=\"import_aliquots_filename\" invisible=\"1\"/>\n"
-"                            <group>\n"
-"                                <field name=\"vouchers_file\" filename=\"vouchers_filename\"/>\n"
-"                            </group>\n"
-"                            <group>\n"
-"                                <field name=\"aliquots_file\" filename=\"aliquots_filename\"/>\n"
-"                                <field name=\"import_aliquots_file\" filename=\"import_aliquots_filename\"/>\n"
-"                            </group>\n"
-"                        </group>\n"
-"                        <group col=\"1\">\n"
-"                            <!-- <field name=\"REGINFO_CV_CABECERA\"/> -->\n"
-"                            <field name=\"REGINFO_CV_CBTE\"/>\n"
-"                            <field name=\"REGINFO_CV_ALICUOTAS\"/>\n"
-"                            <field name=\"REGINFO_CV_COMPRAS_IMPORTACIONES\" attrs=\"{'invisible': [('type', '!=', 'purchase')]}\"/>\n"
-"                        </group>\n"
-"                    </page>\n"
-"                </notebook>\n"
-"            </data>"
-
-#. module: l10n_ar_account_vat_ledger_citi
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger_citi.view_document_type_form
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<group>\n"
-"                    <field name=\"export_to_citi\"/>\n"
-"                </group>\n"
-"            "
-msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<group>\n"
-"                    <field name=\"export_to_citi\"/>\n"
-"                </group>\n"
-"            "
-
-#. module: l10n_ar_account_vat_ledger_citi
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger_citi.view_document_type_tree
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<tree>\n"
-"                    <field name=\"export_to_citi\"/>\n"
-"                </tree>\n"
-"            "
-msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<tree>\n"
-"                    <field name=\"export_to_citi\"/>\n"
-"                </tree>\n"
-"            "
 
 #. module: l10n_ar_account_vat_ledger_citi
 #: model:ir.model,name:l10n_ar_account_vat_ledger_citi.model_account_document_type
@@ -123,13 +29,12 @@ msgid "Account VAT Ledger"
 msgstr "Libro IVA Contable"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:110
+#: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:113
 #, python-format
 msgid "Alicuots_%s_%s.txt"
 msgstr "Alicuotas_%s_%s.txt"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,aliquots_file:0
 #: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:43
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_aliquots_file
 #, python-format
@@ -137,7 +42,6 @@ msgid "Aliquots File"
 msgstr "Archivo de Alícuotas"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,aliquots_filename:0
 #: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:48
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_aliquots_filename
 #, python-format
@@ -150,13 +54,21 @@ msgid "By Voucher"
 msgstr "Por Comprobante"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,tax_credit_computable_amount:0
+#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger_citi.account_vat_ledger_form
+msgid "CITI"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger_citi
+#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger_citi.account_vat_ledger_form
+msgid "Compute Citi Data"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger_citi
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_tax_credit_computable_amount
 msgid "Credit Computable Amount"
 msgstr "Importe de Crédito Computable"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.document.type,export_to_citi:0
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_document_type_export_to_citi
 msgid "Export to citi"
 msgstr "Exportar al CITI"
@@ -167,7 +79,6 @@ msgid "Global"
 msgstr "Global"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,import_aliquots_file:0
 #: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:53
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_import_aliquots_file
 #, python-format
@@ -175,7 +86,6 @@ msgid "Import Aliquots File"
 msgstr "Archivo de Alicuotas Importación"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,import_aliquots_filename:0
 #: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:58
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_import_aliquots_filename
 #, python-format
@@ -183,13 +93,13 @@ msgid "Import Aliquots Filename"
 msgstr "Nombre Archivo Alicuotas Importación"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:118
+#: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:121
 #, python-format
 msgid "Import_Alicuots_%s_%s.txt"
 msgstr "Alicuotas_Importacion_%s_%s.txt"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:185
+#: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:195
 #, python-format
 msgid ""
 "On purchase citi, partner document is mandatory and partner document type "
@@ -199,43 +109,36 @@ msgstr ""
 "documento debe ser distinto a 99. Empresas %s"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,prorate_tax_credit:0
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_prorate_tax_credit
 msgid "Prorate Tax Credit"
 msgstr "Proratear Crédito de Impuestos"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,prorate_type:0
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_prorate_type
 msgid "Prorate Type"
 msgstr "Tipo de Prorrateo"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,REGINFO_CV_ALICUOTAS:0
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_REGINFO_CV_ALICUOTAS
 msgid "REGINFO_CV_ALICUOTAS"
 msgstr "REGINFO_CV_ALICUOTAS"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,REGINFO_CV_CABECERA:0
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_REGINFO_CV_CABECERA
 msgid "REGINFO_CV_CABECERA"
 msgstr "REGINFO_CV_CABECERA"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,REGINFO_CV_CBTE:0
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_REGINFO_CV_CBTE
 msgid "REGINFO_CV_CBTE"
 msgstr "REGINFO_CV_CBTE"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,REGINFO_CV_COMPRAS_IMPORTACIONES:0
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_REGINFO_CV_COMPRAS_IMPORTACIONES
 msgid "REGINFO_CV_COMPRAS_IMPORTACIONES"
 msgstr "REGINFO_CV_COMPRAS_IMPORTACIONES"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: help:account.vat.ledger,sequence:0
 #: model:ir.model.fields,help:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_sequence
 msgid ""
 "Se deberá indicar si la presentación es Original (00) o Rectificativa y su "
@@ -245,13 +148,11 @@ msgstr ""
 "orden"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,sequence:0
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_sequence
 msgid "Sequence"
 msgstr "Sequencia"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: help:account.document.type,export_to_citi:0
 #: model:ir.model.fields,help:l10n_ar_account_vat_ledger_citi.field_account_document_type_export_to_citi
 msgid "Set True if this document type and can be imported on citi"
 msgstr ""
@@ -259,7 +160,6 @@ msgstr ""
 "citi"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,vouchers_file:0
 #: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:33
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_vouchers_file
 #, python-format
@@ -267,7 +167,6 @@ msgid "Vouchers File"
 msgstr "Archivo de Comprobantes"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: field:account.vat.ledger,vouchers_filename:0
 #: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:38
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger_citi.field_account_vat_ledger_vouchers_filename
 #, python-format
@@ -275,13 +174,13 @@ msgid "Vouchers Filename"
 msgstr "Nombre de Archivo de Comprobantes"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:126
+#: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:129
 #, python-format
 msgid "Vouchers_%s_%s.txt"
 msgstr "Comprobantes_%s_%s.txt"
 
 #. module: l10n_ar_account_vat_ledger_citi
-#: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:373
+#: code:addons/l10n_ar_account_vat_ledger_citi/models/account_vat_report.py:374
 #, python-format
 msgid "by_voucher not implemented yet"
 msgstr "por_comprobantes no esta implementado aún"

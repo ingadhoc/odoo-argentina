@@ -4,14 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Andres L <aleibrecht@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 17:48+0000\n"
-"PO-Revision-Date: 2017-04-06 17:48+0000\n"
-"Last-Translator: Andres L <aleibrecht@gmail.com>, 2017\n"
+"POT-Creation-Date: 2017-07-20 14:26+0000\n"
+"PO-Revision-Date: 2017-07-20 14:26+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,32 +20,8 @@ msgstr ""
 
 #. module: l10n_ar_currency_update
 #: model:ir.ui.view,arch_db:l10n_ar_currency_update.currency_rate_update_form
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"max_delta_days\" position=\"after\">\n"
-"                    <label for=\"rate_perc\" string=\"New Rate =\" attrs=\"{'invisible':[('service','!=','afip_ws')]}\"/>\n"
-"                    <div attrs=\"{'invisible':[('service','!=','afip_ws')]}\">\n"
-"                        <label string=\"Base Rate\" class=\"oe_inline\"/>\n"
-"                        <label string=\"* ( 1 + \" class=\"oe_inline\"/>\n"
-"                        <field name=\"rate_perc\" class=\"oe_inline\"/>\n"
-"                        <label string=\" ) + \" class=\"oe_inline\"/>\n"
-"                        <field name=\"rate_surcharge\" class=\"oe_inline\"/>\n"
-"                    </div>\n"
-"                </field>\n"
-"            "
-msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"max_delta_days\" position=\"after\">\n"
-"                    <label for=\"rate_perc\" string=\"Nueva Tasa =\" attrs=\"{'invisible':[('service','!=','afip_ws')]}\"/>\n"
-"                    <div attrs=\"{'invisible':[('service','!=','afip_ws')]}\">\n"
-"                        <label string=\"Tasa Base\" class=\"oe_inline\"/>\n"
-"                        <label string=\"* ( 1 + \" class=\"oe_inline\"/>\n"
-"                        <field name=\"rate_perc\" class=\"oe_inline\"/>\n"
-"                        <label string=\" ) + \" class=\"oe_inline\"/>\n"
-"                        <field name=\"rate_surcharge\" class=\"oe_inline\"/>\n"
-"                    </div>\n"
-"                </field>\n"
-"            "
+msgid "Base Rate"
+msgstr "taza Base"
 
 #. module: l10n_ar_currency_update
 #: code:addons/l10n_ar_currency_update/models/currency_rate_update.py:55
@@ -66,13 +41,16 @@ msgid "For AFIP WS base currency must be ARS!"
 msgstr "Para el WS AFIP la moneda base debe ser ARS!"
 
 #. module: l10n_ar_currency_update
-#: field:currency.rate.update.service,rate_perc:0
+#: model:ir.ui.view,arch_db:l10n_ar_currency_update.currency_rate_update_form
+msgid "New Rate ="
+msgstr "Nueva Taza = "
+
+#. module: l10n_ar_currency_update
 #: model:ir.model.fields,field_description:l10n_ar_currency_update.field_currency_rate_update_service_rate_perc
 msgid "Rate Perc."
 msgstr "Porcentaje"
 
 #. module: l10n_ar_currency_update
-#: field:currency.rate.update.service,rate_surcharge:0
 #: model:ir.model.fields,field_description:l10n_ar_currency_update.field_currency_rate_update_service_rate_surcharge
 msgid "Rate Surcharge"
 msgstr "Fijo"

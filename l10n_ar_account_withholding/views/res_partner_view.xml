@@ -11,6 +11,7 @@
                 </field>
                 <group name="others_col_1">
                     <field name="drei"/>
+                    <field name="drei_number"/>
                 </group>
                 <group name="others" position="after">
                     <label for="arba_alicuot_ids"/>

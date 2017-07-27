@@ -19,8 +19,10 @@ class ResPartner(models.Model):
     ],
         string='DREI',
     )
-    drei_number = fields.Char(
-    )
+    # TODO agregarlo en mig a v10 ya que fix dbs no es capaz de arreglarlo
+    # porque da el error antes de empezar a arreglar
+    # drei_number = fields.Char(
+    # )
     default_regimen_ganancias_id = fields.Many2one(
         'afip.tabla_ganancias.alicuotasymontos',
         'Regimen Ganancias por Defecto',

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: odoo-argentina (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-24 13:24+0000\n"
+"POT-Creation-Date: 2017-03-14 11:59+0000\n"
 "PO-Revision-Date: 2016-05-24 20:39+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-argentina-8-0/language/es/)\n"
@@ -65,8 +65,10 @@ msgid "Document Class"
 msgstr "Clase de Documento"
 
 #. module: l10n_ar_account_voucher
+#: field:account.voucher,afip_document_number:0
 #: field:account.voucher,document_number:0
 #: code:addons/l10n_ar_account_voucher/models/account_voucher.py:17
+#: code:addons/l10n_ar_account_voucher/models/account_voucher.py:24
 #, python-format
 msgid "Document Number"
 msgstr "Número de Documento"
@@ -218,7 +220,7 @@ msgid "Sequence Type"
 msgstr "Tipo de Secuencia"
 
 #. module: l10n_ar_account_voucher
-#: code:addons/l10n_ar_account_voucher/models/account_voucher.py:111
+#: code:addons/l10n_ar_account_voucher/models/account_voucher.py:118
 #, python-format
 msgid ""
 "The company of the receiptbook and of the                 voucher must be "

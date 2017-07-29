@@ -29,6 +29,15 @@ class AccountTaxWithholding(models.Model):
             voucher_line)
 
     @api.multi
+    def get_period_vouchers_domain(self, voucher):
+        domain = super(AccountTaxWithholding, self).get_period_vouchers_domain(
+            voucher)
+        if self.type == 'tabla_ganancias':
+            domain.append(
+                ('regimen_ganancias_id', '=', voucher.regimen_ganancias_id.id))
+        return domain
+
+    @api.multi
     def get_withholding_vals(self, voucher):
         vals = super(AccountTaxWithholding, self).get_withholding_vals(
             voucher)
@@ -102,6 +111,7 @@ class AccountTaxWithholding(models.Model):
             elif imp_ganancias_padron == 'NC':
                 # no corresponde, no impuesto
                 amount = 0.0
-            vals['description'] = regimen.codigo_de_regimen
+            vals['description'] = "%s - %s" % (
+                regimen.codigo_de_regimen, regimen.concepto_referencia)
             vals['period_withholding_amount'] = amount
         return vals

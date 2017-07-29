@@ -48,11 +48,13 @@ CENTENAS = (
 
 def to_word(number):
     ans = to_word_int(int(number))
-    # ans = to_word_int(int(number)) + ' PESOS'
+    # ans = to_word_int(int(number)) + 'PESOS'
     centavos = int(round((number - int(number)), 2) * 100)
     if centavos > 0:
-        ans += ' CON ' + to_word_int(centavos) + ' CENTAVOS'
-    return ans.title()
+        ans += ' CON ' + to_word_int(centavos) + 'CENTAVOS'
+    # return ans.title()
+    # we prefer only first letter in upper case
+    return ans.capitalize()
     
 
 def to_word_int(number):
@@ -74,15 +76,15 @@ def to_word_int(number):
  
     if(millones):
         if(millones == '001'):
-            converted += 'UN MILLON'
+            converted += 'UN MILLON '
         elif(int(millones) > 0):
-            converted += '%sMILLONES' % __convertNumber(millones)
+            converted += '%sMILLONES ' % __convertNumber(millones)
  
     if(miles):
         if(miles == '001'):
-            converted += 'MIL '
+            converted += 'UN MIL '
         elif(int(miles) > 0):
-            converted += '%sMIL' % __convertNumber(miles)
+            converted += '%sMIL ' % __convertNumber(miles)
  
     if(cientos):
         if(cientos == '001'):

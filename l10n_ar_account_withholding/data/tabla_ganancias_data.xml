@@ -163,7 +163,7 @@
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_14">
             <field name="anexo_referencia">Anexo ll, inc. k)</field>
-            <field name="codigo_de_regimen">116</field>
+            <field name="codigo_de_regimen">116 I</field>
             <field name="concepto_referencia">Honorarios de director de sociedades anónimas,  síndico fiduciario,  consejero de sociedades cooperativas integrante de consejos de vigilancia y socios administradores de las sociedades de responsabilidad limitada, en comandita simple y en comandita por acciones.</field>
             <field name="porcentaje_inscripto">-1</field>
             <field name="porcentaje_no_inscripto">28</field>
@@ -172,7 +172,7 @@
         
         <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_15">
             <field name="anexo_referencia">Anexo ll, inc. k)</field>
-            <field name="codigo_de_regimen">116</field>
+            <field name="codigo_de_regimen">116 II</field>
             <field name="concepto_referencia">Profesionales liberales, oficios, albacea, mandatario, gestor de negocio.</field>
             <field name="porcentaje_inscripto">-1</field>
             <field name="porcentaje_no_inscripto">28</field>

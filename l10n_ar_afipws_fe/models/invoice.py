@@ -425,8 +425,12 @@ print "Observaciones:", wscdc.Obs
                 incoterms_ds = inv.afip_incoterm_id.name
             else:
                 incoterms = incoterms_ds = None
-            if int(doc_afip_code) in [19, 20, 21] and tipo_expo == 1:
-                permiso_existente = "N" or "S"     # not used now
+            # por lo que verificamos, se pide permiso existente solo
+            # si es tipo expo 1 y es factura (codigo 19), para todo el
+            # resto pasamos cadena vacia
+            if int(doc_afip_code) == 19 and tipo_expo == 1:
+                # TODO investigar si hay que pasar si ("S")
+                permiso_existente = "N"
             else:
                 permiso_existente = ""
             obs_generales = inv.comment
@@ -545,7 +549,8 @@ print "Observaciones:", wscdc.Obs
                     umed = line.uos_id.afip_code
                     precio = line.price_unit
                     importe = line.price_subtotal
-                    bonif = line.discount or None
+                    # calculamos bonificacion haciendo teorico menos importe
+                    bonif = line.discount and (precio * qty - importe) or None
                     if afip_ws == 'wsmtxca':
                         if not line.product_id.uom_id.afip_code:
                             raise Warning(_('Not afip code con producto UOM %s' % (

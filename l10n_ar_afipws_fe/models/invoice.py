@@ -270,11 +270,11 @@ print "Observaciones:", wscdc.Obs
             if (
                     afip_doc_class.document_letter_id.name in ['A', 'M'] and
                     doc_tipo_receptor != '80' or not doc_nro_receptor):
-                    raise Warning(_(
-                        'Para Comprobantes tipo A o tipo M:\n'
-                        '*  el documento del receptor debe ser CUIT\n'
-                        '*  el documento del Receptor es obligatorio\n'
-                    ))
+                raise Warning(_(
+                    'Para Comprobantes tipo A o tipo M:\n'
+                    '*  el documento del receptor debe ser CUIT\n'
+                    '*  el documento del Receptor es obligatorio\n'
+                ))
 
             cbte_nro = inv.invoice_number
             pto_vta = inv.point_of_sale
@@ -621,4 +621,12 @@ print "Observaciones:", wscdc.Obs
                 'afip_xml_response': ws.XmlResponse,
             })
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
+class AccountInvoiceRefund(models.TransientModel):
+
+    _inherit = "account.invoice.refund"
+
+    filter_refund = fields.Selection(
+        [('refund', 'Create a draft refund'),
+         ('cancel', 'Cancel: create refund and reconcile')],
+    )

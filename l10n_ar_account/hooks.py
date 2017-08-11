@@ -146,7 +146,11 @@ def set_company_loc_ar(cr):
 
 def merge_refund_journals_to_normal(env):
     def get_digits(string):
-        return int(filter(str.isdigit, str(string)))
+        try:
+            return int(filter(str.isdigit, str(string)))
+        except Exception:
+            return False
+
     _logger.info('Merging refund journals to normal ones')
     cr = env.cr
 

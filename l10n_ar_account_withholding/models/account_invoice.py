@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, api
+from openerp import models, api, fields
 
 
 class AccountInvoice(models.Model):
@@ -14,3 +14,30 @@ class AccountInvoice(models.Model):
         if tax_factor == 1.0 and doc_letter == 'B':
             tax_factor = 1.0 / 1.21
         return tax_factor
+
+    @api.multi
+    def get_taxes_values(self):
+        """
+        Hacemos esto para disponer de fecha de factura y cia para calcular
+        impuesto con código python (por ej. para ARBA).
+        Aparentemente no se puede cambiar el contexto a cosas que se llaman
+        desde un onchange (ver https://github.com/odoo/odoo/issues/7472)
+        entonces usamos este artilugio
+        """
+        date_invoice = self.date_invoice or fields.Date.context_today(self)
+        self.env.context.date_invoice = date_invoice
+        self.env.context.invoice_company = self.company_id
+        return super(AccountInvoice, self).get_taxes_values()
+
+
+class AccountInvoiceLine(models.Model):
+    _inherit = "account.invoice.line"
+
+    @api.one
+    def _compute_price(self):
+        # ver nota en get_taxes_values
+        invoice = self.invoice_id
+        date_invoice = invoice.date_invoice or fields.Date.context_today(self)
+        self.env.context.date_invoice = date_invoice
+        self.env.context.invoice_company = self.company_id
+        return super(AccountInvoiceLine, self)._compute_price()

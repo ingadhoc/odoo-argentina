@@ -27,10 +27,12 @@
         product_id: l10n_ar_account.product_product_telefonia
         price_unit: 250.0
         quantity: 1.0
-      - name: 'Laptop E5023 (IVA 10,5)'
-        product_id: product.product_product_25
-        price_unit: 3245.0
-        quantity: 2.0
+      # sacamos este producto porque tiene perc de iva y no se puede en comp
+      # b o c
+      # - name: 'Laptop E5023 (IVA 10,5)'
+      #   product_id: product.product_product_25
+      #   price_unit: 3245.0
+      #   quantity: 2.0
       - name: 'Conceptos no gravados (IVA NG)'
         product_id: l10n_ar_account.product_product_no_gravado
         price_unit: 50.0
@@ -213,3 +215,35 @@
     eval: "[obj(ref('demo_sup_invoice_6')).id]"
 -
   !workflow {model: account.invoice, action: invoice_open, ref: demo_sup_invoice_6}
+-
+   Factura simil dhl con linea no corresponde en negativo
+-
+  !record {model: account.invoice, id: demo_sup_invoice_7}:
+    company_id: base.main_company
+    partner_id: l10n_ar_partner.res_partner_odoo
+    user_id: base.user_demo
+    reference_type: none
+    # analizar si para este tipo de doc asignamos numero nosotros o no
+    document_number: 0001-00000334
+    payment_term_id: account.account_payment_term
+    type: 'in_invoice'
+    invoice_line_ids:
+      - name: 'Support Services'
+        product_id: product.product_product_2
+        price_unit: 2642.0
+        quantity: 1
+      - name: 'Conceptos no gravados (IVA NG)'
+        product_id: l10n_ar_account.product_product_no_gravado
+        price_unit: -50.0
+        quantity: 1.0
+-
+  !function {model: account.invoice, name: compute_taxes, id: demo_sup_invoice_7}:
+  - model: account.invoice
+    eval: "[obj(ref('demo_sup_invoice_7')).id]"
+-
+  !python {model: ir.model.data} : |
+      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
+      if position_id:
+          self._update(cr, uid, 'account.invoice', 'l10n_ar_chart', {'fiscal_position_id': position_id[0]}, 'demo_sup_invoice_5')
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: demo_sup_invoice_7}

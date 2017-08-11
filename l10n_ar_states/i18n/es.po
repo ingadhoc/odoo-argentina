@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-10 23:26+0000\n"
-"PO-Revision-Date: 2017-01-10 23:26+0000\n"
+"POT-Creation-Date: 2017-07-20 14:26+0000\n"
+"PO-Revision-Date: 2017-07-20 14:26+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -20,13 +20,11 @@ msgstr ""
 
 #. module: l10n_ar_states
 #: model:ir.model.fields,field_description:l10n_ar_states.field_res_country_state_afip_code
-#: field:res.country.state,afip_code:0
 msgid "AFIP code"
 msgstr "Código de AFIP"
 
 #. module: l10n_ar_states
 #: model:ir.model.fields,help:l10n_ar_states.field_res_country_state_afip_code
-#: help:res.country.state,afip_code:0
 msgid "Codigo oficial del AFIP."
 msgstr "Codigo oficial del AFIP."
 

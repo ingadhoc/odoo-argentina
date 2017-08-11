@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Javier Diez <jd@adhoc.com.ar>, 2017
+# emiquinodoz <eq@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 14:25+0000\n"
-"PO-Revision-Date: 2017-07-20 14:25+0000\n"
-"Last-Translator: Javier Diez <jd@adhoc.com.ar>, 2017\n"
+"POT-Creation-Date: 2017-08-11 14:17+0000\n"
+"PO-Revision-Date: 2017-08-11 14:17+0000\n"
+"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,7 +43,7 @@ msgstr "AFIP"
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_account_afip_activity_id
 msgid "AFIP Activity"
-msgstr ""
+msgstr "Actividad de AFIP"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_fiscal_position_afip_code
@@ -90,7 +90,7 @@ msgstr "Actividad AFIP"
 #. module: l10n_ar_account
 #: model:ir.model.fields,help:l10n_ar_account.field_account_account_afip_activity_id
 msgid "AFIP activity, used for IVA f2002 report"
-msgstr ""
+msgstr "Actividad de AFIP, utilizada para el informe IVA f2002"
 
 #. module: l10n_ar_account
 #: model:ir.actions.act_window,name:l10n_ar_account.act_afip_concept
@@ -107,7 +107,7 @@ msgstr "Conceptos AFIP"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "AFIP responsability"
-msgstr ""
+msgstr "Responsabilidad de AFIP"
 
 #. module: l10n_ar_account
 #: model:ir.actions.act_window,name:l10n_ar_account.act_afip_tax
@@ -119,7 +119,7 @@ msgstr "Impuesto AFIP"
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_account_account
 msgid "Account"
-msgstr ""
+msgstr "Cuenta"
 
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_account_document_letter
@@ -134,7 +134,7 @@ msgstr "Tipo de Documento Contable"
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_account_move
 msgid "Account Entry"
-msgstr ""
+msgstr "Entrada de Cuenta"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_date
@@ -221,7 +221,7 @@ msgstr "Animales y vegetales no industrializados (IVA cero)"
 #. module: l10n_ar_account
 #: model:ir.ui.menu,name:l10n_ar_account.menu_current_account
 msgid "Análisis de IVA (BETA)"
-msgstr ""
+msgstr "Análisis de IVA (BETA)"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_tax_group_application
@@ -263,7 +263,7 @@ msgstr ""
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_config_settings
 msgid "Argentina"
-msgstr ""
+msgstr "Argentina"
 
 #. module: l10n_ar_account
 #: model:ir.ui.menu,name:l10n_ar_account.account_reports_ar_statements_menu
@@ -318,7 +318,7 @@ msgstr "Categoría"
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_account_vat_f2002_category_id
 msgid "Categoría IVA f2002"
-msgstr ""
+msgstr "Categoría IVA f2002"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,help:l10n_ar_account.field_account_invoice_line_report_customer
@@ -384,7 +384,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_comprobante
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "Comprobante"
-msgstr ""
+msgstr "Comprobante"
 
 #. module: l10n_ar_account
 #: model:product.product,name:l10n_ar_account.product_product_no_gravado
@@ -490,7 +490,7 @@ msgstr "DREI"
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_date
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "Date"
-msgstr ""
+msgstr "Fecha"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_date_invoice
@@ -581,7 +581,7 @@ msgstr "Letra de Documento"
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Document Type"
-msgstr ""
+msgstr "Tipo de documento"
 
 #. module: l10n_ar_account
 #: model:ir.actions.act_window,name:l10n_ar_account.action_document_type_argentina
@@ -615,7 +615,7 @@ msgstr "Borrador"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Draft Invoices"
-msgstr ""
+msgstr "Facturas en borrador"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_date_due
@@ -636,7 +636,7 @@ msgstr "Empleador padron"
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_move_id
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "Entry"
-msgstr ""
+msgstr "Entrada"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_estado_padron
@@ -700,7 +700,7 @@ msgstr ""
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "From Date"
-msgstr ""
+msgstr "Desde la fecha"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_ganancias
@@ -711,27 +711,27 @@ msgstr "Ganancias"
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_base_10
 msgid "Grav. 10,5%"
-msgstr ""
+msgstr "Grav. 10,5%"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_base_25
 msgid "Grav. 2,5%"
-msgstr ""
+msgstr "Grav. 2,5%"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_base_21
 msgid "Grav. 21%"
-msgstr ""
+msgstr "Grav. 21%"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_base_27
 msgid "Grav. 27%"
-msgstr ""
+msgstr "Grav. 27%"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_base_5
 msgid "Grav. 5%"
-msgstr ""
+msgstr "Grav. 5%"
 
 #. module: l10n_ar_account
 #: selection:account.tax.group,tax:0
@@ -767,7 +767,7 @@ msgstr "Subtotal bruto"
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Group By..."
-msgstr ""
+msgstr "Agrupar por..."
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_id
@@ -802,7 +802,7 @@ msgstr "IVA 0%"
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_iva_10
 msgid "IVA 10,5%"
-msgstr ""
+msgstr "IVA 10,5%"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iva_10
@@ -836,7 +836,7 @@ msgstr "IVA 5%"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "IVA Compras"
-msgstr ""
+msgstr "IVA Compras"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_iva_exento
@@ -861,7 +861,7 @@ msgstr "IVA No Gravado"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "IVA Ventas"
-msgstr ""
+msgstr "IVA Ventas"
 
 #. module: l10n_ar_account
 #: code:addons/l10n_ar_account/models/account_invoice.py:500
@@ -879,7 +879,7 @@ msgstr "Impuestos"
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_impuestos_internos
 msgid "Impuestos Internos"
-msgstr ""
+msgstr "Impuestos Internos"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_afip_incoterm_id
@@ -940,23 +940,23 @@ msgstr "La factura con ID %s tiene algunas líneas sin IVA"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Invoiced"
-msgstr ""
+msgstr "Facturado"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_graph
 msgid "Invoices Analysis"
-msgstr ""
+msgstr "Análisis de facturas"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_tree
 msgid "Invoices Line Analysis"
-msgstr ""
+msgstr "Análisis de líneas de facturas"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.product_template_form_view
 msgid "Invoices Line Report"
-msgstr ""
+msgstr "Informe de línea de facturas"
 
 #. module: l10n_ar_account
 #: model:ir.actions.act_window,name:l10n_ar_account.action_account_invoice_line_report_all
@@ -991,19 +991,19 @@ msgstr "Diario"
 #: code:addons/l10n_ar_account/report/account_ar_vat_line.py:175
 #, python-format
 msgid "Journal Entry"
-msgstr ""
+msgstr "Entrada de diario"
 
 #. module: l10n_ar_account
 #: code:addons/l10n_ar_account/report/account_ar_vat_line_bu.py:225
 #: model:ir.model,name:l10n_ar_account.model_account_move_line
 #, python-format
 msgid "Journal Item"
-msgstr ""
+msgstr "Artículo del Diario"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Journal Type"
-msgstr ""
+msgstr "Tipo de diario"
 
 #. module: l10n_ar_account
 #: code:addons/l10n_ar_account/models/res_partner.py:217
@@ -1018,7 +1018,7 @@ msgstr ""
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_name
 msgid "Label"
-msgstr ""
+msgstr "Etiqueta"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line___last_update
@@ -1080,7 +1080,7 @@ msgstr "Local"
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_account_ar_vat_line
 msgid "Línea de IVA para análisis en localización argentina"
-msgstr ""
+msgstr "Línea de IVA para análisis en localización argentina"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_main_id_number
@@ -1173,6 +1173,8 @@ msgid ""
 "No gravado / Exento.\n"
 "Todo lo que tenga iva 0, exento, no gravado o no corresponde"
 msgstr ""
+"No gravado / Exento.\n"
+"Todo lo que tenga iva 0, exento, no gravado o no corresponde"
 
 #. module: l10n_ar_account
 #: code:addons/l10n_ar_account/wizard/res_partner_update_from_padron_wizard.py:51
@@ -1235,12 +1237,12 @@ msgstr "Abierta"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Open and Paid Invoices"
-msgstr ""
+msgstr "Facturas abiertas y pagadas"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_tree
 msgid "Open journal entry"
-msgstr ""
+msgstr "Entrada de diario abierta"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_chart_template_opening_clousure_account_id
@@ -1261,7 +1263,7 @@ msgstr "Otro"
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_company_inherit_form
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_partner_property_form
 msgid "Other Jurisdictions"
-msgstr ""
+msgstr "Otras jurisdicciones"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,help:l10n_ar_account.field_account_tax_group_application
@@ -1282,7 +1284,7 @@ msgstr "Otros"
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_otros_impuestos
 msgid "Otr. Imp"
-msgstr ""
+msgstr "Otr. Imp"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,help:l10n_ar_account.field_account_ar_vat_line_otros_impuestos
@@ -1290,6 +1292,8 @@ msgid ""
 "Otros Impuestos. Todos los impuestos otros impuestos que no sean ni iva ni "
 "perc de iibb y que figuren en comprobantes afectados por IVA"
 msgstr ""
+"Otros Impuestos. Todos los impuestos otros impuestos que no sean ni iva ni "
+"perc de iibb y que figuren en comprobantes afectados por IVA"
 
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_res_partner
@@ -1304,7 +1308,7 @@ msgstr "Empresa"
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_ref
 msgid "Partner Reference"
-msgstr ""
+msgstr "Referencia de Partner"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_partner_ids
@@ -1314,7 +1318,7 @@ msgstr "Empresas"
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_per_iva
 msgid "Perc. IVA"
-msgstr ""
+msgstr "Perc. IVA"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_percepcion_drei
@@ -1339,7 +1343,7 @@ msgstr "Percepción IVA"
 #. module: l10n_ar_account
 #: model:ir.model.fields,help:l10n_ar_account.field_account_ar_vat_line_per_iva
 msgid "Percepción de IVA"
-msgstr ""
+msgstr "Percepción de IVA"
 
 #. module: l10n_ar_account
 #: selection:account.tax.group,type:0
@@ -1366,12 +1370,12 @@ msgstr "Tipo del Punto de Venta"
 #: selection:account.ar.vat.line,state:0
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "Posted"
-msgstr ""
+msgstr "Publicado"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "Posted Journal Items"
-msgstr ""
+msgstr "Artículos publicados en el Diario"
 
 #. module: l10n_ar_account
 #: selection:account.journal,point_of_sale_type:0
@@ -1392,7 +1396,7 @@ msgstr "Producto"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Product Category"
-msgstr ""
+msgstr "Categoría de producto"
 
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_product_template
@@ -1432,12 +1436,12 @@ msgstr "Impuestos Provinciales"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Purchase Invoice"
-msgstr ""
+msgstr "Factura de compra"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Purchase Refund"
-msgstr ""
+msgstr "Reembolso de compra"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_quantity
@@ -1462,7 +1466,7 @@ msgstr "Referencia/Nombre de Fantasía"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_config_settings
 msgid "Refresh from Padron AFIP"
-msgstr ""
+msgstr "Actualizar desde Padron AFIP"
 
 #. module: l10n_ar_account
 #: code:addons/l10n_ar_account/res_config.py:69
@@ -1481,6 +1485,8 @@ msgid ""
 "Responsability type from journal entry where it is stored and it nevers "
 "change"
 msgstr ""
+"Tipo de responsabilidad de entrada de diario donde se almacena y nunca "
+"cambia"
 
 #. module: l10n_ar_account
 #: model:account.tax.group,name:l10n_ar_account.tax_group_retencion_drei
@@ -1505,12 +1511,12 @@ msgstr "Retención IVA"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Sale Invoice"
-msgstr ""
+msgstr "Factura de venta"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Sale Refund"
-msgstr ""
+msgstr "Reembolso de la venta"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_user_id
@@ -1573,6 +1579,8 @@ msgid ""
 "Si hay líneas con IVA declarado 0, entonces debe elegir una posición fiscal con código de afip '%s'.\n"
 "* Invoice id %i"
 msgstr ""
+"Si hay líneas con IVA declarado 0, entonces debe elegir una posición fiscal con código de afip '%s'.\n"
+"* Invoice id %i"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_base_partner_update_from_padron_form
@@ -1610,7 +1618,7 @@ msgid "Status"
 msgstr ""
 
 #. module: l10n_ar_account
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4347
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4173
 msgid "Subtotal"
 msgstr "Subtotal"
 
@@ -1741,7 +1749,7 @@ msgid "Type must be \"base\" or \"tax\""
 msgstr ""
 
 #. module: l10n_ar_account
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4346
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4172
 msgid "Unit Price"
 msgstr "Precio unitario"
 
@@ -1898,27 +1906,27 @@ msgstr "Rango postal hasta"
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_account_config_settings
 msgid "account.config.settings"
-msgstr ""
+msgstr "account.config.settings"
 
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_account_tax_group
 msgid "account.tax.group"
-msgstr ""
+msgstr "account.tax.group"
 
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_afip_activity
 msgid "afip.activity"
-msgstr ""
+msgstr "afip.activity"
 
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_afip_concept
 msgid "afip.concept"
-msgstr ""
+msgstr "afip.concept"
 
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_afip_tax
 msgid "afip.tax"
-msgstr ""
+msgstr "afip.tax"
 
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_afip_vat_f2002_category

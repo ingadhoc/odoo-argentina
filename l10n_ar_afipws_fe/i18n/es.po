@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Javier Diez <jd@adhoc.com.ar>, 2017
+# emiquinodoz <eq@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 14:26+0000\n"
-"PO-Revision-Date: 2017-07-20 14:26+0000\n"
-"Last-Translator: Javier Diez <jd@adhoc.com.ar>, 2017\n"
+"POT-Creation-Date: 2017-08-11 14:17+0000\n"
+"PO-Revision-Date: 2017-08-11 14:17+0000\n"
+"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -800,7 +800,7 @@ msgstr ""
 #. module: l10n_ar_afipws_fe
 #: model:ir.model,name:l10n_ar_afipws_fe.model_account_config_settings
 msgid "account.config.settings"
-msgstr ""
+msgstr "account.config.settings"
 
 #. module: l10n_ar_afipws_fe
 #: selection:account.invoice,afip_result:0

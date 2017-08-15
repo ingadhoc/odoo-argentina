@@ -44,7 +44,7 @@ Integration between electronic invoice and account cancel
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'application': False,
 }

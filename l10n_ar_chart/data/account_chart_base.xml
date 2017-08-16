@@ -149,6 +149,7 @@
                     <field name="code">1.1.04.02.010</field>
                     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
                     <field name="name">Retención ganancias Sufrida</field>
+                    <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_a_cuenta_ganancias')])]"/>
                 </record>
 
                 <record model="account.account.template" id="base_percepcion_ganancias_sufrida">
@@ -156,6 +157,7 @@
                     <field name="code">1.1.04.02.020</field>
                     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
                     <field name="name">Percepción ganancias Sufrida</field>
+                    <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_a_cuenta_ganancias')])]"/>
                 </record>
 
                 <record model="account.account.template" id="base_anticipo_ganancias">
@@ -163,6 +165,7 @@
                     <field name="code">1.1.04.02.030</field>
                     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
                     <field name="name">Anticipo ganancias</field>
+                    <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_a_cuenta_ganancias')])]"/>
                 </record>
 
                 <record model="account.account.template" id="base_saldo_favor_ganancias">
@@ -170,6 +173,7 @@
                     <field name="code">1.1.04.02.040</field>
                     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
                     <field name="name">Saldo a favor Ganancias</field>
+                    <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_a_cuenta_ganancias')])]"/>
                 </record>
 
                 <record model="account.account.template" id="base_imp_debitos_computables">
@@ -177,6 +181,7 @@
                     <field name="code">1.1.04.02.050</field>
                     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
                     <field name="name">Impuesto a los débitos computables</field>
+                    <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_a_cuenta_ganancias')])]"/>
                 </record>
 
             <!-- 1.1.04.03 (ibbb caba) --> 
@@ -1097,6 +1102,7 @@
             <field name="code">4.5.00.00.010</field>
             <field name="user_type_id" ref="account.data_account_type_expenses"/>
             <field name="name">Impuestos a las ganancias</field>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_impuestos_a_las_ganancias')])]"/>
         </record>
 
 <!-- 6 (Transitorias) --> 

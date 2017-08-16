@@ -18,6 +18,16 @@
         product_id: product.product_product_2
         price_unit: 642.0
         quantity: 1
+    # al final no lo hicimos porque necesitamos los ref y no los tenemos
+    # deberiamos hacer un search
+    # simulamos agregado manual de impuestos
+    # tax_line_ids:
+    #   - name: 'Retda dsada'
+    #     tax_id: product.product_product_2
+    #     amount: 642.0
+    #     manual: True
+    #     sequence: 99
+    #     account_id: 99
 -
   !function {model: account.invoice, name: compute_taxes, id: demo_invoice_1}:
   - model: account.invoice

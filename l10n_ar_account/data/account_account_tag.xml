@@ -5,7 +5,7 @@
 
     <!-- usamos tags en cuentas y no el tax group para ir de a poco moviendo a la odoo way de usar tax y no los campos nuevos de tax group. Además, los tagas existen tmb en las cuentas y, por ej, para adelantos de ganancias y otras ceuntas, no tenemos impuesto asociado -->
 
-    <record id="tag_descuentos_ganancias" model="account.account.tag">
+<!--     <record id="tag_descuentos_ganancias" model="account.account.tag">
         <field name="name">Descuentos Ganancias</field>
         <field name="applicability">accounts</field>
     </record>
@@ -18,11 +18,11 @@
     <record id="tag_impuestos_a_las_ganancias" model="account.account.tag">
         <field name="name">Impuesto a las ganancias</field>
         <field name="applicability">accounts</field>
-    </record>
+    </record> -->
 
     <!-- Estos si quedaron aplicados a impuestos porque no hicimos que se excluya el diario actual -->
 
-    <record id="tag_ret_perc_iibb_aplicada" model="account.account.tag">
+    <!-- <record id="tag_ret_perc_iibb_aplicada" model="account.account.tag">
         <field name="name">Ret/Perc IIBB Aplicada</field>
         <field name="applicability">taxes</field>
     </record>
@@ -35,11 +35,11 @@
     <record id="tag_ret_perc_iva_aplicada" model="account.account.tag">
         <field name="name">Ret/Perc IVA Aplicada</field>
         <field name="applicability">taxes</field>
-    </record>
+    </record> -->
 
     <!-- jurisdicciones iibb -->
 
-    <record id="tag_tax_jurisdiccion_901" model="account.account.tag">
+    <!-- <record id="tag_tax_jurisdiccion_901" model="account.account.tag">
         <field name="name">Jur: 901 - Capital Federal</field>
         <field name="applicability">taxes</field>
     </record>
@@ -157,6 +157,6 @@
     <record id="tag_tax_jurisdiccion_924" model="account.account.tag">
         <field name="name">Jur: 924 - Tucumán</field>
         <field name="applicability">taxes</field>
-    </record>
+    </record> -->
 
 </odoo>

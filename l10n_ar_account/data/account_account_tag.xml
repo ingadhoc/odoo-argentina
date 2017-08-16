@@ -5,20 +5,20 @@
 
     <!-- usamos tags en cuentas y no el tax group para ir de a poco moviendo a la odoo way de usar tax y no los campos nuevos de tax group. Además, los tagas existen tmb en las cuentas y, por ej, para adelantos de ganancias y otras ceuntas, no tenemos impuesto asociado -->
 
-<!--     <record id="tag_descuentos_ganancias" model="account.account.tag">
-        <field name="name">Descuentos Ganancias</field>
+    <record id="tag_a_cuenta_ganancias" model="account.account.tag">
+        <field name="name">Pagos a Cuenta Ganancias</field>
         <field name="applicability">accounts</field>
     </record>
 
-    <record id="tag_descuentos_iva" model="account.account.tag">
+<!--     <record id="tag_descuentos_iva" model="account.account.tag">
         <field name="name">Descuentos IVA</field>
         <field name="applicability">accounts</field>
     </record>
-
+ -->
     <record id="tag_impuestos_a_las_ganancias" model="account.account.tag">
         <field name="name">Impuesto a las ganancias</field>
         <field name="applicability">accounts</field>
-    </record> -->
+    </record>
 
     <!-- Estos si quedaron aplicados a impuestos porque no hicimos que se excluya el diario actual -->
 

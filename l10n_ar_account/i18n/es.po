@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-11 14:17+0000\n"
-"PO-Revision-Date: 2017-08-11 14:17+0000\n"
+"POT-Creation-Date: 2017-08-18 14:37+0000\n"
+"PO-Revision-Date: 2017-08-18 14:37+0000\n"
 "Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -1537,7 +1537,7 @@ msgstr "Secuencia"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_invoice_form
 msgid "Service Date"
-msgstr ""
+msgstr "Fecha de Servicio"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_afip_service_end
@@ -1615,7 +1615,7 @@ msgstr "Provincia"
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_state
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4173
@@ -1706,12 +1706,12 @@ msgstr "No hay mas empresas que actualizar en esta solicitud..."
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "This Month"
-msgstr ""
+msgstr "Este Mes"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "This Year"
-msgstr ""
+msgstr "Este Año"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_title_case
@@ -1721,7 +1721,7 @@ msgstr "Título con Mayúscula"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "To Date"
-msgstr ""
+msgstr "A Fecha"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_total
@@ -1746,7 +1746,7 @@ msgstr "El tipo %s no está implementado todavía"
 #: code:addons/l10n_ar_account/models/account_move_line.py:107
 #, python-format
 msgid "Type must be \"base\" or \"tax\""
-msgstr ""
+msgstr "El tipo debe ser \"base\" o \"impuesto\""
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4172
@@ -1756,7 +1756,7 @@ msgstr "Precio unitario"
 #. module: l10n_ar_account
 #: selection:account.ar.vat.line,state:0
 msgid "Unposted"
-msgstr ""
+msgstr "No Publicado"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_base_partner_update_from_padron_form
@@ -1850,17 +1850,17 @@ msgstr "id de IVA"
 #. module: l10n_ar_account
 #: selection:account.ar.vat.line,comprobante:0
 msgid "Vendor Bill"
-msgstr ""
+msgstr "Factura del proveedor"
 
 #. module: l10n_ar_account
 #: selection:account.ar.vat.line,comprobante:0
 msgid "Vendor Refund"
-msgstr ""
+msgstr "Reembolso de proveedores"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "With Document Type"
-msgstr ""
+msgstr "Con Tipo de Documento"
 
 #. module: l10n_ar_account
 #: selection:account.tax.group,type:0
@@ -1887,6 +1887,7 @@ msgstr ""
 #, python-format
 msgid "You must request tax amounts with tax or tax group"
 msgstr ""
+"Debe solicitar importes de impuestos con el grupo de impuestos o impuesto."
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_position_template_form
@@ -1931,7 +1932,7 @@ msgstr "afip.tax"
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_afip_vat_f2002_category
 msgid "afip.vat.f2002_category"
-msgstr ""
+msgstr "afip.vat.f2002_category"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_base_partner_update_from_padron_form
@@ -1941,12 +1942,12 @@ msgstr "o"
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_res_partner_update_from_padron_field
 msgid "res.partner.update.from.padron.field"
-msgstr ""
+msgstr "res.partner.update.from.padron.field"
 
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_res_partner_update_from_padron_wizard
 msgid "res.partner.update.from.padron.wizard"
-msgstr ""
+msgstr "res.partner.update.from.padron.wizard"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_invoice_form
@@ -1956,4 +1957,4 @@ msgstr ""
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_wizard_multi_charts_accounts
 msgid "wizard.multi.charts.accounts"
-msgstr ""
+msgstr "wizard.multi.charts.accounts"

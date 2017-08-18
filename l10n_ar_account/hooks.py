@@ -187,14 +187,16 @@ def merge_refund_journals_to_normal(env):
                 journals.merge_journals(
                     from_journal, to_journals[0], delete_from=False)
             elif to_journals:
-                # merge if number on code is the same
+                # merge if number on code is the same on only one
+                selected_journal = []
+                from_code_number = get_digits(from_journal.code)
                 for to_journal in to_journals:
-                    from_code_number = get_digits(from_journal.code)
                     to_code_number = get_digits(to_journal.code)
                     if from_code_number == to_code_number:
-                        journals.merge_journals(
-                            from_journal, to_journal, delete_from=False)
-                        break
+                        selected_journal.append(to_journal)
+            if len(selected_journal) == 1:
+                journals.merge_journals(
+                    from_journal, selected_journal[0], delete_from=False)
 
 
 def map_tax_groups_to_taxes(cr, registry):

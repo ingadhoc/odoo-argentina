@@ -194,9 +194,9 @@ def merge_refund_journals_to_normal(env):
                     to_code_number = get_digits(to_journal.code)
                     if from_code_number == to_code_number:
                         selected_journal.append(to_journal)
-            if len(selected_journal) == 1:
-                journals.merge_journals(
-                    from_journal, selected_journal[0], delete_from=False)
+                if len(selected_journal) == 1:
+                    journals.merge_journals(
+                        from_journal, selected_journal[0], delete_from=False)
 
 
 def map_tax_groups_to_taxes(cr, registry):

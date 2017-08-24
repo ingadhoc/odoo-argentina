@@ -448,7 +448,8 @@ class AccountInvoice(models.Model):
         if wihtout_tax_id:
             raise ValidationError(_(
                 "Some Invoice Tax Lines don't have a tax_id asociated, please "
-                "correct them or try to refresh invoice "))
+                "correct them or try to refresh invoice. Tax lines: %s") % (
+                ', '.join(wihtout_tax_id.mapped('name'))))
 
         # check codes has argentinian tax attributes configured
         tax_groups = argentinian_invoices.mapped(

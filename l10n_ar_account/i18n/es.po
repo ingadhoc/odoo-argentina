@@ -4,14 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# emiquinodoz <eq@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-18 14:37+0000\n"
-"PO-Revision-Date: 2017-08-18 14:37+0000\n"
-"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2017-08-24 21:54+0000\n"
+"PO-Revision-Date: 2017-08-24 21:54+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -864,7 +863,7 @@ msgid "IVA Ventas"
 msgstr "IVA Ventas"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:500
+#: code:addons/l10n_ar_account/models/account_invoice.py:501
 #, python-format
 msgid ""
 "If you have choose a 0, exempt or untaxed 'tax', or you must choose a fiscal position with afip code in %s.\n"
@@ -932,7 +931,7 @@ msgid "Invoice Total"
 msgstr "Total Factura"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:474
+#: code:addons/l10n_ar_account/models/account_invoice.py:475
 #, python-format
 msgid "Invoice with ID %s has some lines without vat Tax "
 msgstr "La factura con ID %s tiene algunas líneas sin IVA"
@@ -1573,7 +1572,7 @@ msgid "Si"
 msgstr "Si"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:516
+#: code:addons/l10n_ar_account/models/account_invoice.py:517
 #, python-format
 msgid ""
 "Si hay líneas con IVA declarado 0, entonces debe elegir una posición fiscal con código de afip '%s'.\n"
@@ -1592,10 +1591,8 @@ msgstr "Omitir esta empresa"
 #, python-format
 msgid ""
 "Some Invoice Tax Lines don't have a tax_id asociated, please correct them or"
-" try to refresh invoice "
+" try to refresh invoice. Tax lines: %s"
 msgstr ""
-"Algunas líneas de impuesto en las facturas no tienen asociado un tax_id, por"
-" favor corríjalos o intente refrescar la factura"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_res_company_start_date
@@ -1873,7 +1870,7 @@ msgid "Wizard"
 msgstr "Asistente"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:463
+#: code:addons/l10n_ar_account/models/account_invoice.py:464
 #, python-format
 msgid ""
 "You are using argentinian localization and there are some tax groups that "

@@ -4,14 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# emiquinodoz <eq@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-18 14:37+0000\n"
-"PO-Revision-Date: 2017-08-18 14:37+0000\n"
-"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2017-08-25 23:30+0000\n"
+"PO-Revision-Date: 2017-08-25 23:30+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -432,7 +431,7 @@ msgstr "Importe de IVA"
 #: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
 #: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_tree
 msgid "VAT Ledger"
-msgstr ""
+msgstr "Libro IVA"
 
 #. module: l10n_ar_account_vat_ledger
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_vat_tax_ids

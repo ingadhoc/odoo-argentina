@@ -4,14 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Javier Diez <jd@adhoc.com.ar>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 14:26+0000\n"
-"PO-Revision-Date: 2017-07-20 14:26+0000\n"
-"Last-Translator: Javier Diez <jd@adhoc.com.ar>, 2017\n"
+"POT-Creation-Date: 2017-08-25 23:30+0000\n"
+"PO-Revision-Date: 2017-08-25 23:30+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -239,6 +238,8 @@ msgid ""
 "Id Number must be unique per id category!\n"
 "Same number is only allowed for partner with parent/child relation"
 msgstr ""
+"El número de identificación debe ser único por categoría!\n"
+"Números iguales se permiten solamente para partners en la cadena padre/hijo"
 
 #. module: l10n_ar_partner
 #: model:ir.model.fields,help:l10n_ar_partner.field_sale_config_settings_group_multiple_id_numbers
@@ -256,6 +257,9 @@ msgid ""
 "cuit, dni, etc) are unique. Same number for partners in a child/parent "
 "relation are still allowed"
 msgstr ""
+"Si marca la casilla entonces vamos a verificar que el número de "
+"identificación en Partners sea único (por ej. en cuit, dni, etc). Números "
+"iguales para partners en cadena padre/hijo son permitidos"
 
 #. module: l10n_ar_partner
 #: model:res.partner.title,shortcut:l10n_ar_partner.ing

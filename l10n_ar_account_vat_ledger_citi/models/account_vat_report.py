@@ -142,12 +142,17 @@ class account_vat_ledger(models.Model):
         for k, v in alicuotas.items():
             lines += v
         self.REGINFO_CV_ALICUOTAS = '\r\n'.join(lines)
-        self.get_REGINFO_CV_CBTE(alicuotas)
 
-        # para esto haria falta tal vez compatibilizarlo con la cantidad
-        # de alicuotas
+        impo_alicuotas = {}
         if self.type == 'purchase':
-            self.get_REGINFO_CV_COMPRAS_IMPORTACIONES()
+            impo_alicuotas = self.get_REGINFO_CV_ALICUOTAS(impo=True)
+            # sacamos todas las lineas y las juntamos
+            lines = []
+            for k, v in impo_alicuotas.items():
+                lines += v
+            self.REGINFO_CV_COMPRAS_IMPORTACIONES = '\r\n'.join(lines)
+        alicuotas.update(impo_alicuotas)
+        self.get_REGINFO_CV_CBTE(alicuotas)
 
     @api.model
     def get_partner_document_code(self, partner):
@@ -198,6 +203,7 @@ class account_vat_ledger(models.Model):
                     "Partners %s") % partners.ids)
 
         for inv in invoices:
+            # si no existe la factura en alicuotas es porque no tienen ninguna
             cant_alicuotas = len(alicuotas.get(inv))
 
             row = [
@@ -408,7 +414,7 @@ class account_vat_ledger(models.Model):
         self.REGINFO_CV_CBTE = '\r\n'.join(res)
 
     @api.multi
-    def get_tax_row(self, invoice, base, code, tax_amount):
+    def get_tax_row(self, invoice, base, code, tax_amount, impo=False):
         self.ensure_one()
         inv = invoice
         row = [
@@ -430,6 +436,20 @@ class account_vat_ledger(models.Model):
                 str(code).rjust(4, '0'),
 
                 # Campo 6: Impuesto Liquidado.
+                self.format_amount(tax_amount, invoice=inv),
+            ]
+        elif impo:
+            row += [
+                # Campo 1: Despacho de importación.
+                (inv.document_number or inv.number or '').rjust(16, '0'),
+
+                # Campo 2: Importe Neto Gravado
+                self.format_amount(base, invoice=inv),
+
+                # Campo 3: Alícuota de IVA
+                str(code).rjust(4, '0'),
+
+                # Campo 4: Impuesto Liquidado.
                 self.format_amount(tax_amount, invoice=inv),
             ]
         else:
@@ -454,7 +474,7 @@ class account_vat_ledger(models.Model):
         return row
 
     @api.multi
-    def get_REGINFO_CV_ALICUOTAS(self):
+    def get_REGINFO_CV_ALICUOTAS(self, impo=False):
         """
         Devolvemos un dict para calcular la cantidad de alicuotas cuando
         hacemos los comprobantes
@@ -468,8 +488,13 @@ class account_vat_ledger(models.Model):
         # si no hay alicuotas, sumamos una de esta con 0, 0, 0 en detalle
         # usamos mapped por si hay afip codes duplicados (ej. manual y
         # auto)
-        for inv in self.get_citi_invoices().filtered(
-                lambda r: r.document_type_id.code != '66'):
+        if impo:
+            invoices = self.get_citi_invoices().filtered(
+                lambda r: r.document_type_id.code == '66')
+        else:
+            invoices = self.get_citi_invoices().filtered(
+                lambda r: r.document_type_id.code != '66')
+        for inv in invoices:
             lines = []
             is_zero = inv.currency_id.is_zero
             # reportamos como linea de iva si:
@@ -497,40 +522,7 @@ class account_vat_ledger(models.Model):
                     imp_neto,
                     afip_code,
                     imp_liquidado,
+                    impo=impo,
                 )))
             res[inv] = lines
         return res
-
-    @api.multi
-    def get_REGINFO_CV_COMPRAS_IMPORTACIONES(self):
-        self.ensure_one()
-        res = []
-        for inv in self.get_citi_invoices().filtered(
-                lambda r: r.document_type_id.code == '66'):
-            vat_taxes = inv.vat_tax_ids.filtered(
-                lambda r: r.tax_id.tax_group_id.afip_code in [
-                    3, 4, 5, 6, 8, 9])
-
-            # we group by afip_code
-            for afip_code in vat_taxes.mapped('tax_id.tax_group_id.afip_code'):
-                taxes = vat_taxes.filtered(
-                    lambda x: x.tax_id.tax_group_id.afip_code == afip_code)
-                base = sum(taxes.mapped('base'))
-                # base_amount = sum(taxes.mapped('base_amount'))
-                amount = sum(taxes.mapped('amount'))
-                row = [
-                    # Campo 1: Despacho de importación.
-                    (inv.document_number or inv.number or '').rjust(
-                        16, '0'),
-
-                    # Campo 2: Importe Neto Gravado
-                    self.format_amount(base, invoice=inv),
-
-                    # Campo 3: Alícuota de IVA
-                    str(afip_code).rjust(4, '0'),
-
-                    # Campo 4: Impuesto Liquidado.
-                    self.format_amount(amount, invoice=inv),
-                ]
-                res.append(''.join(row))
-        self.REGINFO_CV_COMPRAS_IMPORTACIONES = '\r\n'.join(res)

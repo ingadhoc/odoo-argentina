@@ -77,7 +77,7 @@ class account_vat_ledger(models.Model):
         'Rectificativa y su orden'
     )
 
-    @api.model
+    @api.multi
     def format_amount(self, amount, padding=15, decimals=2, invoice=False):
         # get amounts on correct sign despite conifiguration on taxes and tax
         # codes
@@ -90,6 +90,16 @@ class account_vat_ledger(models.Model):
         #         amount = -1.0 * amount
         # Al final volvimos a agregar esto, lo necesitabamos por ej si se pasa
         # base negativa de no gravado
+
+        # TODO mejorar, tenemos entendido que las facturas de venta
+        # que no sean exportacion se pasan siempre en ARS, habria que ver
+        # que otros casos y/o hacer parametrizable
+        # en realidad por lo que veo las expo deberian tmb ir en ARS
+        if self.type == 'sale' and invoice and \
+                invoice.document_type_id.code not in ['19', '20', '21']:
+            amount = invoice.currency_id.round(
+                amount * invoice.currency_rate)
+
         if amount < 0:
             template = "-{:0>%dd}" % (padding - 1)
         else:
@@ -205,6 +215,17 @@ class account_vat_ledger(models.Model):
         for inv in invoices:
             # si no existe la factura en alicuotas es porque no tienen ninguna
             cant_alicuotas = len(alicuotas.get(inv))
+
+            # TODO mejorar, tenemos entendido que las facturas de venta
+            # que no sean exportacion se pasan siempre en ARS, habria que ver
+            # que otros casos y/o hacer parametrizable
+            if self.type == 'sale' and inv.document_type_id.code not in [
+                    '19', '20', '21']:
+                currency_rate = 1.0
+                currency_code = 'PES'
+            else:
+                currency_rate = inv.currency_rate
+                currency_code = inv.currency_id.afip_code
 
             row = [
                 # Campo 1: Fecha de comprobante
@@ -329,11 +350,11 @@ class account_vat_ledger(models.Model):
                     ).mapped('amount')), invoice=inv),
 
                 # Campo 17: Código de Moneda
-                str(inv.currency_id.afip_code),
+                str(currency_code),
 
                 # Campo 18: Tipo de Cambio
                 # nueva modalidad de currency_rate
-                self.format_amount(inv.currency_rate, padding=10, decimals=6),
+                self.format_amount(currency_rate, padding=10, decimals=6),
                 # TODO borrar
                 # self.format_amount(
                 #     inv.currency_rate or inv.currency_id.with_context(

@@ -26,19 +26,18 @@ class AccountInvoice(models.Model):
     # TODO: depreciar este campo y la funcion que lo setea, lo dejamos por
     # ahora para que no se borre esta columna que ya esta calculada, pero si
     # todo va bien con el nuevo computado, lo vamos a borrar directamente
-    old_currency_rate = fields.Float(
+    currency_rate = fields.Float(
         string='Currency Rate',
-        oldname='currency_rate',
         copy=False,
         digits=(16, 4),
         # TODO make it editable, we have to change move create method
         readonly=True,
     )
-    currency_rate = fields.Float(
-        string='Currency Rate',
-        compute='_compute_currency_rate',
-        digits=(16, 4),
-    )
+    # computed_currency_rate = fields.Float(
+    #     string='Currency Rate',
+    #     compute='_compute_currency_rate',
+    #     digits=(10, 6),
+    # )
     document_letter_id = fields.Many2one(
         related='document_type_id.document_letter_id',
         readonly=True,
@@ -280,15 +279,19 @@ class AccountInvoice(models.Model):
                     afip_concept = '4'
         self.afip_concept = afip_concept
 
-    @api.multi
-    def _compute_currency_rate(self):
-        for rec in self:
-            if rec.currency_id and rec.company_id and (
-                    rec.currency_id != rec.company_id.currency_id):
-                rec.currency_rate = abs(
-                    rec.amount_total_company_signed / rec.amount_total)
-            else:
-                rec.currency_rate = 1.0
+    # TODO borrar o implementar. Al final usamos el currency rate que
+    # almacenamos porque es muy inexacto calcularlo ya que se pierde
+    # información y segun el importe, al mismo cambio, podriamos tener
+    # distintos valores de cambio
+    # @api.multi
+    # def _compute_currency_rate(self):
+    #     for rec in self:
+    #         if rec.currency_id and rec.company_id and (
+    #                 rec.currency_id != rec.company_id.currency_id):
+    #             rec.computed_currency_rate = abs(
+    #                 rec.amount_total_company_signed / rec.amount_total)
+    #         else:
+    #             rec.computed_currency_rate = 1.0
 
     @api.multi
     def get_localization_invoice_vals(self):
@@ -299,12 +302,12 @@ class AccountInvoice(models.Model):
             currency = self.currency_id.with_context(
                 date=self.date_invoice or fields.Date.context_today(self))
             if self.company_id.currency_id == currency:
-                old_currency_rate = 1.0
+                currency_rate = 1.0
             else:
-                old_currency_rate = currency.compute(
+                currency_rate = currency.compute(
                     1., self.company_id.currency_id, round=False)
             return {
-                'old_currency_rate': old_currency_rate,
+                'currency_rate': currency_rate,
             }
         else:
             return super(

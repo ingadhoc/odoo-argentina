@@ -268,6 +268,7 @@
     eval: "[obj(ref('demo_invoice_12')).id]"
 -
    Invoice to ADHOC con muchas lineas para probar factura en cero y rounding "ERROR 3" (ver readme), (se requiere usar precision decimal de precio producto en 4 para que de el error)
+   # TODO mejorar este caso demo porque con dos decimales queda en negativo
 -
   !record {model: account.invoice, id: demo_invoice_13}:
     company_id: base.main_company
@@ -313,6 +314,11 @@
   !function {model: account.invoice, name: compute_taxes, id: demo_invoice_13}:
   - model: account.invoice
     eval: "[obj(ref('demo_invoice_13')).id]"
+-
+  !python {model: ir.model.data} : |
+      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
+      if position_id:
+          self.pool['account.invoice'].write(cr, uid, ref('demo_invoice_13'), {'fiscal_position_id': position_id[0]})
 # 14, 15 y 16 son de expo
 -
    Invoice to ADHOC con 100% de descuento (para testear citi)

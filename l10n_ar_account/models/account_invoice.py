@@ -23,12 +23,21 @@ class AccountInvoice(models.Model):
         store=True,
         readonly=True,
     )
-    currency_rate = fields.Float(
+    # TODO: depreciar este campo y la funcion que lo setea, lo dejamos por
+    # ahora para que no se borre esta columna que ya esta calculada, pero si
+    # todo va bien con el nuevo computado, lo vamos a borrar directamente
+    old_currency_rate = fields.Float(
         string='Currency Rate',
+        oldname='currency_rate',
         copy=False,
         digits=(16, 4),
         # TODO make it editable, we have to change move create method
         readonly=True,
+    )
+    currency_rate = fields.Float(
+        string='Currency Rate',
+        compute='_compute_currency_rate',
+        digits=(16, 4),
     )
     document_letter_id = fields.Many2one(
         related='document_type_id.document_letter_id',
@@ -272,6 +281,16 @@ class AccountInvoice(models.Model):
         self.afip_concept = afip_concept
 
     @api.multi
+    def _compute_currency_rate(self):
+        for rec in self:
+            if rec.currency_id and rec.company_id and (
+                    rec.currency_id != rec.company_id.currency_id):
+                rec.currency_rate = (
+                    rec.amount_total_company_signed / rec.amount_total)
+            else:
+                rec.currency_rate = 1.0
+
+    @api.multi
     def get_localization_invoice_vals(self):
         self.ensure_one()
         # TODO depreciar esta funcion y convertir a currency_rate campo
@@ -280,12 +299,12 @@ class AccountInvoice(models.Model):
             currency = self.currency_id.with_context(
                 date=self.date_invoice or fields.Date.context_today(self))
             if self.company_id.currency_id == currency:
-                currency_rate = 1.0
+                old_currency_rate = 1.0
             else:
-                currency_rate = currency.compute(
+                old_currency_rate = currency.compute(
                     1., self.company_id.currency_id, round=False)
             return {
-                'currency_rate': currency_rate,
+                'old_currency_rate': old_currency_rate,
             }
         else:
             return super(
@@ -503,10 +522,11 @@ class AccountInvoice(models.Model):
             # esto es, por eje, si hay un producto con 100% de descuento para
             # única alicuota, entonces el impuesto liquidado da cero y se
             # obliga reportar con alicuota 0, entonces se exige tmb cod de op.
+            # esta restriccion no es de FE si no de aplicativo citi
             zero_vat_lines = invoice.tax_line_ids.filtered(
-                lambda r: (
-                    (r.tax_id.tax_group_id.afip_code in [4, 5, 6, 8, 9] and
-                        not r.amount)))
+                lambda r: ((
+                    r.tax_id.tax_group_id.afip_code in [4, 5, 6, 8, 9] and
+                    r.currency_id.is_zero(r.amount))))
             if (
                     zero_vat_lines and
                     invoice.fiscal_position_id.afip_code

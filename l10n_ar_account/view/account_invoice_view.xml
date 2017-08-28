@@ -24,6 +24,7 @@
                     <field name="document_letter_name" invisible="1"/>
                 </form>
                 <div groups="base.group_multi_currency" position="after">
+                    <!-- <field name="old_currency_rate" attrs="{'invisible': [('old_currency_rate', '=', False)]}"/> -->
                     <field name="currency_rate" attrs="{'invisible': [('currency_rate', '=', False)]}"/>
                 </div>
 

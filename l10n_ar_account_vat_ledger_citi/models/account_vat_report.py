@@ -326,11 +326,14 @@ class account_vat_ledger(models.Model):
                 str(inv.currency_id.afip_code),
 
                 # Campo 18: Tipo de Cambio
-                self.format_amount(
-                    inv.currency_rate or inv.currency_id.with_context(
-                        date=inv.date_invoice).compute(
-                            1., inv.company_id.currency_id),
-                    padding=10, decimals=6),
+                # nueva modalidad de currency_rate
+                self.format_amount(inv.currency_rate, padding=10, decimals=6),
+                # TODO borrar
+                # self.format_amount(
+                #     inv.currency_rate or inv.currency_id.with_context(
+                #         date=inv.date_invoice).compute(
+                #             1., inv.company_id.currency_id),
+                #     padding=10, decimals=6),
 
                 # Campo 19: Cantidad de alícuotas de IVA
                 str(cant_alicuotas),

@@ -285,7 +285,7 @@ class AccountInvoice(models.Model):
         for rec in self:
             if rec.currency_id and rec.company_id and (
                     rec.currency_id != rec.company_id.currency_id):
-                rec.currency_rate = (
+                rec.currency_rate = abs(
                     rec.amount_total_company_signed / rec.amount_total)
             else:
                 rec.currency_rate = 1.0

@@ -49,8 +49,11 @@ class AccountInvoiceTax(models.Model):
             self.cc_base = self.base
             self.cc_amount = self.amount
         else:
-            currency_rate = currency.compute(
-                1.0, self.company_id.currency_id, round=False)
+            # nueva modalidad de currency_rate
+            currency_rate = self.invoice_id.currency_rate
+            # TODO borrar
+            # currency_rate = currency.compute
+            #     1.0, self.company_id.currency_id, round=False)
             # otra alternativa serua usar currency.compute con round true
             # para cada uno de estos valores
             self.cc_base = currency.round(
@@ -62,6 +65,8 @@ class AccountInvoiceTax(models.Model):
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
+    # TODO podriamos mejorar y no requerir todos estos y usar alguno de los
+    # nativos company signed
     # no gravado en iva
     # cc_vat_untaxed = fields.Monetary(
     cc_vat_untaxed_base_amount = fields.Monetary(
@@ -111,8 +116,11 @@ class AccountInvoice(models.Model):
             self.cc_other_taxes_amount = self.other_taxes_amount
             # self.currency_rate = 1.0
         else:
-            currency_rate = currency.compute(
-                1.0, self.company_id.currency_id, round=False)
+            # nueva modalidad de currency_rate
+            currency_rate = self.currency_rate
+            # TODO borrar
+            # currency_rate = currency.compute(
+            #     1.0, self.company_id.currency_id, round=False)
             # otra alternativa serua usar currency.compute con round true
             # para cada uno de estos valores
             # self.currency_rate = currency_rate

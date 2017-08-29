@@ -95,6 +95,10 @@ class AccountInvoice(models.Model):
         compute="_get_currency_values",
         string='Company Cur. Other Taxes Amount'
     )
+    cc_vat_exempt_base_amount = fields.Monetary(
+        compute="_get_currency_values",
+        string='Company Cur. VAT Exempt Base Amount'
+    )
 
     @api.one
     @api.depends('currency_id')
@@ -114,6 +118,7 @@ class AccountInvoice(models.Model):
             self.cc_vat_untaxed_base_amount = self.vat_untaxed_base_amount
             self.cc_vat_amount = self.vat_amount
             self.cc_other_taxes_amount = self.other_taxes_amount
+            self.cc_vat_exempt_base_amount = self.vat_exempt_base_amount
             # self.currency_rate = 1.0
         else:
             # nueva modalidad de currency_rate
@@ -136,3 +141,5 @@ class AccountInvoice(models.Model):
                 self.vat_amount * currency_rate)
             self.cc_other_taxes_amount = currency.round(
                 self.other_taxes_amount * currency_rate)
+            self.cc_vat_exempt_base_amount = currency.round(
+                self.vat_exempt_base_amount * currency_rate)

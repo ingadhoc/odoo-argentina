@@ -91,15 +91,6 @@ class account_vat_ledger(models.Model):
         # Al final volvimos a agregar esto, lo necesitabamos por ej si se pasa
         # base negativa de no gravado
 
-        # TODO mejorar, tenemos entendido que las facturas de venta
-        # que no sean exportacion se pasan siempre en ARS, habria que ver
-        # que otros casos y/o hacer parametrizable
-        # en realidad por lo que veo las expo deberian tmb ir en ARS
-        if self.type == 'sale' and invoice and \
-                invoice.document_type_id.code not in ['19', '20', '21']:
-            amount = invoice.currency_id.round(
-                amount * invoice.currency_rate)
-
         if amount < 0:
             template = "-{:0>%dd}" % (padding - 1)
         else:
@@ -216,16 +207,8 @@ class account_vat_ledger(models.Model):
             # si no existe la factura en alicuotas es porque no tienen ninguna
             cant_alicuotas = len(alicuotas.get(inv))
 
-            # TODO mejorar, tenemos entendido que las facturas de venta
-            # que no sean exportacion se pasan siempre en ARS, habria que ver
-            # que otros casos y/o hacer parametrizable
-            if self.type == 'sale' and inv.document_type_id.code not in [
-                    '19', '20', '21']:
-                currency_rate = 1.0
-                currency_code = 'PES'
-            else:
-                currency_rate = inv.currency_rate
-                currency_code = inv.currency_id.afip_code
+            currency_rate = inv.currency_rate
+            currency_code = inv.currency_id.afip_code
 
             row = [
                 # Campo 1: Fecha de comprobante
@@ -277,11 +260,12 @@ class account_vat_ledger(models.Model):
                 #     'ascii', 'replace').ljust(30, ' ')[:30],
 
                 # Campo 9: Importe Total de la Operación.
-                self.format_amount(inv.amount_total, invoice=inv),
+                self.format_amount(inv.cc_amount_total, invoice=inv),
 
                 # Campo 10: Importe total de conceptos que no integran el
                 # precio neto gravado
-                self.format_amount(inv.vat_untaxed_base_amount, invoice=inv),
+                self.format_amount(
+                    inv.cc_vat_untaxed_base_amount, invoice=inv),
             ]
 
             if self.type == 'sale':
@@ -293,17 +277,17 @@ class account_vat_ledger(models.Model):
                             r.tax_id.tax_group_id.tax == 'vat' and
                             r.tax_id.tax_group_id.application \
                             == 'national_taxes')
-                        ).mapped('amount')), invoice=inv),
+                        ).mapped('cc_amount')), invoice=inv),
 
                     # Campo 12: Importe de operaciones exentas
                     self.format_amount(
-                        inv.vat_exempt_base_amount, invoice=inv),
+                        inv.cc_vat_exempt_base_amount, invoice=inv),
                 ]
             else:
                 row += [
                     # Campo 11: Importe de operaciones exentas
                     self.format_amount(
-                        inv.vat_exempt_base_amount, invoice=inv),
+                        inv.cc_vat_exempt_base_amount, invoice=inv),
 
                     # Campo 12: Importe de percepciones o pagos a cuenta del
                     # Impuesto al Valor Agregado
@@ -314,7 +298,7 @@ class account_vat_ledger(models.Model):
                             r.tax_id.tax_group_id.application \
                             == 'national_taxes')
                         ).mapped(
-                            'amount')), invoice=inv),
+                            'cc_amount')), invoice=inv),
                 ]
 
             row += [
@@ -325,7 +309,7 @@ class account_vat_ledger(models.Model):
                         r.tax_id.tax_group_id.type == 'perception' and
                         r.tax_id.tax_group_id.tax != 'vat' and
                         r.tax_id.tax_group_id.application == 'national_taxes')
-                    ).mapped('amount')), invoice=inv),
+                    ).mapped('cc_amount')), invoice=inv),
 
                 # Campo 14: Importe de percepciones de ingresos brutos
                 self.format_amount(
@@ -333,21 +317,21 @@ class account_vat_ledger(models.Model):
                         r.tax_id.tax_group_id.type == 'perception' and
                         r.tax_id.tax_group_id.application \
                         == 'provincial_taxes')
-                    ).mapped('amount')), invoice=inv),
+                    ).mapped('cc_amount')), invoice=inv),
 
                 # Campo 15: Importe de percepciones de impuestos municipales
                 self.format_amount(
                     sum(inv.tax_line_ids.filtered(lambda r: (
                         r.tax_id.tax_group_id.type == 'perception' and
                         r.tax_id.tax_group_id.application == 'municipal_taxes')
-                    ).mapped('amount')), invoice=inv),
+                    ).mapped('cc_amount')), invoice=inv),
 
                 # Campo 16: Importe de impuestos internos
                 self.format_amount(
                     sum(inv.tax_line_ids.filtered(
                         lambda r: r.tax_id.tax_group_id.application \
                         == 'internal_taxes'
-                    ).mapped('amount')), invoice=inv),
+                    ).mapped('cc_amount')), invoice=inv),
 
                 # Campo 17: Código de Moneda
                 str(currency_code),
@@ -379,7 +363,7 @@ class account_vat_ledger(models.Model):
                         sum(inv.tax_line_ids.filtered(
                             lambda r: r.tax_id.tax_group_id.application \
                             == 'others'
-                        ).mapped('amount')), invoice=inv),
+                        ).mapped('cc_amount')), invoice=inv),
 
                     # Campo 22: vencimiento comprobante (no figura en
                     # instructivo pero si en aplicativo) para tique y factura
@@ -404,7 +388,8 @@ class account_vat_ledger(models.Model):
                         raise ValidationError(_(
                             'by_voucher not implemented yet'))
                 else:
-                    row.append(self.format_amount(inv.vat_amount, invoice=inv))
+                    row.append(self.format_amount(
+                        inv.cc_vat_amount, invoice=inv))
 
                 row += [
                     # Campo 22: Otros Tributos
@@ -412,7 +397,7 @@ class account_vat_ledger(models.Model):
                         sum(inv.tax_line_ids.filtered(lambda r: (
                             r.tax_id.tax_group_id.application \
                             == 'others')).mapped(
-                            'amount')), invoice=inv),
+                            'cc_amount')), invoice=inv),
 
                     # TODO implementar estos 3
                     # Campo 23: CUIT Emisor / Corredor
@@ -536,8 +521,8 @@ class account_vat_ledger(models.Model):
             for afip_code in vat_taxes.mapped('tax_id.tax_group_id.afip_code'):
                 taxes = vat_taxes.filtered(
                     lambda x: x.tax_id.tax_group_id.afip_code == afip_code)
-                imp_neto = sum(taxes.mapped('base'))
-                imp_liquidado = sum(taxes.mapped('amount'))
+                imp_neto = sum(taxes.mapped('cc_base'))
+                imp_liquidado = sum(taxes.mapped('cc_amount'))
                 lines.append(''.join(self.get_tax_row(
                     inv,
                     imp_neto,

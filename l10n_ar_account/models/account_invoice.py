@@ -299,11 +299,11 @@ class AccountInvoice(models.Model):
         # TODO depreciar esta funcion y convertir a currency_rate campo
         # calculado que la calcule en funcion a los datos del move
         if self.localization == 'argentina':
-            currency = self.currency_id.with_context(
-                date=self.date_invoice or fields.Date.context_today(self))
-            if self.company_id.currency_id == currency:
+            if self.company_id.currency_id == self.currency_id:
                 currency_rate = 1.0
             else:
+                currency = self.currency_id.with_context(
+                    date=self.date_invoice or fields.Date.context_today(self))
                 currency_rate = currency.compute(
                     1., self.company_id.currency_id, round=False)
             return {

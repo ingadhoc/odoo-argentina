@@ -423,18 +423,17 @@ class account_vat_ledger(models.Model):
     def get_tax_row(self, invoice, base, code, tax_amount, impo=False):
         self.ensure_one()
         inv = invoice
-        row = [
-            # Campo 1: Tipo de Comprobante
-            "{:0>3d}".format(int(inv.document_type_id.code)),
-
-            # Campo 2: Punto de Venta
-            self.get_point_of_sale(inv),
-
-            # Campo 3: Número de Comprobante
-            "{:0>20d}".format(inv.invoice_number),
-        ]
         if self.type == 'sale':
-            row += [
+            row = [
+                # Campo 1: Tipo de Comprobante
+                "{:0>3d}".format(int(inv.document_type_id.code)),
+
+                # Campo 2: Punto de Venta
+                self.get_point_of_sale(inv),
+
+                # Campo 3: Número de Comprobante
+                "{:0>20d}".format(inv.invoice_number),
+
                 # Campo 4: Importe Neto Gravado
                 self.format_amount(base, invoice=inv),
 
@@ -445,7 +444,7 @@ class account_vat_ledger(models.Model):
                 self.format_amount(tax_amount, invoice=inv),
             ]
         elif impo:
-            row += [
+            row = [
                 # Campo 1: Despacho de importación.
                 (inv.document_number or inv.number or '').rjust(16, '0'),
 
@@ -459,7 +458,16 @@ class account_vat_ledger(models.Model):
                 self.format_amount(tax_amount, invoice=inv),
             ]
         else:
-            row += [
+            row = [
+                # Campo 1: Tipo de Comprobante
+                "{:0>3d}".format(int(inv.document_type_id.code)),
+
+                # Campo 2: Punto de Venta
+                self.get_point_of_sale(inv),
+
+                # Campo 3: Número de Comprobante
+                "{:0>20d}".format(inv.invoice_number),
+
                 # Campo 4: Código de documento del vendedor
                 self.get_partner_document_code(
                     inv.commercial_partner_id),

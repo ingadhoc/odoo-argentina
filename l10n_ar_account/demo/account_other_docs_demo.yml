@@ -174,4 +174,9 @@
           'sequence': 99,
         })
 -
+  !python {model: ir.model.data} : |
+      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
+      if position_id:
+          self.pool['account.invoice'].write(cr, uid, ref('demo_despacho_1'), {'fiscal_position_id': position_id[0]})
+-
   !workflow {model: account.invoice, action: invoice_open, ref: demo_despacho_1}

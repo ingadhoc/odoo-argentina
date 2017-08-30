@@ -3,29 +3,21 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-# from openerp import models, fields, api
+from openerp import models, api, _
+from openerp.exceptions import ValidationError
 import logging
 _logger = logging.getLogger(__name__)
 
-# TODO borrar, ahora odoo agrego el campo base computado
 
-# class AccountInvoiceTax(models.Model):
-#     _inherit = "account.invoice.tax"
-#     """
-#     We need this fields for electronic invoice, vat reports and citi
-#     """
-#     base_amount = fields.Monetary(
-#         compute="_get_base_amount",
-#         string='Base Amount'
-#     )
+class AccountInvoiceTax(models.Model):
+    _inherit = "account.invoice.tax"
 
-#     @api.multi
-#     def _get_base_amount(self):
-#         for invoice_tax in self:
-#             # search for invoice lines of this tax and invoice
-#             invoice_lines = self.env['account.invoice.line'].search([
-#                 ('invoice_id', '=', invoice_tax.invoice_id.id),
-#                 ('invoice_line_tax_ids', '=', invoice_tax.tax_id.id),
-#             ])
-#             invoice_tax.base_amount = sum(
-#                 invoice_lines.mapped('price_subtotal'))
+    @api.multi
+    @api.constrains('manual', 'tax_id')
+    def check_vat_not_manual(self):
+        for rec in self:
+            if rec.manual and rec.tax_id.tax_group_id.type == 'tax' and \
+                    rec.tax_id.tax_group_id.tax == 'vat':
+                raise ValidationError(_(
+                    'No puede agregar IVA manualmente, debe agregarlo en las '
+                    'líneas de factura.'))

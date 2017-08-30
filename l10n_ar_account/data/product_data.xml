@@ -23,6 +23,7 @@
             <field name="default_code">AFIP_ARANCEL</field>
             <field name="sale_ok" eval="False"/>
             <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'IVA No Gravado')]"/>
         </record>
         <record id="product_product_servicio_de_guarda" model="product.product">
             <field name="name">Servicio de Guarda</field>
@@ -30,6 +31,7 @@
             <field name="default_code">AFIP_SERV_GUARDA</field>
             <field name="sale_ok" eval="False"/>
             <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'IVA No Gravado')]"/>
         </record>
     </data>
 </openerp>

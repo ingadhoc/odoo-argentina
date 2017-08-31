@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 23:30+0000\n"
-"PO-Revision-Date: 2017-08-25 23:30+0000\n"
+"POT-Creation-Date: 2017-08-31 14:04+0000\n"
+"PO-Revision-Date: 2017-08-31 14:04+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -405,7 +405,7 @@ msgid "Converts retreived text fields to Title Case."
 msgstr "Convierte el texto solicitado a formato de Título con Mayúscula"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:234
+#: code:addons/l10n_ar_account/models/account_invoice.py:242
 #, python-format
 msgid "Could not get invoice number and point of sale for invoice id %i"
 msgstr ""
@@ -865,7 +865,7 @@ msgid "IVA Ventas"
 msgstr "IVA Ventas"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:501
+#: code:addons/l10n_ar_account/models/account_invoice.py:523
 #, python-format
 msgid ""
 "If you have choose a 0, exempt or untaxed 'tax', or you must choose a fiscal position with afip code in %s.\n"
@@ -930,12 +930,17 @@ msgid "Invoice State"
 msgstr "Estado Factura"
 
 #. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_invoice_tax
+msgid "Invoice Tax"
+msgstr "Línea de Impuesto"
+
+#. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_amount_total
 msgid "Invoice Total"
 msgstr "Total Factura"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:475
+#: code:addons/l10n_ar_account/models/account_invoice.py:497
 #, python-format
 msgid "Invoice with ID %s has some lines without vat Tax "
 msgstr "La factura con ID %s tiene algunas líneas sin IVA"
@@ -1178,6 +1183,13 @@ msgid ""
 msgstr ""
 "No gravado / Exento.\n"
 "Todo lo que tenga iva 0, exento, no gravado o no corresponde"
+
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/account_invoice_tax.py:21
+#, python-format
+msgid ""
+"No puede agregar IVA manualmente, debe agregarlo en las líneas de factura."
+msgstr ""
 
 #. module: l10n_ar_account
 #: code:addons/l10n_ar_account/wizard/res_partner_update_from_padron_wizard.py:51
@@ -1576,7 +1588,7 @@ msgid "Si"
 msgstr "Si"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:517
+#: code:addons/l10n_ar_account/models/account_invoice.py:540
 #, python-format
 msgid ""
 "Si hay líneas con IVA declarado 0, entonces debe elegir una posición fiscal con código de afip '%s'.\n"
@@ -1591,7 +1603,7 @@ msgid "Skip these partner"
 msgstr "Omitir esta empresa"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:449
+#: code:addons/l10n_ar_account/models/account_invoice.py:471
 #, python-format
 msgid ""
 "Some Invoice Tax Lines don't have a tax_id asociated, please correct them or"
@@ -1690,7 +1702,7 @@ msgid "Templates for Taxes"
 msgstr "Plantilla de impuestos"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:440
+#: code:addons/l10n_ar_account/models/account_invoice.py:462
 #, python-format
 msgid "The following invoices has a partner without AFIP responsability: %s"
 msgstr ""
@@ -1877,7 +1889,7 @@ msgid "Wizard"
 msgstr "Asistente"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:464
+#: code:addons/l10n_ar_account/models/account_invoice.py:486
 #, python-format
 msgid ""
 "You are using argentinian localization and there are some tax groups that "

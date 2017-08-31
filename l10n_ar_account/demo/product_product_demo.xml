@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="0">
+        <!-- agregamos impuesto no gravado a productos de data ya que en data no fuciona porque todavia no esta instalado plan de cuentas, aca si porque justamente esto lo carga el plan de cuentas -->
+
+        <record id="l10n_ar_account.product_product_arancel" model="product.product">
+            <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'IVA No Gravado')]"/>
+        </record>
+        <record id="l10n_ar_account.product_product_servicio_de_guarda" model="product.product">
+            <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'IVA No Gravado')]"/>
+        </record>
 
     <!-- Creamos productos para distintos casos de uso -->
         <record id="l10n_ar_account.product_product_exento" model="product.product">

@@ -54,30 +54,38 @@ def migrate_automatic_withholding_config(env):
             # 'withholding_python_compute': python_compute,
         })
 
-        # migramos las rules
+        # al final en realidad estamos usando la misma tabla, por lo cual solo
+        # hay que arreglar los ids que referncian a los nuevos impuestos
         openupgrade.logged_query(cr, """
-        SELECT
-            sequence,
-            domain,
-            tax_withholding_id,
-            percentage,
-            fix_amount
-        FROM
-            account_tax_withholding_rule
-        WHERE
-            tax_withholding_id = %s
-        """, (id,))
-        for tax_rule in cr.fetchall():
-            (
-                sequence,
-                domain,
-                tax_withholding_id,
-                percentage,
-                fix_amount) = tax_rule
-            env['account.tax.withholding.rule'].create({
-                'sequence': sequence,
-                'domain': domain,
-                'percentage': percentage,
-                'fix_amount': fix_amount,
-                'tax_withholding_id': new_tax_id,
-            })
+            UPDATE account_tax_withholding_rule
+            SET tax_withholding_id = %s
+            WHERE tax_withholding_id = %s;
+            """, (new_tax_id, id))
+
+        # migramos las rules
+        # openupgrade.logged_query(cr, """
+        # SELECT
+        #     sequence,
+        #     domain,
+        #     tax_withholding_id,
+        #     percentage,
+        #     fix_amount
+        # FROM
+        #     account_tax_withholding_rule
+        # WHERE
+        #     tax_withholding_id = %s
+        # """, (id,))
+        # for tax_rule in cr.fetchall():
+        #     (
+        #         sequence,
+        #         domain,
+        #         tax_withholding_id,
+        #         percentage,
+        #         fix_amount) = tax_rule
+        #     env['account.tax.withholding.rule'].create({
+        #         'sequence': sequence,
+        #         'domain': domain,
+        #         'percentage': percentage,
+        #         'fix_amount': fix_amount,
+        #         'tax_withholding_id': new_tax_id,
+        #     })

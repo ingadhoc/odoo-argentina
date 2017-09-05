@@ -26,6 +26,7 @@ def migrate_automatic_withholding_config(env):
     FROM
         account_tax_withholding
     """,)
+    updated_ids = []
     for tax_read in cr.fetchall():
         (
             non_taxable_amount,
@@ -56,11 +57,35 @@ def migrate_automatic_withholding_config(env):
 
         # al final en realidad estamos usando la misma tabla, por lo cual solo
         # hay que arreglar los ids que referncian a los nuevos impuestos
-        openupgrade.logged_query(cr, """
-            UPDATE account_tax_withholding_rule
-            SET tax_withholding_id = %s
-            WHERE tax_withholding_id = %s;
-            """, (new_tax_id, id))
+        # todo este lio horrible seguro se podria mejorar, hacemos esto porque
+        # una vez que se cambio uno id no queremos que en otra iteracion se
+        # cambie equivocadamente
+        if updated_ids:
+            openupgrade.logged_query(cr, """
+                SELECT id FROM account_tax_withholding_rule
+                WHERE tax_withholding_id = %s and id NOT IN %s;
+                """, (id, tuple(updated_ids)))
+        else:
+            openupgrade.logged_query(cr, """
+                SELECT id FROM account_tax_withholding_rule
+                WHERE tax_withholding_id = %s;
+                """, (id,))
+
+        tax_rule_read = cr.fetchall()
+        tax_rule_ids = [x[0] for x in tax_rule_read]
+        if tax_rule_ids:
+            openupgrade.logged_query(cr, """
+                UPDATE account_tax_withholding_rule
+                SET tax_withholding_id = %s
+                WHERE id in %s;
+                """, (new_tax_id, tuple(tax_rule_ids)))
+
+            updated_ids += tax_rule_ids
+        # openupgrade.logged_query(cr, """
+        #     UPDATE account_tax_withholding_rule
+        #     SET tax_withholding_id = %s
+        #     WHERE tax_withholding_id = %s;
+        #     """, (new_tax_id, id))
 
         # migramos las rules
         # openupgrade.logged_query(cr, """

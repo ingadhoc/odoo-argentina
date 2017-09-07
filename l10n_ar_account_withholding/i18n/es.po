@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# emiquinodoz <eq@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 14:25+0000\n"
-"PO-Revision-Date: 2017-07-20 14:25+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-08-18 14:37+0000\n"
+"PO-Revision-Date: 2017-08-18 14:37+0000\n"
+"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,7 +40,7 @@ msgstr "Impuesto AFIP"
 #. module: l10n_ar_account_withholding
 #: model:ir.ui.view,arch_db:l10n_ar_account_withholding.view_company_inherit_form
 msgid "ARBA WS"
-msgstr ""
+msgstr "ARBA WS"
 
 #. module: l10n_ar_account_withholding
 #: selection:res.partner,drei:0
@@ -114,7 +115,7 @@ msgstr "Id Compañía"
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_payment_group_company_regimenes_ganancias_ids
 msgid "Company regimenes ganancias ids"
-msgstr ""
+msgstr "ids de regimenes de ganancias de Empresas"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos_concepto_referencia
@@ -269,7 +270,7 @@ msgstr "Grupo de Pagos"
 #: model:ir.ui.view,arch_db:l10n_ar_account_withholding.view_account_payment_from_group_tree
 #: model:ir.ui.view,arch_db:l10n_ar_account_withholding.view_account_payment_tree
 msgid "Print withholding voucher"
-msgstr ""
+msgstr "Imprimir Comprobante de retención"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_payment_group_regimen_ganancias_id
@@ -315,14 +316,14 @@ msgstr "Debe configurar el CIT de ARA en la compañía %s"
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_afip_tabla_ganancias_alicuotasymontos
 msgid "afip.tabla_ganancias.alicuotasymontos"
-msgstr ""
+msgstr "afip.tabla_ganancias.alicuotasymontos"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_afip_tabla_ganancias_escala
 msgid "afip.tabla_ganancias.escala"
-msgstr ""
+msgstr "afip.tabla_ganancias.escala"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_res_partner_arba_alicuot
 msgid "res.partner.arba_alicuot"
-msgstr ""
+msgstr "res.partner.arba_alicuot"

@@ -23,6 +23,9 @@
         # 'data/account_chart_template.yml',
     ],
     'demo': [
+        # para datos demo agregamos alicuotas a las percepciones aplicadas y
+        # sufridas
+        '../l10n_ar_account/demo/account_tax_template_demo.xml',
         'data/account_chart_template.yml',
         # TODO los productos se podrian cargar directamente en l10n_ar_account
         '../l10n_ar_account/demo/product_product_demo.xml',

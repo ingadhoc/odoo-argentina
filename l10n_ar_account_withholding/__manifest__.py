@@ -33,7 +33,6 @@
         'views/res_partner_view.xml',
         'security/ir.model.access.csv',
         'security/security.xml',
-        # 'wizard/account_withholding_sicore_wizard_view.xml',
         'data/tabla_ganancias_data.xml',
     ],
     'demo': [

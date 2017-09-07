@@ -11,6 +11,10 @@
         'account_document',
         'l10n_ar_partner',
         'l10n_ar_bank',
+        # agregamos esta dependencia ya que el fix que hace ese modulo
+        # es fundamental para que el importa base de los impuestos se calcule
+        # bien en los reembolsos.
+        'account_fix',
         # para guardar el link entre facturas y NC
         # el modulo tiene errores en los test (probado solo con odoo y tmb)
         # 'account_invoice_refund_link',
@@ -39,6 +43,7 @@
         'data/res_country_group_data.xml',
         'data/res_company_data.xml',
         'data/afip_vat_f2002_category_data.xml',
+        'data/account_account_tag.xml',
         # TODO analizar y migrar
         # data_account_type
         # 'data/account_financial_report_data.xml',

@@ -23,6 +23,9 @@ class AccountInvoice(models.Model):
         store=True,
         readonly=True,
     )
+    # TODO: depreciar este campo y la funcion que lo setea, lo dejamos por
+    # ahora para que no se borre esta columna que ya esta calculada, pero si
+    # todo va bien con el nuevo computado, lo vamos a borrar directamente
     currency_rate = fields.Float(
         string='Currency Rate',
         copy=False,
@@ -30,6 +33,11 @@ class AccountInvoice(models.Model):
         # TODO make it editable, we have to change move create method
         readonly=True,
     )
+    # computed_currency_rate = fields.Float(
+    #     string='Currency Rate',
+    #     compute='_compute_currency_rate',
+    #     digits=(10, 6),
+    # )
     document_letter_id = fields.Many2one(
         related='document_type_id.document_letter_id',
         readonly=True,
@@ -275,17 +283,31 @@ class AccountInvoice(models.Model):
                         afip_concept = '4'
             rec.afip_concept = afip_concept
 
+    # TODO borrar o implementar. Al final usamos el currency rate que
+    # almacenamos porque es muy inexacto calcularlo ya que se pierde
+    # información y segun el importe, al mismo cambio, podriamos tener
+    # distintos valores de cambio
+    # @api.multi
+    # def _compute_currency_rate(self):
+    #     for rec in self:
+    #         if rec.currency_id and rec.company_id and (
+    #                 rec.currency_id != rec.company_id.currency_id):
+    #             rec.computed_currency_rate = abs(
+    #                 rec.amount_total_company_signed / rec.amount_total)
+    #         else:
+    #             rec.computed_currency_rate = 1.0
+
     @api.multi
     def get_localization_invoice_vals(self):
         self.ensure_one()
         # TODO depreciar esta funcion y convertir a currency_rate campo
         # calculado que la calcule en funcion a los datos del move
         if self.localization == 'argentina':
-            currency = self.currency_id.with_context(
-                date=self.date_invoice or fields.Date.context_today(self))
-            if self.company_id.currency_id == currency:
+            if self.company_id.currency_id == self.currency_id:
                 currency_rate = 1.0
             else:
+                currency = self.currency_id.with_context(
+                    date=self.date_invoice or fields.Date.context_today(self))
                 currency_rate = currency.compute(
                     1., self.company_id.currency_id, round=False)
             return {
@@ -452,7 +474,8 @@ class AccountInvoice(models.Model):
         if wihtout_tax_id:
             raise ValidationError(_(
                 "Some Invoice Tax Lines don't have a tax_id asociated, please "
-                "correct them or try to refresh invoice "))
+                "correct them or try to refresh invoice. Tax lines: %s") % (
+                ', '.join(wihtout_tax_id.mapped('name'))))
 
         # check codes has argentinian tax attributes configured
         tax_groups = argentinian_invoices.mapped(
@@ -506,10 +529,11 @@ class AccountInvoice(models.Model):
             # esto es, por eje, si hay un producto con 100% de descuento para
             # única alicuota, entonces el impuesto liquidado da cero y se
             # obliga reportar con alicuota 0, entonces se exige tmb cod de op.
+            # esta restriccion no es de FE si no de aplicativo citi
             zero_vat_lines = invoice.tax_line_ids.filtered(
-                lambda r: (
-                    (r.tax_id.tax_group_id.afip_code in [4, 5, 6, 8, 9] and
-                        not r.amount)))
+                lambda r: ((
+                    r.tax_id.tax_group_id.afip_code in [4, 5, 6, 8, 9] and
+                    r.currency_id.is_zero(r.amount))))
             if (
                     zero_vat_lines and
                     invoice.fiscal_position_id.afip_code

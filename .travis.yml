@@ -90,6 +90,7 @@ install:
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-payment/account_withholding_automatic ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-payment/account_payment_group ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-payment/account_payment_fix ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-financial-tools/account_fix ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/account-financial-tools/currency_rate_update ~/build/ingadhoc/odoo-argentina; fi
 
 script:

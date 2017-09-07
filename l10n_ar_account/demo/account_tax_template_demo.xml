@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- para datos demo agregamos alicuotas a las percepciones aplicadas y sufridas -->
+
+    <record id="ri_tax_percepcion_iva_aplicada" model="account.tax.template">
+        <field eval="0.1" name="amount"/>
+    </record>
+
+    <record id="ri_tax_percepcion_ganancias_aplicada" model="account.tax.template">
+        <field eval="0.1" name="amount"/>
+    </record>
+
+    <record id="ri_tax_percepcion_ganancias_sufrida" model="account.tax.template">
+        <field eval="0.1" name="amount"/>
+    </record>
+
+    <record id="ri_tax_percepcion_iibb_sufrida" model="account.tax.template">
+        <field eval="0.1" name="amount"/>
+    </record>
+
+    <record id="ri_tax_percepcion_iibb_aplicada" model="account.tax.template">
+        <field eval="0.1" name="amount"/>
+    </record>
+
+    <record id="ri_tax_percepcion_iva_sufrida" model="account.tax.template">
+        <field eval="0.1" name="amount"/>
+    </record>
+
+    <!-- a los fines de demo, por ahora seteamos la cuenta de iibb como la de bs as asi se puede usar directamente, tmb renombramos el impuesto -->
+    <record id="ri_tax_percepcion_iibb_sufrida" model="account.tax.template">
+        <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+        <field name="name">Percepción IIBB Bs As Sufrida</field>
+        <field name="description">Perc IIBB Bs As S</field>
+        <field name="account_id" ref="base_percepcion_iibb_ba_sufrida"/>
+        <field name="refund_account_id" ref="base_percepcion_iibb_ba_sufrida"/>
+    </record>
+
+</odoo>

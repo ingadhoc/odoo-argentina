@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Argentina - Planes Contables',
-    'author': 'Moldeo Interactive,ADHOC SA',
+    'author': 'Moldeo Interactive,ADHOC SA,Odoo Community Association (OCA)',
     'category': 'Localization/Account Charts',
     'license': 'AGPL-3',
     'depends': [
@@ -42,8 +42,8 @@
         # '../account/demo/account_bank_statement.yml',
         # '../account/demo/account_invoice_demo.yml',
     ],
-    'installable': False,
+    'installable': True,
     'images': [
     ],
-    'version': '9.0.1.3.0',
+    'version': '10.0.1.0.0',
 }

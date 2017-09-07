@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data noupdate="False">
         <record model='res.partner.id_category' id='dt_CPF'>
             <field name='code'>CPF</field>
@@ -286,5 +286,5 @@ failed = not check_vat_ar(id_number.name)
             <field name='active' eval="False"/>
         </record> 
     </data>
-</openerp>
+</odoo>
         

@@ -26,7 +26,7 @@ class ResPartner(models.Model):
     # )
     main_id_number = fields.Char(
         compute='_compute_main_id_number',
-        inverse='_set_main_id_number',
+        inverse='_inverse_main_id_number',
         store=True,
         string='Main Identification Number',
     )
@@ -43,7 +43,7 @@ class ResPartner(models.Model):
                 self.name))
         return self.cuit
 
-    @api.one
+    @api.multi
     @api.depends(
         'id_numbers.category_id.afip_code',
         'id_numbers.name',
@@ -51,16 +51,20 @@ class ResPartner(models.Model):
         'main_id_category_id',
     )
     def _compute_cuit(self):
-        cuit = self.id_numbers.search([
-            ('partner_id', '=', self.id),
-            ('category_id.afip_code', '=', 80),
-        ], limit=1)
-        # agregamos esto para el caso en donde el registro todavia no se creo
-        # queremos el cuit para que aparezca el boton de refrescar de afip
-        if not cuit and self.main_id_category_id.afip_code == 80:
-            self.cuit = self.main_id_number
-        else:
-            self.cuit = cuit.name
+        # TODO improve this on performance, for eg. make search for all
+        # partners first
+        for rec in self:
+            cuit = rec.id_numbers.search([
+                ('partner_id', '=', rec.id),
+                ('category_id.afip_code', '=', 80),
+            ], limit=1)
+            # agregamos esto para el caso en donde el registro todavia no se
+            # creo, queremos el cuit para que aparezca el boton de refrescar
+            # de afip
+            if not cuit and rec.main_id_category_id.afip_code == 80:
+                rec.cuit = rec.main_id_number
+            else:
+                rec.cuit = cuit.name
 
     @api.multi
     @api.depends(
@@ -76,7 +80,7 @@ class ResPartner(models.Model):
                 partner.main_id_number = id_numbers[0].name
 
     @api.multi
-    def _set_main_id_number(self):
+    def _inverse_main_id_number(self):
         for partner in self:
             name = partner.main_id_number
             category_id = partner.main_id_category_id

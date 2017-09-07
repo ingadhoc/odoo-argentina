@@ -23,8 +23,8 @@ class SaleConfiguration(models.TransientModel):
         "child/parent relation are still allowed",
     )
 
-    @api.multi
-    def get_default_unique_id_numbers(self):
+    @api.model
+    def get_default_unique_id_numbers(self, fields):
         unique_id_numbers = self.env['ir.config_parameter'].get_param(
             "l10n_ar_partner.unique_id_numbers", 'False')
         return {

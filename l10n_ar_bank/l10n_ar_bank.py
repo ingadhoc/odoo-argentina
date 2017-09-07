@@ -12,8 +12,10 @@ class ResPartnerBank(models.Model):
 
     cbu = fields.Char(
         'CBU',
-        help="Código Bancario Único Argentino")
+        help="Código Bancario Único Argentino"
+    )
 
+    @api.multi
     @api.constrains('cbu')
     def check_cbu(self):
         for rec in self:

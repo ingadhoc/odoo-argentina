@@ -76,7 +76,7 @@
       account = self.env['account.account'].search([('name', '=', 'Compra de mercadería')], limit=1)
       vat_21_tax = self.env['account.tax'].search([('type_tax_use', '=', 'purchase'), ('name', '=', 'IVA Compras 21%')], limit=1)
       no_gravado_tax = self.env['account.tax'].search([('type_tax_use', '=', 'purchase'), ('name', '=', 'IVA Compras No Gravado')], limit=1)
-      if accounts and vat_21_tax and no_gravado_tax:
+      if account and vat_21_tax and no_gravado_tax:
         invoice_tax_id = self.env['account.invoice.line'].create({
           'invoice_id': ref('demo_despacho_1'),
           'name': 'FOB Total',
@@ -171,7 +171,6 @@
           'manual': True,
           'sequence': 99,
         })
--
 -
   !python {model: ir.model.data} : |
       position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')], limit=1)

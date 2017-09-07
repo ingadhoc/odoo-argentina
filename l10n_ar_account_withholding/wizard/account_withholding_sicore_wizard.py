@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
 import datetime
@@ -8,7 +8,7 @@ import calendar
 import base64
 import re
 from dateutil.relativedelta import relativedelta
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class account_debt_report_wizard(models.TransientModel):

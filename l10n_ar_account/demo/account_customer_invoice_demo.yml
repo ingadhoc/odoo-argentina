@@ -316,9 +316,9 @@
     eval: "[obj(ref('demo_invoice_13')).id]"
 -
   !python {model: ir.model.data} : |
-      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
-      if position_id:
-          self.pool['account.invoice'].write(cr, uid, ref('demo_invoice_13'), {'fiscal_position_id': position_id[0]})
+      position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')], limit=1)
+      if position:
+          self.env['account.invoice'].browse(ref('demo_invoice_13')).write({'fiscal_position_id': position.id})
 # 14, 15 y 16 son de expo
 -
    Invoice to ADHOC con 100% de descuento (para testear citi)

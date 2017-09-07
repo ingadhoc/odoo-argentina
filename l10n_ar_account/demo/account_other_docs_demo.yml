@@ -34,7 +34,8 @@
   - model: account.invoice
     eval: "[obj(ref('demo_invoice_9')).id]"
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_9}
+  !python {model: account.invoice, id: demo_invoice_9}:
+    self.action_invoice_open()
 -
    Set the context for supplier invoices because the 'type' field is readonly in invoice form views, so it value won't be considered by the yaml import
 -
@@ -113,4 +114,5 @@
           'sequence': 99,
         })
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: demo_despacho_1}
+  !python {model: account.invoice, id: demo_despacho_1}:
+    self.action_invoice_open()

@@ -12,8 +12,8 @@
     afip_incoterm_id: l10n_ar_account.incoterm_exw
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Servicio de telefonía (IVA 27)'
@@ -52,8 +52,8 @@
     afip_incoterm_id: l10n_ar_account.incoterm_exw
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Servicio de telefonía (IVA 27)'
@@ -92,8 +92,8 @@
     afip_incoterm_id: l10n_ar_account.incoterm_exw
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
 -
@@ -132,8 +132,8 @@
     afip_incoterm_id: l10n_ar_account.incoterm_exw
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
 -

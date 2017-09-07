@@ -33,8 +33,8 @@
     payment_term_id: account.account_payment_term
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Servicio de telefonía (IVA 27)'
@@ -60,8 +60,8 @@
     payment_term_id: account.account_payment_term
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Animales y vegetales no industrializados (IVA cero)'
@@ -74,9 +74,9 @@
     eval: "[obj(ref('demo_invoice_3')).id]"
 -
   !python {model: ir.model.data} : |
-      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
-      if position_id:
-          self.pool['account.invoice'].write(cr, uid, ref('demo_invoice_3'), {'fiscal_position_id': position_id[0]})
+      position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')], limit=1)
+      if position:
+          self.env['account.invoice'].browse(ref('demo_invoice_3')).write({'fiscal_position_id': position.id})
 -
    Invoice to ADHOC with vat exempt and 21 (requires fiscal position, setted manually)
 -
@@ -88,8 +88,8 @@
     payment_term_id: account.account_payment_term
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Libro "Desarrollo en Odoo" (IVA exento)'
@@ -98,9 +98,9 @@
         quantity: 1.0
 -
   !python {model: ir.model.data} : |
-      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
-      if position_id:
-          self.pool['account.invoice'].write(cr, uid, ref('demo_invoice_4'), {'fiscal_position_id': position_id[0]})
+      position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')], limit=1)
+      if position:
+          self.env['account.invoice'].browse(ref('demo_invoice_4')).write({'fiscal_position_id': position.id})
 -
   !function {model: account.invoice, name: compute_taxes, id: demo_invoice_4}:
   - model: account.invoice
@@ -116,8 +116,8 @@
     payment_term_id: account.account_payment_term
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Servicio de telefonía (IVA 27)'
@@ -148,9 +148,9 @@
   We add fiscal position
 -
   !python {model: ir.model.data} : |
-      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
-      if position_id:
-          self.pool['account.invoice'].write(cr, uid, ref('demo_invoice_5'), {'fiscal_position_id': position_id[0]})
+      position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')], limit=1)
+      if position:
+          self.env['account.invoice'].browse(ref('demo_invoice_5')).write({'fiscal_position_id': position.id})
 -
   La invoice 6 y 7 es la de expo pero la llevamos a otro archivo
 -
@@ -186,8 +186,8 @@
     payment_term_id: account.account_payment_term
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 1000.0
         quantity: 5
 -
@@ -326,9 +326,9 @@
     eval: "[obj(ref('demo_invoice_17')).id]"
 -
   !python {model: ir.model.data} : |
-      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
-      if position_id:
-          self.pool['account.invoice'].write(cr, uid, ref('demo_invoice_17'), {'fiscal_position_id': position_id[0]})
+      position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')], limit=1)
+      if position:
+          self.env['account.invoice'].browse(ref('demo_invoice_17')).write({'fiscal_position_id': position.id})
 -
    Invoice to ADHOC con 100% de descuento en ivas distintos (para testear citi)
    y con linea de importe
@@ -361,6 +361,6 @@
     eval: "[obj(ref('demo_invoice_18')).id]"
 -
   !python {model: ir.model.data} : |
-      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
-      if position_id:
-          self.pool['account.invoice'].write(cr, uid, ref('demo_invoice_18'), {'fiscal_position_id': position_id[0]})
+      position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')], limit=1)
+      if position:
+          self.env['account.invoice'].browse(ref('demo_invoice_18')).write({'fiscal_position_id': position.id})

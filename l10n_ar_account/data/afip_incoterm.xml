@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data noupdate="True">
         <record model='afip.incoterm' forcecreate="0" id='incoterm_exw'>
             <field name='afip_code'>EXW</field>
@@ -58,4 +58,4 @@
             <field name='name'>Delivered At Port</field>
         </record>
     </data>
-</openerp>
+</odoo>

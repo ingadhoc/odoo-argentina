@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data noupdate="True">
 
         <record model='base.validator' id='validator_numero_factura'>
@@ -53,5 +53,5 @@ El número de despacho de importación debe tener 16 caractéres
         </record>
 
     </data>
-</openerp>
+</odoo>
  

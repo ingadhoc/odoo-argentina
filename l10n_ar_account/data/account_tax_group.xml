@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data noupdate="True">    
         <!-- rename to Other Taxes, use sequence 20 y clasificamos impuesto -->
         <record id="account.tax_group_taxes" model="account.tax.group">
@@ -292,4 +292,4 @@
         </record>
 
     </data>
-</openerp>
+</odoo>

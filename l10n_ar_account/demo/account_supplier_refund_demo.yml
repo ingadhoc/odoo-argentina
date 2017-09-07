@@ -14,7 +14,7 @@
 -
   !python {model: account.invoice.refund} : |
     context = {'active_ids': [ref('demo_sup_invoice_3')], 'active_model': 'account.invoice'}
-    refund_id = self.browse(ref("demo_sup_refund_invoice_3"))
+    refunds = self.browse(ref("demo_sup_refund_invoice_3"))
     refunds.get_available_journal_document_types()
     refunds.invoice_refund()
 -
@@ -28,6 +28,6 @@
 -
   !python {model: account.invoice.refund} : |
     context = {'active_ids': [ref('demo_sup_invoice_4')], 'active_model': 'account.invoice'}
-    refund_id = self.browse(ref("demo_sup_refund_invoice_4"))
+    refunds = self.browse(ref("demo_sup_refund_invoice_4"))
     refunds.get_available_journal_document_types()
     refunds.invoice_refund()

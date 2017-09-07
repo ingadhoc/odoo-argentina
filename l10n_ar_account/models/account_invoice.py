@@ -54,8 +54,7 @@ class AccountInvoice(models.Model):
     afip_responsability_type_id = fields.Many2one(
         'afip.responsability.type',
         string='AFIP Responsability Type',
-        # readonly=True,
-        # copy=False,
+        readonly=True,
         help='Responsability type from journal entry where it is stored and '
         'it nevers change',
         related='move_id.afip_responsability_type_id',

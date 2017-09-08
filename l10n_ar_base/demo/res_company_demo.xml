@@ -6,7 +6,7 @@
         <record id="base.main_company" model="res.company">
             <field name="country_id" ref="base.ar"/>
             <!-- this is already done in data -->
-            <!-- <field name="currency_id" ref="base.ARS"/> -->
+            <field name="currency_id" ref="base.USD"/>
         </record>
 
     </data>

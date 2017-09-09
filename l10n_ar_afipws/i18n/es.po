@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Javier Diez <jd@adhoc.com.ar>, 2017
+# Gonzalo Ruzafa <gr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 14:25+0000\n"
-"PO-Revision-Date: 2017-07-20 14:25+0000\n"
-"Last-Translator: Javier Diez <jd@adhoc.com.ar>, 2017\n"
+"POT-Creation-Date: 2017-09-07 15:47+0000\n"
+"PO-Revision-Date: 2017-09-07 15:47+0000\n"
+"Last-Translator: Gonzalo Ruzafa <gr@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -518,12 +518,12 @@ msgstr ""
 #. module: l10n_ar_afipws
 #: model:ir.model,name:l10n_ar_afipws.model_afipws_certificate
 msgid "afipws.certificate"
-msgstr ""
+msgstr "afipws.certificate"
 
 #. module: l10n_ar_afipws
 #: model:ir.model,name:l10n_ar_afipws.model_afipws_upload_certificate_wizard
 msgid "afipws.upload_certificate.wizard"
-msgstr ""
+msgstr "afipws.upload_certificate.wizard"
 
 #. module: l10n_ar_afipws
 #: model:ir.ui.view,arch_db:l10n_ar_afipws.view_upload_certificate_form

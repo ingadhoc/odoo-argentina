@@ -10,7 +10,6 @@
         'account_withholding',
         'account_check',
     ],
-    'test': [],
     'data': [
         'data/account_chart_base.xml',
         'data/account_chart_template.xml',

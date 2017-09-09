@@ -9,7 +9,6 @@ Listado de entidades financieras habilitadas por el BCRA.
 Este módulo le permite tener a disposición el listado actualizado de las entidades bancarias de la República Argentina.
 
 
-
 Credits
 =======
 

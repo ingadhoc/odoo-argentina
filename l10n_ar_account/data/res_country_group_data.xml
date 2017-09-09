@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data>
         <record model='res.country.group' id='not_argentina'>
             <field name='name'>No Argentina</field>
             <field name='country_ids' search="[('code', '!=', 'AR')]"/>
         </record> 
     </data>
-</openerp>
+</odoo>

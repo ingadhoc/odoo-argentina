@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Argentina - Planes Contables',
-    'author': 'Moldeo Interactive,ADHOC SA',
+    'author': 'Moldeo Interactive,ADHOC SA,Odoo Community Association (OCA)',
     'category': 'Localization/Account Charts',
     'license': 'AGPL-3',
     'depends': [
@@ -10,7 +10,6 @@
         'account_withholding',
         'account_check',
     ],
-    'test': [],
     'data': [
         'data/account_chart_base.xml',
         'data/account_chart_template.xml',
@@ -23,6 +22,9 @@
         # 'data/account_chart_template.yml',
     ],
     'demo': [
+        # para datos demo agregamos alicuotas a las percepciones aplicadas y
+        # sufridas
+        '../l10n_ar_account/demo/account_tax_template_demo.xml',
         'data/account_chart_template.yml',
         # TODO los productos se podrian cargar directamente en l10n_ar_account
         '../l10n_ar_account/demo/product_product_demo.xml',
@@ -42,8 +44,8 @@
         # '../account/demo/account_bank_statement.yml',
         # '../account/demo/account_invoice_demo.yml',
     ],
-    'installable': False,
+    'installable': True,
     'images': [
     ],
-    'version': '9.0.1.3.0',
+    'version': '10.0.1.0.0',
 }

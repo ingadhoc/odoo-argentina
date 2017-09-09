@@ -14,9 +14,9 @@
 -
   !python {model: account.invoice.refund} : |
     context = {'active_ids': [ref('demo_sup_invoice_3')], 'active_model': 'account.invoice'}
-    refund_ids = [ref("demo_sup_refund_invoice_3")]
-    self.get_available_journal_document_types(cr, uid, refund_ids, context)
-    self.invoice_refund(cr, uid, refund_ids, context)
+    refunds = self.browse(ref("demo_sup_refund_invoice_3"))
+    refunds.get_available_journal_document_types()
+    refunds.invoice_refund()
 -
   Create cancel refund for sup invoice 4
 -
@@ -28,6 +28,6 @@
 -
   !python {model: account.invoice.refund} : |
     context = {'active_ids': [ref('demo_sup_invoice_4')], 'active_model': 'account.invoice'}
-    refund_ids = [ref("demo_sup_refund_invoice_4")]
-    self.get_available_journal_document_types(cr, uid, refund_ids, context)
-    self.invoice_refund(cr, uid, refund_ids, context)
+    refunds = self.browse(ref("demo_sup_refund_invoice_4"))
+    refunds.get_available_journal_document_types()
+    refunds.invoice_refund()

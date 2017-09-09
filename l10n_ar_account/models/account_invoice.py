@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields, api, _
-from openerp.exceptions import ValidationError
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 from dateutil.relativedelta import relativedelta
 import re
 import logging
@@ -23,6 +23,9 @@ class AccountInvoice(models.Model):
         store=True,
         readonly=True,
     )
+    # TODO: depreciar este campo y la funcion que lo setea, lo dejamos por
+    # ahora para que no se borre esta columna que ya esta calculada, pero si
+    # todo va bien con el nuevo computado, lo vamos a borrar directamente
     currency_rate = fields.Float(
         string='Currency Rate',
         copy=False,
@@ -30,6 +33,11 @@ class AccountInvoice(models.Model):
         # TODO make it editable, we have to change move create method
         readonly=True,
     )
+    # computed_currency_rate = fields.Float(
+    #     string='Currency Rate',
+    #     compute='_compute_currency_rate',
+    #     digits=(10, 6),
+    # )
     document_letter_id = fields.Many2one(
         related='document_type_id.document_letter_id',
         readonly=True,
@@ -53,61 +61,61 @@ class AccountInvoice(models.Model):
         related='move_id.afip_responsability_type_id',
     )
     invoice_number = fields.Integer(
-        compute='_get_invoice_number',
+        compute='_compute_invoice_number',
         string="Invoice Number",
     )
     point_of_sale_number = fields.Integer(
-        compute='_get_invoice_number',
+        compute='_compute_invoice_number',
         string="Point Of Sale",
     )
 # impuestos e importes de impuestos
     # todos los impuestos tipo iva (es un concepto mas bien interno)
     vat_tax_ids = fields.One2many(
-        compute="_get_argentina_amounts",
+        compute="_compute_argentina_amounts",
         comodel_name='account.invoice.tax',
         string='VAT Taxes'
     )
     # todos los impuestos iva que componene base imponible (no se incluyen 0,
     # 1, 2 que no son impuesto en si)
     vat_taxable_ids = fields.One2many(
-        compute="_get_argentina_amounts",
+        compute="_compute_argentina_amounts",
         comodel_name='account.invoice.tax',
         string='VAT Taxes'
     )
     # todos los impuestos menos los tipo iva vat_tax_ids
     not_vat_tax_ids = fields.One2many(
-        compute="_get_argentina_amounts",
+        compute="_compute_argentina_amounts",
         comodel_name='account.invoice.tax',
         string='Not VAT Taxes'
     )
     # suma de base para todos los impuestos tipo iva
     vat_base_amount = fields.Monetary(
-        compute="_get_argentina_amounts",
+        compute="_compute_argentina_amounts",
         string='VAT Base Amount'
     )
     # base imponible (no se incluyen 0, exento y no gravado)
     vat_taxable_amount = fields.Monetary(
-        compute="_get_argentina_amounts",
+        compute="_compute_argentina_amounts",
         string='VAT Taxable Amount'
     )
     # base iva exento
     vat_exempt_base_amount = fields.Monetary(
-        compute="_get_argentina_amounts",
+        compute="_compute_argentina_amounts",
         string='VAT Exempt Base Amount'
     )
     # base iva no gravado
     vat_untaxed_base_amount = fields.Monetary(
-        compute="_get_argentina_amounts",
+        compute="_compute_argentina_amounts",
         string='VAT Untaxed Base Amount'
     )
     # importe de iva
     vat_amount = fields.Monetary(
-        compute="_get_argentina_amounts",
+        compute="_compute_argentina_amounts",
         string='VAT Amount'
     )
     # importe de otros impuestos
     other_taxes_amount = fields.Monetary(
-        compute="_get_argentina_amounts",
+        compute="_compute_argentina_amounts",
         string='Other Taxes Amount'
     )
     afip_incoterm_id = fields.Many2one(
@@ -147,62 +155,65 @@ class AccountInvoice(models.Model):
         states={'draft': [('readonly', False)]},
     )
 
-    @api.one
-    def _get_argentina_amounts(self):
+    @api.multi
+    def _compute_argentina_amounts(self):
         """
         """
-        vat_taxes = self.tax_line_ids.filtered(
-            lambda r: (
-                r.tax_id.tax_group_id.type == 'tax' and
-                r.tax_id.tax_group_id.tax == 'vat'))
-        # we add and "r.base" because only if a there is a base amount it is
-        # considered taxable, this is used for eg to validate invoices on afip
-        vat_taxables = vat_taxes.filtered(
-            lambda r: (
-                r.tax_id.tax_group_id.afip_code not in [0, 1, 2]) and r.base)
+        for rec in self:
+            vat_taxes = rec.tax_line_ids.filtered(
+                lambda r: (
+                    r.tax_id.tax_group_id.type == 'tax' and
+                    r.tax_id.tax_group_id.tax == 'vat'))
+            # we add and "r.base" because only if a there is a base amount it
+            # is considered taxable, this is used for eg to validate invoices
+            # on afip
+            vat_taxables = vat_taxes.filtered(
+                lambda r: (
+                    r.tax_id.tax_group_id.afip_code not in
+                    [0, 1, 2]) and r.base)
 
-        vat_amount = sum(vat_taxes.mapped('amount'))
-        self.vat_tax_ids = vat_taxes
-        self.vat_taxable_ids = vat_taxables
-        self.vat_amount = vat_amount
-        # self.vat_taxable_amount = sum(vat_taxables.mapped('base_amount'))
-        self.vat_taxable_amount = sum(vat_taxables.mapped('base'))
-        # self.vat_base_amount = sum(vat_taxes.mapped('base_amount'))
-        self.vat_base_amount = sum(vat_taxes.mapped('base'))
+            vat_amount = sum(vat_taxes.mapped('amount'))
+            rec.vat_tax_ids = vat_taxes
+            rec.vat_taxable_ids = vat_taxables
+            rec.vat_amount = vat_amount
+            # rec.vat_taxable_amount = sum(vat_taxables.mapped('base_amount'))
+            rec.vat_taxable_amount = sum(vat_taxables.mapped('base'))
+            # rec.vat_base_amount = sum(vat_taxes.mapped('base_amount'))
+            rec.vat_base_amount = sum(vat_taxes.mapped('base'))
 
-        # vat exempt values
-        # exempt taxes are the ones with code 2
-        vat_exempt_taxes = self.tax_line_ids.filtered(
-            lambda r: (
-                r.tax_id.tax_group_id.type == 'tax' and
-                r.tax_id.tax_group_id.tax == 'vat' and
-                r.tax_id.tax_group_id.afip_code == 2))
-        self.vat_exempt_base_amount = sum(
-            vat_exempt_taxes.mapped('base'))
-        # self.vat_exempt_base_amount = sum(
-        #     vat_exempt_taxes.mapped('base_amount'))
+            # vat exempt values
+            # exempt taxes are the ones with code 2
+            vat_exempt_taxes = rec.tax_line_ids.filtered(
+                lambda r: (
+                    r.tax_id.tax_group_id.type == 'tax' and
+                    r.tax_id.tax_group_id.tax == 'vat' and
+                    r.tax_id.tax_group_id.afip_code == 2))
+            rec.vat_exempt_base_amount = sum(
+                vat_exempt_taxes.mapped('base'))
+            # rec.vat_exempt_base_amount = sum(
+            #     vat_exempt_taxes.mapped('base_amount'))
 
-        # vat_untaxed_base_amount values (no gravado)
-        # vat exempt taxes are the ones with code 1
-        vat_untaxed_taxes = self.tax_line_ids.filtered(
-            lambda r: (
-                r.tax_id.tax_group_id.type == 'tax' and
-                r.tax_id.tax_group_id.tax == 'vat' and
-                r.tax_id.tax_group_id.afip_code == 1))
-        self.vat_untaxed_base_amount = sum(
-            vat_untaxed_taxes.mapped('base'))
-        # self.vat_untaxed_base_amount = sum(
-        #     vat_untaxed_taxes.mapped('base_amount'))
+            # vat_untaxed_base_amount values (no gravado)
+            # vat exempt taxes are the ones with code 1
+            vat_untaxed_taxes = rec.tax_line_ids.filtered(
+                lambda r: (
+                    r.tax_id.tax_group_id.type == 'tax' and
+                    r.tax_id.tax_group_id.tax == 'vat' and
+                    r.tax_id.tax_group_id.afip_code == 1))
+            rec.vat_untaxed_base_amount = sum(
+                vat_untaxed_taxes.mapped('base'))
+            # rec.vat_untaxed_base_amount = sum(
+            #     vat_untaxed_taxes.mapped('base_amount'))
 
-        # other taxes values
-        not_vat_taxes = self.tax_line_ids - vat_taxes
-        other_taxes_amount = sum(not_vat_taxes.mapped('amount'))
-        self.not_vat_tax_ids = not_vat_taxes
-        self.other_taxes_amount = other_taxes_amount
+            # other taxes values
+            not_vat_taxes = rec.tax_line_ids - vat_taxes
+            other_taxes_amount = sum(not_vat_taxes.mapped('amount'))
+            rec.not_vat_tax_ids = not_vat_taxes
+            rec.other_taxes_amount = other_taxes_amount
 
     @api.multi
     @api.depends('document_number', 'number')
-    def _get_invoice_number(self):
+    def _compute_invoice_number(self):
         """ Funcion que calcula numero de punto de venta y numero de factura
         a partir del document number. Es utilizado principalmente por el modulo
         de vat ledger citi
@@ -239,7 +250,7 @@ class AccountInvoice(models.Model):
                 rec.point_of_sale_number = int(
                     re.sub("[^0-9]", "", point_of_sale))
 
-    @api.one
+    @api.multi
     @api.depends(
         'invoice_line_ids',
         'invoice_line_ids.product_id',
@@ -247,29 +258,44 @@ class AccountInvoice(models.Model):
         'localization',
     )
     def _get_concept(self):
-        afip_concept = False
-        if self.point_of_sale_type in ['online', 'electronic']:
-            # exportaciones
-            invoice_lines = self.invoice_line_ids
-            product_types = set(
-                [x.product_id.type for x in invoice_lines if x.product_id])
-            consumible = set(['consu', 'product'])
-            service = set(['service'])
-            mixed = set(['consu', 'service', 'product'])
-            # default value "product"
-            afip_concept = '1'
-            if product_types.issubset(mixed):
-                afip_concept = '3'
-            if product_types.issubset(service):
-                afip_concept = '2'
-            if product_types.issubset(consumible):
+        for rec in self:
+            afip_concept = False
+            if rec.point_of_sale_type in ['online', 'electronic']:
+                # exportaciones
+                invoice_lines = rec.invoice_line_ids
+                product_types = set(
+                    [x.product_id.type for x in invoice_lines if x.product_id])
+                consumible = set(['consu', 'product'])
+                service = set(['service'])
+                mixed = set(['consu', 'service', 'product'])
+                # default value "product"
                 afip_concept = '1'
-            if self.document_type_id.code in ['19', '20', '21']:
-                # TODO verificar esto, como par expo no existe 3 y existe 4
-                # (otros), considermaos que un mixto seria el otros
-                if afip_concept == '3':
-                    afip_concept = '4'
-        self.afip_concept = afip_concept
+                if product_types.issubset(mixed):
+                    afip_concept = '3'
+                if product_types.issubset(service):
+                    afip_concept = '2'
+                if product_types.issubset(consumible):
+                    afip_concept = '1'
+                if rec.document_type_id.code in ['19', '20', '21']:
+                    # TODO verificar esto, como par expo no existe 3 y existe 4
+                    # (otros), considermaos que un mixto seria el otros
+                    if afip_concept == '3':
+                        afip_concept = '4'
+            rec.afip_concept = afip_concept
+
+    # TODO borrar o implementar. Al final usamos el currency rate que
+    # almacenamos porque es muy inexacto calcularlo ya que se pierde
+    # información y segun el importe, al mismo cambio, podriamos tener
+    # distintos valores de cambio
+    # @api.multi
+    # def _compute_currency_rate(self):
+    #     for rec in self:
+    #         if rec.currency_id and rec.company_id and (
+    #                 rec.currency_id != rec.company_id.currency_id):
+    #             rec.computed_currency_rate = abs(
+    #                 rec.amount_total_company_signed / rec.amount_total)
+    #         else:
+    #             rec.computed_currency_rate = 1.0
 
     @api.multi
     def get_localization_invoice_vals(self):
@@ -277,11 +303,11 @@ class AccountInvoice(models.Model):
         # TODO depreciar esta funcion y convertir a currency_rate campo
         # calculado que la calcule en funcion a los datos del move
         if self.localization == 'argentina':
-            currency = self.currency_id.with_context(
-                date=self.date_invoice or fields.Date.context_today(self))
-            if self.company_id.currency_id == currency:
+            if self.company_id.currency_id == self.currency_id:
                 currency_rate = 1.0
             else:
+                currency = self.currency_id.with_context(
+                    date=self.date_invoice or fields.Date.context_today(self))
                 currency_rate = currency.compute(
                     1., self.company_id.currency_id, round=False)
             return {
@@ -448,7 +474,8 @@ class AccountInvoice(models.Model):
         if wihtout_tax_id:
             raise ValidationError(_(
                 "Some Invoice Tax Lines don't have a tax_id asociated, please "
-                "correct them or try to refresh invoice "))
+                "correct them or try to refresh invoice. Tax lines: %s") % (
+                ', '.join(wihtout_tax_id.mapped('name'))))
 
         # check codes has argentinian tax attributes configured
         tax_groups = argentinian_invoices.mapped(
@@ -502,10 +529,11 @@ class AccountInvoice(models.Model):
             # esto es, por eje, si hay un producto con 100% de descuento para
             # única alicuota, entonces el impuesto liquidado da cero y se
             # obliga reportar con alicuota 0, entonces se exige tmb cod de op.
+            # esta restriccion no es de FE si no de aplicativo citi
             zero_vat_lines = invoice.tax_line_ids.filtered(
-                lambda r: (
-                    (r.tax_id.tax_group_id.afip_code in [4, 5, 6, 8, 9] and
-                        not r.amount)))
+                lambda r: ((
+                    r.tax_id.tax_group_id.afip_code in [4, 5, 6, 8, 9] and
+                    r.currency_id.is_zero(r.amount))))
             if (
                     zero_vat_lines and
                     invoice.fiscal_position_id.afip_code
@@ -544,13 +572,15 @@ class AccountInvoice(models.Model):
             self.fiscal_position_id = fiscal_position
         return res
 
-    @api.one
+    @api.multi
     @api.constrains('date_invoice')
     def set_date_afip(self):
-        if self.date_invoice:
-            date_invoice = fields.Datetime.from_string(self.date_invoice)
-            if not self.afip_service_start:
-                self.afip_service_start = date_invoice + relativedelta(day=1)
-            if not self.afip_service_end:
-                self.afip_service_end = date_invoice + \
-                    relativedelta(day=1, days=-1, months=+1)
+        for rec in self:
+            if rec.date_invoice:
+                date_invoice = fields.Datetime.from_string(rec.date_invoice)
+                if not rec.afip_service_start:
+                    rec.afip_service_start = (
+                        date_invoice + relativedelta(day=1))
+                if not rec.afip_service_end:
+                    rec.afip_service_end = date_invoice + \
+                        relativedelta(day=1, days=-1, months=+1)

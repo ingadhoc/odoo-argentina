@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, api, fields
+from odoo import models, api, fields
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -91,7 +91,7 @@ class AccountChartTemplate(models.Model):
                 })
         return res
 
-    @api.model
+    @api.multi
     def _prepare_all_journals(
             self, acc_template_ref, company, journals_dict=None):
         """

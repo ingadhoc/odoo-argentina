@@ -4,14 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# emiquinodoz <eq@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-11 14:17+0000\n"
-"PO-Revision-Date: 2017-08-11 14:17+0000\n"
-"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2017-08-31 14:04+0000\n"
+"PO-Revision-Date: 2017-08-31 14:04+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -365,6 +364,8 @@ msgid ""
 "Companies of this type will require VAT tax on every invoice line of a "
 "journal that use documents"
 msgstr ""
+"Compañías de este tipo van a requerir un impuesto de IVA en cada factura de "
+"diarios que utilicen documentos"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_company_id
@@ -378,7 +379,7 @@ msgstr "Compañía"
 #: model:ir.model.fields,field_description:l10n_ar_account.field_afip_responsability_type_company_requires_vat
 #: model:ir.model.fields,field_description:l10n_ar_account.field_res_company_company_requires_vat
 msgid "Company requires vat?"
-msgstr ""
+msgstr "Compañía requiere IVA?"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_comprobante
@@ -404,7 +405,7 @@ msgid "Converts retreived text fields to Title Case."
 msgstr "Convierte el texto solicitado a formato de Título con Mayúscula"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:234
+#: code:addons/l10n_ar_account/models/account_invoice.py:242
 #, python-format
 msgid "Could not get invoice number and point of sale for invoice id %i"
 msgstr ""
@@ -864,12 +865,14 @@ msgid "IVA Ventas"
 msgstr "IVA Ventas"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:500
+#: code:addons/l10n_ar_account/models/account_invoice.py:523
 #, python-format
 msgid ""
 "If you have choose a 0, exempt or untaxed 'tax', or you must choose a fiscal position with afip code in %s.\n"
 "* Invoice id %i"
 msgstr ""
+"Si está utilizando un impuesto 0, exento o no gravado, debe seleccionar una posición fiscal con algún código de afip entre los siguientes %s.\n"
+"* Id de Factura %i"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_impuestos_padron
@@ -927,12 +930,17 @@ msgid "Invoice State"
 msgstr "Estado Factura"
 
 #. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_invoice_tax
+msgid "Invoice Tax"
+msgstr "Línea de Impuesto"
+
+#. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_amount_total
 msgid "Invoice Total"
 msgstr "Total Factura"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:474
+#: code:addons/l10n_ar_account/models/account_invoice.py:497
 #, python-format
 msgid "Invoice with ID %s has some lines without vat Tax "
 msgstr "La factura con ID %s tiene algunas líneas sin IVA"
@@ -1175,6 +1183,13 @@ msgid ""
 msgstr ""
 "No gravado / Exento.\n"
 "Todo lo que tenga iva 0, exento, no gravado o no corresponde"
+
+#. module: l10n_ar_account
+#: code:addons/l10n_ar_account/models/account_invoice_tax.py:21
+#, python-format
+msgid ""
+"No puede agregar IVA manualmente, debe agregarlo en las líneas de factura."
+msgstr ""
 
 #. module: l10n_ar_account
 #: code:addons/l10n_ar_account/wizard/res_partner_update_from_padron_wizard.py:51
@@ -1537,7 +1552,7 @@ msgstr "Secuencia"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_invoice_form
 msgid "Service Date"
-msgstr ""
+msgstr "Fecha de Servicio"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_afip_service_end
@@ -1573,7 +1588,7 @@ msgid "Si"
 msgstr "Si"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:516
+#: code:addons/l10n_ar_account/models/account_invoice.py:540
 #, python-format
 msgid ""
 "Si hay líneas con IVA declarado 0, entonces debe elegir una posición fiscal con código de afip '%s'.\n"
@@ -1588,14 +1603,15 @@ msgid "Skip these partner"
 msgstr "Omitir esta empresa"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:449
+#: code:addons/l10n_ar_account/models/account_invoice.py:471
 #, python-format
 msgid ""
 "Some Invoice Tax Lines don't have a tax_id asociated, please correct them or"
-" try to refresh invoice "
+" try to refresh invoice. Tax lines: %s"
 msgstr ""
-"Algunas líneas de impuesto en las facturas no tienen asociado un tax_id, por"
-" favor corríjalos o intente refrescar la factura"
+"Algunos impuestos de la Factura no tienen el campo tax_id completado, por "
+"favor corrija las líneas o trate de refrescar la factura. Líneas de "
+"impuesto: %s"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_res_company_start_date
@@ -1615,7 +1631,7 @@ msgstr "Provincia"
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_state
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4173
@@ -1686,7 +1702,7 @@ msgid "Templates for Taxes"
 msgstr "Plantilla de impuestos"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:440
+#: code:addons/l10n_ar_account/models/account_invoice.py:462
 #, python-format
 msgid "The following invoices has a partner without AFIP responsability: %s"
 msgstr ""
@@ -1706,12 +1722,12 @@ msgstr "No hay mas empresas que actualizar en esta solicitud..."
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "This Month"
-msgstr ""
+msgstr "Este Mes"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "This Year"
-msgstr ""
+msgstr "Este Año"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_res_partner_update_from_padron_wizard_title_case
@@ -1721,7 +1737,7 @@ msgstr "Título con Mayúscula"
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "To Date"
-msgstr ""
+msgstr "A Fecha"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_total
@@ -1746,7 +1762,7 @@ msgstr "El tipo %s no está implementado todavía"
 #: code:addons/l10n_ar_account/models/account_move_line.py:107
 #, python-format
 msgid "Type must be \"base\" or \"tax\""
-msgstr ""
+msgstr "El tipo debe ser \"base\" o \"impuesto\""
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4172
@@ -1756,7 +1772,7 @@ msgstr "Precio unitario"
 #. module: l10n_ar_account
 #: selection:account.ar.vat.line,state:0
 msgid "Unposted"
-msgstr ""
+msgstr "No Publicado"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_base_partner_update_from_padron_form
@@ -1819,12 +1835,12 @@ msgstr "Importe Base Exento de IVA"
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_tree
 msgid "VAT Line"
-msgstr ""
+msgstr "Línea de IVA"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_pivot
 msgid "VAT Line Analysis"
-msgstr ""
+msgstr "Análisis de líneas de IVA"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_vat_taxable_amount
@@ -1850,17 +1866,17 @@ msgstr "id de IVA"
 #. module: l10n_ar_account
 #: selection:account.ar.vat.line,comprobante:0
 msgid "Vendor Bill"
-msgstr ""
+msgstr "Factura del proveedor"
 
 #. module: l10n_ar_account
 #: selection:account.ar.vat.line,comprobante:0
 msgid "Vendor Refund"
-msgstr ""
+msgstr "Reembolso de proveedores"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_ar_vat_line_search
 msgid "With Document Type"
-msgstr ""
+msgstr "Con Tipo de Documento"
 
 #. module: l10n_ar_account
 #: selection:account.tax.group,type:0
@@ -1873,7 +1889,7 @@ msgid "Wizard"
 msgstr "Asistente"
 
 #. module: l10n_ar_account
-#: code:addons/l10n_ar_account/models/account_invoice.py:463
+#: code:addons/l10n_ar_account/models/account_invoice.py:486
 #, python-format
 msgid ""
 "You are using argentinian localization and there are some tax groups that "
@@ -1887,6 +1903,7 @@ msgstr ""
 #, python-format
 msgid "You must request tax amounts with tax or tax group"
 msgstr ""
+"Debe solicitar importes de impuestos con el grupo de impuestos o impuesto."
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_account_position_template_form
@@ -1931,7 +1948,7 @@ msgstr "afip.tax"
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_afip_vat_f2002_category
 msgid "afip.vat.f2002_category"
-msgstr ""
+msgstr "afip.vat.f2002_category"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_base_partner_update_from_padron_form
@@ -1941,19 +1958,19 @@ msgstr "o"
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_res_partner_update_from_padron_field
 msgid "res.partner.update.from.padron.field"
-msgstr ""
+msgstr "res.partner.update.from.padron.field"
 
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_res_partner_update_from_padron_wizard
 msgid "res.partner.update.from.padron.wizard"
-msgstr ""
+msgstr "res.partner.update.from.padron.wizard"
 
 #. module: l10n_ar_account
 #: model:ir.ui.view,arch_db:l10n_ar_account.view_invoice_form
 msgid "to"
-msgstr ""
+msgstr "hasta"
 
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_wizard_multi_charts_accounts
 msgid "wizard.multi.charts.accounts"
-msgstr ""
+msgstr "wizard.multi.charts.accounts"

@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {
-    'author': 'ADHOC SA',
+    'author': 'ADHOC SA,Odoo Community Association (OCA)',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'category': 'Accounting & Finance',
@@ -33,7 +33,6 @@
         'views/res_partner_view.xml',
         'security/ir.model.access.csv',
         'security/security.xml',
-        # 'wizard/account_withholding_sicore_wizard_view.xml',
         'data/tabla_ganancias_data.xml',
     ],
     'demo': [

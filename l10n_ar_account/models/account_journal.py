@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, api, _
-from openerp.exceptions import UserError
+from odoo import fields, models, api, _
+from odoo.exceptions import UserError
 
 
 class AccountJournal(models.Model):
@@ -137,8 +137,9 @@ class AccountJournal(models.Model):
         elif journal_type == 'purchase':
             resp_field = 'receptor_ids'
         else:
-            raise UserError('Letters not implemented for journal type %s' % (
-                journal_type))
+            raise UserError(_(
+                'Letters not implemented for journal type %s' % (
+                    journal_type)))
         letters = self.env['account.document.letter'].search([
             '|', (resp_field, '=', responsability.id),
             (resp_field, '=', False)])

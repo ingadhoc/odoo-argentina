@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
     <!-- Cargamos partners locales de los distintos tipo de responsbilidad para probar operaciones mas comunes -->
     <!-- Partners -->
@@ -61,4 +61,4 @@
             <field name='afip_responsability_type_id' ref='res_IVARI'/>
         </record>
     </data>
-</openerp>
+</odoo>

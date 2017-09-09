@@ -2,7 +2,7 @@
 # © 2009 Camptocamp
 # © 2009 Grzegorz Grzelak
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from openerp.addons.currency_rate_update import services
+from odoo.addons.currency_rate_update import services
 
 import logging
 _logger = logging.getLogger(__name__)

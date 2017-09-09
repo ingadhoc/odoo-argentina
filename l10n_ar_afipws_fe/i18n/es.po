@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-11 14:17+0000\n"
-"PO-Revision-Date: 2017-08-11 14:17+0000\n"
+"POT-Creation-Date: 2017-08-18 14:37+0000\n"
+"PO-Revision-Date: 2017-08-18 14:37+0000\n"
 "Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -430,7 +430,7 @@ msgstr "Obtener Información Remota del Documento"
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_account_journal_form
 msgid "Get Document Types"
-msgstr ""
+msgstr "Obtener tipos de Documentos"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_account_journal_form
@@ -445,7 +445,7 @@ msgstr "Obtener Última Factura"
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_account_journal_form
 msgid "Get NCM"
-msgstr ""
+msgstr "Obtener NCM"
 
 #. module: l10n_ar_afipws_fe
 #: code:addons/l10n_ar_afipws_fe/models/journal.py:209
@@ -461,7 +461,7 @@ msgstr "Obtener Punto de Venta"
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_account_journal_form
 msgid "Get Zones"
-msgstr ""
+msgstr "Obtener zonas"
 
 #. module: l10n_ar_afipws_fe
 #: code:addons/l10n_ar_afipws_fe/models/journal.py:173
@@ -485,7 +485,7 @@ msgstr "Obtener monedas validas para este webservice"
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_account_journal_form
 msgid "Get valid document types for this webservice"
-msgstr ""
+msgstr "Obtener tipos de documento válidos para este servicio web"
 
 #. module: l10n_ar_afipws_fe
 #: code:addons/l10n_ar_afipws_fe/models/journal.py:191
@@ -496,7 +496,7 @@ msgstr "La obtención de zonas por WS %s todavía no esta implementada"
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_account_journal_form
 msgid "Get zones for this webservice"
-msgstr ""
+msgstr "Obtener zonas para este servicio web"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_consult_wizard_id
@@ -663,7 +663,7 @@ msgstr "OK! Números locales y remotos coinciden!"
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_account_journal_form
 msgid "Obetener códigos del Nomenclador Común del Mercosur"
-msgstr ""
+msgstr "Obetener códigos del Nomenclador Común del Mercosur"
 
 #. module: l10n_ar_afipws_fe
 #: selection:account.invoice,afip_auth_verify_result:0

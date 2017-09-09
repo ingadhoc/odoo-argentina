@@ -1,9 +1,10 @@
-<openerp>
+<odoo>
     <data noupdate="1">
         <!-- set ars as base currency and update usd and eur currency for 11/11/2016 -->
 
 <!-- TODO Ver como cargarlo sin que rompa los tests de odoo -->
 <!-- como por ahora no podemos hacer ars la base, seteamos rate para que ars quede bien respecto al USD -->
+
         <record id="base.rateARS" model="res.currency.rate">
             <field name="rate">23.29</field>
         </record>
@@ -17,4 +18,4 @@
             <field name="rate">0.058823</field>
         </record> -->
     </data>
-</openerp>
+</odoo>

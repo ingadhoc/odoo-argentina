@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, api
-from openerp.tools.safe_eval import safe_eval
+from odoo import fields, models, api
+from odoo.tools.safe_eval import safe_eval
 
 
 class SaleConfiguration(models.TransientModel):
@@ -23,8 +23,8 @@ class SaleConfiguration(models.TransientModel):
         "child/parent relation are still allowed",
     )
 
-    @api.multi
-    def get_default_unique_id_numbers(self):
+    @api.model
+    def get_default_unique_id_numbers(self, fields):
         unique_id_numbers = self.env['ir.config_parameter'].get_param(
             "l10n_ar_partner.unique_id_numbers", 'False')
         return {

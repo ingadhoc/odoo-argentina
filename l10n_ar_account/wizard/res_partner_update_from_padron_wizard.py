@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-from openerp import models, api, fields, _
+from odoo import models, api, fields, _
 from ast import literal_eval
-from openerp.exceptions import UserError
+from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 
 
-class res_partner_update_from_padron_field(models.TransientModel):
+class ResPartnerUpdateFromPadronField(models.TransientModel):
     _name = 'res.partner.update.from.padron.field'
 
     wizard_id = fields.Many2one(
@@ -22,7 +22,7 @@ class res_partner_update_from_padron_field(models.TransientModel):
     )
 
 
-class res_partner_update_from_padron_wizard(models.TransientModel):
+class ResPartnerUpdateFromPadronWizard(models.TransientModel):
     _name = 'res.partner.update.from.padron.wizard'
 
     @api.model
@@ -39,7 +39,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields):
-        res = super(res_partner_update_from_padron_wizard, self).default_get(
+        res = super(ResPartnerUpdateFromPadronWizard, self).default_get(
             fields)
         context = self._context
         if (

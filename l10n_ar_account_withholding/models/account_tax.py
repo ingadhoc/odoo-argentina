@@ -63,7 +63,7 @@ class AccountTax(models.Model):
                 raise UserError(
                     'El partner %s no tiene configurada inscripcion en '
                     'impuesto a las ganancias' % commercial_partner.name)
-            elif imp_ganancias_padron == 'EX':
+            elif imp_ganancias_padron in ['EX', 'NC']:
                 # if amount zero then we dont create withholding
                 amount = 0.0
             # TODO validar excencion actualizada
@@ -107,9 +107,6 @@ class AccountTax(models.Model):
                     regimen.porcentaje_no_inscripto / 100.0)
                 vals['comment'] = "%s x %s" % (
                     base_amount, regimen.porcentaje_no_inscripto / 100.0)
-            elif imp_ganancias_padron == 'NC':
-                # no corresponde, no impuesto
-                amount = 0.0
             # TODO, tal vez sea mejor utilizar otro campo?
             vals['communication'] = "%s - %s" % (
                 regimen.codigo_de_regimen, regimen.concepto_referencia)

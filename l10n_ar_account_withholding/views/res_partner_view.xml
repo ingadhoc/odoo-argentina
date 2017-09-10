@@ -7,7 +7,7 @@
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
                 <field name="imp_ganancias_padron" position="after">
-                    <field name="default_regimen_ganancias_id"/>
+                    <field name="default_regimen_ganancias_id" attrs="{'invisible': [('imp_ganancias_padron', 'in', ['EX', 'NC'])]}"/>
                 </field>
                 <group name="others_col_1">
                     <field name="drei"/>

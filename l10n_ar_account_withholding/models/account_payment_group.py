@@ -70,10 +70,11 @@ class AccountPaymentGroup(models.Model):
             rec.company_regimenes_ganancias_ids = (
                 rec.company_id.regimenes_ganancias_ids)
 
-    @api.onchange('retencion_ganancias', 'commercial_partner_id')
+    @api.onchange('commercial_partner_id')
     def change_retencion_ganancias(self):
-        def_regimen = False
-        if self.retencion_ganancias == 'nro_regimen':
+        if self.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC']:
+            self.retencion_ganancias = 'no_aplica'
+        else:
             cia_regs = self.company_regimenes_ganancias_ids
             partner_regimen = (
                 self.commercial_partner_id.default_regimen_ganancias_id)
@@ -81,7 +82,7 @@ class AccountPaymentGroup(models.Model):
                 def_regimen = partner_regimen
             elif cia_regs:
                 def_regimen = cia_regs[0]
-        self.regimen_ganancias_id = def_regimen
+            self.regimen_ganancias_id = def_regimen
 
     @api.onchange('company_regimenes_ganancias_ids')
     def change_company_regimenes_ganancias(self):

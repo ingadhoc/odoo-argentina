@@ -12,7 +12,7 @@ class ResPartnerBank(models.Model):
 
     cbu = fields.Char(
         'CBU',
-        help="Código Bancario Único Argentino"
+        help=u"Código Bancario Único Argentino"
     )
 
     @api.multi

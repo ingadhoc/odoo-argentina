@@ -48,7 +48,7 @@
         price_unit: 642.0
         quantity: 5
       - name: 'Servicio de telefonía (IVA 27)'
-        product_id: l10n_ar_account.product_product_telefonia
+        product_id: l10n_ar_chart.product_product_telefonia
         price_unit: 250.0
         quantity: 1.0
       - name: 'Laptop E5023 (IVA 10,5)'
@@ -75,7 +75,7 @@
         price_unit: 642.0
         quantity: 5
       - name: 'Animales y vegetales no industrializados (IVA cero)'
-        product_id: l10n_ar_account.product_product_cero
+        product_id: l10n_ar_chart.product_product_cero
         price_unit: 200.0
         quantity: 1.0
 -
@@ -103,7 +103,7 @@
         price_unit: 642.0
         quantity: 5
       - name: 'Libro "Desarrollo en Odoo" (IVA exento)'
-        product_id: l10n_ar_account.product_product_exento
+        product_id: l10n_ar_chart.product_product_exento
         price_unit: 100.0
         quantity: 1.0
 -
@@ -131,7 +131,7 @@
         price_unit: 642.0
         quantity: 5
       - name: 'Servicio de telefonía (IVA 27)'
-        product_id: l10n_ar_account.product_product_telefonia
+        product_id: l10n_ar_chart.product_product_telefonia
         price_unit: 250.0
         quantity: 1.0
       - name: 'Laptop E5023 (IVA 10,5)'
@@ -139,15 +139,15 @@
         price_unit: 3245.0
         quantity: 2.0
       - name: 'Conceptos no gravados (IVA NG)'
-        product_id: l10n_ar_account.product_product_no_gravado
+        product_id: l10n_ar_chart.product_product_no_gravado
         price_unit: 50.0
         quantity: 10.0
       - name: 'Animales y vegetales no industrializados (IVA cero)'
-        product_id: l10n_ar_account.product_product_cero
+        product_id: l10n_ar_chart.product_product_cero
         price_unit: 200.0
         quantity: 1.0
       - name: 'Libro "Desarrollo en Odoo" (IVA exento)'
-        product_id: l10n_ar_account.product_product_exento
+        product_id: l10n_ar_chart.product_product_exento
         price_unit: 100.0
         quantity: 1.0
 -
@@ -363,7 +363,7 @@
         price_unit: 24.3
         quantity: 3
       - name: 'Servicio de telefonía (IVA 27)'
-        product_id: l10n_ar_account.product_product_telefonia
+        product_id: l10n_ar_chart.product_product_telefonia
         price_unit: 250.0
         discount: 100.0
         quantity: 1.0

@@ -82,6 +82,8 @@ class AccountPaymentGroup(models.Model):
                 def_regimen = partner_regimen
             elif cia_regs:
                 def_regimen = cia_regs[0]
+            else:
+                def_regimen = False
             self.regimen_ganancias_id = def_regimen
 
     @api.onchange('company_regimenes_ganancias_ids')

@@ -4,9 +4,12 @@
 from openerp.api import Environment
 try:
     from openupgradelib.openupgrade_tools import table_exists
+    from openupgradelib.openupgrade_tools import column_exists
     from openupgradelib import openupgrade
 except ImportError:
     table_exists = None
+    column_exists = None
+    openupgradelib = None
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -59,6 +62,20 @@ def post_init_hook(cr, registry):
     # a copy of voucher table and get data from thisone. Beacuse
     # account_payment ids and account_voucher ids does not match, we search
     # by move_id
+    advance_column = column_exists(
+        cr, 'account_voucher_copy', 'advance_amount')
+    if advance_column:
+        sql = """
+                SELECT receiptbook_id, afip_document_number, advance_amount
+                FROM account_voucher_copy
+                WHERE move_id = %s
+                """
+    else:
+        sql = """
+                SELECT receiptbook_id, afip_document_number
+                FROM account_voucher_copy
+                WHERE move_id = %s
+                """
     if table_exists(cr, 'account_voucher_copy'):
         _logger.info('Migrating vouchers data')
         for payment_id in registry['account.payment'].search(cr, 1, []):
@@ -67,18 +84,24 @@ def post_init_hook(cr, registry):
                 cr, 1, [('line_ids.payment_id', '=', payment_id)], limit=1)
             if not move_ids:
                 continue
-            cr.execute("""
-                SELECT receiptbook_id, afip_document_number
-                FROM account_voucher_copy
-                WHERE move_id = %s
-                """, (move_ids[0],))
+            cr.execute(sql, (move_ids[0],))
             recs = cr.fetchall()
             if recs:
-                receiptbook_id, document_number = recs[0]
-                registry['account.payment'].write(cr, 1, [payment_id], {
-                    'receiptbook_id': receiptbook_id,
-                    'document_number': document_number,
-                })
+                # steamos el advance_amount aunque sea para los pagos que
+                # fueron validados
+                if advance_column:
+                    receiptbook_id, document_number, advance_amount = recs[0]
+                    registry['account.payment'].write(cr, 1, [payment_id], {
+                        'receiptbook_id': receiptbook_id,
+                        'document_number': document_number,
+                        'unreconciled_amount': advance_amount,
+                    })
+                else:
+                    receiptbook_id, document_number = recs[0]
+                    registry['account.payment'].write(cr, 1, [payment_id], {
+                        'receiptbook_id': receiptbook_id,
+                        'document_number': document_number,
+                    })
 
     # forma horrible de saber si se esta instalando en una bd que viene migrada
     # despues de hacer esto aprendimos a usar el no_version en migrates

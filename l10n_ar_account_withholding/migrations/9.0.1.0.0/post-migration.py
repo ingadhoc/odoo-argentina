@@ -13,6 +13,7 @@ def migrate_automatic_withholding_config(env):
     cr = env.cr
     openupgrade.logged_query(cr, """
     SELECT
+        sequence_id,
         non_taxable_amount,
         non_taxable_minimum,
         base_amount_type,
@@ -29,6 +30,7 @@ def migrate_automatic_withholding_config(env):
     updated_ids = []
     for tax_read in cr.fetchall():
         (
+            sequence_id,
             non_taxable_amount,
             non_taxable_minimum,
             base_amount_type,
@@ -52,6 +54,9 @@ def migrate_automatic_withholding_config(env):
             'withholding_advances': advances_are_withholdable,
             'withholding_accumulated_payments': accumulated_payments,
             'withholding_type': type,
+            # si bien la secuencia la creaba el withholding no auto, la
+            # migramos solo si with automatico
+            'withholding_sequence_id': sequence_id,
             # 'withholding_python_compute': python_compute,
         })
 

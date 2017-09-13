@@ -1,12 +1,53 @@
 # -*- coding: utf-8 -*-
 from openupgradelib import openupgrade
 import logging
+from openerp.exceptions import ValidationError
 _logger = logging.getLogger(__name__)
 
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     migrate_automatic_withholding_config(env)
+    migrate_retencion_ganancias_on_pay_group(env)
+
+
+def migrate_retencion_ganancias_on_pay_group(env):
+    cr = env.cr
+    # migramos solo los que tengan moves para simplificar
+    cr.execute("""
+        SELECT move_id, retencion_ganancias, regimen_ganancias_id
+        FROM account_voucher_copy
+        WHERE move_id is not null
+        """,)
+
+    reads = cr.fetchall()
+    for read in reads:
+        (
+            move_id,
+            retencion_ganancias,
+            regimen_ganancias_id) = read
+        domain = [('move_id', '=', move_id), ('payment_id', '!=', False)]
+        payment = env[('account.move.line')].search(domain).mapped(
+            'payment_id')
+
+        if len(payment) != 1:
+            raise ValidationError(
+                'Se encontro mas de un payment o ninguno!!! \n'
+                '* Payments: %s\n'
+                '* Domain: %s' % (payment, domain))
+
+        if not payment.payment_group_id:
+            _logger.error(
+                'No encontramos payment group para payment %s' % (payment))
+            continue
+        _logger.info('Seteando fecha de payment group %s' % payment)
+
+        vals = {
+            'retencion_ganancias': retencion_ganancias,
+            'regimen_ganancias_id': regimen_ganancias_id,
+        }
+
+        payment.payment_group_id.write(vals)
 
 
 def migrate_automatic_withholding_config(env):

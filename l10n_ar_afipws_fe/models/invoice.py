@@ -627,6 +627,5 @@ class AccountInvoiceRefund(models.TransientModel):
     _inherit = "account.invoice.refund"
 
     filter_refund = fields.Selection(
-        [('refund', 'Create a draft refund'),
-         ('cancel', 'Cancel: create refund and reconcile')],
+        [('refund', 'Create a draft refund')],
     )

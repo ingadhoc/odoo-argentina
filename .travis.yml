@@ -83,6 +83,7 @@ install:
   - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/account ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/account_cancel ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/account_full_reconcile ~/build/ingadhoc/odoo-argentina; fi
+  - if [ "${TESTS}" == "1"  ]; then mv ~/odoo-9.0/addons/sale ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-financial-tools/account_document ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-financial-tools/account_debt_management ~/build/ingadhoc/odoo-argentina; fi
   - if [ "${TESTS}" == "1"  ]; then mv ~/dependencies/ingadhoc-account-financial-tools/account_financial_amount ~/build/ingadhoc/odoo-argentina; fi

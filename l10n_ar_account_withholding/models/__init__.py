@@ -9,4 +9,3 @@ from . import account_invoice
 from . import afip
 from . import account_payment_group
 from . import res_partner
-from . import sale_order

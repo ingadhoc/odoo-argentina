@@ -48,6 +48,9 @@
         # usa las lineas
         # 'l10n_ar_aeroo_base',
         'report_aeroo',
+        # agregamos dependencia a sale para poder agregar calculo de perc. de
+        # arba en ventas
+        'sale',
     ],
     'external_dependencies': {
         'python': ['pyafipws'],

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data noupdate="True">
+    <data noupdate="False">
+    <!-- <data noupdate="True"> -->
 
         <record model='base.validator' id='validator_numero_factura'>
             <field name='name'>Numero de Factura</field>
@@ -24,6 +25,7 @@ if value:
         elif len(number) >8 or not number.isdigit():
             failed=True
         value = '{:>04s}-{:>08s}'.format(pos, number)
+        parts = [pos, number]
             ]]></field>
             <field name='help_message'><![CDATA[
 El número de facturas debe ingresarse con un guión (-) y máximo 4 caracteres para la primer parte y 8 para la segunda. Los siguientes son ejemplos de números válidos:
@@ -46,6 +48,7 @@ El número de facturas debe ingresarse con un guión (-) y máximo 4 caracteres 
 if value:
     if len(value) != 16:
         failed = True
+    parts = [value]
             ]]></field>
             <field name='help_message'><![CDATA[
 El número de despacho de importación debe tener 16 caractéres

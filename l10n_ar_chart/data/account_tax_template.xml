@@ -44,17 +44,60 @@
             <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_ganancias"/>
         </record>
 
-        <record id="ri_tax_percepcion_iibb_sufrida" model="account.tax.template">
+        <record id="ri_tax_percepcion_iibb_caba_sufrida" model="account.tax.template">
             <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
-            <field name="name">Percepción IIBB Sufrida</field>
-            <field name="description">Perc IIBB S</field>
+            <field name="name">Percepción IIBB CABA Sufrida</field>
+            <field name="description">Perc IIBB CABA S</field>
             <field name="sequence">4</field>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
-            <!-- <field name="account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
-            <!-- <field name="refund_account_id" ref="ri_a_cuenta_impuestos_ganancias"/> -->
+            <field name="account_id" ref="base_percepcion_iibb_caba_sufrida"/>
+            <field name="refund_account_id" ref="base_percepcion_iibb_caba_sufrida"/>
             <field name="type_tax_use">purchase</field>
             <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_iibb"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_ret_perc_iibb_sufrida'), ref('l10n_ar_account.tag_tax_jurisdiccion_901')])]"/>
+        </record>
+
+        <record id="ri_tax_percepcion_iibb_ba_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+            <field name="name">Percepción IIBB ARBA Sufrida</field>
+            <field name="description">Perc IIBB ARBA S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="account_id" ref="base_percepcion_iibb_ba_sufrida"/>
+            <field name="refund_account_id" ref="base_percepcion_iibb_ba_sufrida"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_iibb"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_ret_perc_iibb_sufrida'), ref('l10n_ar_account.tag_tax_jurisdiccion_902')])]"/>
+        </record>
+
+        <record id="ri_tax_percepcion_iibb_co_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+            <field name="name">Percepción IIBB Córdoba Sufrida</field>
+            <field name="description">Perc IIBB Córdoba S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="account_id" ref="base_percepcion_iibb_co_sufrida"/>
+            <field name="refund_account_id" ref="base_percepcion_iibb_co_sufrida"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_iibb"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_ret_perc_iibb_sufrida'), ref('l10n_ar_account.tag_tax_jurisdiccion_904')])]"/>
+        </record>
+
+        <record id="ri_tax_percepcion_iibb_sf_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+            <field name="name">Percepción IIBB Santa Fé Sufrida</field>
+            <field name="description">Perc IIBB Santa Fé S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="account_id" ref="base_percepcion_iibb_sf_sufrida"/>
+            <field name="refund_account_id" ref="base_percepcion_iibb_sf_sufrida"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="tax_group_id" ref="l10n_ar_account.tax_group_percepcion_iibb"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_ret_perc_iibb_sufrida'), ref('l10n_ar_account.tag_tax_jurisdiccion_920')])]"/>
         </record>
 
         <record id="ri_tax_percepcion_iibb_aplicada" model="account.tax.template">

@@ -18,6 +18,9 @@ class ResPartner(models.Model):
     cuit = fields.Char(
         compute='_compute_cuit',
     )
+    formated_cuit = fields.Char(
+        compute='_compute_formated_cuit',
+    )
     # no podemos hacerlo asi porque cuando se pide desde algun lugar
     # quiere computar para todos los partners y da error para los que no
     # tienen por mas que no lo pedimos
@@ -42,6 +45,18 @@ class ResPartner(models.Model):
             raise UserError(_('No CUIT cofigured for partner %s') % (
                 self.name))
         return self.cuit
+
+    @api.multi
+    @api.depends(
+        'cuit',
+    )
+    def _compute_formated_cuit(self):
+        for rec in self:
+            if not rec.cuit:
+                continue
+            cuit = rec.cuit
+            rec.formated_cuit = "{0}-{1}-{2}".format(
+                cuit[0:2], cuit[2:10], cuit[10:])
 
     @api.one
     @api.depends(

@@ -25,15 +25,27 @@
         <field name="applicability">accounts</field>
     </record>
 
+    <!-- por ahora estamos usando el de taxes -->
+<!--     <record id="tag_a_cuenta_iibb" model="account.account.tag">
+        <field name="name">Pagos a Cuenta IIBB</field>
+        <field name="applicability">accounts</field>
+    </record> -->
+
+    <record id="tag_a_cuenta_suss" model="account.account.tag">
+        <field name="name">Pagos a Cuenta SUSS</field>
+        <field name="applicability">accounts</field>
+    </record>
+
     <!-- Estos si quedaron aplicados a impuestos porque no hicimos que se excluya el diario actual -->
 
-    <record id="tag_ret_perc_iibb_aplicada" model="account.account.tag">
-        <field name="name">Ret/Perc IIBB Aplicada</field>
+    <!-- para todo lo sufrido dejamos como estandar de nombre el pago a cuenta, falta ver si estandariamozamos applicability de accounts/taxes -->
+    <record id="tax_tag_a_cuenta_iibb" model="account.account.tag">
+        <field name="name">Pagos a Cuenta IIBB</field>
         <field name="applicability">taxes</field>
     </record>
 
-    <record id="tag_ret_perc_iibb_sufrida" model="account.account.tag">
-        <field name="name">Ret/Perc IIBB Sufrida</field>
+    <record id="tag_ret_perc_iibb_aplicada" model="account.account.tag">
+        <field name="name">Ret/Perc IIBB Aplicada</field>
         <field name="applicability">taxes</field>
     </record>
 

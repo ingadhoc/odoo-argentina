@@ -66,6 +66,13 @@
                 <field name="reconcile" eval="True"/>
             </record>
 
+            <record model="account.account.template" id="base_cheques_rechazados">
+                <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                <field name="code">1.1.02.00.040</field>
+                <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                <field name="name">Cheques Rechazados</field>
+            </record>
+
         <!-- 1.1.03 (otros créditos) -->
 
             <record model="account.account.template" id="base_deudores_varios">
@@ -84,18 +91,18 @@
 
         <!-- 1.1.04 (créditos por impuestos) -->
 
-            <record model="account.account.template" id="base_saldo_libre_disponibilidad">
-                <field name="chart_template_id" ref="l10nar_base_chart_template"/>
-                <field name="code">1.1.04.00.010</field>
-                <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-                <field name="name">Saldo Libre Disponibilidad</field>
-            </record>
-
             <record model="account.account.template" id="base_retencion_suss_sufrida">
                 <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                 <field name="code">1.1.04.00.020</field>
                 <field name="user_type_id" ref="account.data_account_type_current_assets"/>
                 <field name="name">Retención SUSS Sufrida</field>
+            </record>
+
+            <record model="account.account.template" id="base_saldo_a_favor_suss">
+                <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                <field name="code">1.1.04.00.025</field>
+                <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+                <field name="name">Saldo a favor SUSS</field>
             </record>
 
             <record model="account.account.template" id="base_itc">
@@ -168,6 +175,7 @@
                     <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_a_cuenta_ganancias')])]"/>
                 </record>
 
+                <!-- este es libre disponibilidad de ganancias -->
                 <record model="account.account.template" id="base_saldo_favor_ganancias">
                     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                     <field name="code">1.1.04.02.040</field>
@@ -1115,13 +1123,6 @@
             <field name="user_type_id" ref="account.data_account_type_current_assets"/>
             <field name="name">Contrapartida Auxiliar</field>
             <!-- <field name="reconcile" eval="True"/> -->
-        </record>
-
-        <record model="account.account.template" id="base_cheques_rechazados">
-            <field name="chart_template_id" ref="l10nar_base_chart_template"/>
-            <field name="code">6.0.00.00.020</field>
-            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
-            <field name="name">Cheques Rechazados</field>
         </record>
 
         <!-- Update chart template -->

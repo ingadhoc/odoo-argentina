@@ -527,45 +527,53 @@
 
             <!-- (IIBB) --> 
 
-            <record model="account.account.template" id="base_iibb_caba_a_pagar">
+            <record model="account.account.template" id="base_iibb_a_pagar">
+                <field name="chart_template_id" ref="l10nar_base_chart_template"/>
+                <field name="code">2.1.02.00.100</field>
+                <field name="user_type_id" ref="account.data_account_type_payable"/>
+                <field name="name">IIBB pagar</field>
+                <field name="reconcile" eval="True"/>
+            </record>
+
+<!--             <record model="account.account.template" id="base_iibb_caba_a_pagar">
                 <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                 <field name="code">2.1.02.00.040</field>
                 <field name="user_type_id" ref="account.data_account_type_payable"/>
                 <field name="name">IIBB CABA a pagar</field>
                 <field name="reconcile" eval="True"/>
-            </record>
+            </record> -->
 
-            <record model="account.account.template" id="base_iibb_ba_a_pagar">
+<!--             <record model="account.account.template" id="base_iibb_ba_a_pagar">
                 <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                 <field name="code">2.1.02.00.050</field>
                 <field name="user_type_id" ref="account.data_account_type_payable"/>
                 <field name="name">IIBB p. Buenos Aires a pagar</field>
                 <field name="reconcile" eval="True"/>
-            </record>
+            </record> -->
 
-            <record model="account.account.template" id="base_iibb_cordoba_a_pagar">
+<!--             <record model="account.account.template" id="base_iibb_cordoba_a_pagar">
                 <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                 <field name="code">2.1.02.00.060</field>
                 <field name="user_type_id" ref="account.data_account_type_payable"/>
                 <field name="name">IIBB Córdoba a pagar</field>
                 <field name="reconcile" eval="True"/>
             </record>
-
-            <record model="account.account.template" id="base_iibb_santa_fe_a_pagar">
+ -->
+<!--             <record model="account.account.template" id="base_iibb_santa_fe_a_pagar">
                 <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                 <field name="code">2.1.02.00.070</field>
                 <field name="user_type_id" ref="account.data_account_type_payable"/>
                 <field name="name">IIBB Santa Fé a pagar</field>
                 <field name="reconcile" eval="True"/>
-            </record>
-
+            </record> -->
+<!-- 
             <record model="account.account.template" id="base_drei_a_pagar">
                 <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                 <field name="code">2.1.02.00.080</field>
                 <field name="user_type_id" ref="account.data_account_type_payable"/>
                 <field name="name">DREI a pagar</field>
                 <field name="reconcile" eval="True"/>
-            </record>
+            </record> -->
 
         <!-- 2.1.02.01 (SICORE Ganancias e IVA)  -->
 

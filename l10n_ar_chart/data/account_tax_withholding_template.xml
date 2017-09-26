@@ -3,6 +3,20 @@
   <data noupdate="0">
 
 <!-- EXENTO -->
+    <!-- Retenciones suss -->
+        <record id="ri_tax_retencion_suss_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+            <field name="name">Retención SUSS Sufrida</field>
+            <field name="description">Ret SUSS S</field>
+            <field name="sequence">10</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="account_id" ref="base_retencion_suss_sufrida"/>
+            <field name="refund_account_id" ref="base_retencion_suss_sufrida"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="account.tax_group_taxes"/>
+        </record>
+
     <!-- Retenciones ganancias -->
         <record id="ri_tax_retencion_ganancias_sufrida" model="account.tax.template">
             <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
@@ -43,7 +57,7 @@
             <field name="refund_account_id" ref="base_retencion_iibb_caba_sufrida"/>
             <field name="type_tax_use">customer</field>
             <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iibb"/>
-            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_ret_perc_iibb_sufrida'), ref('l10n_ar_account.tag_tax_jurisdiccion_901')])]"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tax_tag_a_cuenta_iibb'), ref('l10n_ar_account.tag_tax_jurisdiccion_901')])]"/>
         </record>
 
         <record id="ri_tax_retencion_iibb_ba_sufrida" model="account.tax.template">
@@ -57,7 +71,7 @@
             <field name="refund_account_id" ref="base_retencion_iibb_ba_sufrida"/>
             <field name="type_tax_use">customer</field>
             <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iibb"/>
-            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_ret_perc_iibb_sufrida'), ref('l10n_ar_account.tag_tax_jurisdiccion_902')])]"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tax_tag_a_cuenta_iibb'), ref('l10n_ar_account.tag_tax_jurisdiccion_902')])]"/>
         </record>
 
         <record id="ri_tax_retencion_iibb_co_sufrida" model="account.tax.template">
@@ -71,7 +85,7 @@
             <field name="refund_account_id" ref="base_retencion_iibb_co_sufrida"/>
             <field name="type_tax_use">customer</field>
             <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iibb"/>
-            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_ret_perc_iibb_sufrida'), ref('l10n_ar_account.tag_tax_jurisdiccion_904')])]"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tax_tag_a_cuenta_iibb'), ref('l10n_ar_account.tag_tax_jurisdiccion_904')])]"/>
         </record>
 
         <record id="ri_tax_retencion_iibb_sf_sufrida" model="account.tax.template">
@@ -85,7 +99,7 @@
             <field name="refund_account_id" ref="base_retencion_iibb_sf_sufrida"/>
             <field name="type_tax_use">customer</field>
             <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iibb"/>
-            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_ret_perc_iibb_sufrida'), ref('l10n_ar_account.tag_tax_jurisdiccion_920')])]"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tax_tag_a_cuenta_iibb'), ref('l10n_ar_account.tag_tax_jurisdiccion_920')])]"/>
         </record>
 
         <record id="ri_tax_retencion_iibb_aplicada" model="account.tax.template">

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-23 14:12+0000\n"
-"PO-Revision-Date: 2017-09-23 14:12+0000\n"
+"POT-Creation-Date: 2017-09-23 22:05+0000\n"
+"PO-Revision-Date: 2017-09-23 22:05+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -134,6 +134,11 @@ msgstr "Tipo de Documento Contable"
 #: model:ir.model,name:l10n_ar_account.model_account_move
 msgid "Account Entry"
 msgstr "Entrada de Cuenta"
+
+#. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_account_tag
+msgid "Account Tag"
+msgstr ""
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_date
@@ -1024,6 +1029,12 @@ msgstr ""
 "de la empresa, por favor, eliminarla de la lista de jurisdicción"
 
 #. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_account_tag_jurisdiction_code
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_tax_jurisdiction_code
+msgid "Jurisdiction code"
+msgstr ""
+
+#. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_name
 msgid "Label"
 msgstr "Etiqueta"
@@ -1635,7 +1646,7 @@ msgid "Status"
 msgstr "Estado"
 
 #. module: l10n_ar_account
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4183
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4185
 msgid "Subtotal"
 msgstr "Subtotal"
 
@@ -1666,6 +1677,7 @@ msgid "Tasa Estadística"
 msgstr "Tasa Estadística"
 
 #. module: l10n_ar_account
+#: model:ir.model,name:l10n_ar_account.model_account_tax
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_tax_group_tax
 msgid "Tax"
 msgstr "Impuesto"
@@ -1766,7 +1778,7 @@ msgid "Type must be \"base\" or \"tax\""
 msgstr "El tipo debe ser \"base\" o \"impuesto\""
 
 #. module: l10n_ar_account
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4182
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4184
 msgid "Unit Price"
 msgstr "Precio unitario"
 

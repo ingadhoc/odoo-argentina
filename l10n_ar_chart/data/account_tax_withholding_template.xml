@@ -15,6 +15,7 @@
             <field name="refund_account_id" ref="base_retencion_suss_sufrida"/>
             <field name="type_tax_use">customer</field>
             <field name="tax_group_id" ref="account.tax_group_taxes"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tax_tag_a_cuenta_suss')])]"/>
         </record>
 
     <!-- Retenciones ganancias -->

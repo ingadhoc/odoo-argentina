@@ -31,16 +31,33 @@
         <field name="applicability">accounts</field>
     </record> -->
 
-    <record id="tag_a_cuenta_suss" model="account.account.tag">
+    <!-- por ahora estamos usando el de taxes -->
+<!--     <record id="tag_a_cuenta_suss" model="account.account.tag">
         <field name="name">Pagos a Cuenta SUSS</field>
         <field name="applicability">accounts</field>
-    </record>
+    </record> -->
 
     <!-- Estos si quedaron aplicados a impuestos porque no hicimos que se excluya el diario actual -->
 
     <!-- para todo lo sufrido dejamos como estandar de nombre el pago a cuenta, falta ver si estandariamozamos applicability de accounts/taxes -->
+    <record id="tax_tag_a_cuenta_suss" model="account.account.tag">
+        <field name="name">Pagos a Cuenta SUSS</field>
+        <field name="applicability">taxes</field>
+    </record>
+
     <record id="tax_tag_a_cuenta_iibb" model="account.account.tag">
         <field name="name">Pagos a Cuenta IIBB</field>
+        <field name="applicability">taxes</field>
+    </record>
+
+    <!-- por si queremos liquidar uno a uno -->
+    <record id="tax_tag_a_cuenta_ganancias" model="account.account.tag">
+        <field name="name">Pagos a Cuenta Ganancias</field>
+        <field name="applicability">taxes</field>
+    </record>
+
+    <record id="tax_tag_a_cuenta_iva" model="account.account.tag">
+        <field name="name">Pagos a Cuenta IVA</field>
         <field name="applicability">taxes</field>
     </record>
 

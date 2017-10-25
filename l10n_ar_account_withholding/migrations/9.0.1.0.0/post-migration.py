@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from openupgradelib import openupgrade
 import logging
-from openerp.exceptions import ValidationError
+# from openerp.exceptions import ValidationError
 _logger = logging.getLogger(__name__)
 
 
@@ -31,10 +31,14 @@ def migrate_retencion_ganancias_on_pay_group(env):
             'payment_id')
 
         if len(payment) != 1:
-            raise ValidationError(
+            # raise ValidationError(
+            # si no hay (por ej. no tiene move lines, no arrojamos error
+            # ya que no es tan crítico y no queremos romper la actualizacion)
+            _logger.error(
                 'Se encontro mas de un payment o ninguno!!! \n'
                 '* Payments: %s\n'
                 '* Domain: %s' % (payment, domain))
+            continue
 
         if not payment.payment_group_id:
             _logger.error(

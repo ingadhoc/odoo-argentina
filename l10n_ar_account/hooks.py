@@ -30,6 +30,13 @@ def sync_padron_afip(cr, registry):
         pass
 
 
+def document_types_not_updatable(cr, registry):
+    cr.execute("""
+        UPDATE ir_model_data set noupdate=True
+        WHERE model = 'account.document.type' and module = 'l10n_ar_account'
+    """)
+
+
 def post_init_hook(cr, registry):
     """Loaded after installing the module.
     This module's DB modifications will be available.
@@ -40,6 +47,7 @@ def post_init_hook(cr, registry):
     """
     _logger.info('Post init hook initialized')
 
+    document_types_not_updatable(cr, registry)
     sync_padron_afip(cr, registry)
 
     _logger.info('Getting currency rate for invoices')

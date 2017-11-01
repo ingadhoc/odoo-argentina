@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Módulo base de Contabilidad Argentina",
-    'version': '9.0.1.19.0',
+    'version': '9.0.1.20.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Moldeo Interactive',
@@ -32,6 +32,7 @@
         'data/base_validator_data.xml',
         'data/afip_responsability_type.xml',
         'data/account_document_letter.xml',
+        # los cargamos con csv pero los hacemos no actualizables con un hook
         'data/account.document.type.csv',
         'data/afip_incoterm.xml',
         'data/res_country_afip_code.xml',
@@ -45,7 +46,6 @@
         'data/afip_vat_f2002_category_data.xml',
         'data/account_account_tag.xml',
         # TODO analizar y migrar
-        # data_account_type
         # 'data/account_financial_report_data.xml',
         # 'data/account_payment_term.xml',
         'report/account_ar_vat_line_view.xml',

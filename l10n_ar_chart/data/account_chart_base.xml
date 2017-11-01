@@ -608,9 +608,11 @@
                 <record model="account.account.template" id="base_anticipos_de_clientes">
                     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                     <field name="code">2.1.03.01.040</field>
-                    <field name="user_type_id" ref="account.data_account_type_payable"/>
+                    <!-- no tiene sentido que sea a pagar ya que se usa como líneas de facturas y odoo luego la resta -->
+                    <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
+                    <!-- <field name="user_type_id" ref="account.data_account_type_payable"/> -->
                     <field name="name">Anticipos de clientes</field>
-                    <field name="reconcile" eval="True"/>
+                    <!-- <field name="reconcile" eval="True"/> -->
                 </record>        
 
             <!-- 2.1.03.02 (Documentadas) --> 

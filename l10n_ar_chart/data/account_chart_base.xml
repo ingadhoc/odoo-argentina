@@ -531,7 +531,7 @@
                 <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                 <field name="code">2.1.02.00.100</field>
                 <field name="user_type_id" ref="account.data_account_type_payable"/>
-                <field name="name">IIBB pagar</field>
+                <field name="name">IIBB a pagar</field>
                 <field name="reconcile" eval="True"/>
             </record>
 

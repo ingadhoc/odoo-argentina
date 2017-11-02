@@ -44,7 +44,7 @@
     </record>
 
     <record model="account.payment" id="demo_supplier_payment_2_line_1">
-        <field name="journal_id" search="[('name', '=', 'Efectivo')]"/>
+        <field name="journal_id" search="[('name', 'in', ['Efectivo', 'Caja'])]"/>
         <field name="payment_group_id" ref="demo_supplier_payment_2"/>
         <field name="partner_type">supplier</field>
         <field name="payment_type">outbound</field>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Argentina - Planes Contables',
-    'author': 'Moldeo Interactive,ADHOC SA',
+    'author': 'Moldeo Interactive,ADHOC SA,Odoo Community Association (OCA)',
     'category': 'Localization/Account Charts',
     'license': 'AGPL-3',
     'depends': [

@@ -9,6 +9,13 @@
             <field name='afip_responsability_type_id' ref='res_CF'/>
         </record>
 
+        <record model='res.partner' id='par_iibb_pagar'>
+            <field name='name'>IIBB a pagar</field>
+            <!-- <field name="notify_email">none</field> -->
+            <!-- <field name='main_id_category_id' ref='l10n_ar_partner.dt_Sigd'/>
+            <field name='afip_responsability_type_id' ref='res_CF'/> -->
+        </record>
+
         <record id="partner_afip" model="res.partner">
             <field name="name">AFIP</field>
             <!-- <field name="notify_email">none</field> -->

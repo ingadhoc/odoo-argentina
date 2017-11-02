@@ -61,9 +61,9 @@
         # '../account/demo/account_bank_statement.yml',
         # '../account/demo/account_invoice_demo.yml',
 
-        # de l10n_ar_account_withholding
-        '../l10n_ar_account_withholding/demo/customer_payment_demo.xml',
-        '../l10n_ar_account_withholding/demo/supplier_payment_demo.xml',
+        # de l10n_ar_account_withholding (no estarian los diarios creados acá)
+        # '../l10n_ar_account_withholding/demo/customer_payment_demo.xml',
+        # '../l10n_ar_account_withholding/demo/supplier_payment_demo.xml',
 
         # de l10n_ar_afipws_fe
         '../l10n_ar_afipws_fe/demo/account_journal_expo_demo.yml',

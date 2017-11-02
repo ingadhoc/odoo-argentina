@@ -43,7 +43,7 @@
             <field name="refund_account_id" ref="ri_retencion_ganancias_aplicada"/>
             <field name="type_tax_use">supplier</field>
             <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_ganancias"/>
-            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_ret_perc_ganancias_aplicada')])]"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_ret_perc_sicore_aplicada')])]"/>
         </record>
 
     <!-- Retenciones IIBB -->
@@ -128,7 +128,7 @@
             <field name="account_id" ref="ri_retencion_iva_aplicada"/>
             <field name="refund_account_id" ref="ri_retencion_iva_aplicada"/>
             <field name="type_tax_use">supplier</field>
-            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_ret_perc_iva_aplicada')])]"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_ret_perc_sicore_aplicada')])]"/>
             <field name="tax_group_id" ref="l10n_ar_account.tax_group_retencion_iva"/>
         </record>
 

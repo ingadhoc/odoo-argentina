@@ -2,5 +2,5 @@
   We set without doc journals as default ones for odoo tests
 -
   !python {model: account.journal} : |
-    without_doc_journal_ids = [ref('l10n_ar_chart.sales_journal'), ref('l10n_ar_chart.expenses_journal')]
+    without_doc_journal_ids = [ref('l10n_ar_demo.sales_journal'), ref('l10n_ar_demo.expenses_journal')]
     self.write(cr, uid, without_doc_journal_ids, {'sequence':1})

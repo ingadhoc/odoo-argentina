@@ -535,6 +535,8 @@
                 <field name="reconcile" eval="True"/>
             </record>
 
+            <!-- usamos un solo a pagar para hacer mas facil la liquidacion -->
+
 <!--             <record model="account.account.template" id="base_iibb_caba_a_pagar">
                 <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                 <field name="code">2.1.02.00.040</field>

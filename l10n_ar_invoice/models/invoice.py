@@ -554,7 +554,7 @@ class account_invoice(models.Model):
                 if not document_class_id and document_class_ids:
                     document_class_id = document_class_ids[0]
 
-        if invoice_type == 'in_invoice':
+        if invoice_type in ['in_invoice', 'in_refund']:
             other_afip_document_classes = (
                 self.commercial_partner_id.other_afip_document_class_ids)
 

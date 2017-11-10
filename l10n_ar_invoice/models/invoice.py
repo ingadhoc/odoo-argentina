@@ -210,6 +210,7 @@ class account_invoice(models.Model):
         string='Document Number',
         copy=False,
         readonly=True,
+        states={'draft': [('readonly', False)]}
     )
     responsability_id = fields.Many2one(
         'afip.responsability',

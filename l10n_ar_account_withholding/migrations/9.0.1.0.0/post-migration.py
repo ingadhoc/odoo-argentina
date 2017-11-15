@@ -12,10 +12,16 @@ def migrate(env, version):
 
 
 def migrate_retencion_ganancias_on_pay_group(env):
+    """
+    y tambien migramos el advance amount porque en la practica solo lo usaban
+    los que tenian retenciones y no lo podemos hacer en l10n_ar_account porque
+    no existen a ese momento los payment groups
+    """
     cr = env.cr
     # migramos solo los que tengan moves para simplificar
     cr.execute("""
-        SELECT move_id, retencion_ganancias, regimen_ganancias_id
+        SELECT move_id, retencion_ganancias, regimen_ganancias_id,
+            advance_amount
         FROM account_voucher_copy
         WHERE move_id is not null
         """,)
@@ -25,7 +31,8 @@ def migrate_retencion_ganancias_on_pay_group(env):
         (
             move_id,
             retencion_ganancias,
-            regimen_ganancias_id) = read
+            regimen_ganancias_id,
+            advance_amount) = read
         domain = [('move_id', '=', move_id), ('payment_id', '!=', False)]
         payment = env[('account.move.line')].search(domain).mapped(
             'payment_id')
@@ -49,6 +56,7 @@ def migrate_retencion_ganancias_on_pay_group(env):
         vals = {
             'retencion_ganancias': retencion_ganancias,
             'regimen_ganancias_id': regimen_ganancias_id,
+            'unreconciled_amount': advance_amount,
         }
 
         payment.payment_group_id.write(vals)

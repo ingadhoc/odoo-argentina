@@ -102,7 +102,10 @@ def post_init_hook(cr, registry):
                     registry['account.payment'].write(cr, 1, [payment_id], {
                         'receiptbook_id': receiptbook_id,
                         'document_number': document_number,
-                        'unreconciled_amount': advance_amount,
+                        # no lo hacemos aca porque este campo es de
+                        # payment.group y el payment group probablemente no
+                        # existe en este momento, lo hacemos en l10 withholding
+                        # 'unreconciled_amount': advance_amount,
                     })
                 else:
                     receiptbook_id, document_number = recs[0]

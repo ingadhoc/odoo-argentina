@@ -91,7 +91,7 @@ class ResCompany(models.Model):
         arba_url = self.get_arba_login_url(environment_type)
         ws.Usuario = cuit
         ws.Password = self.arba_cit
-        ws.Conectar(url=self.get_arba_login_url(environment_type))
+        ws.Conectar(url=arba_url)
         _logger.info(
             'Connection getted to ARBA with url "%s" and CUIT %s' % (
                 arba_url, cuit))

@@ -198,6 +198,30 @@ class AccountInvoice(models.Model):
         return res
 
     @api.multi
+    @api.constrains(
+        'partner_id',
+    )
+    def _set_afip_journal(self):
+        """
+        Si es factura electrónica y es del exterior, buscamos diario
+        para exportación
+        TODO: implementar similar para elegir bono fiscal o factura con detalle
+        """
+        for rec in self.filtered(lambda x: (
+                x.journal_id.point_of_sale_type == 'electronic' and
+                x.journal_id.type == 'sale' and
+                x.commercial_partner_id.afip_responsability_type_id.code
+                in ['8', '9'])):
+            journal = self.env['account.journal'].search([
+                ('company_id', '=', rec.company_id.id),
+                ('point_of_sale_type', '=', 'electronic'),
+                ('afip_ws', '=', 'wsfex'),
+                ('type', '=', 'sale'),
+            ], limit=1)
+            if journal:
+                rec.journal_id = journal.id
+
+    @api.multi
     def check_afip_auth_verify_required(self):
         for inv in self:
             if (

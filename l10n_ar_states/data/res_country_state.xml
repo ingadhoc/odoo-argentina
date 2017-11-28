@@ -4,7 +4,9 @@
 
         <record model="res.country.state" id="CABA">
             <field name="name">Ciudad Autónoma de Buenos Aires</field>
-            <field name="code">CABA</field>
+            <!-- <field name="code">CABA</field> -->
+            <!-- actualizado según tablas para transporte de mercaderías -->
+            <field name="code">C</field>
             <field name="country_id" ref="base.ar"/>
             <field name="afip_code">0</field>
         </record>

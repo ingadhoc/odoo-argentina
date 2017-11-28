@@ -58,7 +58,7 @@ def post_init_hook(cr, registry):
             cr, 1, invoice_id)
         registry['account.invoice'].write(
             cr, 1, invoice_id, {
-                'old_currency_rate': vals.get('old_currency_rate')})
+                'currency_rate': vals.get('currency_rate')})
 
     # we don not force dependency on openupgradelib, only if available we try
     # o un de hook

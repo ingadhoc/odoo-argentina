@@ -23,6 +23,10 @@ class AccountInvoice(models.Model):
         store=True,
         readonly=True,
     )
+    # IMPORANTE: si llegamos a implementar el campo computado no usar
+    # cotizacion de la moneda ya que esta puede cambiar y ademas, si facturamos
+    # algo futuro y no existe cotizacion, se usa la de hoy y luego al agregar
+    # la cotizacion este dato va a cambiar
     # TODO: depreciar este campo y la funcion que lo setea, lo dejamos por
     # ahora para que no se borre esta columna que ya esta calculada, pero si
     # todo va bien con el nuevo computado, lo vamos a borrar directamente

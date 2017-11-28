@@ -5,7 +5,7 @@
 ##############################################################################
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning
-import time
+# import time
 
 
 class account_vat_ledger(models.Model):

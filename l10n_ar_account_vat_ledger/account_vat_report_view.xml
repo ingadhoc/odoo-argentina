@@ -50,7 +50,7 @@
     	                </group>
     	                <notebook>
                             <page string="Journals" name="journal_ids">
-                                <field name="journal_ids" domain="[('type','in',['purchase', 'sale', 'purchase_refund', 'sale_refund']),('company_id', 'child_of', company_id)]"/>
+                                <field name="journal_ids" domain="[('type', '=', type), ('company_id', '=', company_id), ('use_documents', '=', True)]"/>
                             </page>
                             <page string="Invoices" name="invoices">
                                 <field name="invoice_ids">

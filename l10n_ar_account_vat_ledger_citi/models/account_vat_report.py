@@ -7,6 +7,7 @@ from openerp import models, fields, api, _
 from openerp.exceptions import ValidationError
 import base64
 import logging
+import re
 _logger = logging.getLogger(__name__)
 
 
@@ -170,7 +171,13 @@ class account_vat_ledger(models.Model):
         # TODO agregar validaciones para los que se presentan sin numero de
         # documento para operaciones menores a 1000 segun doc especificacion
         # regimen de...
-        return (partner.main_id_number or '').rjust(20, '0')
+
+        # el aplicativo exije que si es cie, cuit o cuil se pasen solo numeros
+        # para cuit y cuil ya se restringe, si es ci sacamos los digitos
+        number = partner.main_id_number or ''
+        if partner.main_id_category_id.afip_code == 91:
+            number = re.sub("[^0-9]", "", number)
+        return number.rjust(20, '0')
 
     @api.model
     def get_point_of_sale(self, invoice):

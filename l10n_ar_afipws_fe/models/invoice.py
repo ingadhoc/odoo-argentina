@@ -198,9 +198,10 @@ class AccountInvoice(models.Model):
         return res
 
     @api.multi
-    @api.constrains(
-        'partner_id',
-    )
+    # para cuando se crea, por ej, desde ventas o contratos
+    @api.constrains('partner_id')
+    # para cuando se crea manualmente la factura
+    @api.onchange('partner_id')
     def _set_afip_journal(self):
         """
         Si es factura electrónica y es del exterior, buscamos diario
@@ -209,17 +210,26 @@ class AccountInvoice(models.Model):
         """
         for rec in self.filtered(lambda x: (
                 x.journal_id.point_of_sale_type == 'electronic' and
-                x.journal_id.type == 'sale' and
-                x.commercial_partner_id.afip_responsability_type_id.code
-                in ['8', '9'])):
-            journal = self.env['account.journal'].search([
-                ('company_id', '=', rec.company_id.id),
-                ('point_of_sale_type', '=', 'electronic'),
-                ('afip_ws', '=', 'wsfex'),
-                ('type', '=', 'sale'),
-            ], limit=1)
-            if journal:
-                rec.journal_id = journal.id
+                x.journal_id.type == 'sale')):
+
+            res_code = rec.commercial_partner_id.afip_responsability_type_id.\
+                code
+            new_ws = False
+            old_ws = rec.journal_id.afip_ws
+            if old_ws != 'wsfex' and res_code in ['8', '9']:
+                new_ws = 'wsfex'
+            elif old_ws == 'wsfex' and res_code not in ['8', '9']:
+                new_ws = 'wsfe'
+
+            if new_ws:
+                journal = self.env['account.journal'].search([
+                    ('company_id', '=', rec.company_id.id),
+                    ('point_of_sale_type', '=', 'electronic'),
+                    ('afip_ws', '=', new_ws),
+                    ('type', '=', 'sale'),
+                ], limit=1)
+                if journal:
+                    rec.journal_id = journal.id
 
     @api.multi
     def check_afip_auth_verify_required(self):

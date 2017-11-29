@@ -214,22 +214,22 @@ class AccountInvoice(models.Model):
 
             res_code = rec.commercial_partner_id.afip_responsability_type_id.\
                 code
-            new_ws = False
-            old_ws = rec.journal_id.afip_ws
-            if old_ws != 'wsfex' and res_code in ['8', '9']:
-                new_ws = 'wsfex'
-            elif old_ws == 'wsfex' and res_code not in ['8', '9']:
-                new_ws = 'wsfe'
+            ws = rec.journal_id.afip_ws
+            journal = False
+            domain = [
+                ('company_id', '=', rec.company_id.id),
+                ('point_of_sale_type', '=', 'electronic'),
+                ('type', '=', 'sale'),
+            ]
+            if ws == 'wsfe' and res_code in ['8', '9']:
+                domain.append(('afip_ws', '=', 'wsfex'))
+                journal = self.env['account.journal'].search(domain, limit=1)
+            elif ws == 'wsfex' and res_code not in ['8', '9']:
+                domain.append(('afip_ws', '=', 'wsfe'))
+                journal = self.env['account.journal'].search(domain, limit=1)
 
-            if new_ws:
-                journal = self.env['account.journal'].search([
-                    ('company_id', '=', rec.company_id.id),
-                    ('point_of_sale_type', '=', 'electronic'),
-                    ('afip_ws', '=', new_ws),
-                    ('type', '=', 'sale'),
-                ], limit=1)
-                if journal:
-                    rec.journal_id = journal.id
+            if journal:
+                rec.journal_id = journal.id
 
     @api.multi
     def check_afip_auth_verify_required(self):

@@ -1,0 +1,14 @@
+<odoo>
+
+    <!-- actualizamos datos de remitos -->
+
+    <record model='account.document.type' id='dc_remito_x'>
+        <field name='code'>94</field>
+    </record>
+
+    <record model='account.document.type' id='dc_r_r'>
+        <field name='document_letter_id' ref="dl_r"/>
+    </record>
+
+
+</odoo>

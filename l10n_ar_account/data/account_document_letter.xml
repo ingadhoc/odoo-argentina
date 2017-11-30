@@ -44,5 +44,9 @@
             <field name='issuer_ids' eval="[(6, 0, [ref('res_CLI_EXT'), ref('res_EXT')])]"/>
             <field name='receptor_ids' eval="[(6, 0, [ref('res_IVARI'), ref('res_IVANR'), ref('res_RM'), ref('res_IVARNI'), ref('res_IVAE')])]"/>
         </record>
+        <!-- para remitos -->
+        <record model='account.document.letter' id='dl_r'>
+            <field name='name'>R</field>
+        </record>
     </data>
 </openerp>

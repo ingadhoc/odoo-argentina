@@ -64,7 +64,7 @@ dc_oc_se,620,87,OTROS COMPROBANTES - SERVICIOS DEL EXTERIOR,,,,,argentina,
 dc_oc_c,630,88,"OTROS COMPROBANTES - DOCUMENTOS EXCEPTUADOS / REMITO ELECTRONICO,",,,,,argentina,
 dc_oc_nd,640,89,OTROS COMPROBANTES - DOCUMENTOS EXCEPTUADOS - NOTAS DE DEBITO / RESUMEN DE DATOS,,,,,argentina,
 dc_oc_nc,650,90,OTROS COMPROBANTES - DOCUMENTOS EXCEPTUADOS - NOTAS DE CREDITO,,,,,argentina,
-dc_r_r,660,91,REMITOS R,,,,,argentina,validator_numero_factura
+dc_r_r,660,91,REMITOS R,dl_r,,,,argentina,validator_numero_factura
 dc_ac_inc_df,670,92,AJUSTES CONTABLES QUE INCREMENTAN EL DEBITO FISCAL,,,,,argentina,
 dc_ac_dis_df,680,93,AJUSTES CONTABLES QUE DISMINUYEN EL DEBITO FISCAL,,,,,argentina,
 dc_ac_inc_cf,690,94,AJUSTES CONTABLES QUE INCREMENTAN EL CREDITO FISCAL,,,,,argentina,
@@ -77,7 +77,7 @@ dc_aa_dj_neg,750,102,AJUSTE ANUAL PROVENIENTE DE LA  D J  DEL IVA  NEGATIVO,,,,,
 dc_na,760,103,NOTA DE ASIGNACION,,,,,argentina,
 dc_nca,770,104,NOTA DE CREDITO DE ASIGNACION,,,,,argentina,
 dc_recibo_x,780,,RECIBOS X,dl_x,RECIBO,customer_payment,RE-X ,argentina,validator_numero_factura
-dc_remito_x,790,,REMITOS X,dl_x,REMITO,,RM-X ,argentina,validator_numero_factura
+dc_remito_x,790,94,REMITOS X,dl_x,REMITO,,RM-X ,argentina,validator_numero_factura
 dc_orden_pago_x,800,,ORDEN DE PAGO X,dl_x,ORDEN DE PAGO,supplier_payment,OP-X ,argentina,validator_numero_factura
 fa_exterior,195,,FACTURAS Y COMPROBANTES DEL EXTERIOR,dl_i,,invoice,FA-I ,argentina,
 nc_exterior,196,,NOTAS DE CREDITO Y REEMBOLSOS DEL EXTERIOR,dl_i,,credit_note,NC-I ,argentina,

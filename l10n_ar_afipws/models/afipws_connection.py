@@ -61,10 +61,10 @@ class AfipwsConnection(models.Model):
         required=True,
     )
     afip_ws = fields.Selection([
-        ('ws_sr_padron_a4', 'ws_sr_padron_a4'),
-        ('ws_sr_padron_a5', 'ws_sr_padron_a5'),
-        ('ws_sr_padron_a10', 'ws_sr_padron_a10'),
-        ('ws_sr_padron_a100', 'ws_sr_padron_a100'),
+        ('ws_sr_padron_a4', 'Servicio de Consulta de Padrón Alcance 4'),
+        ('ws_sr_padron_a5', 'Servicio de Consulta de Padrón Alcance 5'),
+        ('ws_sr_padron_a10', 'Servicio de Consulta de Padrón Alcance 10'),
+        ('ws_sr_padron_a100', 'Servicio de Consulta de Padrón Alcance 100'),
     ],
         'AFIP WS',
         required=True,

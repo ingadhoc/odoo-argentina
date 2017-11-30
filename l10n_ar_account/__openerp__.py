@@ -15,6 +15,8 @@
         # es fundamental para que el importa base de los impuestos se calcule
         # bien en los reembolsos.
         'account_fix',
+        # para padron de afip
+        'l10n_ar_afipws',
         # para guardar el link entre facturas y NC
         # el modulo tiene errores en los test (probado solo con odoo y tmb)
         # 'account_invoice_refund_link',

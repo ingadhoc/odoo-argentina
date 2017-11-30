@@ -60,8 +60,12 @@ class AfipwsConnection(models.Model):
         'Type',
         required=True,
     )
-    afip_ws = fields.Selection(
-        [],
+    afip_ws = fields.Selection([
+        ('ws_sr_padron_a4', 'ws_sr_padron_a4'),
+        ('ws_sr_padron_a5', 'ws_sr_padron_a5'),
+        ('ws_sr_padron_a10', 'ws_sr_padron_a10'),
+        ('ws_sr_padron_a100', 'ws_sr_padron_a100'),
+    ],
         'AFIP WS',
         required=True,
     )
@@ -93,7 +97,17 @@ class AfipwsConnection(models.Model):
         """
         _logger.info('Getting URL for afip ws %s on %s' % (
             afip_ws, environment_type))
-        return False
+        afip_ws_url = False
+        if afip_ws == 'ws_sr_padron_a4':
+            if environment_type == 'production':
+                afip_ws_url = (
+                    "https://aws.afip.gov.ar/sr-padron/webservices/"
+                    "personaServiceA4?wsdl")
+            else:
+                afip_ws_url = (
+                    "https://awshomo.afip.gov.ar/sr-padron/webservices/"
+                    "personaServiceA4?wsdl")
+        return afip_ws_url
 
     @api.multi
     def check_afip_ws(self, afip_ws):
@@ -123,7 +137,9 @@ class AfipwsConnection(models.Model):
         # cfg = self.pool.get('ir.config_parameter')
         # cache = cfg.get_param(cr, uid, 'pyafipws.cache', context=context)
         # proxy = cfg.get_param(cr, uid, 'pyafipws.proxy', context=context)
-        wsdl = self.afip_ws_url + '?WSDL'
+
+        wsdl = self.afip_ws_url
+
         # connect to the webservice and call to the test method
         ws.Conectar("", wsdl or "", "")
         cuit = self.company_id.cuit_required()
@@ -145,4 +161,9 @@ class AfipwsConnection(models.Model):
         Method to be inherited
         """
         _logger.info('Getting ws %s from libraries ' % afip_ws)
-        return False
+        # por ahora el unico implementado es ws_sr_padron_a4
+        ws = False
+        if afip_ws == 'ws_sr_padron_a4':
+            from pyafipws.ws_sr_padron import WSSrPadronA4
+            ws = WSSrPadronA4()
+        return ws

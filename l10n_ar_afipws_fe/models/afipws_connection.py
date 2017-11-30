@@ -55,24 +55,24 @@ class AfipwsConnection(models.Model):
         elif afip_ws == 'wsfe':
             if environment_type == 'production':
                 afip_ws_url = (
-                    'https://servicios1.afip.gov.ar/wsfev1/service.asmx')
+                    'https://servicios1.afip.gov.ar/wsfev1/service.asmx?WSDL')
             else:
                 afip_ws_url = (
-                    'https://wswhomo.afip.gov.ar/wsfev1/service.asmx')
+                    'https://wswhomo.afip.gov.ar/wsfev1/service.asmx?WSDL')
         elif afip_ws == 'wsfex':
             if environment_type == 'production':
                 afip_ws_url = (
-                    'https://servicios1.afip.gov.ar/wsfexv1/service.asmx')
+                    'https://servicios1.afip.gov.ar/wsfexv1/service.asmx?WSDL')
             else:
                 afip_ws_url = (
-                    'https://wswhomo.afip.gov.ar/wsfexv1/service.asmx')
+                    'https://wswhomo.afip.gov.ar/wsfexv1/service.asmx?WSDL')
         elif afip_ws == 'wsbfe':
             if environment_type == 'production':
                 afip_ws_url = (
-                    'https://servicios1.afip.gov.ar/wsbfev1/service.asmx')
+                    'https://servicios1.afip.gov.ar/wsbfev1/service.asmx?WSDL')
             else:
                 afip_ws_url = (
-                    'https://wswhomo.afip.gov.ar/wsbfev1/service.asmx')
+                    'https://wswhomo.afip.gov.ar/wsbfev1/service.asmx?WSDL')
         elif afip_ws == 'wsmtxca':
             raise UserError('AFIP WS %s Not implemented yet' % afip_ws)
             # if environment_type == 'production':
@@ -86,7 +86,8 @@ class AfipwsConnection(models.Model):
         elif afip_ws == 'wscdc':
             if environment_type == 'production':
                 afip_ws_url = (
-                    'https://servicios1.afip.gov.ar/WSCDC/service.asmx')
+                    'https://servicios1.afip.gov.ar/WSCDC/service.asmx?WSDL')
             else:
-                afip_ws_url = 'https://wswhomo.afip.gov.ar/WSCDC/service.asmx'
+                afip_ws_url = (
+                    'https://wswhomo.afip.gov.ar/WSCDC/service.asmx?WSDL')
         return afip_ws_url

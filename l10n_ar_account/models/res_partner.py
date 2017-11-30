@@ -5,7 +5,7 @@
 ##############################################################################
 from openerp import fields, models, api, _
 from openerp.exceptions import UserError
-import base64
+# import base64
 try:
     from pyafipws.padron import PadronAFIP
 except ImportError:
@@ -101,37 +101,43 @@ class ResPartner(models.Model):
     @api.multi
     def update_constancia_from_padron_afip(self):
         self.ensure_one()
-        # DESACTIVAMOS ESTO HASTA ARREGLARLO
-        cuit = self.cuit
-        # cuit = self.cuit_required
+        # TODO implementar, al 30.11.2017 solo ws_sr_padron_a4 esta
+        # implementado
+        return True
+        # # DESACTIVAMOS ESTO HASTA ARREGLARLO
+        # cuit = self.cuit
+        # # cuit = self.cuit_required
 
-        # descarga de constancia
-        # basedir = os.path.join(os.getcwd(), 'cache')
-        # tmpfilename = os.path.join(basedir, "constancia.pdf")
-        tmpfilename = "/tmp/constancia.pdf"
-        # sie queremos mejora esto podriamos no hardecodearlo con esto
-        # https://bugs.launchpad.net/openobject-addons/+bug/1040901
-        padron = PadronAFIP()
-        padron.DescargarConstancia(cuit, tmpfilename)
-        f = file(tmpfilename, 'r')
-        constancia = base64.b64decode(base64.encodestring(f.read()))
-        f.close()
-        attachments = [
-            ('Constancia %s %s.pdf' % (
-                self.name,
-                fields.Date.context_today(self)),
-                constancia)]
-        self.message_post(
-            subject="Constancia de inscripción actualizada",
-            # subject="Actualizacion de datos desde Padron AFIP",
-            # body="Datos utilizados:<br/>%s" % vals,
-            attachments=attachments)
+        # # descarga de constancia
+        # # basedir = os.path.join(os.getcwd(), 'cache')
+        # # tmpfilename = os.path.join(basedir, "constancia.pdf")
+        # tmpfilename = "/tmp/constancia.pdf"
+        # # sie queremos mejora esto podriamos no hardecodearlo con esto
+        # # https://bugs.launchpad.net/openobject-addons/+bug/1040901
+        # padron = self.env.user.company_id.get_connection(
+        #     'ws_sr_padron_a5').connect()
+        # padron.DescargarConstancia(cuit, tmpfilename)
+        # f = file(tmpfilename, 'r')
+        # constancia = base64.b64decode(base64.encodestring(f.read()))
+        # f.close()
+        # attachments = [
+        #     ('Constancia %s %s.pdf' % (
+        #         self.name,
+        #         fields.Date.context_today(self)),
+        #         constancia)]
+        # self.message_post(
+        #     subject="Constancia de inscripción actualizada",
+        #     # subject="Actualizacion de datos desde Padron AFIP",
+        #     # body="Datos utilizados:<br/>%s" % vals,
+        #     attachments=attachments)
 
     @api.multi
     def get_data_from_padron_afip(self):
         self.ensure_one()
         cuit = self.cuit_required()
-        padron = PadronAFIP()
+
+        padron = self.env.user.company_id.get_connection(
+            'ws_sr_padron_a4').connect()
         padron.Consultar(cuit)
 
         # porque imp_iva activo puede ser S o AC

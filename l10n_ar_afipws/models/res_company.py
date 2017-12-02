@@ -102,7 +102,7 @@ class ResCompany(models.Model):
                             cert = cert_file.read()
                     msg = 'Could not find %s or %s files' % (
                         pkey_path, cert_path)
-                except:
+                except Exception:
                     msg = 'Could not read %s or %s files' % (
                         pkey_path, cert_path)
                 else:

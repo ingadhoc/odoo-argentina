@@ -136,8 +136,26 @@ class ResPartner(models.Model):
         self.ensure_one()
         cuit = self.cuit_required()
 
-        padron = self.env.user.company_id.get_connection(
-            'ws_sr_padron_a4').connect()
+        # GET COMPANY
+        # if there is certificate for user company, use that one, if not
+        # use the company for the first certificate found
+        company = self.env.user.company_id
+        env_type = company._get_environment_type()
+        try:
+            certificate = company.get_key_and_certificate(
+                company._get_environment_type())
+        except Exception:
+            certificate = self.env['afipws.certificate'].search([
+                ('alias_id.type', '=', env_type),
+                ('state', '=', 'confirmed'),
+            ], limit=1)
+            if not certificate:
+                raise UserError(_(
+                    'Not confirmed certificate found on database'))
+            company = certificate.alias_id.company_id
+
+        padron = company.get_connection('ws_sr_padron_a4').connect()
+
         padron.Consultar(cuit)
 
         # porque imp_iva activo puede ser S o AC

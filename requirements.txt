@@ -2,7 +2,7 @@ pyOpenSSL
 suds
 m2crypto>=0.18
 httplib2>=0.7
-pysimplesoap==1.08.8
+pysimplesoap==1.08.14
 fpdf>=1.7.2
 dbf>=0.88.019
 Pillow>=2.0.0

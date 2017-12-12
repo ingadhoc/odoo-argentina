@@ -19,7 +19,10 @@ class AccountInvoice(models.Model):
         readonly=True,
     )
     state_id = fields.Many2one(
-        related='commercial_partner_id.state_id',
+        # related='commercial_partner_id.state_id',
+        # al final lo hacemos por contacto (y no commercial) para poder usar
+        # direcciones distintas
+        related='partner_id.state_id',
         store=True,
         readonly=True,
     )

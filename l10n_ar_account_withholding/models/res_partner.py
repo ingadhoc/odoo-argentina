@@ -78,6 +78,7 @@ class ResPartnerArbaAlicuot(models.Model):
         'res.company',
         required=True,
         ondelete='cascade',
+        default=lambda self: self.env.user.company_id,
     )
     from_date = fields.Date(
     )

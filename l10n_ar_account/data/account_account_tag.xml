@@ -25,6 +25,33 @@
         <field name="applicability">accounts</field>
     </record>
 
+    <!-- tags de cuentas contables que se usan en liquidaciones, por ahora solo para llevar la cuenta -->
+
+    <record id="tag_liquidacion_de_iva" model="account.account.tag">
+        <field name="name">Liquidación de IVA</field>
+        <field name="applicability">accounts</field>
+    </record>
+
+    <record id="tag_liquidacion_de_iibb" model="account.account.tag">
+        <field name="name">Liquidación de IIBB</field>
+        <field name="applicability">accounts</field>
+    </record>
+
+    <record id="tag_liquidacion_de_ganancias" model="account.account.tag">
+        <field name="name">Liquidación de Ganancias</field>
+        <field name="applicability">accounts</field>
+    </record>
+
+    <record id="tag_liquidacion_sicore_aplicado" model="account.account.tag">
+        <field name="name">Liquidación SICORE Aplicado</field>
+        <field name="applicability">accounts</field>
+    </record>
+
+    <record id="tag_liquidacion_sicore_aplicado" model="account.account.tag">
+        <field name="name">Liquidación IIBB Aplicado</field>
+        <field name="applicability">accounts</field>
+    </record>
+
     <!-- por ahora estamos usando el de taxes -->
 <!--     <record id="tag_a_cuenta_iibb" model="account.account.tag">
         <field name="name">Pagos a Cuenta IIBB</field>

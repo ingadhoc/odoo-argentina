@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Modulo Base para los Web Services de AFIP',
-    'version': '9.0.1.2.0',
+    'version': '9.0.1.3.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA, Moldeo Interactive,Odoo Community Association (OCA)',
@@ -23,6 +23,7 @@
         'views/res_company_view.xml',
         # 'wizard/config_view.xml',
         'security/ir.model.access.csv',
+        'security/security.xml',
     ],
     'demo': [
         'demo/certificate_demo.xml',

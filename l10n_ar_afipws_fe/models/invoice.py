@@ -215,18 +215,26 @@ class AccountInvoice(models.Model):
             res_code = rec.commercial_partner_id.afip_responsability_type_id.\
                 code
             ws = rec.journal_id.afip_ws
-            journal = False
+            journal = self.env['account.journal']
             domain = [
                 ('company_id', '=', rec.company_id.id),
                 ('point_of_sale_type', '=', 'electronic'),
                 ('type', '=', 'sale'),
             ]
-            if ws == 'wsfe' and res_code in ['8', '9']:
+            # TODO mejorar que aca buscamos por codigo de resp mientras que
+            # el mapeo de tipo de documentos es configurable por letras y,
+            # por ejemplo, si se da letra e de RI a RI y se genera factura
+            # para un RI queriendo forzar diario de expo, termina dando error
+            # porque los ws y los res_code son incompatibles para esta logica.
+            # El error lo da el metodo check_journal_document_type_journal
+            # porque este metodo trata de poner otro diario sin actualizar
+            # el tipo de documento
+            if ws == 'wsfe' and res_code in ['8', '9', '10']:
                 domain.append(('afip_ws', '=', 'wsfex'))
-                journal = self.env['account.journal'].search(domain, limit=1)
-            elif ws == 'wsfex' and res_code not in ['8', '9']:
+                journal = journal.search(domain, limit=1)
+            elif ws == 'wsfex' and res_code not in ['8', '9', '10']:
                 domain.append(('afip_ws', '=', 'wsfe'))
-                journal = self.env['account.journal'].search(domain, limit=1)
+                journal = journal.search(domain, limit=1)
 
             if journal:
                 rec.journal_id = journal.id

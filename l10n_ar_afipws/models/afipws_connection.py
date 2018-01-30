@@ -129,6 +129,14 @@ class AfipwsConnection(models.Model):
             'Getting connection to ws %s from libraries on '
             'connection id %s' % (self.afip_ws, self.id))
         ws = self._get_ws(self.afip_ws)
+
+        # parche por este error que da al consultar por esa opción de homo
+        # https://groups.google.com/d/msg/pyafipws/Xr08e4ZuMmQ/6iDzXwdJAwAJ
+        # TODO mejorar ya que probablemente no ande en test pero el tema es
+        # que en esta parte no tenemos data del env_type
+        if self.afip_ws == 'ws_sr_padron_a4':
+            ws.HOMO = False
+
         if not ws:
             raise UserError(_('AFIP Webservice %s not implemented yet' % (
                 self.afip_ws)))

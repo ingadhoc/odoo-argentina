@@ -155,8 +155,12 @@ class ResPartner(models.Model):
             company = certificate.alias_id.company_id
 
         padron = company.get_connection('ws_sr_padron_a4').connect()
-
-        padron.Consultar(cuit)
+        try:
+            padron.Consultar(cuit)
+        except Exception:
+            raise UserError(_(
+                'This cuit %s of the partner %s not exists in afip') % (
+                cuit, self.name))
 
         # porque imp_iva activo puede ser S o AC
         imp_iva = padron.imp_iva

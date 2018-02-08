@@ -56,12 +56,21 @@
                 <separator/>
                 <field name="name_template"/>
                 <filter string="Draft"
+                       name="draft"
                        domain="[('state','in',['draft','proforma','proforma2'])]"
                        help="Draft Invoices"/>
                 <filter string="Invoiced"
                        name="current"
                        domain="[('state','not in', ('draft','cancel'))]"
                        help="Open and Paid Invoices"/>
+                <separator/>
+                <filter string="Last month"
+                        name="last_month"
+                        domain="[('date_invoice', '&gt;=', (context_today()-relativedelta(months=1)).strftime('%Y-%m-01')), ('date_invoice', '&lt;', (context_today()).strftime('%Y-%m-01'))]"/>
+                <filter string="This month" 
+                        name="this_month"
+                        domain="[('date_invoice', '&gt;=', context_today().strftime('%Y-%m-01')), ('date_invoice', '&lt;', (context_today()+relativedelta(months=1)).strftime('%Y-%m-01'))]"/>                
+                
                 <field name="date_invoice_from" filter_domain="[('date_invoice','&gt;=',self)]"/>
                 <field name="date_invoice_to" filter_domain="[('date_invoice','&lt;=',self)]"/>
                 <field name="company_id"/>

@@ -49,10 +49,11 @@
         <field name="model">account.invoice.line.report</field>
         <field name="arch" type="xml">
             <search string="Invoices Line Analysis">
-                <filter name="sale" string="Sale Invoice"
-                        domain="[('type','in', ['out_invoice', 'out_refund'])]"/>
-                <filter name="purchase" string="Purchase Invoice"
-                        domain="[('type','in', ['in_invoice', 'in_refund'])]"/>
+                <filter string="Customer" name="customer" domain="['|', ('type','=','out_invoice'),('type','=','out_refund')]"/>
+                <filter string="Vendor" name="supplier" domain="['|', ('type','=','in_invoice'),('type','=','in_refund')]"/>
+                <separator/>
+                <filter string="Invoice" domain="['|', ('type','=','out_invoice'),('type','=','in_invoice')]"/>
+                <filter string="Refund" domain="['|', ('type','=','out_refund'),('type','=','in_refund')]"/>
                 <separator/>
                 <field name="name_template"/>
                 <filter string="Draft"
@@ -110,7 +111,7 @@
         <field name="res_model">account.invoice.line.report</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,pivot,graph</field>
-        <field name="context">{'search_default_sale': 1}</field>
+        <field name="context">{'search_default_current': 1, 'search_default_customer': 1}</field>
     </record>
 
     <menuitem action="action_account_invoice_line_report_all" id="menu_action_account_invoice_line_report_all" name="Invoices Lines Analysis" parent="account.account_reports_business_intelligence_menu" sequence="10"/>

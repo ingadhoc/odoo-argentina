@@ -58,7 +58,7 @@ class ResPartner(models.Model):
             rec.formated_cuit = "{0}-{1}-{2}".format(
                 cuit[0:2], cuit[2:10], cuit[10:])
 
-    @api.one
+    @api.multi
     @api.depends(
         'id_numbers.category_id.afip_code',
         'id_numbers.name',
@@ -66,16 +66,30 @@ class ResPartner(models.Model):
         'main_id_category_id',
     )
     def _compute_cuit(self):
-        cuit = self.id_numbers.search([
-            ('partner_id', '=', self.id),
-            ('category_id.afip_code', '=', 80),
-        ], limit=1)
-        # agregamos esto para el caso en donde el registro todavia no se creo
-        # queremos el cuit para que aparezca el boton de refrescar de afip
-        if not cuit and self.main_id_category_id.afip_code == 80:
-            self.cuit = self.main_id_number
-        else:
-            self.cuit = cuit.name
+        for rec in self:
+            # el cuit solo lo devolvemos si es el doc principal
+            # para que no sea engañoso si no tienen activado multiples doc
+            # y esta seleccionado otro que no es cuit
+            # igualmente, si es un partner del extranjero intentamos devolver
+            # cuit fisica o juridica del pais
+            if rec.main_id_category_id.afip_code != 80:
+                country = rec.country_id
+                if country and country.code != 'AR':
+                    if rec.is_company:
+                        rec.cuit = country.cuit_juridica
+                    else:
+                        rec.cuit = country.cuit_fisica
+                continue
+            cuit = rec.id_numbers.search([
+                ('partner_id', '=', rec.id),
+                ('category_id.afip_code', '=', 80),
+            ], limit=1)
+            # agregamos esto para el caso donde el registro todavia no se creo
+            # queremos el cuit para que aparezca el boton de refrescar de afip
+            if not cuit:
+                rec.cuit = rec.main_id_number
+            else:
+                rec.cuit = cuit.name
 
     @api.multi
     @api.depends(

@@ -158,25 +158,24 @@ class account_vat_ledger(models.Model):
 
     @api.model
     def get_partner_document_code(self, partner):
-        # TODO agregar validaciones para los que se presentan sin numero de
-        # documento para operaciones menores a 1000 segun doc especificacion
-        # regimen de...
-        if partner.main_id_category_id.afip_code:
+        # se exige cuit para todo menos consumidor final.
+        # TODO si es mayor a 1000 habria que validar reportar
+        # DNI, LE, LC, CI o pasaporte
+        if partner.afip_responsability_type_id.code == '5':
             return "{:0>2d}".format(partner.main_id_category_id.afip_code)
-        else:
-            return '99'
+        return '80'
 
     @api.model
     def get_partner_document_number(self, partner):
-        # TODO agregar validaciones para los que se presentan sin numero de
-        # documento para operaciones menores a 1000 segun doc especificacion
-        # regimen de...
-
-        # el aplicativo exije que si es cie, cuit o cuil se pasen solo numeros
-        # para cuit y cuil ya se restringe, si es ci sacamos los digitos
-        number = partner.main_id_number or ''
-        if partner.main_id_category_id.afip_code == 91:
+        # se exige cuit para todo menos consumidor final.
+        # TODO si es mayor a 1000 habria que validar reportar
+        # DNI, LE, LC, CI o pasaporte
+        if partner.afip_responsability_type_id.code == '5':
+            number = partner.main_id_number or ''
+            # por las dudas limpiamos letras
             number = re.sub("[^0-9]", "", number)
+        else:
+            number = partner.cuit_required()
         return number.rjust(20, '0')
 
     @api.model

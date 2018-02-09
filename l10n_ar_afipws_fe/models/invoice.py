@@ -501,6 +501,8 @@ print "Observaciones:", wscdc.Obs
 
                 idioma_cbte = 1     # invoice language: spanish / español
 
+                # TODO tal vez podemos unificar este criterio con el del
+                # citi que pide el cuit al partner
                 # customer data (foreign trade):
                 nombre_cliente = commercial_partner.name
                 # If argentinian and cuit, then use cuit

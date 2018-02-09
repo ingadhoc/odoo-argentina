@@ -33,7 +33,7 @@ class ResCompany(models.Model):
     )
     company_requires_vat = fields.Boolean(
         related='afip_responsability_type_id.company_requires_vat',
-        store=True,
+        readonly=True,
     )
     # use globally as default so that if child companies are created they
     # also use this as default

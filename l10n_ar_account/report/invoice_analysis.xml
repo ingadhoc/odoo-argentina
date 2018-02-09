@@ -49,23 +49,29 @@
         <field name="model">account.invoice.line.report</field>
         <field name="arch" type="xml">
             <search string="Invoices Line Analysis">
-                <filter string="Sale Invoice"
-                        domain="[('type','=','out_invoice')]"/>
-                <filter string="Sale Refund"
-                        domain="[('type','=','out_refund')]"/>
-                <filter string="Purchase Invoice"
-                        domain="[('type','=','in_invoice')]"/>
-                <filter string="Purchase Refund"
-                        domain="[('type','=','in_refund')]"/>
+                <filter string="Customer" name="customer" domain="['|', ('type','=','out_invoice'),('type','=','out_refund')]"/>
+                <filter string="Vendor" name="supplier" domain="['|', ('type','=','in_invoice'),('type','=','in_refund')]"/>
+                <separator/>
+                <filter string="Invoice" domain="['|', ('type','=','out_invoice'),('type','=','in_invoice')]"/>
+                <filter string="Refund" domain="['|', ('type','=','out_refund'),('type','=','in_refund')]"/>
                 <separator/>
                 <field name="name_template"/>
                 <filter string="Draft"
+                       name="draft"
                        domain="[('state','in',['draft','proforma','proforma2'])]"
                        help="Draft Invoices"/>
                 <filter string="Invoiced"
                        name="current"
                        domain="[('state','not in', ('draft','cancel'))]"
                        help="Open and Paid Invoices"/>
+                <separator/>
+                <filter string="Last month"
+                        name="last_month"
+                        domain="[('date_invoice', '&gt;=', (context_today()-relativedelta(months=1)).strftime('%Y-%m-01')), ('date_invoice', '&lt;', (context_today()).strftime('%Y-%m-01'))]"/>
+                <filter string="This month" 
+                        name="this_month"
+                        domain="[('date_invoice', '&gt;=', context_today().strftime('%Y-%m-01')), ('date_invoice', '&lt;', (context_today()+relativedelta(months=1)).strftime('%Y-%m-01'))]"/>                
+                
                 <field name="date_invoice_from" filter_domain="[('date_invoice','&gt;=',self)]"/>
                 <field name="date_invoice_to" filter_domain="[('date_invoice','&lt;=',self)]"/>
                 <field name="company_id"/>
@@ -105,7 +111,7 @@
         <field name="res_model">account.invoice.line.report</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,pivot,graph</field>
-        <field name="context">{}</field>
+        <field name="context">{'search_default_current': 1, 'search_default_customer': 1}</field>
     </record>
 
     <menuitem action="action_account_invoice_line_report_all" id="menu_action_account_invoice_line_report_all" name="Invoices Lines Analysis" parent="account.account_reports_business_intelligence_menu" sequence="10"/>

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-09 20:56+0000\n"
-"PO-Revision-Date: 2018-02-09 20:56+0000\n"
+"POT-Creation-Date: 2018-02-15 15:34+0000\n"
+"PO-Revision-Date: 2018-02-15 15:34+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -1644,7 +1644,7 @@ msgid "Status"
 msgstr "Estado"
 
 #. module: l10n_ar_account
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4185
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_4189
 msgid "Subtotal"
 msgstr "Subtotal"
 
@@ -1787,7 +1787,7 @@ msgid "Type must be \"base\" or \"tax\""
 msgstr "El tipo debe ser \"base\" o \"impuesto\""
 
 #. module: l10n_ar_account
-#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4184
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_unit_4188
 msgid "Unit Price"
 msgstr "Precio unitario"
 

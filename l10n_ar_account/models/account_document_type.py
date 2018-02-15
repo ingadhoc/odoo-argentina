@@ -31,7 +31,11 @@ class AccountDocmentType(models.Model):
         self.ensure_one()
         if self.localization == 'argentina':
             if self.document_letter_id.taxes_included:
-                return self.env['account.tax'].search([])
+                # solo incluir el IVA, el resto se debe discriminar
+                # return self.env['account.tax'].search([])
+                return self.env['account.tax'].search(
+                    [('tax_group_id.tax', '=', 'vat'),
+                     ('tax_group_id.type', '=', 'tax')])
             # included_tax_groups = (
             #     self.document_letter_id.included_tax_group_ids)
             # if included_tax_groups:

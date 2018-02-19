@@ -70,7 +70,14 @@
                         domain="[('date_invoice', '&gt;=', (context_today()-relativedelta(months=1)).strftime('%Y-%m-01')), ('date_invoice', '&lt;', (context_today()).strftime('%Y-%m-01'))]"/>
                 <filter string="This month" 
                         name="this_month"
-                        domain="[('date_invoice', '&gt;=', context_today().strftime('%Y-%m-01')), ('date_invoice', '&lt;', (context_today()+relativedelta(months=1)).strftime('%Y-%m-01'))]"/>                
+                        domain="[('date_invoice', '&gt;=', context_today().strftime('%Y-%m-01')), ('date_invoice', '&lt;', (context_today()+relativedelta(months=1)).strftime('%Y-%m-01'))]"/>
+                <separator/>
+                <filter string="Last year"
+                        name="last_year"
+                        domain="[('date_invoice', '&gt;=', (context_today()-relativedelta(years=1)).strftime('%Y-01-01')), ('date_invoice', '&lt;', (context_today()).strftime('%Y-01-01'))]"/>
+                <filter string="This year" 
+                        name="this_year"
+                        domain="[('date_invoice', '&gt;=', context_today().strftime('%Y-01-01')), ('date_invoice', '&lt;', (context_today()+relativedelta(years=1)).strftime('%Y-01-01'))]"/>
                 
                 <field name="date_invoice_from" filter_domain="[('date_invoice','&gt;=',self)]"/>
                 <field name="date_invoice_to" filter_domain="[('date_invoice','&lt;=',self)]"/>
@@ -111,7 +118,7 @@
         <field name="res_model">account.invoice.line.report</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,pivot,graph</field>
-        <field name="context">{'search_default_current': 1, 'search_default_customer': 1}</field>
+        <field name="context">{'search_default_current': 1, 'search_default_customer': 1, 'search_default_this_year': 1}</field>
     </record>
 
     <menuitem action="action_account_invoice_line_report_all" id="menu_action_account_invoice_line_report_all" name="Invoices Lines Analysis" parent="account.account_reports_business_intelligence_menu" sequence="10"/>

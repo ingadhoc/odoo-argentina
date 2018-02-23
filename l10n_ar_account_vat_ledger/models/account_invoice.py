@@ -2,7 +2,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 
 class AccountInvoice(models.Model):
@@ -87,3 +88,20 @@ class AccountInvoice(models.Model):
                     rec.other_taxes_amount * currency_rate)
                 rec.cc_vat_exempt_base_amount = currency.round(
                     rec.vat_exempt_base_amount * currency_rate)
+
+    @api.multi
+    def invoice_validate(self):
+        for invoice in self:
+            ledger = self.env['account.vat.ledger']
+            ledger_ids = ledger.search([
+                ('state', '=', 'presented'),
+                ('company_id', '=', invoice.company_id.id),
+                ('journal_ids.id', '=', invoice.journal_id.id),
+                ('date_from', '<=', invoice.date),
+                ('date_to', '>=', invoice.date)])
+            if ledger_ids:
+                raise UserError(_(
+                    "You can't validate an invoice of this date if the "
+                    "VAT Ledger Report has already been presented.\r\n"
+                    "You need to manually set the Accounting Date."))
+        return super(AccountInvoice, self).invoice_validate()

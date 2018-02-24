@@ -50,16 +50,6 @@ def post_init_hook(cr, registry):
     document_types_not_updatable(cr, registry)
     sync_padron_afip(cr, registry)
 
-    _logger.info('Getting currency rate for invoices')
-    ar_invoice_ids = registry['account.invoice'].search(
-        cr, 1, [('localization', '=', 'argentina')])
-    for invoice_id in ar_invoice_ids:
-        vals = registry['account.invoice'].get_localization_invoice_vals(
-            cr, 1, invoice_id)
-        registry['account.invoice'].write(
-            cr, 1, invoice_id, {
-                'currency_rate': vals.get('currency_rate')})
-
     # we don not force dependency on openupgradelib, only if available we try
     # o un de hook
     if not table_exists:
@@ -123,8 +113,18 @@ def post_init_hook(cr, registry):
         merge_padron_into_account(cr)
         migrate_responsability_type(env)
         fix_invoice_without_date(env)
-    merge_refund_journals_to_normal(env)
-    map_tax_groups_to_taxes(cr, registry)
+        merge_refund_journals_to_normal(env)
+        map_tax_groups_to_taxes(cr, registry)
+
+        _logger.info('Getting currency rate for invoices')
+        ar_invoice_ids = registry['account.invoice'].search(
+            cr, 1, [('localization', '=', 'argentina')])
+        for invoice_id in ar_invoice_ids:
+            vals = registry['account.invoice'].get_localization_invoice_vals(
+                cr, 1, invoice_id)
+            registry['account.invoice'].write(
+                cr, 1, invoice_id, {
+                    'currency_rate': vals.get('currency_rate')})
 
 
 def fix_invoice_without_date(env):

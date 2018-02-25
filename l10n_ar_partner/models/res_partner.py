@@ -132,7 +132,9 @@ class ResPartner(models.Model):
         """
         if not args:
             args = []
-        if name:
+        # solo para estos operadores para no romper cuando se usa, por ej,
+        # no contiene algo del nombre
+        if name and operator in ('ilike', 'like', '=', '=like', '=ilike'):
             recs = self.search(
                 [('id_numbers', operator, name)] + args, limit=limit)
             if recs:

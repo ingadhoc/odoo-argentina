@@ -8,7 +8,7 @@ from openerp.exceptions import Warning
 # import time
 
 
-class account_vat_ledger(models.Model):
+class AccountVatLedger(models.Model):
 
     _name = "account.vat.ledger"
     _description = "Account VAT Ledger"

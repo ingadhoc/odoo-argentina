@@ -8,15 +8,6 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class AccountTax(models.Model):
-    _inherit = 'account.tax'
-
-    # for performance (should be a PR to odoo)
-    tax_group_id = fields.Many2one(
-        auto_join=True
-    )
-
-
 class AcountDocumentType(models.Model):
     _inherit = 'account.document.type'
 
@@ -82,8 +73,13 @@ class AcountDocumentType(models.Model):
         return (amount_untaxed, vat_amount, other_taxes_amount, amount_total)
 
 
-class account_tax(models.Model):
+class AccountTax(models.Model):
     _inherit = 'account.tax'
+
+    # for performance (should be a PR to odoo)
+    tax_group_id = fields.Many2one(
+        auto_join=True
+    )
 
     amount_untaxed = fields.Float(
         string='Untaxed',

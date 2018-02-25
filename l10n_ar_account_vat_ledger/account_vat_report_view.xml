@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <openerp>
-	<data>
+    <data>
         <record model='ir.ui.view' id='account_vat_ledger_tree'>
             <field name='name'>Account VAT Ledger</field> 
             <field name="model">account.vat.ledger</field>
@@ -16,11 +16,11 @@
             </field>
         </record>
 
-		<record model='ir.ui.view' id='account_vat_ledger_form'>
-			<field name='name'>Account VAT Ledger</field> 
+        <record model='ir.ui.view' id='account_vat_ledger_form'>
+            <field name='name'>Account VAT Ledger</field> 
             <field name="model">account.vat.ledger</field>
-			<field name='arch' type='xml'>
-	            <form string="VAT Ledger">
+            <field name='arch' type='xml'>
+                <form string="VAT Ledger">
                     <field name="type" invisible="1"/>
                     <header>
                         <button name="action_print" string="Print" states="draft" type="object" class="oe_highlight"/>
@@ -32,8 +32,8 @@
                     </header>
                     <sheet>
                         <group>
-    	                   <group>
-        	                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                           <group>
+                                <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                                 <!-- <field name="fiscalyear_id" domain="[('company_id','=',company_id)]"/> -->
                                 <!-- <field name="period_id" domain="[('fiscalyear_id','=',fiscalyear_id)]"/> -->
                                 <field name="date_range_id" class="oe_edit_only"/>
@@ -45,10 +45,10 @@
                             <group>
                                 <field name="first_page"/>
                                 <field name="last_page"/>
-                            	<field name="reference"/>
+                                <field name="reference"/>
                             </group>
-    	                </group>
-    	                <notebook>
+                        </group>
+                        <notebook>
                             <page string="Journals" name="journal_ids">
                                 <field name="journal_ids" domain="[('type', '=', type), ('company_id', '=', company_id), ('use_documents', '=', True)]"/>
                             </page>
@@ -106,22 +106,22 @@
                                     </tree>
                                 </field>
                             </page>
-    	                    <page string="Notes" name="notes">
-    	                        <field name="note"/>
-    	                    </page>
-    	                </notebook>
+                            <page string="Notes" name="notes">
+                                <field name="note"/>
+                            </page>
+                        </notebook>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
                         <field name="message_ids" widget="mail_thread"/>
                     </div>
-	            </form>
-			</field>
-		</record>
+                </form>
+            </field>
+        </record>
 
-		<record id="action_account_purchase_vat_ledger" model="ir.actions.act_window">
-			<field name="name">Purchases VAT Ledger</field>
-			<field name="res_model">account.vat.ledger</field>
+        <record id="action_account_purchase_vat_ledger" model="ir.actions.act_window">
+            <field name="name">Purchases VAT Ledger</field>
+            <field name="res_model">account.vat.ledger</field>
             <field name="context">{'default_type':'purchase'}</field>
             <field name="domain">[('type','=','purchase')]</field>
         </record>
@@ -131,7 +131,7 @@
             <field name="res_model">account.vat.ledger</field>
             <field name="context">{'default_type':'sale'}</field>
             <field name="domain">[('type','=','sale')]</field>
-		</record>
+        </record>
 
 <!--         <menuitem id="account_vat_ledger_parent_menu"
                   name="VAT Ledgers"
@@ -147,5 +147,5 @@
                   action="action_account_sale_vat_ledger"
                   parent="l10n_ar_account.account_reports_ar_statements_menu"
                   sequence="4"/>                          
-	</data>
+    </data>
 </openerp>

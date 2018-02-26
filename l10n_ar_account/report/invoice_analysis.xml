@@ -5,7 +5,7 @@
         <field name="name">account.invoice.line.report.tree</field>
         <field name="model">account.invoice.line.report</field>
         <field name="arch" type="xml">
-            <tree colors="blue:state == 'draft';gray:state in ('cancel','paid');black:state in ('proforma','proforma2')" string="Invoices Line Analysis">
+            <tree colors="blue:state == 'draft';gray:state in ('cancel','paid');black:state in ('proforma','proforma2')" string="Invoice Lines Analysis">
                 <field name="number"/>
                 <!-- <field name="date"/> -->
                 <field name="date_invoice"/>
@@ -48,7 +48,7 @@
         <field name="name">account.invoice.line.report.search</field>
         <field name="model">account.invoice.line.report</field>
         <field name="arch" type="xml">
-            <search string="Invoices Line Analysis">
+            <search string="Invoice Lines Analysis">
                 <filter string="Customer" name="customer" domain="['|', ('type','=','out_invoice'),('type','=','out_refund')]"/>
                 <filter string="Vendor" name="supplier" domain="['|', ('type','=','in_invoice'),('type','=','in_refund')]"/>
                 <separator/>
@@ -112,16 +112,27 @@
         </field>
     </record>
 
+    <record id="view_account_invoice_line_report_pivot" model="ir.ui.view">
+        <field name="name">account.invoice.line.report.pivot</field>
+        <field name="model">account.invoice.line.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Invoice Lines Analysis" disable_linking="True">
+                <field name="product_category_id" type="row"/>
+                <field name="date_invoice" interval="month" type="col"/>
+                <field name="price_subtotal" type="measure"/>
+            </pivot>
+        </field>
+    </record>
 
     <record id="action_account_invoice_line_report_all" model="ir.actions.act_window">
-        <field name="name">Invoices Lines Analysis</field>
+        <field name="name">Invoice Lines Analysis</field>
         <field name="res_model">account.invoice.line.report</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,pivot,graph</field>
         <field name="context">{'search_default_current': 1, 'search_default_customer': 1, 'search_default_this_year': 1}</field>
     </record>
 
-    <menuitem action="action_account_invoice_line_report_all" id="menu_action_account_invoice_line_report_all" name="Invoices Lines Analysis" parent="account.account_reports_business_intelligence_menu" sequence="10"/>
+    <menuitem action="action_account_invoice_line_report_all" id="menu_action_account_invoice_line_report_all" name="Invoice Lines Analysis" parent="account.account_reports_business_intelligence_menu" sequence="10"/>
 
     </data>
 </openerp>

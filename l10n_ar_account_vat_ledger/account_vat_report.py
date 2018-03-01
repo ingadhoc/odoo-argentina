@@ -4,7 +4,7 @@
 # directory
 ##############################################################################
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+# from openerp.exceptions import Warning
 # import time
 
 
@@ -203,9 +203,9 @@ class AccountVatLedger(models.Model):
             name = "%s - %s" % (name, self.reference)
         self.name = name
 
-    #@api.one
-    #@api.constrains('presented_ledger', 'last_page', 'state')
-    #def _check_state(self):
+    # @api.one
+    # @api.constrains('presented_ledger', 'last_page', 'state')
+    # def _check_state(self):
     #    if self.state == 'presented':
     #        if not self.presented_ledger:
     #            raise Warning(_(

@@ -12,7 +12,7 @@
         'l10n_ar_partner',
     ],
     'external_dependencies': {
-        'python': ['suds', 'M2Crypto', 'pyafipws']
+        'python': ['pyafipws', 'OpenSSL']
     },
     'data': [
         'wizard/upload_certificate_view.xml',

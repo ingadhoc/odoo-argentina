@@ -533,11 +533,11 @@ class AccountInvoice(models.Model):
                 raise ValidationError(_(
                     "If you have choose a 0, exempt or untaxed 'tax', or "
                     "you must choose a fiscal position with afip code in %s.\n"
-                    "* Invoice [%i] %s" % (
+                    "* Invoice [%i] %s") % (
                         afip_exempt_codes,
                         invoice.id,
                         invoice.display_name))
-                )
+
             # esto es, por eje, si hay un producto con 100% de descuento para
             # única alicuota, entonces el impuesto liquidado da cero y se
             # obliga reportar con alicuota 0, entonces se exige tmb cod de op.

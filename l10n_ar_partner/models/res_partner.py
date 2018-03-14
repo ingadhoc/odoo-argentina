@@ -42,8 +42,8 @@ class ResPartner(models.Model):
     def cuit_required(self):
         self.ensure_one()
         if not self.cuit:
-            raise UserError(_('No CUIT cofigured for partner %s') % (
-                self.name))
+            raise UserError(_('No CUIT configured for partner [%i] %s') % (
+                self.id, self.name))
         return self.cuit
 
     @api.multi

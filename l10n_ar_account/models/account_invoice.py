@@ -232,7 +232,11 @@ class AccountInvoice(models.Model):
                 if rec.document_type_id.code in ['33', '99', '331', '332']:
                     point_of_sale = '0'
                     # leave only numbers and convert to integer
-                    invoice_number = str_number
+                    # otherwise use date as a number
+                    if re.search(r'\d', str_number):
+                        invoice_number = str_number
+                    else:
+                        invoice_number = rec.date_invoice
                 # despachos de importacion
                 elif rec.document_type_id.code == '66':
                     point_of_sale = '0'
@@ -247,7 +251,7 @@ class AccountInvoice(models.Model):
                 else:
                     raise ValidationError(_(
                         'Could not get invoice number and point of sale for '
-                        'invoice id %i') % (rec.id))
+                        'Invoice [%i] %s') % (rec.id, rec.display_name))
                 rec.invoice_number = int(
                     re.sub("[^0-9]", "", invoice_number))
                 rec.point_of_sale_number = int(
@@ -467,7 +471,10 @@ class AccountInvoice(models.Model):
         if without_responsability:
             raise ValidationError(_(
                 'The following invoices has a partner without AFIP '
-                'responsability: %s' % without_responsability.ids))
+                'responsability:\r\n\r\n'
+                '%s') % ('\r\n'.join(
+                    ['[%i] %s' % (i.id, i.display_name)
+                        for i in without_responsability])))
 
         # we check all invoice tax lines has tax_id related
         # we exclude exempt vats and untaxed (no gravados)
@@ -526,8 +533,11 @@ class AccountInvoice(models.Model):
                 raise ValidationError(_(
                     "If you have choose a 0, exempt or untaxed 'tax', or "
                     "you must choose a fiscal position with afip code in %s.\n"
-                    "* Invoice id %i" % (afip_exempt_codes, invoice.id))
-                )
+                    "* Invoice [%i] %s") % (
+                        afip_exempt_codes,
+                        invoice.id,
+                        invoice.display_name))
+
             # esto es, por eje, si hay un producto con 100% de descuento para
             # única alicuota, entonces el impuesto liquidado da cero y se
             # obliga reportar con alicuota 0, entonces se exige tmb cod de op.
@@ -543,8 +553,10 @@ class AccountInvoice(models.Model):
                 raise ValidationError(_(
                     "Si hay líneas con IVA declarado 0, entonces debe elegir "
                     "una posición fiscal con código de afip '%s'.\n"
-                    "* Invoice id %i" % (afip_exempt_codes, invoice.id))
-                )
+                    "* Invoice [%i] %s") % (
+                        afip_exempt_codes,
+                        invoice.id,
+                        invoice.display_name))
 
     # TODO sacamos esto porque no era muy lindo y daba algunos errores con
     # el account_fix, hicimos que los datos demo hagan el compute tax

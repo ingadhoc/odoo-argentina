@@ -553,11 +553,10 @@ class AccountInvoice(models.Model):
                 raise ValidationError(_(
                     "Si hay líneas con IVA declarado 0, entonces debe elegir "
                     "una posición fiscal con código de afip '%s'.\n"
-                    "* Invoice [%i] %s" % (
+                    "* Invoice [%i] %s") % (
                         afip_exempt_codes,
                         invoice.id,
                         invoice.display_name))
-                )
 
     # TODO sacamos esto porque no era muy lindo y daba algunos errores con
     # el account_fix, hicimos que los datos demo hagan el compute tax

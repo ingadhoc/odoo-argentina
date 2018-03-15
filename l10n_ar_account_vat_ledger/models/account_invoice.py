@@ -91,9 +91,9 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def invoice_validate(self):
+        AccountVatLedger = self.env['account.vat.ledger']
         for invoice in self:
-            ledger = self.env['account.vat.ledger']
-            ledger_ids = ledger.search([
+            ledger_ids = AccountVatLedger.sudo().search([
                 ('state', '=', 'presented'),
                 ('company_id', '=', invoice.company_id.id),
                 ('journal_ids.id', '=', invoice.journal_id.id),

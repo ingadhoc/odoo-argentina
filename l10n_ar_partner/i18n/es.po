@@ -4,14 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Gonzalo Ruzafa <gr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-07 15:47+0000\n"
-"PO-Revision-Date: 2017-09-07 15:47+0000\n"
-"Last-Translator: Gonzalo Ruzafa <gr@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2018-03-14 23:19+0000\n"
+"PO-Revision-Date: 2018-03-14 23:19+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -233,7 +232,12 @@ msgid "Documento Nacional de Identidad"
 msgstr "Documento Nacional de Identidad"
 
 #. module: l10n_ar_partner
-#: code:addons/l10n_ar_partner/models/res_partner_id_number.py:34
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner_formated_cuit
+msgid "Formated cuit"
+msgstr ""
+
+#. module: l10n_ar_partner
+#: code:addons/l10n_ar_partner/models/res_partner_id_number.py:36
 #, python-format
 msgid ""
 "Id Number must be unique per id category!\n"
@@ -321,10 +325,10 @@ msgid "Médico"
 msgstr "Médico"
 
 #. module: l10n_ar_partner
-#: code:addons/l10n_ar_partner/models/res_partner.py:42
+#: code:addons/l10n_ar_partner/models/res_partner.py:45
 #, python-format
-msgid "No CUIT cofigured for partner %s"
-msgstr "No hay CUIT configurado en el partner %s"
+msgid "No CUIT configured for partner [%i] %s"
+msgstr ""
 
 #. module: l10n_ar_partner
 #: model:ir.ui.view,arch_db:l10n_ar_partner.view_company_inherit_form

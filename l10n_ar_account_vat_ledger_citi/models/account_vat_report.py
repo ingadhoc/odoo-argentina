@@ -205,9 +205,12 @@ class account_vat_ledger(models.Model):
                     False, 99) or not r.main_id_number)
             if partners:
                 raise ValidationError(_(
-                    "On purchase citi, partner document is mandatory and "
-                    "partner document type must be different from 99. "
-                    "Partners %s") % partners.ids)
+                    "On purchase citi, partner document type is mandatory "
+                    "and it must be different from 99. "
+                    "Partners: \r\n\r\n"
+                    "%s") % '\r\n'.join(
+                        ['[%i] %s' % (p.id, p.display_name)
+                            for p in partners]))
 
         for inv in invoices:
             # si no existe la factura en alicuotas es porque no tienen ninguna

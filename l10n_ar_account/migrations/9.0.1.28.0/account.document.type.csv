@@ -1,0 +1,15 @@
+id,doc_code_prefix
+l10n_ar_account.dc_a_t,TF-A
+l10n_ar_account.dc_b_t,TF-B
+l10n_ar_account.dc_t,TI-X
+l10n_ar_account.dc_t_nc,TC-X
+l10n_ar_account.dc_t_c,TF-C
+l10n_ar_account.dc_t_nc_a,TC-A
+l10n_ar_account.dc_t_nc_b,TC-B
+l10n_ar_account.dc_t_nc_c,TC-C
+l10n_ar_account.dc_t_nd_a,TD-A
+l10n_ar_account.dc_t_nd_b,TD-B
+l10n_ar_account.dc_t_nd_c,TD-C
+l10n_ar_account.dc_t_m,TF-M
+l10n_ar_account.dc_t_nc_m,TC-M
+l10n_ar_account.dc_t_nd_m,TD-M

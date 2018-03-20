@@ -4,14 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Gonzalo Ruzafa <gr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-07 15:47+0000\n"
-"PO-Revision-Date: 2017-09-07 15:47+0000\n"
-"Last-Translator: Gonzalo Ruzafa <gr@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2018-03-20 14:34+0000\n"
+"PO-Revision-Date: 2018-03-20 14:34+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:195
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:181
 #, python-format
 msgid "%s VAT Ledger %s - %s"
 msgstr "%s Libro de IVA %s - %s"
@@ -130,11 +129,6 @@ msgstr "Id Moneda"
 #: model:ir.model.fields,help:l10n_ar_account_vat_ledger.field_account_vat_ledger_message_last_post
 msgid "Date of the last message posted on the record."
 msgstr "Fecha del último mensaje en este registro"
-
-#. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_date_range_id
-msgid "Date range"
-msgstr "Rango de Fechas"
 
 #. module: l10n_ar_account_vat_ledger
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_display_name
@@ -315,7 +309,7 @@ msgid "Purchase"
 msgstr "Compra"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:189
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:175
 #, python-format
 msgid "Purchases"
 msgstr "Compras"
@@ -337,7 +331,7 @@ msgid "Sale"
 msgstr "Venta"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:187
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:173
 #, python-format
 msgid "Sales"
 msgstr "Ventas"
@@ -383,13 +377,13 @@ msgid "To Draft"
 msgstr "A Borrador"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:215
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:201
 #, python-format
 msgid "To set \"Presented\" you must set the \"Last Page\" first"
 msgstr "Para establecer \"Presentado\" primero debe setear la \"Última Página\""
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:211
+#: code:addons/l10n_ar_account_vat_ledger/account_vat_report.py:197
 #, python-format
 msgid "To set \"Presented\" you must upload the \"Presented Ledger\" first"
 msgstr "Para establecer \"Presentado\" primero debe subir el \"Libro Presentado\""

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-23 14:12+0000\n"
-"PO-Revision-Date: 2017-09-23 14:12+0000\n"
+"POT-Creation-Date: 2018-03-20 14:34+0000\n"
+"PO-Revision-Date: 2018-03-20 14:34+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -107,7 +107,7 @@ msgid "AFIP Web Services"
 msgstr "Servicios Web de AFIP"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_connection.py:119
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:141
 #, python-format
 msgid "AFIP Webservice %s not implemented yet"
 msgstr "Servicio Web de AFIP %s todavía no implementado"
@@ -157,7 +157,7 @@ msgid "Certificate"
 msgstr "Certificado"
 
 #. module: l10n_ar_afipws
-#: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_certificate_alias_id_2276
+#: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_certificate_alias_id_2237
 msgid "Certificate Alias"
 msgstr "Certificar Alias"
 
@@ -438,6 +438,26 @@ msgid "Service Type"
 msgstr "Tipo de Servicio"
 
 #. module: l10n_ar_afipws
+#: selection:afipws.connection,afip_ws:0
+msgid "Servicio de Consulta de Padrón Alcance 10"
+msgstr ""
+
+#. module: l10n_ar_afipws
+#: selection:afipws.connection,afip_ws:0
+msgid "Servicio de Consulta de Padrón Alcance 100"
+msgstr ""
+
+#. module: l10n_ar_afipws
+#: selection:afipws.connection,afip_ws:0
+msgid "Servicio de Consulta de Padrón Alcance 4"
+msgstr ""
+
+#. module: l10n_ar_afipws
+#: selection:afipws.connection,afip_ws:0
+msgid "Servicio de Consulta de Padrón Alcance 5"
+msgstr ""
+
+#. module: l10n_ar_afipws
 #: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_connection_sign
 msgid "Sign"
 msgstr "Firma"
@@ -450,7 +470,7 @@ msgid "State"
 msgstr "Provincia"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_connection.py:103
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:117
 #, python-format
 msgid ""
 "This method is for %s connections and you call it from an %s connection"
@@ -499,7 +519,7 @@ msgid "Upload Certificate"
 msgstr "Subir Certificado"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_connection.py:76
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:80
 #, python-format
 msgid "Webservice %s not supported"
 msgstr "Servicio web %s no soportado"

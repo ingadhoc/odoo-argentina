@@ -36,7 +36,6 @@
         	                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                                 <!-- <field name="fiscalyear_id" domain="[('company_id','=',company_id)]"/> -->
                                 <!-- <field name="period_id" domain="[('fiscalyear_id','=',fiscalyear_id)]"/> -->
-                                <field name="date_range_id" class="oe_edit_only"/>
                                 <field name="date_from"/>
                                 <field name="date_to"/>
                                 <field name="presented_ledger_name" invisible="1"/>

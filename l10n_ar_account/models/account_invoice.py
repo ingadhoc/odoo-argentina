@@ -361,26 +361,27 @@ class AccountInvoice(models.Model):
 
                 # if invoice_type is refund, only credit notes
                 if invoice_type in ['out_refund', 'in_refund']:
-                    domain += [
+                    domain = [
                         ('document_type_id.internal_type',
                             # '=', 'credit_note')]
                             # TODO, check if we need to add tickets and others
                             # also
-                            'in', ['credit_note', 'in_document'])]
+                            'in', ['credit_note', 'in_document'])] + domain
                 # else, none credit notes
                 else:
-                    domain += [
+                    # usamos not in porque != no funciona bien, no muestra los
+                    # que tienen internal type = False
+                    domain = [
                         ('document_type_id.internal_type',
-                            '!=', 'credit_note')]
+                            'not in', ['credit_note'])] + domain
 
                 # If internal_type in context we try to serch specific document
                 # for eg used on debit notes
                 internal_type = self._context.get('internal_type', False)
                 if internal_type:
                     journal_document_type = journal_document_type.search(
-                        domain + [
-                            ('document_type_id.internal_type',
-                                '=', internal_type)], limit=1)
+                        [('document_type_id.internal_type',
+                            '=', internal_type)] + domain, limit=1)
                 # For domain, we search all documents
                 journal_document_types = journal_document_types.search(domain)
 

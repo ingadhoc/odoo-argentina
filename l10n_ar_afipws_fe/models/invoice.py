@@ -181,7 +181,7 @@ class AccountInvoice(models.Model):
         """
         self.ensure_one()
         rel_invoices = self.search([
-            ('number', '=', self.origin),
+            ('document_number', '=', self.origin),
             ('state', 'not in',
                 ['draft', 'proforma', 'proforma2', 'cancel'])])
         return rel_invoices

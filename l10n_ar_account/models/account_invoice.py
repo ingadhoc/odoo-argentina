@@ -14,6 +14,13 @@ _logger = logging.getLogger(__name__)
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
+    afip_invoice_concepts = [
+        ('1', 'Producto / Exportación definitiva de bienes'),
+        ('2', 'Servicios'),
+        ('3', 'Productos y Servicios'),
+        ('4', '4-Otros (exportación)'),
+    ]
+
     main_id_number = fields.Char(
         related='commercial_partner_id.main_id_number',
         readonly=True,
@@ -141,14 +148,24 @@ class AccountInvoice(models.Model):
     # TODO mejorar, este concepto deberia quedar fijo y no poder modificarse
     # una vez validada, cosa que pasaria por ej si cambias el producto
     afip_concept = fields.Selection(
-        compute='_get_concept',
+        compute='_compute_concept',
+        inverse='_inverse_concept',
         # store=True,
-        selection=[('1', 'Producto / Exportación definitiva de bienes'),
-                   ('2', 'Servicios'),
-                   ('3', 'Productos y Servicios'),
-                   ('4', '4-Otros (exportación)'),
-                   ],
+        selection=afip_invoice_concepts,
         string="AFIP concept",
+        help="Se sugiere un concepto en función a la configuración de los "
+        "productos (tipo servicio, consumible o almacenable) pero se puede "
+        "cambiar este valor si lo requiere.",
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+    )
+    # la idea es incorporar la posibilidad de forzar otro concepto distinto
+    # al sugerido, para no complicarla y ser compatible hacia atras de manera
+    # simple, agregamos este otro campo
+    force_afip_concept = fields.Selection(
+        selection=afip_invoice_concepts,
+        string="AFIP concept",
+        readonly=True,
     )
     afip_service_start = fields.Date(
         string='Service Start Date',
@@ -257,37 +274,62 @@ class AccountInvoice(models.Model):
                 rec.point_of_sale_number = int(
                     re.sub("[^0-9]", "", point_of_sale))
 
-    @api.one
+    @api.multi
+    def _inverse_concept(self):
+        for rec in self:
+            if rec._get_concept() == rec.afip_concept:
+                rec.force_afip_concept = False
+            else:
+                rec.force_afip_concept = rec.afip_concept
+
+    @api.multi
+    def _get_concept(self):
+        """
+        Metodo para obtener el concepto en funcion a los productos de una
+        factura, luego es utilizado por los metodos inverse y compute del campo
+        afip_concept
+        """
+        self.ensure_one()
+        invoice_lines = self.invoice_line_ids
+        product_types = set([
+            x.product_id.type for x in invoice_lines
+            if x.product_id])
+        consumible = set(['consu', 'product'])
+        service = set(['service'])
+        mixed = set(['consu', 'service', 'product'])
+        # default value "product"
+        afip_concept = '1'
+        if product_types.issubset(mixed):
+            afip_concept = '3'
+        if product_types.issubset(service):
+            afip_concept = '2'
+        if product_types.issubset(consumible):
+            afip_concept = '1'
+        if self.document_type_id.code in ['19', '20', '21']:
+            # TODO verificar esto, como par expo no existe 3 y
+            # existe 4 (otros), considermaos que un mixto seria
+            # el otros
+            if afip_concept == '3':
+                afip_concept = '4'
+        return afip_concept
+
+    @api.multi
     @api.depends(
         'invoice_line_ids',
         'invoice_line_ids.product_id',
         'invoice_line_ids.product_id.type',
         'localization',
+        'force_afip_concept',
     )
-    def _get_concept(self):
-        afip_concept = False
-        if self.point_of_sale_type in ['online', 'electronic']:
-            # exportaciones
-            invoice_lines = self.invoice_line_ids
-            product_types = set(
-                [x.product_id.type for x in invoice_lines if x.product_id])
-            consumible = set(['consu', 'product'])
-            service = set(['service'])
-            mixed = set(['consu', 'service', 'product'])
-            # default value "product"
-            afip_concept = '1'
-            if product_types.issubset(mixed):
-                afip_concept = '3'
-            if product_types.issubset(service):
-                afip_concept = '2'
-            if product_types.issubset(consumible):
-                afip_concept = '1'
-            if self.document_type_id.code in ['19', '20', '21']:
-                # TODO verificar esto, como par expo no existe 3 y existe 4
-                # (otros), considermaos que un mixto seria el otros
-                if afip_concept == '3':
-                    afip_concept = '4'
-        self.afip_concept = afip_concept
+    def _compute_concept(self):
+        for rec in self:
+            afip_concept = False
+            if rec.point_of_sale_type in ['online', 'electronic']:
+                if rec.force_afip_concept:
+                    afip_concept = rec.force_afip_concept
+                else:
+                    afip_concept = rec._get_concept()
+            rec.afip_concept = afip_concept
 
     # TODO borrar o implementar. Al final usamos el currency rate que
     # almacenamos porque es muy inexacto calcularlo ya que se pierde

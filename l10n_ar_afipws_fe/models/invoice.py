@@ -180,11 +180,16 @@ class AccountInvoice(models.Model):
         List related invoice information to fill CbtesAsoc.
         """
         self.ensure_one()
-        rel_invoices = self.search([
-            ('document_number', '=', self.origin),
-            ('state', 'not in',
-                ['draft', 'proforma', 'proforma2', 'cancel'])])
-        return rel_invoices
+        if self.origin:
+            return self.search([
+                ('commercial_partner_id', '=', self.commercial_partner_id.id),
+                ('company_id', '=', self.company_id.id),
+                ('document_number', '=', self.origin),
+                ('state', 'not in',
+                    ['draft', 'proforma', 'proforma2', 'cancel'])],
+                limit=1)
+        else:
+            return self.browse()
 
     @api.multi
     def invoice_validate(self):

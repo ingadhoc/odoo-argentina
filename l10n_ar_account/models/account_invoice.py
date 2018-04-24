@@ -564,6 +564,44 @@ class AccountInvoice(models.Model):
         #             "Invoice with ID %i has some lines without vat Tax ") % (
         #                 invoice.id))
 
+        # verificamos facturas de compra que deben reportar cuit y no lo tienen
+        # configurado
+        without_cuit = argentinian_invoices.filtered(
+            lambda x: x.type in ['in_invoice', 'in_refund'] and
+            x.document_type_id.purchase_cuit_required and
+            not x.commercial_partner_id.cuit)
+        if without_cuit:
+            raise ValidationError(_(
+                'Las siguientes partners no tienen configurado CUIT: %s') % (
+                    ', '.join(
+                        without_cuit.mapped('commercial_partner_id.name'))
+                ))
+
+        # facturas que no debería tener ningún iva y tienen
+        not_zero_alicuot = argentinian_invoices.filtered(
+            lambda x: x.type in ['in_invoice', 'in_refund'] and
+            x.document_type_id.purchase_alicuots == 'zero' and
+            any([t.tax_id.tax_group_id.afip_code != 0 for t in x.vat_tax_ids]))
+        if not_zero_alicuot:
+            raise ValidationError(_(
+                'Las siguientes facturas tienen configurados IVA incorrecto.'
+                'Debe utilizar IVA no corresponde.\n*Facturas: %s') % (
+                    ', '.join(not_zero_alicuot.mapped('display_name'))
+                ))
+
+        # facturas que debería tener iva y tienen no corresponde
+        zero_alicuot = argentinian_invoices.filtered(
+            lambda x: x.type in ['in_invoice', 'in_refund'] and
+            x.document_type_id.purchase_alicuots == 'not_zero' and
+            any([t.tax_id.tax_group_id.afip_code == 0 for t in x.vat_tax_ids]))
+        if zero_alicuot:
+            raise ValidationError(_(
+                'Las siguientes facturas tienen IVA no corresponde pero debe '
+                'seleccionar una alícuota correcta (No gravado, Exento, Cero, '
+                '10,5, etc).\n*Facturas: %s') % (
+                    ', '.join(zero_alicuot.mapped('display_name'))
+                ))
+
         # Check except vat invoice
         afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
         for invoice in argentinian_invoices:

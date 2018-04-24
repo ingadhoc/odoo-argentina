@@ -9,6 +9,8 @@
             <field name="arch" type="xml">
                 <field name='doc_code_prefix' position="after">
                     <field name='document_letter_id'/>
+                    <field name='purchase_cuit_required'/>
+                    <field name='purchase_alicuots'/>
                 </field>
             </field>
         </record>

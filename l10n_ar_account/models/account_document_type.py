@@ -10,6 +10,14 @@ class AccountDocmentType(models.Model):
         'account.document.letter',
         'Document Letter'
     )
+    purchase_cuit_required = fields.Boolean(
+        help='Verdadero si la declaración del CITI compras requiere informar '
+        'CUIT'
+    )
+    purchase_alicuots = fields.Selection(
+        [('not_zero', 'No Cero'), ('zero', 'Cero')],
+        help='Cero o No cero según lo requiere la declaración del CITI compras'
+    )
 
     @api.multi
     def get_document_sequence_vals(self, journal):

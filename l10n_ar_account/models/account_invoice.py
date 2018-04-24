@@ -584,7 +584,7 @@ class AccountInvoice(models.Model):
             any([t.tax_id.tax_group_id.afip_code != 0 for t in x.vat_tax_ids]))
         if not_zero_alicuot:
             raise ValidationError(_(
-                'Las siguientes facturas tienen configurados IVA incorrecto.'
+                'Las siguientes facturas tienen configurados IVA incorrecto. '
                 'Debe utilizar IVA no corresponde.\n*Facturas: %s') % (
                     ', '.join(not_zero_alicuot.mapped('display_name'))
                 ))

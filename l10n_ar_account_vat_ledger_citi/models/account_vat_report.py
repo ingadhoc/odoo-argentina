@@ -532,7 +532,8 @@ class account_vat_ledger(models.Model):
 
             if not vat_taxes and inv.vat_tax_ids.filtered(
                     lambda r: r.tax_id.tax_group_id.afip_code):
-                lines.append(''.join(self.get_tax_row(inv, 0.0, 3, 0.0)))
+                lines.append(''.join(self.get_tax_row(
+                    inv, 0.0, 3, 0.0, impo=impo)))
 
             # we group by afip_code
             for afip_code in vat_taxes.mapped('tax_id.tax_group_id.afip_code'):

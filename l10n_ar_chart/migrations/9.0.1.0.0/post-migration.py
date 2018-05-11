@@ -53,14 +53,21 @@ def set_iva_no_corresponde(env):
                 'sequence': 2,
                 'amount': 0.0,
             })
+        # lo agregamos solo a facturas c y analogas ya que las otras deberian
+        # llevar algun otro iva y si no lo tenian ya estaban mal en v8
         lines = env['account.invoice.line'].search([
             ('invoice_id.company_id.localization', '=', 'argentina'),
             ('invoice_line_tax_ids', '=', False),
             ('company_id', '=', company.id),
             ('invoice_id.journal_id.use_documents', '=', True),
+            ('invoice_id.document_type_id.purchase_alicuots', '=', 'zero'),
             ('invoice_id.type', 'in', ['in_invoice', 'in_refund'])])
         lines.write({'invoice_line_tax_ids': [(6, False, [tax.id])]})
-        lines.mapped('invoice_id').compute_taxes()
+        # forzamos recomputo porque serian comprobante c y analogos a los que
+        # las percepciones y otros impuestos se les agregaban tipo manual
+        # y entonces no se van a recomputar
+        lines.mapped('invoice_id').with_context(
+            force_compute_taxes=True).compute_taxes()
 
 
 def migrate_fiscal_positions(env):

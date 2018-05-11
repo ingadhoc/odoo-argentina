@@ -180,7 +180,13 @@ class AccountInvoice(models.Model):
         List related invoice information to fill CbtesAsoc.
         """
         self.ensure_one()
-        if self.origin:
+        # for now we only get related document for debit and credit notes
+        # because, for eg, an invoice can not be related to an invocie and
+        # that happens if you choose the modify option of the credit note
+        # wizard. A mapping of which documents can be reported as related
+        # documents would be a better solution
+        if self.document_type_internal_type in ['debit_note', 'credit_note'] \
+                and self.origin:
             return self.search([
                 ('commercial_partner_id', '=', self.commercial_partner_id.id),
                 ('company_id', '=', self.company_id.id),

@@ -64,6 +64,7 @@
                                         <field name="amount_untaxed"/>
                                         <field name="amount_tax"/>
                                         <field name="amount_total"/>
+                                        <field name="currency_id" invisible="1"/>
                                     </tree>
                                 </field>
                             </page>

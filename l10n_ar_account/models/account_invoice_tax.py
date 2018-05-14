@@ -3,8 +3,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, api, _
-from openerp.exceptions import ValidationError
+from odoo import models, api, _
+from odoo.exceptions import ValidationError
 import logging
 _logger = logging.getLogger(__name__)
 

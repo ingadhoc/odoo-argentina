@@ -3,10 +3,10 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, api, _
+from odoo import fields, models, api, _
 import logging
-from openerp.exceptions import UserError
-import openerp.tools as tools
+from odoo.exceptions import UserError
+import odoo.tools as tools
 import os
 import hashlib
 import time

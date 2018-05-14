@@ -3,7 +3,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields
+from odoo import models, fields
 import logging
 
 _logger = logging.getLogger(__name__)

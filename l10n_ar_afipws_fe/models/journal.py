@@ -3,10 +3,10 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, api, fields, _
+from odoo import models, api, fields, _
 import logging
-from openerp.exceptions import UserError
-from openerp.addons.l10n_ar_account.models import account_journal
+from odoo.exceptions import UserError
+from odoo.addons.l10n_ar_account.models import account_journal
 
 _logger = logging.getLogger(__name__)
 

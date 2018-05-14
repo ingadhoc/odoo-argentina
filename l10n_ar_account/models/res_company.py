@@ -3,8 +3,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, api
-from openerp.addons.account_document.models.res_company import ResCompany
+from odoo import fields, models, api
+from odoo.addons.account_document.models.res_company import ResCompany
 
 localizations = ResCompany._localization_selection
 new_selection = localizations.append(('argentina', 'Argentina'))

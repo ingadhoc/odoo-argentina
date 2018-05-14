@@ -3,7 +3,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, api
+from odoo import fields, models, api
 try:
     from OpenSSL import crypto
 except ImportError:

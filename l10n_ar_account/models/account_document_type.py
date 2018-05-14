@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, api, fields
-# from openerp.exceptions import UserError
+from odoo import models, api, fields
+# from odoo.exceptions import UserError
 
 
 class AccountDocmentType(models.Model):

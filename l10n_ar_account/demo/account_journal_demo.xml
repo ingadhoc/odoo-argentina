@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="0">
 
         <!-- we create this two journals so that demo invoices and demo data is loaded on them. It is very difficult to make native demo and test data to work with argentinian checks. -->
@@ -24,4 +24,4 @@
             <field name="show_on_dashboard" eval="False"/>
         </record>
     </data>
-</openerp> 
+</odoo> 

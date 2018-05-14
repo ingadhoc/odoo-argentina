@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="0">
         <!-- Chart template -->
         <record id="l10nar_ri_chart_template" model="account.chart.template">
@@ -77,4 +77,4 @@
             </record>
 
     </data>
-</openerp>
+</odoo>

@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from openerp import tools, models, fields, api, _
+from odoo import tools, models, fields, api, _
 # from ast import literal_eval
 
 

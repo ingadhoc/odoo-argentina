@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     "name": "Argentinian VAT Ledger Management",
     'version': '9.0.1.7.0',
@@ -24,8 +23,6 @@
         'security/ir.model.access.csv',
     ],
     'demo': [
-    ],
-    'test': [
     ],
     'images': [
     ],

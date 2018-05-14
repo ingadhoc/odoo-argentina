@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="0">
         <!-- agregamos impuesto no gravado a productos de data ya que en data no fuciona porque todavia no esta instalado plan de cuentas, aca si porque justamente esto lo carga el plan de cuentas -->
 
@@ -79,4 +79,4 @@
         </record>
 
     </data>
-</openerp>
+</odoo>

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
@@ -20,7 +19,7 @@
 ##############################################################################
 {
     'name': 'More demo data for Argentina Localization',
-    'version': '9.0.1.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Accounting',
     'sequence': 14,
     'summary': '',
@@ -30,7 +29,7 @@
     'images': [
     ],
     'depends': [
-        'account_accountant',
+        'account_invoicing',
         'l10n_ar_afipws_fe',
         'l10n_ar_chart',
         'l10n_ar_account_withholding',
@@ -75,8 +74,6 @@
         # idem para las de expo
         # '../l10n_ar_account/demo/account_customer_invoice_demo.yml',
         '../l10n_ar_afipws_fe/demo/account_journal_demo_without_doc.yml',
-    ],
-    'test': [
     ],
     'installable': False,
     'auto_install': False,

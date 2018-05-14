@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, api
-from openerp.tools.safe_eval import safe_eval
+from odoo import fields, models, api
+from odoo.tools.safe_eval import safe_eval
 
 
 class SaleConfiguration(models.TransientModel):

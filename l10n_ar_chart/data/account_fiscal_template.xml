@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data>
 
 <!-- SOLO RI por ahora, si se necesita para ex o mono tenemos que hacer nuevas por mapeo de impuestos -->
@@ -145,4 +145,4 @@
             <field name="tax_dest_id" ref="ri_tax_vat_no_corresponde_compras"/>
         </record>
     </data>
-</openerp>
+</odoo>

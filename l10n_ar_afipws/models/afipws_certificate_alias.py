@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, api
+from odoo import fields, models, api
 try:
     from OpenSSL import crypto
 except ImportError:
@@ -109,7 +108,7 @@ class AfipwsCertificateAlias(models.Model):
         ('draft', 'Draft'),
         ('confirmed', 'Confirmed'),
         ('cancel', 'Cancelled'),
-    ], 'State', select=True, readonly=True, default='draft',
+    ], 'State', index=True, readonly=True, default='draft',
         help="* The 'Draft' state is used when a user is creating a new pair "
         "key. Warning: everybody can see the key."
         "\n* The 'Confirmed' state is used when the key is completed with "

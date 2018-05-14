@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import SUPERUSER_ID
+from odoo import SUPERUSER_ID
 
-from openerp.addons import account
+from odoo.addons import account
 old_auto_install_l10n = account._auto_install_l10n
 
 

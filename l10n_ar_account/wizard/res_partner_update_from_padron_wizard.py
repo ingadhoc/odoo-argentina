@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
-from openerp import models, api, fields, _
+from odoo import models, api, fields, _
 from ast import literal_eval
-from openerp.exceptions import UserError
+from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -171,7 +170,7 @@ class res_partner_update_from_padron_wizard(models.TransientModel):
                     lines.append((0, False, line_vals))
             self.field_ids = lines
 
-    # @mute_logger('openerp.osv.expression', 'openerp.models')
+    # @mute_logger('odoo.osv.expression', 'odoo.models')
     @api.multi
     def _update(self):
         self.ensure_one()

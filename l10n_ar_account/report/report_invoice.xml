@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
 <data>
 <template id="report_invoice_document" inherit_id="account.report_invoice_document" name="Argentina Invoice">
         <xpath expr="//span[@t-field='o.number']" position="replace">
@@ -32,4 +32,4 @@
         </xpath>
 </template>
 </data>
-</openerp>
+</odoo>

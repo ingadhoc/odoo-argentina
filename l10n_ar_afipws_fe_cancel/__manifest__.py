@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
@@ -20,7 +19,7 @@
 ##############################################################################
 {
     "name": "Integration between electronic invoice and account cancel",
-    'version': '9.0.1.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Odoo Community Association (OCA)',
@@ -41,8 +40,6 @@ Integration between electronic invoice and account cancel
         'views/invoice_view.xml',
     ],
     'demo': [
-    ],
-    'test': [
     ],
     'installable': False,
     'auto_install': True,

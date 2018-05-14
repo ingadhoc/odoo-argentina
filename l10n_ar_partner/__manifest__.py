@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     'author': "Moldeo Interactive,ADHOC SA,Odoo Community Association (OCA)",
     'category': 'Localization/Argentina',

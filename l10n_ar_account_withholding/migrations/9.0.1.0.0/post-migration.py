@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 from openupgradelib import openupgrade
 import logging
-# from openerp.exceptions import ValidationError
+# from odoo.exceptions import ValidationError
 _logger = logging.getLogger(__name__)
 
 

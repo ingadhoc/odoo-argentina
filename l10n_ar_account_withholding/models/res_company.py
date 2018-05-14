@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
-from openerp import models, fields, api, _
-# import openerp.tools as tools
+from odoo import models, fields, api, _
+# import odoo.tools as tools
 try:
     from pyafipws.iibb import IIBB
 except ImportError:
     IIBB = None
 # from pyafipws.padron import PadronAFIP
-from openerp.exceptions import UserError
+from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 

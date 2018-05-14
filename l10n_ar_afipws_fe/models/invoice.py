@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
 from .pyi25 import PyI25
-from openerp import fields, models, api, _
-from openerp.exceptions import UserError
-from cStringIO import StringIO as StringIO
+from odoo import fields, models, api, _
+from odoo.exceptions import UserError
+from io import StringIO as StringIO
 import logging
 import sys
 import traceback
@@ -346,7 +345,7 @@ print "Observaciones:", wscdc.Obs
             except SoapFault as fault:
                 msg = 'Falla SOAP %s: %s' % (
                     fault.faultcode, fault.faultstring)
-            except Exception, e:
+            except Exception as e:
                 msg = e
             except Exception:
                 if ws.Excepcion:
@@ -686,7 +685,7 @@ print "Observaciones:", wscdc.Obs
             except SoapFault as fault:
                 msg = 'Falla SOAP %s: %s' % (
                     fault.faultcode, fault.faultstring)
-            except Exception, e:
+            except Exception as e:
                 msg = e
             except Exception:
                 if ws.Excepcion:

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     'name': 'Argentina - Planes Contables',
     'author': 'Moldeo Interactive,ADHOC SA,Odoo Community Association (OCA)',
@@ -10,7 +9,6 @@
         'account_withholding',
         'account_check',
     ],
-    'test': [],
     'data': [
         'data/account_chart_base.xml',
         'data/account_chart_template.xml',

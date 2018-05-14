@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="1">
         <!-- update symbol to common use in argentina -->
         <record id="base.USD" model="res.currency">
@@ -24,4 +24,4 @@
             <!-- <field name="rounding" eval="0.001"/> -->
         </record>
     </data>
-</openerp>
+</odoo>

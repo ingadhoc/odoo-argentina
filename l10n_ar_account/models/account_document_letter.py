@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from openerp import models, fields
+from odoo import models, fields
 
 
 class AccountDocumentLetter(models.Model):

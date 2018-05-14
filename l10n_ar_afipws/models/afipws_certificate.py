@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp.exceptions import UserError
-from openerp import fields, models, api, _
+from odoo.exceptions import UserError
+from odoo import fields, models, api, _
 try:
     from OpenSSL import crypto
 except ImportError:
@@ -44,7 +43,7 @@ class AfipwsCertificate(models.Model):
         ('cancel', 'Cancelled'),
     ],
         'State',
-        select=True,
+        index=True,
         readonly=True,
         default='draft',
         help="* The 'Draft' state is used when a user is creating a new pair "
@@ -122,7 +121,7 @@ class AfipwsCertificate(models.Model):
             try:
                 certificate = crypto.load_certificate(
                     crypto.FILETYPE_PEM, self.crt.encode('ascii'))
-            except Exception, e:
+            except Exception as e:
                 if 'Expecting: CERTIFICATE' in e[0]:
                     raise UserError(_(
                         'Wrong Certificate file format.\nBe sure you have '

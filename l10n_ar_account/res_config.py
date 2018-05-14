@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
-from openerp import models, api, _
-from openerp.exceptions import UserError
-# from openerp.addons.l10n_ar_account.models import account_journal
+from odoo import models, api, _
+from odoo.exceptions import UserError
+# from odoo.addons.l10n_ar_account.models import account_journal
 try:
     from pyafipws.padron import PadronAFIP
 except ImportError:

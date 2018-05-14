@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
-from openerp import models, fields, api, _
-from openerp.exceptions import UserError
-from openerp.tools.safe_eval import safe_eval
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
+from odoo.tools.safe_eval import safe_eval
 
 
 class ResPartnerIdNumber(models.Model):

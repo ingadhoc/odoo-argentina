@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="1">
         <record id="afipws_certificate_alias_multi_company_rule" model="ir.rule">
                 <field name="name">Afipws Certificate Alias Multi-company</field>
@@ -22,4 +22,4 @@
                 <field name="domain_force">[('alias_id.company_id','child_of',[user.company_id.id])]</field>
         </record>
     </data>
-</openerp>
+</odoo>

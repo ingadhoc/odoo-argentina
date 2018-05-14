@@ -1,4 +1,4 @@
-<openerp>
+<odoo>
     <data noupdate="1">
         <!-- set ars as base currency and update usd and eur currency for 11/11/2016 -->
 
@@ -17,4 +17,4 @@
             <field name="rate">0.058823</field>
         </record> -->
     </data>
-</openerp>
+</odoo>

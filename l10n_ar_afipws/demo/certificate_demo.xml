@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 
         <record id="main_company_certificate_alias" model="afipws.certificate_alias">
@@ -87,4 +87,4 @@ LkKwIfpEEu65VFXfdbZ1iLKoHligJaJuq4gUa44aoI3de3KHGGzxDLbwMZOdmuPYj9PK9ll7Tq+4
 </field>
         </record>
     </data>
-</openerp>
+</odoo>

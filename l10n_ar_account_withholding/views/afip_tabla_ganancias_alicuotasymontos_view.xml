@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 
 <!--         <record id="view_afip_tabla_ganancias_alicuotasymontos_form" model="ir.ui.view">
@@ -42,6 +42,6 @@
         <menuitem name="Alicuotas y Montos Ganancias" action="act_afip_tabla_ganancias_alicuotasymontos" id="menu_action_afip_tabla_ganancias_alicuotasymontos" sequence="95" parent="l10n_ar_account.menu_afip_config"/>
 
     </data>
-</openerp>
+</odoo>
 <!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
      -->

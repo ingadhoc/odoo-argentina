@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 
         <record id="view_afip_activity_form" model="ir.ui.view">
@@ -38,6 +38,6 @@
         <menuitem name="Activities" action="act_afip_activity" id="menu_action_afip_activity" sequence="30" parent="l10n_ar_account.menu_afip_config"/>
 
     </data>
-</openerp>
+</odoo>
 <!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4
      -->

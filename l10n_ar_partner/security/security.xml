@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
 <data noupdate="0">
     <record id="group_multiple_id_numbers" model="res.groups">
         <field name="name">Allow Multiple Id Numbers on Partners</field>
         <field name="category_id" ref="base.module_category_hidden"/>
     </record>
 </data>
-</openerp>
+</odoo>

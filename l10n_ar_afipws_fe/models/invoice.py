@@ -346,7 +346,7 @@ print "Observaciones:", wscdc.Obs
             except SoapFault as fault:
                 msg = 'Falla SOAP %s: %s' % (
                     fault.faultcode, fault.faultstring)
-            except Exception, e:
+            except Exception as e:
                 msg = e
             except Exception:
                 if ws.Excepcion:
@@ -686,7 +686,7 @@ print "Observaciones:", wscdc.Obs
             except SoapFault as fault:
                 msg = 'Falla SOAP %s: %s' % (
                     fault.faultcode, fault.faultstring)
-            except Exception, e:
+            except Exception as e:
                 msg = e
             except Exception:
                 if ws.Excepcion:

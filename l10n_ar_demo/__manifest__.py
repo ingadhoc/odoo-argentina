@@ -29,7 +29,7 @@
     'images': [
     ],
     'depends': [
-        'account_accountant',
+        'account_invoicing',
         'l10n_ar_afipws_fe',
         'l10n_ar_chart',
         'l10n_ar_account_withholding',

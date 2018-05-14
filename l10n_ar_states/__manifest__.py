@@ -1,6 +1,6 @@
 {
     "name": "Listado de provincias Argentinas",
-    'version': '9.0.1.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Odoo Community Association (OCA)',
@@ -15,8 +15,6 @@
         'data/res_country_state.xml',
     ],
     'demo': [
-    ],
-    'test': [
     ],
     'images': [
     ],

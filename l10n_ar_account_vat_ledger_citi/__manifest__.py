@@ -18,8 +18,6 @@
     ],
     'demo': [
     ],
-    'test': [
-    ],
     'images': [
     ],
     'installable': False,

@@ -108,7 +108,7 @@ class AfipwsCertificateAlias(models.Model):
         ('draft', 'Draft'),
         ('confirmed', 'Confirmed'),
         ('cancel', 'Cancelled'),
-    ], 'State', select=True, readonly=True, default='draft',
+    ], 'State', index=True, readonly=True, default='draft',
         help="* The 'Draft' state is used when a user is creating a new pair "
         "key. Warning: everybody can see the key."
         "\n* The 'Confirmed' state is used when the key is completed with "

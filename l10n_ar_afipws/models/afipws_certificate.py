@@ -43,7 +43,7 @@ class AfipwsCertificate(models.Model):
         ('cancel', 'Cancelled'),
     ],
         'State',
-        select=True,
+        index=True,
         readonly=True,
         default='draft',
         help="* The 'Draft' state is used when a user is creating a new pair "

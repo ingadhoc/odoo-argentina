@@ -42,7 +42,7 @@ def post_init_hook(cr, registry):
     This module's DB modifications will be available.
     :param openerp.sql_db.Cursor cr:
         Database cursor.
-    :param openerp.modules.registry.RegistryManager registry:
+    :param openerp.modules.registry.Registry registry:
         Database registry, using v7 api.
     """
     _logger.info('Post init hook initialized')

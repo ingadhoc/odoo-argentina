@@ -6,7 +6,7 @@
 from .pyi25 import PyI25
 from openerp import fields, models, api, _
 from openerp.exceptions import UserError
-from cStringIO import StringIO as StringIO
+from io import StringIO as StringIO
 import logging
 import sys
 import traceback

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from odoo import models, api, _
 from odoo.exceptions import UserError
 # from odoo.addons.l10n_ar_account.models import account_journal

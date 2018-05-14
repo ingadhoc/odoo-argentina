@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from odoo import tools, models, fields, api, _
 # from ast import literal_eval
 

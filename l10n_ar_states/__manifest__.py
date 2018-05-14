@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     "name": "Listado de provincias Argentinas",
     'version': '9.0.1.0.0',

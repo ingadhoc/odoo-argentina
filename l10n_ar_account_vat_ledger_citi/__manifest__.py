@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     "name": "Argentinian CITI Reports",
     'version': '9.0.1.3.0',

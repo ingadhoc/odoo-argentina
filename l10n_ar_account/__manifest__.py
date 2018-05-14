@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     "name": "Módulo base de Contabilidad Argentina",
     'version': '9.0.1.30.0',

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     'name': 'Argentina - Planes Contables',
     'author': 'Moldeo Interactive,ADHOC SA,Odoo Community Association (OCA)',

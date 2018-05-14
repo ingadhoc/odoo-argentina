@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     'name': 'Modulo Base para los Web Services de AFIP',
     'version': '9.0.1.3.0',

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     "name": "Factura Electrónica Argentina",
     'version': '9.0.1.3.0',

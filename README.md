@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/ingadhoc/odoo-argentina/badge.png?branch=11.0)](https://coveralls.io/r/ingadhoc/odoo-argentina?branch=11.0)
 [![Code Climate](https://codeclimate.com/github/ingadhoc/odoo-argentina/badges/gpa.svg)](https://codeclimate.com/github/ingadhoc/odoo-argentina)
 
-# ADHOC odoo-argentina (UNSTABLE, we recommend to use v9 for now)
+# ADHOC odoo-argentina
 
 ADHOC Odoo odoo-argentina Modules
 

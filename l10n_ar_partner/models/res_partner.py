@@ -28,7 +28,7 @@ class ResPartner(models.Model):
     # )
     main_id_number = fields.Char(
         compute='_compute_main_id_number',
-        inverse='_set_main_id_number',
+        inverse='_inverse_main_id_number',
         store=True,
         string='Main Identification Number',
     )
@@ -104,7 +104,7 @@ class ResPartner(models.Model):
                 partner.main_id_number = id_numbers[0].name
 
     @api.multi
-    def _set_main_id_number(self):
+    def _inverse_main_id_number(self):
         for partner in self:
             name = partner.main_id_number
             category_id = partner.main_id_category_id

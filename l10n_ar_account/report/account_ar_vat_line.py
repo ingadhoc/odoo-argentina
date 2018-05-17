@@ -180,9 +180,9 @@ class AccountArVatLine(models.Model):
             'type': 'ir.actions.act_window',
         }
 
-    # TODO usar en v10
-    # @api.model_cr
-    def init(self, cr):
+    @api.model_cr
+    def init(self):
+        cr = self.env.cr
         tools.drop_view_if_exists(cr, self._table)
         env = api.Environment(cr, 1, {})
         ref = env.ref
@@ -296,5 +296,5 @@ GROUP BY
     ai.type
         """ % vals
 
-        cr.execute("""CREATE or REPLACE VIEW %s as (%s
-        )""" % (self._table, query))
+        sql = """CREATE or REPLACE VIEW %s as (%s)""" % (self._table, query)
+        cr.execute(sql)

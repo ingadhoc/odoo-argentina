@@ -218,8 +218,8 @@ msgid "Analytic Account"
 msgstr "Cuenta Analítica"
 
 #. module: l10n_ar_account
-#: model:product.product,name:l10n_ar_account.product_product_cero
-#: model:product.template,name:l10n_ar_account.product_product_cero_product_template
+#: model:product.product,name:l10n_ar_chart.product_product_cero
+#: model:product.template,name:l10n_ar_chart.product_product_cero_product_template
 msgid "Animales y vegetales no industrializados (IVA cero)"
 msgstr "Animales y vegetales no industrializados (IVA cero)"
 
@@ -394,8 +394,8 @@ msgid "Comprobante"
 msgstr "Comprobante"
 
 #. module: l10n_ar_account
-#: model:product.product,name:l10n_ar_account.product_product_no_gravado
-#: model:product.template,name:l10n_ar_account.product_product_no_gravado_product_template
+#: model:product.product,name:l10n_ar_chart.product_product_no_gravado
+#: model:product.template,name:l10n_ar_chart.product_product_no_gravado_product_template
 msgid "Conceptos no gravados (IVA NG)"
 msgstr "Conceptos no gravados (IVA NG)"
 
@@ -1584,8 +1584,8 @@ msgid "Servicio de Guarda"
 msgstr "Servicio de Guarda"
 
 #. module: l10n_ar_account
-#: model:product.product,name:l10n_ar_account.product_product_telefonia
-#: model:product.template,name:l10n_ar_account.product_product_telefonia_product_template
+#: model:product.product,name:l10n_ar_chart.product_product_telefonia
+#: model:product.template,name:l10n_ar_chart.product_product_telefonia_product_template
 msgid "Servicio de telefonía (IVA 27)"
 msgstr "Servicio de telefonía (IVA 27%)"
 

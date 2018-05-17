@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_config_settings" model="ir.ui.view">
+        <field name="name">crm settings</field>
+        <field name="model">sale.config.settings</field>
+        <field name="inherit_id" ref="sales_team.view_sale_config_settings"/>
+        <field name="arch" type="xml">
+            <div id="main" position="inside">
+                <group string="Partners">
+                    <field name="group_multiple_id_numbers"/>
+                    <field name="unique_id_numbers"/>
+                </group>
+            </div>
+        </field>
+    </record>
+</odoo>

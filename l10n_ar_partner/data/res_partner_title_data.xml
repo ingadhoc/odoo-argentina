@@ -42,11 +42,6 @@
             <field name="shortcut">Lic.</field>
         </record>
 
-        <record model="res.partner.title" id="doc">
-            <field name="name">Doctor</field>
-            <field name="shortcut">Doc.</field>
-        </record>
-
         <record model="res.partner.title" id="med">
             <field name="name">Médico</field>
             <field name="shortcut">Med.</field>

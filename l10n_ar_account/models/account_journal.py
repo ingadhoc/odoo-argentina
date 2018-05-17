@@ -136,8 +136,9 @@ class AccountJournal(models.Model):
         elif journal_type == 'purchase':
             resp_field = 'receptor_ids'
         else:
-            raise UserError('Letters not implemented for journal type %s' % (
-                journal_type))
+            raise UserError(_(
+                'Letters not implemented for journal type %s' % (
+                    journal_type)))
         letters = self.env['account.document.letter'].search([
             '|', (resp_field, '=', responsability.id),
             (resp_field, '=', False)])

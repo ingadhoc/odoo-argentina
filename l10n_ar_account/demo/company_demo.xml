@@ -20,7 +20,7 @@
             <field name="street">Calle Falsa 123</field>
             <field name="city">Rosario</field>
             <field name="country_id" ref="base.ar"/>
-            <field name="state_id" ref="l10n_ar_states.S"/>
+            <field name="state_id" ref="base.state_ar_s"/>
             <field name="zip">2000</field>
             <field name="phone">+1 555 123 8069</field>
             <field name="email">info@yourcompany.example.com</field>
@@ -55,7 +55,7 @@
             <field name="street">Soyexento 123</field>
             <field name="city">Rosario</field>
             <field name="country_id" ref="base.ar"/>
-            <field name="state_id" ref="l10n_ar_states.S"/>
+            <field name="state_id" ref="base.state_ar_s"/>
             <field name="zip">2000</field>
             <field name="phone">+1 555 123 8069</field>
             <field name="email">info@exento.example.com</field>

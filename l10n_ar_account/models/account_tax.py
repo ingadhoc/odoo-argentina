@@ -49,23 +49,24 @@ class AccountTaxGroup(models.Model):
     )
     application_code = fields.Char(
         'Application Code',
-        compute='get_application_code',
+        compute='_compute_application_code',
     )
 
-    @api.one
+    @api.multi
     @api.depends('application')
-    def get_application_code(self):
-        if self.application == 'national_taxes':
-            application_code = '01'
-        elif self.application == 'provincial_taxes':
-            application_code = '02'
-        elif self.application == 'municipal_taxes':
-            application_code = '03'
-        elif self.application == 'internal_taxes':
-            application_code = '04'
-        else:
-            application_code = '99'
-        self.application_code = application_code
+    def _compute_application_code(self):
+        for rec in self:
+            if rec.application == 'national_taxes':
+                application_code = '01'
+            elif rec.application == 'provincial_taxes':
+                application_code = '02'
+            elif rec.application == 'municipal_taxes':
+                application_code = '03'
+            elif rec.application == 'internal_taxes':
+                application_code = '04'
+            else:
+                application_code = '99'
+            rec.application_code = application_code
 
 
 class AccountFiscalPositionTemplate(models.Model):

@@ -11,7 +11,7 @@
         <field name="is_company">1</field>
         <field name="city">Rosario</field>
         <field name="zip">2000</field>
-        <field name="state_id" ref="l10n_ar_states.S"/>
+        <field name="state_id" ref="base.state_ar_s"/>
         <field name="country_id" ref="base.ar"/>
         <field name="street">Ovidio Lagos 41 bis</field>
         <field name="email">info@adhoc.com.ar</field>
@@ -38,7 +38,7 @@
         <field name="is_company">1</field>
         <field name="city">Rosario</field>
         <field name="zip">2000</field>
-        <field name="state_id" ref="l10n_ar_states.S"/>
+        <field name="state_id" ref="base.state_ar_s"/>
         <field name="country_id" ref="base.ar"/>
         <field name="street">Calle Falsa 123</field>
         <field name="email">info@example.com.ar</field>
@@ -56,7 +56,7 @@
         <field name="is_company">1</field>
         <field name="city">Rosario</field>
         <field name="zip">2000</field>
-        <field name="state_id" ref="l10n_ar_states.S"/>
+        <field name="state_id" ref="base.state_ar_s"/>
         <field name="country_id" ref="base.ar"/>
         <field name="street">Cordoba 501</field>
         <field name="email">info@example.com.ar</field>
@@ -119,7 +119,7 @@
         <field eval="1" name="customer"/>
         <field name="is_company">1</field>
         <field name="city">Ushuaia</field>
-        <field name="state_id" ref="l10n_ar_states.V"/>
+        <field name="state_id" ref="base.state_ar_v"/>
         <field name="country_id" ref="base.ar"/>
         <field name="street">Ruta 3 km 26</field>
         <field name="email">info@cerrocastor.com</field>

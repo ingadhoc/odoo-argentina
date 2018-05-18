@@ -5,14 +5,13 @@
 from odoo import fields, models, api
 from odoo.addons.account_document.models.res_company import ResCompany
 
-localizations = ResCompany._localization_selection
-new_selection = localizations.append(('argentina', 'Argentina'))
-ResCompany._localization_selection = new_selection
-
 
 class ResCompany(models.Model):
     _inherit = "res.company"
 
+    localization = fields.Selection(
+        selection_add=[('argentina', 'Argentina')]
+    )
     gross_income_number = fields.Char(
         related='partner_id.gross_income_number',
         string='Gross Income'

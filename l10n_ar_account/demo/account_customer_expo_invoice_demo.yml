@@ -12,12 +12,12 @@
     afip_incoterm_id: l10n_ar_account.incoterm_exw
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Servicio de telefonía (IVA 27)'
-        product_id: l10n_ar_account.product_product_telefonia
+        product_id: l10n_ar_chart.product_product_telefonia
         price_unit: 250.0
         quantity: 1.0
       - name: 'Laptop E5023 (IVA 10,5)'
@@ -25,15 +25,15 @@
         price_unit: 3245.0
         quantity: 2.0
       - name: 'Conceptos no gravados (IVA NG)'
-        product_id: l10n_ar_account.product_product_no_gravado
+        product_id: l10n_ar_chart.product_product_no_gravado
         price_unit: 50.0
         quantity: 10.0
       - name: 'Animales y vegetales no industrializados (IVA cero)'
-        product_id: l10n_ar_account.product_product_cero
+        product_id: l10n_ar_chart.product_product_cero
         price_unit: 200.0
         quantity: 1.0
       - name: 'Libro "Desarrollo en Odoo" (IVA exento)'
-        product_id: l10n_ar_account.product_product_exento
+        product_id: l10n_ar_chart.product_product_exento
         price_unit: 100.0
         quantity: 1.0
 -
@@ -52,12 +52,12 @@
     afip_incoterm_id: l10n_ar_account.incoterm_exw
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
       - name: 'Servicio de telefonía (IVA 27)'
-        product_id: l10n_ar_account.product_product_telefonia
+        product_id: l10n_ar_chart.product_product_telefonia
         price_unit: 250.0
         quantity: 1.0
       - name: 'Laptop E5023 (IVA 10,5)'
@@ -65,15 +65,15 @@
         price_unit: 3245.0
         quantity: 2.0
       - name: 'Conceptos no gravados (IVA NG)'
-        product_id: l10n_ar_account.product_product_no_gravado
+        product_id: l10n_ar_chart.product_product_no_gravado
         price_unit: 50.0
         quantity: 10.0
       - name: 'Animales y vegetales no industrializados (IVA cero)'
-        product_id: l10n_ar_account.product_product_cero
+        product_id: l10n_ar_chart.product_product_cero
         price_unit: 200.0
         quantity: 1.0
       - name: 'Libro "Desarrollo en Odoo" (IVA exento)'
-        product_id: l10n_ar_account.product_product_exento
+        product_id: l10n_ar_chart.product_product_exento
         price_unit: 100.0
         quantity: 1.0
 -
@@ -92,8 +92,8 @@
     afip_incoterm_id: l10n_ar_account.incoterm_exw
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
 -
@@ -113,7 +113,7 @@
     type: 'out_invoice'
     invoice_line_ids:
       - name: 'Servicio de telefonía (IVA 27)'
-        product_id: l10n_ar_account.product_product_telefonia
+        product_id: l10n_ar_chart.product_product_telefonia
         price_unit: 250.0
         quantity: 1.0
 -
@@ -132,8 +132,8 @@
     afip_incoterm_id: l10n_ar_account.incoterm_exw
     type: 'out_invoice'
     invoice_line_ids:
-      - name: 'Dell Inspiron Laptop without OS (IVA 21)'
-        product_id: product.product_product_49
+      - name: 'Laptop Customized (IVA 21)'
+        product_id: product.product_product_27
         price_unit: 642.0
         quantity: 5
 -

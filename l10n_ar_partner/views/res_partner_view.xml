@@ -1,49 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <data>
 
-        <record id="view_res_partner_filter" model="ir.ui.view">
-            <field name="name">partner_documents.view_partner_filter</field>
-            <field name="inherit_id" ref="base.view_res_partner_filter" />
-            <!-- <field name="inherit_id" ref="base.view_partner_form" /> -->
-            <field name="model">res.partner</field>
-            <field type="xml" name="arch">
-                <!-- we add it here because name_search is only used on m2o fields -->
+    <record id="view_res_partner_filter" model="ir.ui.view">
+        <field name="name">partner_documents.view_partner_filter</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter" />
+        <!-- <field name="inherit_id" ref="base.view_partner_form" /> -->
+        <field name="model">res.partner</field>
+        <field type="xml" name="arch">
+            <!-- we add it here because name_search is only used on m2o fields -->
 
-                <!-- we can use this way or the second one -->
-                <!-- <field name="name" position="attributes">
-                    <attribute name="filter_domain">['|','|','|',('display_name','ilike',self),('ref','=',self),('email','ilike',self),('id_numbers','ilike',self)]</attribute>
-                </field> -->
-                <field name="name" position="after">
-                    <field name="id_numbers"/>
-                </field>
+            <!-- we can use this way or the second one -->
+            <!-- <field name="name" position="attributes">
+                <attribute name="filter_domain">['|','|','|',('display_name','ilike',self),('ref','=',self),('email','ilike',self),('id_numbers','ilike',self)]</attribute>
+            </field> -->
+            <field name="name" position="after">
+                <field name="id_numbers"/>
             </field>
-        </record>
+        </field>
+    </record>
 
-        <record id="view_partner_form" model="ir.ui.view">
-            <field name="name">partner_documents.view_partner_form</field>
-            <field name="inherit_id" ref="partner_identification.view_partner_form" />
-            <!-- <field name="inherit_id" ref="base.view_partner_form" /> -->
-            <field name="model">res.partner</field>
-            <field type="xml" name="arch">
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">partner_documents.view_partner_form</field>
+        <field name="inherit_id" ref="partner_identification.view_partner_form" />
+        <!-- <field name="inherit_id" ref="base.view_partner_form" /> -->
+        <field name="model">res.partner</field>
+        <field type="xml" name="arch">
 
-                <form>
-                    <field name="cuit" invisible="1"/>
-                </form>
-                <field name="website" position="after">
-                    <label for="main_id_number" string="Main Identification"/>
-                    <div>
-                        <field name="main_id_category_id" options="{'no_open': True, 'no_create': True}" placeholder="Category" class="oe_inline"/> - 
-                        <field name="main_id_number" placeholder="Number" class="oe_inline"/>
-                    </div>
-                </field>
-
-              <page name="id_numbers" position="attributes">
-                <attribute name="groups">l10n_ar_partner.group_multiple_id_numbers</attribute>
-              </page>
-
+            <form>
+                <field name="cuit" invisible="1"/>
+            </form>
+            <field name="website" position="after">
+                <label for="main_id_number" string="Main Identification"/>
+                <div>
+                    <field name="main_id_category_id" options="{'no_open': True, 'no_create': True}" placeholder="Category" class="oe_inline"/> - 
+                    <field name="main_id_number" placeholder="Number" class="oe_inline"/>
+                </div>
             </field>
-        </record>
 
-    </data>
+          <page name="id_numbers" position="attributes">
+            <attribute name="groups">l10n_ar_partner.group_multiple_id_numbers</attribute>
+          </page>
+
+        </field>
+    </record>
 </odoo>

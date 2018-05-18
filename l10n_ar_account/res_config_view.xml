@@ -2,12 +2,12 @@
 <odoo>
     <data>
 
-        <record model="ir.ui.view" id="view_account_config_settings">
-            <field name="name">l10n_ar.view.account.config.form.inherit</field>
-            <field name="inherit_id" ref="account_document.view_account_config_settings"/>
-            <field name="model">account.config.settings</field>
+        <record model="ir.ui.view" id="res_config_settings_view_form">
+            <field name="name">res.config.settings.view.form.inherit.l10n_ar_account</field>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="model">res.config.settings</field>
             <field name="arch" type="xml">
-                <group name="bank_cash" position="after">
+                <div id="bank_cash" position="after">
                     <group name="argentina_config" string="Argentina">
                         <label for="id" string="Refresh from Padron AFIP"/>
                         <div>
@@ -22,7 +22,7 @@
                             </div>
                         </div>
                     </group>
-                </group>
+                </div>
                 <div name="sale_use_documents" position="after">
                     <!-- TODO implementar o borrar vista -->
                     <!-- <div name="afip_responsability_type_id">

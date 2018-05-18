@@ -7,8 +7,8 @@ except ImportError:
     PadronAFIP = None
 
 
-class AccountConfigSettings(models.TransientModel):
-    _inherit = 'account.config.settings'
+class ResConfigSettings(models.TransientModel):
+    _inherit = 'res.config.settings'
 
     # point_of_sale_type = fields.Selection(
     #     account_journal.AccountJournal._point_of_sale_types_selection,

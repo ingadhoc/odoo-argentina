@@ -16,7 +16,7 @@
         <menuitem id='menu_base_partner_update_from_padron'
             action='action_base_partner_update_from_padron'
             groups='base.group_system'
-            parent='base.menu_config_address_book'/>
+            parent='contacts.res_partner_menu_config'/>
 
         <record model='ir.ui.view' id='view_base_partner_update_from_padron_form'>
             <field name='name'>res.partner.update.from.padron.wizard.form</field>

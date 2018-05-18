@@ -1,6 +1,6 @@
 {
     'name': 'Argentinian Localization',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Odoo Community Association (OCA)',
@@ -20,7 +20,7 @@
         'demo/res_currency_demo.xml',
         'demo/res_company_demo.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': True,
 }

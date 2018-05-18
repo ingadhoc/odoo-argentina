@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import fields, models
+from odoo import fields, models, api
 from odoo import tools
 
 
@@ -76,7 +76,9 @@ class AccountInvoiceLineReport(models.Model):
 
     _order = 'id'
 
-    def init(self, cr):
+    @api.model_cr
+    def init(self):
+        cr = self.env.cr
 
         tools.drop_view_if_exists(cr, 'account_invoice_line_report')
         cr.execute("""
@@ -128,7 +130,7 @@ class AccountInvoiceLineReport(models.Model):
 
         "account_invoice"."amount_total" AS "amount_total",
         "product_product"."barcode" AS "barcode",
-        "product_product"."name_template" AS "name_template",
+        "product_template"."name" AS "name_template",
 
 
         "product_template"."categ_id" as "product_category_id", --n

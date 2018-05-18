@@ -6,8 +6,8 @@ from odoo import fields, models, api
 from odoo.tools.safe_eval import safe_eval
 
 
-class SaleConfiguration(models.TransientModel):
-    _inherit = 'sale.config.settings'
+class ResConfigSettings(models.TransientModel):
+    _inherit = 'res.config.settings'
 
     group_multiple_id_numbers = fields.Boolean(
         "Allow Multiple Id Numbers on Partners",
@@ -22,8 +22,8 @@ class SaleConfiguration(models.TransientModel):
         "child/parent relation are still allowed",
     )
 
-    @api.multi
-    def get_default_unique_id_numbers(self):
+    @api.model
+    def get_default_unique_id_numbers(self, fields):
         unique_id_numbers = self.env['ir.config_parameter'].get_param(
             "l10n_ar_partner.unique_id_numbers", 'False')
         return {

@@ -2,10 +2,9 @@
   agregamos doc type para tique en diario manual
 -
   !python {model: ir.model.data} : |
-      manual_journal_id = self.pool['account.journal'].search(cr, uid, [('type', '=', 'sale'), ('point_of_sale_type', '=', 'manual')], limit=1)
-      manual_journal = self.pool['account.journal'].browse(cr, uid, manual_journal_id)
+      manual_journal = self.env['account.journal'].search([('type', '=', 'sale'), ('point_of_sale_type', '=', 'manual')], limit=1)
       if manual_journal:
-        type_tique_id = self.pool['account.journal.document.type'].create(cr, uid, {
+        type_tique_id = self.env['account.journal.document.type'].create({
           'journal_id': manual_journal.id,
           'document_type_id': ref('l10n_ar_account.dc_t'),
         })
@@ -34,7 +33,8 @@
   - model: account.invoice
     eval: "[obj(ref('demo_invoice_9')).id]"
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: demo_invoice_9}
+  !python {model: account.invoice, id: demo_invoice_9}:
+    self.action_invoice_open()
 -
    Set the context for supplier invoices because the 'type' field is readonly in invoice form views, so it value won't be considered by the yaml import
 -
@@ -73,55 +73,55 @@
   a pesar del limit se devuelve una lista, por eso hacemos "account_ids" para que sea mas claro
 -
   !python {model: ir.model.data} : |
-      account_ids = self.pool['account.account'].search(cr, uid, [('name', '=', 'Compra de mercadería')])
-      vat_21_tax_id = self.pool['account.tax'].search(cr, uid, [('type_tax_use', '=', 'purchase'), ('name', '=', 'IVA Compras 21%')], limit=1)
-      no_gravado_tax_id = self.pool['account.tax'].search(cr, uid, [('type_tax_use', '=', 'purchase'), ('name', '=', 'IVA Compras No Gravado')], limit=1)
-      if account_ids and vat_21_tax_id and no_gravado_tax_id:
-        invoice_tax_id = self.pool['account.invoice.line'].create(cr, uid, {
+      account = self.env['account.account'].search([('name', '=', 'Compra de mercadería')], limit=1)
+      vat_21_tax = self.env['account.tax'].search([('type_tax_use', '=', 'purchase'), ('name', '=', 'IVA Compras 21%')], limit=1)
+      no_gravado_tax = self.env['account.tax'].search([('type_tax_use', '=', 'purchase'), ('name', '=', 'IVA Compras No Gravado')], limit=1)
+      if account and vat_21_tax and no_gravado_tax:
+        invoice_tax_id = self.env['account.invoice.line'].create({
           'invoice_id': ref('demo_despacho_1'),
           'name': 'FOB Total',
-          'invoice_line_tax_ids': [(6, 0, [vat_21_tax_id])],
-          'account_id': account_ids[0],
+          'invoice_line_tax_ids': [(6, 0, [vat_21_tax.id])],
+          'account_id': account.id,
           'price_unit': 28936.06,
           'quantity': 1,
         })
-        invoice_tax_id = self.pool['account.invoice.line'].create(cr, uid, {
+        invoice_tax_id = self.env['account.invoice.line'].create({
           'invoice_id': ref('demo_despacho_1'),
           'name': '-FOB Total',
-          'invoice_line_tax_ids': [(6, 0, [no_gravado_tax_id])],
-          'account_id': account_ids[0],
+          'invoice_line_tax_ids': [(6, 0, [no_gravado_tax.id])],
+          'account_id': account.id,
           'price_unit': -28936.06,
           'quantity': 1,
         })
-        invoice_tax_id = self.pool['account.invoice.line'].create(cr, uid, {
+        invoice_tax_id = self.env['account.invoice.line'].create({
           'invoice_id': ref('demo_despacho_1'),
           'name': 'Flete',
-          'invoice_line_tax_ids': [(6, 0, [vat_21_tax_id])],
-          'account_id': account_ids[0],
+          'invoice_line_tax_ids': [(6, 0, [vat_21_tax.id])],
+          'account_id': account.id,
           'price_unit': 1350.0,
           'quantity': 1,
         })
-        invoice_tax_id = self.pool['account.invoice.line'].create(cr, uid, {
+        invoice_tax_id = self.env['account.invoice.line'].create({
           'invoice_id': ref('demo_despacho_1'),
           'name': '-Flete',
-          'invoice_line_tax_ids': [(6, 0, [no_gravado_tax_id])],
-          'account_id': account_ids[0],
+          'invoice_line_tax_ids': [(6, 0, [no_gravado_tax.id])],
+          'account_id': account.id,
           'price_unit': -1350.0,
           'quantity': 1,
         })
-        invoice_tax_id = self.pool['account.invoice.line'].create(cr, uid, {
+        invoice_tax_id = self.env['account.invoice.line'].create({
           'invoice_id': ref('demo_despacho_1'),
           'name': 'Seguro',
-          'invoice_line_tax_ids': [(6, 0, [vat_21_tax_id])],
-          'account_id': account_ids[0],
+          'invoice_line_tax_ids': [(6, 0, [vat_21_tax.id])],
+          'account_id': account.id,
           'price_unit': 130.21,
           'quantity': 1,
         })
-        invoice_tax_id = self.pool['account.invoice.line'].create(cr, uid, {
+        invoice_tax_id = self.env['account.invoice.line'].create({
           'invoice_id': ref('demo_despacho_1'),
           'name': '-Seguro',
-          'invoice_line_tax_ids': [(6, 0, [no_gravado_tax_id])],
-          'account_id': account_ids[0],
+          'invoice_line_tax_ids': [(6, 0, [no_gravado_tax.id])],
+          'account_id': account.id,
           'price_unit': -130.21,
           'quantity': 1,
         })
@@ -133,10 +133,9 @@
   We should improove this and search tax by other thing than name
 -
   !python {model: ir.model.data} : |
-      tax_id = self.pool['account.tax'].search(cr, uid, [('type_tax_use', '=', 'purchase'), ('name', '=', 'Percepción Ganancias Sufrida')], limit=1)
-      tax = self.pool['account.tax'].browse(cr, uid, tax_id)
+      tax = self.env['account.tax'].search([('type_tax_use', '=', 'purchase'), ('name', '=', 'Percepción Ganancias Sufrida')], limit=1)
       if tax and tax.account_id:
-        invoice_tax_id = self.pool['account.invoice.tax'].create(cr, uid, {
+        invoice_tax_id = self.env['account.invoice.tax'].create({
           'invoice_id': ref('demo_despacho_1'),
           'name': tax.name,
           'tax_id': tax.id,
@@ -148,10 +147,9 @@
 -
   !python {model: ir.model.data} : |
       # la percepcion fue renombrada en demo a "Percepción IIBB Bs As Sufrida"
-      tax_id = self.pool['account.tax'].search(cr, uid, [('type_tax_use', '=', 'purchase'), ('name', '=', 'Percepción IIBB Bs As Sufrida')], limit=1)
-      tax = self.pool['account.tax'].browse(cr, uid, tax_id)
+      tax = self.env['account.tax'].search([('type_tax_use', '=', 'purchase'), ('name', '=', 'Percepción IIBB Bs As Sufrida')], limit=1)
       if tax and tax.account_id:
-        invoice_tax_id = self.pool['account.invoice.tax'].create(cr, uid, {
+        invoice_tax_id = self.env['account.invoice.tax'].create({
           'invoice_id': ref('demo_despacho_1'),
           'name': tax.name,
           'tax_id': tax.id,
@@ -162,10 +160,9 @@
         })
 -
   !python {model: ir.model.data} : |
-      tax_id = self.pool['account.tax'].search(cr, uid, [('type_tax_use', '=', 'purchase'), ('name', '=', 'IVA Adicional 20%')], limit=1)
-      tax = self.pool['account.tax'].browse(cr, uid, tax_id)
+      tax = self.env['account.tax'].search([('type_tax_use', '=', 'purchase'), ('name', '=', 'IVA Adicional 20%')], limit=1)
       if tax and tax.account_id:
-        invoice_tax_id = self.pool['account.invoice.tax'].create(cr, uid, {
+        invoice_tax_id = self.env['account.invoice.tax'].create({
           'invoice_id': ref('demo_despacho_1'),
           'name': tax.name,
           'tax_id': tax.id,
@@ -176,8 +173,9 @@
         })
 -
   !python {model: ir.model.data} : |
-      position_id = self.pool.get('account.fiscal.position').search(cr, uid, [('name', '=', 'No gravado')])
-      if position_id:
-          self.pool['account.invoice'].write(cr, uid, ref('demo_despacho_1'), {'fiscal_position_id': position_id[0]})
+      position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')], limit=1)
+      if position:
+          self.env['account.invoice'].browse(ref('demo_despacho_1')).write({'fiscal_position_id': position.id})
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: demo_despacho_1}
+  !python {model: account.invoice, id: demo_despacho_1}:
+    self.action_invoice_open()

@@ -7,7 +7,7 @@
     'license': 'AGPL-3',
     'summary': '',
     'depends': [
-        'l10n_ar_states',
+        'base',
     ],
     'external_dependencies': {
     },
@@ -19,7 +19,7 @@
     ],
     'images': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

@@ -11,7 +11,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4320-0600</field>
-            <field name='fax'>011-4322-0603</field>
             <field name='email'>consultas.por.la.web@ar.abnamro.com</field>
         </record>
         <record model='res.bank' id='00295'>
@@ -25,7 +24,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4310-3000</field>
-            <field name='fax'>011-4315-9922</field>
             <field name='email'>amex.bank.argentina@aexp.com</field>
         </record>
         <record model='res.bank' id='00340'>
@@ -39,7 +37,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4347-1010</field>
-            <field name='fax'>011-4347-1020</field>
             <field name='email'>bacs@bacs.com.ar</field>
         </record>
         <record model='res.bank' id='00147'>
@@ -53,7 +50,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4319-8400</field>
-            <field name='fax'>011-4319-8230</field>
             <field name='email'>info@bicreditanstalt.com.ar</field>
         </record>
         <record model='res.bank' id='00336'>
@@ -67,7 +63,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>01-4114-6111</field>
-            <field name='fax'>01-4114-6199</field>
             <field name='email'>bradesco@arnet.com.ar</field>
         </record>
         <record model='res.bank' id='00331'>
@@ -81,7 +76,6 @@
             <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4796-8600</field>
-            <field name='fax'>011-4796-8641</field>
             <field name='email'>comercial@cetelem.com.ar</field>
         </record>
         <record model='res.bank' id='00319'>
@@ -95,7 +89,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4318-6800</field>
-            <field name='fax'>011-4318-6844</field>
             <field name='email'>cmfb@cmfb.com.ar</field>
         </record>
         <record model='res.bank' id='00389'>
@@ -122,7 +115,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4328-5555</field>
-            <field name='fax'>011-4328-9068</field>
             <field name='email'>contactenos@comafi.com.ar</field>
         </record>
         <record model='res.bank' id='00191'>
@@ -136,7 +128,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4320-5000</field>
-            <field name='fax'>011-4320-5257</field>
             <field name='email'>credicoop@bancocredicoop.coop</field>
         </record>
         <record model='res.bank' id='00094'>
@@ -150,7 +141,6 @@
             <field name='state' ref='base.state_ar_w'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>03783-479300</field>
-            <field name='fax'>03783-479300</field>
             <field name='email'>bcteservicios@bcoctes.com.ar</field>
         </record>
         <record model='res.bank' id='00315'>
@@ -164,7 +154,6 @@
             <field name='state' ref='base.state_ar_p'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>03717-429200</field>
-            <field name='fax'>03717-429844</field>
         </record>
         <record model='res.bank' id='00007'>
             <field name='name'>Banco De Galicia Y Buenos Aires S.A.</field>
@@ -177,7 +166,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-6329-0000</field>
-            <field name='fax'>011-4329-6100</field>
             <field name='email'>asuntosinstitucionales@bancogalicia.com.ar</field>
         </record>
         <record model='res.bank' id='00300'>
@@ -191,7 +179,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4313-9546</field>
-            <field name='fax'>011-4311-5596</field>
             <field name='email'>comercial@bice.com.ar</field>
         </record>
         <record model='res.bank' id='00029'>
@@ -205,7 +192,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4329-8600</field>
-            <field name='fax'>011-4329-8700</field>
             <field name='email'>servicioalcliente@bancociudad.com.ar</field>
         </record>
         <record model='res.bank' id='00011'>
@@ -219,7 +205,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4347-6000</field>
-            <field name='fax'>011-4342-2991</field>
             <field name='email'>telemarketing@bna.com.ar</field>
         </record>
         <record model='res.bank' id='00093'>
@@ -259,7 +244,6 @@
             <field name='state' ref='base.state_ar_x'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0351-4207200</field>
-            <field name='fax'>0351-4207407</field>
             <field name='email'>contgral@bancor.com.ar</field>
         </record>
         <record model='res.bank' id='00269'>
@@ -273,7 +257,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4132-2000</field>
-            <field name='fax'>011-4132-2092</field>
             <field name='email'>brou@broubsas.com.ar</field>
         </record>
         <record model='res.bank' id='00045'>
@@ -287,7 +270,6 @@
             <field name='state' ref='base.state_ar_j'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0264-4291000</field>
-            <field name='fax'>0264-4214126</field>
             <field name='email'>sdirectorio@bancosanjuan.com</field>
         </record>
         <record model='res.bank' id='00086'>
@@ -301,7 +283,6 @@
             <field name='state' ref='base.state_ar_z'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>02966-441200</field>
-            <field name='fax'>02966-422395</field>
             <field name='email'>sdirectorio@bancosantacruz.com</field>
         </record>
         <record model='res.bank' id='00321'>
@@ -315,7 +296,6 @@
             <field name='state' ref='base.state_ar_g'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0385-450-2300</field>
-            <field name='fax'>0385-450-2319</field>
             <field name='email'>bsegerencia@arnet.com.ar</field>
         </record>
         <record model='res.bank' id='00332'>
@@ -329,7 +309,6 @@
             <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>-4003-7275</field>
-            <field name='fax'>-4003-6923</field>
             <field name='email'>comercial@cetelem.com.ar</field>
         </record>
         <record model='res.bank' id='00338'>
@@ -343,7 +322,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-5235-2300</field>
-            <field name='fax'>011-5235-2305</field>
             <field name='email'>info@bancost.com.ar</field>
         </record>
         <record model='res.bank' id='00198'>
@@ -357,7 +335,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4323-6900</field>
-            <field name='fax'>011-4334-1731</field>
             <field name='email'>info@banval.sba.com.ar</field>
         </record>
         <record model='res.bank' id='00083'>
@@ -371,7 +348,6 @@
             <field name='state' ref='base.state_ar_u'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>02965-482505</field>
-            <field name='fax'>02965-482513</field>
             <field name='email'>contacto@chubutbank.com.ar</field>
         </record>
         <record model='res.bank' id='00310'>
@@ -385,7 +361,6 @@
             <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0221-4232403</field>
-            <field name='fax'>0221-422-9111</field>
             <field name='email'>buzon@bancodelsol.com</field>
         </record>
         <record model='res.bank' id='00060'>
@@ -399,7 +374,6 @@
             <field name='state' ref='base.state_ar_t'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0381-4503300</field>
-            <field name='fax'>0381-4311957</field>
             <field name='email'>bancodeltucuman@bancodeltucuman.com.ar</field>
         </record>
         <record model='res.bank' id='00046'>
@@ -413,7 +387,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>-4000-2700</field>
-            <field name='fax'>-4000-2770</field>
             <field name='email'>buenosaires@bb.com.br</field>
         </record>
         <record model='res.bank' id='00303'>
@@ -427,7 +400,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-43243400</field>
-            <field name='fax'>011-43224687</field>
             <field name='email'>marketing@bancofinansur.com.ar</field>
         </record>
         <record model='res.bank' id='00044'>
@@ -479,7 +451,6 @@
             <field name='state' ref='base.state_ar_x'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0351-4213007</field>
-            <field name='fax'>0351-4213007</field>
             <field name='email'>gcia.administracion@bancojulio.com.ar</field>
         </record>
         <record model='res.bank' id='00285'>
@@ -506,7 +477,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4321-2200</field>
-            <field name='fax'>011-4321-2222</field>
             <field name='email'>tecnol@mariva.com.ar</field>
         </record>
         <record model='res.bank' id='00341'>
@@ -520,7 +490,6 @@
             <field name='state' ref='base.state_ar_a'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0387-4310298</field>
-            <field name='fax'>0387-4310914</field>
             <field name='email'>masventas@bancomasventas.com.ar</field>
         </record>
         <record model='res.bank' id='00281'>
@@ -547,7 +516,6 @@
             <field name='state' ref='base.state_ar_s'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0341-4256162</field>
-            <field name='fax'>0341-4256182</field>
             <field name='email'>cliente@bmros.com.ar</field>
         </record>
         <record model='res.bank' id='00034'>
@@ -561,7 +529,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4132-6300</field>
-            <field name='fax'>011-4331-2793</field>
             <field name='email'>bancopatagonia@bancopatagonia.com.ar</field>
         </record>
         <record model='res.bank' id='00301'>
@@ -575,7 +542,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4394-2463</field>
-            <field name='fax'>011-4325-4942</field>
             <field name='email'>info@piano.com.ar</field>
         </record>
         <record model='res.bank' id='00306'>
@@ -589,7 +555,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4318-7300</field>
-            <field name='fax'>011-4318-7301</field>
             <field name='email'>info@bancoprivado.com.ar</field>
         </record>
         <record model='res.bank' id='00268'>
@@ -603,7 +568,6 @@
             <field name='state' ref='base.state_ar_v'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>02901-441600</field>
-            <field name='fax'>02901-441671</field>
             <field name='email'>info@bancotdf.com.ar</field>
         </record>
         <record model='res.bank' id='00097'>
@@ -617,7 +581,6 @@
             <field name='state' ref='base.state_ar_q'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0299-4496600</field>
-            <field name='fax'>0299-4480439</field>
             <field name='email'>institucional@bpn.com.ar</field>
         </record>
         <record model='res.bank' id='00079'>
@@ -631,7 +594,6 @@
             <field name='state' ref='base.state_ar_m'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0261-4498800</field>
-            <field name='fax'>0261-4235999</field>
             <field name='email'>brc@bancoregional.com.ar</field>
         </record>
         <record model='res.bank' id='00247'>
@@ -645,7 +607,6 @@
             <field name='state' ref='base.state_ar_x'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0351-4241777</field>
-            <field name='fax'>0351-4230824</field>
             <field name='email'>servicioalcliente@bancoroela.com.ar</field>
         </record>
         <record model='res.bank' id='00277'>
@@ -659,7 +620,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4342-6969</field>
-            <field name='fax'>011-4331-2214</field>
             <field name='email'>contaduria@saenzsa.com.ar</field>
         </record>
         <record model='res.bank' id='00072'>
@@ -673,7 +633,6 @@
             <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4341-1000</field>
-            <field name='fax'>011-4342-8962</field>
             <field name='email'>info@santanderrio.com.ar</field>
         </record>
         <record model='res.bank' id='00027'>
@@ -687,7 +646,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4324-8000</field>
-            <field name='fax'>011-4324-8080</field>
             <field name='email'>Eduardo.Hospital@supervielle.com.ar</field>
         </record>
         <record model='res.bank' id='00262'>
@@ -740,7 +698,6 @@
             <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4512-6000</field>
-            <field name='fax'>011-4754-9399</field>
             <field name='email'>cuenca@cccuenca.com.ar</field>
         </record>
         <record model='res.bank' id='64085'>
@@ -792,7 +749,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4590-2800</field>
-            <field name='fax'>011-4590-2882</field>
             <field name='email'>monica.mestre@db.com</field>
         </record>
         <record model='res.bank' id='44092'>
@@ -806,7 +762,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>01-4344-5700</field>
-            <field name='fax'>01-4344-5874</field>
             <field name='email'>gabriela.bruno@fiatfinanciera.com.ar</field>
         </record>
         <record model='res.bank' id='44059'>
@@ -820,7 +775,6 @@
             <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>-4510-8325</field>
-            <field name='fax'>-4510-8004</field>
             <field name='email'>fordcredit@fordmail.com.ar</field>
         </record>
         <record model='res.bank' id='44090'>
@@ -847,7 +801,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>01-4317-1900</field>
-            <field name='fax'>01-4317-1931</field>
             <field name='email'>contactenos@gm.com</field>
         </record>
         <record model='res.bank' id='00150'>
@@ -861,7 +814,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4320-2800</field>
-            <field name='fax'>011-4324-3988</field>
             <field name='email'>contactenos@hsbc.com.ar</field>
         </record>
         <record model='res.bank' id='44096'>
@@ -875,7 +827,6 @@
             <field name='state' ref='base.state_ar_s'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0341-410-5331</field>
-            <field name='fax'>0341-410-5310</field>
             <field name='email'>jdca@johndeere.com</field>
         </record>
         <record model='res.bank' id='00165'>
@@ -889,7 +840,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4325-8046</field>
-            <field name='fax'>011-4348-7254</field>
             <field name='email'>gayoso_paola@jpmorgan.com</field>
         </record>
         <record model='res.bank' id='00312'>
@@ -903,7 +853,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4319-5800</field>
-            <field name='fax'>011-4312-6460</field>
             <field name='email'>mba@merchant.com.ar</field>
         </record>
         <record model='res.bank' id='44094'>
@@ -917,7 +866,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>-4808-8900</field>
-            <field name='fax'>-4808-8977</field>
             <field name='email'>maria_fernanda.pellegrino@daimlerchrysler.com</field>
         </record>
         <record model='res.bank' id='44068'>
@@ -931,7 +879,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-5554-5800</field>
-            <field name='fax'>011-5554-5802</field>
             <field name='email'>mensajes@metropoliscf.com</field>
         </record>
         <record model='res.bank' id='45056'>
@@ -945,7 +892,6 @@
             <field name='state' ref='base.state_ar_m'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0261-4494500</field>
-            <field name='fax'>0261-4494540</field>
             <field name='email'>informes@montemarciafin.com.ar</field>
         </record>
         <record model='res.bank' id='45072'>
@@ -959,7 +905,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4393-3953</field>
-            <field name='fax'>011-4394-1244</field>
             <field name='email'>multifin@sinectis.com.ar</field>
         </record>
         <record model='res.bank' id='00386'>
@@ -973,7 +918,6 @@
             <field name='state' ref='base.state_ar_e'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0343-4201200</field>
-            <field name='fax'>0343-4313869</field>
             <field name='email'>info@nuevobersa.com.ar</field>
         </record>
         <record model='res.bank' id='00309'>
@@ -987,7 +931,6 @@
             <field name='state' ref='base.state_ar_f'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>03822-430575</field>
-            <field name='fax'>03822-430618</field>
             <field name='email'>nblrsa@nblr.com.ar</field>
         </record>
         <record model='res.bank' id='00330'>
@@ -1001,7 +944,6 @@
             <field name='state' ref='base.state_ar_s'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>0341-4294200</field>
-            <field name='fax'>0341-440150</field>
             <field name='email'>contactobc@bancobsf.com.ar</field>
         </record>
         <record model='res.bank' id='00311'>
@@ -1015,7 +957,6 @@
             <field name='state' ref='base.state_ar_h'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>03722-447400</field>
-            <field name='fax'>03722-447401</field>
             <field name='email'>nbchdir@nbch.com.ar</field>
         </record>
         <record model='res.bank' id='44098'>
@@ -1029,7 +970,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4131-6313</field>
-            <field name='fax'>011-4131-6301</field>
         </record>
         <record model='res.bank' id='00339'>
             <field name='name'>Rci Banque</field>
@@ -1042,7 +982,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4779-6068</field>
-            <field name='fax'>011-4778-2337</field>
         </record>
         <record model='res.bank' id='44095'>
             <field name='name'>Rombo Compañía Financiera S.A.</field>
@@ -1055,7 +994,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4779-6065</field>
-            <field name='fax'>011-4779-6072</field>
         </record>
         <record model='res.bank' id='00015'>
             <field name='name'>Standard Bank Argentina S.A.</field>
@@ -1081,7 +1019,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4348-2000</field>
-            <field name='fax'>011-4348-2051</field>
             <field name='email'>btmu@ar.mufg.jp</field>
         </record>
         <record model='res.bank' id='44099'>
@@ -1095,7 +1032,6 @@
             <field name='state' ref='base.state_ar_c'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4341-7900</field>
-            <field name='fax'>011-4341-7966</field>
             <field name='email'>info@ToyotaCFA.com.ar</field>
         </record>
         <record model='res.bank' id='44088'>
@@ -1109,7 +1045,6 @@
             <field name='state' ref='base.state_ar_b'/>
             <field name='country' ref='base.ar'/>
             <field name='phone'>011-4317-9000</field>
-            <field name='fax'>011-4317-9001</field>
             <field name='email'>mariana.rodriguez@vwfs.com</field>
         </record>
     </data>

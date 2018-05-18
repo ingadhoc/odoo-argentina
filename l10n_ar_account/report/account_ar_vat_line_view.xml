@@ -70,7 +70,7 @@
          <field name="name">account.ar.vat.line.pivot</field>
          <field name="model">account.ar.vat.line</field>
          <field name="arch" type="xml">
-            <pivot string="VAT Line Analysis" type="pivot">
+            <pivot string="VAT Line Analysis">
                 <field name="move_id" type="row"/>
                 <field name="base_21" type="measure"/>
                 <field name="iva_21" type="measure"/>

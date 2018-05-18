@@ -2,8 +2,8 @@ from odoo import models, fields
 # from odoo.exceptions import UserError
 
 
-class AccountConfigSettings(models.TransientModel):
-    _inherit = 'account.config.settings'
+class ResConfigSettings(models.TransientModel):
+    _inherit = 'res.config.settings'
 
     # TODO ver si queremosimplementar esto o no
     # _afip_ws_selection = (

@@ -1,4 +1,4 @@
-# pyOpenSSL
+pyOpenSSL
 # m2crypto>=0.18
 # httplib2>=0.7
 # pysimplesoap==1.08.14
@@ -6,4 +6,5 @@
 # dbf>=0.88.019
 # Pillow>=2.0.0
 # git+https://github.com/OCA/openupgradelib/@master
-# git+https://github.com/reingart/pyafipws@master
+# git+https://github.com/reingart/pyafipws@py3k
+git+https://github.com/adhoc-dev/pyafipws@py3k-fix-tabs

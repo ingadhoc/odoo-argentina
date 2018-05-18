@@ -6,8 +6,8 @@ from odoo import fields, models, api
 from odoo.tools.safe_eval import safe_eval
 
 
-class SaleConfiguration(models.TransientModel):
-    _inherit = 'sale.config.settings'
+class ResConfigSettings(models.TransientModel):
+    _inherit = 'res.config.settings'
 
     group_multiple_id_numbers = fields.Boolean(
         "Allow Multiple Id Numbers on Partners",

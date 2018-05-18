@@ -8,7 +8,7 @@
         # for the sales config
         'base_setup',
     ],
-    'installable': False,
+    'installable': True,
     'license': 'AGPL-3',
     'name': 'Títulos de Personería y Tipos de documentos Arentinos',
     'data': [

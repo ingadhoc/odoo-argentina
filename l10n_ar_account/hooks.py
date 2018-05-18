@@ -18,7 +18,7 @@ def sync_padron_afip(cr, registry):
     Try to sync data from padron
     """
     _logger.info('Syncking afip padron data')
-    account_config = registry['account.config.settings']
+    account_config = registry['res.config.settings']
     account_config_id = account_config.create(
         cr, 1, {})
     try:

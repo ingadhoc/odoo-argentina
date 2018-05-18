@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_sale_config_settings" model="ir.ui.view">
+<!-- need to create a config menu for this in contacts -->
+    <!-- <record id="view_sale_config_settings" model="ir.ui.view">
         <field name="name">crm settings</field>
         <field name="model">sale.config.settings</field>
         <field name="inherit_id" ref="sales_team.view_sale_config_settings"/>
@@ -12,5 +13,5 @@
                 </group>
             </div>
         </field>
-    </record>
+    </record> -->
 </odoo>

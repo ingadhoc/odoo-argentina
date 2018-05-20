@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data noupdate="1">
-        <!-- update symbol to common use in argentina -->
-        <record id="base.USD" model="res.currency">
-            <field name="symbol">USD</field>
-            <!-- because we change ars, we need to change here -->
-            <!-- tests are broken by this change, only do this change for customers that requires it, it would be better to use company round per invoice -->
-            <!-- <field name="rounding" eval="0.001"/> -->
-        </record>
+<odoo noupdate="1">
+    <!-- update symbol to common use in argentina -->
+    <record id="base.USD" model="res.currency">
+        <field name="symbol">USD</field>
+        <!-- because we change ars, we need to change here -->
+        <!-- tests are broken by this change, only do this change for customers that requires it, it would be better to use company round per invoice -->
+        <!-- <field name="rounding" eval="0.001"/> -->
+    </record>
 
-        <!-- in argentina we are used to position of symbol before -->
-        <record id="base.ARS" model="res.currency">
-            <field name="position">before</field>
-            <!-- we need a rounding of 3 digits because of possible errors on taxes rounding when using discounts, you can replicate with 6 lines of 3.52 with 45% discount using electronic invoice. We have also try using round globally of odoo but it does not work ok on base calculation of account.invoice.tax -->
-            <!-- <field name="rounding" eval="0.001"/> -->
-            <!-- no matter we create database for argentina, ars currency is deactivated -->
-            <field name="active" eval="True"/>
-        </record>
+    <!-- in argentina we are used to position of symbol before -->
+    <record id="base.ARS" model="res.currency">
+        <field name="position">before</field>
+        <!-- we need a rounding of 3 digits because of possible errors on taxes rounding when using discounts, you can replicate with 6 lines of 3.52 with 45% discount using electronic invoice. We have also try using round globally of odoo but it does not work ok on base calculation of account.invoice.tax -->
+        <!-- <field name="rounding" eval="0.001"/> -->
+        <!-- no matter we create database for argentina, ars currency is deactivated -->
+        <field name="active" eval="True"/>
+    </record>
 
-        <record id="base.EUR" model="res.currency">
-            <field name="position">before</field>
-            <!-- because we change ars, we need to change here -->
-            <!-- <field name="rounding" eval="0.001"/> -->
-        </record>
-    </data>
+    <record id="base.EUR" model="res.currency">
+        <field name="position">before</field>
+        <!-- because we change ars, we need to change here -->
+        <!-- <field name="rounding" eval="0.001"/> -->
+    </record>
 </odoo>

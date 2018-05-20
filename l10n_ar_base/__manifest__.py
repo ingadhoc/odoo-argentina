@@ -1,6 +1,6 @@
 {
     'name': 'Argentinian Localization',
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Odoo Community Association (OCA)',

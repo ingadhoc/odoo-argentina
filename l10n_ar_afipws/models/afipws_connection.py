@@ -20,6 +20,8 @@ class AfipwsConnection(models.Model):
         'res.company',
         'Company',
         required=True,
+        index=True,
+        auto_join=True,
     )
     uniqueid = fields.Char(
         'Unique ID',
@@ -40,11 +42,6 @@ class AfipwsConnection(models.Model):
     expirationtime = fields.Datetime(
         'Expiration Time',
         readonly=True
-    )
-    batch_sequence_id = fields.Many2one(
-        'ir.sequence',
-        'Batch Sequence',
-        readonly=False,
     )
     afip_login_url = fields.Char(
         'AFIP Login URL',
@@ -69,15 +66,16 @@ class AfipwsConnection(models.Model):
         required=True,
     )
 
-    @api.one
+    @api.multi
     @api.depends('type', 'afip_ws')
     def get_urls(self):
-        self.afip_login_url = self.get_afip_login_url(self.type)
+        for rec in self:
+            rec.afip_login_url = rec.get_afip_login_url(rec.type)
 
-        afip_ws_url = self.get_afip_ws_url(self.afip_ws, self.type)
-        if self.afip_ws and not afip_ws_url:
-            raise UserError(_('Webservice %s not supported') % self.afip_ws)
-        self.afip_ws_url = afip_ws_url
+            afip_ws_url = rec.get_afip_ws_url(rec.afip_ws, rec.type)
+            if rec.afip_ws and not afip_ws_url:
+                raise UserError(_('Webservice %s not supported') % rec.afip_ws)
+            rec.afip_ws_url = afip_ws_url
 
     @api.model
     def get_afip_login_url(self, environment_type):

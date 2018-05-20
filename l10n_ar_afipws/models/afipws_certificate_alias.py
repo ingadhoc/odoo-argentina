@@ -48,6 +48,8 @@ class AfipwsCertificateAlias(models.Model):
         states={'draft': [('readonly', False)]},
         readonly=True,
         default=lambda self: self.env.user.company_id,
+        auto_join=True,
+        index=True,
     )
     country_id = fields.Many2one(
         'res.country', 'Country',
@@ -95,6 +97,7 @@ class AfipwsCertificateAlias(models.Model):
         'alias_id',
         'Certificates',
         states={'cancel': [('readonly', True)]},
+        auto_join=True,
     )
     service_type = fields.Selection(
         [('in_house', 'In House'), ('outsourced', 'Outsourced')],
@@ -131,13 +134,14 @@ class AfipwsCertificateAlias(models.Model):
             self.common_name = 'AFIP WS %s - %s' % (
                 self.type, self.company_id.name)
 
-    @api.one
+    @api.multi
     @api.depends('company_cuit', 'service_provider_cuit', 'service_type')
     def get_cuit(self):
-        if self.service_type == 'outsourced':
-            self.cuit = self.service_provider_cuit
-        else:
-            self.cuit = self.company_cuit
+        for rec in self:
+            if rec.service_type == 'outsourced':
+                rec.cuit = rec.service_provider_cuit
+            else:
+                rec.cuit = rec.company_cuit
 
     @api.onchange('company_id')
     def change_company_id(self):
@@ -154,14 +158,15 @@ class AfipwsCertificateAlias(models.Model):
         self.write({'state': 'confirmed'})
         return True
 
-    @api.one
+    @api.multi
     def generate_key(self, key_length=2048):
         """
         """
         # TODO reemplazar todo esto por las funciones nativas de pyafipws
-        k = crypto.PKey()
-        k.generate_key(crypto.TYPE_RSA, key_length)
-        self.key = crypto.dump_privatekey(crypto.FILETYPE_PEM, k)
+        for rec in self:
+            k = crypto.PKey()
+            k.generate_key(crypto.TYPE_RSA, key_length)
+            rec.key = crypto.dump_privatekey(crypto.FILETYPE_PEM, k)
 
     @api.multi
     def action_to_draft(self):

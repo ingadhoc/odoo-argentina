@@ -23,11 +23,13 @@ class ResCompany(models.Model):
         'afipws.certificate_alias',
         'company_id',
         'Aliases',
+        auto_join=True,
     )
     connection_ids = fields.One2many(
         'afipws.connection',
         'company_id',
         'Connections',
+        auto_join=True,
     )
 
     @api.model

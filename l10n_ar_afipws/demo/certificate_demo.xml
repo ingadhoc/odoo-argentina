@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-
-        <record id="main_company_certificate_alias" model="afipws.certificate_alias">
-            <field name="common_name">AFIPWShomologationYourCompany</field>
-            <field name="key">-----BEGIN PRIVATE KEY-----
+    <record id="main_company_certificate_alias" model="afipws.certificate_alias">
+        <field name="common_name">AFIPWShomologationYourCompany</field>
+        <field name="key">-----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCj4tVufRBH9j1Q
 1cag4xHHgYhNOWSTPtkZbB6ZVfxng/MLGgUF+InNRn2ZWFKpTsQucSa1JKWaYWt+
 gmq+7NMUu1smgdhyZxbGXubVEm8bp1AQO7432V4pOU06NW8i6YqRb79ru+wY32RN
@@ -32,22 +30,22 @@ UP5X/eu06EMYVLamZit64kJMdumKcJuVDo4jyz+DYhz6T3bMPbAzRBqsZA4M8l73
 XWp9z1bKS/AHsZSXLLRKk1C/OR7z5zLz/j8BgbqKpjNtRCp1DFu1IgPC2+3rVr89
 mQa1nuu+xYOkgxcs7F5qM7g=
 -----END PRIVATE KEY-----</field>
-            <field name="company_id" ref="base.main_company"/>
-            <field name="country_id" ref="base.ar"/>
-            <!-- <field name="state_id" ref="l10n_ar_account.demo_S"/> -->
-            <field name="city">Rosario</field>
-            <field name="service_provider_cuit">20313932975</field>
-            <field name="service_type">outsourced</field>
-            <!-- <field name="company_cuit">30111111118</field> -->
-            <!-- <field name="service_type">in_house</field> -->
-            <field name="type">homologation</field>
-            <field name="state">confirmed</field>
-        </record>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="country_id" ref="base.ar"/>
+        <!-- <field name="state_id" ref="l10n_ar_account.demo_S"/> -->
+        <field name="city">Rosario</field>
+        <field name="service_provider_cuit">20313932975</field>
+        <field name="service_type">outsourced</field>
+        <!-- <field name="company_cuit">30111111118</field> -->
+        <!-- <field name="service_type">in_house</field> -->
+        <field name="type">homologation</field>
+        <field name="state">confirmed</field>
+    </record>
 
-        <record id="main_company_certificate" model="afipws.certificate">
-            <field name="alias_id" ref="main_company_certificate_alias"/>
-            <field name="state">confirmed</field>
-            <field name="csr">  -----BEGIN CERTIFICATE REQUEST-----
+    <record id="main_company_certificate" model="afipws.certificate">
+        <field name="alias_id" ref="main_company_certificate_alias"/>
+        <field name="state">confirmed</field>
+        <field name="csr">  -----BEGIN CERTIFICATE REQUEST-----
 MIIC0DCCAbgCAQAwgYoxCzAJBgNVBAYTAkFSMRAwDgYDVQQHDAdSb3NhcmlvMRQw
 EgYDVQQKDAtZb3VyQ29tcGFueTELMAkGA1UECwwCSVQxKzApBgNVBAMMIkFGSVAg
 V1MgaG9tb2xvZ2F0aW9uIC0gWW91ckNvbXBhbnkxGTAXBgNVBAUTEENVSVQgMjAz
@@ -65,7 +63,7 @@ BaC4mea1SCe6rAo51+nulOeEmXUiVKZdPXyJCoKee7IUrpvrGL9II/MK4eqOC6QI
 Ri6joiKV2XbOj5Y6ezeX6o2ktBLhvKn22SHh6PHlZCKfdCmPs1FcfwDJ9d94x07E
 IgIFAA==
 -----END CERTIFICATE REQUEST-----</field>
-            <field name="crt">-----BEGIN CERTIFICATE-----
+        <field name="crt">-----BEGIN CERTIFICATE-----
 MIIDpTCCAo2gAwIBAgIINFRqzyQ0Yx4wDQYJKoZIhvcNAQENBQAwODEaMBgGA1UEAwwRQ29tcHV0
 YWRvcmVzIFRlc3QxDTALBgNVBAoMBEFGSVAxCzAJBgNVBAYTAkFSMB4XDTE2MDkwOTIxMDIxMloX
 DTE4MDkwOTIxMDIxMlowgYoxCzAJBgNVBAYTAkFSMRAwDgYDVQQHDAdSb3NhcmlvMRQwEgYDVQQK
@@ -85,6 +83,5 @@ LkKwIfpEEu65VFXfdbZ1iLKoHligJaJuq4gUa44aoI3de3KHGGzxDLbwMZOdmuPYj9PK9ll7Tq+4
 8BDuUO11smuc49l7Pe3fcBU+4XdHxj12qw==
 -----END CERTIFICATE-----
 </field>
-        </record>
-    </data>
+    </record>
 </odoo>

@@ -128,18 +128,6 @@ class AccountTax(models.Model):
             price_unit, currency=currency, quantity=quantity, product=product,
             partner=partner)
 
-    @api.v7
-    def compute_all(
-            self, cr, uid, ids, price_unit, currency_id=None, quantity=1.0,
-            product_id=None, partner_id=None, context=None):
-        # no podemos mandar contexto a partner_id porque no es un browse pero
-        # igualmente lo arreglamos para no tener errores, por ejemplo, con
-        # mrp_repair
-        return super(AccountTax, self).compute_all(
-            cr, uid, ids, price_unit, currency_id=currency_id,
-            quantity=quantity, product_id=product_id, partner_id=partner_id,
-            context=context)
-
     def _compute_amount(
             self, base_amount, price_unit, quantity=1.0, product=None,
             partner=None):

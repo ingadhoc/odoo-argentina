@@ -10,7 +10,7 @@ class ResPartner(models.Model):
     arba_alicuot_ids = fields.One2many(
         'res.partner.arba_alicuot',
         'partner_id',
-        'Alicuotas de ARBA'
+        'Alicuotas de ARBA',
     )
     drei = fields.Selection([
         ('activo', 'Activo'),

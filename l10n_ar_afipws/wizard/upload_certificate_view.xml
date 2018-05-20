@@ -19,6 +19,7 @@
     </record>
 
     <record id="action_upload_certificate" model="ir.actions.act_window">
+        <field name="name">AFIP WS - Upload Certificate</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">afipws.upload_certificate.wizard</field>
         <field name="view_id" ref="view_upload_certificate_form"/>

@@ -23,9 +23,9 @@
     'license': 'AGPL-3',
     'category': 'Accounting & Finance',
     'data': [
+        'wizard/res_config_settings_views.xml',
         'reports/certificado_de_retencion_report.xml',
         'views/account_payment_group_view.xml',
-        'views/res_company_view.xml',
         'views/afip_tabla_ganancias_escala_view.xml',
         'views/afip_tabla_ganancias_alicuotasymontos_view.xml',
         'views/account_payment_view.xml',
@@ -51,7 +51,7 @@
     'external_dependencies': {
         'python': ['pyafipws'],
     },
-    'installable': False,
+    'installable': True,
     'name': 'Automatic Argentinian Withholdings on Payments',
     'version': '11.0.1.0.0',
 }

@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        <record model="ir.ui.view" id="view_partner_form">
-            <field name="name">res.partner.form.inherit</field>
-            <field name="inherit_id" ref="l10n_ar_account.view_partner_property_form"/>
-            <field name="model">res.partner</field>
-            <field name="arch" type="xml">
-                <field name="imp_ganancias_padron" position="after">
-                    <field name="default_regimen_ganancias_id" attrs="{'invisible': [('imp_ganancias_padron', 'in', ['EX', 'NC'])]}"/>
-                </field>
-                <group name="others_col_1">
-                    <field name="drei"/>
-                    <!-- <field name="drei_number"/> -->
-                </group>
-                <group name="others" position="after">
-                    <label for="arba_alicuot_ids"/>
-                    <field name="arba_alicuot_ids">
-                        <tree editable="bottom">
-                            <field name="company_id" groups="base.group_multi_company"/>
-                            <field name="from_date"/>
-                            <field name="to_date"/>
-                            <field name="numero_comprobante"/>
-                            <field name="alicuota_percepcion"/>
-                            <field name="alicuota_retencion"/>
-                            <field name="grupo_percepcion"/>
-                            <field name="grupo_retencion"/>
-                        </tree>
-                    </field>
-                </group>
+    <record model="ir.ui.view" id="view_partner_form">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="inherit_id" ref="l10n_ar_account.view_partner_property_form"/>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <field name="imp_ganancias_padron" position="after">
+                <field name="default_regimen_ganancias_id" attrs="{'invisible': [('imp_ganancias_padron', 'in', ['EX', 'NC'])]}"/>
             </field>
-        </record>
-    </data>
+            <group name="others_col_1">
+                <field name="drei"/>
+                <!-- <field name="drei_number"/> -->
+            </group>
+            <group name="others" position="after">
+                <label for="arba_alicuot_ids"/>
+                <field name="arba_alicuot_ids">
+                    <tree editable="bottom">
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                        <field name="numero_comprobante"/>
+                        <field name="alicuota_percepcion"/>
+                        <field name="alicuota_retencion"/>
+                        <field name="grupo_percepcion"/>
+                        <field name="grupo_retencion"/>
+                    </tree>
+                </field>
+            </group>
+        </field>
+    </record>
 </odoo>

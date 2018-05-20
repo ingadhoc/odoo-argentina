@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
 <!-- New Partners -->
     <!-- ADHOC -->
     <record id="res_partner_adhoc" model="res.partner">
@@ -168,5 +167,4 @@
         <field name='main_id_number'>27333333339</field>
     </record> -->
 
-    </data>
 </odoo>

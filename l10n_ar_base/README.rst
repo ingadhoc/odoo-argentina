@@ -1,10 +1,18 @@
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+.. |company| replace:: ADHOC SA
+
+.. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png
+   :alt: ADHOC SA
+   :target: https://www.adhoc.com.ar
+
+.. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png
+
+.. image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+   :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-===================================================
-Provides configuration for Argentinian Localization
-===================================================
+========================================
+Base Module for Argentinian Localization
+========================================
 
 Este modulo basicamente hace:
 1. Poner como dato demo a la companía como pais "Argentina" para que todos los tests y planes de cuenta que se instalan sean de argentina
@@ -30,7 +38,7 @@ Algunas ideas en torno a esta localización:
             * Creamos productos tipo "servicio" para cada percepción dentro de una categoría "Impuestos", asociadas a un impuesto de esa percepción, con código python "result = price_unit" e "impuestos incluidos en el precio". Son productos que solo se pueden comprar.
             * Luego se agregan dichos productos en la factura de compras, completando el importe correspondiente.
         * Atlernativa 2 (con modulo "account_invoice_manual_tax")
-            * Modificamos la vista de impuestos en facturas para que permita elegir código de impuestos. 
+            * Modificamos la vista de impuestos en facturas para que permita elegir código de impuestos.
             * La ventaja de esto es que ya nos permite utilizar esto en percepciones de venta sin que hayamos que se carguen manualmente.
     * Si yo tengo que cargar retenciones en un cobro:
         * TODO
@@ -38,7 +46,6 @@ Algunas ideas en torno a esta localización:
         * TODO pero la idea sería usar algo de posiciones fiscales o similar y terminar 
     * Si yo tengo que aplicar retenciones en un pago:
         * TODO
-
 
 Installation
 ============
@@ -63,21 +70,13 @@ To use this module, you need to:
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.adhoc.com.ar/
-
-.. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
-.. branch is "8.0" for example
-
-Known issues / Roadmap
-======================
-
-* N/A
+   :target: http://runbot.adhoc.com.ar/
 
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/ingadhoc/{project_repo}/issues>`_. In case of trouble, please
+<https://github.com/ingadhoc/odoo-argentina/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 
@@ -87,19 +86,16 @@ Credits
 Images
 ------
 
-* ADHOC SA: `Icon <http://fotos.subefotos.com/83fed853c1e15a8023b86b2b22d6145bo.png>`_.
+* |company| |icon|
 
 Contributors
 ------------
 
-
 Maintainer
 ----------
 
-.. image:: http://fotos.subefotos.com/83fed853c1e15a8023b86b2b22d6145bo.png
-   :alt: Odoo Community Association
-   :target: https://www.adhoc.com.ar
+|company_logo|
 
-This module is maintained by the ADHOC SA.
+This module is maintained by the |company|.
 
 To contribute to this module, please visit https://www.adhoc.com.ar.

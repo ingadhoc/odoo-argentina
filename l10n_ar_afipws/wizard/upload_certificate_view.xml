@@ -4,15 +4,17 @@
         <field name="name">afipws.upload_certificate.wizard.form</field>
         <field name="model">afipws.upload_certificate.wizard</field>
         <field name="arch" type="xml">
-            <group>
-                <field name="certificate_id" invisible="1"/>
-                <field name="certificate_file"/>
-            </group>
-            <footer>
-                <button name="action_confirm" string="Confirm" type="object" class="oe_highlight"/>
-                or
-                <button string="Cancel" class="oe_link" special="cancel"/>
-            </footer>
+            <form string="Upload Certificate">
+                <group>
+                    <field name="certificate_id" invisible="1"/>
+                    <field name="certificate_file"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" string="Confirm" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
         </field>
     </record>
 

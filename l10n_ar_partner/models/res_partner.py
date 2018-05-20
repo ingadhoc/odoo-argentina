@@ -35,6 +35,8 @@ class ResPartner(models.Model):
     main_id_category_id = fields.Many2one(
         string="Main Identification Category",
         comodel_name='res.partner.id_category',
+        index=True,
+        auto_join=True,
     )
 
     @api.multi
@@ -105,6 +107,7 @@ class ResPartner(models.Model):
 
     @api.multi
     def _inverse_main_id_number(self):
+        to_unlink = self.env['res.partner.id_number']
         for partner in self:
             name = partner.main_id_number
             category_id = partner.main_id_category_id
@@ -114,7 +117,7 @@ class ResPartner(models.Model):
                 if partner_id_numbers and name:
                     partner_id_numbers[0].name = name
                 elif partner_id_numbers and not name:
-                    partner_id_numbers[0].unlink()
+                    to_unlink |= partner_id_numbers[0]
                 # we only create new record if name has a value
                 elif name:
                     partner_id_numbers.create({
@@ -122,6 +125,7 @@ class ResPartner(models.Model):
                         'category_id': category_id.id,
                         'name': name
                     })
+        to_unlink.unlink()
 
     @api.model
     def name_search(self, name, args=None, operator='ilike', limit=100):

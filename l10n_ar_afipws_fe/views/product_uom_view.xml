@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data> 
-        <record id="product_uom_form_view" model="ir.ui.view">
-            <field name="name">product.uom Form</field>
-            <field name="model">product.uom</field>
-            <field name="inherit_id" ref="l10n_ar_account.product_uom_form_view"/>
-            <field name="arch" type="xml">
-                <field name="afip_code" position="replace">
-                    <label for="afip_code"/>
-                    <div>
-                        <field name="afip_code" class="oe_inline"/>
-                        <button name="action_get_pyafipws_product_uoms" string="Get Afip Codes" type="object" class="oe_link"/>
-                    </div>
-                </field>
+    <record id="product_uom_form_view" model="ir.ui.view">
+        <field name="name">product.uom Form</field>
+        <field name="model">product.uom</field>
+        <field name="inherit_id" ref="l10n_ar_account.product_uom_form_view"/>
+        <field name="arch" type="xml">
+            <field name="afip_code" position="replace">
+                <label for="afip_code"/>
+                <div>
+                    <field name="afip_code" class="oe_inline"/>
+                    <button name="action_get_pyafipws_product_uoms" string="Get Afip Codes" type="object" class="oe_link"/>
+                </div>
             </field>
-        </record>
-  </data>
+        </field>
+    </record>
 </odoo>
-<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4 -->

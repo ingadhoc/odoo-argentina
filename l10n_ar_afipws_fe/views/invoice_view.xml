@@ -1,73 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data> 
-        <record id="invoice_supplier_form" model="ir.ui.view">
-            <field name="model">account.invoice</field>
-            <field name="name">account.invoice.afip.form</field>
-            <field name="inherit_id" ref="l10n_ar_account.view_supplier_invoice_form"/>
-            <field name="arch" type="xml">
-                <form>
-                    <field name="afip_auth_verify_type" invisible="1"/>
-                </form>
-                <field name="document_number" position="after">
-                    <label for="afip_auth_code" string="AFIP authorization" attrs="{'invisible': ['|', ('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice']), ('afip_auth_verify_type', '=', 'not_available')]}"/>
-                    <div class="oe_inline" attrs="{'invisible': ['|', ('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice']), ('afip_auth_verify_type', '=', 'not_available')]}">
-                        <field name="afip_auth_mode" class="oe_inline"/>
-                        <field name="afip_auth_code" class="oe_inline" attrs="{'required': [('afip_auth_mode', '!=', False)]}" placeholder="Code"/> - 
-                        <field name="afip_auth_verify_result" class="oe_inline"/>
-                        <button name="verify_on_afip" type="object" attrs="{'invisible': [('afip_auth_mode', '=', False)]}" string="Constantar" help="Constatar en AFIP" class="oe_inline oe_link" groups="base.group_user"/>
-                    </div>
-                </field>
-                <notebook>
-                    <page string="AFIP" name="afip" attrs="{'invisible': ['|', ('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice']), ('afip_auth_verify_type', '=', 'not_available')]}">
-                        <group>
-                            <field name='afip_auth_verify_observation'/>
-                        </group>
-                    </page>
-                </notebook>
+    <record id="invoice_supplier_form" model="ir.ui.view">
+        <field name="model">account.invoice</field>
+        <field name="name">account.invoice.afip.form</field>
+        <field name="inherit_id" ref="l10n_ar_account.view_supplier_invoice_form"/>
+        <field name="arch" type="xml">
+            <form>
+                <field name="afip_auth_verify_type" invisible="1"/>
+            </form>
+            <field name="document_number" position="after">
+                <label for="afip_auth_code" string="AFIP authorization" attrs="{'invisible': ['|', ('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice']), ('afip_auth_verify_type', '=', 'not_available')]}"/>
+                <div class="oe_inline" attrs="{'invisible': ['|', ('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice']), ('afip_auth_verify_type', '=', 'not_available')]}">
+                    <field name="afip_auth_mode" class="oe_inline"/>
+                    <field name="afip_auth_code" class="oe_inline" attrs="{'required': [('afip_auth_mode', '!=', False)]}" placeholder="Code"/> - 
+                    <field name="afip_auth_verify_result" class="oe_inline"/>
+                    <button name="verify_on_afip" type="object" attrs="{'invisible': [('afip_auth_mode', '=', False)]}" string="Constantar" help="Constatar en AFIP" class="oe_inline oe_link" groups="base.group_user"/>
+                </div>
             </field>
-        </record>
+            <notebook>
+                <page string="AFIP" name="afip" attrs="{'invisible': ['|', ('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice']), ('afip_auth_verify_type', '=', 'not_available')]}">
+                    <group>
+                        <field name='afip_auth_verify_observation'/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
 
-        <record id="view_invoice_form" model="ir.ui.view">
-            <field name="model">account.invoice</field>
-            <field name="name">account.invoice.afip.form</field>
-            <field name="inherit_id" ref="account.invoice_form"/>
-            <!-- we want this view to be loaded after invoice operation view if installed -->
-            <field name="priority">20</field>
-            <field name="arch" type="xml">
-                <!-- we change button labels for better usability -->
-                <button name="invoice_open" position="attributes">
-                    <attribute name="attrs">{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', False)]}</attribute>
-                    <attribute name="states"></attribute>
-                </button>
-                <button name="invoice_open" position="after">
-                    <button name="invoice_open" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', 'production')]}" string="Validar en AFIP" class="oe_highlight" groups="base.group_user"/>
-                    <button name="invoice_open" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', 'homologation')]}" string="Validar en HOMOLOGACION" class="oe_highlight" groups="base.group_user"/>
-                </button>
+    <record id="view_invoice_form" model="ir.ui.view">
+        <field name="model">account.invoice</field>
+        <field name="name">account.invoice.afip.form</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <!-- we want this view to be loaded after invoice operation view if installed -->
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <!-- we change button labels for better usability -->
+            <button name="action_invoice_open" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', False)]}</attribute>
+                <attribute name="states"></attribute>
+            </button>
+            <button name="action_invoice_open" position="after">
+                <button name="action_invoice_open" type="object" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', 'production')]}" string="Validar en AFIP" class="oe_highlight" groups="base.group_user"/>
+                <button name="action_invoice_open" type="object" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', 'homologation')]}" string="Validar en HOMOLOGACION" class="oe_highlight" groups="base.group_user"/>
+            </button>
 
-                <notebook>
-                    <page string="AFIP" name="afip" attrs="{'invisible': [('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice'])]}">
-                        <group>
-                            <field name='afip_auth_verify_type' invisible="1"/>
-                            <field name='afip_batch_number' invisible="1"/>
-                            <field name='validation_type' invisible="1"/>
-                            <label for="afip_auth_code" string="AFIP authorization"/>
-                            <div class="oe_inline">
-                                <field name="afip_auth_mode" class="oe_inline"/>
-                                <field name="afip_auth_code" class="oe_inline" attrs="{'required': [('afip_auth_mode', '!=', False)]}" placeholder="Code"/> - 
-                                <field name="afip_auth_verify_result" class="oe_inline"/>
-                                <button name="verify_on_afip" type="object" attrs="{'invisible': ['|', ('afip_auth_mode', '=', False), ('afip_auth_verify_type', '=', 'not_available')]}" string="Constantar" help="Constatar en AFIP" class="oe_inline oe_link" groups="base.group_user"/>
-                            </div>
-                            <field name='afip_auth_verify_observation' attrs="{'invisible': [('afip_auth_verify_observation', '=', False)]}"/>
-                            <field name='afip_auth_code_due'/>
-                            <field name='afip_result'/>
-                            <field name='afip_message'/>
-                            <field name='afip_xml_request' groups="base.group_no_one"/>
-                            <field name='afip_xml_response' groups="base.group_no_one"/>
-                        </group>
-                    </page>
-                </notebook>
-            </field>
-        </record>
-    </data>
+            <notebook>
+                <page string="AFIP" name="afip" attrs="{'invisible': [('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice'])]}">
+                    <group>
+                        <field name='afip_auth_verify_type' invisible="1"/>
+                        <field name='afip_batch_number' invisible="1"/>
+                        <field name='validation_type' invisible="1"/>
+                        <label for="afip_auth_code" string="AFIP authorization"/>
+                        <div class="oe_inline">
+                            <field name="afip_auth_mode" class="oe_inline"/>
+                            <field name="afip_auth_code" class="oe_inline" attrs="{'required': [('afip_auth_mode', '!=', False)]}" placeholder="Code"/> - 
+                            <field name="afip_auth_verify_result" class="oe_inline"/>
+                            <button name="verify_on_afip" type="object" attrs="{'invisible': ['|', ('afip_auth_mode', '=', False), ('afip_auth_verify_type', '=', 'not_available')]}" string="Constantar" help="Constatar en AFIP" class="oe_inline oe_link" groups="base.group_user"/>
+                        </div>
+                        <field name='afip_auth_verify_observation' attrs="{'invisible': [('afip_auth_verify_observation', '=', False)]}"/>
+                        <field name='afip_auth_code_due'/>
+                        <field name='afip_result'/>
+                        <field name='afip_message'/>
+                        <field name='afip_xml_request' groups="base.group_no_one"/>
+                        <field name='afip_xml_response' groups="base.group_no_one"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
 </odoo>

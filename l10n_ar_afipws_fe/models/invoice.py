@@ -71,11 +71,11 @@ class AccountInvoice(models.Model):
     )
 
     afip_barcode = fields.Char(
-        compute='_get_barcode',
+        compute='_compute_barcode',
         string='AFIP Barcode'
     )
     afip_barcode_img = fields.Binary(
-        compute='_get_barcode',
+        compute='_compute_barcode',
         string='AFIP Barcode Image'
     )
     afip_message = fields.Text(
@@ -103,36 +103,33 @@ class AccountInvoice(models.Model):
     )
     validation_type = fields.Char(
         'Validation Type',
-        compute='get_validation_type',
+        compute='_compute_validation_type',
     )
 
-    @api.one
-    def get_validation_type(self):
-        # for compatibility with account_invoice_operation, if module installed
-        # and there are operations we return no_validation so no validate
-        # button is displayed
-        if self._fields.get('operation_ids') and self.operation_ids:
-            self.validation_type = 'no_validation'
-        # if invoice has cae then me dont validate it against afip
-        elif self.journal_id.afip_ws and not self.afip_auth_code:
-            self.validation_type = self.env[
-                'res.company']._get_environment_type()
+    @api.multi
+    def _compute_validation_type(self):
+        for rec in self:
+            if rec.journal_id.afip_ws and not rec.afip_auth_code:
+                rec.validation_type = self.env[
+                    'res.company']._get_environment_type()
 
-    @api.one
+    @api.multi
     @api.depends('afip_auth_code')
-    def _get_barcode(self):
-        barcode = False
-        if self.afip_auth_code:
-            cae_due = ''.join(
-                [c for c in str(self.afip_auth_code_due or '') if c.isdigit()])
-            barcode = ''.join(
-                [str(self.company_id.cuit),
-                    "%02d" % int(self.document_type_id.code),
-                    "%04d" % int(self.journal_id.point_of_sale_number),
-                    str(self.afip_auth_code), cae_due])
-            barcode = barcode + self.verification_digit_modulo10(barcode)
-        self.afip_barcode = barcode
-        self.afip_barcode_img = self._make_image_I25(barcode)
+    def _compute_barcode(self):
+        for rec in self:
+            barcode = False
+            if rec.afip_auth_code:
+                cae_due = ''.join(
+                    [c for c in str(
+                        rec.afip_auth_code_due or '') if c.isdigit()])
+                barcode = ''.join(
+                    [str(rec.company_id.cuit),
+                        "%02d" % int(rec.document_type_id.code),
+                        "%04d" % int(rec.journal_id.point_of_sale_number),
+                        str(rec.afip_auth_code), cae_due])
+                barcode = barcode + rec.verification_digit_modulo10(barcode)
+            rec.afip_barcode = barcode
+            rec.afip_barcode_img = rec._make_image_I25(barcode)
 
     @api.model
     def _make_image_I25(self, barcode):

@@ -22,17 +22,13 @@
     'data': [
         'wizard/afip_ws_consult_wizard_view.xml',
         'wizard/afip_ws_currency_rate_wizard_view.xml',
+        'wizard/res_config_settings_view.xml',
         'views/invoice_view.xml',
         'views/account_journal_document_type_view.xml',
-        'views/wsfe_error_view.xml',
         'views/account_journal_view.xml',
         'views/product_uom_view.xml',
         'views/res_currency_view.xml',
         'views/menuitem.xml',
-        'res_config_view.xml',
-        'views/res_company_view.xml',
-        'data/afip.wsfe_error.csv',
-        'security/ir.model.access.csv',
     ],
     'demo': [
         # 'demo/account_journal_expo_demo.yml',
@@ -43,7 +39,7 @@
     ],
     'images': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

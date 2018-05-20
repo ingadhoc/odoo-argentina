@@ -22,16 +22,24 @@ class ResConfigSettings(models.TransientModel):
         "child/parent relation are still allowed",
     )
 
-    @api.model
-    def get_default_unique_id_numbers(self, fields):
-        unique_id_numbers = self.env['ir.config_parameter'].get_param(
-            "l10n_ar_partner.unique_id_numbers", 'False')
-        return {
-            'unique_id_numbers': safe_eval(unique_id_numbers),
-        }
-
     @api.multi
     def set_default_unique_id_numbers(self):
         for record in self:
             self.env['ir.config_parameter'].set_param(
                 "l10n_ar_partner.unique_id_numbers", record.unique_id_numbers)
+
+    @api.model
+    def get_values(self):
+        res = super(ResConfigSettings, self).get_values()
+        unique_id_numbers = self.env['ir.config_parameter'].sudo().get_param(
+            'l10n_ar_partner.unique_id_numbers')
+        res.update(
+            default_unique_id_numbers=unique_id_numbers,
+        )
+        return res
+
+    @api.multi
+    def set_values(self):
+        super(ResConfigSettings, self).set_values()
+        self.env['ir.config_parameter'].sudo().set_param(
+            'l10n_ar_partner.unique_id_numbers', self.unique_id_numbers)

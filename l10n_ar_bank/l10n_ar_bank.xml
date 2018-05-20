@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  
+
     <record id="view_bank_cbu_filter" model="ir.ui.view">
         <field name="name">partner.bank.select</field>
         <field name="model">res.partner.bank</field>
@@ -22,5 +22,5 @@
             </field>
         </field>
     </record>
- 
+
 </odoo>

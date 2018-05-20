@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import fields, models, api
+from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 import logging
 
@@ -73,7 +73,7 @@ class AfipwsConnection(models.Model):
                 afip_ws_url = (
                     'https://wswhomo.afip.gov.ar/wsbfev1/service.asmx?WSDL')
         elif afip_ws == 'wsmtxca':
-            raise UserError('AFIP WS %s Not implemented yet' % afip_ws)
+            raise UserError(_('AFIP WS %s Not implemented yet') % afip_ws)
             # if environment_type == 'production':
             #     afip_ws_url = (
             #         'https://serviciosjava.afip.gob.ar/wsmtxca/services/'

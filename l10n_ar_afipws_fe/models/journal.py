@@ -59,12 +59,13 @@ class AccountJournal(models.Model):
     #     types.append(['electronic', _('Electronic')])
     #     return types
 
-    @api.one
+    @api.multi
     @api.constrains('point_of_sale_type', 'afip_ws')
     def check_afip_ws_and_type(self):
-        if self.point_of_sale_type != 'electronic' and self.afip_ws:
-            raise UserError(_(
-                'You can only use an AFIP WS if type is "Electronic"'))
+        for rec in self:
+            if rec.point_of_sale_type != 'electronic' and rec.afip_ws:
+                raise UserError(_(
+                    'You can only use an AFIP WS if type is "Electronic"'))
 
     @api.multi
     def get_journal_letter(self, counterpart_partner=False):

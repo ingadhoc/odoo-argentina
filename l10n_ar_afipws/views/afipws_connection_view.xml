@@ -1,56 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        <record id="view_afipws_auth_form" model="ir.ui.view">
-            <field name="name">afipws.auth.form</field>
-            <field name="model">afipws.connection</field>
-            <field name="arch" type="xml">
-                <form string="AFIP Connector">
-                    <sheet string="AFIP Servers">
-                        <group>
-                            <field name="afip_ws"/>
-                            <field name="type"/>
-                            <field name="batch_sequence_id"/>
-                            <field name="uniqueid"/>
-                            <field name="generationtime"/>
-                            <field name="expirationtime"/>
-                            <field name="sign"/>
-                            <field name="token"/>
-                            <field name="afip_login_url"/>
-                            <field name="afip_ws_url"/>
-                            <field name="company_id"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+    <record id="view_afipws_auth_form" model="ir.ui.view">
+        <field name="name">afipws.auth.form</field>
+        <field name="model">afipws.connection</field>
+        <field name="arch" type="xml">
+            <form string="AFIP Connector">
+                <sheet string="AFIP Servers">
+                    <group>
+                        <field name="afip_ws"/>
+                        <field name="type"/>
+                        <field name="uniqueid"/>
+                        <field name="generationtime"/>
+                        <field name="expirationtime"/>
+                        <field name="sign"/>
+                        <field name="token"/>
+                        <field name="afip_login_url"/>
+                        <field name="afip_ws_url"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-        <record id="view_afipws_auth_tree" model="ir.ui.view">
-            <field name="name">afipws.auth.tree</field>
-            <field name="model">afipws.connection</field>
-            <field name="arch" type="xml">
-                <tree string="AFIP Connector" create="false" edit="false">
-                    <field name="afip_ws"/>
-                    <field name="type"/>
-                    <field name="batch_sequence_id"/>
-                    <field name="uniqueid"/>
-                    <field name="generationtime"/>
-                    <field name="expirationtime"/>
-                    <field name="company_id"/>
-                </tree>
-            </field>
-        </record>
+    <record id="view_afipws_auth_tree" model="ir.ui.view">
+        <field name="name">afipws.auth.tree</field>
+        <field name="model">afipws.connection</field>
+        <field name="arch" type="xml">
+            <tree string="AFIP Connector" create="false" edit="false">
+                <field name="afip_ws"/>
+                <field name="type"/>
+                <field name="uniqueid"/>
+                <field name="generationtime"/>
+                <field name="expirationtime"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
 
-        <record model="ir.actions.act_window" id="act_afipws_auth">
-            <field name="name">AFIP Connections</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">afipws.connection</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
+    <record model="ir.actions.act_window" id="act_afipws_auth">
+        <field name="name">AFIP Connections</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">afipws.connection</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
-        <menuitem name="Connections" action="act_afipws_auth" id="menu_action_afipws_auth" parent="menu_afipws"/>
+    <menuitem name="Connections" action="act_afipws_auth" id="menu_action_afipws_auth" parent="menu_afipws"/>
 
-    </data>
 </odoo>
-<!-- vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4-->

@@ -23,6 +23,7 @@ class AfipwsCertificate(models.Model):
         string='Certificate Alias',
         required=True,
         auto_join=True,
+        index=True,
     )
     csr = fields.Text(
         'Request Certificate',
@@ -63,12 +64,12 @@ class AfipwsCertificate(models.Model):
         compute='get_request_file',
     )
 
-    @api.one
+    @api.multi
     @api.depends('csr')
     def get_request_file(self):
-        if self.csr:
-            self.request_filename = 'request.csr'
-            self.request_file = base64.encodestring(
+        for rec in self.filtered('csr'):
+            rec.request_filename = 'request.csr'
+            rec.request_file = base64.encodestring(
                 self.csr)
 
     @api.multi
@@ -89,26 +90,27 @@ class AfipwsCertificate(models.Model):
         self.write({'state': 'confirmed'})
         return True
 
-    @api.one
+    @api.multi
     def verify_crt(self):
         """
         Verify if certificate is well formed
         """
-        crt = self.crt
-        msg = False
+        for rec in self:
+            crt = rec.crt
+            msg = False
 
-        if not crt:
-            msg = _(
-                'Invalid action! Please, set the certification string to '
-                'continue.')
-        certificate = self.get_certificate()
-        if certificate is None:
-            msg = _(
-                'Invalid action! Your certificate string is invalid. Check if '
-                'you forgot the header CERTIFICATE or forgot/append end of '
-                'lines.')
-        if msg:
-            raise UserError(msg)
+            if not crt:
+                msg = _(
+                    'Invalid action! Please, set the certification string to '
+                    'continue.')
+            certificate = rec.get_certificate()
+            if certificate is None:
+                msg = _(
+                    'Invalid action! Your certificate string is invalid. '
+                    'Check if you forgot the header CERTIFICATE or forgot/ '
+                    'append end of lines.')
+            if msg:
+                raise UserError(msg)
         return True
 
     @api.multi

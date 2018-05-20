@@ -151,30 +151,30 @@
         <field name='sequence'>1</field>
         <field name="validation_code">
 def check_vat_ar(vat):
-vat = id_number.name
-cstr = str(vat)
-salt = str(5432765432)
-n = 0
-sum = 0
-if not vat.isdigit:
-    return False
-if (len(vat) != 11):
-    return False
-while (n &lt; 10):
-    sum = sum + int(salt[n]) * int(cstr[n])
-    n = n + 1
-op1 = sum % 11
-op2 = 11 - op1
-code_verifier = op2
-if (op2 == 11 or op2 == 10):
-    if (op2 == 11):
-        code_verifier = 0
+    vat = id_number.name
+    cstr = str(vat)
+    salt = str(5432765432)
+    n = 0
+    sum = 0
+    if not vat.isdigit:
+        return False
+    if (len(vat) != 11):
+        return False
+    while (n &lt; 10):
+        sum = sum + int(salt[n]) * int(cstr[n])
+        n = n + 1
+    op1 = sum % 11
+    op2 = 11 - op1
+    code_verifier = op2
+    if (op2 == 11 or op2 == 10):
+        if (op2 == 11):
+            code_verifier = 0
+        else:
+            code_verifier = 9
+    if (code_verifier == int(cstr[10])):
+        return True
     else:
-        code_verifier = 9
-if (code_verifier == int(cstr[10])):
-    return True
-else:
-    return False
+        return False
 failed = not check_vat_ar(id_number.name)
         </field>
     </record>
@@ -185,30 +185,30 @@ failed = not check_vat_ar(id_number.name)
         <field name='sequence'>4</field>
         <field name="validation_code">
 def check_vat_ar(vat):
-vat = id_number.name
-cstr = str(vat)
-salt = str(5432765432)
-n = 0
-sum = 0
-if not vat.isdigit:
-    return False
-if (len(vat) != 11):
-    return False
-while (n &lt; 10):
-    sum = sum + int(salt[n]) * int(cstr[n])
-    n = n + 1
-op1 = sum % 11
-op2 = 11 - op1
-code_verifier = op2
-if (op2 == 11 or op2 == 10):
-    if (op2 == 11):
-        code_verifier = 0
+    vat = id_number.name
+    cstr = str(vat)
+    salt = str(5432765432)
+    n = 0
+    sum = 0
+    if not vat.isdigit:
+        return False
+    if (len(vat) != 11):
+        return False
+    while (n &lt; 10):
+        sum = sum + int(salt[n]) * int(cstr[n])
+        n = n + 1
+    op1 = sum % 11
+    op2 = 11 - op1
+    code_verifier = op2
+    if (op2 == 11 or op2 == 10):
+        if (op2 == 11):
+            code_verifier = 0
+        else:
+            code_verifier = 9
+    if (code_verifier == int(cstr[10])):
+        return True
     else:
-        code_verifier = 9
-if (code_verifier == int(cstr[10])):
-    return True
-else:
-    return False
+        return False
 failed = not check_vat_ar(id_number.name)
         </field>
     </record>

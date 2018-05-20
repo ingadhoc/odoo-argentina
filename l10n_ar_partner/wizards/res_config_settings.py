@@ -3,7 +3,6 @@
 # directory
 ##############################################################################
 from odoo import fields, models, api
-from odoo.tools.safe_eval import safe_eval
 
 
 class ResConfigSettings(models.TransientModel):
@@ -21,12 +20,6 @@ class ResConfigSettings(models.TransientModel):
         "(for eg. cuit, dni, etc) are unique. Same number for partners in a "
         "child/parent relation are still allowed",
     )
-
-    @api.multi
-    def set_default_unique_id_numbers(self):
-        for record in self:
-            self.env['ir.config_parameter'].set_param(
-                "l10n_ar_partner.unique_id_numbers", record.unique_id_numbers)
 
     @api.model
     def get_values(self):

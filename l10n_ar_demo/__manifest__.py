@@ -75,7 +75,7 @@
         # '../l10n_ar_account/demo/account_customer_invoice_demo.yml',
         '../l10n_ar_afipws_fe/demo/account_journal_demo_without_doc.yml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

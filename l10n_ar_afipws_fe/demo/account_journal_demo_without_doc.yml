@@ -3,4 +3,4 @@
 -
   !python {model: account.journal} : |
     without_doc_journal_ids = [ref('l10n_ar_demo.sales_journal'), ref('l10n_ar_demo.expenses_journal')]
-    self.write(cr, uid, without_doc_journal_ids, {'sequence':1})
+    self.browse(without_doc_journal_ids).write({'sequence':1})

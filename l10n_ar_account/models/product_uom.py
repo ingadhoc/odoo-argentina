@@ -9,5 +9,5 @@ class ProductUom(models.Model):
     _inherit = 'product.uom'
 
     afip_code = fields.Char(
-        'Afip Code'
+        'Afip Code',
     )

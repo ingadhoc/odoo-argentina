@@ -16,8 +16,9 @@ class AccountTaxTemplate(models.Model):
         string="Tax Group",
     )
 
-    def _get_tax_vals(self, company):
-        vals = super(AccountTaxTemplate, self)._get_tax_vals(company)
+    def _get_tax_vals(self, company, tax_template_to_tax):
+        vals = super(AccountTaxTemplate, self)._get_tax_vals(
+            company, tax_template_to_tax)
         if self.tax_group_id:
             vals['tax_group_id'] = self.tax_group_id.id
         return vals

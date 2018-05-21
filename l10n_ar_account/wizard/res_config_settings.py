@@ -72,7 +72,7 @@ class ResConfigSettings(models.TransientModel):
         data = padron.ObtenerTablaParametros(resource_type, separator)
         codes = []
         for line in data:
-            False, code, name, False = line.split(separator)
+            code, name = line.split(separator)[1:2]
             vals = {
                 'code': code,
                 'name': name,
@@ -81,9 +81,9 @@ class ResConfigSettings(models.TransientModel):
             record = self.env[model].search([('code', '=', code)], limit=1)
             codes.append(code)
             if record:
-                record.write(vals)
+                record.update(vals)
             else:
                 record.create(vals)
         # deactivate the ones that are not in afip
-        self.env[model].search([('code', 'not in', codes)]).write(
+        self.env[model].search([('code', 'not in', codes)]).update(
             {'active': False})

@@ -180,7 +180,7 @@ class ResPartnerUpdateFromPadronWizard(models.TransientModel):
                 vals[field.field] = [(6, False, literal_eval(field.new_value))]
             else:
                 vals[field.field] = field.new_value
-        self.partner_id.write(vals)
+        self.partner_id.update(vals)
         if self.update_constancia:
             self.partner_id.update_constancia_from_padron_afip()
 
@@ -191,7 +191,7 @@ class ResPartnerUpdateFromPadronWizard(models.TransientModel):
             self.change_partner()
             self._update()
 
-        self.write({'state': 'finished'})
+        self.update({'state': 'finished'})
         return {
             'type': 'ir.actions.act_window',
             'res_model': self._name,
@@ -204,7 +204,7 @@ class ResPartnerUpdateFromPadronWizard(models.TransientModel):
     def update_selection(self):
         self.ensure_one()
         if not self.field_ids:
-            self.write({'state': 'finished'})
+            self.update({'state': 'finished'})
             return {
                 'type': 'ir.actions.act_window',
                 'res_model': self._name,
@@ -221,7 +221,7 @@ class ResPartnerUpdateFromPadronWizard(models.TransientModel):
         """
         self.ensure_one()
         if self.partner_id:
-            self.write({'partner_ids': [(3, self.partner_id.id, False)]})
+            self.update({'partner_ids': [(3, self.partner_id.id, False)]})
         return self._next_screen()
 
     @api.multi
@@ -241,7 +241,7 @@ class ResPartnerUpdateFromPadronWizard(models.TransientModel):
                 'state': 'finished',
             })
 
-        self.write(values)
+        self.update(values)
         # because field is not changed, view is distroyed and reopen, on change
         # is not called an we call it manually
         self.change_partner()

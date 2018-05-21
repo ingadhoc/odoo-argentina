@@ -12,7 +12,8 @@ class AccountDocumentLetter(models.Model):
     document_type_ids = fields.One2many(
         'account.document.type',
         'document_letter_id',
-        'Document Types'
+        'Document Types',
+        auto_join=True,
     )
     issuer_ids = fields.Many2many(
         'afip.responsability.type',
@@ -20,6 +21,7 @@ class AccountDocumentLetter(models.Model):
         'document_letter_id',
         'afip_responsability_type_id',
         'Issuers',
+        auto_join=True,
     )
     receptor_ids = fields.Many2many(
         'afip.responsability.type',
@@ -27,6 +29,7 @@ class AccountDocumentLetter(models.Model):
         'document_letter_id',
         'afip_responsability_type_id',
         'Receptors',
+        auto_join=True,
     )
     active = fields.Boolean(
         'Active',

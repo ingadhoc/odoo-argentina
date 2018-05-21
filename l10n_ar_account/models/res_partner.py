@@ -30,15 +30,16 @@ class ResPartner(models.Model):
     gross_income_jurisdiction_ids = fields.Many2many(
         'res.country.state',
         string='Gross Income Jurisdictions',
-        help='The state of the company is cosidered the main jurisdiction'
+        help='The state of the company is cosidered the main jurisdiction',
     )
     start_date = fields.Date(
-        'Start-up Date'
+        'Start-up Date',
     )
     afip_responsability_type_id = fields.Many2one(
         'afip.responsability.type',
         'AFIP Responsability Type',
         auto_join=True,
+        index=True,
     )
     # campos desde
     # http://www.sistemasagiles.com.ar/trac/wiki/PadronContribuyentesAFIP

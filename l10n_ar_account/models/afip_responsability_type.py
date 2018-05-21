@@ -10,7 +10,8 @@ class AfipresponsabilityType(models.Model):
     name = fields.Char(
         'Name',
         size=64,
-        required=True
+        required=True,
+        index=True,
     )
     sequence = fields.Integer(
         'Sequence',
@@ -18,7 +19,8 @@ class AfipresponsabilityType(models.Model):
     code = fields.Char(
         'Code',
         size=8,
-        required=True
+        required=True,
+        index=True,
     )
     active = fields.Boolean(
         'Active',
@@ -29,14 +31,16 @@ class AfipresponsabilityType(models.Model):
         'account_doc_let_responsability_issuer_rel',
         'afip_responsability_type_id',
         'letter_id',
-        'Issued Document Letters'
+        'Issued Document Letters',
+        auto_join=True,
     )
     received_letter_ids = fields.Many2many(
         'account.document.letter',
         'account_doc_let_responsability_receptor_rel',
         'afip_responsability_type_id',
         'letter_id',
-        'Received Document Letters'
+        'Received Document Letters',
+        auto_join=True,
     )
     # hacemos esto para que, principalmente, monotributistas y exentos no
     # requieran iva, otra forma sería poner el impuesto no corresponde, pero

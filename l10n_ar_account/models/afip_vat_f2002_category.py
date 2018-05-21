@@ -6,4 +6,5 @@ class AfipVatF2002Category(models.Model):
 
     name = fields.Char(
         required=True,
+        index=True,
     )

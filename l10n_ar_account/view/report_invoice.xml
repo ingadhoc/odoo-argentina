@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<data>
 <template id="report_invoice_document" inherit_id="account_document.report_invoice_document">
 
     <xpath expr="//span[@t-if='o.partner_id.vat']" position="after">
@@ -13,5 +12,4 @@
 
 </template>
 
-</data>
 </odoo>

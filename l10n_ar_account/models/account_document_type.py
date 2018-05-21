@@ -7,7 +7,9 @@ class AccountDocmentType(models.Model):
 
     document_letter_id = fields.Many2one(
         'account.document.letter',
-        'Document Letter'
+        'Document Letter',
+        auto_join=True,
+        index=True,
     )
     purchase_cuit_required = fields.Boolean(
         help='Verdadero si la declaración del CITI compras requiere informar '

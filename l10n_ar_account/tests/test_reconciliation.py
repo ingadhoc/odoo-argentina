@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from openerp.addons.account.tests.test_reconciliation import TestReconciliation
+from odoo.addons.account.tests.test_reconciliation import TestReconciliation
 
 
 def new_method(self):

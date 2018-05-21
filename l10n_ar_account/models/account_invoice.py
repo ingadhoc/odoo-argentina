@@ -31,6 +31,7 @@ class AccountInvoice(models.Model):
         related='partner_id.state_id',
         store=True,
         readonly=True,
+        auto_join=True,
     )
     # IMPORANTE: si llegamos a implementar el campo computado no usar
     # cotizacion de la moneda ya que esta puede cambiar y ademas, si facturamos
@@ -71,6 +72,8 @@ class AccountInvoice(models.Model):
         help='Responsability type from journal entry where it is stored and '
         'it nevers change',
         related='move_id.afip_responsability_type_id',
+        index=True,
+        auto_join=True,
     )
     invoice_number = fields.Integer(
         compute='_compute_invoice_number',
@@ -134,7 +137,7 @@ class AccountInvoice(models.Model):
         'afip.incoterm',
         'Incoterm',
         readonly=True,
-        states={'draft': [('readonly', False)]}
+        states={'draft': [('readonly', False)]},
     )
     point_of_sale_type = fields.Selection(
         related='journal_id.point_of_sale_type',

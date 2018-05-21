@@ -22,6 +22,7 @@ class AccountMove(models.Model):
         string='AFIP Responsability Type',
         readonly=True,
         copy=False,
+        auto_join=True,
     )
 
     @api.multi

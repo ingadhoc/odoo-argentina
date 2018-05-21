@@ -17,7 +17,7 @@ class AccountInvoiceRefund(models.TransientModel):
             refund_invoices = self.env['account.invoice'].search(domain)
             # invoice = self.env['account.invoice'].browse(invoice_ids)
             invoice = self.invoice_id
-            refund_invoices.write({
+            refund_invoices.update({
                 # TODO this origin should be set on account_document module
                 'origin': invoice.document_number or invoice.number,
                 'afip_service_start': invoice.afip_service_start,

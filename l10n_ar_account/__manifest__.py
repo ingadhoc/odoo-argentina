@@ -28,6 +28,7 @@
     },
     'data': [
         'wizard/res_partner_update_from_padron_wizard_view.xml',
+        'wizard/res_config_settings_view.xml',
         'data/menuitem.xml',
         'data/product_data.xml',
         'data/base_validator_data.xml',
@@ -70,7 +71,6 @@
         'view/afip_activity_view.xml',
         'view/afip_concept_view.xml',
         'view/afip_tax_view.xml',
-        'res_config_view.xml',
         'report/invoice_analysis.xml',
         'security/ir.model.access.csv',
         'security/security.xml',
@@ -84,4 +84,5 @@
     'installable': True,
     'auto_install': False,
     'application': False,
+    'post_init_hook': 'post_init_hook',
 }

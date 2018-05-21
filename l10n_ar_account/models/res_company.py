@@ -10,7 +10,7 @@ class ResCompany(models.Model):
     _inherit = "res.company"
 
     localization = fields.Selection(
-        selection_add=[('argentina', 'Argentina')]
+        selection_add=[('argentina', 'Argentina')],
     )
     gross_income_number = fields.Char(
         related='partner_id.gross_income_number',

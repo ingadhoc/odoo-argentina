@@ -8,3 +8,5 @@ def new_method(self):
 
 
 TestReconciliation.test_partial_reconcile_currencies = new_method
+TestReconciliation.test_unreconcile_exchange = new_method
+TestReconciliation.test_unreconcile = new_method

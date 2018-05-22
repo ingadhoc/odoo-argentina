@@ -267,7 +267,7 @@
   - model: account.invoice
     eval: "[obj(ref('demo_invoice_12')).id]"
 -
-   Invoice to ADHOC con muchas lineas para probar factura en cero y rounding "ERROR 3" (ver readme), (se requiere usar precision decimal de precio producto en 4 para que de el error)
+   Invoice to ADHOC con muchas lineas para probar factura en cero y rounding "ERROR 3" (ver readme), (se requiere usar precision decimal de precio producto en 4 para que de el error y cambiar el 260.59 por 260.60)
    # TODO mejorar este caso demo porque con dos decimales queda en negativo
 -
   !record {model: account.invoice, id: demo_invoice_13}:
@@ -284,7 +284,7 @@
         quantity: 3
       - name: 'Support Services 2'
         product_id: product.product_product_2
-        price_unit: 260.6
+        price_unit: 260.59
         quantity: -1
       - name: 'Support Services 3'
         product_id: product.product_product_2

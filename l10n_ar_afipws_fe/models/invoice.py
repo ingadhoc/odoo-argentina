@@ -703,7 +703,7 @@ print "Observaciones:", wscdc.Obs
             # escribe aca si no hay errores
             _logger.info('CAE solicitado con exito. CAE: %s. Resultado %s' % (
                 ws.CAE, ws.Resultado))
-            inv.update({
+            inv.write({
                 'afip_auth_mode': 'CAE',
                 'afip_auth_code': ws.CAE,
                 'afip_auth_code_due': vto,

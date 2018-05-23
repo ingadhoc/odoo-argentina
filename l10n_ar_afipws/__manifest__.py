@@ -11,7 +11,7 @@
         'l10n_ar_partner',
     ],
     'external_dependencies': {
-        'python': ['pyafipws', 'OpenSSL']
+        'python': ['pyafipws', 'OpenSSL', 'pysimplesoap']
     },
     'data': [
         'wizard/upload_certificate_view.xml',

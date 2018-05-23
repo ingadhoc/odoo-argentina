@@ -61,7 +61,7 @@ class AccountJournalDocumentType(models.Model):
         # TODO ver como hacer para que tome los enter en los mensajes
         for pu_attrin in attributes:
             msg += "%s: %s\n" % (
-                pu_attrin, str(getattr(ws, pu_attrin)).decode("utf8"))
+                pu_attrin, getattr(ws, pu_attrin))
 
         msg += " - ".join([
             ws.Excepcion,

@@ -19,8 +19,6 @@
         'views/afipws_certificate_view.xml',
         'views/afipws_certificate_alias_view.xml',
         'views/afipws_connection_view.xml',
-        'views/res_company_view.xml',
-        # 'wizard/config_view.xml',
         'security/ir.model.access.csv',
         'security/security.xml',
     ],

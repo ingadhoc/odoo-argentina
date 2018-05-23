@@ -177,7 +177,7 @@ class ResCompany(models.Model):
 
         # make md5 hash of the parameter for caching...
         fn = "%s.xml" % hashlib.md5(
-            service + certificate + private_key).hexdigest()
+            (service + certificate + private_key).encode('utf-8')).hexdigest()
         if cache:
             fn = os.path.join(cache, fn)
         else:

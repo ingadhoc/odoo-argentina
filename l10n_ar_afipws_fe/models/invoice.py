@@ -356,7 +356,7 @@ print "Observaciones:", wscdc.Obs
             if msg:
                 raise UserError(_('AFIP Verification Error. %s' % msg))
 
-            inv.write({
+            inv.update({
                 'afip_auth_verify_result': ws.Resultado,
                 'afip_auth_verify_observation': '%s%s' % (ws.Obs, ws.ErrMsg)
             })
@@ -703,7 +703,7 @@ print "Observaciones:", wscdc.Obs
             # escribe aca si no hay errores
             _logger.info('CAE solicitado con exito. CAE: %s. Resultado %s' % (
                 ws.CAE, ws.Resultado))
-            inv.write({
+            inv.update({
                 'afip_auth_mode': 'CAE',
                 'afip_auth_code': ws.CAE,
                 'afip_auth_code_due': vto,

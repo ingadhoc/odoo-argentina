@@ -1,7 +1,8 @@
 pyOpenSSL
-# m2crypto>=0.18
-# httplib2>=0.7
-# pysimplesoap==1.08.14
+# m2crypto
+httplib2
+# pysimplesoap
+git+https://github.com/pysimplesoap/pysimplesoap@stable_py3k
 # fpdf>=1.7.2
 # dbf>=0.88.019
 # Pillow>=2.0.0

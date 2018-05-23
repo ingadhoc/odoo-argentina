@@ -45,7 +45,7 @@ mQa1nuu+xYOkgxcs7F5qM7g=
     <record id="main_company_certificate" model="afipws.certificate">
         <field name="alias_id" ref="main_company_certificate_alias"/>
         <field name="state">confirmed</field>
-        <field name="csr">  -----BEGIN CERTIFICATE REQUEST-----
+        <field name="csr">-----BEGIN CERTIFICATE REQUEST-----
 MIIC0DCCAbgCAQAwgYoxCzAJBgNVBAYTAkFSMRAwDgYDVQQHDAdSb3NhcmlvMRQw
 EgYDVQQKDAtZb3VyQ29tcGFueTELMAkGA1UECwwCSVQxKzApBgNVBAMMIkFGSVAg
 V1MgaG9tb2xvZ2F0aW9uIC0gWW91ckNvbXBhbnkxGTAXBgNVBAUTEENVSVQgMjAz

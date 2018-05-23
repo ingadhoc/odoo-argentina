@@ -356,7 +356,7 @@ print "Observaciones:", wscdc.Obs
             if msg:
                 raise UserError(_('AFIP Verification Error. %s' % msg))
 
-            inv.write({
+            inv.update({
                 'afip_auth_verify_result': ws.Resultado,
                 'afip_auth_verify_observation': '%s%s' % (ws.Obs, ws.ErrMsg)
             })

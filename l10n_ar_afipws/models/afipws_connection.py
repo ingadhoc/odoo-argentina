@@ -149,8 +149,8 @@ class AfipwsConnection(models.Model):
         ws.Conectar("", wsdl or "", "")
         cuit = self.company_id.cuit_required()
         ws.Cuit = cuit
-        ws.Token = self.token.encode('ascii')
-        ws.Sign = self.sign.encode('ascii')
+        ws.Token = self.token
+        ws.Sign = self.sign
         # TODO till this this PR is accepted
         ws.Obs = ''
         ws.Errores = []

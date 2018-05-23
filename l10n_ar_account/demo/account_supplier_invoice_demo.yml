@@ -107,7 +107,7 @@
   !python {model: ir.model.data} : |
       position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')])
       if position:
-          self.env['account.invoice'].browse(ref('l10n_ar_chart.demo_sup_invoice_3')).write({'fiscal_position_id': position.id})
+          self.env['account.invoice'].browse(ref('demo_sup_invoice_3')).write({'fiscal_position_id': position.id})
 -
   !function {model: account.invoice, name: compute_taxes, id: demo_sup_invoice_3}:
   - model: account.invoice
@@ -139,7 +139,7 @@
   !python {model: ir.model.data} : |
       position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')])
       if position:
-          self.env['account.invoice'].browse(ref('l10n_ar_chart.demo_sup_invoice_4')).write({'fiscal_position_id': position.id})
+          self.env['account.invoice'].browse(ref('demo_sup_invoice_4')).write({'fiscal_position_id': position.id})
 -
   !function {model: account.invoice, name: compute_taxes, id: demo_sup_invoice_4}:
   - model: account.invoice
@@ -189,7 +189,7 @@
   !python {model: ir.model.data} : |
       position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')])
       if position:
-          self.env['account.invoice'].browse(ref('l10n_ar_chart.demo_sup_invoice_5')).write({'fiscal_position_id': position.id})
+          self.env['account.invoice'].browse(ref('demo_sup_invoice_5')).write({'fiscal_position_id': position.id})
 -
   !function {model: account.invoice, name: compute_taxes, id: demo_sup_invoice_5}:
   - model: account.invoice
@@ -250,7 +250,7 @@
   !python {model: ir.model.data} : |
       position = self.env['account.fiscal.position'].search([('name', '=', 'No gravado')])
       if position:
-          self.env['account.invoice'].browse(ref('l10n_ar_chart.demo_sup_invoice_5')).write({'fiscal_position_id': position.id})
+          self.env['account.invoice'].browse(ref('demo_sup_invoice_5')).write({'fiscal_position_id': position.id})
 -
   !python {model: account.invoice, id: demo_sup_invoice_7}:
     self.action_invoice_open()

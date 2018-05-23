@@ -14,7 +14,7 @@
   !python {model: account.invoice.refund} : |
     context = {'active_ids': [ref('demo_invoice_3')], 'active_model': 'account.invoice'}
     refunds = self.browse(ref("demo_refund_invoice_3"))
-    refunds.get_available_journal_document_types()
+    refunds._compute_available_journal_document_types()
     refunds.invoice_refund()
 -
   Create cancel refund for invoice 4
@@ -27,7 +27,7 @@
   !python {model: account.invoice.refund} : |
     context = {'active_ids': [ref('demo_invoice_4')], 'active_model': 'account.invoice'}
     refunds = self.browse(ref("demo_refund_invoice_4"))
-    refunds.get_available_journal_document_types()
+    refunds._compute_available_journal_document_types()
     refunds.invoice_refund()
 -
   Create cancel refund for expo invoice 16 (las nc/nd expo invoice no requiere parametro permiso existennte, por eso agregamos este ejemplo)
@@ -40,5 +40,5 @@
   !python {model: account.invoice.refund} : |
     context = {'active_ids': [ref('demo_invoice_16')], 'active_model': 'account.invoice'}
     refunds = self.browse(ref("demo_refund_invoice_4"))
-    refunds.get_available_journal_document_types()
+    refunds._compute_available_journal_document_types()
     refunds.invoice_refund()

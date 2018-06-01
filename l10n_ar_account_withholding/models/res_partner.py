@@ -29,12 +29,16 @@ class ResPartner(models.Model):
     )
 
     @api.multi
-    def get_arba_alicuota_percepcion(self):
+    def get_arba_alicuota_percepcion(self, alicuot_no_inscripto=False):
         company = self._context.get('invoice_company')
         date_invoice = self._context.get('date_invoice')
         if date_invoice and company:
             date = fields.Date.from_string(date_invoice)
             arba = self.get_arba_data(company, date)
+            # si pasamos alicuota para no inscripto y no hay numero de
+            # comprobante entonces es porque no figura en el padron
+            if alicuot_no_inscripto and not arba.numero_comprobante:
+                return alicuot_no_inscripto
             return arba.alicuota_percepcion / 100.0
         return 0
 

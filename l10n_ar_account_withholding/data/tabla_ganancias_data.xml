@@ -321,7 +321,7 @@
             <field name="importe_excedente">40000</field>
         </record>
         
-        <record model="afip.tabla_ganancias.escala" id="escala_7">
+        <record model="afip.tabla_ganancias.escala" id="escala_8">
             <field name="importe_desde">60000</field>
             <field name="importe_hasta">999999999</field>
             <field name="importe_fijo">11650</field>

@@ -170,6 +170,8 @@ class ResPartner(models.Model):
             # por ej. monotributista devuelve N
             imp_iva = 'NI'
 
+        import pdb
+        pdb.set_trace()
         vals = {
             'name': padron.denominacion,
             # 'name': padron.tipo_persona,
@@ -206,16 +208,18 @@ class ResPartner(models.Model):
                 "must set it manually")
 
         if padron.provincia:
+            # depending on the database, caba can have one of this codes
+            caba_codes = ['C', 'CABA', 'ABA']
             # if not localidad then it should be CABA.
             if not padron.localidad:
                 state = self.env['res.country.state'].search([
-                    ('code', '=', 'ABA'),
+                    ('code', 'in', caba_codes),
                     ('country_id.code', '=', 'AR')], limit=1)
             # If localidad cant be caba
             else:
                 state = self.env['res.country.state'].search([
                     ('name', 'ilike', padron.provincia),
-                    ('code', '!=', 'ABA'),
+                    ('code', 'not in', caba_codes),
                     ('country_id.code', '=', 'AR')], limit=1)
             if state:
                 vals['state_id'] = state.id

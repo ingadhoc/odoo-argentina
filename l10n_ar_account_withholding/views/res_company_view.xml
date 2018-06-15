@@ -12,7 +12,7 @@
                 <notebook>
                     <page string="ARBA WS" name="arbaws">
                         <group>
-                            <field name="arba_cit"/>
+                            <field name="arba_cit" password="True"/>
                         </group>
                     </page>
                 </notebook>

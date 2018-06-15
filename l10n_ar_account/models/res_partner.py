@@ -170,8 +170,6 @@ class ResPartner(models.Model):
             # por ej. monotributista devuelve N
             imp_iva = 'NI'
 
-        import pdb
-        pdb.set_trace()
         vals = {
             'name': padron.denominacion,
             # 'name': padron.tipo_persona,

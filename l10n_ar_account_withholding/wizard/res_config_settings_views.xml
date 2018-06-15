@@ -24,7 +24,7 @@
                             CIT de ARBA
                         </div>
                         <div class="content-group">
-                            <field name="arba_cit" />
+                            <field name="arba_cit" password="True"/>
                         </div>
                     </div>
                 </div>

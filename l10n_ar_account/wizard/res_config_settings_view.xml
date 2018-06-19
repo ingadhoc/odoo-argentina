@@ -22,8 +22,7 @@
                     </div>
                 </div>
             </xpath>
-            <!-- Ver si re-activamos, no es muy utilizado -->
-            <!-- <div id="bank_cash" position="after">
+            <div id="bank_cash" position="after">
                 <group name="argentina_config" string="Argentina">
                     <label for="id" string="Refresh from Padron AFIP"/>
                     <div>
@@ -38,7 +37,7 @@
                         </div>
                     </div>
                 </group>
-            </div> -->
+            </div>
             <div name="sale_use_documents" position="after">
                 <!-- TODO implementar o borrar vista -->
                 <!-- <div name="afip_responsability_type_id">

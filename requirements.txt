@@ -1,9 +1,10 @@
 pyOpenSSL
-# m2crypto
+M2Crypto
 httplib2
 git+https://github.com/pysimplesoap/pysimplesoap@stable_py3k
 # fpdf>=1.7.2
 # dbf>=0.88.019
 # Pillow>=2.0.0
 # git+https://github.com/OCA/openupgradelib/@master
-git+https://github.com/reingart/pyafipws@py3k
+# git+https://github.com/reingart/pyafipws@py3k
+git+https://github.com/urbina05/pyafipws@patch-2

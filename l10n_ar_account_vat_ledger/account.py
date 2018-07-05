@@ -137,22 +137,11 @@ class account_tax(models.Model):
         refund_invoice_taxes = self.env['account.invoice.tax'].search(
             taxes_domain +
             [('invoice_id.type', 'in', ['in_refund', 'out_refund'])])
-        # we use base_amount and tax_amount instad of base and amount because
-        # we want them in local currency
-        # usamos valor absoluto porque si el impuesto se configura con signo
-        # negativo, por ej. para notas de credito, nosotros igual queremos
-        # llevarlo positivo
-        # TODO mejorarlo, no hace falta si lo disenamos bien, el tema es que
-        # algunos usan regitrando esto como negativo y otros como positivo
-        # el tema en realidad es que en el reporte queremos mostrarlo
-        # positivo tendriamos que hacer alg otipo:
-        # for invoice_tax in invoice_taxes:
-        #     amount_untaxed += invoice_tax.base_amount * invoice_tax
-        # amount_untaxed = abs(sum(invoice_taxes.mapped('base_amount')))
-        # amount_tax = abs(sum(invoice_taxes.mapped('tax_amount')))
-        amount_untaxed = abs(sum(invoice_taxes.mapped('cc_base'))) - abs(
+        amount_untaxed = (
+            sum(invoice_taxes.mapped('cc_base')) -
             sum(refund_invoice_taxes.mapped('cc_base')))
-        amount_tax = abs(sum(invoice_taxes.mapped('cc_amount'))) - abs(
+        amount_tax = (
+            sum(invoice_taxes.mapped('cc_amount')) -
             sum(refund_invoice_taxes.mapped('cc_amount')))
         amount_total = amount_untaxed + amount_tax
         return (amount_untaxed, amount_tax, amount_total)

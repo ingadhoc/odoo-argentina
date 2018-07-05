@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+##############################################################################
+# For copyright and license notices, see __openerp__.py file in module root
+# directory
+##############################################################################
 from openerp import models, fields, api, _
 from pyafipws.padron import PadronAFIP
 from openerp.exceptions import Warning
@@ -71,42 +75,36 @@ class ResPartner(models.Model):
     @api.multi
     def update_constancia_from_padron_afip(self):
         self.ensure_one()
-        cuit = self.document_number
-        if not cuit or self.document_type_id.afip_code != 80:
-            raise Warning(_(
-                'No CUIT for partner %s') % (self.name))
-        # descarga de constancia
-        # basedir = os.path.join(os.getcwd(), 'cache')
-        # tmpfilename = os.path.join(basedir, "constancia.pdf")
-        tmpfilename = "/tmp/constancia.pdf"
-        # sie queremos mejora esto podriamos no hardecodearlo con esto
-        # https://bugs.launchpad.net/openobject-addons/+bug/1040901
-        padron = PadronAFIP()
-        padron.Consultar(cuit)
-        padron.DescargarConstancia(cuit, tmpfilename)
-        f = file(tmpfilename, 'r')
-        constancia = base64.b64decode(base64.encodestring(f.read()))
-        f.close()
-        attachments = [
-            ('Constancia %s %s.pdf' % (
-                self.name,
-                fields.Date.context_today(self)),
-                constancia)]
-        self.message_post(
-            subject="Constancia de inscripción actualizada",
-            # subject="Actualizacion de datos desde Padron AFIP",
-            # body="Datos utilizados:<br/>%s" % vals,
-            attachments=attachments)
+        return True
 
     @api.multi
     def get_data_from_padron_afip(self):
         self.ensure_one()
         cuit = self.document_number
-        if not cuit or self.document_type_id.afip_code != 80:
+        # GET COMPANY
+        # if there is certificate for user company, use that one, if not
+        # use the company for the first certificate found
+        company = self.env.user.company_id
+        env_type = company._get_environment_type()
+        try:
+            certificate = company.get_key_and_certificate(company._get_environment_type())
+        except Exception:
+            certificate = self.env['afipws.certificate'].search([
+                ('alias_id.type', '=', env_type),
+                ('state', '=', 'confirmed'),
+            ], limit=1)
+            if not certificate:
+                raise Warning(_(
+                    'Not confirmed certificate found on database'))
+            company = certificate.alias_id.company_id
+
+        padron = company.get_connection('ws_sr_padron_a4').connect()
+        try:
+            padron.Consultar(cuit)
+        except Exception:
             raise Warning(_(
-                'No CUIT for partner %s') % (self.name))
-        padron = PadronAFIP()
-        padron.Consultar(cuit)
+                'This cuit %s of the partner %s not exists in afip') % (
+                cuit, self.name))
 
         # porque imp_iva activo puede ser S o AC
         imp_iva = padron.imp_iva
@@ -148,8 +146,7 @@ class ResPartner(models.Model):
             vals['imp_ganancias_padron'] = 'NC'
         else:
             _logger.info(
-                "We couldn't get impuesto a las ganancias from padron, you"
-                "must set it manually")
+                "We couldn't get impuesto a las ganancias from padron, you must set it manually")
 
         if padron.provincia:
             # if not localidad then it should be CABA.
@@ -177,7 +174,6 @@ class ResPartner(models.Model):
                 'l10n_ar_invoice.res_IVAE').id
         else:
             _logger.info(
-                "We couldn't infer the responsability_id from padron, you"
-                "must set it manually.")
+                "We couldn't infer the AFIP responsability from padron, you must set it manually.")
 
         return vals

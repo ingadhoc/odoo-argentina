@@ -3,11 +3,11 @@
 # directory
 ##############################################################################
 from odoo import models, fields, api, _
-from odoo.exceptions import Warning
+from odoo.exceptions import UserError
 # import time
 
 
-class account_vat_ledger(models.Model):
+class AccountVatLedger(models.Model):
 
     _name = "account.vat.ledger"
     _description = "Account VAT Ledger"
@@ -44,9 +44,6 @@ class account_vat_ledger(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)]},
     )
-    # period_id = fields.Many2one(
-    #     'account.period', 'Period', required=True,
-    #     readonly=True, states={'draft': [('readonly', False)]},)
     journal_ids = fields.Many2many(
         'account.journal', 'account_vat_ledger_journal_rel',
         'vat_ledger_id', 'journal_id',
@@ -85,7 +82,7 @@ class account_vat_ledger(models.Model):
 # Computed fields
     name = fields.Char(
         'Titile',
-        compute='_get_name'
+        compute='_compute_name'
     )
     reference = fields.Char(
         'Reference',
@@ -93,111 +90,94 @@ class account_vat_ledger(models.Model):
     invoice_ids = fields.Many2many(
         'account.invoice',
         string="Invoices",
-        compute="_get_data"
+        compute="_compute_data"
     )
     document_type_ids = fields.Many2many(
         'account.document.type',
         string="Document Classes",
-        compute="_get_data"
+        compute="_compute_data"
     )
     vat_tax_ids = fields.Many2many(
         'account.tax',
         string="VAT Taxes",
-        compute="_get_data"
+        compute="_compute_data"
     )
     other_tax_ids = fields.Many2many(
         'account.tax',
         string="Other Taxes",
-        compute="_get_data"
+        compute="_compute_data"
     )
-    # vat_tax_code_ids = fields.Many2many(
-    #     'account.tax.code',
-    #     string="VAT Tax Codes",
-    #     compute="_get_data"
-    # )
-    # other_tax_code_ids = fields.Many2many(
-    #     'account.tax.code',
-    #     string="Other Tax Codes",
-    #     compute="_get_data"
-    # )
     afip_responsability_type_ids = fields.Many2many(
         'afip.responsability.type',
         string="AFIP Responsabilities",
-        compute="_get_data"
+        compute="_compute_data"
     )
 
-    @api.one
-    # Sacamos el depends por un error con el cache en esqume multi cia al
-    # cambiar periodo de una cia hija con usuario distinto a admin
-    # @api.depends('journal_ids', 'period_id')
-    def _get_data(self):
-        self.afip_responsability_type_ids = self.env[
-            'afip.responsability.type'].search([])
+    @api.multi
+    @api.depends('journal_ids', 'date_from', 'date_to')
+    def _compute_data(self):
+        for rec in self:
+            rec.afip_responsability_type_ids = rec.env[
+                'afip.responsability.type'].search([])
 
-        invoices_domain = [
-            # cancel invoices with internal number are invoices
-            ('state', '!=', 'draft'),
-            ('number', '!=', False),
-            # ('internal_number', '!=', False),
-            ('journal_id', 'in', self.journal_ids.ids),
-            ('date', '>=', self.date_from),
-            ('date', '<=', self.date_to),
-        ]
+            invoices_domain = [
+                # cancel invoices with internal number are invoices
+                ('state', '!=', 'draft'),
+                ('number', '!=', False),
+                # ('internal_number', '!=', False),
+                ('journal_id', 'in', rec.journal_ids.ids),
+                ('date', '>=', rec.date_from),
+                ('date', '<=', rec.date_to),
+            ]
 
-        # Get invoices
-        invoices = self.env['account.invoice'].search(
-            # TODO, tal vez directamente podemos invertir el orden, como?
-            invoices_domain,
-            order='date_invoice asc, document_number asc, number asc, id asc')
-        self.document_type_ids = invoices.mapped('document_type_id')
-        self.invoice_ids = invoices
+            # Get invoices
+            invoices = rec.env['account.invoice'].search(
+                # TODO, tal vez directamente podemos invertir el orden, como?
+                invoices_domain,
+                order='date_invoice asc, document_number asc, number asc, '
+                'id asc')
+            rec.document_type_ids = invoices.mapped('document_type_id')
+            rec.invoice_ids = invoices
 
-        self.vat_tax_ids = invoices.mapped(
-            'vat_tax_ids.tax_id')
-        self.other_tax_ids = invoices.mapped(
-            'not_vat_tax_ids.tax_id')
-        # self.vat_tax_code_ids = invoices.mapped(
-        #     'vat_tax_ids.tax_code_id')
-        # self.other_tax_code_ids = invoices.mapped(
-        #     'not_vat_tax_ids.tax_code_id')
+            rec.vat_tax_ids = invoices.mapped(
+                'vat_tax_ids.tax_id')
+            rec.other_tax_ids = invoices.mapped(
+                'not_vat_tax_ids.tax_id')
 
-    @api.one
+    @api.multi
     @api.depends(
         'type',
-        # 'period_id',
         'reference',
     )
-    def _get_name(self):
-        if self.type == 'sale':
-            ledger_type = _('Sales')
-        elif self.type == 'purchase':
-            ledger_type = _('Purchases')
+    def _compute_name(self):
+        date_format = self.env['res.lang']._lang_get(
+            self._context.get('lang', 'en_US')).date_format
+        for rec in self:
+            if rec.type == 'sale':
+                ledger_type = _('Sales')
+            elif rec.type == 'purchase':
+                ledger_type = _('Purchases')
+            name = _("%s VAT Ledger %s - %s") % (
+                ledger_type,
+                rec.date_from and fields.Date.from_string(
+                    rec.date_from).strftime(date_format) or '',
+                rec.date_to and fields.Date.from_string(
+                    rec.date_to).strftime(date_format) or '',
+            )
+            if rec.reference:
+                name = "%s - %s" % (name, rec.reference)
+            rec.name = name
 
-        lang = self.env['res.lang']
-        date_format = lang.browse(lang._lang_get(
-            self._context.get('lang', 'en_US'))).date_format
-
-        name = _("%s VAT Ledger %s - %s") % (
-            ledger_type,
-            self.date_from and fields.Date.from_string(
-                self.date_from).strftime(date_format) or '',
-            self.date_to and fields.Date.from_string(
-                self.date_to).strftime(date_format) or '',
-        )
-        if self.reference:
-            name = "%s - %s" % (name, self.reference)
-        self.name = name
-
-    @api.one
+    @api.multi
     @api.constrains('presented_ledger', 'last_page', 'state')
     def _check_state(self):
-        if self.state == 'presented':
-            if not self.presented_ledger:
-                raise Warning(_(
+        for rec in self.filtered(lambda x: x.state == 'presented'):
+            if not rec.presented_ledger:
+                raise UserError(_(
                     'To set "Presented" you must upload the '
                     '"Presented Ledger" first'))
-            elif not self.last_page:
-                raise Warning(_(
+            elif not rec.last_page:
+                raise UserError(_(
                     'To set "Presented" you must set the "Last Page" first'))
 
     # TODO por alguna razón no se está computando el journals al guardar, por

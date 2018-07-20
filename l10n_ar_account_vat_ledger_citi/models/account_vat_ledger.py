@@ -10,7 +10,7 @@ import re
 _logger = logging.getLogger(__name__)
 
 
-class account_vat_ledger(models.Model):
+class AccountVatLedger(models.Model):
     _inherit = "account.vat.ledger"
 
     REGINFO_CV_ALICUOTAS = fields.Text(
@@ -31,33 +31,33 @@ class account_vat_ledger(models.Model):
     )
     vouchers_file = fields.Binary(
         _('Vouchers File'),
-        compute='get_files',
+        compute='_compute_files',
         readonly=True
     )
     vouchers_filename = fields.Char(
         _('Vouchers Filename'),
         readonly=True,
-        compute='get_files',
+        compute='_compute_files',
     )
     aliquots_file = fields.Binary(
         _('Aliquots File'),
-        compute='get_files',
+        compute='_compute_files',
         readonly=True
     )
     aliquots_filename = fields.Char(
         _('Aliquots Filename'),
         readonly=True,
-        compute='get_files',
+        compute='_compute_files',
     )
     import_aliquots_file = fields.Binary(
         _('Import Aliquots File'),
-        compute='get_files',
+        compute='_compute_files',
         readonly=True
     )
     import_aliquots_filename = fields.Char(
         _('Import Aliquots Filename'),
         readonly=True,
-        compute='get_files',
+        compute='_compute_files',
     )
     prorate_tax_credit = fields.Boolean(
         'Prorate Tax Credit',
@@ -105,7 +105,7 @@ class account_vat_ledger(models.Model):
         'type',
         # 'period_id.name'
     )
-    def get_files(self):
+    def _compute_files(self):
         self.ensure_one()
         # segun vimos aca la afip espera "ISO-8859-1" en vez de utf-8
         # http://www.planillasutiles.com.ar/2015/08/

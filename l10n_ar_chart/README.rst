@@ -23,14 +23,13 @@ Known issues / Roadmap
 Migrate and make installable chart of account for monotributo and cooperativa
 
 
-
 Credits
 =======
 
 Contributors
 ------------
 
-* 
+*
 
 Maintainer
 ----------

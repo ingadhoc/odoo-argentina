@@ -43,7 +43,7 @@ Algunas ideas en torno a esta localización:
     * Si yo tengo que cargar retenciones en un cobro:
         * TODO
     * Si yo tengo que aplicar percepciones en una venta
-        * TODO pero la idea sería usar algo de posiciones fiscales o similar y terminar 
+        * TODO pero la idea sería usar algo de posiciones fiscales o similar y terminar
     * Si yo tengo que aplicar retenciones en un pago:
         * TODO
 

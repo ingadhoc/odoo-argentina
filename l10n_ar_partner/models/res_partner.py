@@ -128,7 +128,7 @@ class ResPartner(models.Model):
         to_unlink.unlink()
 
     @api.model
-    def name_search(self, name, args=None, operator='ilike', limit=100):
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
         """
         we search by id, if we found we return this results, else we do
         default search
@@ -139,7 +139,7 @@ class ResPartner(models.Model):
         # no contiene algo del nombre
         if name and operator in ('ilike', 'like', '=', '=like', '=ilike'):
             recs = self.search(
-                [('id_numbers', operator, name)] + args, limit=limit)
+                [('id_numbers.name', operator, name)] + args, limit=limit)
             if recs:
                 return recs.name_get()
         return super(ResPartner, self).name_search(

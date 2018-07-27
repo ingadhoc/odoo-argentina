@@ -2,6 +2,7 @@
     'author': "Moldeo Interactive,ADHOC SA,Odoo Community Association (OCA)",
     'category': 'Localization/Argentina',
     'depends': [
+        'portal',
         'partner_identification',
         # this is for demo data, for fiscal position data on account
         # and also beacuse it is essential for argentinian use
@@ -19,6 +20,7 @@
         'views/res_company_view.xml',
         'views/res_partner_id_category_view.xml',
         'views/res_partner_id_number_view.xml',
+        'views/portal_templates.xml',
         'security/security.xml',
     ],
     'demo': [

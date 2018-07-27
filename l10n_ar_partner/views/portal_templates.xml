@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_details" name="l10n_ar portal_my_details" inherit_id="portal.portal_my_details">
+
+        <!-- TODO por ahora no lo agregamos porque solo debería ser editable si no hay facturas, para lo cual tal vez hay que crearlo o modificarlo en l10n_ar_account -->
+        <!-- <xpath expr="//div[@t-if='has_check_vat']" position="after">
+            <div class="clearfix"/>
+            <div t-attf-class="form-group #{error.get('main_id_category_id') and 'has-error' or ''} col-lg-6">
+                <label class="control-label" for="partner.main_id_category_id">Tipo de Documento</label>
+                <select name="main_id_category_id" class="form-control">
+                    <option value="">Tipo de Documento...</option>
+                    <t t-foreach="document_categories or []" t-as="document_category">
+                      <option t-att-value="document_category.id" t-att-selected="document_category.id == partner.main_id_category_id.id"><t t-esc="document_category.code"/></option>
+                    </t>
+                </select>
+            </div>
+            <div t-attf-class="form-group #{error.get('main_id_number') and 'has-error' or ''} col-lg-6">
+                <label class="control-label" for="main_id_number">Número de Documento</label>
+                <input type="text" name="main_id_number" class="form-control" t-att-value="partner.main_id_number" t-att-readonly="'readonly' if partner.invoice_ids else None"/>
+            </div>
+        </xpath> -->
+
+        <xpath expr="//div[@t-if='has_check_vat']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+    </template>
+
+</odoo>

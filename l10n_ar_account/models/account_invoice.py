@@ -580,7 +580,7 @@ class AccountInvoice(models.Model):
                 'Las siguientes partners no tienen configurado CUIT: %s') % (
                     ', '.join(
                         without_cuit.mapped('commercial_partner_id.name'))
-                ))
+            ))
 
         # facturas que no debería tener ningún iva y tienen
         not_zero_alicuot = argentinian_invoices.filtered(
@@ -592,7 +592,7 @@ class AccountInvoice(models.Model):
                 'Las siguientes facturas tienen configurados IVA incorrecto. '
                 'Debe utilizar IVA no corresponde.\n*Facturas: %s') % (
                     ', '.join(not_zero_alicuot.mapped('display_name'))
-                ))
+            ))
 
         # facturas que debería tener iva y tienen no corresponde
         zero_alicuot = argentinian_invoices.filtered(
@@ -605,7 +605,7 @@ class AccountInvoice(models.Model):
                 'seleccionar una alícuota correcta (No gravado, Exento, Cero, '
                 '10,5, etc).\n*Facturas: %s') % (
                     ', '.join(zero_alicuot.mapped('display_name'))
-                ))
+            ))
 
         # Check except vat invoice
         afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
@@ -660,17 +660,6 @@ class AccountInvoice(models.Model):
     #     self.with_context(constraint_update_taxes=True).compute_taxes()
 
     # we add fiscal position with fp method instead of directly from partner
-    # TODO. this should go in a PR to ODOO
-    @api.onchange('partner_id', 'company_id')
-    def _onchange_partner_id(self):
-        res = super(AccountInvoice, self)._onchange_partner_id()
-        fiscal_position = self.env[
-            'account.fiscal.position'].with_context(
-                force_company=self.company_id.id).get_fiscal_position(
-                self.partner_id.id)
-        if fiscal_position:
-            self.fiscal_position_id = fiscal_position
-        return res
 
     @api.multi
     @api.constrains('date_invoice')

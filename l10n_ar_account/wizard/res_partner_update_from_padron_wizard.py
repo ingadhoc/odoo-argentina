@@ -148,7 +148,7 @@ class ResPartnerUpdateFromPadronWizard(models.TransientModel):
             partner_vals = partner.get_data_from_padron_afip()
             lines = []
             # partner_vals.pop('constancia')
-            for key, new_value in partner_vals.iteritems():
+            for key, new_value in partner_vals.items():
                 old_value = partner[key]
                 if new_value == '':
                     new_value = False

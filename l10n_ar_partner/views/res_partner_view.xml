@@ -29,7 +29,11 @@
             <form>
                 <field name="cuit" invisible="1"/>
             </form>
-            <field name="website" position="after">
+            <!-- ocultamos vat que no lo usamos y agregamos main_id nuber abajo -->
+            <field name="vat" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="vat" position="after">
                 <label for="main_id_number" string="Main Identification"/>
                 <div>
                     <field name="main_id_category_id" options="{'no_open': True, 'no_create': True}" placeholder="Category" class="oe_inline"/> - 
@@ -38,7 +42,7 @@
             </field>
 
           <page name="id_numbers" position="attributes">
-            <attribute name="groups">l10n_ar_partner.group_multiple_id_numbers</attribute>
+                <attribute name="groups">l10n_ar_partner.group_multiple_id_numbers</attribute>
           </page>
 
         </field>

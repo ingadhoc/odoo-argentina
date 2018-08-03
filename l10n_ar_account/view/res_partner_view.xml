@@ -25,7 +25,7 @@
                 <field name="ref" placeholder="Reference/Name fantasy"/>
             </field>
 
-            <field name="website" position="after">
+            <field name="vat" position="after">
                 <field name="afip_responsability_type_id" options="{'no_open': True, 'no_create': True}" attrs="{'invisible': [('is_company','=',False), ('parent_id','!=',False)]}"/>
             </field>
 

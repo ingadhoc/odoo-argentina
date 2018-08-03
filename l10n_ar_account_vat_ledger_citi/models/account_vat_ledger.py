@@ -390,11 +390,21 @@ class AccountVatLedger(models.Model):
                 # Campo 21: Crédito Fiscal Computable
                 if self.prorate_tax_credit:
                     if self.prorate_type == 'global':
-                        row.append(self.format_amount(0), invoice=inv)
+                        row.append(self.format_amount(0, invoice=inv))
                     else:
                         # row.append(self.format_amount(0))
+                        # por ahora no implementado pero seria lo mismo que
+                        # sacar si prorrateo y que el cliente entre en el citi
+                        # en cada comprobante y complete cuando es en
+                        # credito fiscal computable
                         raise ValidationError(_(
-                            'by_voucher not implemented yet'))
+                            'Para utilizar el prorrateo por comprobante:\n'
+                            '1) Exporte los archivos sin la opción "Proratear '
+                            'Crédito de Impuestos"\n2) Importe los mismos '
+                            'en el aplicativo\n3) En el aplicativo de afip, '
+                            'comprobante por comprobante, indique el valor '
+                            'correspondiente en el campo "Crédito Fiscal '
+                            'Computable"'))
                 else:
                     row.append(self.format_amount(
                         inv.cc_vat_amount, invoice=inv))

@@ -546,18 +546,6 @@ class AccountInvoice(models.Model):
                     ', '.join(unconfigured_tax_groups.mapped(
                         lambda x: '%s (%s)' % (x.name, x.id))))))
 
-        vat_taxes = self.env['account.tax'].search([
-            ('tax_group_id.type', '=', 'tax'),
-            ('tax_group_id.tax', '=', 'vat')])
-        lines_without_vat = self.env['account.invoice.line'].search([
-            ('invoice_id', 'in', argentinian_invoices.ids),
-            ('invoice_line_tax_ids', 'not in', vat_taxes.ids),
-            ('company_id.company_requires_vat', '=', True),
-        ])
-        if lines_without_vat:
-            raise ValidationError(_(
-                "Invoice with ID %s has some lines without vat Tax ") % (
-                    lines_without_vat.mapped('invoice_id').ids))
         # for invoice in argentinian_invoices:
         #     # TODO usar round
         #     # TODO tal vez debamos usar esto para un chequeo de suma de

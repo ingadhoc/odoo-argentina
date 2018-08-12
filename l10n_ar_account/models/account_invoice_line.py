@@ -42,6 +42,10 @@ class AccountInvoiceLine(models.Model):
         """For recs of companies with company_requires_vat (that comes from
         the responsability), we ensure one and only one vat tax is configured
         """
+        # por ahora, para no romper los tests de odoo y datos demo de algunos
+        # modulos, lo desactivamos en la instalacion
+        if self._context.get('install_mode'):
+            return True
         for rec in self.filtered('company_id.company_requires_vat'):
             vat_taxes = rec.invoice_line_tax_ids.filtered(
                 lambda x:

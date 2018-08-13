@@ -4,12 +4,10 @@
 ##############################################################################
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
-from pysimplesoap.client import SoapFault
-# import base64
-# try:
-#     from pyafipws.padron import PadronAFIP
-# except ImportError:
-#     PadronAFIP = None
+try:
+    from pysimplesoap.client import SoapFault
+except ImportError:
+    SoapFault = None
 import logging
 _logger = logging.getLogger(__name__)
 

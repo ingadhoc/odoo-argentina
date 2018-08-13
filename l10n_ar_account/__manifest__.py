@@ -24,7 +24,7 @@
         # 'account_invoice_tax_wizard',
     ],
     'external_dependencies': {
-        'python': ['pyafipws'],
+        'python': ['pyafipws', 'pysimplesoap.client'],
     },
     'data': [
         'wizard/res_partner_update_from_padron_wizard_view.xml',

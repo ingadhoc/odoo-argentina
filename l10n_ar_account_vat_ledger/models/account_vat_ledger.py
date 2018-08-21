@@ -180,27 +180,18 @@ class AccountVatLedger(models.Model):
                 raise UserError(_(
                     'To set "Presented" you must set the "Last Page" first'))
 
-    # TODO por alguna razón no se está computando el journals al guardar, por
-    # ahora lo dejamos comentado
-    # @api.onchange('company_id')
-    # def change_company(self):
-    #     # now = time.strftime('%Y-%m-%d')
-    #     # company_id = self.company_id.id
-    #     # domain = [('company_id', '=', company_id),
-    #     #           ('date_start', '<', now), ('date_stop', '>', now)]
-    #     # fiscalyears = self.env['account.fiscalyear'].search(
-    #     #     domain, limit=1)
-    #     # self.fiscalyear_id = fiscalyears
-    #     if self.type == 'sale':
-    #         domain = [('type', '=', 'sale')]
-    #     elif self.type == 'purchase':
-    #         domain = [('type', '=', 'purchase')]
-    #     domain += [
-    #         ('use_documents', '=', True),
-    #         ('company_id', '=', self.company_id.id),
-    #     ]
-    #     journals = self.env['account.journal'].search(domain)
-    #     self.journal_ids = journals.ids
+    @api.onchange('company_id')
+    def change_company(self):
+        if self.type == 'sale':
+            domain = [('type', '=', 'sale')]
+        elif self.type == 'purchase':
+            domain = [('type', '=', 'purchase')]
+        domain += [
+            ('use_documents', '=', True),
+            ('company_id', '=', self.company_id.id),
+        ]
+        journals = self.env['account.journal'].search(domain)
+        self.journal_ids = journals
 
     # @api.onchange('fiscalyear_id')
     # def change_fiscalyear(self):

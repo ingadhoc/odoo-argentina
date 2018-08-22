@@ -5,7 +5,8 @@
 from .pyi25 import PyI25
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
-from io import StringIO as StringIO
+import base64
+from io import BytesIO
 import logging
 import sys
 import traceback
@@ -138,15 +139,14 @@ class AccountInvoice(models.Model):
         if barcode:
             # create the helper:
             pyi25 = PyI25()
-            output = StringIO()
+            output = BytesIO()
             # call the helper:
             bars = ''.join([c for c in barcode if c.isdigit()])
             if not bars:
                 bars = "00"
             pyi25.GenerarImagen(bars, output, extension="PNG")
             # get the result and encode it for openerp binary field:
-            image = output.getvalue()
-            image = output.getvalue().encode("base64")
+            image = base64.b64encode(output.getvalue())
             output.close()
         return image
 
@@ -165,7 +165,7 @@ class AccountInvoice(models.Model):
         # Step 4: sum the results of step 2 and 3
         etapa4 = etapa2 + etapa3
         # Step 5: the minimun value that summed to step 4 is a multiple of 10
-        digito = 10 - (etapa4 - (int(etapa4 / 10) * 10))
+        digito = 10 - (etapa4 - (int(etapa4 // 10) * 10))
         if digito == 10:
             digito = 0
         return str(digito)

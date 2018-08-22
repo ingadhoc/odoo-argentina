@@ -38,7 +38,7 @@ class PyI25:
         #  * http://code.activestate.com/recipes/426069/
 
         wide = basewidth
-        narrow = basewidth / 3
+        narrow = basewidth // 3
 
         # códigos ancho/angostos (wide/narrow) para los dígitos
         bars = ("nnwwn", "wnnnw", "nwnnw", "wwnnn", "nnwnw", "wnwnn", "nwwnn",
@@ -108,7 +108,7 @@ class PyI25:
         # Etapa 5: buscar el menor número que sumado al resultado obtenido en
         # la etapa 4 dé un número múltiplo de 10. Este será el valor del dígito
         # verificador del módulo 10.
-        digito = 10 - (etapa4 - (int(etapa4 / 10) * 10))
+        digito = 10 - (etapa4 - (int(etapa4 // 10) * 10))
         if digito == 10:
             digito = 0
         return str(digito)

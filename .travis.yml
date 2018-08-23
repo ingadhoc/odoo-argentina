@@ -73,8 +73,7 @@ env:
 
 
 install:
-  - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
-  - sed -i 's/manifest_required_author\=.*/manifest_required_author="ADHOC SA"/g' ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint_pr.cfg
+  - git clone --depth=1 https://github.com/ingadhoc/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
   # if we are on TESTS then we copy this modules because if not account is pre-nstalled an it launches l10n_ar_chart installation, and then later on l10n_ar_chart re-install we have errors (native odoo errors)

@@ -107,6 +107,15 @@ class AfipwsConnection(models.Model):
                 afip_ws_url = (
                     "https://awshomo.afip.gov.ar/sr-padron/webservices/"
                     "personaServiceA4?wsdl")
+        elif afip_ws == 'ws_sr_padron_a5':
+            if environment_type == 'production':
+                afip_ws_url = (
+                    "https://aws.afip.gov.ar/sr-padron/webservices/"
+                    "personaServiceA5?wsdl")
+            else:
+                afip_ws_url = (
+                    "https://awshomo.afip.gov.ar/sr-padron/webservices/"
+                    "personaServiceA5?wsdl")
         return afip_ws_url
 
     @api.multi
@@ -134,7 +143,7 @@ class AfipwsConnection(models.Model):
         # https://groups.google.com/d/msg/pyafipws/Xr08e4ZuMmQ/6iDzXwdJAwAJ
         # TODO mejorar ya que probablemente no ande en test pero el tema es
         # que en esta parte no tenemos data del env_type
-        if self.afip_ws == 'ws_sr_padron_a4':
+        if self.afip_ws in ['ws_sr_padron_a4', 'ws_sr_padron_a5']:
             ws.HOMO = False
 
         if not ws:
@@ -174,4 +183,7 @@ class AfipwsConnection(models.Model):
         if afip_ws == 'ws_sr_padron_a4':
             from pyafipws.ws_sr_padron import WSSrPadronA4
             ws = WSSrPadronA4()
+        elif afip_ws == 'ws_sr_padron_a5':
+            from pyafipws.ws_sr_padron import WSSrPadronA5
+            ws = WSSrPadronA5()
         return ws

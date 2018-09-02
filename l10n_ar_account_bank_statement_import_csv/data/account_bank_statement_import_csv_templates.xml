@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="account.bank.statement.import.csv.template" id="Galicia">
+            <field name="name">Banco Galicia y de Buenos Aires S.A.</field>
+            <field name="encoding">latin1</field>
+            <field name="separator">;</field>
+            <field name="quoting">"</field>
+            <field name="error_handling">ignore_date</field>
+            <field name="headers">True</field>
+        </record>
+
+        <record model="account.bank.statement.import.csv.template.line" id="Galicia_1">
+            <field name="template_id" eval="ref('Galicia')" />
+            <field name="field">name</field>
+            <field name="type">header</field>
+            <field name="col_header">Descripción</field>
+        </record>
+
+        <record model="account.bank.statement.import.csv.template.line" id="Galicia_2">
+            <field name="template_id" eval="ref('Galicia')" />
+            <field name="field">date</field>
+            <field name="type">header</field>
+            <field name="col_header">Fecha</field>
+            <field name="date_format">%d/%m/%Y</field>
+        </record>
+
+        <record model="account.bank.statement.import.csv.template.line" id="Galicia_3">
+            <field name="template_id" eval="ref('Galicia')" />
+            <field name="type">header</field>
+            <field name="col_header">Observaciones Cliente</field>
+            <field name="field">note</field>
+        </record>
+
+        <record model="account.bank.statement.import.csv.template.line" id="Galicia_4">
+            <field name="template_id" eval="ref('Galicia')" />
+            <field name="type">expr</field>
+            <field name="expr">safe_float(col('Créditos')) - safe_float(col('Débitos'))</field>
+            <field name="field">amount</field>
+            <field name="replace_comma">True</field>
+        </record>
+
+        <record model="account.bank.statement.import.csv.template.line" id="Galicia_5">
+            <field name="template_id" eval="ref('Galicia')" />
+            <field name="type">expr</field>
+            <field name="expr">col('Leyendas Adicionales1') if col('Concepto').startswith('917193') else None</field>
+            <field name="field">partner_name</field>
+        </record>
+
+        <record model="account.bank.statement.import.csv.template.line" id="Galicia_6">
+            <field name="template_id" eval="ref('Galicia')" />
+            <field name="type">expr</field>
+            <field name="field">ref</field>
+            <field name="expr">
+                '\r\n'.join([ line for line in [
+                    col('Origen'),
+                    col('Número de Terminal'),
+                    col('Número de Comprobante'),
+                    col('Leyendas Adicionales1'),
+                    col('Leyendas Adicionales2'),
+                    col('Leyendas Adicionales3'),
+                    col('Leyendas Adicionales4')
+                ] if line ])
+            </field>
+        </record>
+
+        <!-- Compatibility with l10n_ar_account_bank_statement_import_partner_main_id_number -->
+        <!-- Extracts CUIT from incoming transfers, sets Banco Galicia's cuits on Taxes and Comissions -->
+        <record model="account.bank.statement.import.csv.template.line" id="Galicia_7">
+            <field name="template_id" eval="ref('Galicia')" />
+            <field name="type">expr</field>
+            <field name="expr">
+                ('30500001735' if col('Grupo de Conceptos') in ['901 - Impuestos', '808 - Comisiones'] else None) or (col('Leyendas Adicionales2') if col('Concepto').startswith('917193') else None)
+            </field>
+            <field name="field">other</field>
+            <field name="custom_field">partner_main_id_number</field>
+        </record>
+
+    </data>
+</openerp>

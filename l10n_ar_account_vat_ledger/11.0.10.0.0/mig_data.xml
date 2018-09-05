@@ -1,0 +1,5 @@
+<odoo noupdate="1">
+    <record id="report_account_vat_ledger" context="{'no_key_lines':True}" model="ir.actions.report">
+        <field name="print_report_name">'Libro IVA %s %s' % (object.type == 'purchase' and 'Compras' or 'Ventas', object.date_to)</field>
+    </record>
+</odoo>

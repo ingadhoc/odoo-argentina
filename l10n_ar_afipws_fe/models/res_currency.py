@@ -50,14 +50,14 @@ class ResCurrency(models.Model):
     # def get_pyafipws_currency_rate(self, afip_ws='wsfex', company=False):
     def get_pyafipws_currency_rate(self, afip_ws='wsfe', company=False):
         self.ensure_one()
-        # if not company, then we search one that uses argentinian localization
+        # if not company, we use any that has valid certificates
         if not company:
-            company = self.env['res.company'].search(
-                [('localization', '=', 'argentina')],
-                limit=1)
-        if not company:
-            raise UserError(_(
-                'No company found using argentinian localization'))
+            env_type = self.env['res.company']._get_environment_type()
+            certificate = self.env['afipws.certificate'].search([
+                ('alias_id.type', '=', env_type),
+                ('state', '=', 'confirmed'),
+            ], limit=1)
+            company = certificate.alias_id.company_id
 
         if not self.afip_code:
             raise UserError(_('No AFIP code for currency %s') % self.name)

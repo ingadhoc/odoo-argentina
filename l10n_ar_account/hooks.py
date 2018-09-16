@@ -11,11 +11,11 @@ def sync_padron_afip(cr, registry):
     """
     _logger.info('Syncking afip padron data')
     env = Environment(cr, SUPERUSER_ID, {})
-    account_config = env['res.config.settings'].create({})
     try:
-        account_config.refresh_taxes_from_padron()
-        account_config.refresh_concepts_from_padron()
-        account_config.refresh_activities_from_padron()
+        account_config = env['res.config.settings']
+        account_config.refresh_from_padron("impuestos")
+        account_config.refresh_from_padron("conceptos")
+        account_config.refresh_from_padron("actividades")
     except Exception:
         pass
 

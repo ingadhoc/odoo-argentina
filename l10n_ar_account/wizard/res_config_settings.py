@@ -51,13 +51,12 @@ class ResConfigSettings(models.TransientModel):
     def refresh_activities_from_padron(self):
         self.refresh_from_padron("actividades")
 
-    @api.multi
+    @api.model
     def refresh_from_padron(self, resource_type):
         """
         resource_type puede ser "impuestos", "conceptos", "actividades",
         "caracterizaciones", "categoriasMonotributo", "categoriasAutonomo".
         """
-        self.ensure_one()
         if resource_type == 'impuestos':
             model = 'afip.tax'
         elif resource_type == 'actividades':

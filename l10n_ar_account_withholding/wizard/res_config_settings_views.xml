@@ -11,6 +11,7 @@
                     <div class="o_setting_left_pane"/>
                     <div class="o_setting_right_pane">
                         <label for="regimenes_ganancias_ids" string="Regimenes de ganancias en los que retiene"/>
+                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
                         <div class="content-group">
                             <field name="regimenes_ganancias_ids" widget="many2many_tags"/>
                         </div>
@@ -20,6 +21,7 @@
                     <div class="o_setting_left_pane"/>
                     <div class="o_setting_right_pane">
                         <label for="arba_cit"/>
+                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
                         <div class="text-muted">
                             CIT de ARBA
                         </div>

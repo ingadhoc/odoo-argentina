@@ -13,6 +13,7 @@
                         <div class="o_setting_left_pane"/>
                         <div class="o_setting_right_pane">
                             <label string="Configurar certificados de AFIP"/>
+                            <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
                             <div class="content-group">
                                 <div>
                                     <button name="%(l10n_ar_afipws.act_afipws_certificate_alias)d" icon="fa-arrow-right" type="action" string="Configurar" class="btn-link"/>

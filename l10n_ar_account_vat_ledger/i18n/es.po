@@ -281,7 +281,7 @@ msgstr "Importe de Otros Impuestos"
 #. module: l10n_ar_account_vat_ledger
 #: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
 msgid "Present"
-msgstr "Presente"
+msgstr "Presentado"
 
 #. module: l10n_ar_account_vat_ledger
 #: selection:account.vat.ledger,state:0

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.account.vat.ledger</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <div id="rounding_method" position="before">
+                <div class="col-xs-12 col-md-6 o_setting_box" id="account_vat_ledger">
+                    <div class="o_setting_left_pane">
+                        <field name="iva_control_presentation"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="iva_control_presentation"/>
+                        <div class="text-muted">
+                            Requerir número de página y libro presentado para setear un Libro de Iva como presentado "require_vat_ledger_data".
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+
+</odoo>

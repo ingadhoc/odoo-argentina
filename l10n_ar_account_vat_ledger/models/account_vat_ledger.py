@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+from odoo.tools.safe_eval import safe_eval
 # import time
 
 
@@ -171,14 +172,19 @@ class AccountVatLedger(models.Model):
     @api.multi
     @api.constrains('presented_ledger', 'last_page', 'state')
     def _check_state(self):
-        for rec in self.filtered(lambda x: x.state == 'presented'):
-            if not rec.presented_ledger:
-                raise UserError(_(
-                    'To set "Presented" you must upload the '
-                    '"Presented Ledger" first'))
-            elif not rec.last_page:
-                raise UserError(_(
-                    'To set "Presented" you must set the "Last Page" first'))
+        require_file_and_page = safe_eval(self.env[
+            'ir.config_parameter'].sudo().get_param(
+            'l10n_ar_vat_ledger.require_file_and_page', 'False'))
+        if require_file_and_page:
+            for rec in self.filtered(lambda x: x.state == 'presented'):
+                if not rec.presented_ledger:
+                    raise UserError(_(
+                        'To set "Presented" you must upload the '
+                        '"Presented Ledger" first'))
+                elif not rec.last_page:
+                    raise UserError(_(
+                        'To set "Presented" you must set'
+                        ' the "Last Page" first'))
 
     @api.onchange('company_id')
     def change_company(self):

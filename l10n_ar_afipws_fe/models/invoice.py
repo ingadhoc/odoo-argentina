@@ -107,12 +107,20 @@ class AccountInvoice(models.Model):
         compute='_compute_validation_type',
     )
 
-    @api.multi
+    @api.depends('journal_id', 'afip_auth_code')
     def _compute_validation_type(self):
         for rec in self:
             if rec.journal_id.afip_ws and not rec.afip_auth_code:
-                rec.validation_type = self.env[
+                validation_type = self.env[
                     'res.company']._get_environment_type()
+                # if we are on homologation env and we dont have certificates
+                # we validate only locally
+                if validation_type == 'homologation':
+                    try:
+                        rec.company_id.get_key_and_certificate(validation_type)
+                    except Exception:
+                        validation_type = False
+                rec.validation_type = validation_type
 
     @api.multi
     @api.depends('afip_auth_code')

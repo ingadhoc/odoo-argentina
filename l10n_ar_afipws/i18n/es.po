@@ -3,14 +3,14 @@
 # * l10n_ar_afipws
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-20 14:34+0000\n"
-"PO-Revision-Date: 2018-03-20 14:34+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"POT-Creation-Date: 2018-09-27 15:47+0000\n"
+"PO-Revision-Date: 2018-09-27 15:47+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -82,7 +82,6 @@ msgstr "Servidores de AFIP"
 
 #. module: l10n_ar_afipws
 #: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_connection_afip_ws
-#: model:ir.ui.view,arch_db:l10n_ar_afipws.view_company_inherit_form
 msgid "AFIP WS"
 msgstr "WS AFIP"
 
@@ -107,26 +106,20 @@ msgid "AFIP Web Services"
 msgstr "Servicios Web de AFIP"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_connection.py:141
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:147
 #, python-format
 msgid "AFIP Webservice %s not implemented yet"
 msgstr "Servicio Web de AFIP %s todavía no implementado"
 
 #. module: l10n_ar_afipws
 #: model:ir.model.fields,field_description:l10n_ar_afipws.field_res_company_alias_ids
-#: model:ir.ui.view,arch_db:l10n_ar_afipws.view_company_inherit_form
 msgid "Aliases"
 msgstr "Alias"
 
 #. module: l10n_ar_afipws
-#: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_connection_batch_sequence_id
-msgid "Batch Sequence"
-msgstr "Secuencia de lote"
-
-#. module: l10n_ar_afipws
 #: selection:afipws.connection,afip_ws:0
 msgid "Bono Fiscal -con detalle- RG2557 (WSBFE)"
-msgstr "Bono Fiscal -con detalle- RG2557 (WSBFE)"
+msgstr ""
 
 #. module: l10n_ar_afipws
 #: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_certificate_alias_cuit
@@ -153,16 +146,17 @@ msgstr "Certificados"
 
 #. module: l10n_ar_afipws
 #: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_certificate_crt
+#: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_upload_certificate_wizard_certificate_id
 msgid "Certificate"
 msgstr "Certificado"
 
 #. module: l10n_ar_afipws
-#: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_certificate_alias_id_2237
+#: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_certificate_alias_id_4029
 msgid "Certificate Alias"
 msgstr "Certificar Alias"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:78
+#: code:addons/l10n_ar_afipws/models/afipws_certificate.py:77
 #, python-format
 msgid "Certificate Alias must be confirmed first!"
 msgstr "¡El Alias Certificado debe estar confirmado primero!"
@@ -171,11 +165,6 @@ msgstr "¡El Alias Certificado debe estar confirmado primero!"
 #: model:ir.model.fields,help:l10n_ar_afipws.field_afipws_certificate_csr
 msgid "Certificate Request in PEM format."
 msgstr "Solicitud de Certificado en formato PEM."
-
-#. module: l10n_ar_afipws
-#: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_upload_certificate_wizard_certificate_id
-msgid "Certificate id"
-msgstr "Id de Certificado"
 
 #. module: l10n_ar_afipws
 #: model:ir.model.fields,help:l10n_ar_afipws.field_afipws_certificate_crt
@@ -241,10 +230,10 @@ msgstr "Conexiones"
 #. module: l10n_ar_afipws
 #: selection:afipws.connection,afip_ws:0
 msgid "Constatación de Comprobantes (WSCDC)"
-msgstr "Constatación de Comprobantes (WSCDC)"
+msgstr ""
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:221
+#: code:addons/l10n_ar_afipws/models/res_company.py:222
 #, python-format
 msgid "Could not connect. This is the what we received: %s"
 msgstr "No se puede conectar. Esto es lo que recibimos: %s"
@@ -307,7 +296,7 @@ msgstr "Tiempo de expiración"
 #. module: l10n_ar_afipws
 #: selection:afipws.connection,afip_ws:0
 msgid "Exportación -con detalle- RG2758 (WSFEXv1)"
-msgstr "Exportación -con detalle- RG2758 (WSFEXv1)"
+msgstr ""
 
 #. module: l10n_ar_afipws
 #: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_certificate_request_filename
@@ -351,10 +340,8 @@ msgstr ""
 #, python-format
 msgid ""
 "Invalid action! Your certificate string is invalid. Check if you forgot the "
-"header CERTIFICATE or forgot/append end of lines."
+"header CERTIFICATE or forgot/ append end of lines."
 msgstr ""
-"¡Acción inválida! Su cadena certificada es inválida. Corrobore si olvidó el "
-"encabezado CERTIFICADO u olvidó el final de las líneas."
 
 #. module: l10n_ar_afipws
 #: model:ir.model.fields,help:l10n_ar_afipws.field_afipws_certificate_alias_common_name
@@ -393,15 +380,15 @@ msgstr "Última actualización en"
 #. module: l10n_ar_afipws
 #: selection:afipws.connection,afip_ws:0
 msgid "Mercado interno -con detalle- RG2904 (WSMTXCA)"
-msgstr "Mercado interno -con detalle- RG2904 (WSMTXCA)"
+msgstr ""
 
 #. module: l10n_ar_afipws
 #: selection:afipws.connection,afip_ws:0
 msgid "Mercado interno -sin detalle- RG2485 (WSFEv1)"
-msgstr "Mercado interno -sin detalle- RG2485 (WSFEv1)"
+msgstr ""
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/res_company.py:86
+#: code:addons/l10n_ar_afipws/models/res_company.py:87
 #, python-format
 msgid "Not confirmed certificate for %s on company %s"
 msgstr "Certificado no confirmado para %s en la compañía %s"
@@ -470,7 +457,7 @@ msgid "State"
 msgstr "Provincia"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_connection.py:117
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:123
 #, python-format
 msgid ""
 "This method is for %s connections and you call it from an %s connection"
@@ -519,7 +506,7 @@ msgid "Upload Certificate"
 msgstr "Subir Certificado"
 
 #. module: l10n_ar_afipws
-#: code:addons/l10n_ar_afipws/models/afipws_connection.py:80
+#: code:addons/l10n_ar_afipws/models/afipws_connection.py:77
 #, python-format
 msgid "Webservice %s not supported"
 msgstr "Servicio web %s no soportado"

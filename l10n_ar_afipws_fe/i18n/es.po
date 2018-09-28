@@ -3,15 +3,14 @@
 # * l10n_ar_afipws_fe
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# emiquinodoz <eq@ingadhoc.com>, 2017
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-18 14:37+0000\n"
-"PO-Revision-Date: 2017-08-18 14:37+0000\n"
-"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2018-09-27 15:47+0000\n"
+"PO-Revision-Date: 2018-09-27 15:47+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +32,6 @@ msgstr "* Tipo de Documento %s, Local %i, Remoto %i\n"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.invoice_supplier_form
-#: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_account_config_settings
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_invoice_form
 msgid "AFIP"
 msgstr "AFIP"
@@ -54,14 +52,14 @@ msgid "AFIP Message"
 msgstr "Mensaje del AFIP"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:646
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:650
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:705
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:709
 #, python-format
 msgid "AFIP Validation Error. %s"
 msgstr "Error de Validación AFIP. %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:308
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:365
 #, python-format
 msgid "AFIP Verification Error. %s"
 msgstr "Error de Verificación en afip AFIP. %s"
@@ -73,11 +71,17 @@ msgid "AFIP WS"
 msgstr "WS AFIP"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:58
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:103
-#: code:addons/l10n_ar_afipws_fe/models/product_uom.py:36
-#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:40
-#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:76
+#: code:addons/l10n_ar_afipws_fe/models/afipws_connection.py:76
+#, python-format
+msgid "AFIP WS %s Not implemented yet"
+msgstr ""
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:57
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:102
+#: code:addons/l10n_ar_afipws_fe/models/product_uom.py:35
+#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:39
+#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:75
 #, python-format
 msgid "AFIP WS %s not implemented"
 msgstr "WS AFIP %s no implementado"
@@ -106,17 +110,6 @@ msgid "AFIP WS currency_rate Wizard"
 msgstr "Asistente de taza de cambio de WS AFIP"
 
 #. module: l10n_ar_afipws_fe
-#: model:ir.model,name:l10n_ar_afipws_fe.model_afip_wsfe_error
-msgid "AFIP WSFE Error"
-msgstr "Error de WSFE de AFIP"
-
-#. module: l10n_ar_afipws_fe
-#: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_wsfe_error_form
-#: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_wsfe_error_tree
-msgid "AFIP Web service Error"
-msgstr "Error de Web service AFIP"
-
-#. module: l10n_ar_afipws_fe
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_account_invoice_afip_xml_request
 msgid "AFIP XML Request"
 msgstr "XML de Solicitud a AFIP"
@@ -138,15 +131,15 @@ msgid "AFIP authorization mode"
 msgstr "Modo de Autorización AFIP"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:244
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:301
 #, python-format
 msgid "AFIP authorization mode and Code are required!"
 msgstr "El modo y código de autorización de AFIP son requeridos!"
 
 #. module: l10n_ar_afipws_fe
-#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_account_config_settings_afip_auth_verify_type
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_account_invoice_afip_auth_verify_type
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_res_company_afip_auth_verify_type
+#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_res_config_settings_afip_auth_verify_type
 msgid "AFIP authorization verification"
 msgstr "Verificación de autorización de AFIP"
 
@@ -188,7 +181,7 @@ msgid "Aprobado"
 msgstr "Aprobado"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:42
+#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:41
 #, python-format
 msgid ""
 "Authorized Currencies on AFIP%s\n"
@@ -257,6 +250,11 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: l10n_ar_afipws_fe
+#: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.invoice_form_cancel_inherit
+msgid "Cancel Invoicel"
+msgstr ""
+
+#. module: l10n_ar_afipws_fe
 #: model:ir.ui.menu,name:l10n_ar_afipws_fe.menu_action_afipws_certificate_alias
 msgid "Certificates"
 msgstr "Certificados"
@@ -272,7 +270,6 @@ msgid "Check documents local next number against remote Numbers"
 msgstr "Chequear próximo número de documento local contra números remotos"
 
 #. module: l10n_ar_afipws_fe
-#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_wsfe_error_code
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.invoice_supplier_form
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_invoice_form
 msgid "Code"
@@ -304,14 +301,12 @@ msgstr "Constatar en AFIP"
 #. module: l10n_ar_afipws_fe
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_consult_wizard_create_uid
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_currency_rate_wizard_create_uid
-#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_wsfe_error_create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_consult_wizard_create_date
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_currency_rate_wizard_create_date
-#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_wsfe_error_create_date
 msgid "Created on"
 msgstr "Creado en"
 
@@ -322,7 +317,7 @@ msgid "Currency"
 msgstr "Moneda"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:78
+#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:77
 #, python-format
 msgid ""
 "Currency rate for %s: %s.\n"
@@ -332,14 +327,8 @@ msgstr ""
 "Observaciones: %s"
 
 #. module: l10n_ar_afipws_fe
-#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_wsfe_error_description
-msgid "Description"
-msgstr "Descripción"
-
-#. module: l10n_ar_afipws_fe
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_consult_wizard_display_name
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_currency_rate_wizard_display_name
-#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_wsfe_error_display_name
 msgid "Display Name"
 msgstr "Display Name"
 
@@ -354,16 +343,10 @@ msgid "Dummy test to check connection to selected webservice"
 msgstr "Prueba de conexión al webservice seleccionado"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:109
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:108
 #, python-format
 msgid "ERROR! Local (%i) and remote (%i) next number mismatch!\n"
 msgstr "ERROR! El próximo número local (%i) y remoto (%i) no coinciden!\n"
-
-#. module: l10n_ar_afipws_fe
-#: model:ir.actions.act_window,name:l10n_ar_afipws_fe.act_wsfe_error
-#: model:ir.ui.menu,name:l10n_ar_afipws_fe.menu_action_wsfe_error
-msgid "Electronic Invoice Errors"
-msgstr "Errores de Factura Electrónica"
 
 #. module: l10n_ar_afipws_fe
 #: code:addons/l10n_ar_afipws_fe/models/journal.py:156
@@ -372,26 +355,34 @@ msgid "Enabled Point Of Sales on AFIP\n"
 msgstr "Puntos de Venta habilitados en AFIP\n"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:366
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:423
 #, python-format
 msgid "Error!Invoice id: %iNext invoice number should be %i and not %i"
 msgstr ""
 "ERROR! Id Factura: %iEl próximo número de factura debería ser %i y no %i"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:355
+#: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.invoice_form_cancel_inherit
+msgid ""
+"Esta factura tiene número de CAE asignado lo cual significa que fue validad "
+"contra AFIP. No recomendamos que la cancele ya que podría generar "
+"inconsistencia de datos. Desea continuar?"
+msgstr ""
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:412
 #, python-format
 msgid "For WS \"%s\" country afip code is mandatoryCountry: %s"
 msgstr "Para el WS \"%s\" el código AFIP de pais es obligatorio. Pais: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:350
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:407
 #, python-format
 msgid "For WS \"%s\" country code is mandatoryCountry: %s"
 msgstr "Para el WS \"%s\" el código de pais es obligatorio. Pais: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:345
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:402
 #, python-format
 msgid "For WS \"%s\" country is required on partner"
 msgstr "Para el WS \"%s\" el país es requerido en la empresa"
@@ -501,12 +492,11 @@ msgstr "Obtener zonas para este servicio web"
 #. module: l10n_ar_afipws_fe
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_consult_wizard_id
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_currency_rate_wizard_id
-#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_wsfe_error_id
 msgid "ID"
 msgstr "ID"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:328
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:385
 #, python-format
 msgid ""
 "If you use electronic journals (invoice id %s) you need configure AFIP WS on"
@@ -521,21 +511,21 @@ msgid "Invoice"
 msgstr "Factura"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:280
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:337
 #, python-format
 msgid "Invoice Date is required!"
 msgstr "La fecha de factura es requerida!"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:60
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:59
 #, python-format
 msgid "Invoice number %s\n"
 msgstr "Número de Factura %s\n"
 
 #. module: l10n_ar_afipws_fe
-#: model:ir.model.fields,help:l10n_ar_afipws_fe.field_account_config_settings_afip_auth_verify_type
 #: model:ir.model.fields,help:l10n_ar_afipws_fe.field_account_invoice_afip_auth_verify_type
 #: model:ir.model.fields,help:l10n_ar_afipws_fe.field_res_company_afip_auth_verify_type
+#: model:ir.model.fields,help:l10n_ar_afipws_fe.field_res_config_settings_afip_auth_verify_type
 msgid ""
 "It adds an option on invoices to verify the afip authorization data (for documents with CAE, CAI or CAEA).\n"
 "If you choose required, then on supplier invoices, verification is mandatory before invoice validation"
@@ -554,7 +544,7 @@ msgid "Journal Document Types Mapping"
 msgstr "Mapeo del Tipo de Documentos del Diario"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:114
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:113
 #, python-format
 msgid "Last Invoice %s\n"
 msgstr "Última Factura %s\n"
@@ -562,28 +552,20 @@ msgstr "Última Factura %s\n"
 #. module: l10n_ar_afipws_fe
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_consult_wizard___last_update
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_currency_rate_wizard___last_update
-#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_wsfe_error___last_update
 msgid "Last Modified on"
 msgstr "Última Modificación en"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_consult_wizard_write_uid
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_currency_rate_wizard_write_uid
-#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_wsfe_error_write_uid
 msgid "Last Updated by"
 msgstr "Ultima actualización por"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_consult_wizard_write_date
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_ws_currency_rate_wizard_write_date
-#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_wsfe_error_write_date
 msgid "Last Updated on"
 msgstr "Última actualización"
-
-#. module: l10n_ar_afipws_fe
-#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_afip_wsfe_error_name
-msgid "Name"
-msgstr "Nombre"
 
 #. module: l10n_ar_afipws_fe
 #: code:addons/l10n_ar_afipws_fe/models/journal.py:128
@@ -597,40 +579,39 @@ msgid "No AFIP WS selected"
 msgstr "No se seleccionó WS AFIP"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:28
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:92
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:27
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:91
 #, python-format
 msgid "No AFIP WS selected on point of sale %s"
 msgstr "No se seleccionó WS AFIP en unto de venta %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:64
+#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:63
 #, python-format
 msgid "No AFIP code for currency %s"
 msgstr "No hay código de AFIP para la moneda %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/wizard/afip_ws_consult_wizard.py:24
+#: code:addons/l10n_ar_afipws_fe/wizard/afip_ws_consult_wizard.py:23
 #, python-format
 msgid "No Journal Document Class as active_id on context"
 msgstr "No hay una Clase de Documento de Diario as active_id on context"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/wizard/afip_ws_currency_rate_wizard.py:25
+#: code:addons/l10n_ar_afipws_fe/wizard/afip_ws_currency_rate_wizard.py:24
 #, python-format
 msgid "No Journal Id as active_id on context"
 msgstr "No hay un Id del Diario como active_id en el contexto"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/product_uom.py:29
-#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:28
-#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:60
+#: code:addons/l10n_ar_afipws_fe/models/product_uom.py:28
+#: code:addons/l10n_ar_afipws_fe/models/res_currency.py:27
 #, python-format
 msgid "No company found using argentinian localization"
 msgstr "No se encontró compañía utilizando la localización argentina"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:480
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:539
 #, python-format
 msgid "No vat defined for the partner and also no CUIT set on country"
 msgstr ""
@@ -643,8 +624,8 @@ msgid "Not Available"
 msgstr "No Disponible"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:573
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:586
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:632
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:645
 #, python-format
 msgid "Not afip code con producto UOM %s"
 msgstr "No hay código de afip en el UdM %s"
@@ -655,7 +636,7 @@ msgid "Number"
 msgstr "Número"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:113
+#: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:112
 #, python-format
 msgid "OK! Local and remote next number match!"
 msgstr "OK! Números locales y remotos coinciden!"
@@ -672,7 +653,7 @@ msgid "Observado"
 msgstr "Observado"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:265
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:322
 #, python-format
 msgid ""
 "Para Comprobantes tipo A o tipo M:\n"
@@ -684,7 +665,7 @@ msgstr ""
 "*  el documento del Receptor es obligatorio\n"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:275
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:332
 #, python-format
 msgid "Point of sale and document number and document type are required!"
 msgstr ""
@@ -700,6 +681,13 @@ msgstr "Unidad de medida del producto"
 #: selection:account.invoice,afip_result:0
 msgid "Rechazado"
 msgstr "Rechazado"
+
+#. module: l10n_ar_afipws_fe
+#: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.res_config_settings_view_form
+msgid ""
+"Requerir/Permitir validación de facturas de proveedor en AFIP (documentos "
+"con CAE, CAI or CAEA)"
+msgstr ""
 
 #. module: l10n_ar_afipws_fe
 #: selection:res.company,afip_auth_verify_type:0
@@ -728,7 +716,7 @@ msgid "There are some doument desynchronized:\n"
 msgstr "Hay algunos documentos desincronizados:\n"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/product_uom.py:38
+#: code:addons/l10n_ar_afipws_fe/models/product_uom.py:37
 #, python-format
 msgid ""
 "Unit of mesures:\n"
@@ -753,7 +741,12 @@ msgid "Validation Type"
 msgstr "Tipo de Validación"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:600
+#: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.res_config_settings_view_form
+msgid "Verificar validez de factura en AFIP"
+msgstr ""
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:659
 #, python-format
 msgid "WS wsmtxca Not implemented yet"
 msgstr "WS wsmtxca aún no implementado"
@@ -768,7 +761,7 @@ msgstr ""
 "serán sincronizadas con los números remotos."
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:210
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:267
 #, python-format
 msgid ""
 "You can not validate invoice as AFIP authorization verification is required"
@@ -798,11 +791,6 @@ msgstr ""
 "Observaciones: %s"
 
 #. module: l10n_ar_afipws_fe
-#: model:ir.model,name:l10n_ar_afipws_fe.model_account_config_settings
-msgid "account.config.settings"
-msgstr "account.config.settings"
-
-#. module: l10n_ar_afipws_fe
 #: selection:account.invoice,afip_result:0
 msgid "n/a"
 msgstr "n/a"
@@ -812,6 +800,11 @@ msgstr "n/a"
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.afip_ws_currency_rate_wizard_form
 msgid "or"
 msgstr "o"
+
+#. module: l10n_ar_afipws_fe
+#: model:ir.model,name:l10n_ar_afipws_fe.model_res_config_settings
+msgid "res.config.settings"
+msgstr ""
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_currency_form

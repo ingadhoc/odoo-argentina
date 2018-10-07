@@ -441,22 +441,22 @@ print "Observaciones:", wscdc.Obs
                 fecha_venc_pago = fecha_serv_desde = fecha_serv_hasta = None
 
             # # invoice amount totals:
-            imp_total = str("%.2f" % abs(inv.amount_total))
+            imp_total = str("%.2f" % inv.amount_total)
             # ImpTotConc es el iva no gravado
-            imp_tot_conc = str("%.2f" % abs(inv.vat_untaxed_base_amount))
+            imp_tot_conc = str("%.2f" % inv.vat_untaxed_base_amount)
             # tal vez haya una mejor forma, la idea es que para facturas c
             # no se pasa iva. Probamos hacer que vat_taxable_amount
             # incorpore a los imp cod 0, pero en ese caso termina reportando
             # iva y no lo queremos
             if inv.document_type_id.document_letter_id.name == 'C':
-                imp_neto = str("%.2f" % abs(inv.amount_untaxed))
+                imp_neto = str("%.2f" % inv.amount_untaxed)
             else:
-                imp_neto = str("%.2f" % abs(inv.vat_taxable_amount))
-            imp_iva = str("%.2f" % abs(inv.vat_amount))
+                imp_neto = str("%.2f" % inv.vat_taxable_amount)
+            imp_iva = str("%.2f" % inv.vat_amount)
             # se usaba para wsca..
-            # imp_subtotal = str("%.2f" % abs(inv.amount_untaxed))
-            imp_trib = str("%.2f" % abs(inv.other_taxes_amount))
-            imp_op_ex = str("%.2f" % abs(inv.vat_exempt_base_amount))
+            # imp_subtotal = str("%.2f" % inv.amount_untaxed)
+            imp_trib = str("%.2f" % inv.other_taxes_amount)
+            imp_op_ex = str("%.2f" % inv.vat_exempt_base_amount)
             moneda_id = inv.currency_id.afip_code
             moneda_ctz = inv.currency_rate
 

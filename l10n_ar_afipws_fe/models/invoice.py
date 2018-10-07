@@ -609,7 +609,8 @@ print "Observaciones:", wscdc.Obs
                     )
 
             CbteAsoc = inv.get_related_invoices_data()
-            if CbteAsoc:
+            # bono no tiene implementado AgregarCmpAsoc
+            if CbteAsoc and afip_ws != 'wsbfe':
                 ws.AgregarCmpAsoc(
                     CbteAsoc.document_type_id.code,
                     CbteAsoc.point_of_sale_number,

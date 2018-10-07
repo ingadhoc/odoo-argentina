@@ -328,7 +328,7 @@ print "Observaciones:", wscdc.Obs
             if not cbte_fch:
                 raise UserError(_('Invoice Date is required!'))
             cbte_fch = cbte_fch.replace("-", "")
-            imp_total = str("%.2f" % abs(inv.amount_total))
+            imp_total = str("%.2f" % inv.amount_total)
 
             _logger.info('Constatando Comprobante en afip')
 
@@ -584,9 +584,9 @@ print "Observaciones:", wscdc.Obs
                         'Adding VAT %s' % vat.tax_id.tax_group_id.name)
                     ws.AgregarIva(
                         vat.tax_id.tax_group_id.afip_code,
-                        "%.2f" % abs(vat.base),
+                        "%.2f" % vat.base,
                         # "%.2f" % abs(vat.base_amount),
-                        "%.2f" % abs(vat.amount),
+                        "%.2f" % vat.amount,
                     )
 
                 for tax in inv.not_vat_tax_ids:
@@ -595,13 +595,13 @@ print "Observaciones:", wscdc.Obs
                     ws.AgregarTributo(
                         tax.tax_id.tax_group_id.application_code,
                         tax.tax_id.tax_group_id.name,
-                        "%.2f" % abs(tax.base),
+                        "%.2f" % tax.base,
                         # "%.2f" % abs(tax.base_amount),
                         # TODO pasar la alicuota
                         # como no tenemos la alicuota pasamos cero, en v9
                         # podremos pasar la alicuota
                         0,
-                        "%.2f" % abs(tax.amount),
+                        "%.2f" % tax.amount,
                     )
 
             CbteAsoc = inv.get_related_invoices_data()

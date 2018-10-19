@@ -156,16 +156,20 @@ class ResPartner(models.Model):
         # consultamos a5 ya que extiende a4 y tiene validez de constancia
         # padron = company.get_connection('ws_sr_padron_a4').connect()
         padron = company.get_connection('ws_sr_padron_a5').connect()
+        error_msg = _(
+            'No pudimos actualizar desde padron afip al partner %s (%s).\n'
+            'Recomendamos verificar manualmente en la página de AFIP.\n'
+            'Obtuvimos este error: %s')
         try:
             padron.Consultar(cuit)
         except SoapFault as e:
-            raise UserError(_(
-                'No pudimos actualizar desde padron afip al partner %s (%s).\n'
-                'Obtuvimos este error: %s' % (self.name, cuit, e.faultstring)))
+            raise UserError(error_msg % (self.name, cuit, e.faultstring))
         except Exception as e:
-            raise UserError(_(
-                'No pudimos actualizar desde padron afip al partner %s (%s).\n'
-                'Obtuvimos este error: %s' % (self.name, cuit, e.faultstring)))
+            raise UserError(error_msg % (self.name, cuit, e))
+
+        if not padron.denominacion or padron.denominacion == ', ':
+            raise UserError(error_msg % (
+                self.name, cuit, 'La afip no devolvió nombre'))
 
         # porque imp_iva activo puede ser S o AC
         imp_iva = padron.imp_iva

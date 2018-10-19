@@ -458,34 +458,6 @@ class AccountInvoice(models.Model):
         }
 
     @api.multi
-    @api.constrains('document_number', 'partner_id', 'company_id')
-    def _check_document_number_unique(self):
-        for rec in self.filtered(lambda x: x.localization == 'argentina'):
-            if rec.document_number:
-                domain = [
-                    ('type', '=', rec.type),
-                    ('document_number', '=', rec.document_number),
-                    ('document_type_id', '=', rec.document_type_id.id),
-                    ('company_id', '=', rec.company_id.id),
-                    ('id', '!=', rec.id)
-                ]
-                msg = (
-                    'Error en factura con id %s: El numero de comprobante (%s)'
-                    ' debe ser unico por tipo de documento')
-                if rec.type in ['out_invoice', 'out_refund']:
-                    # si es factura de cliente entonces tiene que ser numero
-                    # unico por compania y tipo de documento
-                    rec.search(domain)
-                else:
-                    # si es factura de proveedor debe ser unica por proveedor
-                    domain += [
-                        ('partner_id.commercial_partner_id', '=',
-                            rec.commercial_partner_id.id)]
-                    msg += ' y proveedor'
-                if rec.search(domain):
-                    raise ValidationError(msg % (rec.id, rec.document_number))
-
-    @api.multi
     def action_move_create(self):
         """
         We add currency rate on move creation so it can be used by electronic

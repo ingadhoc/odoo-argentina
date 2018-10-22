@@ -213,6 +213,11 @@ msgid "Afip Responsability Types"
 msgstr "Tipos de Responsabilidad Afip"
 
 #. module: l10n_ar_account
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_price_subtotal_signed
+msgid "Amount Signed"
+msgstr "Subtotal en moneda de Compania"
+
+#. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_account_analytic_id
 msgid "Analytic Account"
 msgstr "Cuenta Analítica"
@@ -458,6 +463,8 @@ msgstr "Creado en"
 #. module: l10n_ar_account
 #: model:ir.model,name:l10n_ar_account.model_res_currency
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_ar_vat_line_company_currency_id
+#: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_currency_id
+#: model:ir.ui.view,arch_db:l10n_ar_account.view_account_invoice_line_report_search
 msgid "Currency"
 msgstr "Moneda"
 

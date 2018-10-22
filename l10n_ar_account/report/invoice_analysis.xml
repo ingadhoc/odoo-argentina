@@ -17,11 +17,13 @@
                 <field name="price_unit"/>
                 <field name="quantity" sum="Total"/>
                 <field name="price_gross_subtotal" sum="Total"/>
+                <field name="price_subtotal_signed" sum="Total"/>
                 <field name="discount"/>
                 <field name="discount_amount" sum="Total"/>
                 <field name="price_subtotal" sum="Total"/>
                 <field name="date_due" invisible="1"/>
                 <field name="state"/>
+                <field name="currency_id"/>
                 <field name="user_id" invisible="0"/>
                 <field name="company_id" invisible="1"/>
                 <field name="product_category_id" invisible="1"/>
@@ -92,6 +94,7 @@
                 <!-- <field name="partner_category_ids"/> -->
                 <group expand="1" string="Group By...">
                     <filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>
+                    <filter string="Currency" name="currency" context="{'group_by':'currency_id'}"/>
                     <filter string="Salesman" name='user' context="{'group_by':'user_id'}"/>
                     <!-- <filter string="Period" name='period_id' context="{'group_by':'period_id'}"/> -->
                     <!-- <filter string="Fiscal Year" name='fiscalyear_id' context="{'group_by':'fiscalyear_id'}"/> -->
@@ -118,7 +121,7 @@
             <pivot string="Invoice Lines Analysis" disable_linking="True">
                 <field name="product_category_id" type="row"/>
                 <field name="date_invoice" interval="month" type="col"/>
-                <field name="price_subtotal" type="measure"/>
+                <field name="price_subtotal_signed" type="measure"/>
             </pivot>
         </field>
     </record>

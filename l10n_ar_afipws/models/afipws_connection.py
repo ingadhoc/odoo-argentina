@@ -148,7 +148,7 @@ class AfipwsConnection(models.Model):
                 self.afip_ws)))
         # TODO implementar cache y proxy
         # create the proxy and get the configuration system parameters:
-        # cfg = self.pool.get('ir.config_parameter')
+        # cfg = self.pool.get('ir.config_parameter').sudo()
         # cache = cfg.get_param(cr, uid, 'pyafipws.cache', context=context)
         # proxy = cfg.get_param(cr, uid, 'pyafipws.proxy', context=context)
 

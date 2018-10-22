@@ -15,7 +15,7 @@ class ResPartnerIdNumber(models.Model):
     @api.multi
     @api.constrains('name', 'category_id')
     def check(self):
-        if not safe_eval(self.env['ir.config_parameter'].get_param(
+        if not safe_eval(self.env['ir.config_parameter'].sudo().get_param(
                 "l10n_ar_partner.unique_id_numbers", 'False')):
             return True
         for rec in self:

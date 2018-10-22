@@ -40,7 +40,7 @@ class ResCompany(models.Model):
         # siempre
         environment_type = 'production'
         # parameter_env_type = self.env[
-        #     'ir.config_parameter'].get_param('arba.ws.env.type')
+        #     'ir.config_parameter'].sudo().get_param('arba.ws.env.type')
         # if parameter_env_type == 'production':
         #     environment_type = 'production'
         # elif parameter_env_type == 'homologation':

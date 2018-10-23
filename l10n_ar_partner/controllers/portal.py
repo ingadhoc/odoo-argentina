@@ -39,7 +39,8 @@ class L10nArCustomerPortal(CustomerPortal):
         if post:
             error, _error_message = self.details_form_validate(post)
             if not error:
-                commercial_partner_id = post.pop('commercial_partner_id', False)
+                commercial_partner_id = post.pop(
+                    'commercial_partner_id', False)
                 if commercial_partner_id:
                     post_process = True
                     commercial_values = dict(
@@ -57,7 +58,7 @@ class L10nArCustomerPortal(CustomerPortal):
             'afip.responsability.type'].sudo().search([])
         uid = request.session.uid
         partner = request.env['res.users'].browse(uid).partner_id if uid else \
-             request.env['res.partner']
+            request.env['res.partner']
         partner = partner.with_context(show_address=1).sudo()
         response.qcontext.update({
             'document_categories': document_categories,

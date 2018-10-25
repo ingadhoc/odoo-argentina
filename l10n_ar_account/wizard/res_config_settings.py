@@ -80,9 +80,9 @@ class ResConfigSettings(models.TransientModel):
             record = self.env[model].search([('code', '=', code)], limit=1)
             codes.append(code)
             if record:
-                record.update(vals)
+                record.write(vals)
             else:
                 record.create(vals)
         # deactivate the ones that are not in afip
-        self.env[model].search([('code', 'not in', codes)]).update(
+        self.env[model].search([('code', 'not in', codes)]).write(
             {'active': False})

@@ -77,7 +77,7 @@ class AccountChartTemplate(models.Model):
                 ('name', '=', position.name),
                 ('note', '=', position.note)], limit=1)
             if created_position:
-                created_position.update({
+                created_position.write({
                     'afip_code': position.afip_code,
                     'afip_responsability_type_ids': (
                         position.afip_responsability_type_ids),

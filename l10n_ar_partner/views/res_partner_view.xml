@@ -28,6 +28,7 @@
 
             <form>
                 <field name="cuit" invisible="1"/>
+                <field name="invoice_ids" invisible="1"/>
             </form>
             <!-- ocultamos vat que no lo usamos y agregamos main_id nuber abajo -->
             <field name="vat" position="attributes">
@@ -36,8 +37,8 @@
             <field name="vat" position="after">
                 <label for="main_id_number" string="Main Identification"/>
                 <div>
-                    <field name="main_id_category_id" options="{'no_open': True, 'no_create': True}" placeholder="Category" class="oe_inline"/> - 
-                    <field name="main_id_number" placeholder="Number" class="oe_inline"/>
+                    <field name="main_id_category_id" options="{'no_open': True, 'no_create': True}" placeholder="Category" class="oe_inline" attrs="{'readonly': [('invoice_ids', '!=', [])]}"/> - 
+                    <field name="main_id_number" placeholder="Number" class="oe_inline" attrs="{'readonly': [('invoice_ids', '!=', [])]}"/>
                 </div>
             </field>
 

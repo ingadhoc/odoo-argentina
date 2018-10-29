@@ -117,7 +117,10 @@ class ResPartner(models.Model):
     @api.multi
     def _inverse_main_id_number(self):
         to_unlink = self.env['res.partner.id_number']
-        for partner in self:
+        # we use sudo because user may have CRUD rights on partner
+        # but no to partner id model because partner id module
+        # only adds CRUD to "Manage contacts" group
+        for partner in self.sudo():
             name = partner.main_id_number
             category_id = partner.main_id_category_id
             if category_id:

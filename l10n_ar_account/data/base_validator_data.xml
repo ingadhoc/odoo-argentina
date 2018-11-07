@@ -18,7 +18,7 @@ if value:
         failed=True
     else:
         pos, number = args
-        if len(pos) > 4 or not pos.isdigit():
+        if len(pos) > 5 or not pos.isdigit():
             failed=True
         elif len(number) >8 or not number.isdigit():
             failed=True
@@ -26,9 +26,10 @@ if value:
         parts = [pos, number]
         ]]></field>
         <field name='help_message'><![CDATA[
-El número de facturas debe ingresarse con un guión (-) y máximo 4 caracteres para la primer parte y 8 para la segunda. Los siguientes son ejemplos de números válidos:
+El número de facturas debe ingresarse con un guión (-) y máximo 5 caracteres para la primer parte y 8 para la segunda. Los siguientes son ejemplos de números válidos:
 * 1-1
 * 0001-00000001
+* 00001-00000001
         ]]></field>
         </record>
 

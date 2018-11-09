@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <record model="ir.ui.view" id="res_config_settings_view_form">
         <field name="name">res.config.settings.view.form.inherit.l10n_ar_account</field>
         <field name="inherit_id" ref="account.res_config_settings_view_form"/>
@@ -21,39 +20,27 @@
                         </div>
                     </div>
                 </div>
-            </xpath>
-            <div id="bank_cash" position="after">
-                <group name="argentina_config" string="Argentina">
-                    <label for="id" string="Refresh from Padron AFIP"/>
-                    <div>
-                        <div>
-                            <button name="refresh_activities_from_padron" string="Activities" type="object" class="oe_link"/>
-                        </div>
-                        <div>
-                            <button name="refresh_taxes_from_padron" string="Taxes" type="object" class="oe_link"/>
-                        </div>
-                        <div>
-                            <button name="refresh_concepts_from_padron" string="Concepts" type="object" class="oe_link"/>
+                <h2 attrs="{'invisible':[('localization', '!=', 'argentina')]}">Setup</h2>
+                <div class="row mt16 o_settings_container" name="padron_setup" attrs="{'invisible':[('localization', '!=', 'argentina')]}">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <label string="Refresh from Padron AFIP"/>
+                            <div class="content-group">
+                                <div>
+                                    <button name="refresh_activities_from_padron" string="Activities" type="object" icon="fa-arrow-right" class="btn-link"/>
+                                </div>
+                                <div>
+                                    <button name="refresh_taxes_from_padron" string="Taxes" type="object" icon="fa-arrow-right" class="btn-link"/>
+                                </div>
+                                <div>
+                                    <button name="refresh_concepts_from_padron" string="Concepts" type="object" icon="fa-arrow-right" class="btn-link"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </group>
-            </div>
-            <div name="sale_use_documents" position="after">
-                <!-- TODO implementar o borrar vista -->
-                <!-- <div name="afip_responsability_type_id">
-                    <label for="afip_responsability_type_id" attrs="{'invisible':['|', ('localization', '!=', 'argentina'), ('has_chart_of_accounts','!=',False)]}"/>
-                    <field name="afip_responsability_type_id" class="oe_inline" attrs="{'invisible':['|', ('localization', '!=', 'argentina'), ('has_chart_of_accounts','!=',False)], 'required':[('localization', '=', 'argentina'), ('sale_use_documents', '=', True), ('has_chart_of_accounts', '=', False)]}"/>
                 </div>
-                <div name="point_of_sale_type">
-                    <label for="point_of_sale_type" attrs="{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)]}"/>
-                    <field name="point_of_sale_type" class="oe_inline" attrs="{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)], 'required':[('localization', '=', 'argentina'), ('sale_use_documents', '=', True), ('has_chart_of_accounts', '=', False)]}"/>
-                </div>
-                <div name="point_of_sale_number">
-                    <label for="point_of_sale_number" attrs="{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)]}"/>
-                    <field name="point_of_sale_number" class="oe_inline" attrs="{'invisible':['|', '|', ('localization', '!=', 'argentina'), ('sale_use_documents', '=', False), ('has_chart_of_accounts','!=',False)], 'required':[('localization', '=', 'argentina'), ('sale_use_documents', '=', True), ('has_chart_of_accounts', '=', False)]}"/>
-                </div> -->
-            </div>
+            </xpath>
         </field>
     </record>
-
 </odoo>

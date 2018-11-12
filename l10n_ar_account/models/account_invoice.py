@@ -484,6 +484,21 @@ class AccountInvoice(models.Model):
         if not argentinian_invoices:
             return True
 
+        # we check that there is one and only one vat tax. We check upon
+        # validation to avoid errors on invoice creations from other menus
+        # and for performance
+        for inv_line in argentinian_invoices.filtered(
+                lambda x: x.company_id.company_requires_vat).mapped(
+                    'invoice_line_ids'):
+            vat_taxes = inv_line.invoice_line_tax_ids.filtered(
+                lambda x:
+                x.tax_group_id.tax == 'vat' and x.tax_group_id.type == 'tax')
+            if len(vat_taxes) != 1:
+                raise ValidationError(_(
+                    'Debe haber un y solo un impuesto de IVA por línea. '
+                    'Verificar líneas con producto "%s"' % (
+                        inv_line.product_id.name)))
+
         # check partner has responsability so it will be assigned on invoice
         # validate
         without_responsability = argentinian_invoices.filtered(

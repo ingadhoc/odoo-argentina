@@ -386,6 +386,23 @@ print "Observaciones:", wscdc.Obs
                     'If you use electronic journals (invoice id %s) you need '
                     'configure AFIP WS on the journal') % (inv.id))
 
+            # if no validation type and we are on electronic invoice, it means
+            # that we are on a testing database without homologation
+            # certificates
+            if not inv.validation_type:
+                msg = (
+                    'Factura validada solo localmente por estar en ambiente '
+                    'de homologación sin claves de homologación')
+                inv.write({
+                    'afip_auth_mode': 'CAE',
+                    'afip_auth_code': '68448767638166',
+                    'afip_auth_code_due': inv.date_invoice,
+                    'afip_result': '',
+                    'afip_message': msg,
+                })
+                inv.message_post(msg)
+                continue
+
             # get the electronic invoice type, point of sale and afip_ws:
             commercial_partner = inv.commercial_partner_id
             country = commercial_partner.country_id

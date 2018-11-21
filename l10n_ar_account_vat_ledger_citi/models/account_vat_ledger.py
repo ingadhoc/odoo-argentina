@@ -179,10 +179,6 @@ class AccountVatLedger(models.Model):
 
     @api.model
     def get_point_of_sale(self, invoice):
-        # this invalidate cache is to fix that when we request pos number
-        # all invoices of the vat ledger, no matter citi export or not,
-        # are requested to compute pos number
-        invoice.invalidate_cache()
         return "{:0>5d}".format(invoice.point_of_sale_number)
 
     @api.multi

@@ -13,4 +13,8 @@
         </field>
     </record>
 
+    <record id="account.action_account_payment_from_invoices" model="ir.actions.act_window">
+        <field name="binding_model_id"/>
+    </record>
+
 </odoo>

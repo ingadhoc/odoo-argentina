@@ -20,6 +20,16 @@ def sync_padron_afip(cr, registry):
         pass
 
 
+def document_types_not_updatable(cr, registry):
+    _logger.info('Update account.document.type to noupdate=True')
+    env = Environment(cr, SUPERUSER_ID, {})
+    items = env['ir.model.data'].search([
+        ('model', '=', 'account.document.type'),
+        ('module', '=', 'l10n_ar_account'),
+    ])
+    items = items.write({'noupdate': True})
+
+
 def post_init_hook(cr, registry):
     """Loaded after installing the module.
     This module's DB modifications will be available.
@@ -30,3 +40,4 @@ def post_init_hook(cr, registry):
     """
     _logger.info('Post init hook initialized')
     sync_padron_afip(cr, registry)
+    document_types_not_updatable(cr, registry)

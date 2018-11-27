@@ -52,6 +52,11 @@
         <field name="applicability">accounts</field>
     </record>
 
+    <record id="no_monetaria_tag" model="account.account.tag">
+        <field name="name">No Monetaria</field>
+        <field name="applicability">accounts</field>
+    </record>
+
     <!-- por ahora estamos usando el de taxes -->
 <!--     <record id="tag_a_cuenta_iibb" model="account.account.tag">
         <field name="name">Pagos a Cuenta IIBB</field>

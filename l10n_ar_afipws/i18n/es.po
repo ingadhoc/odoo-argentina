@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-27 15:47+0000\n"
-"PO-Revision-Date: 2018-09-27 15:47+0000\n"
+"POT-Creation-Date: 2018-11-27 23:57+0000\n"
+"PO-Revision-Date: 2018-05-18 13:22+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -151,7 +152,7 @@ msgid "Certificate"
 msgstr "Certificado"
 
 #. module: l10n_ar_afipws
-#: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_certificate_alias_id_4029
+#: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_certificate_alias_id_4030
 msgid "Certificate Alias"
 msgstr "Certificar Alias"
 
@@ -455,6 +456,12 @@ msgstr "Firma"
 #: model:ir.model.fields,field_description:l10n_ar_afipws.field_afipws_certificate_state
 msgid "State"
 msgstr "Provincia"
+
+#. module: l10n_ar_afipws
+#: code:addons/l10n_ar_afipws/models/afipws_certificate_alias.py:223
+#, python-format
+msgid "The Common Name must be lower than 50 characters long"
+msgstr ""
 
 #. module: l10n_ar_afipws
 #: code:addons/l10n_ar_afipws/models/afipws_connection.py:123

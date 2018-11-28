@@ -1,6 +1,6 @@
 {
     "name": "Módulo base de Contabilidad Argentina",
-    'version': '11.0.1.5.0',
+    'version': '11.0.1.5.1',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Moldeo Interactive,Odoo Community Association (OCA)',

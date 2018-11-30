@@ -20,6 +20,11 @@
         <field name="applicability">accounts</field>
     </record>
 
+    <record id="tag_unaffected_earnings" model="account.account.tag">
+        <field name="name">Ganancias en el año actual</field>
+        <field name="applicability">accounts</field>
+    </record>
+
     <record id="tag_impuestos_a_las_ganancias" model="account.account.tag">
         <field name="name">Impuesto a las ganancias</field>
         <field name="applicability">accounts</field>

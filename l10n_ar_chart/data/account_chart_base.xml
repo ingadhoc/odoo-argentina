@@ -750,6 +750,7 @@
             <field name="code">3.3.00.00.010</field>
             <field name="user_type_id" ref="account.data_unaffected_earnings"/>
             <field name="name">Resultado del ejercicio</field>
+            <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_unaffected_earnings')])]"/>
         </record>
 
         <record model="account.account.template" id="base_resultado_acumulados">

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-27 23:57+0000\n"
+"POT-Creation-Date: 2018-11-30 19:04+0000\n"
 "PO-Revision-Date: 2018-05-18 13:22+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
@@ -343,6 +343,9 @@ msgid ""
 "Invalid action! Your certificate string is invalid. Check if you forgot the "
 "header CERTIFICATE or forgot/ append end of lines."
 msgstr ""
+"Acción Invalida! La cadena de su certificado es invalida. Compruebe si "
+"olvidó el encabezado CERTIFICADO o si olvidó / adjuntó el final de las "
+"líneas."
 
 #. module: l10n_ar_afipws
 #: model:ir.model.fields,help:l10n_ar_afipws.field_afipws_certificate_alias_common_name
@@ -461,7 +464,7 @@ msgstr "Provincia"
 #: code:addons/l10n_ar_afipws/models/afipws_certificate_alias.py:223
 #, python-format
 msgid "The Common Name must be lower than 50 characters long"
-msgstr ""
+msgstr "El Nombre Común debe contener menos de 50 caracteres"
 
 #. module: l10n_ar_afipws
 #: code:addons/l10n_ar_afipws/models/afipws_connection.py:123

@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-27 15:47+0000\n"
-"PO-Revision-Date: 2018-09-27 15:47+0000\n"
+"POT-Creation-Date: 2018-11-30 19:04+0000\n"
+"PO-Revision-Date: 2018-05-20 23:48+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -127,7 +128,7 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contacto"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos_create_uid
@@ -169,7 +170,7 @@ msgstr "Escalas Ganancias"
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot_from_date
 msgid "From Date"
-msgstr ""
+msgstr "Desde Fecha"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot_grupo_percepcion
@@ -315,7 +316,7 @@ msgstr "Impuesto"
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot_to_date
 msgid "To Date"
-msgstr ""
+msgstr "A Fecha"
 
 #. module: l10n_ar_account_withholding
 #: code:addons/l10n_ar_account_withholding/models/res_company.py:79

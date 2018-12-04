@@ -22,7 +22,7 @@ class AccountAccount(models.Model):
     )
 
     @api.model
-    def set_no_monetaria_tag(self):
+    def set_no_monetaria_tag(self, company):
         """ Set no monetaria tag to the corresponding accounts taking into
         account the account type
         """
@@ -43,6 +43,6 @@ class AccountAccount(models.Model):
             account_types.append(self.env.ref(xml_id).id)
         accounts = self.search([
             ('user_type_id', 'in', account_types),
-            ('company_id.localization', '=', 'argentina')])
+            ('company_id', 'in', company.ids)])
         if accounts:
             accounts.write({'tag_ids': [(4, tag.id)]})

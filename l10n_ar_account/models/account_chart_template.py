@@ -50,7 +50,8 @@ class WizardMultiChartsAccounts(models.TransientModel):
     @api.multi
     def execute(self):
         res = super(WizardMultiChartsAccounts, self).execute()
-        self.env['account.account'].set_no_monetaria_tag()
+        if self.company_id.localization == 'argentina':
+            self.env['account.account'].set_no_monetaria_tag(self.company_id)
         return res
 
 

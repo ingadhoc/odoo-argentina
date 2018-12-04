@@ -30,28 +30,6 @@ def document_types_not_updatable(cr, registry):
     items = items.write({'noupdate': True})
 
 
-def set_no_monetaria_tag(cr, registry):
-    env = Environment(cr, SUPERUSER_ID, {})
-    tag = env.ref('l10n_ar_account.no_monetaria_tag')
-    xml_ids = [
-        'account.data_account_type_non_current_assets',  # Activos no-Corriente
-        'account.data_account_type_fixed_assets',  # Activos fijos
-        'account.data_account_type_other_income',  # Otros Ingresos
-        'account.data_account_type_revenue',  # Ingreso
-        'account.data_account_type_expenses',  # Gastos
-        'account.data_account_type_depreciation', # Depreciación
-        'account.data_account_type_equity', # Capital
-        'account.data_account_type_direct_costs',  # Coste de Ingreso
-    ]
-    account_types = []
-    for xml_id in xml_ids:
-        account_types.append(env.ref(xml_id).id)
-    env['account.account'].search([
-        ('user_type_id', 'in', account_types)]).write({
-            'tag_ids': [(4, tag.id)],
-    })
-
-
 def post_init_hook(cr, registry):
     """Loaded after installing the module.
     This module's DB modifications will be available.
@@ -63,4 +41,3 @@ def post_init_hook(cr, registry):
     _logger.info('Post init hook initialized')
     sync_padron_afip(cr, registry)
     document_types_not_updatable(cr, registry)
-    set_no_monetaria_tag(cr, registry)

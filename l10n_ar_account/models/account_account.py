@@ -41,5 +41,8 @@ class AccountAccount(models.Model):
         account_types = []
         for xml_id in xml_ids:
             account_types.append(self.env.ref(xml_id).id)
-        self.search([('user_type_id', 'in', account_types)]).write({
-            'tag_ids': [(4, tag.id)]})
+        accounts = self.search([
+            ('user_type_id', 'in', account_types),
+            ('company_id.localization', '=', 'argentina')])
+        if accounts:
+            accounts.write({'tag_ids': [(4, tag.id)]})

@@ -178,7 +178,7 @@ class ResPartner(models.Model):
             wiz.update_selection()
 
     @api.model
-    def try_write_commercial(self, data):
+    def catch_number_id_exceptions(self, data):
         """ User for website. capture the validation errors and return them.
         return (error, error_message) = (dict[fields], list(str()))
         """
@@ -204,13 +204,23 @@ class ResPartner(models.Model):
                                      'afip_responsability_type_id']
                 values = commercial_partner.remove_readonly_required_fields(
                     commercial_fields, values)
-                with self.env.cr.savepoint():
-                    commercial_partner.write(values)
-            except Exception as exception_error:
-                _logger.error(exception_error)
+                number = self.env['res.partner.id_number'].sudo().new({
+                    'name': values.get('main_id_number', False),
+                    'partner_id': commercial_partner.id,
+                    'category_id': values.get('main_id_category_id', False),
+                })
+                number._validate_fields(['name', 'partner_id', 'category_id'])
+            except ValidationError as exception_error:
                 error['main_id_number'] = 'error'
                 error['main_id_category_id'] = 'error'
-                error_message.append(_(exception_error))
+                error_message.append(exception_error)
+            except Exception as exception_error:
+                _logger.exception(exception_error)
+                error['main_id_number'] = 'error'
+                error['main_id_category_id'] = 'error'
+                error_message.append(_(
+                    'Something Crash! Please report this error to us. Detail:')
+                    + str(exception_error))
         return error, error_message
 
     @api.multi

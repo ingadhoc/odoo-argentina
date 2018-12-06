@@ -5,8 +5,6 @@
 from odoo import _
 from odoo.http import request, route
 from odoo.addons.portal.controllers.portal import CustomerPortal
-import logging
-_logger = logging.getLogger(__name__)
 
 
 class L10nArCustomerPortal(CustomerPortal):
@@ -33,22 +31,29 @@ class L10nArCustomerPortal(CustomerPortal):
             error['main_id_category_id'] = 'error'
             error_message.append(_(
                 'Please add the type of document.'))
-        write_error, write_message = \
-            request.env['res.partner'].try_write_commercial(data)
-        if write_error:
-            error.update(write_error)
-            error_message.extend(write_message)
+        exc_error, exc_message = \
+            request.env['res.partner'].catch_number_id_exceptions(data)
+        if exc_error:
+            error.update(exc_error)
+            error_message.extend(exc_message)
         return error, error_message
 
     @route()
     def account(self, redirect=None, **post):
+        post_process = False
         if post:
             error, _error_message = self.details_form_validate(post)
             if not error:
-                post.pop('commercial_partner_id', False)
-                post.pop('main_id_number', False)
-                post.pop('main_id_category_id', False)
-                post.pop('afip_responsability_type_id', False)
+                commercial_partner_id = post.pop(
+                    'commercial_partner_id', False)
+                if commercial_partner_id:
+                    post_process = True
+                    commercial_values = dict(
+                        main_id_number=post.pop('main_id_number'),
+                        main_id_category_id=post.pop('main_id_category_id'),
+                        afip_responsability_type_id=post.pop(
+                            'afip_responsability_type_id'),
+                    )
 
         response = super(L10nArCustomerPortal, self).account(
             redirect=redirect, **post)
@@ -65,4 +70,8 @@ class L10nArCustomerPortal(CustomerPortal):
             'afip_responsabilities': afip_responsabilities,
             'partner': partner,
             })
+
+        if post_process:
+            partner.commercial_partner_id.write(commercial_values)
+
         return response

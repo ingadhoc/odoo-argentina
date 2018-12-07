@@ -191,23 +191,24 @@ class ResPartner(models.Model):
             'main_id_number',
             'main_id_category_id',
             'afip_responsability_type_id',
-            'commercial_partner_id',
         ]
         values = {}
         for c_field in commercial_fields:
             values.update({
                 c_field: data.get(c_field, data2.get(c_field, False))
             })
-        main_id_category_id = values.get('main_id_category_id')
+        main_id_category_id = values.get('main_id_category_id', False)
         afip_responsability_type_id = values.get('afip_responsability_type_id')
         values.update({
-            'main_id_category_id': int(main_id_category_id),
+            'main_id_category_id': int(main_id_category_id) if main_id_category_id else False,
             'afip_responsability_type_id':
                 int(afip_responsability_type_id)
                 if afip_responsability_type_id else False,
         })
+        print(" ------ pre values %s" % values)
         values = commercial_partner.remove_readonly_required_fields(
             commercial_fields, values)
+        print(" ------ post values %s" % values)
         return (commercial_partner, commercial_fields, values)
 
     @api.model

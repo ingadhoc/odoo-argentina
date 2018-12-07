@@ -178,6 +178,39 @@ class ResPartner(models.Model):
             wiz.update_selection()
 
     @api.model
+    def get_commercial_data(self, data, data2=None):
+        """ return tuple (partner, fields, values)
+        """
+        data2 = data2 or {}
+        commercial_partner = False
+        commercial_partner_id = data.get('commercial_partner_id', False)
+        if commercial_partner_id:
+            commercial_partner = self.env['res.partner'].browse(
+                int(commercial_partner_id))
+        commercial_fields = [
+            'main_id_number',
+            'main_id_category_id',
+            'afip_responsability_type_id',
+            'commercial_partner_id',
+        ]
+        values = {}
+        for c_field in commercial_fields:
+            values.update({
+                c_field: data.get(c_field, data2.get(c_field, False))
+            })
+        main_id_category_id = values.get('main_id_category_id')
+        afip_responsability_type_id = values.get('afip_responsability_type_id')
+        values.update({
+            'main_id_category_id': int(main_id_category_id),
+            'afip_responsability_type_id':
+                int(afip_responsability_type_id)
+                if afip_responsability_type_id else False,
+        })
+        values = commercial_partner.remove_readonly_required_fields(
+            commercial_fields, values)
+        return (commercial_partner, commercial_fields, values)
+
+    @api.model
     def catch_number_id_exceptions(self, data):
         """ User for website. capture the validation errors and return them.
         return (error, error_message) = (dict[fields], list(str()))

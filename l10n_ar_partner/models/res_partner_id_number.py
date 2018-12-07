@@ -1,9 +1,10 @@
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
 from odoo.tools.safe_eval import safe_eval
 
 
 class ResPartnerIdNumber(models.Model):
+
     _inherit = "res.partner.id_number"
     _order = "sequence"
 
@@ -12,7 +13,6 @@ class ResPartnerIdNumber(models.Model):
         required=True,
     )
 
-    @api.multi
     @api.constrains('name', 'category_id')
     def check(self):
         if not safe_eval(self.env['ir.config_parameter'].sudo().get_param(
@@ -32,6 +32,6 @@ class ResPartnerIdNumber(models.Model):
                 # ('id', '!=', rec.id),
             ]) - rec
             if same_id_numbers:
-                raise UserError(_(
+                raise ValidationError(_(
                     'Id Number must be unique per id category!\nSame number '
                     'is only allowed for partner with parent/child relation'))

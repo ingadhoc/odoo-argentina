@@ -47,6 +47,13 @@ class WizardMultiChartsAccounts(models.TransientModel):
             WizardMultiChartsAccounts, self)._create_bank_journals_from_o2m(
             company, acc_template_ref)
 
+    @api.multi
+    def execute(self):
+        res = super(WizardMultiChartsAccounts, self).execute()
+        if self.company_id.localization == 'argentina':
+            self.env['account.account'].set_no_monetaria_tag(self.company_id)
+        return res
+
 
 class AccountChartTemplate(models.Model):
     _inherit = 'account.chart.template'

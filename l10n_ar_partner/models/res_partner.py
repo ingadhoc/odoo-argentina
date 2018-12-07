@@ -1,5 +1,5 @@
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 
 
 class ResPartner(models.Model):
@@ -38,15 +38,6 @@ class ResPartner(models.Model):
         index=True,
         auto_join=True,
     )
-
-    @api.constrains('main_id_number', 'main_id_category_id')
-    def _check_change_cuit(self):
-        for rec in self.filtered('invoice_ids'):
-            raise ValidationError(_(
-                'Can not change identification number/category of partner'
-                ' that already have invoices. In this case please create a '
-                ' new partner'
-            ))
 
     @api.multi
     def cuit_required(self):

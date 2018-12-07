@@ -17,8 +17,6 @@ Automatic Argentinian Withholdings on Payments
 Tablas modificadas según: http://www.afip.gob.ar/noticias/20160526GananciasRegRetencionModificacion.asp
 
 TODO:
-    -A impuestos de percepción de arba configurar Código Python:
-    -result = price_unit * partner.get_arba_alicuota_percepcion()
     -A script de instalación sumarle algo tipo esto, por ahora se puede correr manual. En realidad solo es necesario si estamos en localización o algo que requiera doble validation
     -UPDATE account_payment_group SET retencion_ganancias='no_aplica' WHERE retencion_ganancias is null;
     - el ajuste de calculo de impuestos en pedidos de venta (por compatibilidad con arba) lo hicimos en sale_usability, habria que hacerlo en un modulo de la localización

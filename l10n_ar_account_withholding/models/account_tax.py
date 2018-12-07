@@ -1,17 +1,37 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+from dateutil.relativedelta import relativedelta
 import datetime
 
 
 class AccountTax(models.Model):
     _inherit = "account.tax"
 
-    withholding_type = fields.Selection(
+    amount_type = fields.Selection(
         selection_add=([
-            ('arba_ws', 'WS Arba'),
-            ('tabla_ganancias', 'Tabla Ganancias'),
+            ('partner_tax', 'Alícuota en el Partner'),
         ])
     )
+    withholding_type = fields.Selection(
+        selection_add=([
+            ('tabla_ganancias', 'Tabla Ganancias'),
+            ('partner_tax', 'Alícuota en el Partner'),
+        ])
+    )
+
+    @api.constrains('amount_type', 'withholding_type')
+    def check_partner_tax_tag(self):
+        recs = self.filtered(lambda x: ((
+                x.type_tax_use in ['sale', 'purchase'] and
+                x.amount_type == 'partner_tax') or (
+                x.type_tax_use in ['customer', 'supplier'] and
+                x.withholding_type == 'partner_tax')) and not x.tag_ids)
+        if recs:
+            raise UserError(_(
+                'Si utiliza Cálculo de impuestos igual a "Alícuota en el '
+                'Partner", debe setear al menos una etiqueta en el impuesto y'
+                ' utilizar esa misma etiqueta en las alícuotas configuradas en'
+                ' el partner. Revise los impuestos con id: %s') % recs.ids)
 
     @api.multi
     def get_period_payments_domain(self, payment_group):
@@ -34,22 +54,19 @@ class AccountTax(models.Model):
             payment_group)
         base_amount = vals['withholdable_base_amount']
         commercial_partner = payment_group.commercial_partner_id
-        if self.withholding_type == 'arba_ws':
-            if commercial_partner.gross_income_type == 'no_liquida':
-                vals['period_withholding_amount'] = 0.0
-            else:
-                payment_date = (
-                    payment_group.payment_date and fields.Date.from_string(
-                        payment_group.payment_date) or
-                    datetime.date.today())
-                alicuota = commercial_partner.get_arba_alicuota_retencion(
-                    payment_group.company_id,
-                    payment_date,
-                )
-                amount = base_amount * (alicuota)
-                vals['comment'] = "%s x %s" % (
-                    base_amount, alicuota)
-                vals['period_withholding_amount'] = amount
+        if self.withholding_type == 'partner_tax':
+            payment_date = (
+                payment_group.payment_date and fields.Date.from_string(
+                    payment_group.payment_date) or
+                datetime.date.today())
+            alicuota = self.get_partner_alicuota_retencion(
+                commercial_partner,
+                payment_date,
+            )
+            amount = base_amount * (alicuota)
+            vals['comment'] = "%s x %s" % (
+                base_amount, alicuota)
+            vals['period_withholding_amount'] = amount
         elif self.withholding_type == 'tabla_ganancias':
             regimen = payment_group.regimen_ganancias_id
             imp_ganancias_padron = commercial_partner.imp_ganancias_padron
@@ -112,33 +129,69 @@ class AccountTax(models.Model):
             vals['period_withholding_amount'] = amount
         return vals
 
-    @api.v8
-    def compute_all(
-            self, price_unit, currency=None, quantity=1.0, product=None,
-            partner=None):
-        # ver nota en get_taxes_values
-        try:
-            date_invoice = self._context.date_invoice
-            invoice_company = self._context.invoice_company
-            partner = partner.with_context(
-                invoice_company=invoice_company, date_invoice=date_invoice)
-        except Exception:
-            pass
-        return super(AccountTax, self).compute_all(
-            price_unit, currency=currency, quantity=quantity, product=product,
-            partner=partner)
+    @api.multi
+    def get_partner_alicuota_percepcion(
+            self, partner, date, alicuot_no_inscripto=False):
+        if partner and date:
+            date = fields.Date.from_string(date)
+            arba = self.get_partner_alicuot(partner, date)
+            # si pasamos alicuota para no inscripto y no hay numero de
+            # comprobante entonces es porque no figura en el padron
+            if alicuot_no_inscripto and not arba.numero_comprobante:
+                return alicuot_no_inscripto
+            return arba.alicuota_percepcion / 100.0
+        return 0.0
+
+    @api.multi
+    def get_partner_alicuota_retencion(self, partner, date):
+        arba = self.get_partner_alicuot(partner, date)
+        return arba.alicuota_retencion / 100.0
+
+    @api.multi
+    def get_partner_alicuot(self, partner, date):
+        self.ensure_one()
+        from_date = (date + relativedelta(day=1)).strftime('%Y%m%d')
+        to_date = (date + relativedelta(
+            day=1, days=-1, months=+1)).strftime('%Y%m%d')
+        commercial_partner = partner.commercial_partner_id
+        company = self.company_id
+        alicuot = partner.arba_alicuot_ids.search([
+            ('tag_id', 'in', self.tag_ids.ids),
+            ('company_id', '=', company.id),
+            ('partner_id', '=', commercial_partner.id),
+            '|',
+            ('from_date', '=', False),
+            ('from_date', '>=', from_date),
+            '|',
+            ('to_date', '=', False),
+            ('to_date', '<=', to_date),
+        ], limit=1)
+        if not alicuot:
+            arba_tag = self.env.ref('l10n_ar_account.tag_tax_jurisdiccion_902')
+            if arba_tag and arba_tag.id in self.tag_ids.ids:
+                arba_data = company.get_arba_data(
+                    commercial_partner,
+                    from_date, to_date,
+                )
+                arba_data['partner_id'] = commercial_partner.id
+                arba_data['company_id'] = company.id
+                alicuot = partner.arba_alicuot_ids.sudo().create(arba_data)
+            # elif agip_tag and agip_tag.id in self.tag_ids.ids:
+            #     raise UserError(_(
+            #         'Parece que no se sincronizaron las alicuotas de AGIP'))
+        return alicuot
 
     def _compute_amount(
             self, base_amount, price_unit, quantity=1.0, product=None,
             partner=None):
-        # ver nota en get_taxes_values
-        try:
-            date_invoice = self._context.date_invoice
-            invoice_company = self._context.invoice_company
-            partner = partner.with_context(
-                invoice_company=invoice_company, date_invoice=date_invoice)
-        except Exception:
-            pass
-        return super(AccountTax, self)._compute_amount(
-            base_amount, price_unit, quantity=quantity, product=product,
-            partner=partner)
+        if self.amount_type == 'partner_tax':
+            # TODO obtener fecha de otra manera?
+            try:
+                date = self._context.date_invoice
+            except Exception:
+                date = fields.Date.context_today(self)
+            return base_amount * self.get_partner_alicuota_percepcion(
+                partner, date)
+        else:
+            return super(AccountTax, self)._compute_amount(
+                base_amount, price_unit, quantity, product, partner)

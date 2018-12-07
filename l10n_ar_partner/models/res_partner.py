@@ -186,28 +186,15 @@ class ResPartner(models.Model):
         error_message = []
         main_id_number = data.get('main_id_number', False)
         main_id_category_id = data.get('main_id_category_id', False)
-        afip_responsability_type_id = data.get('afip_responsability_type_id',
-                                               False)
 
         if main_id_number and main_id_category_id:
             commercial_partner = self.env['res.partner'].sudo().browse(
                 int(data.get('commercial_partner_id', False)))
             try:
-                values = {
-                    'main_id_number': main_id_number,
-                    'main_id_category_id': int(main_id_category_id),
-                    'afip_responsability_type_id':
-                        int(afip_responsability_type_id)
-                        if afip_responsability_type_id else False,
-                }
-                commercial_fields = ['main_id_number', 'main_id_category_id',
-                                     'afip_responsability_type_id']
-                values = commercial_partner.remove_readonly_required_fields(
-                    commercial_fields, values)
                 number = self.env['res.partner.id_number'].sudo().new({
-                    'name': values.get('main_id_number', False),
+                    'name': main_id_number,
                     'partner_id': commercial_partner.id,
-                    'category_id': values.get('main_id_category_id', False),
+                    'category_id': int(main_id_category_id),
                 })
                 number._validate_fields(['name', 'partner_id', 'category_id'])
             except ValidationError as exception_error:

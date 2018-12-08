@@ -17,6 +17,7 @@
                 <field name="arba_alicuot_ids">
                     <tree editable="bottom">
                         <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="tag_id" options="{'no_create': True, 'no_open': True}"/>
                         <field name="from_date"/>
                         <field name="to_date"/>
                         <field name="numero_comprobante"/>

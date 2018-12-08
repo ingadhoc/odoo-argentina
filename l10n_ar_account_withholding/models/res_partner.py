@@ -1,16 +1,17 @@
 from odoo import models, fields, api
 import logging
-from dateutil.relativedelta import relativedelta
+# from dateutil.relativedelta import relativedelta
 _logger = logging.getLogger(__name__)
 
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
+    # TODO renombrar campo
     arba_alicuot_ids = fields.One2many(
         'res.partner.arba_alicuot',
         'partner_id',
-        'Alicuotas de ARBA',
+        'Alícuotas PERC-RET',
     )
     drei = fields.Selection([
         ('activo', 'Activo'),
@@ -27,55 +28,21 @@ class ResPartner(models.Model):
         'Regimen Ganancias por Defecto',
     )
 
-    @api.multi
-    def get_arba_alicuota_percepcion(self, alicuot_no_inscripto=False):
-        company = self._context.get('invoice_company')
-        date_invoice = self._context.get('date_invoice')
-        if date_invoice and company:
-            date = fields.Date.from_string(date_invoice)
-            arba = self.get_arba_data(company, date)
-            # si pasamos alicuota para no inscripto y no hay numero de
-            # comprobante entonces es porque no figura en el padron
-            if alicuot_no_inscripto and not arba.numero_comprobante:
-                return alicuot_no_inscripto
-            return arba.alicuota_percepcion / 100.0
-        return 0
-
-    @api.multi
-    def get_arba_alicuota_retencion(self, company, date):
-        arba = self.get_arba_data(company, date)
-        return arba.alicuota_retencion / 100.0
-
-    @api.multi
-    def get_arba_data(self, company, date):
-        self.ensure_one()
-        from_date = (date + relativedelta(day=1)).strftime('%Y%m%d')
-        to_date = (date + relativedelta(
-            day=1, days=-1, months=+1)).strftime('%Y%m%d')
-        commercial_partner = self.commercial_partner_id
-        arba = self.arba_alicuot_ids.search([
-            ('from_date', '=', from_date),
-            ('to_date', '=', to_date),
-            ('company_id', '=', company.id),
-            ('partner_id', '=', commercial_partner.id)], limit=1)
-        if not arba:
-            arba_data = company.get_arba_data(
-                commercial_partner,
-                from_date, to_date,
-            )
-            arba_data['partner_id'] = commercial_partner.id
-            arba_data['company_id'] = company.id
-            arba = self.arba_alicuot_ids.sudo().create(arba_data)
-        return arba
-
 
 class ResPartnerArbaAlicuot(models.Model):
+    # TODO rename model to res.partner.tax or similar
     _name = "res.partner.arba_alicuot"
+    _order = "to_date desc, from_date desc, tag_id, company_id"
 
     partner_id = fields.Many2one(
         'res.partner',
         required=True,
         ondelete='cascade',
+    )
+    tag_id = fields.Many2one(
+        'account.account.tag',
+        domain=[('applicability', '=', 'taxes')],
+        required=True,
     )
     company_id = fields.Many2one(
         'res.company',

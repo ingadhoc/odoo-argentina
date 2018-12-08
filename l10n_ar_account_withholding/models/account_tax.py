@@ -175,6 +175,7 @@ class AccountTax(models.Model):
                 )
                 arba_data['partner_id'] = commercial_partner.id
                 arba_data['company_id'] = company.id
+                arba_data['tag_id'] = arba_tag.id
                 alicuot = partner.arba_alicuot_ids.sudo().create(arba_data)
             # elif agip_tag and agip_tag.id in self.tag_ids.ids:
             #     raise UserError(_(

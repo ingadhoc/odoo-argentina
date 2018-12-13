@@ -23,6 +23,11 @@ class ResCompany(models.Model):
         'CIT ARBA',
         help='Clave de Identificación Tributaria de ARBA',
     )
+    agip_padron_type = fields.Selection([
+        ('regimenes_generales', 'Regímenes Generales')],
+        string='Padron AGIP',
+        default='regimenes_generales',
+    )
 
     @api.model
     def _get_arba_environment_type(self):
@@ -96,8 +101,11 @@ class ResCompany(models.Model):
                 arba_url, cuit))
         return ws
 
-    # def get_arba_data(self, partner, date):
-    @api.model
+    def get_agip_data(self, partner, date):
+        raise UserError(_(
+            'Falta configuración de credenciales de ADHOC para consulta de '
+            'Alícuotas de AGIP'))
+
     def get_arba_data(self, partner, from_date, to_date):
         self.ensure_one()
 

@@ -11,3 +11,6 @@ class ResConfigSettings(models.TransientModel):
     regimenes_ganancias_ids = fields.Many2many(
         related='company_id.regimenes_ganancias_ids'
     )
+    agip_padron_type = fields.Selection(
+        related='company_id.agip_padron_type'
+    )

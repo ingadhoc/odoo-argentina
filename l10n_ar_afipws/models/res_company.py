@@ -172,7 +172,7 @@ class ResCompany(models.Model):
         # no estamos seguros porque pero a partir del 12.12.18 tuvimos que
         # agregar esto para que no intente usar la de homologacion a la hora
         # de conectarse
-        wsaa.WSDL = wsdl
+        wsaa.WSDL = wsdl + '?wsdl'
 
         # raise python exceptions on any failure
         wsaa.LanzarExcepciones = True

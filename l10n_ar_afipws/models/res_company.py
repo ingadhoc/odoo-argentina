@@ -168,6 +168,12 @@ class ResCompany(models.Model):
         from pyafipws.wsaa import WSAA
         # create AFIP webservice authentication helper instance:
         wsaa = WSAA()
+
+        # no estamos seguros porque pero a partir del 12.12.18 tuvimos que
+        # agregar esto para que no intente usar la de homologacion a la hora
+        # de conectarse
+        wsaa.WSDL = wsdl
+
         # raise python exceptions on any failure
         wsaa.LanzarExcepciones = True
 

@@ -18,6 +18,14 @@ class AccountTax(models.Model):
             ('partner_tax', 'Alícuota en el Partner'),
         ])
     )
+    # default_alicuot = fields.Float(
+    #     'Alícuota por defecto',
+    #     help="Alícuota por defecto para los partners que no figuran en el "
+    #     "padrón"
+    # )
+    # default_alicuot_copy = fields.Float(
+    #     related='default_alicuot',
+    # )
 
     @api.constrains('amount_type', 'withholding_type')
     def check_partner_tax_tag(self):
@@ -55,13 +63,9 @@ class AccountTax(models.Model):
         base_amount = vals['withholdable_base_amount']
         commercial_partner = payment_group.commercial_partner_id
         if self.withholding_type == 'partner_tax':
-            payment_date = (
-                payment_group.payment_date and fields.Date.from_string(
-                    payment_group.payment_date) or
-                datetime.date.today())
             alicuota = self.get_partner_alicuota_retencion(
                 commercial_partner,
-                payment_date,
+                payment_group.payment_date or fields.Date.context_today(self),
             )
             amount = base_amount * (alicuota)
             vals['comment'] = "%s x %s" % (
@@ -133,7 +137,6 @@ class AccountTax(models.Model):
     def get_partner_alicuota_percepcion(
             self, partner, date, alicuot_no_inscripto=False):
         if partner and date:
-            date = fields.Date.from_string(date)
             arba = self.get_partner_alicuot(partner, date)
             # si pasamos alicuota para no inscripto y no hay numero de
             # comprobante entonces es porque no figura en el padron
@@ -150,8 +153,9 @@ class AccountTax(models.Model):
     @api.multi
     def get_partner_alicuot(self, partner, date):
         self.ensure_one()
-        from_date = (date + relativedelta(day=1)).strftime('%Y%m%d')
-        to_date = (date + relativedelta(
+        date_date = fields.Date.from_string(date)
+        from_date = (date_date + relativedelta(day=1)).strftime('%Y%m%d')
+        to_date = (date_date + relativedelta(
             day=1, days=-1, months=+1)).strftime('%Y%m%d')
         commercial_partner = partner.commercial_partner_id
         company = self.company_id
@@ -167,6 +171,7 @@ class AccountTax(models.Model):
             ('to_date', '<=', to_date),
         ], limit=1)
         if not alicuot:
+            agip_tag = self.env.ref('l10n_ar_account.tag_tax_jurisdiccion_901')
             arba_tag = self.env.ref('l10n_ar_account.tag_tax_jurisdiccion_902')
             if arba_tag and arba_tag.id in self.tag_ids.ids:
                 arba_data = company.get_arba_data(
@@ -177,9 +182,17 @@ class AccountTax(models.Model):
                 arba_data['company_id'] = company.id
                 arba_data['tag_id'] = arba_tag.id
                 alicuot = partner.arba_alicuot_ids.sudo().create(arba_data)
-            # elif agip_tag and agip_tag.id in self.tag_ids.ids:
-            #     raise UserError(_(
-            #         'Parece que no se sincronizaron las alicuotas de AGIP'))
+            elif agip_tag and agip_tag.id in self.tag_ids.ids:
+                agip_data = company.get_agip_data(
+                    commercial_partner,
+                    date,
+                )
+                agip_data['from_date'] = from_date
+                agip_data['to_date'] = to_date
+                agip_data['partner_id'] = commercial_partner.id
+                agip_data['company_id'] = company.id
+                agip_data['tag_id'] = agip_tag.id
+                alicuot = partner.arba_alicuot_ids.sudo().create(agip_data)
         return alicuot
 
     def _compute_amount(

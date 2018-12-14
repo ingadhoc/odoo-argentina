@@ -30,6 +30,7 @@
         'views/afip_tabla_ganancias_alicuotasymontos_view.xml',
         'views/account_payment_view.xml',
         'views/res_partner_view.xml',
+        'views/account_tax_view.xml',
         'security/ir.model.access.csv',
         'security/security.xml',
         'data/tabla_ganancias_data.xml',
@@ -53,5 +54,5 @@
     },
     'installable': True,
     'name': 'Automatic Argentinian Withholdings on Payments',
-    'version': '11.0.1.2.0',
+    'version': '11.0.1.3.0',
 }

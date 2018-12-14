@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Por ahora no activamos esto, probablemente lo vamos a mover a config en la compañia donde se pueda setear alicuota por defecto para arba/agip -->
+    <!-- <record id="view_withholding_tax_form" model="ir.ui.view"> -->
+    <!-- <record id="view_tax_form" model="ir.ui.view">
+        <field name="name">account.tax.tree</field>
+        <field name="model">account.tax</field>
+        <field name="inherit_id" ref="account_withholding_automatic.view_tax_form"/>
+        <field name="arch" type="xml">
+            <field name="withholding_python_compute" position="before">
+                <field name="default_alicuot_copy" attrs="{'invisible': [('withholding_type', '!=', 'partner_tax')]}"/>
+            </field>
+            <field name="amount_type" position="after">
+                <field name="default_alicuot" attrs="{'invisible': [('amount_type', '!=', 'partner_tax')]}"/>
+            </field>
+        </field>
+    </record> -->
+
+</odoo>
+

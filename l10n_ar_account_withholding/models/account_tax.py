@@ -18,6 +18,14 @@ class AccountTax(models.Model):
             ('partner_tax', 'Alícuota en el Partner'),
         ])
     )
+    # default_alicuot = fields.Float(
+    #     'Alícuota por defecto',
+    #     help="Alícuota por defecto para los partners que no figuran en el "
+    #     "padrón"
+    # )
+    # default_alicuot_copy = fields.Float(
+    #     related='default_alicuot',
+    # )
 
     @api.constrains('amount_type', 'withholding_type')
     def check_partner_tax_tag(self):
@@ -179,6 +187,8 @@ class AccountTax(models.Model):
                     commercial_partner,
                     date,
                 )
+                agip_data['from_date'] = from_date
+                agip_data['to_date'] = to_date
                 agip_data['partner_id'] = commercial_partner.id
                 agip_data['company_id'] = company.id
                 agip_data['tag_id'] = agip_tag.id

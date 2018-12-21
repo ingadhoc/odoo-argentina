@@ -19,6 +19,7 @@ from . import product_uom
 from . import account_chart_template
 from . import afip_vat_f2002_category
 from . import product_template
+from . import product_product
 from . import account_move_line
 from . import account_move
 from . import afip_padron

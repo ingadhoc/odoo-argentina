@@ -153,10 +153,6 @@ class AccountTax(models.Model):
     @api.multi
     def get_partner_alicuot(self, partner, date):
         self.ensure_one()
-        date_date = fields.Date.from_string(date)
-        from_date = (date_date + relativedelta(day=1)).strftime('%Y%m%d')
-        to_date = (date_date + relativedelta(
-            day=1, days=-1, months=+1)).strftime('%Y%m%d')
         commercial_partner = partner.commercial_partner_id
         company = self.company_id
         alicuot = partner.arba_alicuot_ids.search([
@@ -165,12 +161,17 @@ class AccountTax(models.Model):
             ('partner_id', '=', commercial_partner.id),
             '|',
             ('from_date', '=', False),
-            ('from_date', '>=', from_date),
+            ('from_date', '<=', date),
             '|',
             ('to_date', '=', False),
-            ('to_date', '<=', to_date),
+            ('to_date', '>=', date),
         ], limit=1)
         if not alicuot:
+            date_date = fields.Date.from_string(date)
+            from_date = (date_date + relativedelta(day=1)).strftime('%Y%m%d')
+            to_date = (date_date + relativedelta(
+                day=1, days=-1, months=+1)).strftime('%Y%m%d')
+
             agip_tag = self.env.ref('l10n_ar_account.tag_tax_jurisdiccion_901')
             arba_tag = self.env.ref('l10n_ar_account.tag_tax_jurisdiccion_902')
             if arba_tag and arba_tag.id in self.tag_ids.ids:

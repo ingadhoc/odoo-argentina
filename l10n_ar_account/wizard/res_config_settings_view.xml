@@ -21,25 +21,21 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </xpath>
-            <!-- Ver si re-activamos, no es muy utilizado -->
-            <!-- <div id="bank_cash" position="after">
-                <group name="argentina_config" string="Argentina">
-                    <label for="id" string="Refresh from Padron AFIP"/>
-                    <div>
-                        <div>
-                            <button name="refresh_activities_from_padron" string="Activities" type="object" class="oe_link"/>
-                        </div>
-                        <div>
-                            <button name="refresh_taxes_from_padron" string="Taxes" type="object" class="oe_link"/>
-                        </div>
-                        <div>
-                            <button name="refresh_concepts_from_padron" string="Concepts" type="object" class="oe_link"/>
+                    <div class="col-xs-12 col-md-6 o_setting_box" groups="base.group_no_one" title="Al hacer click en los botones de mas abajo se van a sincronizar desde afip las Actividades, Impuestos y Conceptos. Estos datos son solo informativos y se utilizan para clasificar al partner al consultar datos del partner en el padron AFIP." >
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <label string="Refrescar datos del Padron AFIP" />
+                            <div class="content-group">
+                                <div>
+                                    <button name="refresh_activities_from_padron" string="-> Actividades" type="object" class="oe_link"/>
+                                    <button name="refresh_taxes_from_padron" string="-> Impuestos" type="object" class="oe_link"/>
+                                    <button name="refresh_concepts_from_padron" string="-> Conceptos" type="object" class="oe_link"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </group>
-            </div> -->
+                </div>
+            </xpath>
             <div name="sale_use_documents" position="after">
                 <!-- TODO implementar o borrar vista -->
                 <!-- <div name="afip_responsability_type_id">

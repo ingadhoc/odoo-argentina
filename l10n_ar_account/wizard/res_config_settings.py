@@ -71,7 +71,7 @@ class ResConfigSettings(models.TransientModel):
         data = padron.ObtenerTablaParametros(resource_type, separator)
         codes = []
         for line in data:
-            code, name = line.split(separator)[1:2]
+            code, name = line.split(separator)[1:3]
             vals = {
                 'code': code,
                 'name': name,

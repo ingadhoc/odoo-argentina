@@ -1,4 +1,4 @@
-from odoo import models, api, _
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 # from odoo.addons.l10n_ar_account.models import account_journal
 try:
@@ -10,6 +10,9 @@ except ImportError:
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
+    arba_cit = fields.Char(
+        related='company_id.arba_cit'
+    )
     # point_of_sale_type = fields.Selection(
     #     account_journal.AccountJournal._point_of_sale_types_selection,
     #     'Point Of Sale Type',

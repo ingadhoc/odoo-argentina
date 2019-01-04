@@ -19,10 +19,6 @@ class ResCompany(models.Model):
         'company_id', 'regimen_id',
         'Regimenes Ganancia',
     )
-    arba_cit = fields.Char(
-        'CIT ARBA',
-        help='Clave de Identificación Tributaria de ARBA',
-    )
     agip_padron_type = fields.Selection([
         ('regimenes_generales', 'Regímenes Generales')],
         string='Padron AGIP',

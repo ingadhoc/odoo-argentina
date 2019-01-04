@@ -38,6 +38,10 @@ class ResCompany(models.Model):
     tax_calculation_rounding_method = fields.Selection(
         default='round_globally',
     )
+    arba_cit = fields.Char(
+        'CIT ARBA',
+        help='Clave de Identificación Tributaria de ARBA',
+    )
 
     @api.onchange('localization')
     def change_localization(self):

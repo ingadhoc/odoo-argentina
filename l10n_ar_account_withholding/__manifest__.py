@@ -23,6 +23,8 @@
     'license': 'AGPL-3',
     'category': 'Accounting & Finance',
     'data': [
+        'security/ir.model.access.csv',
+        'security/security.xml',
         'wizard/res_config_settings_views.xml',
         'reports/certificado_de_retencion_report.xml',
         'views/account_payment_group_view.xml',
@@ -31,8 +33,6 @@
         'views/account_payment_view.xml',
         'views/res_partner_view.xml',
         'views/account_tax_view.xml',
-        'security/ir.model.access.csv',
-        'security/security.xml',
         'data/tabla_ganancias_data.xml',
     ],
     'demo': [
@@ -54,5 +54,5 @@
     },
     'installable': True,
     'name': 'Automatic Argentinian Withholdings on Payments',
-    'version': '11.0.1.4.0',
+    'version': '11.0.1.5.0',
 }

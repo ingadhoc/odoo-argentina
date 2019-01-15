@@ -58,15 +58,22 @@ class AccountTax(models.Model):
 
     @api.multi
     def get_withholding_vals(self, payment_group):
-        vals = super(AccountTax, self).get_withholding_vals(
-            payment_group)
-        base_amount = vals['withholdable_base_amount']
         commercial_partner = payment_group.commercial_partner_id
+
+        force_withholding_amount_type = None
         if self.withholding_type == 'partner_tax':
-            alicuota = self.get_partner_alicuota_retencion(
+            alicuot_line = self.get_partner_alicuot(
                 commercial_partner,
                 payment_group.payment_date or fields.Date.context_today(self),
             )
+            alicuota = alicuot_line.alicuota_retencion / 100.0
+            force_withholding_amount_type = alicuot_line.withholding_amount_type
+
+        vals = super(AccountTax, self).get_withholding_vals(
+            payment_group, force_withholding_amount_type)
+        base_amount = vals['withholdable_base_amount']
+
+        if self.withholding_type == 'partner_tax':
             amount = base_amount * (alicuota)
             vals['comment'] = "%s x %s" % (
                 base_amount, alicuota)
@@ -144,11 +151,6 @@ class AccountTax(models.Model):
                 return alicuot_no_inscripto
             return arba.alicuota_percepcion / 100.0
         return 0.0
-
-    @api.multi
-    def get_partner_alicuota_retencion(self, partner, date):
-        arba = self.get_partner_alicuot(partner, date)
-        return arba.alicuota_retencion / 100.0
 
     @api.multi
     def get_partner_alicuot(self, partner, date):

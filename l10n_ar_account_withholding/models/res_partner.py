@@ -66,3 +66,10 @@ class ResPartnerArbaAlicuot(models.Model):
     )
     grupo_retencion = fields.Char(
     )
+    withholding_amount_type = fields.Selection([
+        ('untaxed_amount', 'Untaxed Amount'),
+        ('total_amount', 'Total Amount'),
+    ],
+        'Base para retenciones',
+        help='Base amount used to get withholding amount',
+    )

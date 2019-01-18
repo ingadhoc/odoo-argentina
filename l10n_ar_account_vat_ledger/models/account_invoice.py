@@ -90,7 +90,7 @@ class AccountInvoice(models.Model):
                     rec.vat_exempt_base_amount * currency_rate)
 
     @api.multi
-    def invoice_validate(self):
+    def check_vat_ledger_presented(self):
         AccountVatLedger = self.env['account.vat.ledger']
         for invoice in self:
             ledger_ids = AccountVatLedger.sudo().search([
@@ -101,7 +101,22 @@ class AccountInvoice(models.Model):
                 ('date_to', '>=', invoice.date)])
             if ledger_ids:
                 raise UserError(_(
-                    "You can't validate an invoice of this date if the "
-                    "VAT Ledger Report has already been presented.\r\n"
-                    "You need to manually set the Accounting Date."))
-        return super(AccountInvoice, self).invoice_validate()
+                    "You can't validate/cancel an invoice of this date if the "
+                    "VAT Ledger Report for this month has already been "
+                    "presented."))
+
+    @api.multi
+    def action_move_create(self):
+        """ Chequeamos en este metodo y no en invoice_validate porque queremos
+        que invoice_validate sea siempre el ultimo y que sea el que valida
+        en afip. No lo hacemos antes de este metodo porque puede no estar
+        seteada la fecha
+        """
+        res = super(AccountInvoice, self).action_move_create()
+        self.check_vat_ledger_presented()
+        return res
+
+    @api.multi
+    def action_invoice_cancel(self):
+        self.check_vat_ledger_presented()
+        return super(AccountInvoice, self).action_invoice_cancel()

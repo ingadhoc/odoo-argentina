@@ -4,13 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Katherine Zaoral <katherine.zaoral@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-27 15:47+0000\n"
-"PO-Revision-Date: 2018-09-27 15:47+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
+"POT-Creation-Date: 2019-01-18 17:21+0000\n"
+"PO-Revision-Date: 2018-05-18 13:22+0000\n"
+"Last-Translator: Katherine Zaoral <katherine.zaoral@gmail.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,4 +39,4 @@ msgstr "Código Bancario Único Argentino"
 #: code:addons/l10n_ar_bank/l10n_ar_bank.py:22
 #, python-format
 msgid "El CBU \"%s\" no es vÃ¡lido"
-msgstr ""
+msgstr "El CBU \"%s\" no es válido"

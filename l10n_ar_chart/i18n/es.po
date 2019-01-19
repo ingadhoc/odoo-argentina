@@ -3,14 +3,16 @@
 # * l10n_ar_chart
 # 
 # Translators:
-# Javier Diez <jd@adhoc.com.ar>, 2016
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Katherine Zaoral <katherine.zaoral@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-13 17:16+0000\n"
-"PO-Revision-Date: 2016-11-13 17:16+0000\n"
-"Last-Translator: Javier Diez <jd@adhoc.com.ar>, 2016\n"
+"POT-Creation-Date: 2019-01-18 17:21+0000\n"
+"PO-Revision-Date: 2018-05-18 13:22+0000\n"
+"Last-Translator: Katherine Zaoral <katherine.zaoral@gmail.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,6 +21,370 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_ar_chart
+#: model:product.product,name:l10n_ar_chart.product_product_cero
+#: model:product.template,name:l10n_ar_chart.product_product_cero_product_template
+msgid "Animales y vegetales no industrializados (IVA cero)"
+msgstr "Animales y vegetales no industrializados (IVA cero)"
+
+#. module: l10n_ar_chart
+#: model:product.product,name:l10n_ar_chart.product_product_no_gravado
+#: model:product.template,name:l10n_ar_chart.product_product_no_gravado_product_template
+msgid "Conceptos no gravados (IVA NG)"
+msgstr "Conceptos no gravados (IVA NG)"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_0_compras
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_0_ventas
+msgid "IVA 0%"
+msgstr "IVA 0%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_10_compras
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_10_ventas
+msgid "IVA 10.5%"
+msgstr "IVA 10.5%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_25_compras
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_25_ventas
+msgid "IVA 2,5%"
+msgstr "IVA 2,5%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_21_compras
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_21_ventas
+msgid "IVA 21%"
+msgstr "IVA 21%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_27_compras
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_27_ventas
+msgid "IVA 27%"
+msgstr "IVA 27%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_5_compras
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_5_ventas
+msgid "IVA 5%"
+msgstr "IVA 5%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_ganancias_iva_adicional
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_ganancias_iva_adicional
+msgid "IVA Adicional 20%"
+msgstr "IVA Adicional 20%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_0_compras
+msgid "IVA Compras 0%"
+msgstr "IVA Compras 0%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_10_compras
+msgid "IVA Compras 10.5%"
+msgstr "IVA Compras 10.5%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_25_compras
+msgid "IVA Compras 2,5%"
+msgstr "IVA Compras 2,5%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_21_compras
+msgid "IVA Compras 21%"
+msgstr "IVA Compras 21%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_27_compras
+msgid "IVA Compras 27%"
+msgstr "IVA Compras 27%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_5_compras
+msgid "IVA Compras 5%"
+msgstr "IVA Compras 5%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_exento_compras
+msgid "IVA Compras Exento"
+msgstr "IVA Compras Exento"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_no_corresponde_compras
+msgid "IVA Compras No Corresponde"
+msgstr "IVA Compras No Corresponde"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_no_gravado_compras
+msgid "IVA Compras No Gravado"
+msgstr "IVA Compras No Gravado"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_exento_compras
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_exento_ventas
+msgid "IVA Exento"
+msgstr "IVA Exento"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_no_corresponde_compras
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_no_corresponde_ventas
+msgid "IVA No Corresponde"
+msgstr "IVA No Corresponde"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_no_gravado_compras
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_vat_no_gravado_ventas
+msgid "IVA No Gravado"
+msgstr "IVA No Gravado"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_0_ventas
+msgid "IVA Ventas 0%"
+msgstr "IVA Ventas 0%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_10_ventas
+msgid "IVA Ventas 10.5%"
+msgstr "IVA Ventas 10.5%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_25_ventas
+msgid "IVA Ventas 2,5%"
+msgstr "IVA Ventas 2,5%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_21_ventas
+msgid "IVA Ventas 21%"
+msgstr "IVA Ventas 21%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_27_ventas
+msgid "IVA Ventas 27%"
+msgstr "IVA Ventas 27%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_5_ventas
+msgid "IVA Ventas 5%"
+msgstr "IVA Ventas 5%"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_exento_ventas
+msgid "IVA Ventas Exento"
+msgstr "IVA Ventas Exento"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_no_corresponde_ventas
+msgid "IVA Ventas No Corresponde"
+msgstr "IVA Ventas No Corresponde"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_vat_no_gravado_ventas
+msgid "IVA Ventas No Gravado"
+msgstr "IVA Ventas No Gravado"
+
+#. module: l10n_ar_chart
+#: model:product.product,name:l10n_ar_chart.product_product_exento
+#: model:product.template,name:l10n_ar_chart.product_product_exento_product_template
+msgid "Libro \"Desarrollo en Odoo\" (IVA exento)"
+msgstr "Libro \"Desarrollo en Odoo\" (IVA exento)"
+
+#. module: l10n_ar_chart
 #: model:ir.actions.client,name:l10n_ar_chart.action_client_l10n_ar_menu
 msgid "Open Account Dashboard Menu"
 msgstr "Abrir menú panel de control de cuenta"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_percepcion_ganancias_aplicada
+msgid "Perc Ganancias A"
+msgstr "Perc Ganancias A"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_percepcion_ganancias_sufrida
+msgid "Perc Ganancias S"
+msgstr "Perc Ganancias S"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_percepcion_iibb_aplicada
+msgid "Perc IIBB A"
+msgstr "Perc IIBB A"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_percepcion_iibb_ba_sufrida
+msgid "Perc IIBB ARBA S"
+msgstr "Perc IIBB ARBA S"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_percepcion_iibb_caba_sufrida
+msgid "Perc IIBB CABA S"
+msgstr "Perc IIBB CABA S"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_percepcion_iibb_co_sufrida
+msgid "Perc IIBB Córdoba S"
+msgstr "Perc IIBB Córdoba S"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_percepcion_iibb_sf_sufrida
+msgid "Perc IIBB Santa Fé S"
+msgstr "Perc IIBB Santa Fé S"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_percepcion_iva_aplicada
+msgid "Perc IVA A"
+msgstr "Perc IVA A"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_percepcion_iva_sufrida
+msgid "Perc IVA S"
+msgstr "Perc IVA S"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_percepcion_ganancias_aplicada
+msgid "Percepción Ganancias Aplicada"
+msgstr "Percepción Ganancias Aplicada"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_percepcion_ganancias_sufrida
+msgid "Percepción Ganancias Sufrida"
+msgstr "Percepción Ganancias Sufrida"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_percepcion_iibb_ba_sufrida
+msgid "Percepción IIBB ARBA Sufrida"
+msgstr "Percepción IIBB ARBA Sufrida"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_percepcion_iibb_aplicada
+msgid "Percepción IIBB Aplicada"
+msgstr "Percepción IIBB Aplicada"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_percepcion_iibb_caba_sufrida
+msgid "Percepción IIBB CABA Sufrida"
+msgstr "Percepción IIBB CABA Sufrida"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_percepcion_iibb_co_sufrida
+msgid "Percepción IIBB Córdoba Sufrida"
+msgstr "Percepción IIBB Córdoba Sufrida"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_percepcion_iibb_sf_sufrida
+msgid "Percepción IIBB Santa Fé Sufrida"
+msgstr "Percepción IIBB Santa Fé Sufrida"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_percepcion_iva_aplicada
+msgid "Percepción IVA Aplicada"
+msgstr "Percepción IVA Aplicada"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_percepcion_iva_sufrida
+msgid "Percepción IVA Sufrida"
+msgstr "Percepción IVA Sufrida"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_retencion_ganancias_aplicada
+msgid "Ret Ganancias A"
+msgstr "Ret Ganancias A"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_retencion_ganancias_sufrida
+msgid "Ret Ganancias S"
+msgstr "Ret Ganancias S"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_retencion_iibb_aplicada
+msgid "Ret IIBB A"
+msgstr "Ret IIBB A"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_retencion_iibb_ba_sufrida
+msgid "Ret IIBB ARBA S"
+msgstr "Ret IIBB ARBA S"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_retencion_iibb_caba_sufrida
+msgid "Ret IIBB CABA S"
+msgstr "Ret IIBB CABA S"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_retencion_iibb_co_sufrida
+msgid "Ret IIBB Córdoba S"
+msgstr "Ret IIBB Córdoba S"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_retencion_iibb_sf_sufrida
+msgid "Ret IIBB Santa Fé S"
+msgstr "Ret IIBB Santa Fé S"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_retencion_iva_aplicada
+msgid "Ret IVA A"
+msgstr "Ret IVA A"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_retencion_iva_sufrida
+msgid "Ret IVA S"
+msgstr "Ret IVA S"
+
+#. module: l10n_ar_chart
+#: model:account.tax,description:l10n_ar_chart.1_ri_tax_retencion_suss_sufrida
+msgid "Ret SUSS S"
+msgstr "Ret SUSS S"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_retencion_ganancias_aplicada
+msgid "Retención Ganancias Aplicada"
+msgstr "Retención Ganancias Aplicada"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_retencion_ganancias_sufrida
+msgid "Retención Ganancias Sufrida"
+msgstr "Retención Ganancias Sufrida"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_retencion_iibb_ba_sufrida
+msgid "Retención IIBB ARBA Sufrida"
+msgstr "Retención IIBB ARBA Sufrida"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_retencion_iibb_aplicada
+msgid "Retención IIBB Aplicada"
+msgstr "Retención IIBB Aplicada"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_retencion_iibb_caba_sufrida
+msgid "Retención IIBB CABA Sufrida"
+msgstr "Retención IIBB CABA Sufrida"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_retencion_iibb_co_sufrida
+msgid "Retención IIBB Córdoba Sufrida"
+msgstr "Retención IIBB Córdoba Sufrida"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_retencion_iibb_sf_sufrida
+msgid "Retención IIBB Santa Fé Sufrida"
+msgstr "Retención IIBB Santa Fé Sufrida"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_retencion_iva_aplicada
+msgid "Retención IVA Aplicada"
+msgstr "Retención IVA Aplicada"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_retencion_iva_sufrida
+msgid "Retención IVA Sufrida"
+msgstr "Retención IVA Sufrida"
+
+#. module: l10n_ar_chart
+#: model:account.tax,name:l10n_ar_chart.1_ri_tax_retencion_suss_sufrida
+msgid "Retención SUSS Sufrida"
+msgstr "Retención SUSS Sufrida"
+
+#. module: l10n_ar_chart
+#: model:product.product,name:l10n_ar_chart.product_product_telefonia
+#: model:product.template,name:l10n_ar_chart.product_product_telefonia_product_template
+msgid "Servicio de telefonía (IVA 27)"
+msgstr "Servicio de telefonía (IVA 27)"

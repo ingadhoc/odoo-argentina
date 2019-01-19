@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Katherine Zaoral <katherine.zaoral@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-19 22:22+0000\n"
+"POT-Creation-Date: 2019-01-18 17:21+0000\n"
 "PO-Revision-Date: 2018-08-23 20:15+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
+"Last-Translator: Katherine Zaoral <katherine.zaoral@gmail.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/models/account_vat_ledger.py:160
+#: code:addons/l10n_ar_account_vat_ledger/models/account_vat_ledger.py:161
 #, python-format
 msgid "%s VAT Ledger %s - %s"
 msgstr "%s Libro de IVA %s - %s"
@@ -105,6 +106,11 @@ msgstr "Monto base de excención de IVA de la Compañia en Cuestion"
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_cc_vat_untaxed_base_amount
 msgid "Company Cur. VAT Untaxed"
 msgstr "Moneda IVA sin impuestos Cia"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_res_config_settings_iva_control_presentation
+msgid "Control de presentación de Libro IVA"
+msgstr ""
 
 #. module: l10n_ar_account_vat_ledger
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_create_uid
@@ -245,7 +251,7 @@ msgid "Purchase"
 msgstr "Compra"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/models/account_vat_ledger.py:159
+#: code:addons/l10n_ar_account_vat_ledger/models/account_vat_ledger.py:160
 #, python-format
 msgid "Purchases"
 msgstr "Compras"
@@ -262,12 +268,19 @@ msgid "Reference"
 msgstr "Referencia"
 
 #. module: l10n_ar_account_vat_ledger
+#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.res_config_settings_view_form
+msgid ""
+"Requerir número de página y libro presentado para setear un Libro de Iva "
+"como presentado \"require_vat_ledger_data\"."
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
 #: selection:account.vat.ledger,type:0
 msgid "Sale"
 msgstr "Venta"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/models/account_vat_ledger.py:157
+#: code:addons/l10n_ar_account_vat_ledger/models/account_vat_ledger.py:158
 #, python-format
 msgid "Sales"
 msgstr "Ventas"
@@ -311,13 +324,13 @@ msgid "To Draft"
 msgstr "A Borrador"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/models/account_vat_ledger.py:180
+#: code:addons/l10n_ar_account_vat_ledger/models/account_vat_ledger.py:185
 #, python-format
 msgid "To set \"Presented\" you must set the \"Last Page\" first"
 msgstr "Para establecer \"Presentado\" primero debe setear la \"Última Página\""
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/models/account_vat_ledger.py:176
+#: code:addons/l10n_ar_account_vat_ledger/models/account_vat_ledger.py:181
 #, python-format
 msgid "To set \"Presented\" you must upload the \"Presented Ledger\" first"
 msgstr "Para establecer \"Presentado\" primero debe subir el \"Libro Presentado\""
@@ -357,3 +370,16 @@ msgstr "Libro IVA"
 #: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_vat_tax_ids
 msgid "VAT Taxes"
 msgstr "Impuestos de IVA"
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/models/account_invoice.py:103
+#, python-format
+msgid ""
+"You can't validate/cancel an invoice of this date if the VAT Ledger Report "
+"for this month has already been presented."
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model,name:l10n_ar_account_vat_ledger.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"

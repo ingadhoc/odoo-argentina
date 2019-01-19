@@ -4,13 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Katherine Zaoral <katherine.zaoral@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-27 15:47+0000\n"
-"PO-Revision-Date: 2018-09-27 15:47+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
+"POT-Creation-Date: 2019-01-18 17:21+0000\n"
+"PO-Revision-Date: 2018-05-20 17:27+0000\n"
+"Last-Translator: Katherine Zaoral <katherine.zaoral@gmail.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,6 +31,15 @@ msgstr " %s %s"
 #, python-format
 msgid "* Document Type %s, Local %i, Remote %i\n"
 msgstr "* Tipo de Documento %s, Local %i, Remoto %i\n"
+
+#. module: l10n_ar_afipws_fe
+#: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.res_config_settings_view_form
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" groups=\"base.group_multi_company\"/>"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.invoice_supplier_form
@@ -52,8 +63,8 @@ msgid "AFIP Message"
 msgstr "Mensaje del AFIP"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:705
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:709
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:723
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:727
 #, python-format
 msgid "AFIP Validation Error. %s"
 msgstr "Error de Validación AFIP. %s"
@@ -74,7 +85,7 @@ msgstr "WS AFIP"
 #: code:addons/l10n_ar_afipws_fe/models/afipws_connection.py:76
 #, python-format
 msgid "AFIP WS %s Not implemented yet"
-msgstr ""
+msgstr "AFIP WS %s No implementado aún"
 
 #. module: l10n_ar_afipws_fe
 #: code:addons/l10n_ar_afipws_fe/models/account_journal_document_type.py:57
@@ -252,7 +263,7 @@ msgstr "Cancelar"
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.invoice_form_cancel_inherit
 msgid "Cancel Invoicel"
-msgstr ""
+msgstr "Cancelar Factura"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.menu,name:l10n_ar_afipws_fe.menu_action_afipws_certificate_alias
@@ -355,7 +366,7 @@ msgid "Enabled Point Of Sales on AFIP\n"
 msgstr "Puntos de Venta habilitados en AFIP\n"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:423
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:440
 #, python-format
 msgid "Error!Invoice id: %iNext invoice number should be %i and not %i"
 msgstr ""
@@ -368,21 +379,24 @@ msgid ""
 "contra AFIP. No recomendamos que la cancele ya que podría generar "
 "inconsistencia de datos. Desea continuar?"
 msgstr ""
+"Esta factura tiene número de CAE asignado lo cual significa que fue validad "
+"contra AFIP. No recomendamos que la cancele ya que podría generar "
+"inconsistencia de datos. Desea continuar?"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:412
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:429
 #, python-format
 msgid "For WS \"%s\" country afip code is mandatoryCountry: %s"
 msgstr "Para el WS \"%s\" el código AFIP de pais es obligatorio. Pais: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:407
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:424
 #, python-format
 msgid "For WS \"%s\" country code is mandatoryCountry: %s"
 msgstr "Para el WS \"%s\" el código de pais es obligatorio. Pais: %s"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:402
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:419
 #, python-format
 msgid "For WS \"%s\" country is required on partner"
 msgstr "Para el WS \"%s\" el país es requerido en la empresa"
@@ -611,7 +625,7 @@ msgid "No company found using argentinian localization"
 msgstr "No se encontró compañía utilizando la localización argentina"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:539
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:556
 #, python-format
 msgid "No vat defined for the partner and also no CUIT set on country"
 msgstr ""
@@ -624,8 +638,8 @@ msgid "Not Available"
 msgstr "No Disponible"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:632
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:645
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:650
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:663
 #, python-format
 msgid "Not afip code con producto UOM %s"
 msgstr "No hay código de afip en el UdM %s"
@@ -688,6 +702,8 @@ msgid ""
 "Requerir/Permitir validación de facturas de proveedor en AFIP (documentos "
 "con CAE, CAI or CAEA)"
 msgstr ""
+"Requerir/Permitir validación de facturas de proveedor en AFIP (documentos "
+"con CAE, CAI or CAEA)"
 
 #. module: l10n_ar_afipws_fe
 #: selection:res.company,afip_auth_verify_type:0
@@ -743,10 +759,10 @@ msgstr "Tipo de Validación"
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.res_config_settings_view_form
 msgid "Verificar validez de factura en AFIP"
-msgstr ""
+msgstr "Verificar validez de factura en AFIP"
 
 #. module: l10n_ar_afipws_fe
-#: code:addons/l10n_ar_afipws_fe/models/invoice.py:659
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:677
 #, python-format
 msgid "WS wsmtxca Not implemented yet"
 msgstr "WS wsmtxca aún no implementado"
@@ -804,7 +820,7 @@ msgstr "o"
 #. module: l10n_ar_afipws_fe
 #: model:ir.model,name:l10n_ar_afipws_fe.model_res_config_settings
 msgid "res.config.settings"
-msgstr ""
+msgstr "res.config.settings"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_currency_form

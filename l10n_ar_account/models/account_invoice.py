@@ -311,11 +311,12 @@ class AccountInvoice(models.Model):
         if product_types.issubset(consumible):
             afip_concept = '1'
         if self.document_type_id.code in ['19', '20', '21']:
-            # TODO verificar esto, como par expo no existe 3 y
-            # existe 4 (otros), considermaos que un mixto seria
-            # el otros
+            # en realidad para expo no se puede informar productos y servicios
+            # en mismo comprobante, este otros no sabemos bien que significa,
+            # si hay mezcla de productos y servicios lo dejamos como producto
+            # ya que es más seguro al exigir que el usuario agregue el Incoterm
             if afip_concept == '3':
-                afip_concept = '4'
+                afip_concept = '1'
         return afip_concept
 
     @api.multi

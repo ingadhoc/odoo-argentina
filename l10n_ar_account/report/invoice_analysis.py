@@ -73,6 +73,16 @@ class AccountInvoiceLineReport(models.Model):
         'account.analytic.account',
         'Analytic Account',
         readonly=True)
+    price_subtotal_signed = fields.Float(
+        'Amount Signed',
+        readonly=True,
+        group_operator="sum"
+    )
+    currency_id = fields.Many2one(
+        'res.currency',
+        string='Currency',
+        readonly=True
+    )
 
     _order = 'id'
 
@@ -88,6 +98,8 @@ class AccountInvoiceLineReport(models.Model):
         "account_invoice_line"."price_unit" AS "price_unit",
         "account_invoice_line"."discount" AS "discount",
         "account_invoice_line"."account_analytic_id" AS "account_analytic_id",
+        "account_invoice_line"."price_subtotal_signed" AS
+         "price_subtotal_signed",
         case when "account_invoice"."type" in ('in_refund','out_refund') then
                                -("account_invoice_line"."quantity")
                               else
@@ -117,6 +129,7 @@ class AccountInvoiceLineReport(models.Model):
         "account_invoice"."date_due" AS "date_due",
         COALESCE("account_invoice"."document_number",
         "account_invoice"."number") AS "number",
+        "account_invoice"."currency_id" AS "currency_id",
         "account_invoice"."journal_id" AS "journal_id",--n
         "account_invoice"."user_id" AS "user_id",--n
         "account_invoice"."company_id" AS "company_id",--n

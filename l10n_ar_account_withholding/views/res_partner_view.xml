@@ -14,32 +14,8 @@
             </group>
             <group name="others" position="after">
                 <label for="arba_alicuot_ids"/>
-                <field name="arba_alicuot_ids">
-                    <tree editable="bottom">
-                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True, 'no_open': True}"/>
-                        <field name="tag_id" options="{'no_create': True, 'no_open': True}"/>
-                        <field name="from_date"/>
-                        <field name="to_date"/>
-                        <field name="numero_comprobante"/>
-                        <field name="alicuota_percepcion"/>
-                        <field name="alicuota_retencion"/>
-                        <!-- <field name="grupo_percepcion"/> -->
-                        <!-- <field name="grupo_retencion"/> -->
-                    </tree>
-                </field>
+                <field name="arba_alicuot_ids"/>
             </group>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_partner_withholding_amount_type_form">
-        <field name="name">res.partner.form.inherit</field>
-        <field name="inherit_id" ref="l10n_ar_account_withholding.view_partner_form"/>
-        <field name="model">res.partner</field>
-        <field name="groups_id" eval="[(4, ref('l10n_ar_account_withholding.partner_tax_withholding_amount_type'))]"/>
-        <field name="arch" type="xml">
-            <field name="alicuota_retencion" position="after">
-                <field name="withholding_amount_type" required="True"/>
-            </field>
         </field>
     </record>
 

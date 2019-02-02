@@ -53,6 +53,14 @@
             <field name="alicuota_retencion" position="after">
                 <field name="withholding_amount_type" required="True"/>
             </field>
+            <!-- TODO mejorar esto, por ahora solo lo hacemos visible con este grupo ya que este grupo solo lo estamos usando en realidad para API, deberiamos ver de hacerlo de otra manera -->
+            <group position="after">
+                <group string="API">
+                    <field name="api_codigo_articulo_retencion"/>
+                    <field name="api_codigo_articulo_percepcion"/>
+                    <field name="api_articulo_inciso_calculo"/>
+                </group>
+            </group>
         </field>
     </record>
 

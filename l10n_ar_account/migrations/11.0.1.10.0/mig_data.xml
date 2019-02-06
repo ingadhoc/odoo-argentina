@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- para remitos, agregamos emisores/receptores para que partners sin responsabilidad no tomen esta letra y se tome correctamente el valor por defecto para determinar o no determinar iva, además le marcamos la opción de tax included como en x pero no tiene mucho sentido -->
+    <record model='account.document.letter' id='dl_r'>
+        <field name='name'>R</field>
+        <field name='issuer_ids' eval="[(6, 0, [ref('res_IVARI'), ref('res_IVANR'), ref('res_RM'), ref('res_IVARNI'), ref('res_IVAE')])]"/>
+        <field name='receptor_ids' eval="[(6, 0, [ref('res_IVARI'), ref('res_IVANR'), ref('res_RM'), ref('res_IVARNI'), ref('res_IVAE'), ref('res_CF')])]"/>
+        <field name="taxes_included" eval="True"/>
+    </record>
+</odoo>

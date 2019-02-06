@@ -46,9 +46,9 @@
 
     <record model="ir.ui.view" id="view_partner_withholding_amount_type_form">
         <field name="name">res.partner.arba_alicuot.form.inherit</field>
-        <field name="inherit_id" ref="l10n_ar_account_withholding.view_res_partner_arba_alicuot_form"/>
+        <field name="inherit_id" ref="view_res_partner_arba_alicuot_form"/>
         <field name="model">res.partner.arba_alicuot</field>
-        <field name="groups_id" eval="[(4, ref('l10n_ar_account_withholding.partner_tax_withholding_amount_type'))]"/>
+        <field name="groups_id" eval="[(4, ref('partner_tax_withholding_amount_type'))]"/>
         <field name="arch" type="xml">
             <field name="alicuota_retencion" position="after">
                 <field name="withholding_amount_type" required="True"/>
@@ -57,8 +57,9 @@
             <group position="after">
                 <group string="API">
                     <field name="api_codigo_articulo_retencion"/>
+                    <field name="api_articulo_inciso_calculo_retencion"/>
                     <field name="api_codigo_articulo_percepcion"/>
-                    <field name="api_articulo_inciso_calculo"/>
+                    <field name="api_articulo_inciso_calculo_percepcion"/>
                 </group>
             </group>
         </field>

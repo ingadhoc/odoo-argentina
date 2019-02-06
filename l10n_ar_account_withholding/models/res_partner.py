@@ -43,6 +43,7 @@ class ResPartnerArbaAlicuot(models.Model):
         'account.account.tag',
         domain=[('applicability', '=', 'taxes')],
         required=True,
+        change_default=True,
     )
     company_id = fields.Many2one(
         'res.company',
@@ -111,7 +112,7 @@ class ResPartnerArbaAlicuot(models.Model):
     ],
         string='Código de artículo Inciso por el que percibe',
     )
-    api_articulo_inciso_calculo = fields.Selection([
+    api_articulo_inciso_calculo_selection = [
         ('001', '001: Art. 5º 1er. párrafo (Res. Gral. 15/97 y Modif.)'),
         ('002', '002: Art. 5º inciso 1)(Res. Gral. 15/97 y Modif.)'),
         ('003', '003: Art. 5° inciso 2)(Res. Gral. 15/97 y Modif.)'),
@@ -120,6 +121,18 @@ class ResPartnerArbaAlicuot(models.Model):
         ('006', '006: Art. 6º inciso a)(Res. Gral. 15/97 y Modif.)'),
         ('007', '007: Art. 6º inciso b)(Res. Gral. 15/97 y Modif.)'),
         ('008', '008: Art. 6º inciso c)(Res. Gral. 15/97 y Modif.)'),
-    ],
-        string='Artículo/Inciso para el cálculo',
+        ('009', '009: Art. 12º)(Res. Gral. 15/97 y Modif.)'),
+        ('010', '010: Art. 6º inciso d)(Res. Gral. 15/97 y Modif.)'),
+        ('011', '011: Art. 5° inciso 6)(Res. Gral. 15/97 y Modif.)'),
+        ('012', '012: Art. 5° inciso 3)(Res. Gral. 15/97 y Modif.)'),
+        ('013', '013: Art. 5° inciso 7)(Res. Gral. 15/97 y Modif.)'),
+        ('014', '014: Art. 5° inciso 8)(Res. Gral. 15/97 y Modif.)'),
+    ]
+    api_articulo_inciso_calculo_percepcion = fields.Selection(
+        api_articulo_inciso_calculo_selection,
+        string='Artículo/Inciso para el cálculo percepción',
+    )
+    api_articulo_inciso_calculo_retencion = fields.Selection(
+        api_articulo_inciso_calculo_selection,
+        string='Artículo/Inciso para el cálculo retención',
     )

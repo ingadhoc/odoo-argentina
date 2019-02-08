@@ -58,7 +58,7 @@ class AccountPaymentGroup(models.Model):
             cia_regs = self.company_regimenes_ganancias_ids
             partner_regimen = (
                 self.commercial_partner_id.default_regimen_ganancias_id)
-            if partner_regimen and partner_regimen in cia_regs:
+            if partner_regimen:
                 def_regimen = partner_regimen
             elif cia_regs:
                 def_regimen = cia_regs[0]

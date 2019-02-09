@@ -8,6 +8,7 @@ def migrate(env, version):
     "view_res_partner_arba_alicuot_form"
     """
     view = env.ref(
-        'l10n_ar_account_withholding.view_partner_withholding_amount_type_form')
+        'l10n_ar_account_withholding.'
+        'view_partner_withholding_amount_type_form', raise_if_not_found=False)
     if view:
         view.unlink()

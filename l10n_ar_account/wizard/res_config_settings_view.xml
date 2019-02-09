@@ -37,13 +37,16 @@
                     <div class="col-xs-12 col-md-6 o_setting_box">
                         <div class="o_setting_left_pane"/>
                         <div class="o_setting_right_pane">
-                            <label for="arba_cit"/>
+                            <label for="arba_cit" string="ARBA"/>
                             <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
-                            <div class="text-muted">
-                                CIT de ARBA
+                            <div class="text-muted" name="arba_description">
+                                Indique la clave CIT si utiliza padrón de ARBA de ret/perc de iibb o remito electrónico mediante web-service de ARBA.
                             </div>
-                            <div class="content-group">
-                                <field name="arba_cit" password="True"/>
+                            <div class="content-group" name="arba-content-group">
+                                <div class="row">
+                                    <label for="arba_cit" class="col-md-6 o_light_label" string="Clave CIT"/>
+                                    <field name="arba_cit" class="oe_inline" password="True"/>
+                                </div>
                             </div>
                         </div>
                     </div>

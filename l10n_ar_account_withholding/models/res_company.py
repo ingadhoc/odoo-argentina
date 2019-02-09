@@ -24,6 +24,18 @@ class ResCompany(models.Model):
         string='Padron AGIP',
         default='regimenes_generales',
     )
+    agip_alicuota_no_sincripto_retencion = fields.Float(
+        'Agip: Alicuota no inscripto retención',
+    )
+    agip_alicuota_no_sincripto_percepcion = fields.Float(
+        'Agip: Alicuota no inscripto percepción',
+    )
+    arba_alicuota_no_sincripto_retencion = fields.Float(
+        'Arba: Alicuota no inscripto retención',
+    )
+    arba_alicuota_no_sincripto_percepcion = fields.Float(
+        'Arba: Alicuota no inscripto percepción',
+    )
 
     @api.model
     def _get_arba_environment_type(self):

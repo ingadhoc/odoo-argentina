@@ -163,7 +163,10 @@ class AccountTax(models.Model):
             ('to_date', '=', False),
             ('to_date', '>=', date),
         ], limit=1)
-        if not alicuot:
+        # solo buscamos en padron para estas responsabilidades
+        if not alicuot and \
+                commercial_partner.afip_responsability_type_id.code in \
+                ['1', '1FM', '2', '3', '4', '6', '11', '13']:
             date_date = fields.Date.from_string(date)
             from_date = (date_date + relativedelta(day=1)).strftime('%Y%m%d')
             to_date = (date_date + relativedelta(

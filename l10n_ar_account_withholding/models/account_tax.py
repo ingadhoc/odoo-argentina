@@ -141,14 +141,9 @@ class AccountTax(models.Model):
         return vals
 
     @api.multi
-    def get_partner_alicuota_percepcion(
-            self, partner, date, alicuot_no_inscripto=False):
+    def get_partner_alicuota_percepcion(self, partner, date):
         if partner and date:
             arba = self.get_partner_alicuot(partner, date)
-            # si pasamos alicuota para no inscripto y no hay numero de
-            # comprobante entonces es porque no figura en el padron
-            if alicuot_no_inscripto and not arba.numero_comprobante:
-                return alicuot_no_inscripto
             return arba.alicuota_percepcion / 100.0
         return 0.0
 
@@ -181,6 +176,17 @@ class AccountTax(models.Model):
                     commercial_partner,
                     from_date, to_date,
                 )
+
+                # si no hay numero de comprobante entonces es porque no
+                # figura en el padron, aplicamos alicuota no inscripto
+                if not arba_data['numero_comprobante']:
+                    arba_data['numero_comprobante'] = \
+                        'Alícuota no inscripto'
+                    arba_data['alicuota_retencion'] = \
+                        company.arba_alicuota_no_sincripto_retencion
+                    arba_data['alicuota_percepcion'] = \
+                        company.arba_alicuota_no_sincripto_percepcion
+
                 arba_data['partner_id'] = commercial_partner.id
                 arba_data['company_id'] = company.id
                 arba_data['tag_id'] = arba_tag.id
@@ -190,6 +196,15 @@ class AccountTax(models.Model):
                     commercial_partner,
                     date,
                 )
+                # si no hay numero de comprobante entonces es porque no
+                # figura en el padron, aplicamos alicuota no inscripto
+                if not agip_data['numero_comprobante']:
+                    agip_data['numero_comprobante'] = \
+                        'Alícuota no inscripto'
+                    agip_data['alicuota_retencion'] = \
+                        company.arba_alicuota_no_sincripto_retencion
+                    agip_data['alicuota_percepcion'] = \
+                        company.arba_alicuota_no_sincripto_percepcion
                 agip_data['from_date'] = from_date
                 agip_data['to_date'] = to_date
                 agip_data['partner_id'] = commercial_partner.id

@@ -202,9 +202,9 @@ class AccountTax(models.Model):
                     agip_data['numero_comprobante'] = \
                         'Alícuota no inscripto'
                     agip_data['alicuota_retencion'] = \
-                        company.arba_alicuota_no_sincripto_retencion
+                        company.agip_alicuota_no_sincripto_retencion
                     agip_data['alicuota_percepcion'] = \
-                        company.arba_alicuota_no_sincripto_percepcion
+                        company.agip_alicuota_no_sincripto_percepcion
                 agip_data['from_date'] = from_date
                 agip_data['to_date'] = to_date
                 agip_data['partner_id'] = commercial_partner.id

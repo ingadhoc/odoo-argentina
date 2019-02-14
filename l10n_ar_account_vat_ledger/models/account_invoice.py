@@ -43,6 +43,10 @@ class AccountInvoice(models.Model):
         compute="_get_currency_values",
         string='Company Cur. VAT Exempt Base Amount'
     )
+    cc_vat_taxable_amount = fields.Monetary(
+        compute="_get_currency_values",
+        string='Company Cur. VAT Taxable Amount'
+    )
 
     @api.multi
     @api.depends('currency_id')
@@ -64,6 +68,7 @@ class AccountInvoice(models.Model):
                 rec.cc_vat_amount = rec.vat_amount
                 rec.cc_other_taxes_amount = rec.other_taxes_amount
                 rec.cc_vat_exempt_base_amount = rec.vat_exempt_base_amount
+                rec.cc_vat_taxable_amount = rec.vat_taxable_amount
                 # rec.currency_rate = 1.0
             else:
                 # nueva modalidad de currency_rate
@@ -88,6 +93,8 @@ class AccountInvoice(models.Model):
                     rec.other_taxes_amount * currency_rate)
                 rec.cc_vat_exempt_base_amount = currency.round(
                     rec.vat_exempt_base_amount * currency_rate)
+                rec.cc_vat_taxable_amount = currency.round(
+                    rec.vat_taxable_amount * currency_rate)
 
     @api.multi
     def check_vat_ledger_presented(self):

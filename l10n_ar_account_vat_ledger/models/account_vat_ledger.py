@@ -114,6 +114,25 @@ class AccountVatLedger(models.Model):
         compute="_compute_data"
     )
 
+    @api.model
+    def get_tax_groups_columns(self):
+        ref = self.env.ref
+        # tg_0 = ref('l10n_ar_account.tax_group_iva_0', False)
+        tg_21 = ref('l10n_ar_account.tax_group_iva_21', False)
+        tg_10 = ref('l10n_ar_account.tax_group_iva_10', False)
+        tg_27 = ref('l10n_ar_account.tax_group_iva_27', False)
+        tg_25 = ref('l10n_ar_account.tax_group_iva_25', False)
+        tg_5 = ref('l10n_ar_account.tax_group_iva_5', False)
+        # tg_per_iva = ref('l10n_ar_account.tax_group_percepcion_iva', False)
+        return [
+            ('IVA 2,5%', tg_25),
+            ('IVA 5%', tg_5),
+            ('IVA 10.5%', tg_10),
+            ('IVA 21%', tg_21),
+            ('IVA 27%', tg_27),
+            # ('Perc. IVA', tg_per_iva),
+        ]
+
     @api.multi
     @api.depends('journal_ids', 'date_from', 'date_to')
     def _compute_data(self):

@@ -104,11 +104,12 @@ class AccountInvoice(models.Model):
         string='Not VAT Taxes'
     )
     # suma de base para todos los impuestos tipo iva
+    # TODO revisar si se usa y si no borrar
     vat_base_amount = fields.Monetary(
         compute="_compute_argentina_amounts",
         string='VAT Base Amount'
     )
-    # base imponible (no se incluyen 0, exento y no gravado)
+    # base imponible (no se incluyen no corresponde, exento y no gravado)
     vat_taxable_amount = fields.Monetary(
         compute="_compute_argentina_amounts",
         string='VAT Taxable Amount'

@@ -8,4 +8,11 @@
         <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
     </record>
 
+    <record id="account_invoice_line_report_multicompany_rule" model="ir.rule">
+        <field name="name">Invoice Line Report Company Rule</field>
+        <field name="model_id" ref="model_account_invoice_line_report"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
 </odoo>

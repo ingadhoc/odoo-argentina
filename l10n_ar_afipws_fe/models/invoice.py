@@ -445,8 +445,8 @@ print "Observaciones:", wscdc.Obs
 
             partner_id_code = commercial_partner.main_id_category_id.afip_code
             tipo_doc = partner_id_code or '99'
-            nro_doc = partner_id_code and int(
-                commercial_partner.main_id_number) or "0"
+            nro_doc = partner_id_code and \
+                commercial_partner.main_id_number or "0"
             cbt_desde = cbt_hasta = cbte_nro = inv.invoice_number
             concepto = tipo_expo = int(inv.afip_concept)
 

@@ -638,15 +638,16 @@ class AccountInvoice(models.Model):
 
     # we add fiscal position with fp method instead of directly from partner
 
-    @api.multi
     @api.constrains('date_invoice')
     def set_date_afip(self):
-        for rec in self:
-            if rec.date_invoice:
-                date_invoice = fields.Datetime.from_string(rec.date_invoice)
-                if not rec.afip_service_start:
-                    rec.afip_service_start = (
-                        date_invoice + relativedelta(day=1))
-                if not rec.afip_service_end:
-                    rec.afip_service_end = date_invoice + \
-                        relativedelta(day=1, days=-1, months=+1)
+        for rec in self.filtered('date_invoice'):
+            date_invoice = fields.Datetime.from_string(rec.date_invoice)
+            vals = {}
+            if not rec.afip_service_start:
+                vals['afip_service_start'] = (
+                    date_invoice + relativedelta(day=1))
+            if not rec.afip_service_end:
+                vals['afip_service_end'] = date_invoice + \
+                    relativedelta(day=1, days=-1, months=+1)
+            if vals:
+                rec.write(vals)

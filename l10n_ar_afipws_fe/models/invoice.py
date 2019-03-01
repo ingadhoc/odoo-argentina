@@ -10,6 +10,7 @@ from io import BytesIO
 import logging
 import sys
 import traceback
+from datetime import datetime
 _logger = logging.getLogger(__name__)
 
 try:
@@ -705,6 +706,8 @@ print "Observaciones:", wscdc.Obs
                 elif afip_ws == 'wsbfe':
                     ws.Authorize(inv.id)
                     vto = ws.Vencimiento
+                    vto = datetime.strftime(
+                        datetime.strptime(vto, '%d/%m/%Y'), '%Y%m%d')
             except SoapFault as fault:
                 msg = 'Falla SOAP %s: %s' % (
                     fault.faultcode, fault.faultstring)

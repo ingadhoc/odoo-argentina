@@ -58,6 +58,8 @@ class ResCurrency(models.Model):
                 ('state', '=', 'confirmed'),
             ], limit=1)
             company = certificate.alias_id.company_id
+            if not company:
+                return (False, _("There is not afipws certificates"))
 
         if not self.afip_code:
             raise UserError(_('No AFIP code for currency %s') % self.name)

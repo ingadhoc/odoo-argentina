@@ -112,13 +112,13 @@ msgstr "Asistente de consulta de WS AFIP"
 #. module: l10n_ar_afipws_fe
 #: model:ir.model,name:l10n_ar_afipws_fe.model_afip_ws_currency_rate_wizard
 msgid "AFIP WS Currency Rate Wizard"
-msgstr "Asistente de taza de cambio de WS AFIP"
+msgstr "Asistente de tasa de cambio de WS AFIP"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.actions.act_window,name:l10n_ar_afipws_fe.action_afip_ws_currency_rate_wizard
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.afip_ws_currency_rate_wizard_form
 msgid "AFIP WS currency_rate Wizard"
-msgstr "Asistente de taza de cambio de WS AFIP"
+msgstr "Asistente de tasa de cambio de WS AFIP"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_account_invoice_afip_xml_request
@@ -334,7 +334,7 @@ msgid ""
 "Currency rate for %s: %s.\n"
 "Observations: %s"
 msgstr ""
-"Taza de cambio para %s: %s.\n"
+"Tasa de cambio para %s: %s.\n"
 "Observaciones: %s"
 
 #. module: l10n_ar_afipws_fe
@@ -425,7 +425,7 @@ msgstr "Obtener Moendas"
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_account_journal_form
 msgid "Get Currency Rate"
-msgstr "Obtener Taza de Cambio"
+msgstr "Obtener Tasa de Cambio"
 
 #. module: l10n_ar_afipws_fe
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_journal_document_type_form

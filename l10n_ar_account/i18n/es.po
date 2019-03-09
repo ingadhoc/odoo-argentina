@@ -464,7 +464,7 @@ msgstr "Moneda"
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_currency_rate
 msgid "Currency Rate"
-msgstr "Taza de Cambio"
+msgstr "Tasa de Cambio"
 
 #. module: l10n_ar_account
 #: model:ir.model.fields,field_description:l10n_ar_account.field_account_invoice_line_report_customer

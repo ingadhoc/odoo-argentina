@@ -111,3 +111,12 @@ l10n_ar_account.dc_t_nc_m,True
 l10n_ar_account.dc_t_nd_m,True
 l10n_ar_account.dc_liq_sec_gr,False
 l10n_ar_account.dc_cert_ele_gr,False
+l10n_ar_account.dc_fce_a_f,True
+l10n_ar_account.dc_fce_a_nd,True
+l10n_ar_account.dc_fce_a_nc,True
+l10n_ar_account.dc_fce_b_f,True
+l10n_ar_account.dc_fce_b_nd,True
+l10n_ar_account.dc_fce_b_nc,True
+l10n_ar_account.dc_fce_c_f,True
+l10n_ar_account.dc_fce_c_nd,True
+l10n_ar_account.dc_fce_c_nc,True

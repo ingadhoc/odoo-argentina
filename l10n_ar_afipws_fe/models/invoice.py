@@ -454,17 +454,26 @@ print "Observaciones:", wscdc.Obs
             if afip_ws != 'wsmtxca':
                 fecha_cbte = fecha_cbte.replace("-", "")
 
-            # due and billing dates only for concept "services"
-            if int(concepto) != 1:
+            mipyme_fce = int(doc_afip_code) in [
+                201, 202, 203, 206, 207, 208, 211, 212, 213]
+
+            # due date only for concept "services" and mipyme_fce
+            if int(concepto) != 1 or mipyme_fce:
                 fecha_venc_pago = inv.date_due or inv.date_invoice
+                if afip_ws != 'wsmtxca':
+                    fecha_venc_pago = fecha_venc_pago.replace("-", "")
+            else:
+                fecha_venc_pago = None
+
+            # fecha de servicio solo si no es 1
+            if int(concepto) != 1:
                 fecha_serv_desde = inv.afip_service_start
                 fecha_serv_hasta = inv.afip_service_end
                 if afip_ws != 'wsmtxca':
-                    fecha_venc_pago = fecha_venc_pago.replace("-", "")
                     fecha_serv_desde = fecha_serv_desde.replace("-", "")
                     fecha_serv_hasta = fecha_serv_hasta.replace("-", "")
             else:
-                fecha_venc_pago = fecha_serv_desde = fecha_serv_hasta = None
+                fecha_serv_desde = fecha_serv_hasta = None
 
             # # invoice amount totals:
             imp_total = str("%.2f" % inv.amount_total)
@@ -496,6 +505,11 @@ print "Observaciones:", wscdc.Obs
                     fecha_serv_desde, fecha_serv_hasta,
                     moneda_id, moneda_ctz
                 )
+                if mipyme_fce:
+                    # agregamos cbu para factura de credito electronica
+                    ws.AgregarOpcional(
+                        opcional_id=2101,
+                        valor=inv.partner_bank_id.cbu)
             # elif afip_ws == 'wsmtxca':
             #     obs_generales = inv.comment
             #     ws.CrearFactura(

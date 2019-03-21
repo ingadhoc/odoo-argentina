@@ -111,3 +111,14 @@ dc_t_nc_m,1060,119,TIQUE NOTA DE CREDITO M,dl_m,,ticket,TC-M,argentina,validator
 dc_t_nd_m,1070,120,TIQUE NOTA DE DEBITO M,dl_m,,ticket,TD-M,argentina,validator_numero_factura,True,not_zero
 dc_liq_sec_gr,1080,331,LIQUIDACION SECUNDARIA DE GRANOS,,,,,argentina,,,
 dc_cert_ele_gr,1090,332,CERTIFICACION ELECTRONICA (GRANOS),,,,,argentina,,,
+dc_fce_a_f,1100,201,FACTURA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) A,dl_a,FACTURA,invoice,FA-A ,argentina,validator_numero_factura,True,not_zero
+dc_fce_a_nd,1110,202,NOTA DE DÉBITO ELECTRÓNICA MiPyME (FCE) A,dl_a,NOTA DE DEBITO,debit_note,ND-A ,argentina,validator_numero_factura,True,not_zero
+dc_fce_a_nc,1120,203,NOTA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) A,dl_a,NOTA DE CREDITO,credit_note,NC-A ,argentina,validator_numero_factura,True,not_zero
+dc_fce_b_f,1130,206,FACTURA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) B,dl_b,FACTURA,invoice,FA-B ,argentina,validator_numero_factura,True,zero
+dc_fce_b_nd,1140,207,NOTA DE DÉBITO ELECTRÓNICA MiPyME (FCE) B,dl_b,NOTA DE DEBITO,debit_note,ND-B ,argentina,validator_numero_factura,True,zero
+dc_fce_b_nc,1150,208,NOTA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) B,dl_b,NOTA DE CREDITO,credit_note,NC-B ,argentina,validator_numero_factura,True,zero
+dc_fce_c_f,1160,211,FACTURA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) C,dl_c,FACTURA,invoice,FA-C,argentina,validator_numero_factura,True,zero
+dc_fce_c_nd,1170,212,NOTA DE DÉBITO ELECTRÓNICA MiPyME (FCE) C,dl_c,NOTA DE DEBITO,debit_note,ND-C ,argentina,validator_numero_factura,True,zero
+dc_fce_c_nc,1180,213,NOTA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) C,dl_c,NOTA DE CREDITO,credit_note,NC-D,argentina,validator_numero_factura,True,zero
+,,,,,,,,,,,
+,,, ,,,,,,,,

@@ -5,6 +5,14 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
+def update_tax_calculation_rounding_method(cr, registry):
+    _logger.info('Update _tax_calculation_rounding_method = round_globally')
+    env = Environment(cr, SUPERUSER_ID, {})
+    env['res.company'].search([]).write({
+        'tax_calculation_rounding_method': 'round_globally',
+    })
+
+
 def sync_padron_afip(cr, registry):
     """
     Try to sync data from padron
@@ -39,5 +47,6 @@ def post_init_hook(cr, registry):
         Database registry, using v7 api.
     """
     _logger.info('Post init hook initialized')
+    update_tax_calculation_rounding_method(cr, registry)
     sync_padron_afip(cr, registry)
     document_types_not_updatable(cr, registry)

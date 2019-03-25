@@ -1,6 +1,6 @@
 {
     "name": "Módulo base de Contabilidad Argentina",
-    'version': '11.0.1.15.0',
+    'version': '11.0.1.16.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Moldeo Interactive,Odoo Community Association (OCA)',
@@ -44,7 +44,6 @@
         'data/res_partner.xml',
         'data/account_tax_group.xml',
         'data/res_country_group_data.xml',
-        'data/res_company_data.xml',
         'data/afip_vat_f2002_category_data.xml',
         'data/account_account_tag.xml',
         # TODO analizar y migrar

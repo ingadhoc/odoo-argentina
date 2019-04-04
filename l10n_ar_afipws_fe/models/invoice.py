@@ -720,8 +720,6 @@ print "Observaciones:", wscdc.Obs
                 elif afip_ws == 'wsbfe':
                     ws.Authorize(inv.id)
                     vto = ws.Vencimiento
-                    vto = datetime.strftime(
-                        datetime.strptime(vto, '%d/%m/%Y'), '%Y%m%d')
             except SoapFault as fault:
                 msg = 'Falla SOAP %s: %s' % (
                     fault.faultcode, fault.faultstring)
@@ -746,6 +744,9 @@ print "Observaciones:", wscdc.Obs
             # escribe aca si no hay errores
             _logger.info('CAE solicitado con exito. CAE: %s. Resultado %s' % (
                 ws.CAE, ws.Resultado))
+            if afip_ws == 'wsbfe':
+                vto = datetime.strftime(
+                    datetime.strptime(vto, '%d/%m/%Y'), '%Y%m%d')
             inv.write({
                 'afip_auth_mode': 'CAE',
                 'afip_auth_code': ws.CAE,

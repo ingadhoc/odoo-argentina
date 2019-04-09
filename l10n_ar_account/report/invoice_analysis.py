@@ -49,11 +49,11 @@ class AccountInvoiceLineReport(models.Model):
         string="Product by text", size=128, readonly=True)
     partner_id = fields.Many2one('res.partner', 'Partner', readonly=True)
     customer = fields.Boolean(
-        'Customer',
+        'Is a Customer',
         help="Check this box if this contact is a customer.", readonly=True)
     supplier = fields.Boolean(
-        'Supplier',
-        help="Check this box if this contact is a supplier."
+        'Vendor',
+        help="Check this box if this contact is a vendor."
         " If it's not checked,"
         "purchase people will not see it when encoding a purchase order.",
         readonly=True)
@@ -66,6 +66,12 @@ class AccountInvoiceLineReport(models.Model):
     ], 'Type', readonly=True)
     user_id = fields.Many2one('res.users', 'Salesman', readonly=True)
     state_id = fields.Many2one('res.country.state', 'State', readonly=True)
+    afip_activity_id = fields.Many2one(
+        'afip.activity',
+        'AFIP Activity',
+        help='AFIP activity, used for IVA f2002 report',
+        readonly=True,
+    )
     company_id = fields.Many2one('res.company', 'Company', readonly=True)
     product_category_id = fields.Many2one(
         'product.category', 'Category', readonly=True)
@@ -145,6 +151,7 @@ class AccountInvoiceLineReport(models.Model):
         "product_product"."barcode" AS "barcode",
         "product_template"."name" AS "name_template",
 
+        "account_account"."afip_activity_id" AS "afip_activity_id",
 
         "product_template"."categ_id" as "product_category_id", --n
         "res_partner"."customer" AS "customer",
@@ -159,6 +166,8 @@ class AccountInvoiceLineReport(models.Model):
         ON ("account_invoice_line"."product_id" = "product_product"."id")
         INNER JOIN "res_partner" "res_partner"
         ON ("account_invoice"."partner_id" = "res_partner"."id")
+        INNER JOIN "account_account" "account_account"
+        ON ("account_invoice_line"."account_id" = "account_account"."id")
         LEFT JOIN "product_template" "product_template"
         ON ("product_product"."product_tmpl_id" = "product_template"."id")
         -- INNER JOIN "public"."account_period" "account_period"

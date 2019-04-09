@@ -35,11 +35,10 @@
         <field name="name">account.invoice.line.report.graph</field>
         <field name="model">account.invoice.line.report</field>
          <field name="arch" type="xml">
-             <graph string="Invoices Analysis" type="pivot" stacked="True">
-             <!-- <graph string="Invoices Analysis" type="bar"> -->
-                 <!-- <field name="month" type="row"/> -->
-                 <!-- <field name="month" type="col"/> -->
-                 <!-- <field name="price_subtotal"/> -->
+             <graph string="Invoices Analysis">
+                <field name="product_category_id" type="row"/>
+                <field name="date_invoice" interval="month" type="col"/>
+                <field name="price_subtotal_signed" type="measure"/>
              </graph>
          </field>
     </record>
@@ -56,6 +55,8 @@
                 <filter string="Invoice" domain="['|', ('type','=','out_invoice'),('type','=','in_invoice')]"/>
                 <filter string="Refund" domain="['|', ('type','=','out_refund'),('type','=','in_refund')]"/>
                 <separator/>
+                <filter string="With AFIP Document" name="with_afip_document" domain="[('journal_id.use_documents', '=', True)]"/>
+                <separator/>
                 <field name="name_template"/>
                 <filter string="Draft"
                        name="draft"
@@ -69,17 +70,17 @@
                 <filter string="Last month"
                         name="last_month"
                         domain="[('date_invoice', '&gt;=', (context_today()-relativedelta(months=1)).strftime('%Y-%m-01')), ('date_invoice', '&lt;', (context_today()).strftime('%Y-%m-01'))]"/>
-                <filter string="This month" 
+                <filter string="This month"
                         name="this_month"
                         domain="[('date_invoice', '&gt;=', context_today().strftime('%Y-%m-01')), ('date_invoice', '&lt;', (context_today()+relativedelta(months=1)).strftime('%Y-%m-01'))]"/>
                 <separator/>
                 <filter string="Last year"
                         name="last_year"
                         domain="[('date_invoice', '&gt;=', (context_today()-relativedelta(years=1)).strftime('%Y-01-01')), ('date_invoice', '&lt;', (context_today()).strftime('%Y-01-01'))]"/>
-                <filter string="This year" 
+                <filter string="This year"
                         name="this_year"
                         domain="[('date_invoice', '&gt;=', context_today().strftime('%Y-01-01')), ('date_invoice', '&lt;', (context_today()+relativedelta(years=1)).strftime('%Y-01-01'))]"/>
-                
+
                 <field name="date_invoice_from" filter_domain="[('date_invoice','&gt;=',self)]"/>
                 <field name="date_invoice_to" filter_domain="[('date_invoice','&lt;=',self)]"/>
                 <field name="company_id"/>
@@ -93,9 +94,11 @@
                 <field name="partner_id"/>
                 <!-- <field name="partner_category_ids"/> -->
                 <group expand="1" string="Group By...">
+                    <filter string="Use" name="partner" context="{'group_by':'partner_id'}"/>
                     <filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>
                     <filter string="Currency" name="currency" context="{'group_by':'currency_id'}"/>
                     <filter string="Salesman" name='user' context="{'group_by':'user_id'}"/>
+                    <filter string="AFIP Activity" name='afip_activity_id' context="{'group_by':'afip_activity_id'}"/>
                     <!-- <filter string="Period" name='period_id' context="{'group_by':'period_id'}"/> -->
                     <!-- <filter string="Fiscal Year" name='fiscalyear_id' context="{'group_by':'fiscalyear_id'}"/> -->
                     <filter string="State" context="{'group_by':'state_id'}"/>
@@ -118,7 +121,7 @@
         <field name="name">account.invoice.line.report.pivot</field>
         <field name="model">account.invoice.line.report</field>
         <field name="arch" type="xml">
-            <pivot string="Invoice Lines Analysis" disable_linking="True">
+            <pivot string="Invoice Lines Analysis">
                 <field name="product_category_id" type="row"/>
                 <field name="date_invoice" interval="month" type="col"/>
                 <field name="price_subtotal_signed" type="measure"/>

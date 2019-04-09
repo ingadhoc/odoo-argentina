@@ -671,7 +671,8 @@ print "Observaciones:", wscdc.Obs
                     precio = line.price_unit
                     importe = line.price_subtotal
                     # calculamos bonificacion haciendo teorico menos importe
-                    bonif = line.discount and (precio * qty - importe) or None
+                    bonif = line.discount and str(
+                        "%.2f" % (precio * qty - importe)) or None
                     if afip_ws in ['wsmtxca', 'wsbfe']:
                         if not line.product_id.uom_id.afip_code:
                             raise UserError(_(

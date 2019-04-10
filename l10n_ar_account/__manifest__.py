@@ -80,7 +80,7 @@
     ],
     'images': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
     'post_init_hook': 'post_init_hook',

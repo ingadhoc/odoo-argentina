@@ -30,9 +30,9 @@
     <record id="view_invoice_form" model="ir.ui.view">
         <field name="model">account.invoice</field>
         <field name="name">account.invoice.afip.form</field>
-        <field name="inherit_id" ref="l10n_ar_account.view_invoice_form"/>
-        <!-- TODO this priority field could be removed as is default value -->
-        <field name="priority">16</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <!-- we want this view to be loaded after invoice operation view if installed -->
+        <field name="priority">20</field>
         <field name="arch" type="xml">
             <!-- we change button labels for better usability -->
             <button name="action_invoice_open" position="attributes">

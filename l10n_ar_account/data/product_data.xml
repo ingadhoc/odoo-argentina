@@ -7,27 +7,27 @@
         <field name="type">service</field>
         <field name="default_code">AFIP_DESPACHO</field>
         <field name="sale_ok" eval="False"/>
-        <field name="uom_id" ref="product.product_uom_unit"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="product_product_tasa_estadistica" model="product.product">
         <field name="name">Tasa Estadística</field>
         <field name="type">service</field>
         <field name="default_code">AFIP_TASA_EST</field>
         <field name="sale_ok" eval="False"/>
-        <field name="uom_id" ref="product.product_uom_unit"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="product_product_arancel" model="product.product">
         <field name="name">Arancel</field>
         <field name="type">service</field>
         <field name="default_code">AFIP_ARANCEL</field>
         <field name="sale_ok" eval="False"/>
-        <field name="uom_id" ref="product.product_uom_unit"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
     </record>
     <record id="product_product_servicio_de_guarda" model="product.product">
         <field name="name">Servicio de Guarda</field>
         <field name="type">service</field>
         <field name="default_code">AFIP_SERV_GUARDA</field>
         <field name="sale_ok" eval="False"/>
-        <field name="uom_id" ref="product.product_uom_unit"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
     </record>
 </odoo>

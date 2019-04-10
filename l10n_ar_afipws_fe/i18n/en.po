@@ -307,7 +307,7 @@ msgid "For WS \"%s\" country is required on partner"
 msgstr "For WS \"%s\" country is required on partner"
 
 #. module: l10n_ar_afipws_fe
-#: view:product.uom:l10n_ar_afipws_fe.product_uom_form_view
+#: view:uom.uom:l10n_ar_afipws_fe.product_uom_form_view
 msgid "Get Afip Codes"
 msgstr "Get Afip Codes"
 

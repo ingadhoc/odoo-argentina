@@ -23,7 +23,7 @@ class AccountTaxTemplate(models.Model):
             vals['tax_group_id'] = self.tax_group_id.id
         return vals
 
-
+"""
 class WizardMultiChartsAccounts(models.TransientModel):
     _inherit = 'wizard.multi.charts.accounts'
 
@@ -53,7 +53,7 @@ class WizardMultiChartsAccounts(models.TransientModel):
         if self.company_id.localization == 'argentina':
             self.env['account.account'].set_no_monetaria_tag(self.company_id)
         return res
-
+"""
 
 class AccountChartTemplate(models.Model):
     _inherit = 'account.chart.template'
@@ -218,3 +218,22 @@ class AccountChartTemplate(models.Model):
     #     for product in self.env['product.product'].search([]):
     #         product.write(tax_vals)
     #     return True
+    @api.multi
+    def _create_bank_journals(self, company, acc_template_ref):
+        # hacemos que se cree diario de retenciones si modulo instaldo
+        if company.localization == 'argentina':
+            self = self.with_context(create_withholding_journal=True)
+
+        # al final esto lo hacemos como customizacion
+        # on argentinian localization we prefer to create banks manually
+        # for tests, demo data requires a bank journal to be loaded, we
+        # send this on context
+        # NEW: we also prefer to create cashbox manually
+        # if company.localization == 'argentina' and not self._context.get(
+        #         'with_bank_journal'):
+        #     for rec in self.bank_account_ids:
+        #         if rec.account_type == 'bank':
+        #             rec.unlink()
+        return super(
+            AccountChartTemplate, self)._create_bank_journals(
+            company, acc_template_ref)

@@ -52,10 +52,8 @@
                 <filter string="Customer" name="customer" domain="['|', ('type','=','out_invoice'),('type','=','out_refund')]"/>
                 <filter string="Vendor" name="supplier" domain="['|', ('type','=','in_invoice'),('type','=','in_refund')]"/>
                 <separator/>
-                <filter string="Invoice" domain="['|', ('type','=','out_invoice'),('type','=','in_invoice')]"/>
-                <filter string="Refund" domain="['|', ('type','=','out_refund'),('type','=','in_refund')]"/>
-                <separator/>
-                <filter string="With AFIP Document" name="with_afip_document" domain="[('journal_id.use_documents', '=', True)]"/>
+                <filter name="invoice" string="Invoice" domain="['|', ('type','=','out_invoice'),('type','=','in_invoice')]"/>
+                <filter name="refund" string="Refund" domain="['|', ('type','=','out_refund'),('type','=','in_refund')]"/>
                 <separator/>
                 <field name="name_template"/>
                 <filter string="Draft"
@@ -101,18 +99,18 @@
                     <filter string="AFIP Activity" name='afip_activity_id' context="{'group_by':'afip_activity_id'}"/>
                     <!-- <filter string="Period" name='period_id' context="{'group_by':'period_id'}"/> -->
                     <!-- <filter string="Fiscal Year" name='fiscalyear_id' context="{'group_by':'fiscalyear_id'}"/> -->
-                    <filter string="State" context="{'group_by':'state_id'}"/>
-                    <filter string="Document Type" context="{'group_by':'document_type_id'}"/>
-                    <filter string="Product" context="{'group_by':'product_id'}"/>
+                    <filter name="state_id" string="State" context="{'group_by':'state_id'}"/>
+                    <filter name="document_type_id" string="Document Type" context="{'group_by':'document_type_id'}"/>
+                    <filter name="product_id" string="Product" context="{'group_by':'product_id'}"/>
                     <filter string="Product Category" name="category_product" context="{'group_by':'product_category_id'}"/>
-                    <filter string="State" context="{'group_by':'state'}"/>
-                    <filter string="Journal Type" context="{'group_by':'type'}"/>
-                    <filter string="Journal" context="{'group_by':'journal_id'}"/>
-                    <filter string="Company" context="{'group_by':'company_id'}"/>
+                    <filter name="state" string="State" context="{'group_by':'state'}"/>
+                    <filter name="type" string="Journal Type" context="{'group_by':'type'}"/>
+                    <filter name="journal_id" string="Journal" context="{'group_by':'journal_id'}"/>
+                    <filter name="company_id" string="Company" context="{'group_by':'company_id'}"/>
                     <!-- <filter string="Week" name="week" context="{'group_by':'week'}" help="Group by week of Invoice Date"/> -->
                     <!-- <filter string="Month" name="month" context="{'group_by':'month'}" help="Group by month of Invoice Date"/> -->
                     <!-- <filter string="Year" name="year" context="{'group_by':'year'}" help="Group by year of Invoice Date"/> -->
-                </group> 
+                </group>
             </search>
         </field>
     </record>
@@ -137,6 +135,6 @@
         <field name="context">{'search_default_current': 1, 'search_default_customer': 1, 'search_default_this_year': 1}</field>
     </record>
 
-    <menuitem action="action_account_invoice_line_report_all" id="menu_action_account_invoice_line_report_all" name="Invoice Lines Analysis" parent="account.account_reports_business_intelligence_menu" sequence="10"/>
+    <menuitem action="action_account_invoice_line_report_all" id="menu_action_account_invoice_line_report_all" name="Invoice Lines Analysis" parent="account.menu_finance_reports" sequence="10"/>
 
 </odoo>

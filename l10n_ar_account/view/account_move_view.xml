@@ -9,7 +9,7 @@
                 <field name="afip_responsability_type_id"/>
             </field>
             <group>
-                <filter string="AFIP Responsability Type" domain="[]" context="{'group_by':'afip_responsability_type_id'}"/>
+                <filter name="afip_responsability_type_id" string="AFIP Responsability Type" domain="[]" context="{'group_by':'afip_responsability_type_id'}"/>
             </group>
         </field>
     </record>

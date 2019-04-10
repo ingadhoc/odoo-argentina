@@ -16,8 +16,8 @@
         <field name="standard_price">100.0</field>
         <field name="list_price">80.0</field>
         <field name="type">consu</field>
-        <field name="uom_id" ref="product.product_uom_unit"/>
-        <field name="uom_po_id" ref="product.product_uom_unit"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="default_code">EXENTO</field>
         <field name="taxes_id" search="[('type_tax_use', '=', 'sale'), ('tax_group_id', '=', 'IVA Exento')]"/>
         <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'IVA Exento')]"/>
@@ -28,8 +28,8 @@
         <field name="standard_price">200.0</field>
         <field name="list_price">160.0</field>
         <field name="type">consu</field>
-        <field name="uom_id" ref="product.product_uom_unit"/>
-        <field name="uom_po_id" ref="product.product_uom_unit"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="default_code">CERO</field>
         <field name="taxes_id" search="[('type_tax_use', '=', 'sale'), ('tax_group_id', '=', 'IVA 0%')]"/>
         <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'IVA 0%')]"/>
@@ -40,8 +40,8 @@
         <field name="standard_price">50.0</field>
         <field name="list_price">40.0</field>
         <field name="type">consu</field>
-        <field name="uom_id" ref="product.product_uom_unit"/>
-        <field name="uom_po_id" ref="product.product_uom_unit"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="default_code">NOGRAVADO</field>
         <field name="taxes_id" search="[('type_tax_use', '=', 'sale'), ('tax_group_id', '=', 'IVA No Gravado')]"/>
         <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'IVA No Gravado')]"/>
@@ -52,8 +52,8 @@
         <field name="standard_price">250.0</field>
         <field name="list_price">130.0</field>
         <field name="type">service</field>
-        <field name="uom_id" ref="product.product_uom_unit"/>
-        <field name="uom_po_id" ref="product.product_uom_unit"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="default_code">TELEFONIA</field>
         <field name="taxes_id" search="[('type_tax_use', '=', 'sale'), ('tax_group_id', '=', 'IVA 27%')]"/>
         <field name="supplier_taxes_id" search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'IVA 27%')]"/>

@@ -170,12 +170,12 @@ class AccountInvoice(models.Model):
         string="AFIP concept",
         readonly=True,
     )
-    afip_service_start = fields.Date(
+    afip_service_start = fields.Datetime(
         string='Service Start Date',
         readonly=True,
         states={'draft': [('readonly', False)]},
     )
-    afip_service_end = fields.Date(
+    afip_service_end = fields.Datetime(
         string='Service End Date',
         readonly=True,
         states={'draft': [('readonly', False)]},

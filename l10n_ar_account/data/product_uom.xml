@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo noupdate="True">
-    <record model='product.uom' forcecreate="False" id='product.product_uom_cm'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_cm'>
         <field name='afip_code'>20</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_day'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_day'>
         <field name='afip_code'>98</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_dozen'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_dozen'>
         <field name='afip_code'>9</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_floz'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_floz'>
         <field name='afip_code'>98</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_foot'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_foot'>
         <field name='afip_code'>98</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_gram'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_gram'>
         <field name='afip_code'>14</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_gal'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_gal'>
         <field name='afip_code'>98</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_hour'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_hour'>
         <field name='afip_code'>98</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_inch'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_inch'>
         <field name='afip_code'>98</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_kgm'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_kgm'>
         <field name='afip_code'>1</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_km'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_km'>
         <field name='afip_code'>17</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_lb'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_lb'>
         <field name='afip_code'>98</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_litre'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_litre'>
         <field name='afip_code'>5</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_meter'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_meter'>
         <field name='afip_code'>2</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_mile'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_mile'>
         <field name='afip_code'>98</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_oz'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_oz'>
         <field name='afip_code'>98</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_qt'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_qt'>
         <field name='afip_code'>98</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_ton'>
+    <record model='uom.uom' forcecreate="False" id='product.product_uom_ton'>
         <field name='afip_code'>29</field>
     </record>
-    <record model='product.uom' forcecreate="False" id='product.product_uom_unit'>
+    <record model='uom.uom' forcecreate="False" id='uom.product_uom_unit'>
         <field name='afip_code'>7</field>
     </record>
 </odoo>

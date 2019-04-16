@@ -38,7 +38,9 @@ class AccountInvoiceTax(models.Model):
                 rec.cc_amount = rec.amount
             else:
                 # nueva modalidad de currency_rate
-                currency_rate = rec.invoice_id.currency_rate
+                currency_rate = rec.invoice_id.currency_rate or \
+                    currency.compute(
+                        1., self.company_id.currency_id, round=False)
                 # TODO borrar
                 # currency_rate = currency.compute
                 #     1.0, rec.company_id.currency_id, round=False)

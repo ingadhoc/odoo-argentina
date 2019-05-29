@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 from odoo import models, fields, api, _
-# import odoo.tools as tools
+# import openerp.tools as tools
 try:
     from pyafipws.iibb import IIBB
 except ImportError:
@@ -19,22 +20,9 @@ class ResCompany(models.Model):
         'company_id', 'regimen_id',
         'Regimenes Ganancia',
     )
-    agip_padron_type = fields.Selection([
-        ('regimenes_generales', 'Regímenes Generales')],
-        string='Padron AGIP',
-        default='regimenes_generales',
-    )
-    agip_alicuota_no_sincripto_retencion = fields.Float(
-        'Agip: Alicuota no inscripto retención',
-    )
-    agip_alicuota_no_sincripto_percepcion = fields.Float(
-        'Agip: Alicuota no inscripto percepción',
-    )
-    arba_alicuota_no_sincripto_retencion = fields.Float(
-        'Arba: Alicuota no inscripto retención',
-    )
-    arba_alicuota_no_sincripto_percepcion = fields.Float(
-        'Arba: Alicuota no inscripto percepción',
+    arba_cit = fields.Char(
+        'CIT ARBA',
+        help='Clave de Identificación Tributaria de ARBA',
     )
 
     @api.model
@@ -53,7 +41,7 @@ class ResCompany(models.Model):
         # siempre
         environment_type = 'production'
         # parameter_env_type = self.env[
-        #     'ir.config_parameter'].sudo().get_param('arba.ws.env.type')
+        #     'ir.config_parameter'].get_param('arba.ws.env.type')
         # if parameter_env_type == 'production':
         #     environment_type = 'production'
         # elif parameter_env_type == 'homologation':
@@ -103,17 +91,14 @@ class ResCompany(models.Model):
         arba_url = self.get_arba_login_url(environment_type)
         ws.Usuario = cuit
         ws.Password = self.arba_cit
-        ws.Conectar(url=arba_url)
+        ws.Conectar(url=self.get_arba_login_url(environment_type))
         _logger.info(
             'Connection getted to ARBA with url "%s" and CUIT %s' % (
                 arba_url, cuit))
         return ws
 
-    def get_agip_data(self, partner, date):
-        raise UserError(_(
-            'Falta configuración de credenciales de ADHOC para consulta de '
-            'Alícuotas de AGIP'))
-
+    # def get_arba_data(self, partner, date):
+    @api.model
     def get_arba_data(self, partner, from_date, to_date):
         self.ensure_one()
 

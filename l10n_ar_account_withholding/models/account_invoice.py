@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from odoo import models, api, fields
 
 
@@ -24,12 +25,8 @@ class AccountInvoice(models.Model):
         entonces usamos este artilugio
         """
         date_invoice = self.date_invoice or fields.Date.context_today(self)
-        # hacemos try porque al llamarse desde acciones de servidor da error
-        try:
-            self.env.context.date_invoice = date_invoice
-            self.env.context.invoice_company = self.company_id
-        except Exception:
-            pass
+        self.env.context.date_invoice = date_invoice
+        self.env.context.invoice_company = self.company_id
         return super(AccountInvoice, self).get_taxes_values()
 
 
@@ -41,10 +38,6 @@ class AccountInvoiceLine(models.Model):
         # ver nota en get_taxes_values
         invoice = self.invoice_id
         date_invoice = invoice.date_invoice or fields.Date.context_today(self)
-        # hacemos try porque al llamarse desde acciones de servidor da error
-        try:
-            self.env.context.date_invoice = date_invoice
-            self.env.context.invoice_company = self.company_id
-        except Exception:
-            pass
+        self.env.context.date_invoice = date_invoice
+        self.env.context.invoice_company = self.company_id
         return super(AccountInvoiceLine, self)._compute_price()

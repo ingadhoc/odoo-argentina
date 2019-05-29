@@ -44,6 +44,7 @@
         'data/res_partner.xml',
         'data/account_tax_group.xml',
         'data/res_country_group_data.xml',
+        #'data/res_company_data.xml',
         'data/afip_vat_f2002_category_data.xml',
         'data/account_account_tag.xml',
         # TODO analizar y migrar

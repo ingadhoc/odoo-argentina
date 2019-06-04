@@ -92,14 +92,27 @@ class AccountJournalDocumentType(models.Model):
                 self.journal_id.name))
         ws = company.get_connection(afip_ws).connect()
         # call the webservice method to get the last invoice at AFIP:
-        if afip_ws in ("wsfe", "wsmtxca"):
-            last = ws.CompUltimoAutorizado(
-                document_type, self.journal_id.point_of_sale_number)
-        elif afip_ws in ["wsfex", 'wsbfe']:
-            last = ws.GetLastCMP(
-                document_type, self.journal_id.point_of_sale_number)
-        else:
-            return(_('AFIP WS %s not implemented') % afip_ws)
+
+        try:
+            if afip_ws in ("wsfe", "wsmtxca"):
+                last = ws.CompUltimoAutorizado(
+                    document_type, self.journal_id.point_of_sale_number)
+            elif afip_ws in ["wsfex", 'wsbfe']:
+                last = ws.GetLastCMP(
+                    document_type, self.journal_id.point_of_sale_number)
+            else:
+                return(_('AFIP WS %s not implemented') % afip_ws)
+        except ValueError as error:
+            _logger.warning('exception in get_pyafipws_last_invoice: %s' % (
+                str(error)))
+            if 'The read operation timed out' in str(error):
+                raise UserError(_(
+                    'Servicio AFIP Ocupado reintente en unos minutos'))
+            else:
+                raise UserError(_(
+                    'Hubo un error al conectarse a AFIP, contacte a su'
+                    ' proveedor de Odoo para mas información'))
+
         msg = " - ".join([ws.Excepcion, ws.ErrMsg, ws.Obs])
 
         next_ws = int(last or 0) + 1

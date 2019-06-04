@@ -65,7 +65,7 @@
               </div>
               <div class="col-6">
                 <p><br/></p>
-                <p><strong>CUIT</strong> <span t-field="o.company_id.main_id_number"/> - <span t-field="o.partner_id.afip_responsability_type_id.name"/></p>
+                <p><strong>CUIT</strong> <span t-field="o.company_id.main_id_number"/> - <span t-field="o.company_id.partner_id.afip_responsability_type_id.name"/></p>
                  <p><strong>Ingresos Brutos:</strong> <span t-if="o.company_id.gross_income_type == 'no_liquida'">No liquida</span> <span t-if="o.company_id.gross_income_type != 'no_liquida'" t-field="o.company_id.gross_income_number"/> <br/> <strong>Inicio de actividades:</strong> <span t-field="o.company_id.start_date"/></p>
               </div>
           </div>

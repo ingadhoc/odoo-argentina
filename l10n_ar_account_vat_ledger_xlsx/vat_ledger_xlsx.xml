@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <data>
+
+<report
+    id="vat_ledger_xlsx"
+    model="account.vat.ledger"
+    string="Print to XLSX"
+    report_type="xlsx"
+    name="account.vat.ledger.xlsx"
+    file="account.vat.ledger.xlsx"
+    attachment_use="False"
+/>
+
+</data>
+
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data> 
+
+        <!-- tree of payments -->
+        <record id="view_account_payment_tree" model="ir.ui.view">
+            <field name="name">account.payment.tree</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_tree"/>
+            <field name="arch" type="xml"> 
+                <tree>
+                    <field name="payment_method_code" invisible="1"/>
+                    <!-- button name="%(action_aeroo_certificado_de_retencion_report)d" icon="fa-print " help="Print withholding voucher" type="action" attrs="{'invisible': ['|', ('payment_method_code', '!=', 'withholding'), ('partner_type', '!=', 'supplier')]}"/ -->
+                </tree>
+            </field>
+        </record>
+
+        <!-- tree of payments on payment groups -->
+        <record id="view_account_payment_from_group_tree" model="ir.ui.view">
+            <field name="name">account.payment.tree</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account_payment_group.view_account_payment_from_group_tree"/>
+            <field name="arch" type="xml"> 
+                <tree>
+                    <field name="payment_method_code" invisible="1"/>
+                    <!-- button name="%(action_aeroo_certificado_de_retencion_report)d" icon="fa-print " help="Print withholding voucher" type="action" attrs="{'invisible': ['|', ('payment_method_code', '!=', 'withholding'), ('partner_type', '!=', 'supplier')]}"/ -->
+                </tree>
+            </field>
+        </record>   
+
+    </data>
+</openerp>
+

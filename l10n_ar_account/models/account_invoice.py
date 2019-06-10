@@ -612,11 +612,11 @@ class AccountInvoice(models.Model):
             # única alicuota, entonces el impuesto liquidado da cero y se
             # obliga reportar con alicuota 0, entonces se exige tmb cod de op.
             # esta restriccion no es de FE si no de aplicativo citi
-            zero_vat_lines = all(
-                x.currency_id.is_zero(x.amount) for x in
-                invoice.tax_line_ids.filtered(
-                    lambda x: x.tax_id.tax_group_id.afip_code in [
-                        4, 5, 6, 8, 9]))
+            vat_taxes = invoice.tax_line_ids.filtered(
+                lambda x: x.tax_id.tax_group_id.afip_code in [
+                    4, 5, 6, 8, 9])
+            zero_vat_lines = vat_taxes and all(
+                x.currency_id.is_zero(x.amount) for x in vat_taxes)
             if (
                     zero_vat_lines and
                     invoice.fiscal_position_id.afip_code

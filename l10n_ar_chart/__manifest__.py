@@ -11,6 +11,7 @@
         'account_check',
     ],
     'data': [
+        'data/account_group.xml',
         'data/account_chart_base.xml',
         'data/account_chart_template.xml',
         'data/account_chart_exento.xml',

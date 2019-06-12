@@ -463,8 +463,11 @@ print "Observaciones:", wscdc.Obs
             else:
                 fecha_venc_pago = None
 
+            mipyme_fce = int(doc_afip_code) in [
+               201, 202, 203, 206, 207, 208, 211, 212, 213]
+
             # fecha de servicio solo si no es 1
-            if int(concepto) != 1:
+            if int(concepto) != 1 or mipyme_fce:
                 fecha_serv_desde = inv.afip_service_start
                 fecha_serv_hasta = inv.afip_service_end
                 if afip_ws != 'wsmtxca':

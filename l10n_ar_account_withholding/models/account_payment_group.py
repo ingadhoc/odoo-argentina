@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
@@ -41,25 +40,6 @@ class AccountPaymentGroup(models.Model):
     )
 
     @api.multi
-    def onchange(self, values, field_name, field_onchange):
-        """
-        Idea obtenida de aca
-        https://github.com/odoo/odoo/issues/16072#issuecomment-289833419
-        por el cambio que se introdujo en esa mimsa conversación, TODO en v11
-        no haría mas falta, simplemente domain="[('id', 'in', x2m_field)]"
-        Otras posibilidades que probamos pero no resultaron del todo fue:
-        * agregar onchange sobre campos calculados y que devuelvan un dict con
-        domain. El tema es que si se entra a un registro guardado el onchange
-        no se ejecuta
-        * usae el modulo de web_domain_field que esta en un pr a la oca
-        """
-        for field in field_onchange.keys():
-            if field.startswith('company_regimenes_ganancias_ids.'):
-                del field_onchange[field]
-        return super(AccountPaymentGroup, self).onchange(
-            values, field_name, field_onchange)
-
-    @api.multi
     @api.depends('company_id.regimenes_ganancias_ids')
     def _company_regimenes_ganancias(self):
         """
@@ -70,18 +50,21 @@ class AccountPaymentGroup(models.Model):
             rec.company_regimenes_ganancias_ids = (
                 rec.company_id.regimenes_ganancias_ids)
 
-    @api.onchange('retencion_ganancias', 'commercial_partner_id')
+    @api.onchange('commercial_partner_id')
     def change_retencion_ganancias(self):
-        def_regimen = False
-        if self.retencion_ganancias == 'nro_regimen':
+        if self.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC']:
+            self.retencion_ganancias = 'no_aplica'
+        else:
             cia_regs = self.company_regimenes_ganancias_ids
             partner_regimen = (
                 self.commercial_partner_id.default_regimen_ganancias_id)
-            if partner_regimen and partner_regimen in cia_regs:
+            if partner_regimen:
                 def_regimen = partner_regimen
             elif cia_regs:
                 def_regimen = cia_regs[0]
-        self.regimen_ganancias_id = def_regimen
+            else:
+                def_regimen = False
+            self.regimen_ganancias_id = def_regimen
 
     @api.onchange('company_regimenes_ganancias_ids')
     def change_company_regimenes_ganancias(self):

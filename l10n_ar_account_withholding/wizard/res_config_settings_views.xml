@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="res_config_settings_view_form">
+        <field name="name">res.config.settings.view.form.inherit.l10n_ar_afip_ws</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <div name="argentina_localization" position="inside">
+                <div class="col-xs-12 col-md-6 o_setting_box">
+                    <div class="o_setting_left_pane"/>
+                    <div class="o_setting_right_pane">
+                        <label for="agip_padron_type" string="AGIP"/>
+                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
+                        <div class="text-muted">
+                            Si es agente de Ret/Perc de AGIP especifique:
+                        </div>
+                        <div class="content-group">
+                            <div class="row">
+                                <label for="agip_padron_type" class="col-md-6 o_light_label" string="Padrón a aplicar"/>
+                                <field name="agip_padron_type" class="oe_inline"/>
+                            </div>
+                            <div class="row">
+                                <label for="agip_alicuota_no_sincripto_retencion" class="col-md-6 o_light_label" string="Alícuota retención no inscripto"/>
+                                <field name="agip_alicuota_no_sincripto_retencion" class="oe_inline"/>
+                            </div>
+                            <div class="row">
+                                <label for="agip_alicuota_no_sincripto_percepcion" class="col-md-6 o_light_label" string="Alícuota percepción no inscripto"/>
+                                <field name="agip_alicuota_no_sincripto_percepcion" class="oe_inline"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 o_setting_box" id="partner_tax_withholding_amount_type">
+                    <div class="o_setting_left_pane">
+                        <field name="group_partner_tax_withholding_amount_type"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="group_partner_tax_withholding_amount_type"/>
+                        <div class="text-muted">
+                            En la configuración de alícuotas de retenciones/percepciones de cada partner.
+                            Exige definir si la base de cálculo es según el total del comprobante o el valor neto de impuestos. Se utiliza por ej. en Santa Fe donde la base de cálculo para los inscriptios en convenio multilateral se realiza sobre el total (sin descontar impuestos).
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 o_setting_box">
+                    <div class="o_setting_left_pane"/>
+                    <div class="o_setting_right_pane">
+                        <label for="regimenes_ganancias_ids" string="Regímenes de ganancias en los que usualmente retiene"/>
+                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
+                        <div class="text-muted">
+                            En los proveedores podrá especificar cualquier régimen, y dicho regímen será utilizado por defecto en los pagos a ese proveedor.
+                            En los pagos podrá solo seleccionar manualemente alguno de los regímenes que defina a continuación.
+                        </div>
+                        <div class="content-group">
+                            <field name="regimenes_ganancias_ids" widget="many2many_tags"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div name="arba-content-group">
+                <div class="row">
+                    <label for="arba_alicuota_no_sincripto_retencion" class="col-md-6 o_light_label" string="Alícuota retención no inscripto"/>
+                    <field name="arba_alicuota_no_sincripto_retencion" class="oe_inline"/>
+                </div>
+                <div class="row">
+                    <label for="arba_alicuota_no_sincripto_percepcion" class="col-md-6 o_light_label" string="Alícuota percepción no inscripto"/>
+                    <field name="arba_alicuota_no_sincripto_percepcion" class="oe_inline"/>
+                </div>
+            </div>
+        </field>
+    </record>
+
+</odoo>

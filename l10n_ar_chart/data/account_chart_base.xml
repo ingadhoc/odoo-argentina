@@ -38,7 +38,7 @@
     <field name="user_type_id" ref="account.data_account_type_receivable"/>
     <field name="name">Deudores por ventas</field>
     <field name="reconcile" eval="True"/>
-    <field name="group_id" ref="account_group_créditos_por_ventas"/>
+    <field name="group_id" ref="account_group_creditos_por_ventas"/>
   </record>
   <record model="account.account.template" id="base_valores_a_depositar">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -46,7 +46,7 @@
     <field name="user_type_id" ref="account.data_account_type_liquidity"/>
     <field name="name">Valores a depositar</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_por_ventas"/>
+    <field name="group_id" ref="account_group_creditos_por_ventas"/>
   </record>
   <record model="account.account.template" id="base_ret_percepcion_drei_tasa_municipal">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -54,7 +54,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Ret/Percepción DReI/Tasa Municipal</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_municipales"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_municipales"/>
   </record>
   <record model="account.account.template" id="base_saldo_a_favor_drei_tasa_municipal">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -62,7 +62,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Saldo a favor DReI/Tasa Municipal</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_municipales"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_municipales"/>
   </record>
   <record model="account.account.template" id="base_saldo_favor_iibb_sf">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -70,7 +70,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Saldo a favor IIBB p. Santa Fé</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iibb"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iibb"/>
   </record>
   <record model="account.account.template" id="base_retencion_iibb_sf_sufrida">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -78,7 +78,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Retención IIBB p. Santa Fé sufrida</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iibb"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iibb"/>
   </record>
   <record model="account.account.template" id="base_percepcion_iibb_sf_sufrida">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -86,7 +86,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Percepción IIBB p. Santa Fé sufrida</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iibb"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iibb"/>
   </record>
   <record model="account.account.template" id="base_saldo_favor_iibb_co">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -94,7 +94,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Saldo a favor IIBB p. Córdoba</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iibb"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iibb"/>
   </record>
   <record model="account.account.template" id="base_retencion_iibb_co_sufrida">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -102,7 +102,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Retención IIBB p. Córdoba sufrida</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iibb"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iibb"/>
   </record>
   <record model="account.account.template" id="base_percepcion_iibb_co_sufrida">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -110,7 +110,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Percepción IIBB p. Córdoba sufrida</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iibb"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iibb"/>
   </record>
   <record model="account.account.template" id="base_saldo_favor_iibb_ba">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -118,7 +118,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Saldo a favor IIBB p. Buenos Aires</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iibb"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iibb"/>
   </record>
   <record model="account.account.template" id="base_retencion_iibb_ba_sufrida">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -126,7 +126,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Retención IIBB p. Buenos Aires sufrida</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iibb"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iibb"/>
   </record>
   <record model="account.account.template" id="base_percepcion_iibb_ba_sufrida">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -134,7 +134,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Percepción IIBB p. Buenos Aires sufrida</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iibb"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iibb"/>
   </record>
   <record model="account.account.template" id="base_saldo_favor_iibb_caba">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -142,7 +142,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Saldo a favor IIBB p. CABA</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iibb"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iibb"/>
   </record>
   <record model="account.account.template" id="base_retencion_iibb_caba_sufrida">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -150,7 +150,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Retención IIBB CABA sufrida</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iibb"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iibb"/>
   </record>
   <record model="account.account.template" id="base_percepcion_iibb_caba_sufrida">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -158,7 +158,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Percepción IIBB CABA sufrida</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iibb"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iibb"/>
   </record>
   <record model="account.account.template" id="base_sircreb">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -166,7 +166,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">SIRCREB</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iibb"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iibb"/>
   </record>
   <record model="account.account.template" id="base_saldo_a_favor_suss">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -174,7 +174,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Saldo a favor SUSS</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_suss"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_suss"/>
   </record>
   <record model="account.account.template" id="base_retencion_suss_sufrida">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -182,43 +182,43 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Retención SUSS Sufrida</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_suss"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_suss"/>
   </record>
   <record model="account.account.template" id="ri_iva_credito_fiscal">
-    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">1.1.3.02.300</field>
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">IVA crédito fiscal</field>
     <field name="reconcile" eval="False"/>
     <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_iva_primer_parrafo')])]"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iva"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iva"/>
   </record>
   <record model="account.account.template" id="ri_percepcion_iva_sufrida">
-    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">1.1.3.02.301</field>
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Percepción IVA Sufrida</field>
     <field name="reconcile" eval="False"/>
     <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_a_cuenta_iva')])]"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iva"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iva"/>
   </record>
   <record model="account.account.template" id="ri_retencion_iva_sufrida">
-    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">1.1.3.02.302</field>
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Retención IVA Sufrida</field>
     <field name="reconcile" eval="False"/>
     <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_a_cuenta_iva')])]"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iva"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iva"/>
   </record>
   <record model="account.account.template" id="ri_iva_saldo_tecnico_favor">
-    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">1.1.3.02.303</field>
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">IVA Saldo a favor</field>
     <field name="reconcile" eval="False"/>
     <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_iva_primer_parrafo')])]"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_iva"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_iva"/>
   </record>
   <record model="account.account.template" id="base_anticipo_ganancias">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -227,7 +227,7 @@
     <field name="name">Anticipo ganancias</field>
     <field name="reconcile" eval="False"/>
     <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_a_cuenta_ganancias')])]"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_ganancias"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_ganancias"/>
   </record>
   <record model="account.account.template" id="base_percepcion_ganancias_sufrida">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -236,7 +236,7 @@
     <field name="name">Percepciones de Ganancias Sufridas</field>
     <field name="reconcile" eval="False"/>
     <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_a_cuenta_ganancias')])]"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_ganancias"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_ganancias"/>
   </record>
   <record model="account.account.template" id="base_retencion_ganancias_sufrida">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -245,7 +245,7 @@
     <field name="name">Retenciones de Ganancias Sufridas</field>
     <field name="reconcile" eval="False"/>
     <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_a_cuenta_ganancias')])]"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_ganancias"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_ganancias"/>
   </record>
   <record model="account.account.template" id="base_saldo_favor_ganancias">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -254,7 +254,7 @@
     <field name="name">Saldo a favor Ganancias</field>
     <field name="reconcile" eval="False"/>
     <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_a_cuenta_ganancias')])]"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_ganancias"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_ganancias"/>
   </record>
   <record model="account.account.template" id="base_imp_debitos_computables">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -263,7 +263,7 @@
     <field name="name">Impuesto a los Débitos Computables</field>
     <field name="reconcile" eval="False"/>
     <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_a_cuenta_ganancias')])]"/>
-    <field name="group_id" ref="account_group_créditos_fiscales_ganancias"/>
+    <field name="group_id" ref="account_group_creditos_fiscales_ganancias"/>
   </record>
   <record model="account.account.template" id="base_saldo_libre_disponibilidad">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -271,7 +271,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_assets"/>
     <field name="name">Saldo Libre Disponibilidad</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_otros_créditos_fiscales"/>
+    <field name="group_id" ref="account_group_otros_creditos_fiscales"/>
   </record>
   <record model="account.account.template" id="base_materia_prima">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -508,7 +508,7 @@
     <field name="group_id" ref="account_group_deudas_iibb"/>
   </record>
   <record model="account.account.template" id="ri_retencion_sicore_a_pagar">
-    <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">2.1.3.02.002</field>
     <field name="user_type_id" ref="account.data_account_type_payable"/>
     <field name="name">SICORE a pagar</field>
@@ -516,7 +516,7 @@
     <field name="group_id" ref="account_group_deudas_iibb"/>
   </record>
   <record model="account.account.template" id="ri_retencion_iibb_aplicada">
-    <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">2.1.3.02.003</field>
     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
     <field name="name">Retención IIBB aplicada</field>
@@ -524,7 +524,7 @@
     <field name="group_id" ref="account_group_deudas_iibb"/>
   </record>
   <record model="account.account.template" id="ri_percepcion_iibb_aplicada">
-    <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">2.1.3.02.004</field>
     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
     <field name="name">Percepción IIBB aplicada</field>
@@ -532,7 +532,7 @@
     <field name="group_id" ref="account_group_deudas_iibb"/>
   </record>
   <record model="account.account.template" id="ri_retencion_iibb_a_pagar">
-    <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">2.1.3.02.005</field>
     <field name="user_type_id" ref="account.data_account_type_payable"/>
     <field name="name">Retención/Percepción IIBB a pagar</field>
@@ -540,7 +540,7 @@
     <field name="group_id" ref="account_group_deudas_iibb"/>
   </record>
   <record model="account.account.template" id="base_plan_de_iibb_a_pagar">
-    <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">2.1.3.02.006</field>
     <field name="user_type_id" ref="account.data_account_type_payable"/>
     <field name="name">Plan de IIBB a pagar</field>
@@ -548,7 +548,7 @@
     <field name="group_id" ref="account_group_deudas_iibb"/>
   </record>
   <record model="account.account.template" id="ri_iva_debito_fiscal">
-    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">2.1.3.03.001</field>
     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
     <field name="name">IVA débito fiscal</field>
@@ -556,7 +556,7 @@
     <field name="group_id" ref="account_group_deudas_iva"/>
   </record>
   <record model="account.account.template" id="ri_iva_saldo_a_pagar">
-    <field name="chart_template_id" ref="l10nar_ri_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">2.1.3.03.002</field>
     <field name="user_type_id" ref="account.data_account_type_payable"/>
     <field name="name">IVA saldo a pagar</field>
@@ -564,7 +564,7 @@
     <field name="group_id" ref="account_group_deudas_iva"/>
   </record>
   <record model="account.account.template" id="ri_retencion_iva_aplicada">
-    <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">2.1.3.03.003</field>
     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
     <field name="name">Retención IVA aplicada</field>
@@ -572,7 +572,7 @@
     <field name="group_id" ref="account_group_deudas_iva"/>
   </record>
   <record model="account.account.template" id="ri_percepcion_iva_aplicada">
-    <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">2.1.3.03.004</field>
     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
     <field name="name">Percepción IVA aplicada</field>
@@ -580,7 +580,7 @@
     <field name="group_id" ref="account_group_deudas_iva"/>
   </record>
   <record model="account.account.template" id="base_plan_iva_a_pagar">
-    <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">2.1.3.03.005</field>
     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
     <field name="name">Plan IVA a pagar</field>
@@ -593,23 +593,23 @@
     <field name="user_type_id" ref="account.data_account_type_payable"/>
     <field name="name">Impuesto a las ganancias a pagar</field>
     <field name="reconcile" eval="True"/>
-    <field name="group_id" ref="account_group_deudas_imp._ganancias"/>
+    <field name="group_id" ref="account_group_deudas_imp_ganancias"/>
   </record>
   <record model="account.account.template" id="ri_retencion_ganancias_aplicada">
-    <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">2.1.3.04.002</field>
     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
     <field name="name">Retención ganancias aplicada</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_deudas_imp._ganancias"/>
+    <field name="group_id" ref="account_group_deudas_imp_ganancias"/>
   </record>
   <record model="account.account.template" id="ri_percepcion_ganancias_aplicada">
-    <field name="chart_template_id" ref="l10nar_ex_chart_template"/>
+    <field name="chart_template_id" ref="l10nar_base_chart_template"/>
     <field name="code">2.1.3.04.003</field>
     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
     <field name="name">Percepción ganancias aplicada</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_deudas_imp._ganancias"/>
+    <field name="group_id" ref="account_group_deudas_imp_ganancias"/>
   </record>
   <record model="account.account.template" id="base_provision_imp_a_las_ganancias">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -617,7 +617,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
     <field name="name">Provisión Imp a las Ganancias</field>
     <field name="reconcile" eval="True"/>
-    <field name="group_id" ref="account_group_deudas_imp._ganancias"/>
+    <field name="group_id" ref="account_group_deudas_imp_ganancias"/>
   </record>
   <record model="account.account.template" id="base_anticipos_imp_a_las_ganancias_a_pagar">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -625,7 +625,7 @@
     <field name="user_type_id" ref="account.data_account_type_current_liabilities"/>
     <field name="name">Anticipos Imp a las Ganancias a Pagar</field>
     <field name="reconcile" eval="True"/>
-    <field name="group_id" ref="account_group_deudas_imp._ganancias"/>
+    <field name="group_id" ref="account_group_deudas_imp_ganancias"/>
   </record>
   <record model="account.account.template" id="base_planes_a_pagar_afip">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -633,7 +633,7 @@
     <field name="user_type_id" ref="account.data_account_type_non_current_liabilities"/>
     <field name="name">Plan Ganancias a pagar</field>
     <field name="reconcile" eval="False"/>
-    <field name="group_id" ref="account_group_deudas_imp._ganancias"/>
+    <field name="group_id" ref="account_group_deudas_imp_ganancias"/>
   </record>
   <record model="account.account.template" id="base_sueldos_a_pagar">
     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
@@ -1332,7 +1332,7 @@
     <field name="user_type_id" ref="account.data_account_type_expenses"/>
     <field name="name">Impuestos a las ganancias</field>
     <field name="reconcile" eval="False"/>
-    <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_impuestos_a_las_ganancias,l10n_ar_account.no_monetaria_tag')])]"/>
+    <field name="tag_ids" eval="[(6, 0, [ref('l10n_ar_account.tag_impuestos_a_las_ganancias'),ref('l10n_ar_account.no_monetaria_tag')])]"/>
     <field name="group_id" ref="account_group_imp_a_las_ganancias"/>
   </record>
   <record model="account.account.template" id="base_resultado_intereses_y_recargos">

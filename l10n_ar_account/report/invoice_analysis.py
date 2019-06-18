@@ -34,6 +34,7 @@ class AccountInvoiceLineReport(models.Model):
         ('paid', 'Done'),
         ('cancel', 'Cancelled')
     ], 'Invoice State', readonly=True)
+    account_id = fields.Many2one('account.account', readonly=True)
     document_type_id = fields.Many2one('account.document.type', readonly=True)
     date = fields.Date('Accounting Date', readonly=True)
     date_invoice = fields.Date('Date Invoice', readonly=True)
@@ -103,6 +104,7 @@ class AccountInvoiceLineReport(models.Model):
         "account_invoice_line"."id" AS "id",
         "account_invoice_line"."price_unit" AS "price_unit",
         "account_invoice_line"."discount" AS "discount",
+        "account_invoice_line"."account_id" AS "account_id",
         "account_invoice_line"."account_analytic_id" AS "account_analytic_id",
         "account_invoice_line"."price_subtotal_signed" AS
          "price_subtotal_signed",

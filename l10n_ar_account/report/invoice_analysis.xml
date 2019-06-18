@@ -55,7 +55,7 @@
                 <filter string="Invoice" domain="['|', ('type','=','out_invoice'),('type','=','in_invoice')]"/>
                 <filter string="Refund" domain="['|', ('type','=','out_refund'),('type','=','in_refund')]"/>
                 <separator/>
-                <filter string="With AFIP Document" name="with_afip_document" domain="[('journal_id.use_documents', '=', True)]"/>
+                <filter string="With AFIP Document" name="with_afip_document" domain="[('journal_id.use_documents', '=', True), ('journal_id.localization', '=', 'argentina')]"/>
                 <separator/>
                 <field name="name_template"/>
                 <filter string="Draft"
@@ -89,6 +89,7 @@
                 <!-- <field name="period_id" /> -->
                 <!-- <field name="fiscalyear_id" /> -->
                 <field name="product_id"/>
+                <field name="account_id"/>
                 <field name="document_type_id"/>
                 <field name="product_category_id" filter_domain="[('product_category_id', 'child_of', self)]"/>
                 <field name="partner_id"/>
@@ -103,6 +104,7 @@
                     <!-- <filter string="Fiscal Year" name='fiscalyear_id' context="{'group_by':'fiscalyear_id'}"/> -->
                     <filter string="State" context="{'group_by':'state_id'}"/>
                     <filter string="Document Type" context="{'group_by':'document_type_id'}"/>
+                    <filter string="Account" context="{'group_by':'account_id'}"/>
                     <filter string="Product" context="{'group_by':'product_id'}"/>
                     <filter string="Product Category" name="category_product" context="{'group_by':'product_category_id'}"/>
                     <filter string="State" context="{'group_by':'state'}"/>

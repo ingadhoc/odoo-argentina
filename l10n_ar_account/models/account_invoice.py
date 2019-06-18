@@ -353,6 +353,7 @@ class AccountInvoice(models.Model):
                 # rec.computed_currency_rate = abs(
                 #     rec.amount_total_company_signed / rec.amount_total)
                 currency = rec.currency_id.with_context(
+                    company_id=rec.company_id.id,
                     date=rec.date_invoice or fields.Date.context_today(rec))
                 rec.computed_currency_rate = currency.compute(
                     1., self.company_id.currency_id, round=False)
@@ -369,6 +370,7 @@ class AccountInvoice(models.Model):
                 currency_rate = 1.0
             else:
                 currency = self.currency_id.with_context(
+                    company_id=self.company_id.id,
                     date=self.date_invoice or fields.Date.context_today(self))
                 currency_rate = currency.compute(
                     1., self.company_id.currency_id, round=False)

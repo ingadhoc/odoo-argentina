@@ -57,6 +57,7 @@ class AccountInvoice(models.Model):
         # debito o credito de ese mismo
         for rec in self:
             currency = rec.currency_id.with_context(
+                company_id=rec.company_id.id,
                 date=rec.date_invoice or fields.Date.context_today(rec))
             if not currency:
                 return False
@@ -74,7 +75,7 @@ class AccountInvoice(models.Model):
                 # nueva modalidad de currency_rate
                 # el or es por si la factura no esta balidad o no es l10n_ar
                 currency_rate = rec.currency_rate or currency.compute(
-                    1., self.company_id.currency_id, round=False)
+                    1., rec.company_id.currency_id, round=False)
                 # TODO borrar
                 # currency_rate = currency.compute(
                 #     1.0, rec.company_id.currency_id, round=False)

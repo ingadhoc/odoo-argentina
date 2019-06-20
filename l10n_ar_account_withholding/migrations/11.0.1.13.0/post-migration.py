@@ -6,20 +6,24 @@ _logger = logging.getLogger(__name__)
 
 @openupgrade.migrate()
 def migrate(env, version):
-    """ same fix as on account_multic_fix but also here because if this module
+    """ this fix was on account_multic_fix but also here because if this module
     is installed the it may raise errors on account_multic_fix upgrade due
     to inherited tax compute method not loaded yet
     """
-    for company in env['res.company'].search([]):
+    companies = env['res.company'].search([])
+    # it was a multicompany bug, so only run if more tha one company
+    if len(companies) <= 1:
+        return True
+    for company in companies:
         for rec in env['account.invoice'].search([
-                ('company_id', '!=', company.id),
+                ('currency_id', '!=', company.currency_id.id),
                 ('date_invoice', '>=', '2018-01-01')]):
             try:
                 compute_price(rec)
             except Exception:
                 _logger.warning(
-                    'Could not fix invoice %s. The databases may have custom '
-                    'taxes. You can run the script manually.')
+                    'Could not fix invoice %s. The databases may have '
+                    'custom taxes. You can run the script manually.' % rec.id)
 
 
 def compute_price(invoice):

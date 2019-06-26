@@ -55,7 +55,7 @@
                 <filter string="Invoice" domain="['|', ('type','=','out_invoice'),('type','=','in_invoice')]"/>
                 <filter string="Refund" domain="['|', ('type','=','out_refund'),('type','=','in_refund')]"/>
                 <separator/>
-                <filter string="With AFIP Document" name="with_afip_document" domain="[('journal_id.use_documents', '=', True)]"/>
+                <filter string="With AFIP Document" name="with_afip_document" domain="[('journal_id.use_documents', '=', True), ('journal_id.localization', '=', 'argentina')]"/>
                 <separator/>
                 <field name="name_template"/>
                 <filter string="Draft"
@@ -69,17 +69,21 @@
                 <separator/>
                 <filter string="Last month"
                         name="last_month"
-                        domain="[('date_invoice', '&gt;=', (context_today()-relativedelta(months=1)).strftime('%Y-%m-01')), ('date_invoice', '&lt;', (context_today()).strftime('%Y-%m-01'))]"/>
+                        help="Last month (by accounting date)"
+                        domain="[('date', '&gt;=', (context_today()-relativedelta(months=1)).strftime('%Y-%m-01')), ('date', '&lt;', (context_today()).strftime('%Y-%m-01'))]"/>
                 <filter string="This month"
                         name="this_month"
-                        domain="[('date_invoice', '&gt;=', context_today().strftime('%Y-%m-01')), ('date_invoice', '&lt;', (context_today()+relativedelta(months=1)).strftime('%Y-%m-01'))]"/>
+                        help="This month (by accounting date)"
+                        domain="[('date', '&gt;=', context_today().strftime('%Y-%m-01')), ('date', '&lt;', (context_today()+relativedelta(months=1)).strftime('%Y-%m-01'))]"/>
                 <separator/>
                 <filter string="Last year"
                         name="last_year"
-                        domain="[('date_invoice', '&gt;=', (context_today()-relativedelta(years=1)).strftime('%Y-01-01')), ('date_invoice', '&lt;', (context_today()).strftime('%Y-01-01'))]"/>
+                        help="Last year (by accounting date)"
+                        domain="[('date', '&gt;=', (context_today()-relativedelta(years=1)).strftime('%Y-01-01')), ('date', '&lt;', (context_today()).strftime('%Y-01-01'))]"/>
                 <filter string="This year"
                         name="this_year"
-                        domain="[('date_invoice', '&gt;=', context_today().strftime('%Y-01-01')), ('date_invoice', '&lt;', (context_today()+relativedelta(years=1)).strftime('%Y-01-01'))]"/>
+                        help="This year (by accounting date)"
+                        domain="[('date', '&gt;=', context_today().strftime('%Y-01-01')), ('date', '&lt;', (context_today()+relativedelta(years=1)).strftime('%Y-01-01'))]"/>
 
                 <field name="date_invoice_from" filter_domain="[('date_invoice','&gt;=',self)]"/>
                 <field name="date_invoice_to" filter_domain="[('date_invoice','&lt;=',self)]"/>
@@ -89,30 +93,32 @@
                 <!-- <field name="period_id" /> -->
                 <!-- <field name="fiscalyear_id" /> -->
                 <field name="product_id"/>
+                <field name="account_id"/>
                 <field name="document_type_id"/>
                 <field name="product_category_id" filter_domain="[('product_category_id', 'child_of', self)]"/>
                 <field name="partner_id"/>
                 <!-- <field name="partner_category_ids"/> -->
                 <group expand="1" string="Group By...">
-                    <filter string="Use" name="partner" context="{'group_by':'partner_id'}"/>
-                    <filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>
-                    <filter string="Currency" name="currency" context="{'group_by':'currency_id'}"/>
-                    <filter string="Salesman" name='user' context="{'group_by':'user_id'}"/>
-                    <filter string="AFIP Activity" name='afip_activity_id' context="{'group_by':'afip_activity_id'}"/>
+                    <filter string="Use" name="group_by_partner" context="{'group_by':'partner_id'}"/>
+                    <filter string="Partner" name="group_by_partner" context="{'group_by':'partner_id'}"/>
+                    <filter string="Currency" name="group_by_currency" context="{'group_by':'currency_id'}"/>
+                    <filter string="Salesman" name="group_by_user" context="{'group_by':'user_id'}"/>
                     <!-- <filter string="Period" name='period_id' context="{'group_by':'period_id'}"/> -->
                     <!-- <filter string="Fiscal Year" name='fiscalyear_id' context="{'group_by':'fiscalyear_id'}"/> -->
-                    <filter string="State" context="{'group_by':'state_id'}"/>
-                    <filter string="Document Type" context="{'group_by':'document_type_id'}"/>
-                    <filter string="Product" context="{'group_by':'product_id'}"/>
-                    <filter string="Product Category" name="category_product" context="{'group_by':'product_category_id'}"/>
-                    <filter string="State" context="{'group_by':'state'}"/>
-                    <filter string="Journal Type" context="{'group_by':'type'}"/>
-                    <filter string="Journal" context="{'group_by':'journal_id'}"/>
-                    <filter string="Company" context="{'group_by':'company_id'}"/>
+                    <filter name="group_by_company_id" string="Company" context="{'group_by':'company_id'}"/>
+                    <filter name="group_by_state_id" string="State" context="{'group_by':'state_id'}"/>
+                    <filter name="group_by_document_type_id" string="Document Type" context="{'group_by':'document_type_id'}"/>
+                    <filter string="AFIP Activity" name="group_by_afip_activity_id" context="{'group_by':'afip_activity_id'}"/>
+                    <filter string="Account" name="group_by_account_id" context="{'group_by':'account_id'}"/>
+                    <filter name="group_by_product_id" string="Product" context="{'group_by':'product_id'}"/>
+                    <filter string="Product Category" name="group_by_category_product" context="{'group_by':'product_category_id'}"/>
+                    <filter name="group_by_state" string="State" context="{'group_by':'state'}"/>
+                    <filter name="group_by_type" string="Journal Type" context="{'group_by':'type'}"/>
+                    <filter name="group_by_journal_id" string="Journal" context="{'group_by':'journal_id'}"/>
                     <!-- <filter string="Week" name="week" context="{'group_by':'week'}" help="Group by week of Invoice Date"/> -->
                     <!-- <filter string="Month" name="month" context="{'group_by':'month'}" help="Group by month of Invoice Date"/> -->
                     <!-- <filter string="Year" name="year" context="{'group_by':'year'}" help="Group by year of Invoice Date"/> -->
-                </group> 
+                </group>
             </search>
         </field>
     </record>

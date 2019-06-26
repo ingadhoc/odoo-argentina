@@ -6,5 +6,5 @@ git+https://github.com/pysimplesoap/pysimplesoap@stable_py3k
 # dbf>=0.88.019
 # Pillow>=2.0.0
 # git+https://github.com/OCA/openupgradelib/@master
-git+https://github.com/reingart/pyafipws@py3k
-# git+https://github.com/ingadhoc/pyafipws@py3k
+# git+https://github.com/reingart/pyafipws@py3k
+git+https://github.com/ingadhoc/pyafipws@py3k

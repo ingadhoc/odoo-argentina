@@ -40,8 +40,8 @@
                 <attribute name="states"></attribute>
             </button>
             <button name="action_invoice_open" position="after">
-                <button name="action_invoice_open" type="object" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', 'production')]}" string="Validar en AFIP" class="oe_highlight" groups="base.group_user"/>
-                <button name="action_invoice_open" type="object" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', 'homologation')]}" string="Validar en HOMOLOGACION" class="oe_highlight" groups="base.group_user"/>
+                <button name="action_invoice_open" type="object" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', 'production')]}" string="Validar en AFIP" class="oe_highlight" groups="account.group_account_invoice"/>
+                <button name="action_invoice_open" type="object" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', 'homologation')]}" string="Validar en HOMOLOGACION" class="oe_highlight" groups="account.group_account_invoice"/>
             </button>
 
             <notebook>

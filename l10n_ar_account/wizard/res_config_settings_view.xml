@@ -40,7 +40,7 @@
                             <label for="arba_cit" string="ARBA"/>
                             <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
                             <div class="text-muted" name="arba_description">
-                                Indique la clave CIT si utiliza padrón de ARBA de ret/perc de iibb o remito electrónico mediante web-service de ARBA.
+                                Indique la clave CIT si utiliza padrón de ARBA de ret/perc de iibb.
                             </div>
                             <div class="content-group" name="arba-content-group">
                                 <div class="row">

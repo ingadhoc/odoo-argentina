@@ -40,6 +40,19 @@
                         <field name="alicuota_retencion"/>
                     </group>
                 </group>
+                <notebook>
+                    <page string="SIRCAR">
+                        <p>
+                            Utilizado para la generación del TXT para SIRCAR.<br/>
+                            Tipo de Régimen de Retención/precición (código correspondiente según tabla definida por la jurisdicción).<br/>
+                            Puede consultar la tabla <a target="_blank" href="https://www.ca.gov.ar/sircar2">aquí</a>, sección "Instructivos y tablas" item "Tabla con la Tipificación de Regímenes..."
+                        </p>
+                        <group>
+                            <field name="regimen_percepcion"/>
+                            <field name="regimen_retencion"/>
+                        </group>
+                    </page>
+                </notebook>
             </form>
         </field>
     </record>
@@ -54,14 +67,16 @@
                 <field name="withholding_amount_type" required="True"/>
             </field>
             <!-- TODO mejorar esto, por ahora solo lo hacemos visible con este grupo ya que este grupo solo lo estamos usando en realidad para API, deberiamos ver de hacerlo de otra manera -->
-            <group position="after">
-                <group string="API">
-                    <field name="api_codigo_articulo_retencion"/>
-                    <field name="api_articulo_inciso_calculo_retencion"/>
-                    <field name="api_codigo_articulo_percepcion"/>
-                    <field name="api_articulo_inciso_calculo_percepcion"/>
-                </group>
-            </group>
+            <notebook>
+                <page string="API">
+                    <group>
+                        <field name="api_codigo_articulo_retencion"/>
+                        <field name="api_articulo_inciso_calculo_retencion"/>
+                        <field name="api_codigo_articulo_percepcion"/>
+                        <field name="api_articulo_inciso_calculo_percepcion"/>
+                    </group>
+                </page>
+            </notebook>
         </field>
     </record>
 

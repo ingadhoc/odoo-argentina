@@ -24,6 +24,7 @@
                 <header>
                     <button name="action_print" string="Print" states="draft" type="object" class="oe_highlight"/>
                     <button name="action_print" string="Print" states="cancel,presented" type="object"/>
+                    <button name="%(report_account_vat_ledger_columns)d" string="Imprimir en columnas (beta)" help="Imprimir libro iva en columnas, beta" type="action"/>
                     <button name="action_present" string="Present" states="draft" type="object" class="oe_highlight"/>
                     <button name="action_cancel" string="Cancel" states="draft,presented" type="object"/>
                     <button name="action_to_draft" string="To Draft" states="cancel" type="object"/>

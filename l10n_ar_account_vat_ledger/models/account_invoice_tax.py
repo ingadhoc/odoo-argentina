@@ -29,6 +29,7 @@ class AccountInvoiceTax(models.Model):
         # debito o credito de ese mismo
         for rec in self:
             currency = rec.currency_id.with_context(
+                company_id=rec.company_id.id,
                 date=rec.invoice_id.date_invoice or
                 fields.Date.context_today(rec))
             if not currency:
@@ -38,7 +39,9 @@ class AccountInvoiceTax(models.Model):
                 rec.cc_amount = rec.amount
             else:
                 # nueva modalidad de currency_rate
-                currency_rate = rec.invoice_id.currency_rate
+                currency_rate = rec.invoice_id.currency_rate or \
+                    currency.compute(
+                        1., rec.company_id.currency_id, round=False)
                 # TODO borrar
                 # currency_rate = currency.compute
                 #     1.0, rec.company_id.currency_id, round=False)

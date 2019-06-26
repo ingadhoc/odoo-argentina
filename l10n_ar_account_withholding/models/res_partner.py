@@ -74,6 +74,18 @@ class ResPartnerArbaAlicuot(models.Model):
         'Base para retenciones',
         help='Base amount used to get withholding amount',
     )
+    regimen_percepcion = fields.Char(
+        size=3,
+        help="Utilizado para la generación del TXT para SIRCAR.\n"
+        "Tipo de Régimen de Percepción (código correspondiente según "
+        "tabla definida por la jurisdicción)"
+    )
+    regimen_retencion = fields.Char(
+        size=3,
+        help="Utilizado para la generación del TXT para SIRCAR.\n"
+        "Tipo de Régimen de Retención (código correspondiente según "
+        "tabla definida por la jurisdicción)"
+    )
     api_codigo_articulo_retencion = fields.Selection([
         ('001', '001: Art.1 - inciso A - (Res. Gral. 15/97 y Modif.)'),
         ('002', '002: Art.1 - inciso B - (Res. Gral. 15/97 y Modif.)'),

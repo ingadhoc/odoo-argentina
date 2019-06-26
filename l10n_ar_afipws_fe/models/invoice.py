@@ -702,7 +702,7 @@ print "Observaciones:", wscdc.Obs
                                 iva_id, importe + imp_iva)
                     elif afip_ws == 'wsfex':
                         ws.AgregarItem(
-                            codigo, ds, qty, umed, precio, importe,
+                            codigo, ds, qty, umed, precio, "%.2f" % importe,
                             bonif)
 
             # Request the authorization! (call the AFIP webservice method)

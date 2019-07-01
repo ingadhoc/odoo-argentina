@@ -87,26 +87,28 @@
                 <!-- <field name="period_id" /> -->
                 <!-- <field name="fiscalyear_id" /> -->
                 <field name="product_id"/>
+                <field name="account_id"/>
                 <field name="document_type_id"/>
                 <field name="product_category_id" filter_domain="[('product_category_id', 'child_of', self)]"/>
                 <field name="partner_id"/>
                 <!-- <field name="partner_category_ids"/> -->
                 <group expand="1" string="Group By...">
-                    <filter string="Use" name="partner" context="{'group_by':'partner_id'}"/>
-                    <filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>
-                    <filter string="Currency" name="currency" context="{'group_by':'currency_id'}"/>
-                    <filter string="Salesman" name='user' context="{'group_by':'user_id'}"/>
-                    <filter string="AFIP Activity" name='afip_activity_id' context="{'group_by':'afip_activity_id'}"/>
+                    <filter string="Use" name="group_by_partner" context="{'group_by':'partner_id'}"/>
+                    <filter string="Partner" name="group_by_partner" context="{'group_by':'partner_id'}"/>
+                    <filter string="Currency" name="group_by_currency" context="{'group_by':'currency_id'}"/>
+                    <filter string="Salesman" name="group_by_user" context="{'group_by':'user_id'}"/>
                     <!-- <filter string="Period" name='period_id' context="{'group_by':'period_id'}"/> -->
                     <!-- <filter string="Fiscal Year" name='fiscalyear_id' context="{'group_by':'fiscalyear_id'}"/> -->
-                    <filter name="state_id" string="State" context="{'group_by':'state_id'}"/>
-                    <filter name="document_type_id" string="Document Type" context="{'group_by':'document_type_id'}"/>
-                    <filter name="product_id" string="Product" context="{'group_by':'product_id'}"/>
-                    <filter string="Product Category" name="category_product" context="{'group_by':'product_category_id'}"/>
-                    <filter name="state" string="State" context="{'group_by':'state'}"/>
-                    <filter name="type" string="Journal Type" context="{'group_by':'type'}"/>
-                    <filter name="journal_id" string="Journal" context="{'group_by':'journal_id'}"/>
-                    <filter name="company_id" string="Company" context="{'group_by':'company_id'}"/>
+                    <filter name="group_by_company_id" string="Company" context="{'group_by':'company_id'}"/>
+                    <filter name="group_by_state_id" string="State" context="{'group_by':'state_id'}"/>
+                    <filter name="group_by_document_type_id" string="Document Type" context="{'group_by':'document_type_id'}"/>
+                    <filter string="AFIP Activity" name="group_by_afip_activity_id" context="{'group_by':'afip_activity_id'}"/>
+                    <filter string="Account" name="group_by_account_id" context="{'group_by':'account_id'}"/>
+                    <filter name="group_by_product_id" string="Product" context="{'group_by':'product_id'}"/>
+                    <filter string="Product Category" name="group_by_category_product" context="{'group_by':'product_category_id'}"/>
+                    <filter name="group_by_state" string="State" context="{'group_by':'state'}"/>
+                    <filter name="group_by_type" string="Journal Type" context="{'group_by':'type'}"/>
+                    <filter name="group_by_journal_id" string="Journal" context="{'group_by':'journal_id'}"/>
                     <!-- <filter string="Week" name="week" context="{'group_by':'week'}" help="Group by week of Invoice Date"/> -->
                     <!-- <filter string="Month" name="month" context="{'group_by':'month'}" help="Group by month of Invoice Date"/> -->
                     <!-- <filter string="Year" name="year" context="{'group_by':'year'}" help="Group by year of Invoice Date"/> -->

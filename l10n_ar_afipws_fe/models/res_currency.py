@@ -47,7 +47,6 @@ class ResCurrency(models.Model):
         raise UserError(self.get_pyafipws_currency_rate()[1])
 
     @api.multi
-    # def get_pyafipws_currency_rate(self, afip_ws='wsfex', company=False):
     def get_pyafipws_currency_rate(self, afip_ws='wsfe', company=False):
         self.ensure_one()
         # if not company, we use any that has valid certificates
@@ -79,4 +78,4 @@ class ResCurrency(models.Model):
         msg = (_("Currency rate for %s: %s.\nObservations: %s") % (
             self.name, rate, ".\n".join([ws.Excepcion, ws.ErrMsg, ws.Obs])))
 
-        return (float(rate), msg)
+        return (float(rate), msg, ws.FchCotiz)

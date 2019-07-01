@@ -15,4 +15,11 @@
         <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
     </record>
 
+    <record id="account_ar_vat_line_rule" model="ir.rule">
+        <field name="name">Línea de IVA para análisis en localización argentina</field>
+        <field name="model_id" ref="model_account_ar_vat_line"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
 </odoo>

@@ -455,8 +455,11 @@ print "Observaciones:", wscdc.Obs
                 #fecha_cbte = fecha_cbte.replace("-", "")
                 fecha_cbte = inv.date_invoice.strftime('%Y%m%d')
 
-            # due and billing dates only for concept "services"
-            if int(concepto) != 1:
+            mipyme_fce = int(doc_afip_code) in [
+                201, 202, 203, 206, 207, 208, 211, 212, 213]
+
+            # due date only for concept "services" and mipyme_fce
+            if int(concepto) != 1 or mipyme_fce:
                 fecha_venc_pago = inv.date_due or inv.date_invoice
                 if afip_ws != 'wsmtxca':
                     fecha_venc_pago = fecha_venc_pago.strftime('%Y%m%d')

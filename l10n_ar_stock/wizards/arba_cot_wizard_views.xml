@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_arba_cot_wizard" model="ir.ui.view">
+        <field name="name">arba.cot.wizard.form</field>
+        <field name="model">arba.cot.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Asistente para Código de Operaciones de Traslado">
+                <group>
+                     <group>
+                        <field name="datetime_out"/>
+                        <field name="prod_no_term_dev"/>
+                        <field name="importe"/>
+                     </group>
+                     <group>
+                        <field name="tipo_recorrido"/>
+                        <field name="carrier_id"/>
+                        <field name="patente_vehiculo"/>
+                        <field name="patente_acomplado"/>
+                     </group>
+                </group>
+                <footer>
+                    <button string='Confirm' name="confirm" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="action_arba_cot_wizard" model="ir.actions.act_window">
+        <field name="name">Asistente para Código de Operaciones de Traslado</field>
+        <field name="res_model">arba.cot.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+       <field name="target">new</field>
+    </record>
+
+</odoo>

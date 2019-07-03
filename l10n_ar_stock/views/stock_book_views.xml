@@ -1,0 +1,14 @@
+<odoo>
+
+    <record id="view_stock_book_form" model="ir.ui.view">
+        <field name="name">stock.book.form</field>
+        <field name="model">stock.book</field>
+        <field name="inherit_id" ref="stock_voucher.view_stock_book_form"/>
+        <field name="arch" type="xml">
+            <field name="next_number" position="after">
+                <field name="document_type_id" groups="l10n_ar_stock.arba_cot_enabled"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

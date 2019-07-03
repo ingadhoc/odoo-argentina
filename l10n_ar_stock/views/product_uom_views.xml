@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_uom_form_view" model="ir.ui.view">
+        <field name="name">uom.uom.form</field>
+        <field name="model">uom.uom</field>
+        <field name="inherit_id" ref="uom.product_uom_form_view"/>
+        <field name="arch" type="xml">
+            <field name="rounding" position="after">
+                <label for="arba_code"/>
+                <div class="oe_inline">
+                    <field name="arba_code" class="oe_inline"/>
+                     <a target="_blank" href="http://www.arba.gov.ar/bajadas/Fiscalizacion/Operativos/TransporteBienes/Documentacion/20080701-TB-TablasDeValidacion.pdf" class="oe_edit_only oe_inline">Ver códigos</a>
+                </div>
+            </field>
+        </field>
+    </record>
+
+</odoo>

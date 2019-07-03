@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="True">
+        <record model='uom.uom' forcecreate="False" id='product.product_uom_kgm'>
+            <field name='arba_code'>1</field>
+        </record> 
+        <record model='uom.uom' forcecreate="False" id='product.product_uom_litre'>
+            <field name='arba_code'>2</field>
+        </record> 
+        <record model='uom.uom' forcecreate="False" id='product.product_uom_unit'>
+            <field name='arba_code'>3</field>
+        </record> 
+        <!-- metro cuadrado no viene en odoo por defecto (codigo 4 arba) -->
+        <record model='uom.uom' forcecreate="False" id='product.product_uom_meter'>
+            <field name='arba_code'>5</field>
+        </record> 
+        <!-- metro cúbico no viene en odoo por defecto (codigo 6 arba) -->
+        <!-- par no viene en odoo por defecto (codigo 7 arba) -->
+    </data>
+</odoo>    

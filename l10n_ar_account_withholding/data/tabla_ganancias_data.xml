@@ -57,7 +57,7 @@
         <field name="concepto_referencia">Intereses originados en operaciones no comprendidas en el punto 1.</field>
         <field name="porcentaje_inscripto">6</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">5000</field>
+        <field name="montos_no_sujetos_a_retencion">7870</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_3">
@@ -66,7 +66,7 @@
         <field name="concepto_referencia">Alquileres o arrendamientos de bienes muebles.</field>
         <field name="porcentaje_inscripto">6</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">7120</field>
+        <field name="montos_no_sujetos_a_retencion">11200</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_4">
@@ -75,7 +75,7 @@
         <field name="concepto_referencia">Bienes Inmuebles Urbanos, incluidos los efectuados bajo la modalidad de leasing - incluye suburbanos-</field>
         <field name="porcentaje_inscripto">6</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">7120</field>
+        <field name="montos_no_sujetos_a_retencion">11200</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_5">
@@ -84,7 +84,7 @@
         <field name="concepto_referencia">Bienes Inmuebles Rurales, incluidos los efectuados bajo la modalidad de leasing - incluye subrurales-</field>
         <field name="porcentaje_inscripto">6</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">7120</field>
+        <field name="montos_no_sujetos_a_retencion">11200</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_6">
@@ -93,7 +93,7 @@
         <field name="concepto_referencia">Regalías</field>
         <field name="porcentaje_inscripto">6</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">5000</field>
+        <field name="montos_no_sujetos_a_retencion">7870</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_7">
@@ -102,7 +102,7 @@
         <field name="concepto_referencia">Interés accionario, excedentes y retornos distribuidos entre asociados, cooperativas, -excepto consumo-.</field>
         <field name="porcentaje_inscripto">6</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">5000</field>
+        <field name="montos_no_sujetos_a_retencion">7870</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_8">
@@ -111,7 +111,7 @@
         <field name="concepto_referencia">Obligaciones de no hacer, o por abandono o no ejercicio de una actividad.</field>
         <field name="porcentaje_inscripto">6</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">5000</field>
+        <field name="montos_no_sujetos_a_retencion">7870</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_9">
@@ -120,7 +120,7 @@
         <field name="concepto_referencia">Enajenación de bienes muebles y bienes de cambio.</field>
         <field name="porcentaje_inscripto">2</field>
         <field name="porcentaje_no_inscripto">10</field>
-        <field name="montos_no_sujetos_a_retencion">142400</field>
+        <field name="montos_no_sujetos_a_retencion">224000</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_10">
@@ -129,7 +129,7 @@
         <field name="concepto_referencia">Transferencia temporaria o definitiva de derechos de llave, marcas, patentes de invención, regalías, concesiones y similares.</field>
         <field name="porcentaje_inscripto">2</field>
         <field name="porcentaje_no_inscripto">10</field>
-        <field name="montos_no_sujetos_a_retencion">142400  </field>
+        <field name="montos_no_sujetos_a_retencion">224000</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_11">
@@ -147,7 +147,7 @@
         <field name="concepto_referencia">Locaciones de obra y/o servicios no ejecutados en relación de dependencia no mencionados expresamente en otros incisos.</field>
         <field name="porcentaje_inscripto">2</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">42700</field>
+        <field name="montos_no_sujetos_a_retencion">67170</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_13">
@@ -156,7 +156,7 @@
         <field name="concepto_referencia">Comisiones u otras retribuciones derivadas de la actividad de comisionista, rematador, consignatario y demás auxiliares de comercio a que se refiere el inciso c) del artículo 49 de la Ley de Impuesto a las Ganancias, texto ordenado en 1997 y sus modificaciones.</field>
         <field name="porcentaje_inscripto">-1</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">10700</field>
+        <field name="montos_no_sujetos_a_retencion">16830</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_14">
@@ -165,7 +165,7 @@
         <field name="concepto_referencia">Honorarios de director de sociedades anónimas,  síndico fiduciario,  consejero de sociedades cooperativas integrante de consejos de vigilancia y socios administradores de las sociedades de responsabilidad limitada, en comandita simple y en comandita por acciones.</field>
         <field name="porcentaje_inscripto">-1</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">42700</field>
+        <field name="montos_no_sujetos_a_retencion">67170</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_15">
@@ -174,7 +174,7 @@
         <field name="concepto_referencia">Profesionales liberales, oficios, albacea, mandatario, gestor de negocio.</field>
         <field name="porcentaje_inscripto">-1</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">10700</field>
+        <field name="montos_no_sujetos_a_retencion">16830</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_16">
@@ -183,7 +183,7 @@
         <field name="concepto_referencia">Corredor, viajante de comercio y despachante de aduana.</field>
         <field name="porcentaje_inscripto">-1</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">10700</field>
+        <field name="montos_no_sujetos_a_retencion">16830</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_17">
@@ -192,7 +192,7 @@
         <field name="concepto_referencia">Operaciones de transporte de carga nacional e internacional.</field>
         <field name="porcentaje_inscripto">0.25</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">42700</field>
+        <field name="montos_no_sujetos_a_retencion">67170</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_18">
@@ -228,7 +228,7 @@
         <field name="concepto_referencia">Beneficios provenientes del cumplimiento de los requisitos de los planes de seguro de retiro privados administrados por entidades sujetas al control de la Superintendencia de Seguros de la Nación, establecidos por el inciso d) del artículo 45 y el inciso d) del artículo 79 de la Ley del Impuesto a las Ganancias, texto ordenado en 1997 y sus modificaciones -excepto cuando se encuentren alcanzados por el régimen de retención establecido por la Resolución General Nº 1261, sus modificatorias y complementarias-.</field>
         <field name="porcentaje_inscripto">3</field>
         <field name="porcentaje_no_inscripto">3</field>
-        <field name="montos_no_sujetos_a_retencion">10700</field>
+        <field name="montos_no_sujetos_a_retencion">16830</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_22">
@@ -237,7 +237,7 @@
         <field name="concepto_referencia">Rescates -totales o parciales- por desistimiento  de los planes de seguro de retiro a que se refiere el inciso o), excepto que sea de aplicación lo normado en el artículo 101 de la Ley del Impuesto a las Ganancias, texto ordenado en 1997 y sus modificaciones.</field>
         <field name="porcentaje_inscripto">3</field>
         <field name="porcentaje_no_inscripto">3</field>
-        <field name="montos_no_sujetos_a_retencion">10700</field>
+        <field name="montos_no_sujetos_a_retencion">16830</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_23">
@@ -246,7 +246,7 @@
         <field name="concepto_referencia">Subsidios abonados por los estados Nacional, provinciales, municipales o el Gobierno de la Ciudad Autónoma de Buenos Aires, en concepto de enajenación de bienes muebles y bienes de cambio, en la medida que una ley general o especial no establezca la exención de los mismos en el impuesto a las ganancias.</field>
         <field name="porcentaje_inscripto">2</field>
         <field name="porcentaje_no_inscripto">10</field>
-        <field name="montos_no_sujetos_a_retencion">48400</field>
+        <field name="montos_no_sujetos_a_retencion">76140</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_24">
@@ -255,7 +255,7 @@
         <field name="concepto_referencia">Subsidios abonados por los estados Nacional, provinciales, municipales o el Gobierno de la Ciudad Autónoma de Buenos Aires, en concepto de locaciones de obra y/o servicios, no ejecutados en relación de dependencia, en la medida que una ley general o especial no establezca la exención de los mismos en el impuesto a las ganancias.</field>
         <field name="porcentaje_inscripto">2</field>
         <field name="porcentaje_no_inscripto">28</field>
-        <field name="montos_no_sujetos_a_retencion">20000</field>
+        <field name="montos_no_sujetos_a_retencion">31460</field>
     </record>
 
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_99">
@@ -273,66 +273,66 @@
 
     <record model="afip.tabla_ganancias.escala" id="escala_1">
         <field name="importe_desde">0</field>
-        <field name="importe_hasta">5000</field>
+        <field name="importe_hasta">8000</field>
         <field name="importe_fijo">0</field>
         <field name="porcentaje">5</field>
         <field name="importe_excedente">0</field>
     </record>
 
     <record model="afip.tabla_ganancias.escala" id="escala_2">
-        <field name="importe_desde">5000</field>
-        <field name="importe_hasta">10000</field>
-        <field name="importe_fijo">250</field>
+        <field name="importe_desde">8000</field>
+        <field name="importe_hasta">16000</field>
+        <field name="importe_fijo">400</field>
         <field name="porcentaje">9</field>
-        <field name="importe_excedente">5000</field>
+        <field name="importe_excedente">8000</field>
     </record>
 
     <record model="afip.tabla_ganancias.escala" id="escala_3">
-        <field name="importe_desde">10000</field>
-        <field name="importe_hasta">15000</field>
-        <field name="importe_fijo">700</field>
+        <field name="importe_desde">16000</field>
+        <field name="importe_hasta">24000</field>
+        <field name="importe_fijo">1120</field>
         <field name="porcentaje">12</field>
-        <field name="importe_excedente">10000</field>
+        <field name="importe_excedente">16000</field>
     </record>
 
     <record model="afip.tabla_ganancias.escala" id="escala_4">
-        <field name="importe_desde">15000</field>
-        <field name="importe_hasta">20000</field>
-        <field name="importe_fijo">1300</field>
+        <field name="importe_desde">24000</field>
+        <field name="importe_hasta">32000</field>
+        <field name="importe_fijo">2080</field>
         <field name="porcentaje">15</field>
-        <field name="importe_excedente">15000</field>
+        <field name="importe_excedente">24000</field>
     </record>
 
     <record model="afip.tabla_ganancias.escala" id="escala_5">
-        <field name="importe_desde">20000</field>
-        <field name="importe_hasta">30000</field>
-        <field name="importe_fijo">2050</field>
+        <field name="importe_desde">32000</field>
+        <field name="importe_hasta">48000</field>
+        <field name="importe_fijo">3280</field>
         <field name="porcentaje">19</field>
-        <field name="importe_excedente">20000</field>
+        <field name="importe_excedente">32000</field>
     </record>
 
     <record model="afip.tabla_ganancias.escala" id="escala_6">
-        <field name="importe_desde">30000</field>
-        <field name="importe_hasta">40000</field>
-        <field name="importe_fijo">3950</field>
+        <field name="importe_desde">48000</field>
+        <field name="importe_hasta">64000</field>
+        <field name="importe_fijo">6320</field>
         <field name="porcentaje">23</field>
-        <field name="importe_excedente">30000</field>
+        <field name="importe_excedente">48000</field>
     </record>
 
     <record model="afip.tabla_ganancias.escala" id="escala_7">
-        <field name="importe_desde">40000</field>
-        <field name="importe_hasta">60000</field>
-        <field name="importe_fijo">6250</field>
+        <field name="importe_desde">64000</field>
+        <field name="importe_hasta">96000</field>
+        <field name="importe_fijo">10000</field>
         <field name="porcentaje">27</field>
-        <field name="importe_excedente">40000</field>
+        <field name="importe_excedente">64000</field>
     </record>
 
     <record model="afip.tabla_ganancias.escala" id="escala_8">
-        <field name="importe_desde">60000</field>
+        <field name="importe_desde">96000</field>
         <field name="importe_hasta">999999999</field>
-        <field name="importe_fijo">11650</field>
+        <field name="importe_fijo">18640</field>
         <field name="porcentaje">31</field>
-        <field name="importe_excedente">60000</field>
+        <field name="importe_excedente">96000</field>
     </record>
 
 </odoo>

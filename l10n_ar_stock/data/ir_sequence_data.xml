@@ -1,0 +1,12 @@
+<odoo>
+    <data noupdate="1">
+
+        <record id="arba_cot_file_sequence" model="ir.sequence">
+            <field name="name">Sequencia para COT (ARBA/API)</field>
+            <field name="code">arba.cot.file</field>
+            <field name="prefix"></field>
+            <field name="padding">6</field>
+            <!-- <field name="company_id" eval="False"/> -->
+        </record>
+    </data>
+</odoo>

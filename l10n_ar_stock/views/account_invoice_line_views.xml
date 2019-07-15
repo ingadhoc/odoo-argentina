@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_invoice_line_form">
+        <field name="name">account.invoice.line.form</field>
+        <field name="model">account.invoice.line</field>
+        <field name="inherit_id" ref="account.view_invoice_line_form"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="before">
+                <field name="lot_ids" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

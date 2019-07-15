@@ -471,7 +471,7 @@ print "Observaciones:", wscdc.Obs
                 fecha_serv_desde = inv.afip_service_start
                 fecha_serv_hasta = inv.afip_service_end
                 if afip_ws != 'wsmtxca':
-                    fecha_venc_pago = fecha_venc_pago.strftime('%Y%m%d')
+                    #fecha_venc_pago = fecha_venc_pago.strftime('%Y%m%d')
                     fecha_serv_desde = fecha_serv_desde.strftime('%Y%m%d')
                     fecha_serv_hasta = fecha_serv_hasta.strftime('%Y%m%d')
             else:

@@ -445,8 +445,8 @@ print "Observaciones:", wscdc.Obs
 
             partner_id_code = commercial_partner.main_id_category_id.afip_code
             tipo_doc = partner_id_code or '99'
-            nro_doc = partner_id_code and int(
-                commercial_partner.main_id_number) or "0"
+            nro_doc = \
+                partner_id_code and commercial_partner.main_id_number or "0"
             cbt_desde = cbt_hasta = cbte_nro = inv.invoice_number
             concepto = tipo_expo = int(inv.afip_concept)
 
@@ -552,16 +552,11 @@ print "Observaciones:", wscdc.Obs
                 # citi que pide el cuit al partner
                 # customer data (foreign trade):
                 nombre_cliente = commercial_partner.name
-                # If argentinian and cuit, then use cuit
-                if country.code == 'AR' and tipo_doc == 80 and nro_doc:
+                # se debe informar cuit pais o id_impositivo
+                if nro_doc:
                     id_impositivo = nro_doc
                     cuit_pais_cliente = None
-                # If not argentinian and vat, use vat
                 elif country.code != 'AR' and nro_doc:
-                    id_impositivo = nro_doc
-                    cuit_pais_cliente = None
-                # else use cuit pais cliente
-                else:
                     id_impositivo = None
                     if commercial_partner.is_company:
                         cuit_pais_cliente = country.cuit_juridica

@@ -257,17 +257,21 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def check_afip_auth_verify_required(self):
-        for inv in self:
-            if (
-                    inv.type in ['in_invoice', 'in_refund'] and
-                    inv.afip_auth_verify_type == 'required' and
-                    inv.document_type_internal_type in [
-                        'invoice', 'debit_note', 'credit_note',
-                        'receipt_invoice'] and
-                    not inv.afip_auth_verify_result):
-                raise UserError(_(
-                    'You can not validate invoice as AFIP authorization '
-                    'verification is required'))
+        verify_codes = [
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
+            "13", "15", "19", "20", "21", "39", "40", "49", "51", "52", "53",
+            "54", "60", "61", "63", "64"
+        ]
+        verification_required = self.filtered(
+            lambda inv: inv.type in ['in_invoice', 'in_refund'] and
+            inv.afip_auth_verify_type == 'required' and
+            (inv.document_type_id and
+             inv.document_type_id.code in verify_codes) and
+            not inv.afip_auth_verify_result)
+        if verification_required:
+            raise UserError(_(
+                'You can not validate invoice as AFIP authorization '
+                'verification is required'))
 
     @api.multi
     def verify_on_afip(self):

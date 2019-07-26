@@ -18,14 +18,20 @@
                             <field name="aliquots_filename" invisible="1"/>
                             <field name="import_aliquots_filename" invisible="1"/>
                             <group>
-                                <field name="vouchers_file" filename="vouchers_filename"/>
+                                <field name="citi_skip_invoice_tests"/>
+                                <label for="citi_skip_lines"/>
+                                <div>
+                                    <field name="citi_skip_lines" class="oe_inline"/>
+                                    <button name="action_see_skiped_invoices" class="oe_inline oe_link" type="object" string="(Ver facturas salteadas)" attrs="{'invisible': [('citi_skip_lines', '=', False)]}"/>
+                                </div>
                             </group>
                             <group>
+                                <field name="vouchers_file" filename="vouchers_filename"/>
                                 <field name="aliquots_file" filename="aliquots_filename"/>
                                 <field name="import_aliquots_file" filename="import_aliquots_filename"/>
                             </group>
                         </group>
-                        <group col="1">
+                        <group col="1" groups="base.group_no_one">
                             <!-- <field name="REGINFO_CV_CABECERA"/> -->
                             <field name="REGINFO_CV_CBTE"/>
                             <field name="REGINFO_CV_ALICUOTAS"/>

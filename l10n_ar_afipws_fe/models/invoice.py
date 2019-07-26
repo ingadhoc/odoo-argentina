@@ -257,17 +257,21 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def check_afip_auth_verify_required(self):
-        for inv in self:
-            if (
-                    inv.type in ['in_invoice', 'in_refund'] and
-                    inv.afip_auth_verify_type == 'required' and
-                    inv.document_type_internal_type in [
-                        'invoice', 'debit_note', 'credit_note',
-                        'receipt_invoice'] and
-                    not inv.afip_auth_verify_result):
-                raise UserError(_(
-                    'You can not validate invoice as AFIP authorization '
-                    'verification is required'))
+        verify_codes = [
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
+            "13", "15", "19", "20", "21", "39", "40", "49", "51", "52", "53",
+            "54", "60", "61", "63", "64"
+        ]
+        verification_required = self.filtered(
+            lambda inv: inv.type in ['in_invoice', 'in_refund'] and
+            inv.afip_auth_verify_type == 'required' and
+            (inv.document_type_id and
+             inv.document_type_id.code in verify_codes) and
+            not inv.afip_auth_verify_result)
+        if verification_required:
+            raise UserError(_(
+                'You can not validate invoice as AFIP authorization '
+                'verification is required'))
 
     @api.multi
     def verify_on_afip(self):
@@ -445,8 +449,8 @@ print "Observaciones:", wscdc.Obs
 
             partner_id_code = commercial_partner.main_id_category_id.afip_code
             tipo_doc = partner_id_code or '99'
-            nro_doc = partner_id_code and int(
-                commercial_partner.main_id_number) or "0"
+            nro_doc = \
+                partner_id_code and commercial_partner.main_id_number or "0"
             cbt_desde = cbt_hasta = cbte_nro = inv.invoice_number
             concepto = tipo_expo = int(inv.afip_concept)
 
@@ -552,16 +556,11 @@ print "Observaciones:", wscdc.Obs
                 # citi que pide el cuit al partner
                 # customer data (foreign trade):
                 nombre_cliente = commercial_partner.name
-                # If argentinian and cuit, then use cuit
-                if country.code == 'AR' and tipo_doc == 80 and nro_doc:
+                # se debe informar cuit pais o id_impositivo
+                if nro_doc:
                     id_impositivo = nro_doc
                     cuit_pais_cliente = None
-                # If not argentinian and vat, use vat
                 elif country.code != 'AR' and nro_doc:
-                    id_impositivo = nro_doc
-                    cuit_pais_cliente = None
-                # else use cuit pais cliente
-                else:
                     id_impositivo = None
                     if commercial_partner.is_company:
                         cuit_pais_cliente = country.cuit_juridica

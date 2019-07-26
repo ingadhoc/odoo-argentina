@@ -36,7 +36,7 @@ class AccountInvoiceTax(models.Model):
                 continue
             if rec.company_id.currency_id == currency:
                 rec.cc_base = rec.base
-                rec.cc_amount = rec.amount
+                rec.cc_amount = rec.amount_total
             else:
                 # nueva modalidad de currency_rate
                 currency_rate = rec.invoice_id.currency_rate or \
@@ -50,4 +50,4 @@ class AccountInvoiceTax(models.Model):
                 rec.cc_base = currency.round(
                     rec.base * currency_rate)
                 rec.cc_amount = currency.round(
-                    rec.amount * currency_rate)
+                    rec.amount_total * currency_rate)

@@ -9,6 +9,7 @@
                 <!-- <field name="date"/> -->
                 <field name="date_invoice"/>
                 <field name="journal_id"/>
+                <field name="invoice_id"/>
                 <field name="account_analytic_id"/>
                 <field name="state_id" invisible="1"/>
                 <field name="type" invisible="1"/>
@@ -55,6 +56,8 @@
                 <filter name="invoice" string="Invoice" domain="['|', ('type','=','out_invoice'),('type','=','in_invoice')]"/>
                 <filter name="refund" string="Refund" domain="['|', ('type','=','out_refund'),('type','=','in_refund')]"/>
                 <separator/>
+                <filter string="With AFIP Document" name="with_afip_document" domain="[('journal_id.use_documents', '=', True), ('journal_id.localization', '=', 'argentina')]"/>
+                <separator/>
                 <field name="name_template"/>
                 <filter string="Draft"
                        name="draft"
@@ -67,17 +70,21 @@
                 <separator/>
                 <filter string="Last month"
                         name="last_month"
-                        domain="[('date_invoice', '&gt;=', (context_today()-relativedelta(months=1)).strftime('%Y-%m-01')), ('date_invoice', '&lt;', (context_today()).strftime('%Y-%m-01'))]"/>
+                        help="Last month (by accounting date)"
+                        domain="[('date', '&gt;=', (context_today()-relativedelta(months=1)).strftime('%Y-%m-01')), ('date', '&lt;', (context_today()).strftime('%Y-%m-01'))]"/>
                 <filter string="This month"
                         name="this_month"
-                        domain="[('date_invoice', '&gt;=', context_today().strftime('%Y-%m-01')), ('date_invoice', '&lt;', (context_today()+relativedelta(months=1)).strftime('%Y-%m-01'))]"/>
+                        help="This month (by accounting date)"
+                        domain="[('date', '&gt;=', context_today().strftime('%Y-%m-01')), ('date', '&lt;', (context_today()+relativedelta(months=1)).strftime('%Y-%m-01'))]"/>
                 <separator/>
                 <filter string="Last year"
                         name="last_year"
-                        domain="[('date_invoice', '&gt;=', (context_today()-relativedelta(years=1)).strftime('%Y-01-01')), ('date_invoice', '&lt;', (context_today()).strftime('%Y-01-01'))]"/>
+                        help="Last year (by accounting date)"
+                        domain="[('date', '&gt;=', (context_today()-relativedelta(years=1)).strftime('%Y-01-01')), ('date', '&lt;', (context_today()).strftime('%Y-01-01'))]"/>
                 <filter string="This year"
                         name="this_year"
-                        domain="[('date_invoice', '&gt;=', context_today().strftime('%Y-01-01')), ('date_invoice', '&lt;', (context_today()+relativedelta(years=1)).strftime('%Y-01-01'))]"/>
+                        help="This year (by accounting date)"
+                        domain="[('date', '&gt;=', context_today().strftime('%Y-01-01')), ('date', '&lt;', (context_today()+relativedelta(years=1)).strftime('%Y-01-01'))]"/>
 
                 <field name="date_invoice_from" filter_domain="[('date_invoice','&gt;=',self)]"/>
                 <field name="date_invoice_to" filter_domain="[('date_invoice','&lt;=',self)]"/>

@@ -5,6 +5,7 @@
 ##############################################################################
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from ast import literal_eval
 import base64
 import logging
 _logger = logging.getLogger(__name__)
@@ -13,6 +14,16 @@ _logger = logging.getLogger(__name__)
 class account_vat_ledger(models.Model):
     _inherit = "account.vat.ledger"
 
+    citi_skip_invoice_tests = fields.Boolean(
+        string='Skip invoice tests?',
+        help='If you skip invoice tests probably you will have errors when '
+        'loading the files in citi.'
+    )
+    citi_skip_lines = fields.Char(
+        string="List of lines to skip con citi files",
+        help="Enter a list of lines, for eg '1, 2, 3'. If you skip some lines "
+        "you would need to enter them manually"
+    )
     REGINFO_CV_ALICUOTAS = fields.Text(
         'REGINFO_CV_ALICUOTAS',
         readonly=True,
@@ -180,19 +191,48 @@ class account_vat_ledger(models.Model):
         invoice.invalidate_cache()
         return "{:0>5d}".format(invoice.point_of_sale_number)
 
+    def action_see_skiped_invoices(self):
+        invoices = self.get_citi_invoices(return_skiped=True)
+        raise ValidationError(_('Facturas salteadas:\n%s') % ', '.join(invoices.mapped('display_name')))
+
+    @api.constrains('citi_skip_lines')
+    def _check_citi_skip_lines(self):
+        for rec in self.filtered('citi_skip_lines'):
+            try:
+                res = literal_eval(rec.citi_skip_lines)
+                if not isinstance(res, int):
+                    assert isinstance(res, tuple)
+            except Exception as e:
+                raise ValidationError(_(
+                    'Bad format for Skip Lines. You need to enter a list of '
+                    'numbers like "1, 2, 3". This is the error we get: %s') % (
+                        repr(e)))
+
     @api.multi
-    def get_citi_invoices(self):
+    def get_citi_invoices(self, return_skiped=False):
         self.ensure_one()
-        return self.env['account.invoice'].search([
+        invoices = self.env['account.invoice'].search([
             ('document_type_id.export_to_citi', '=', True),
             ('id', 'in', self.invoice_ids.ids)], order='date_invoice asc')
+        if self.citi_skip_lines:
+            skip_lines = literal_eval(self.citi_skip_lines)
+            if isinstance(skip_lines, int):
+                skip_lines = [skip_lines]
+            to_skip = invoices.browse()
+            for line in skip_lines:
+                to_skip += invoices[line - 1]
+            if return_skiped:
+                return to_skip
+            invoices -= to_skip
+        return invoices
 
     @api.multi
     def get_REGINFO_CV_CBTE(self, alicuotas):
         self.ensure_one()
         res = []
         invoices = self.get_citi_invoices()
-        invoices.check_argentinian_invoice_taxes()
+        if not self.citi_skip_invoice_tests:
+            invoices.check_argentinian_invoice_taxes()
         if self.type == 'purchase':
             partners = invoices.mapped('commercial_partner_id').filtered(
                 lambda r: r.main_id_category_id.afip_code in (

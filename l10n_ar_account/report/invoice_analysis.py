@@ -90,6 +90,10 @@ class AccountInvoiceLineReport(models.Model):
         string='Currency',
         readonly=True
     )
+    invoice_id = fields.Many2one(
+        'account.invoice',
+        readonly=True,
+    )
 
     _order = 'id'
 
@@ -150,6 +154,7 @@ class AccountInvoiceLineReport(models.Model):
         "account_invoice"."date_invoice" AS "date_invoice",
 
         "account_invoice"."amount_total" AS "amount_total",
+        "account_invoice"."id" AS "invoice_id",
         "product_product"."barcode" AS "barcode",
         "product_template"."name" AS "name_template",
 

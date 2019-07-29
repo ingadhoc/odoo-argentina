@@ -995,17 +995,17 @@
         <field name='phone'>011-4779-6065</field>
     </record>
     <record model='res.bank' id='00015'>
-        <field name='name'>Standard Bank Argentina S.A.</field>
-        <field name='bic'>STANDARDBANK</field>
+        <field name='name'>Industrial and Commercial Bank of China (Argentina) S.A.</field>
+        <field name='bic'>ICBC</field>
         <field name='active'>1</field>
         <field name='street'>Cecilia Grierson 355</field>
         <field name='street2'></field>
-        <field name='zip'></field>
-        <field name='city'>Buenos Aires</field>
+        <field name='zip'>C1005AAA</field>
+        <field name='city'>Ciudad Autónoma de Buenos Aires</field>
         <field name='state' ref='base.state_ar_c'/>
         <field name='country' ref='base.ar'/>
-        <field name='phone'>011-48202000</field>
-        <field name='email'>lavozdelcliente@standardbank.com.ar</field>
+        <field name='phone'>0810-444-4652</field>
+        <field name='email'>diego.jahoda@icbc.com.ar</field>
     </record>
     <record model='res.bank' id='00018'>
         <field name='name'>The Bank Of Tokyo-Mitsubishi Ufj, Ltd.</field>

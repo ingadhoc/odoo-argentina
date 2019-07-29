@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Argentinian VAT Ledger Management",
-    'version': '9.0.1.4.0',
+    'version': '12.0.1.0.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Moldeo Interactive,Odoo Community Association (OCA)',
@@ -19,8 +19,10 @@
     'external_dependencies': {
     },
     "data": [
-        'account_vat_report_view.xml',
-        #'report/account_vat_ledger_report.xml',
+        'data/l10n_ar_account_vat_ledger_data.xml',
+        # 'report/account_vat_ledger_report.xml',
+        'views/account_vat_report_views.xml',
+        'wizards/res_config_settings_views.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
     ],

@@ -76,8 +76,15 @@ class ResCompany(models.Model):
         certificate = self.env['afipws.certificate'].search([
             ('alias_id.company_id', '=', self.id),
             ('alias_id.type', '=', environment_type),
-            ('state', '=', 'confirmed'),
-        ], limit=1)
+            ('state', '=', 'confirmed')])
+        # to avoid confusion on the user, if more than one certificate found,
+        # we ask to keep the one he whants to use
+        if len(certificate) > 1:
+            raise UserError(_(
+                'Tiene más de un certificado de "%s" confirmado. Por favor '
+                'deje un solo certificado de "%s" confirmado.') % (
+                    environment_type, environment_type
+                ))
         if certificate:
             pkey = certificate.alias_id.key
             cert = certificate.crt

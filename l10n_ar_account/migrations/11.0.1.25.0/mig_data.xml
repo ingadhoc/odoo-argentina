@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model='account.document.type' id='dc_fce_a_f'>
+        <field name='report_name'>FACTURA DE CREDITO ELECTRONICA</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_a_nd'>
+        <field name='report_name'>NOTA DE DEBITO ELECTRONICA</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_a_nc'>
+        <field name='report_name'>NOTA DE CREDITO ELECTRONICA</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_b_f'>
+        <field name='report_name'>FACTURA DE CREDITO ELECTRONICA</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_b_nd'>
+        <field name='report_name'>NOTA DE DEBITO ELECTRONICA</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_b_nc'>
+        <field name='report_name'>NOTA DE CREDITO ELECTRONICA</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_c_f'>
+        <field name='report_name'>FACTURA DE CREDITO ELECTRONICA</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_c_nd'>
+        <field name='report_name'>NOTA DE DEBITO ELECTRONICA</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_c_nc'>
+        <field name='report_name'>NOTA DE CREDITO ELECTRONICA</field>
+    </record>
+</odoo>

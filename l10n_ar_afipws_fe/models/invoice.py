@@ -259,7 +259,7 @@ class AccountInvoice(models.Model):
     def check_afip_auth_verify_required(self):
         verify_codes = [
             "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
-            "13", "15", "19", "20", "21", "39", "40", "49", "51", "52", "53",
+            "13", "15", "19", "20", "21", "49", "51", "52", "53",
             "54", "60", "61", "63", "64"
         ]
         verification_required = self.filtered(

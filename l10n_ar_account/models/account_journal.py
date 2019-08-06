@@ -189,11 +189,11 @@ class AccountJournal(models.Model):
             '|', ('document_letter_id', 'in', letters.ids),
             ('document_letter_id', '=', False)])
 
-        # no queremos que todo lo que es factura de credito electronica se cree
-        # por defecto ya que es poco usual
-        # TODO mejorar este parche
-        document_types = document_types.filtered(lambda x: int(x.code) not in [
-            201, 202, 203, 206, 207, 208, 211, 212, 213])
+        # for wsfe we create fce doc types, not for the others
+        if 'afip_ws' not in self._fields or self.afip_ws != 'wsfe':
+            document_types = document_types.filtered(
+                lambda x: int(x.code) not in [
+                    201, 202, 203, 206, 207, 208, 211, 212, 213])
 
         # TODO borrar, ya estamos agregando arriba porque buscamos letter false
         # for purchases we add in_documents and ticket whitout letters

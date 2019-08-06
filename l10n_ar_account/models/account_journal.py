@@ -236,3 +236,4 @@ class AccountJournal(models.Model):
                 'sequence': sequence,
             })
             sequence += 10
+        return True

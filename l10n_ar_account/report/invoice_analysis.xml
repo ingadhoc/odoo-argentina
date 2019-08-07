@@ -54,7 +54,6 @@
                 <separator/>
                 <filter name="invoice" string="Invoice" domain="['|', ('type','=','out_invoice'),('type','=','in_invoice')]"/>
                 <filter name="refund" string="Refund" domain="['|', ('type','=','out_refund'),('type','=','in_refund')]"/>
-                <filter string="With AFIP Document" name="with_afip_document" domain="[('journal_id.use_documents', '=', True)]"/>
                 <separator/>
                 <filter string="With AFIP Document" name="with_afip_document" domain="[('journal_id.use_documents', '=', True), ('journal_id.localization', '=', 'argentina')]"/>
                 <field name="name_template"/>

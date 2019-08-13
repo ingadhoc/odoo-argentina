@@ -55,7 +55,7 @@ class AccountInvoice(models.Model):
         # borran una linea de rate), entonces podemos hacerlo desde el move
         # mas o menos como hace account_invoice_currency o viendo el total de
         # debito o credito de ese mismo
-        for rec in self.filtered('currency'):
+        for rec in self.filtered('currency_id'):
             if rec.company_id.currency_id == rec.currency_id:
                 rec.cc_amount_untaxed = rec.amount_untaxed
                 rec.cc_amount_tax = rec.amount_tax

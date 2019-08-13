@@ -30,7 +30,7 @@ class AccountInvoiceTax(models.Model):
         for rec in self.filtered('currency_id'):
             if rec.company_id.currency_id == rec.currency_id:
                 rec.cc_base = rec.base
-                rec.cc_amount = rec.amount
+                rec.cc_amount = rec.amount_total
             else:
                 # nueva modalidad de currency_rate
                 currency_rate = rec.invoice_id.currency_rate or \

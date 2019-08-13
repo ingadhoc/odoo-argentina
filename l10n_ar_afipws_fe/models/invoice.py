@@ -324,11 +324,11 @@ print "Observaciones:", wscdc.Obs
             if (
                     doc_type.document_letter_id.name in ['A', 'M'] and
                     doc_tipo_receptor != '80' or not doc_nro_receptor):
-                    raise UserError(_(
-                        'Para Comprobantes tipo A o tipo M:\n'
-                        '*  el documento del receptor debe ser CUIT\n'
-                        '*  el documento del Receptor es obligatorio\n'
-                    ))
+                raise UserError(_(
+                    'Para Comprobantes tipo A o tipo M:\n'
+                    '*  el documento del receptor debe ser CUIT\n'
+                    '*  el documento del Receptor es obligatorio\n'
+                ))
 
             cbte_nro = inv.invoice_number
             pto_vta = inv.point_of_sale_number

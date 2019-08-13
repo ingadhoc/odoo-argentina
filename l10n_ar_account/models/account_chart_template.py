@@ -41,7 +41,6 @@ class AccountChartTemplate(models.Model):
                 (6, False, position.afip_responsability_type_ids.ids)]
         return res
 
-
     @api.multi
     def _prepare_all_journals(
             self, acc_template_ref, company, journals_dict=None):

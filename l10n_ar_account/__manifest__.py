@@ -10,10 +10,6 @@
         'account_document',
         'l10n_ar_partner',
         'l10n_ar_bank',
-        # agregamos esta dependencia ya que el fix que hace ese modulo
-        # es fundamental para que el importa base de los impuestos se calcule
-        # bien en los reembolsos.
-        'account_fix',
         # para padron de afip
         'l10n_ar_afipws',
         # para guardar el link entre facturas y NC

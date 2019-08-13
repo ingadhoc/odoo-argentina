@@ -8,7 +8,7 @@
         <!-- <field name="name">Customer Invoices without Documents</field> -->
         <field name="code">AINV</field>
         <field name="type">sale</field>
-        <field name="sequence" eval="4"/>
+        <field name="sequence" eval="20"/>
         <!-- they are only for test data -->
         <field name="show_on_dashboard" eval="False"/>
     </record>
@@ -18,9 +18,20 @@
         <!-- <field name="name">Vendor Bills without Documents</field> -->
         <field name="code">AEXJ</field>
         <field name="type">purchase</field>
-        <field name="sequence" eval="4"/>
+        <field name="sequence" eval="20"/>
         <!-- they are only for test data -->
         <field name="show_on_dashboard" eval="False"/>
+    </record>
+
+    <record id="sales_journal_1" model="account.journal">
+        <field name="type">sale</field>
+        <field name="sequence">1</field>
+        <field name="point_of_sale_type">online</field>
+        <field name="use_documents" eval="True"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="code">V0001</field>
+        <field name="point_of_sale_number">1</field>
+        <field name="name">Ventas Manual 0001</field>
     </record>
 
 </odoo>

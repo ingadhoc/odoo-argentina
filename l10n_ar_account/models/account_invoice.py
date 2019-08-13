@@ -22,7 +22,6 @@ class AccountInvoice(models.Model):
 
     main_id_number = fields.Char(
         related='commercial_partner_id.main_id_number',
-        readonly=True,
     )
     state_id = fields.Many2one(
         # related='commercial_partner_id.state_id',
@@ -30,7 +29,6 @@ class AccountInvoice(models.Model):
         # direcciones distintas
         related='partner_id.state_id',
         store=True,
-        readonly=True,
         auto_join=True,
     )
     # IMPORANTE: si llegamos a implementar el campo computado no usar
@@ -54,21 +52,17 @@ class AccountInvoice(models.Model):
     )
     document_letter_id = fields.Many2one(
         related='document_type_id.document_letter_id',
-        readonly=True,
     )
     document_letter_name = fields.Char(
         related='document_letter_id.name',
-        readonly=True,
     )
     taxes_included = fields.Boolean(
         related='document_letter_id.taxes_included',
-        readonly=True,
     )
     # mostly used on reports
     afip_responsability_type_id = fields.Many2one(
         'afip.responsability.type',
         string='AFIP Responsability Type',
-        readonly=True,
         help='Responsability type from journal entry where it is stored and '
         'it nevers change',
         related='move_id.afip_responsability_type_id',
@@ -142,7 +136,6 @@ class AccountInvoice(models.Model):
     )
     point_of_sale_type = fields.Selection(
         related='journal_id.point_of_sale_type',
-        readonly=True,
     )
     # estos campos los agregamos en este modulo pero en realidad los usa FE
     # pero entendemos que podrian ser necesarios para otros tipos, por ahora
@@ -352,11 +345,10 @@ class AccountInvoice(models.Model):
                     rec.currency_id != rec.company_id.currency_id):
                 # rec.computed_currency_rate = abs(
                 #     rec.amount_total_company_signed / rec.amount_total)
-                currency = rec.currency_id.with_context(
-                    company_id=rec.company_id.id,
-                    date=rec.date_invoice or fields.Date.context_today(rec))
-                rec.computed_currency_rate = currency.compute(
-                    1., self.company_id.currency_id, round=False)
+                rec.computed_currency_rate = rec.currency_id._convert(
+                    1., self.company_id.currency_id, self.company_id,
+                    date=rec.date_invoice or fields.Date.context_today(rec),
+                    round=False)
             else:
                 rec.computed_currency_rate = 1.0
 
@@ -369,11 +361,10 @@ class AccountInvoice(models.Model):
             if self.company_id.currency_id == self.currency_id:
                 currency_rate = 1.0
             else:
-                currency = self.currency_id.with_context(
-                    company_id=self.company_id.id,
-                    date=self.date_invoice or fields.Date.context_today(self))
-                currency_rate = currency.compute(
-                    1., self.company_id.currency_id, round=False)
+                currency_rate = self.currency_id._convert(
+                    1., self.company_id.currency_id, self.company_id,
+                    date=self.date_invoice or fields.Date.context_today(self),
+                    round=False)
             return {
                 'currency_rate': currency_rate,
             }
@@ -592,44 +583,6 @@ class AccountInvoice(models.Model):
                 '10,5, etc).\n*Facturas: %s') % (
                     ', '.join(zero_alicuot.mapped('display_name'))
             ))
-
-        # Check except vat invoice
-        afip_exempt_codes = ['Z', 'X', 'E', 'N', 'C']
-        for invoice in argentinian_invoices:
-            special_vat_taxes = invoice.tax_line_ids.filtered(
-                lambda r: r.tax_id.tax_group_id.afip_code in [1, 2, 3])
-            if (
-                    special_vat_taxes and
-                    invoice.fiscal_position_id.afip_code
-                    not in afip_exempt_codes):
-                raise ValidationError(_(
-                    "If you have choose a 0, exempt or untaxed 'tax', or "
-                    "you must choose a fiscal position with afip code in %s.\n"
-                    "* Invoice [%i] %s") % (
-                        afip_exempt_codes,
-                        invoice.id,
-                        invoice.display_name))
-
-            # esto es, por eje, si hay un producto con 100% de descuento para
-            # única alicuota, entonces el impuesto liquidado da cero y se
-            # obliga reportar con alicuota 0, entonces se exige tmb cod de op.
-            # esta restriccion no es de FE si no de aplicativo citi
-            vat_taxes = invoice.tax_line_ids.filtered(
-                lambda x: x.tax_id.tax_group_id.afip_code in [
-                    4, 5, 6, 8, 9])
-            zero_vat_lines = vat_taxes and all(
-                x.currency_id.is_zero(x.amount) for x in vat_taxes)
-            if (
-                    zero_vat_lines and
-                    invoice.fiscal_position_id.afip_code
-                    not in afip_exempt_codes):
-                raise ValidationError(_(
-                    "Si hay líneas con IVA declarado 0, entonces debe elegir "
-                    "una posición fiscal con código de afip '%s'.\n"
-                    "* Invoice [%i] %s") % (
-                        afip_exempt_codes,
-                        invoice.id,
-                        invoice.display_name))
 
     # TODO sacamos esto porque no era muy lindo y daba algunos errores con
     # el account_fix, hicimos que los datos demo hagan el compute tax

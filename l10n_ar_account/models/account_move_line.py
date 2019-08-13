@@ -15,7 +15,6 @@ class AccountMoveLine(models.Model):
     # useful to group by this field
     afip_responsability_type_id = fields.Many2one(
         related='move_id.afip_responsability_type_id',
-        readonly=True,
         auto_join=True,
         # stored required to group by
         store=True,

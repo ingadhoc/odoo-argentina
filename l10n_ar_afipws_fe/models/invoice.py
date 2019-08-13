@@ -24,7 +24,6 @@ class AccountInvoice(models.Model):
 
     afip_auth_verify_type = fields.Selection(
         related='company_id.afip_auth_verify_type',
-        readonly=True,
     )
     afip_batch_number = fields.Integer(
         copy=False,
@@ -66,10 +65,12 @@ class AccountInvoice(models.Model):
     )
     # for compatibility
     afip_cae = fields.Char(
-        related='afip_auth_code'
+        related='afip_auth_code',
+        readonly=False,
     )
     afip_cae_due = fields.Date(
-        related='afip_auth_code_due'
+        related='afip_auth_code_due',
+        readonly=False,
     )
 
     afip_barcode = fields.Char(
@@ -196,8 +197,7 @@ class AccountInvoice(models.Model):
                 ('commercial_partner_id', '=', self.commercial_partner_id.id),
                 ('company_id', '=', self.company_id.id),
                 ('document_number', '=', self.origin),
-                ('state', 'not in',
-                    ['draft', 'proforma', 'proforma2', 'cancel'])],
+                ('state', 'not in', ['draft', 'cancel'])],
                 limit=1)
         else:
             return self.browse()
@@ -259,7 +259,7 @@ class AccountInvoice(models.Model):
     def check_afip_auth_verify_required(self):
         verify_codes = [
             "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
-            "13", "15", "19", "20", "21", "39", "40", "49", "51", "52", "53",
+            "13", "15", "19", "20", "21", "49", "51", "52", "53",
             "54", "60", "61", "63", "64"
         ]
         verification_required = self.filtered(
@@ -324,11 +324,11 @@ print "Observaciones:", wscdc.Obs
             if (
                     doc_type.document_letter_id.name in ['A', 'M'] and
                     doc_tipo_receptor != '80' or not doc_nro_receptor):
-                    raise UserError(_(
-                        'Para Comprobantes tipo A o tipo M:\n'
-                        '*  el documento del receptor debe ser CUIT\n'
-                        '*  el documento del Receptor es obligatorio\n'
-                    ))
+                raise UserError(_(
+                    'Para Comprobantes tipo A o tipo M:\n'
+                    '*  el documento del receptor debe ser CUIT\n'
+                    '*  el documento del Receptor es obligatorio\n'
+                ))
 
             cbte_nro = inv.invoice_number
             pto_vta = inv.point_of_sale_number
@@ -405,7 +405,7 @@ print "Observaciones:", wscdc.Obs
                     'afip_result': '',
                     'afip_message': msg,
                 })
-                inv.message_post(msg)
+                inv.message_post(body=msg)
                 continue
 
             # get the electronic invoice type, point of sale and afip_ws:
@@ -456,7 +456,6 @@ print "Observaciones:", wscdc.Obs
 
             fecha_cbte = inv.date_invoice
             if afip_ws != 'wsmtxca':
-                #fecha_cbte = fecha_cbte.replace("-", "")
                 fecha_cbte = inv.date_invoice.strftime('%Y%m%d')
 
             mipyme_fce = int(doc_afip_code) in [
@@ -475,7 +474,6 @@ print "Observaciones:", wscdc.Obs
                 fecha_serv_desde = inv.afip_service_start
                 fecha_serv_hasta = inv.afip_service_end
                 if afip_ws != 'wsmtxca':
-                    #fecha_venc_pago = fecha_venc_pago.strftime('%Y%m%d')
                     fecha_serv_desde = fecha_serv_desde.strftime('%Y%m%d')
                     fecha_serv_hasta = fecha_serv_hasta.strftime('%Y%m%d')
             else:

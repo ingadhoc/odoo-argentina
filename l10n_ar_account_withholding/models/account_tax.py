@@ -2,7 +2,6 @@
 from odoo import models, fields, api
 from odoo.exceptions import UserError
 from dateutil.relativedelta import relativedelta
-import datetime
 
 
 class AccountTax(models.Model):
@@ -31,10 +30,10 @@ class AccountTax(models.Model):
     @api.constrains('amount_type', 'withholding_type')
     def check_partner_tax_tag(self):
         recs = self.filtered(lambda x: ((
-                x.type_tax_use in ['sale', 'purchase'] and
-                x.amount_type == 'partner_tax') or (
-                x.type_tax_use in ['customer', 'supplier'] and
-                x.withholding_type == 'partner_tax')) and not x.tag_ids)
+            x.type_tax_use in ['sale', 'purchase'] and
+            x.amount_type == 'partner_tax') or (
+            x.type_tax_use in ['customer', 'supplier'] and
+            x.withholding_type == 'partner_tax')) and not x.tag_ids)
         if recs:
             raise UserError(_(
                 'Si utiliza Cálculo de impuestos igual a "Alícuota en el '

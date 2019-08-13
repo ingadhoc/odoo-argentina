@@ -66,10 +66,12 @@
         <xpath expr="//button[@type='submit']/.." position="before">
             <t t-call="l10n_ar_partner.partner_info"/>
         </xpath>
-<!--
-        <xpath expr="//div[@t-if='has_check_vat']" position="attributes">
+
+        <!-- TODO arreglar esto -->
+        <!-- <xpath expr="//div[@t-attf-class='form-group #{error.get('vat') and 'o_has_error' or ''} col-xl-6']" position="attributes"> -->
+        <!-- <xpath expr="//div[@t-if='has_check_vat']" position="attributes">
             <attribute name="t-if">False</attribute>
-        </xpath>-->
+        </xpath> -->
 
     </template>
 

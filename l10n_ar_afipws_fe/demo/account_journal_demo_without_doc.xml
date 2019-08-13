@@ -1,3 +1,8 @@
+<odoo>
+  <record id="" model="account.journal">
+    <field name="">
+  </record>
+</odoo>
 -
   We set without doc journals as default ones for odoo tests
 -

@@ -217,7 +217,7 @@ class ResCompany(models.Model):
             expirationTime = wsaa.ObtenerTagXml("expirationTime")
             generationTime = wsaa.ObtenerTagXml("generationTime")
             uniqueId = wsaa.ObtenerTagXml("uniqueId")
-        except:
+        except Exception:
             token = sign = None
             if wsaa.Excepcion:
                 # get the exception already parsed by the helper

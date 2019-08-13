@@ -177,7 +177,6 @@ class AccountArVatLine(models.Model):
     )
     company_currency_id = fields.Many2one(
         related='company_id.currency_id',
-        readonly=True,
     )
     move_id = fields.Many2one(
         'account.move',

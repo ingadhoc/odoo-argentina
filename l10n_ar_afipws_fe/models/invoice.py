@@ -24,7 +24,6 @@ class AccountInvoice(models.Model):
 
     afip_auth_verify_type = fields.Selection(
         related='company_id.afip_auth_verify_type',
-        readonly=True,
     )
     afip_batch_number = fields.Integer(
         copy=False,
@@ -66,10 +65,12 @@ class AccountInvoice(models.Model):
     )
     # for compatibility
     afip_cae = fields.Char(
-        related='afip_auth_code'
+        related='afip_auth_code',
+        readonly=False,
     )
     afip_cae_due = fields.Date(
-        related='afip_auth_code_due'
+        related='afip_auth_code_due',
+        readonly=False,
     )
 
     afip_barcode = fields.Char(
@@ -196,8 +197,7 @@ class AccountInvoice(models.Model):
                 ('commercial_partner_id', '=', self.commercial_partner_id.id),
                 ('company_id', '=', self.company_id.id),
                 ('document_number', '=', self.origin),
-                ('state', 'not in',
-                    ['draft', 'proforma', 'proforma2', 'cancel'])],
+                ('state', 'not in', ['draft', 'cancel'])],
                 limit=1)
         else:
             return self.browse()
@@ -401,7 +401,7 @@ print "Observaciones:", wscdc.Obs
                     'afip_result': '',
                     'afip_message': msg,
                 })
-                inv.message_post(msg)
+                inv.message_post(body=msg)
                 continue
 
             # get the electronic invoice type, point of sale and afip_ws:
@@ -445,33 +445,31 @@ print "Observaciones:", wscdc.Obs
 
             partner_id_code = commercial_partner.main_id_category_id.afip_code
             tipo_doc = partner_id_code or '99'
-            nro_doc = partner_id_code and int(
-                commercial_partner.main_id_number) or "0"
+            nro_doc = \
+                partner_id_code and commercial_partner.main_id_number or "0"
             cbt_desde = cbt_hasta = cbte_nro = inv.invoice_number
             concepto = tipo_expo = int(inv.afip_concept)
 
             fecha_cbte = inv.date_invoice
             if afip_ws != 'wsmtxca':
-                #fecha_cbte = fecha_cbte.replace("-", "")
                 fecha_cbte = inv.date_invoice.strftime('%Y%m%d')
 
-            # due and billing dates only for concept "services"
-            if int(concepto) != 1:
+            mipyme_fce = int(doc_afip_code) in [
+                201, 202, 203, 206, 207, 208, 211, 212, 213]
+
+            # due date only for concept "services" and mipyme_fce
+            if int(concepto) != 1 or mipyme_fce:
                 fecha_venc_pago = inv.date_due or inv.date_invoice
                 if afip_ws != 'wsmtxca':
                     fecha_venc_pago = fecha_venc_pago.strftime('%Y%m%d')
             else:
                 fecha_venc_pago = None
 
-            mipyme_fce = int(doc_afip_code) in [
-               201, 202, 203, 206, 207, 208, 211, 212, 213]
-
             # fecha de servicio solo si no es 1
-            if int(concepto) != 1 or mipyme_fce:
+            if int(concepto) != 1:
                 fecha_serv_desde = inv.afip_service_start
                 fecha_serv_hasta = inv.afip_service_end
                 if afip_ws != 'wsmtxca':
-                    fecha_venc_pago = fecha_venc_pago.strftime('%Y%m%d')
                     fecha_serv_desde = fecha_serv_desde.strftime('%Y%m%d')
                     fecha_serv_hasta = fecha_serv_hasta.strftime('%Y%m%d')
             else:
@@ -554,16 +552,11 @@ print "Observaciones:", wscdc.Obs
                 # citi que pide el cuit al partner
                 # customer data (foreign trade):
                 nombre_cliente = commercial_partner.name
-                # If argentinian and cuit, then use cuit
-                if country.code == 'AR' and tipo_doc == 80 and nro_doc:
+                # se debe informar cuit pais o id_impositivo
+                if nro_doc:
                     id_impositivo = nro_doc
                     cuit_pais_cliente = None
-                # If not argentinian and vat, use vat
                 elif country.code != 'AR' and nro_doc:
-                    id_impositivo = nro_doc
-                    cuit_pais_cliente = None
-                # else use cuit pais cliente
-                else:
                     id_impositivo = None
                     if commercial_partner.is_company:
                         cuit_pais_cliente = country.cuit_juridica

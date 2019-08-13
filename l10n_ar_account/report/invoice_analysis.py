@@ -28,11 +28,10 @@ class AccountInvoiceLineReport(models.Model):
     number = fields.Char(string='Number', size=128, readonly=True)
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('proforma', 'Pro-forma'),
-        ('proforma2', 'Pro-forma'),
         ('open', 'Open'),
-        ('paid', 'Done'),
-        ('cancel', 'Cancelled')
+        ('in_payment', 'In Payment'),
+        ('paid', 'Paid'),
+        ('cancel', 'Cancelled'),
     ], 'Invoice State', readonly=True)
     account_id = fields.Many2one('account.account', readonly=True)
     document_type_id = fields.Many2one('account.document.type', readonly=True)

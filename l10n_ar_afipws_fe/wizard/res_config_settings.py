@@ -24,5 +24,6 @@ class ResConfigSettings(models.TransientModel):
     #     )).set_chart_of_accounts()
 
     afip_auth_verify_type = fields.Selection(
-        related='company_id.afip_auth_verify_type'
+        related='company_id.afip_auth_verify_type',
+        readonly=False,
     )

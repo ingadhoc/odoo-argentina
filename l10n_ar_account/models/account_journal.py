@@ -44,7 +44,8 @@ class AccountJournal(models.Model):
 
     # to make bank account creation easier
     bank_cbu = fields.Char(
-        related='bank_account_id.cbu'
+        related='bank_account_id.cbu',
+        readonly=False,
     )
 
     def set_bank_account(self, acc_number, bank_id=None):

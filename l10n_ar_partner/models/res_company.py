@@ -6,12 +6,14 @@ class ResCompany(models.Model):
 
     main_id_category_id = fields.Many2one(
         related='partner_id.main_id_category_id',
+        readonly=False,
     )
     main_id_number = fields.Char(
         related='partner_id.main_id_number',
+        readonly=False,
     )
     cuit = fields.Char(
-        related='partner_id.cuit'
+        related='partner_id.cuit',
     )
 
     @api.multi

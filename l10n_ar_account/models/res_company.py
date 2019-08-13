@@ -14,24 +14,28 @@ class ResCompany(models.Model):
     )
     gross_income_number = fields.Char(
         related='partner_id.gross_income_number',
-        string='Gross Income'
+        string='Gross Income',
+        readonly=False,
     )
     gross_income_type = fields.Selection(
         related='partner_id.gross_income_type',
-        string='Gross Income'
+        string='Gross Income',
+        readonly=False,
     )
     gross_income_jurisdiction_ids = fields.Many2many(
         related='partner_id.gross_income_jurisdiction_ids',
+        readonly=False,
     )
     start_date = fields.Date(
         related='partner_id.start_date',
+        readonly=False,
     )
     afip_responsability_type_id = fields.Many2one(
         related='partner_id.afip_responsability_type_id',
+        readonly=False,
     )
     company_requires_vat = fields.Boolean(
         related='afip_responsability_type_id.company_requires_vat',
-        readonly=True,
     )
     # use globally as default so that if child companies are created they
     # also use this as default

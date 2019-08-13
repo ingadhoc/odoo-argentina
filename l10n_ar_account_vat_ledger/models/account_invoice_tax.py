@@ -27,27 +27,23 @@ class AccountInvoiceTax(models.Model):
         # borran una linea de rate), entonces podemos hacerlo desde el move
         # mas o menos como hace account_invoice_currency o viendo el total de
         # debito o credito de ese mismo
-        for rec in self:
-            currency = rec.currency_id.with_context(
-                company_id=rec.company_id.id,
-                date=rec.invoice_id.date_invoice or
-                fields.Date.context_today(rec))
-            if not currency:
-                continue
-            if rec.company_id.currency_id == currency:
+        for rec in self.filtered('currency_id'):
+            if rec.company_id.currency_id == rec.currency_id:
                 rec.cc_base = rec.base
                 rec.cc_amount = rec.amount
             else:
                 # nueva modalidad de currency_rate
                 currency_rate = rec.invoice_id.currency_rate or \
-                    currency.compute(
-                        1., rec.company_id.currency_id, round=False)
+                    rec.currency_id._convert(
+                        1., rec.company_id.currency_id, rec.company_id,
+                        rec.invoice_id.date_invoice or
+                        fields.Date.context_today(rec), round=False)
                 # TODO borrar
                 # currency_rate = currency.compute
                 #     1.0, rec.company_id.currency_id, round=False)
                 # otra alternativa serua usar currency.compute con round true
                 # para cada uno de estos valores
-                rec.cc_base = currency.round(
+                rec.cc_base = rec.currency_id.round(
                     rec.base * currency_rate)
-                rec.cc_amount = currency.round(
+                rec.cc_amount = rec.currency_id.round(
                     rec.amount * currency_rate)

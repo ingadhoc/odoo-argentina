@@ -55,13 +55,8 @@ class AccountInvoice(models.Model):
         # borran una linea de rate), entonces podemos hacerlo desde el move
         # mas o menos como hace account_invoice_currency o viendo el total de
         # debito o credito de ese mismo
-        for rec in self:
-            currency = rec.currency_id.with_context(
-                company_id=rec.company_id.id,
-                date=rec.date_invoice or fields.Date.context_today(rec))
-            if not currency:
-                return False
-            if rec.company_id.currency_id == currency:
+        for rec in self.filtered('currency'):
+            if rec.company_id.currency_id == rec.currency_id:
                 rec.cc_amount_untaxed = rec.amount_untaxed
                 rec.cc_amount_tax = rec.amount_tax
                 rec.cc_amount_total = rec.amount_total
@@ -74,29 +69,25 @@ class AccountInvoice(models.Model):
             else:
                 # nueva modalidad de currency_rate
                 # el or es por si la factura no esta balidad o no es l10n_ar
-                currency_rate = rec.currency_rate or currency.compute(
-                    1., rec.company_id.currency_id, round=False)
-                # TODO borrar
-                # currency_rate = currency.compute(
-                #     1.0, rec.company_id.currency_id, round=False)
-                # otra alternativa serua usar currency.compute con round true
-                # para cada uno de estos valores
-                # rec.currency_rate = currency_rate
-                rec.cc_amount_untaxed = currency.round(
+                currency_rate = rec.currency_rate or rec.currency_id._convert(
+                    1., rec.company_id.currency_id, rec.company_id,
+                    rec.date_invoice or fields.Date.context_today(rec),
+                    round=False)
+                rec.cc_amount_untaxed = rec.currency_id.round(
                     rec.amount_untaxed * currency_rate)
-                rec.cc_amount_tax = currency.round(
+                rec.cc_amount_tax = rec.currency_id.round(
                     rec.amount_tax * currency_rate)
-                rec.cc_amount_total = currency.round(
+                rec.cc_amount_total = rec.currency_id.round(
                     rec.amount_total * currency_rate)
-                rec.cc_vat_untaxed_base_amount = currency.round(
+                rec.cc_vat_untaxed_base_amount = rec.currency_id.round(
                     rec.vat_untaxed_base_amount * currency_rate)
-                rec.cc_vat_amount = currency.round(
+                rec.cc_vat_amount = rec.currency_id.round(
                     rec.vat_amount * currency_rate)
-                rec.cc_other_taxes_amount = currency.round(
+                rec.cc_other_taxes_amount = rec.currency_id.round(
                     rec.other_taxes_amount * currency_rate)
-                rec.cc_vat_exempt_base_amount = currency.round(
+                rec.cc_vat_exempt_base_amount = rec.currency_id.round(
                     rec.vat_exempt_base_amount * currency_rate)
-                rec.cc_vat_taxable_amount = currency.round(
+                rec.cc_vat_taxable_amount = rec.currency_id.round(
                     rec.vat_taxable_amount * currency_rate)
 
     @api.multi

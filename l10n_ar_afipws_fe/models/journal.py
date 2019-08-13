@@ -48,7 +48,7 @@ class AccountJournal(models.Model):
         if journal.point_of_sale_type == 'electronic' and journal.afip_ws:
             try:
                 journal.sync_document_local_remote_number()
-            except:
+            except Exception:
                 _logger.info(
                     'Could not sincronize local and remote numbers')
         return journal

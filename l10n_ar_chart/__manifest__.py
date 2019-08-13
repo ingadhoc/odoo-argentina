@@ -45,7 +45,7 @@
         # # '../account/demo/account_bank_statement.yml',
         # # '../account/demo/account_invoice_demo.yml',
     ],
-    'installable': False,
+    'installable': True,
     'images': [
     ],
     'version': '12.0.1.0.0',

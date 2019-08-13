@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 
 class ProductUom(models.Model):
-    _inherit = "product.uom"
+    _inherit = "uom.uom"
 
     @api.multi
     def action_get_pyafipws_product_uoms(self):

@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="account.view_account_invoice_filter"/>
         <field name="arch" type="xml">
             <group position="inside">
-                <filter string="State" domain="[]" context="{'group_by':'state_id'}"/>
+                <filter name="state_id" string="State" domain="[]" context="{'group_by':'state_id'}"/>
             </group>
         </field>
     </record>

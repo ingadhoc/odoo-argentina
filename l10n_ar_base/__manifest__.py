@@ -20,7 +20,7 @@
         'demo/res_currency_demo.xml',
         'demo/res_company_demo.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': True,
 }

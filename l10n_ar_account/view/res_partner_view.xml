@@ -85,7 +85,7 @@
                 <field name="afip_responsability_type_id"/>
             </field>
             <filter name="salesperson" position="before">
-                <filter string="AFIP Responsability Type" context="{'group_by': 'afip_responsability_type_id'}"/>
+                <filter name="afip_responsability_type_id" string="AFIP Responsability Type" context="{'group_by': 'afip_responsability_type_id'}"/>
             </filter>
         </field>
     </record>

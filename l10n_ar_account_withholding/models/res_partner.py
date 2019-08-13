@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields
 import logging
 # from dateutil.relativedelta import relativedelta
 _logger = logging.getLogger(__name__)

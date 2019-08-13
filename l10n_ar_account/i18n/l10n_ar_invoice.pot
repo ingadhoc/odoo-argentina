@@ -287,7 +287,7 @@ msgid "Activos No Corrientes"
 msgstr ""
 
 #. module: l10n_ar_account
-#: field:product.uom,afip_code:0
+#: field:uom.uom,afip_code:0
 #: field:res.country,afip_code:0
 msgid "Afip Code"
 msgstr ""

@@ -4,7 +4,7 @@
         <field name="name">account.invoice.line.report.tree</field>
         <field name="model">account.invoice.line.report</field>
         <field name="arch" type="xml">
-            <tree colors="blue:state == 'draft';gray:state in ('cancel','paid');black:state in ('proforma','proforma2')" string="Invoice Lines Analysis">
+            <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" string="Invoice">
                 <field name="number"/>
                 <!-- <field name="date"/> -->
                 <field name="date_invoice"/>
@@ -53,20 +53,15 @@
                 <filter string="Customer" name="customer" domain="['|', ('type','=','out_invoice'),('type','=','out_refund')]"/>
                 <filter string="Vendor" name="supplier" domain="['|', ('type','=','in_invoice'),('type','=','in_refund')]"/>
                 <separator/>
-                <filter string="Invoice" domain="['|', ('type','=','out_invoice'),('type','=','in_invoice')]"/>
-                <filter string="Refund" domain="['|', ('type','=','out_refund'),('type','=','in_refund')]"/>
+                <filter name="invoice" string="Invoice" domain="['|', ('type','=','out_invoice'),('type','=','in_invoice')]"/>
+                <filter name="refund" string="Refund" domain="['|', ('type','=','out_refund'),('type','=','in_refund')]"/>
                 <separator/>
                 <filter string="With AFIP Document" name="with_afip_document" domain="[('journal_id.use_documents', '=', True), ('journal_id.localization', '=', 'argentina')]"/>
-                <separator/>
                 <field name="name_template"/>
-                <filter string="Draft"
-                       name="draft"
-                       domain="[('state','in',['draft','proforma','proforma2'])]"
-                       help="Draft Invoices"/>
-                <filter string="Invoiced"
-                       name="current"
-                       domain="[('state','not in', ('draft','cancel'))]"
-                       help="Open and Paid Invoices"/>
+                <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="unpaid" string="Open" domain="[('state', '=', 'open')]"/>
+                <filter name="in_payment" string="In Payment" domain="[('state', '=', 'in_payment')]"/>
+                <filter name="paid" string="Paid" domain="[('state', '=', 'paid')]"/>
                 <separator/>
                 <filter string="Last month"
                         name="last_month"
@@ -144,6 +139,6 @@
         <field name="context">{'search_default_current': 1, 'search_default_customer': 1, 'search_default_this_year': 1}</field>
     </record>
 
-    <menuitem action="action_account_invoice_line_report_all" id="menu_action_account_invoice_line_report_all" name="Invoice Lines Analysis" parent="account.account_reports_business_intelligence_menu" sequence="10"/>
+    <menuitem action="action_account_invoice_line_report_all" id="menu_action_account_invoice_line_report_all" name="Invoice Lines Analysis" parent="account.menu_action_account_invoice_report_all" sequence="10"/>
 
 </odoo>

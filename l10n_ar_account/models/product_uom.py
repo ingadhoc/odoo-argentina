@@ -6,7 +6,7 @@ from odoo import fields, models
 
 
 class ProductUom(models.Model):
-    _inherit = 'product.uom'
+    _inherit = 'uom.uom'
 
     afip_code = fields.Char(
         'Afip Code',

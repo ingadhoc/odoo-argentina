@@ -23,6 +23,11 @@ class AccountInvoice(models.Model):
     main_id_number = fields.Char(
         related='commercial_partner_id.main_id_number',
     )
+    # TODO remove on v13 if moving to qweb reports
+    afip_incoterm_id = fields.Many2one(
+        related='incoterm_id',
+        string='Incoterm (for backward reports compatibility',
+    )
     state_id = fields.Many2one(
         # related='commercial_partner_id.state_id',
         # al final lo hacemos por contacto (y no commercial) para poder usar

@@ -46,7 +46,7 @@ class AccountInvoice(models.Model):
         readonly=True,
     )
     computed_currency_rate = fields.Float(
-        string='Currency Rate',
+        string='Currency Rate (preview)',
         digits=(16, 4),
         compute='_compute_currency_rate',
     )
@@ -89,7 +89,7 @@ class AccountInvoice(models.Model):
     vat_taxable_ids = fields.One2many(
         compute="_compute_argentina_amounts",
         comodel_name='account.invoice.tax',
-        string='VAT Taxes'
+        string='VAT Taxable'
     )
     # todos los impuestos menos los tipo iva vat_tax_ids
     not_vat_tax_ids = fields.One2many(
@@ -128,12 +128,6 @@ class AccountInvoice(models.Model):
         compute="_compute_argentina_amounts",
         string='Other Taxes Amount'
     )
-    afip_incoterm_id = fields.Many2one(
-        'afip.incoterm',
-        'Incoterm',
-        readonly=True,
-        states={'draft': [('readonly', False)]},
-    )
     point_of_sale_type = fields.Selection(
         related='journal_id.point_of_sale_type',
     )
@@ -160,7 +154,6 @@ class AccountInvoice(models.Model):
     # simple, agregamos este otro campo
     force_afip_concept = fields.Selection(
         selection=afip_invoice_concepts,
-        string="AFIP concept",
         readonly=True,
     )
     afip_service_start = fields.Date(

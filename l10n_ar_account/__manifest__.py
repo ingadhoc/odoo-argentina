@@ -32,7 +32,6 @@
         'data/account_document_letter.xml',
         # los cargamos con csv pero los hacemos no actualizables con un hook
         'data/account.document.type.csv',
-        'data/afip_incoterm.xml',
         'data/res_country_afip_code.xml',
         'data/res_country_cuit.xml',
         'data/product_uom.xml',
@@ -52,7 +51,6 @@
         'view/res_partner_view.xml',
         'view/res_company_view.xml',
         'view/afip_menuitem.xml',
-        'view/afip_incoterm_view.xml',
         'view/account_account_view.xml',
         'view/res_country_view.xml',
         'view/res_currency_view.xml',

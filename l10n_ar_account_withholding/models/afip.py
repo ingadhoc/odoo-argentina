@@ -3,6 +3,7 @@ from odoo import models, fields
 
 class AfipTablagananciasEscala(models.Model):
     _name = 'afip.tabla_ganancias.escala'
+    _description = 'afip.tabla_ganancias.escala'
     _rec_name = 'importe_desde'
 
     importe_desde = fields.Float(
@@ -24,6 +25,7 @@ class AfipTablagananciasEscala(models.Model):
 
 class AfipTablagananciasAlicuotasymontos(models.Model):
     _name = 'afip.tabla_ganancias.alicuotasymontos'
+    _description = 'afip.tabla_ganancias.alicuotasymontos'
     _rec_name = 'codigo_de_regimen'
 
     codigo_de_regimen = fields.Char(

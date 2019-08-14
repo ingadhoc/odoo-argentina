@@ -13,6 +13,7 @@
     'license': 'AGPL-3',
     'name': 'Títulos de Personería y Tipos de documentos Arentinos',
     'data': [
+        'security/security.xml',
         'data/res_partner_title_data.xml',
         'data/res_partner_id_category_data.xml',
         'views/res_partner_view.xml',
@@ -20,7 +21,6 @@
         'views/res_partner_id_category_view.xml',
         'views/res_partner_id_number_view.xml',
         'views/portal_templates.xml',
-        'security/security.xml',
     ],
     'demo': [
         'demo/partner_demo.xml',

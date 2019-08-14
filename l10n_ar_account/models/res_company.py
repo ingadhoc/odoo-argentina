@@ -14,12 +14,10 @@ class ResCompany(models.Model):
     )
     gross_income_number = fields.Char(
         related='partner_id.gross_income_number',
-        string='Gross Income',
         readonly=False,
     )
     gross_income_type = fields.Selection(
         related='partner_id.gross_income_type',
-        string='Gross Income',
         readonly=False,
     )
     gross_income_jurisdiction_ids = fields.Many2many(

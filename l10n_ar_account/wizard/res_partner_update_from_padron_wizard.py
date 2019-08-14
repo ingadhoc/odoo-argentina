@@ -7,6 +7,7 @@ _logger = logging.getLogger(__name__)
 
 class ResPartnerUpdateFromPadronField(models.TransientModel):
     _name = 'res.partner.update.from.padron.field'
+    _description = 'res.partner.update.from.padron.field'
 
     wizard_id = fields.Many2one(
         'res.partner.update.from.padron.wizard',
@@ -23,6 +24,7 @@ class ResPartnerUpdateFromPadronField(models.TransientModel):
 
 class ResPartnerUpdateFromPadronWizard(models.TransientModel):
     _name = 'res.partner.update.from.padron.wizard'
+    _description = 'res.partner.update.from.padron.wizard'
 
     @api.model
     def get_partners(self):

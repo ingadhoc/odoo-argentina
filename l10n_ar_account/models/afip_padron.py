@@ -5,6 +5,7 @@ _logger = logging.getLogger(__name__)
 
 class AccountConcept(models.Model):
     _name = "afip.concept"
+    _description = "afip.concept"
 
     code = fields.Char(
         'Code',
@@ -21,6 +22,7 @@ class AccountConcept(models.Model):
 
 class AccountActivity(models.Model):
     _name = "afip.activity"
+    _description = "afip.activity"
 
     code = fields.Char(
         'Code',
@@ -37,6 +39,7 @@ class AccountActivity(models.Model):
 
 class AccountTax(models.Model):
     _name = "afip.tax"
+    _description = "afip.tax"
 
     code = fields.Char(
         'Code',

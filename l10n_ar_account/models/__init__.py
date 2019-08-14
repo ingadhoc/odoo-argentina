@@ -7,7 +7,6 @@ from . import account_tax
 from . import account_document_letter
 from . import afip_responsability_type
 from . import account_document_type
-from . import afip_incoterm
 from . import res_partner
 from . import res_country
 from . import res_currency

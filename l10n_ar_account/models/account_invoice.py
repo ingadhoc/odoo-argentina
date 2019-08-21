@@ -507,8 +507,8 @@ class AccountInvoice(models.Model):
             if len(vat_taxes) != 1:
                 raise ValidationError(_(
                     'Debe haber un y solo un impuesto de IVA por línea. '
-                    'Verificar líneas con producto "%s"' % (
-                        inv_line.product_id.name)))
+                    'Verificar líneas con producto "%s" (Id Factura: %s)' % (
+                        inv_line.product_id.name, inv_line.invoice_id.id)))
 
         # check partner has responsability so it will be assigned on invoice
         # validate

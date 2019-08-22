@@ -79,6 +79,11 @@ class AccountInvoice(models.Model):
         compute='_compute_barcode',
         string='AFIP Barcode'
     )
+    # backport of v13 for qweb report
+    l10n_ar_afip_barcode = fields.Char(
+        compute='_compute_barcode',
+        string='AFIP Barcode',
+    )
     afip_barcode_img = fields.Binary(
         compute='_compute_barcode',
         string='AFIP Barcode Image'
@@ -140,6 +145,7 @@ class AccountInvoice(models.Model):
                         "%02d" % int(rec.document_type_id.code),
                         "%04d" % int(rec.journal_id.point_of_sale_number),
                         str(rec.afip_auth_code), cae_due])
+                rec.l10n_ar_afip_barcode = barcode
                 barcode = barcode + rec.verification_digit_modulo10(barcode)
             rec.afip_barcode = barcode
             rec.afip_barcode_img = rec._make_image_I25(barcode)

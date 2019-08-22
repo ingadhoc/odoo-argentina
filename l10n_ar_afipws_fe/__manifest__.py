@@ -29,6 +29,7 @@
         'views/account_journal_view.xml',
         'views/product_uom_view.xml',
         'views/res_currency_view.xml',
+        'views/report_invoice.xml',
         'views/menuitem.xml',
     ],
     'demo': [

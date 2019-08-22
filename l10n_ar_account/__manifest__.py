@@ -65,6 +65,8 @@
         'view/afip_activity_view.xml',
         'view/afip_concept_view.xml',
         'view/afip_tax_view.xml',
+        'view/report_layout.xml',
+        'view/report_invoice.xml',
         'report/invoice_analysis.xml',
         'security/ir.model.access.csv',
         'security/security.xml',

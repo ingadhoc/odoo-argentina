@@ -489,7 +489,7 @@ class AccountInvoice(models.Model):
         # and for performance
         for inv_line in argentinian_invoices.filtered(
                 lambda x: x.company_id.company_requires_vat).mapped(
-                    'invoice_line_ids'):
+                    'invoice_line_ids').filtered(lambda x: not x.display_type):
             vat_taxes = inv_line.invoice_line_tax_ids.filtered(
                 lambda x:
                 x.tax_group_id.tax == 'vat' and x.tax_group_id.type == 'tax')

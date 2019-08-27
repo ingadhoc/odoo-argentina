@@ -461,9 +461,7 @@ print "Observaciones:", wscdc.Obs
             if afip_ws != 'wsmtxca':
                 fecha_cbte = fecha_cbte.replace("-", "")
 
-            mipyme_fce = int(doc_afip_code) in [
-                201, 202, 203, 206, 207, 208, 211, 212, 213]
-
+            mipyme_fce = int(doc_afip_code) in [201, 206, 211]
             # due date only for concept "services" and mipyme_fce
             if int(concepto) != 1 or mipyme_fce:
                 fecha_venc_pago = inv.date_due or inv.date_invoice
@@ -502,6 +500,8 @@ print "Observaciones:", wscdc.Obs
             moneda_id = inv.currency_id.afip_code
             moneda_ctz = inv.currency_rate
 
+            CbteAsoc = inv.get_related_invoices_data()
+
             # create the invoice internally in the helper
             if afip_ws == 'wsfe':
                 ws.CrearFactura(
@@ -512,11 +512,6 @@ print "Observaciones:", wscdc.Obs
                     fecha_serv_desde, fecha_serv_hasta,
                     moneda_id, moneda_ctz
                 )
-                if mipyme_fce:
-                    # agregamos cbu para factura de credito electronica
-                    ws.AgregarOpcional(
-                        opcional_id=2101,
-                        valor=inv.partner_bank_id.cbu)
             # elif afip_ws == 'wsmtxca':
             #     obs_generales = inv.comment
             #     ws.CrearFactura(
@@ -615,8 +610,25 @@ print "Observaciones:", wscdc.Obs
                     tipo_doc, nro_doc, zona, doc_afip_code, pos_number,
                     cbte_nro, fecha_cbte, imp_total, imp_neto, imp_iva,
                     imp_tot_conc, impto_liq_rni, imp_op_ex, imp_perc, imp_iibb,
-                    imp_perc_mun, imp_internos, moneda_id, moneda_ctz
+                    imp_perc_mun, imp_internos, moneda_id, moneda_ctz,
+                    fecha_venc_pago
                 )
+
+            if afip_ws in ['wsfe', 'wsbfe']:
+                if mipyme_fce:
+                    # agregamos cbu para factura de credito electronica
+                    ws.AgregarOpcional(
+                        opcional_id=2101,
+                        valor=inv.partner_bank_id.cbu)
+                elif int(doc_afip_code) in [202, 203, 207, 208, 212, 213]:
+                    # si es una NC y si el valor es el mismo al comprobante original entonces es una anulacion
+                    if int(doc_afip_code) in [203, 208, 213] and CbteAsoc.amount_total == self.amount_total:
+                        valor = 'S'
+                    else:
+                        valor = 'N'
+                    ws.AgregarOpcional(
+                        opcional_id=22,
+                        valor=valor)
 
             # TODO ver si en realidad tenemos que usar un vat pero no lo
             # subimos
@@ -646,14 +658,23 @@ print "Observaciones:", wscdc.Obs
                         "%.2f" % tax.amount,
                     )
 
-            CbteAsoc = inv.get_related_invoices_data()
-            # bono no tiene implementado AgregarCmpAsoc
-            if CbteAsoc and afip_ws != 'wsbfe':
-                ws.AgregarCmpAsoc(
-                    CbteAsoc.document_type_id.code,
-                    CbteAsoc.point_of_sale_number,
-                    CbteAsoc.invoice_number,
-                )
+            if CbteAsoc:
+                # fex no acepta fecha
+                if afip_ws == 'wsfex':
+                    ws.AgregarCmpAsoc(
+                        CbteAsoc.document_type_id.code,
+                        CbteAsoc.point_of_sale_number,
+                        CbteAsoc.invoice_number,
+                        self.company_id.cuit,
+                    )
+                else:
+                    ws.AgregarCmpAsoc(
+                        CbteAsoc.document_type_id.code,
+                        CbteAsoc.point_of_sale_number,
+                        CbteAsoc.invoice_number,
+                        self.company_id.cuit,
+                        afip_ws != 'wsmtxca' and self.date.replace("-", "") or self.date,
+                    )
 
             # analize line items - invoice detail
             # wsfe do not require detail

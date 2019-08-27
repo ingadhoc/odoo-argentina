@@ -740,6 +740,8 @@ print "Observaciones:", wscdc.Obs
                         sys.exc_type,
                         sys.exc_value)[0]
             if msg:
+                _logger.info(_('AFIP Validation Error. %s' % msg)+' XML Request: %s XML Response: %s' % (
+                    ws.XmlRequest, ws.XmlResponse))
                 raise UserError(_('AFIP Validation Error. %s' % msg))
 
             msg = u"\n".join([ws.Obs or "", ws.ErrMsg or ""])

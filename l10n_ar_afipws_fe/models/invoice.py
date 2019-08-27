@@ -659,24 +659,29 @@ print "Observaciones:", wscdc.Obs
                     codigo = line.product_id.default_code
                     # unidad de referencia del producto si se comercializa
                     # en una unidad distinta a la de consumo
-                    if not line.uom_id.afip_code:
+                    # uom is not mandatory, if no UOM we use "unit"
+                    if not line.uom_id:
+                        umed = '7'
+                    elif not line.uom_id.afip_code:
                         raise UserError(_(
                             'Not afip code con producto UOM %s' % (
                                 line.uom_id.name)))
+                    else:
+                        umed = line.uom_id.afip_code
                     # cod_mtx = line.uom_id.afip_code
                     ds = line.name
                     qty = line.quantity
-                    umed = line.uom_id.afip_code
                     precio = line.price_unit
                     importe = line.price_subtotal
                     # calculamos bonificacion haciendo teorico menos importe
                     bonif = line.discount and str(
                         "%.2f" % (precio * qty - importe)) or None
                     if afip_ws in ['wsmtxca', 'wsbfe']:
-                        if not line.product_id.uom_id.afip_code:
-                            raise UserError(_(
-                                'Not afip code con producto UOM %s' % (
-                                    line.product_id.uom_id.name)))
+                        # TODO No lo estamos usando. Borrar?
+                        # if not line.product_id.uom_id.afip_code:
+                        #     raise UserError(_(
+                        #         'Not afip code con producto UOM %s' % (
+                        #             line.product_id.uom_id.name)))
                         # u_mtx = (
                         #     line.product_id.uom_id.afip_code or
                         #     line.uom_id.afip_code)

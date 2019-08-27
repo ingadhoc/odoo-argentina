@@ -205,6 +205,9 @@ class AccountInvoice(models.Model):
                 ('commercial_partner_id', '=', self.commercial_partner_id.id),
                 ('company_id', '=', self.company_id.id),
                 ('document_number', '=', self.origin),
+                ('id', '!=', self.id),
+                ('document_type_id.document_letter_id', '=', self.document_type_id.document_letter_id.id),
+                ('document_type_id', '!=', self.document_type_id.id),
                 ('state', 'not in', ['draft', 'cancel'])],
                 limit=1)
         else:

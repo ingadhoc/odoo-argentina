@@ -191,7 +191,7 @@ class AccountJournal(models.Model):
             ('document_letter_id', '=', False)])
 
         # for wsfe we create fce doc types, not for the others
-        if 'afip_ws' not in self._fields or self.afip_ws != 'wsfe':
+        if 'afip_ws' not in self._fields or self.afip_ws not in ['wsfe', 'wsbfe']:
             document_types = document_types.filtered(
                 lambda x: int(x.code) not in [
                     201, 202, 203, 206, 207, 208, 211, 212, 213])

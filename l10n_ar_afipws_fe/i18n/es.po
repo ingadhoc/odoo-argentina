@@ -851,3 +851,9 @@ msgstr "⇒ Obtener Información de Monedas"
 #: model:ir.ui.view,arch_db:l10n_ar_afipws_fe.view_currency_form
 msgid "⇒ Get Rate"
 msgstr "⇒ Obtener Tasa"
+
+
+#. module: l10n_ar_afipws_fe
+#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_account_invoice_afip_reference
+msgid "Commercial Reference"
+msgstr "Referencia Comercial"

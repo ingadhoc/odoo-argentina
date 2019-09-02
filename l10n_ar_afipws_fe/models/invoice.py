@@ -107,7 +107,7 @@ class AccountInvoice(models.Model):
         'Validation Type',
         compute='_compute_validation_type',
     )
-    
+
     @api.depends('journal_id', 'afip_auth_code')
     def _compute_validation_type(self):
         for rec in self:

@@ -620,6 +620,10 @@ print "Observaciones:", wscdc.Obs
                     ws.AgregarOpcional(
                         opcional_id=2101,
                         valor=inv.partner_bank_id.cbu)
+                    if inv.name:
+                        ws.AgregarOpcional(
+                            opcional_id=23,
+                            valor=inv.name)
                 elif int(doc_afip_code) in [202, 203, 207, 208, 212, 213]:
                     # si es una NC y si el valor es el mismo al comprobante original entonces es una anulacion
                     if int(doc_afip_code) in [203, 208, 213] and CbteAsoc.amount_total == self.amount_total:

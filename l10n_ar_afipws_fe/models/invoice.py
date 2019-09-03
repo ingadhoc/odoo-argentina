@@ -677,7 +677,7 @@ print "Observaciones:", wscdc.Obs
                         CbteAsoc.point_of_sale_number,
                         CbteAsoc.invoice_number,
                         self.company_id.cuit,
-                        afip_ws != 'wsmtxca' and self.date.replace("-", "") or self.date,
+                        afip_ws != 'wsmtxca' and CbteAsoc.date_invoice.replace("-", "") or CbteAsoc.date_invoice,
                     )
 
             # analize line items - invoice detail

@@ -1,0 +1,29 @@
+<odoo>
+    <record id="l10n_ar_account.dc_fce_a_f" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_fce_a_nc" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_fce_a_nd" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_fce_b_f" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_fce_b_nd" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_fce_b_nc" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_fce_c_f" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_fce_c_nd" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_fce_c_nc" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+</odoo>

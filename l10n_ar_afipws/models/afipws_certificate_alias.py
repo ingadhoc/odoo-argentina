@@ -141,17 +141,17 @@ class AfipwsCertificateAlias(models.Model):
     def get_cuit(self):
         for rec in self:
             if rec.service_type == 'outsourced':
-                rec.cuit=rec.service_provider_cuit
+                rec.cuit = rec.service_provider_cuit
             else:
-                rec.cuit=rec.company_cuit
+                rec.cuit = rec.company_cuit
 
     @api.onchange('company_id')
     def change_company_id(self):
         if self.company_id:
-            self.country_id=self.company_id.country_id.id
-            self.state_id=self.company_id.state_id.id
-            self.city=self.company_id.city
-            self.company_cuit=self.company_id.cuit
+            self.country_id = self.company_id.country_id.id
+            self.state_id = self.company_id.state_id.id
+            self.city = self.company_id.city
+            self.company_cuit = self.company_id.cuit
 
     @api.multi
     def action_confirm(self):
@@ -162,13 +162,11 @@ class AfipwsCertificateAlias(models.Model):
 
     @api.multi
     def generate_key(self, key_length=2048):
-        """
-        """
         # TODO reemplazar todo esto por las funciones nativas de pyafipws
         for rec in self:
-            k=crypto.PKey()
+            k = crypto.PKey()
             k.generate_key(crypto.TYPE_RSA, key_length)
-            rec.key=crypto.dump_privatekey(crypto.FILETYPE_PEM, k)
+            rec.key = crypto.dump_privatekey(crypto.FILETYPE_PEM, k)
 
     @api.multi
     def action_to_draft(self):
@@ -183,32 +181,30 @@ class AfipwsCertificateAlias(models.Model):
 
     @api.multi
     def action_create_certificate_request(self):
-        """
-        TODO agregar descripcion y ver si usamos pyafipsw para generar esto
-        """
+        # TODO agregar descripcion y ver si usamos pyafipsw para generar esto
         for record in self:
-            req=crypto.X509Req()
-            req.get_subject().C=self.country_id.code.encode(
+            req = crypto.X509Req()
+            req.get_subject().C = self.country_id.code.encode(
                 'ascii', 'ignore')
             if self.state_id:
-                req.get_subject().ST=self.state_id.name.encode(
+                req.get_subject().ST = self.state_id.name.encode(
                     'ascii', 'ignore')
-            req.get_subject().L=self.city.encode(
+            req.get_subject().L = self.city.encode(
                 'ascii', 'ignore')
-            req.get_subject().O=self.company_id.name.encode(
+            req.get_subject().O = self.company_id.name.encode(
                 'ascii', 'ignore')
-            req.get_subject().OU=self.department.encode(
+            req.get_subject().OU = self.department.encode(
                 'ascii', 'ignore')
-            req.get_subject().CN=self.common_name.encode(
+            req.get_subject().CN = self.common_name.encode(
                 'ascii', 'ignore')
-            req.get_subject().serialNumber='CUIT %s' % self.cuit.encode(
+            req.get_subject().serialNumber = 'CUIT %s' % self.cuit.encode(
                 'ascii', 'ignore')
-            k=crypto.load_privatekey(crypto.FILETYPE_PEM, self.key)
-            self.key=crypto.dump_privatekey(crypto.FILETYPE_PEM, k)
+            k = crypto.load_privatekey(crypto.FILETYPE_PEM, self.key)
+            self.key = crypto.dump_privatekey(crypto.FILETYPE_PEM, k)
             req.set_pubkey(k)
             req.sign(k, 'sha256')
-            csr=crypto.dump_certificate_request(crypto.FILETYPE_PEM, req)
-            vals={
+            csr = crypto.dump_certificate_request(crypto.FILETYPE_PEM, req)
+            vals = {
                 'csr': csr,
                 'alias_id': record.id,
             }

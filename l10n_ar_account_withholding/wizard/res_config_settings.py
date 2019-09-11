@@ -25,6 +25,6 @@ class ResConfigSettings(models.TransientModel):
     )
     group_partner_tax_withholding_amount_type = fields.Boolean(
         'Allow to choose base amount type for withholdings on partners',
-        implied_group=\
-            'l10n_ar_account_withholding.partner_tax_withholding_amount_type',
+        implied_group='l10n_ar_account_withholding.'
+        'partner_tax_withholding_amount_type',
     )

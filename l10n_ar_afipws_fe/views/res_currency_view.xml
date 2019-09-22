@@ -9,7 +9,7 @@
                 <label for="afip_code"/>
                 <div>
                     <field name="afip_code" class="oe_inline"/>
-                    <button name="action_get_pyafipws_currency_rate" string="⇒ Get Rate" type="object" attrs="{'invisible':[('afip_code','=',False)]}" class="oe_link"/>
+                    <button name="action_get_pyafipws_currency_rate" string="⇒ Get Rate" type="object" attrs="{'invisible':['|', ('afip_code','=',False), ('afip_code', '=', 'PES')]}" class="oe_link"/>
                     <button name="action_get_pyafipws_currencies" string="⇒ Get Currencies Data" type="object" attrs="{'invisible':[('afip_code','!=',False)]}" class="oe_link"/>
                 </div>
             </field>

@@ -463,7 +463,7 @@ print "Observaciones:", wscdc.Obs
 
             mipyme_fce = int(doc_afip_code) in [201, 206, 211]
             # due date only for concept "services" and mipyme_fce
-            if int(concepto) != 1 or mipyme_fce:
+            if int(concepto) != 1 and int(doc_afip_code) not in [202, 203, 207, 208, 212, 213] or mipyme_fce:
                 fecha_venc_pago = inv.date_due or inv.date_invoice
                 if afip_ws != 'wsmtxca':
                     fecha_venc_pago = fecha_venc_pago.replace("-", "")

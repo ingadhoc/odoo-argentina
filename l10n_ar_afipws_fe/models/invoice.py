@@ -351,7 +351,7 @@ print "Observaciones:", wscdc.Obs
             cbte_fch = inv.date_invoice
             if not cbte_fch:
                 raise UserError(_('Invoice Date is required!'))
-            cbte_fch = cbte_fch.replace("-", "")
+            cbte_fch = cbte_fch.strftime('%Y%m%d')
             imp_total = str("%.2f" % inv.amount_total)
 
             _logger.info('Constatando Comprobante en afip')

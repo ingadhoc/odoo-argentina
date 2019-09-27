@@ -14,43 +14,43 @@ class AccountInvoice(models.Model):
     # no gravado en iva
     # cc_vat_untaxed = fields.Monetary(
     cc_vat_untaxed_base_amount = fields.Monetary(
-        compute="_get_currency_values",
+        compute="_compute_currency_values",
         string='Company Cur. VAT Untaxed',
     )
     # company currency default odoo fields
     cc_amount_total = fields.Monetary(
-        compute="_get_currency_values",
+        compute="_compute_currency_values",
         string='Company Cur. Total',
     )
     cc_amount_untaxed = fields.Monetary(
-        compute="_get_currency_values",
+        compute="_compute_currency_values",
         string='Company Cur. Untaxed',
     )
     cc_amount_tax = fields.Monetary(
-        compute="_get_currency_values",
+        compute="_compute_currency_values",
         string='Company Cur. Tax',
     )
     # von iva
     cc_vat_amount = fields.Monetary(
-        compute="_get_currency_values",
+        compute="_compute_currency_values",
         string='Company Cur. VAT Amount',
     )
     cc_other_taxes_amount = fields.Monetary(
-        compute="_get_currency_values",
+        compute="_compute_currency_values",
         string='Company Cur. Other Taxes Amount'
     )
     cc_vat_exempt_base_amount = fields.Monetary(
-        compute="_get_currency_values",
+        compute="_compute_currency_values",
         string='Company Cur. VAT Exempt Base Amount'
     )
     cc_vat_taxable_amount = fields.Monetary(
-        compute="_get_currency_values",
+        compute="_compute_currency_values",
         string='Company Cur. VAT Taxable Amount'
     )
 
     @api.multi
     @api.depends('currency_id')
-    def _get_currency_values(self):
+    def _compute_currency_values(self):
         # TODO si traer el rate de esta manera no resulta (por ej. porque
         # borran una linea de rate), entonces podemos hacerlo desde el move
         # mas o menos como hace account_invoice_currency o viendo el total de

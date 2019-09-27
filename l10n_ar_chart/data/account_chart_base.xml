@@ -339,14 +339,14 @@
                     <field name="name">Muebles y útiles</field>
                 </record>
 
-                <record model="account.account.template" id="base_rodados">
+                <record model="account.account.template" id="base_rodados_0">
                     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                     <field name="code">1.2.01.01.040</field>
                     <field name="user_type_id" ref="account.data_account_type_fixed_assets"/>
                     <field name="name">Rodados</field>
                 </record>
 
-                <record model="account.account.template" id="base_rodados">
+                <record model="account.account.template" id="base_rodados_1">
                     <field name="chart_template_id" ref="l10nar_base_chart_template"/>
                     <field name="code">1.2.01.01.050</field>
                     <field name="user_type_id" ref="account.data_account_type_fixed_assets"/>

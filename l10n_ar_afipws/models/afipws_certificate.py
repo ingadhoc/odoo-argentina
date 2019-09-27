@@ -56,18 +56,18 @@ class AfipwsCertificate(models.Model):
     )
     request_file = fields.Binary(
         'Download Signed Certificate Request',
-        compute='get_request_file',
+        compute='_compute_request_file',
         readonly=True
     )
     request_filename = fields.Char(
         'Filename',
         readonly=True,
-        compute='get_request_file',
+        compute='_compute_request_file',
     )
 
     @api.multi
     @api.depends('csr')
-    def get_request_file(self):
+    def _compute_request_file(self):
         for rec in self.filtered('csr'):
             rec.request_filename = 'request.csr'
             rec.request_file = base64.encodestring(self.csr.encode('utf-8'))

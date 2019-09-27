@@ -138,9 +138,6 @@
     <record model='res.country' forcecreate="False" id='base.rs'>
         <field name='afip_code'>454</field>
     </record>
-    <record model='res.country' forcecreate="False" id='base.rs'>
-        <field name='afip_code'>454</field>
-    </record>
     <record model='res.country' forcecreate="False" id='base.tk'>
         <field name='afip_code'>699</field>
     </record>

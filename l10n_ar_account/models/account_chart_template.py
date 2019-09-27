@@ -63,9 +63,9 @@ class AccountChartTemplate(models.Model):
             ('Asientos de Apertura / Cierre', 'A/C', 'general',
                 opening_clousure_account_id),
         ]
-        for name, code, type, default_account_id in journals:
+        for name, code, journal_type, default_account_id in journals:
             journal_data.append({
-                'type': type,
+                'type': journal_type,
                 'name': name,
                 'code': code,
                 'default_credit_account_id': default_account_id,

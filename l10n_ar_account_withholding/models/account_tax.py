@@ -86,9 +86,9 @@ class AccountTax(models.Model):
                 # if amount zero then we dont create withholding
                 amount = 0.0
             elif not imp_ganancias_padron:
-                raise UserError(
+                raise UserError(_(
                     'El partner %s no tiene configurada inscripcion en '
-                    'impuesto a las ganancias' % commercial_partner.name)
+                    'impuesto a las ganancias' % commercial_partner.name))
             elif imp_ganancias_padron in ['EX', 'NC']:
                 # if amount zero then we dont create withholding
                 amount = 0.0

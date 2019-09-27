@@ -78,7 +78,7 @@ class AfipwsCertificateAlias(models.Model):
     )
     cuit = fields.Char(
         'CUIT',
-        compute='get_cuit',
+        compute='_compute_cuit',
         required=True,
     )
     company_cuit = fields.Char(
@@ -138,7 +138,7 @@ class AfipwsCertificateAlias(models.Model):
 
     @api.multi
     @api.depends('company_cuit', 'service_provider_cuit', 'service_type')
-    def get_cuit(self):
+    def _compute_cuit(self):
         for rec in self:
             if rec.service_type == 'outsourced':
                 rec.cuit = rec.service_provider_cuit

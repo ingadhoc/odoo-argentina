@@ -41,47 +41,38 @@ class AccountVatLedger(models.Model):
         readonly=True,
     )
     vouchers_file = fields.Binary(
-        _('Vouchers File'),
         compute='_compute_files',
         readonly=True
     )
     vouchers_filename = fields.Char(
-        _('Vouchers Filename'),
         readonly=True,
         compute='_compute_files',
     )
     aliquots_file = fields.Binary(
-        _('Aliquots File'),
         compute='_compute_files',
         readonly=True
     )
     aliquots_filename = fields.Char(
-        _('Aliquots Filename'),
         readonly=True,
         compute='_compute_files',
     )
     import_aliquots_file = fields.Binary(
-        _('Import Aliquots File'),
         compute='_compute_files',
         readonly=True
     )
     import_aliquots_filename = fields.Char(
-        _('Import Aliquots Filename'),
         readonly=True,
         compute='_compute_files',
     )
     prorate_tax_credit = fields.Boolean(
-        'Prorate Tax Credit',
     )
     prorate_type = fields.Selection(
         [('global', 'Global'), ('by_voucher', 'By Voucher')],
-        'Prorate Type',
     )
     tax_credit_computable_amount = fields.Float(
         'Credit Computable Amount',
     )
     sequence = fields.Integer(
-        'Sequence',
         default=0,
         required=True,
         help='Se deberá indicar si la presentación es Original (00) o '

@@ -13,16 +13,16 @@ class AccountInvoiceTax(models.Model):
     )
     cc_base = fields.Monetary(
         string='Company Cur. Base',
-        compute="_get_currency_values",
+        compute="_compute_currency_values",
     )
     cc_amount = fields.Monetary(
         string='Company Cur. Amount',
-        compute="_get_currency_values",
+        compute="_compute_currency_values",
     )
 
     @api.multi
     @api.depends('currency_id')
-    def _get_currency_values(self):
+    def _compute_currency_values(self):
         # TODO si traer el rate de esta manera no resulta (por ej. porque
         # borran una linea de rate), entonces podemos hacerlo desde el move
         # mas o menos como hace account_invoice_currency o viendo el total de

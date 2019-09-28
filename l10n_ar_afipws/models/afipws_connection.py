@@ -45,11 +45,11 @@ class AfipwsConnection(models.Model):
     )
     afip_login_url = fields.Char(
         'AFIP Login URL',
-        compute='get_urls',
+        compute='_compute_afip_urls',
     )
     afip_ws_url = fields.Char(
         'AFIP WS URL',
-        compute='get_urls',
+        compute='_compute_afip_urls',
     )
     type = fields.Selection(
         [('production', 'Production'), ('homologation', 'Homologation')],
@@ -68,7 +68,7 @@ class AfipwsConnection(models.Model):
 
     @api.multi
     @api.depends('type', 'afip_ws')
-    def get_urls(self):
+    def _compute_afip_urls(self):
         for rec in self:
             rec.afip_login_url = rec.get_afip_login_url(rec.type)
 

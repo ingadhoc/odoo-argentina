@@ -32,6 +32,7 @@ class AccountInvoice(models.Model):
         store=True,
         readonly=True,
         auto_join=True,
+        compute_sudo=True,
     )
     # IMPORANTE: si llegamos a implementar el campo computado no usar
     # cotizacion de la moneda ya que esta puede cambiar y ademas, si facturamos

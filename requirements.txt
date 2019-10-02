@@ -1,5 +1,5 @@
 pyOpenSSL
-M2Crypto
+pycryptodome
 httplib2>=0.7
 git+https://github.com/pysimplesoap/pysimplesoap@stable_py3k
 # fpdf>=1.7.2

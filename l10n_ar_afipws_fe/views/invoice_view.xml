@@ -42,6 +42,9 @@
                 <button name="action_invoice_open" type="object" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('validation_type', '!=', 'homologation')]}" string="Validar en HOMOLOGACION" class="oe_highlight" groups="account.group_account_invoice"/>
             </button>
 
+            <xpath expr="//page[@name='other_info']//field[@name='origin']" position="after">
+                <field name="afip_fce_es_anulacion"/>
+            </xpath>
             <notebook>
                 <page string="AFIP" name="afip" attrs="{'invisible': [('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice'])]}">
                     <group>

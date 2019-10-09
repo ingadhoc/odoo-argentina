@@ -107,6 +107,12 @@ class AccountInvoice(models.Model):
         'Validation Type',
         compute='_compute_validation_type',
     )
+    afip_fce_es_anulacion = fields.Boolean(
+        string='FCE: Es anulacion?',
+        help='Solo utilizado en comprobantes MiPyMEs (FCE) del tipo débito o crédito. Debe informar:\n'
+        '- SI: sí el comprobante asociado (original) se encuentra rechazado por el comprador\n'
+        '- NO: sí el comprobante asociado (original) NO se encuentra rechazado por el comprador'
+    )
 
     @api.depends('journal_id', 'afip_auth_code')
     def _compute_validation_type(self):
@@ -624,11 +630,7 @@ print "Observaciones:", wscdc.Obs
                             opcional_id=23,
                             valor=inv.name)
                 elif int(doc_afip_code) in [202, 203, 207, 208, 212, 213]:
-                    # si es una NC y si el valor es el mismo al comprobante original entonces es una anulacion
-                    if int(doc_afip_code) in [203, 208, 213] and CbteAsoc.amount_total == self.amount_total:
-                        valor = 'S'
-                    else:
-                        valor = 'N'
+                    valor = inv.afip_fce_es_anulacion and 'S' or 'N'
                     ws.AgregarOpcional(
                         opcional_id=22,
                         valor=valor)

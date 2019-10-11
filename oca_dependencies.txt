@@ -1,5 +1,5 @@
 partner-contact
 # account-financial-tools
 ingadhoc-account-financial-tools https://github.com/ingadhoc/account-financial-tools
-ingadhoc-account-payment https://github.com/ingadhoc/account-payment
+ingadhoc-account-payment https://github.com/adhoc-dev/account-payment 12.0-h-21642-kz
 ingadhoc-aeroo_reports https://github.com/ingadhoc/aeroo_reports

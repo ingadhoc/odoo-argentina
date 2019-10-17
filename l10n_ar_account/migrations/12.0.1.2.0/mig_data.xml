@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model='account.document.type' id='dc_liq_uci_a'>
+        <field name='doc_code_prefix'>LU-A</field>
+    </record>
+    <record model='account.document.type' id='dc_liq_uci_b'>
+        <field name='doc_code_prefix'>LU-B</field>
+    </record>
+    <record model='account.document.type' id='dc_liq_uci_c'>
+        <field name='doc_code_prefix'>LU-C</field>
+    </record>
+    <record model='account.document.type' id='dc_nc_liq_uci_a'>
+        <field name='doc_code_prefix'>NCLU-B</field>
+    </record>
+    <record model='account.document.type' id='dc_nc_liq_uci_b'>
+        <field name='doc_code_prefix'>NCLU-C</field>
+    </record>
+    <record model='account.document.type' id='dc_nd_liq_uci_a'>
+        <field name='doc_code_prefix'>NDLU-A</field>
+    </record>
+    <record model='account.document.type' id='dc_nd_liq_uci_b'>
+        <field name='doc_code_prefix'>NDLU-B</field>
+    </record>
+    <record model='account.document.type' id='dc_nd_liq_uci_c'>
+        <field name='doc_code_prefix'>NDLU-C</field>
+    </record>
+    <record model='account.document.type' id='dc_nc_liq_uci_c'>
+        <field name='doc_code_prefix'>NCLU-A</field>
+    </record>
+    <record model='account.document.type' id='dc_bs_no_reg'>
+        <field name='doc_code_prefix'>BNR</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_a_f'>
+        <field name='doc_code_prefix'>FCE-A</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_a_nd'>
+        <field name='doc_code_prefix'>NDE-A</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_a_nc'>
+        <field name='doc_code_prefix'>NCE-A</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_b_f'>
+        <field name='doc_code_prefix'>FAE-B</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_b_nd'>
+        <field name='doc_code_prefix'>NDE-B</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_b_nc'>
+        <field name='doc_code_prefix'>NCE-B</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_c_f'>
+        <field name='doc_code_prefix'>FAE-C</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_c_nd'>
+        <field name='doc_code_prefix'>NDE-C</field>
+    </record>
+    <record model='account.document.type' id='dc_fce_c_nc'>
+        <field name='doc_code_prefix'>NCE-C</field>
+    </record>
+    <record model='account.document.type' id='dc_liq_s_a'>
+        <field name='doc_code_prefix'>LS-A</field>
+    </record>
+    <record model='account.document.type' id='dc_liq_s_b'>
+        <field name='doc_code_prefix'>LS-B</field>
+    </record>
+    <record model='account.document.type' id='dc_oc_ncrg3419'>
+        <field name='doc_code_prefix'>OC-X</field>
+    </record>
+    <record model='account.document.type' id='dc_desp_imp'>
+        <field name='doc_code_prefix'>DI</field>
+    </record>
+    <record model='account.document.type' id='dc_imp_serv'>
+        <field name='doc_code_prefix'>IS</field>
+    </record>
+    <record model='account.document.type' id='dc_a_o_rg1415'>
+        <field name='doc_code_prefix'>OC-A</field>
+    </record>
+    <record model='account.document.type' id='dc_b_o_rg1415'>
+        <field name='doc_code_prefix'>OC-B</field>
+    </record>
+    <record model='account.document.type' id='dc_c_o_rg1415'>
+        <field name='doc_code_prefix'>OC-C</field>
+    </record>
+
+</odoo>

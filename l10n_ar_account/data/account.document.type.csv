@@ -27,9 +27,9 @@ dc_b_rg1415,250,35,"COMPROBANTES B DEL ANEXO I, APARTADO A, INC. F), RG N° 1415
 dc_c_rg1415,260,36,"COMPROBANTES C DEL Anexo I, Apartado A, INC.F), R.G. N° 1415",dl_c,,,,argentina,validator_numero_factura,True,zero
 dc_nd_rg1415,270,37,NOTAS DE DEBITO O DOCUMENTO EQUIVALENTE QUE CUMPLAN CON LA R.G. N° 1415,,,,,argentina,validator_numero_factura,True,not_zero
 dc_nc_rg1415,280,38,NOTAS DE CREDITO O DOCMENTO EQUIVALENTE QUE CUMPLAN CON LA R.G. N° 1415,,,,,argentina,validator_numero_factura,True,not_zero
-dc_a_o_rg1415,290,39,OTROS COMPROBANTES A QUE CUMPLEN CON LA R G  1415,dl_a,,in_document,,argentina,validator_numero_factura,True,not_zero
-dc_b_o_rg1415,300,40,OTROS COMPROBANTES B QUE CUMPLAN CON LA R.G. N° 1415,dl_b,,in_document,,argentina,validator_numero_factura,True,zero
-dc_c_o_rg1415,310,41,OTROS COMPROBANTES C QUE CUMPLAN CON LA R.G. N° 1415,dl_c,,in_document,,argentina,validator_numero_factura,True,zero
+dc_a_o_rg1415,290,39,OTROS COMPROBANTES A QUE CUMPLEN CON LA R G  1415,dl_a,,in_document,OC-A,argentina,validator_numero_factura,True,not_zero
+dc_b_o_rg1415,300,40,OTROS COMPROBANTES B QUE CUMPLAN CON LA R.G. N° 1415,dl_b,,in_document,OC-B,argentina,validator_numero_factura,True,zero
+dc_c_o_rg1415,310,41,OTROS COMPROBANTES C QUE CUMPLAN CON LA R.G. N° 1415,dl_c,,in_document,OC-C,argentina,validator_numero_factura,True,zero
 dc_a_rf,320,50,RECIBO FACTURA A  REGIMEN DE FACTURA DE CREDITO,dl_a,,,,argentina,validator_numero_factura,True,not_zero
 dc_m_f,330,51,FACTURAS M,dl_m,FACTURA,invoice,FA-M ,argentina,validator_numero_factura,True,not_zero
 dc_m_nd,340,52,NOTAS DE DEBITO M,dl_m,NOTA DE DEBITO,debit_note,ND-C ,argentina,validator_numero_factura,True,not_zero
@@ -45,8 +45,8 @@ dc_b_cvl,430,61,CUENTAS DE VENTA Y LIQUIDO PRODUCTO B,dl_b,,,,argentina,validato
 dc_a_l,440,63,LIQUIDACIONES A,dl_a,,,,argentina,validator_numero_factura,True,not_zero
 dc_b_l,450,64,LIQUIDACIONES B,dl_b,,,,argentina,validator_numero_factura,True,zero
 dc_nc,460,65,"NOTAS DE CREDITO DE COMPROBANTES CON COD. 34, 39, 58, 59, 60, 63, 96, 97,",,,,,argentina,validator_numero_factura,,
-dc_desp_imp,470,66,DESPACHO DE IMPORTACION,,,in_document,,argentina,validator_despacho,True,not_zero
-dc_imp_serv,480,67,IMPORTACION DE SERVICIOS,,,in_document,,argentina,validator_despacho,,
+dc_desp_imp,470,66,DESPACHO DE IMPORTACION,,,in_document,DI,argentina,validator_despacho,True,not_zero
+dc_imp_serv,480,67,IMPORTACION DE SERVICIOS,,,in_document,IS,argentina,validator_despacho,,
 dc_c_l,490,68,LIQUIDACION C,dl_c,,,,argentina,validator_numero_factura,True,not_zero
 dc_rfc,500,70,RECIBOS FACTURA DE CREDITO,,,,,argentina,validator_numero_factura,True,not_zero
 dc_cfcp,510,71,CREDITO FISCAL POR CONTRIBUCIONES PATRONALES,,,,,argentina,,,
@@ -71,7 +71,7 @@ dc_ac_inc_cf,690,94,AJUSTES CONTABLES QUE INCREMENTAN EL CREDITO FISCAL,,,,,arge
 dc_ac_dis_cf,700,95,AJUSTES CONTABLES QUE DISMINUYEN EL CREDITO FISCAL,,,,,argentina,,,
 dc_f1116b,710,96,FORMULARIO 1116 B,,,,,argentina,,,
 dc_f1116c,720,97,FORMULARIO 1116 C,,,,,argentina,,,
-dc_oc_ncrg3419,730,99,OTROS COMP  QUE NO CUMPLEN CON LA R G  3419 Y SUS MODIF,,,in_document,,argentina,,True,not_zero
+dc_oc_ncrg3419,730,99,OTROS COMP  QUE NO CUMPLEN CON LA R G  3419 Y SUS MODIF,,,in_document,OC-X,argentina,,True,not_zero
 dc_aa_dj_pos,740,101,AJUSTE ANUAL PROVENIENTE DE LA  D J  DEL IVA  POSITIVO,,,,,argentina,,,
 dc_aa_dj_neg,750,102,AJUSTE ANUAL PROVENIENTE DE LA  D J  DEL IVA  NEGATIVO,,,,,argentina,,,
 dc_na,760,103,NOTA DE ASIGNACION,,,,,argentina,,,
@@ -81,23 +81,23 @@ dc_remito_x,790,94,REMITOS X,dl_x,REMITO,,RM-X ,argentina,validator_numero_factu
 dc_orden_pago_x,800,,ORDEN DE PAGO X,dl_x,ORDEN DE PAGO,supplier_payment,OP-X ,argentina,validator_numero_factura,,
 fa_exterior,195,,FACTURAS Y COMPROBANTES DEL EXTERIOR,dl_i,,invoice,FA-I ,argentina,,,
 nc_exterior,196,,NOTAS DE CREDITO Y REEMBOLSOS DEL EXTERIOR,dl_i,,credit_note,NC-I ,argentina,,,
-dc_liq_s_a,800,17,LIQUIDACION DE SERVICIOS PUBLICOS CLASE A,,,in_document,,argentina,,True,not_zero
-dc_liq_s_b,810,18,LIQUIDACION DE SERVICIOS PUBLICOS CLASE B,,,in_document,,argentina,,False,zero
+dc_liq_s_a,800,17,LIQUIDACION DE SERVICIOS PUBLICOS CLASE A,,,in_document,LS-A,argentina,,True,not_zero
+dc_liq_s_b,810,18,LIQUIDACION DE SERVICIOS PUBLICOS CLASE B,,,in_document,LS-B,argentina,,False,zero
 dc_com_a_m,820,23,COMPROBANTES “A” DE COMPRA PRIMARIA PARA EL SECTOR PESQUERO MARITIMO,,,,,argentina,,,
 dc_con_a_m,830,24,COMPROBANTES “A” DE CONSIGNACION PRIMARIA PARA EL SECTOR PESQUERO MARITIMO,,,,,argentina,,,
 dc_com_b_m,840,25,COMPROBANTES “B” DE COMPRA PRIMARIA PARA EL SECTOR PESQUERO MARITIMO,,,,,argentina,,,
 dc_con_b_m,850,26,COMPROBANTES “B” DE CONSIGNACION PRIMARIA PARA EL SECTOR PESQUERO MARITIMO,,,,,argentina,,,
-dc_liq_uci_a,860,27,LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE A,,,in_document,,argentina,,True,not_zero
-dc_liq_uci_b,870,28,LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE B,,,in_document,,argentina,,True,zero
-dc_liq_uci_c,880,29,LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE C,,,in_document,,argentina,,,
+dc_liq_uci_a,860,27,LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE A,,,in_document,LU-A,argentina,,True,not_zero
+dc_liq_uci_b,870,28,LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE B,,,in_document,LU-B,argentina,,True,zero
+dc_liq_uci_c,880,29,LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE C,,,in_document,LU-C,argentina,,,
 dc_liq_prim_gr,890,33,LIQUIDACION PRIMARIA DE GRANOS,,,,,argentina,,,
-dc_nc_liq_uci_a,900,43,NOTA DE CREDITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE B,,,in_document,,argentina,,True,zero
-dc_nc_liq_uci_b,910,44,NOTA DE CREDITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE C,,,in_document,,argentina,,,
-dc_nd_liq_uci_a,920,45,NOTA DE DEBITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE A,,,in_document,,argentina,,True,not_zero
-dc_nd_liq_uci_b,930,46,NOTA DE DEBITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE B,,,in_document,,argentina,,True,zero
-dc_nd_liq_uci_c,940,47,NOTA DE DEBITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE C,,,in_document,,argentina,,,
-dc_nc_liq_uci_c,950,48,NOTA DE CREDITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE A,,,in_document,,argentina,,True,not_zero
-dc_bs_no_reg,960,49,COMPROBANTES DE COMPRA DE BIENES NO REGISTRABLES A CONSUMIDORES FINALES,,,in_document,,argentina,,,
+dc_nc_liq_uci_a,900,43,NOTA DE CREDITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE B,,,in_document,NCLU-B,argentina,,True,zero
+dc_nc_liq_uci_b,910,44,NOTA DE CREDITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE C,,,in_document,NCLU-C,argentina,,,
+dc_nd_liq_uci_a,920,45,NOTA DE DEBITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE A,,,in_document,NDLU-A,argentina,,True,not_zero
+dc_nd_liq_uci_b,930,46,NOTA DE DEBITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE B,,,in_document,NDLU-B,argentina,,True,zero
+dc_nd_liq_uci_c,940,47,NOTA DE DEBITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE C,,,in_document,NDLU-C,argentina,,,
+dc_nc_liq_uci_c,950,48,NOTA DE CREDITO LIQUIDACION UNICA COMERCIAL IMPOSITIVA CLASE A,,,in_document,NCLU-A,argentina,,True,not_zero
+dc_bs_no_reg,960,49,COMPROBANTES DE COMPRA DE BIENES NO REGISTRABLES A CONSUMIDORES FINALES,,,in_document,BNR,argentina,,,
 dc_t_nc,970,110,TIQUE NOTA DE CREDITO ,dl_x,,ticket,TC-X,argentina,validator_numero_factura,True,not_zero
 dc_t_c,980,111,TIQUE FACTURA C,dl_c,,ticket,TF-C,argentina,validator_numero_factura,True,zero
 dc_t_nc_a,990,112,TIQUE NOTA DE CREDITO A,dl_x,,ticket,TN-A,argentina,validator_numero_factura,True,not_zero
@@ -111,12 +111,12 @@ dc_t_nc_m,1060,119,TIQUE NOTA DE CREDITO M,dl_m,,ticket,TC-M,argentina,validator
 dc_t_nd_m,1070,120,TIQUE NOTA DE DEBITO M,dl_m,,ticket,TD-M,argentina,validator_numero_factura,True,not_zero
 dc_liq_sec_gr,1080,331,LIQUIDACION SECUNDARIA DE GRANOS,,,,,argentina,,,
 dc_cert_ele_gr,1090,332,CERTIFICACION ELECTRONICA (GRANOS),,,,,argentina,,,
-dc_fce_a_f,1100,201,FACTURA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) A,dl_a,FACTURA DE CREDITO ELECTRONICA,invoice,FA-A ,argentina,validator_numero_factura,True,not_zero
-dc_fce_a_nd,1110,202,NOTA DE DÉBITO ELECTRÓNICA MiPyME (FCE) A,dl_a,NOTA DE DEBITO ELECTRONICA,debit_note,ND-A ,argentina,validator_numero_factura,True,not_zero
-dc_fce_a_nc,1120,203,NOTA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) A,dl_a,NOTA DE CREDITO ELECTRONICA,credit_note,NC-A ,argentina,validator_numero_factura,True,not_zero
-dc_fce_b_f,1130,206,FACTURA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) B,dl_b,FACTURA DE CREDITO ELECTRONICA,invoice,FA-B ,argentina,validator_numero_factura,True,zero
-dc_fce_b_nd,1140,207,NOTA DE DÉBITO ELECTRÓNICA MiPyME (FCE) B,dl_b,NOTA DE DEBITO ELECTRONICA,debit_note,ND-B ,argentina,validator_numero_factura,True,zero
-dc_fce_b_nc,1150,208,NOTA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) B,dl_b,NOTA DE CREDITO ELECTRONICA,credit_note,NC-B ,argentina,validator_numero_factura,True,zero
-dc_fce_c_f,1160,211,FACTURA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) C,dl_c,FACTURA DE CREDITO ELECTRONICA,invoice,FA-C,argentina,validator_numero_factura,True,zero
-dc_fce_c_nd,1170,212,NOTA DE DÉBITO ELECTRÓNICA MiPyME (FCE) C,dl_c,NOTA DE DEBITO ELECTRONICA,debit_note,ND-C ,argentina,validator_numero_factura,True,zero
-dc_fce_c_nc,1180,213,NOTA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) C,dl_c,NOTA DE CREDITO ELECTRONICA,credit_note,NC-D,argentina,validator_numero_factura,True,zero
+dc_fce_a_f,1100,201,FACTURA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) A,dl_a,FACTURA DE CREDITO ELECTRONICA,invoice,FCE-A,argentina,validator_numero_factura,True,not_zero
+dc_fce_a_nd,1110,202,NOTA DE DÉBITO ELECTRÓNICA MiPyME (FCE) A,dl_a,NOTA DE DEBITO ELECTRONICA,debit_note,NDE-A,argentina,validator_numero_factura,True,not_zero
+dc_fce_a_nc,1120,203,NOTA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) A,dl_a,NOTA DE CREDITO ELECTRONICA,credit_note,NCE-A,argentina,validator_numero_factura,True,not_zero
+dc_fce_b_f,1130,206,FACTURA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) B,dl_b,FACTURA DE CREDITO ELECTRONICA,invoice,FAE-B,argentina,validator_numero_factura,True,zero
+dc_fce_b_nd,1140,207,NOTA DE DÉBITO ELECTRÓNICA MiPyME (FCE) B,dl_b,NOTA DE DEBITO ELECTRONICA,debit_note,NDE-B,argentina,validator_numero_factura,True,zero
+dc_fce_b_nc,1150,208,NOTA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) B,dl_b,NOTA DE CREDITO ELECTRONICA,credit_note,NCE-B,argentina,validator_numero_factura,True,zero
+dc_fce_c_f,1160,211,FACTURA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) C,dl_c,FACTURA DE CREDITO ELECTRONICA,invoice,FAE-C,argentina,validator_numero_factura,True,zero
+dc_fce_c_nd,1170,212,NOTA DE DÉBITO ELECTRÓNICA MiPyME (FCE) C,dl_c,NOTA DE DEBITO ELECTRONICA,debit_note,NDE-C,argentina,validator_numero_factura,True,zero
+dc_fce_c_nc,1180,213,NOTA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) C,dl_c,NOTA DE CREDITO ELECTRONICA,credit_note,NCE-D,argentina,validator_numero_factura,True,zero

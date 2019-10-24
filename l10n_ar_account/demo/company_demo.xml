@@ -3,6 +3,7 @@
 <!-- Yourcompany Company -->
     <record id="base.main_company" model="res.company">
         <!-- because argentina country is configurade by base, argentina chart is loaded and localization is setted -->
+        <field name='localization'>argentina</field>
         <field name='gross_income_type'>no_liquida</field>
         <field name='afip_responsability_type_id' ref='res_IVARI'/>
         <field name="start_date" eval="time.strftime('%Y-%m')+'-1'"/>

@@ -540,7 +540,7 @@ print "Observaciones:", wscdc.Obs
             elif afip_ws == 'wsfex':
                 # # foreign trade data: export permit, country code, etc.:
                 if inv.incoterm_id:
-                    incoterms = inv.incoterm_id.afip_code
+                    incoterms = inv.incoterm_id.code
                     incoterms_ds = inv.incoterm_id.name
                     # máximo de 20 caracteres admite
                     incoterms_ds = incoterms_ds and incoterms_ds[:20]

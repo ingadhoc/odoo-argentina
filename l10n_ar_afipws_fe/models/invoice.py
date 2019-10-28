@@ -540,7 +540,7 @@ print "Observaciones:", wscdc.Obs
             elif afip_ws == 'wsfex':
                 # # foreign trade data: export permit, country code, etc.:
                 if inv.incoterm_id:
-                    incoterms = inv.incoterm_id.afip_code
+                    incoterms = inv.incoterm_id.code
                     incoterms_ds = inv.incoterm_id.name
                     # máximo de 20 caracteres admite
                     incoterms_ds = incoterms_ds and incoterms_ds[:20]
@@ -562,6 +562,7 @@ print "Observaciones:", wscdc.Obs
                 else:
                     forma_pago = obs_comerciales = None
 
+                fecha_pago = inv.date_due or ''
                 idioma_cbte = 1     # invoice language: spanish / español
 
                 # TODO tal vez podemos unificar este criterio con el del
@@ -597,7 +598,7 @@ print "Observaciones:", wscdc.Obs
                     nombre_cliente, cuit_pais_cliente, domicilio_cliente,
                     id_impositivo, moneda_id, moneda_ctz, obs_comerciales,
                     obs_generales, forma_pago, incoterms,
-                    idioma_cbte, incoterms_ds
+                    idioma_cbte, incoterms_ds, fecha_pago,
                 )
             elif afip_ws == 'wsbfe':
                 zona = 1  # Nacional (la unica devuelta por afip)

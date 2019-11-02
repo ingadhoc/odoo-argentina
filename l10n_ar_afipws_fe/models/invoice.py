@@ -553,6 +553,14 @@ print "Observaciones:", wscdc.Obs
                 else:
                     forma_pago = obs_comerciales = None
 
+                # 1671 Report fecha_pago with format YYYMMDD
+                # 1672 Is required only doc_type 19. concept (2,4)
+                # 1673 If doc_type != 19 should not be reported.
+                # 1674 doc_type 19 concept (2,4). date should be >= invoice date
+                fecha_pago = datetime.strftime(fields.Datetime.from_string(
+                    inv.date_due), '%Y%m%d') \
+                    if int(doc_afip_code) == 19 and inv.date_due else ''
+
                 idioma_cbte = 1     # invoice language: spanish / español
 
                 # TODO tal vez podemos unificar este criterio con el del
@@ -588,7 +596,7 @@ print "Observaciones:", wscdc.Obs
                     nombre_cliente, cuit_pais_cliente, domicilio_cliente,
                     id_impositivo, moneda_id, moneda_ctz, obs_comerciales,
                     obs_generales, forma_pago, incoterms,
-                    idioma_cbte, incoterms_ds
+                    idioma_cbte, incoterms_ds, fecha_pago,
                 )
             elif afip_ws == 'wsbfe':
                 zona = 1  # Nacional (la unica devuelta por afip)

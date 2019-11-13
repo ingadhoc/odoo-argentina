@@ -567,7 +567,7 @@ print "Observaciones:", wscdc.Obs
                 # 1673 If doc_type != 19 should not be reported.
                 # 1674 doc_type 19 concept (2,4). date should be >= invoice date
                 fecha_pago = datetime.strftime(inv.date_due, '%Y%m%d') \
-                    if int(doc_afip_code) == 19 and inv.date_due else ''
+                    if int(doc_afip_code) == 19 and tipo_expo in [2, 4] and inv.date_due else ''
 
                 idioma_cbte = 1     # invoice language: spanish / español
 

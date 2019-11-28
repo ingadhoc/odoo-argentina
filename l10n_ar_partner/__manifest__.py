@@ -25,5 +25,5 @@
     'demo': [
         'demo/partner_demo.xml',
     ],
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.1.0',
 }

@@ -32,6 +32,7 @@ class AccountInvoice(models.Model):
         store=True,
         readonly=True,
         auto_join=True,
+        compute_sudo=True,
     )
     # IMPORANTE: si llegamos a implementar el campo computado no usar
     # cotizacion de la moneda ya que esta puede cambiar y ademas, si facturamos
@@ -661,3 +662,25 @@ class AccountInvoice(models.Model):
                     relativedelta(day=1, days=-1, months=+1)
             if vals:
                 rec.write(vals)
+
+    @api.model
+    def change_incoterms(self, vals):
+        """ This method evaluate if the incoterms are in vals and
+        set the afip_incoterm with the corresponding code
+        """
+        if 'incoterms_id' in vals and vals.get('incoterms_id'):
+            incoterms = self.env['stock.incoterms'].browse(
+                vals.get('incoterms_id'))
+            afip_incoterm = self.env['afip.incoterm'].search(
+                [('afip_code', '=', incoterms.code)])
+            vals['afip_incoterm_id'] = afip_incoterm.id
+
+    @api.model
+    def create(self, vals):
+        self.change_incoterms(vals)
+        return super(AccountInvoice, self).create(vals)
+
+    @api.multi
+    def write(self, vals):
+        self.change_incoterms(vals)
+        return super(AccountInvoice, self).write(vals)

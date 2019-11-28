@@ -83,7 +83,7 @@ class ResPartnerUpdateFromPadronWizard(models.TransientModel):
     @api.model
     def _get_default_title_case(self):
         parameter = self.env['ir.config_parameter'].sudo().get_param(
-                'use_title_case_on_padron_afip')
+            'use_title_case_on_padron_afip')
         if parameter == 'False' or parameter == '0':
             return False
         return True

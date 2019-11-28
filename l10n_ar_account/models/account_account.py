@@ -34,8 +34,8 @@ class AccountAccount(models.Model):
             'account.data_account_type_other_income',  # Otros Ingresos
             'account.data_account_type_revenue',  # Ingreso
             'account.data_account_type_expenses',  # Gastos
-            'account.data_account_type_depreciation', # Depreciación
-            'account.data_account_type_equity', # Capital
+            'account.data_account_type_depreciation',  # Depreciación
+            'account.data_account_type_equity',  # Capital
             'account.data_account_type_direct_costs',  # Coste de Ingreso
         ]
         account_types = []

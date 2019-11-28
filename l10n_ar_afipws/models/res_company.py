@@ -140,11 +140,9 @@ class ResCompany(models.Model):
 
     @api.multi
     def _create_connection(self, afip_ws, environment_type):
-        """
-        This function should be called from get_connection. Not to be used
-        directyl
-        TODO ver si podemos usar metodos de pyafipws para esto
-        """
+        """ This function should be called from get_connection. Not to be used
+        direclty """
+        # TODO ver si podemos usar metodos de pyafipws para esto
         self.ensure_one()
         _logger.info(
             'Creating connection for company %s, environment type %s and ws '
@@ -217,7 +215,7 @@ class ResCompany(models.Model):
             expirationTime = wsaa.ObtenerTagXml("expirationTime")
             generationTime = wsaa.ObtenerTagXml("generationTime")
             uniqueId = wsaa.ObtenerTagXml("uniqueId")
-        except:
+        except Exception:
             token = sign = None
             if wsaa.Excepcion:
                 # get the exception already parsed by the helper

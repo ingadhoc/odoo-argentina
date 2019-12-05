@@ -196,6 +196,21 @@ class AccountInvoice(models.Model):
         # that happens if you choose the modify option of the credit note
         # wizard. A mapping of which documents can be reported as related
         # documents would be a better solution
+        code_rules = [
+                    ([2, 3], [1, 2, 3, 4, 5, 34, 39, 60, 63, 88, 991]),
+                    ([7, 8], [6, 7, 8, 9, 10, 35, 40, 61, 64, 88, 991]),
+                    ([12, 13], [11, 12, 13, 15]),
+                    ([19], [88, 89]),
+                    ([20, 21], [88, 89, 19, 20, 21]),
+                    ([52, 53], [51, 52, 53, 54, 88, 991]),
+                    ([1, 6, 51], [88, 991]),
+                    ([201, 206, 211], [91, 990, 991, 993, 994, 995]),
+                    ([202, 203], [201, 202, 203]),
+                    ([207, 208], [206, 207, 208]),
+                    ([212, 213], [211, 212, 213])
+                    ]
+        available_codes = list(filter(lambda x: int(self.document_type_id.code) in x[0], code_rules))
+        available_codes = available_codes[0][1] if available_codes else []
         if self.document_type_internal_type in ['debit_note', 'credit_note'] \
                 and self.origin:
             return self.search([
@@ -205,6 +220,7 @@ class AccountInvoice(models.Model):
                 ('id', '!=', self.id),
                 ('document_type_id.document_letter_id', '=', self.document_type_id.document_letter_id.id),
                 ('document_type_id', '!=', self.document_type_id.id),
+                ('document_type_id.code', 'in', available_codes),
                 ('state', 'not in',
                     ['draft', 'proforma', 'proforma2', 'cancel'])],
                 limit=1)

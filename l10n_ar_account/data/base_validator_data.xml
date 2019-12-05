@@ -22,6 +22,8 @@ if value:
             failed=True
         elif len(number) >8 or not number.isdigit():
             failed=True
+        if len(pos) == 5 and pos[0] == '0':
+            pos = pos[1:]
         value = '{:>04s}-{:>08s}'.format(pos, number)
         parts = [pos, number]
         ]]></field>

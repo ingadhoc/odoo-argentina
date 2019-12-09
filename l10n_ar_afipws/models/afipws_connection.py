@@ -155,7 +155,14 @@ class AfipwsConnection(models.Model):
         wsdl = self.afip_ws_url
 
         # connect to the webservice and call to the test method
-        ws.Conectar("", wsdl or "", "")
+        try:
+            ws.Conectar("", wsdl or "", "")
+        except Exception as error:
+            if 'xml.parsers.expat.ExpatError: mismatched tag' in repr(error):
+                raise UserError('It seems like AFIP service is not available. Please try again later.')
+            raise UserError(
+                'There was a connection problem to AFIP. Contact to Odoo Provider. Error\n\n%s' % repr(error))
+
         cuit = self.company_id.cuit_required()
         ws.Cuit = cuit
         ws.Token = self.token

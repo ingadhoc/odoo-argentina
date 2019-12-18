@@ -250,7 +250,7 @@ class AccountInvoice(models.Model):
         # comprobantes de compra
 
         # decidimos obtener esto solamente para comprobantes con doc number
-        for rec in self:
+        for rec in self.filtered(lambda x: x.company_id.localization == 'argentina'):
             str_number = rec.document_number or False
             if str_number:
                 if rec.document_type_id.code in ['33', '99', '331', '332']:

@@ -3,16 +3,16 @@
 # * l10n_ar_account_vat_ledger
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
-# Katherine Zaoral <katherine.zaoral@gmail.com>, 2019
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# Federico La Torre <3doeste@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-30 17:56+0000\n"
-"PO-Revision-Date: 2018-08-23 20:15+0000\n"
-"Last-Translator: Katherine Zaoral <katherine.zaoral@gmail.com>, 2019\n"
+"POT-Creation-Date: 2019-12-10 18:47+0000\n"
+"PO-Revision-Date: 2019-08-13 20:52+0000\n"
+"Last-Translator: Federico La Torre <3doeste@gmail.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +27,7 @@ msgid "%s VAT Ledger %s - %s"
 msgstr "%s Libro de IVA %s - %s"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_afip_responsability_type_ids
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__afip_responsability_type_ids
 msgid "AFIP Responsabilities"
 msgstr "Responsabilidades AFIP"
 
@@ -53,93 +53,108 @@ msgid "Account Vat Ledger"
 msgstr "Libro IVA Contable"
 
 #. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
 #: selection:account.vat.ledger,state:0
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
 msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_company_id
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__company_id
 msgid "Company"
 msgstr "Compañía"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_tax_cc_amount
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_tax__cc_amount
 msgid "Company Cur. Amount"
 msgstr "Importe en Moneda Cia"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_tax_cc_base
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_tax__cc_base
 msgid "Company Cur. Base"
 msgstr "Base en Moneda Cia"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_cc_other_taxes_amount
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice__cc_other_taxes_amount
 msgid "Company Cur. Other Taxes Amount"
 msgstr "Importe Otros Impuestos en Moneda Cia"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_cc_amount_tax
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice__cc_amount_tax
 msgid "Company Cur. Tax"
 msgstr "Impuesto en Moneda Cia"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_cc_amount_total
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice__cc_amount_total
 msgid "Company Cur. Total"
 msgstr "Total Moneda Cia"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_cc_amount_untaxed
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice__cc_amount_untaxed
 msgid "Company Cur. Untaxed"
 msgstr "Base Moneda Cia"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_cc_vat_amount
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice__cc_vat_amount
 msgid "Company Cur. VAT Amount"
 msgstr "Importe Moneda IVA Cia"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_cc_vat_exempt_base_amount
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice__cc_vat_exempt_base_amount
 msgid "Company Cur. VAT Exempt Base Amount"
 msgstr "Monto base de excención de IVA de la Compañia en Cuestion"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_cc_vat_taxable_amount
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice__cc_vat_taxable_amount
 msgid "Company Cur. VAT Taxable Amount"
 msgstr ""
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_cc_vat_untaxed_base_amount
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice__cc_vat_untaxed_base_amount
 msgid "Company Cur. VAT Untaxed"
 msgstr "Moneda IVA sin impuestos Cia"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_res_config_settings_iva_control_presentation
+#: model:ir.model,name:l10n_ar_account_vat_ledger.model_res_config_settings
+msgid "Config Settings"
+msgstr "Parámetros de Configuración"
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_res_config_settings__iva_control_presentation
 msgid "Control de presentación de Libro IVA"
 msgstr ""
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_create_uid
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_create_date
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__create_date
 msgid "Created on"
 msgstr "Creado en"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_document_type_currency_id
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_document_type__currency_id
 msgid "Currency"
 msgstr "Moneda"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_display_name
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__display_name
 msgid "Display Name"
 msgstr "Display Name"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_document_type_ids
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__document_type_ids
 msgid "Document Classes"
 msgstr "Tipos de Documento"
 
@@ -149,32 +164,63 @@ msgid "Draft"
 msgstr "Borrador"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_date_to
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__date_to
 msgid "End Date"
 msgstr "Fecha Fin"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_first_page
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__first_page
 msgid "First Page"
 msgstr "Primer Página"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_id
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_channel_ids
+msgid "Followers (Channels)"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__id
 msgid "ID"
 msgstr "ID"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: model:ir.model.fields,help:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_unread
+msgid "If checked new messages require your attention."
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,help:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,help:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
 msgid "Imprimir en columnas (beta)"
 msgstr ""
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
 msgid "Imprimir libro iva en columnas, beta"
 msgstr ""
 
 #. module: l10n_ar_account_vat_ledger
 #: model:ir.model,name:l10n_ar_account_vat_ledger.model_account_invoice
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_tax__invoice_id
 msgid "Invoice"
 msgstr "Factura"
 
@@ -184,60 +230,110 @@ msgid "Invoice Line"
 msgstr "Línea de Factura"
 
 #. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_invoice_line__invoice_id
+msgid "Invoice Reference"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
 #: model:ir.model,name:l10n_ar_account_vat_ledger.model_account_invoice_tax
 msgid "Invoice Tax"
 msgstr "Línea de Impuesto"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_invoice_ids
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__invoice_ids
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
 msgid "Invoices"
 msgstr "Facturas"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_journal_ids
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__journal_ids
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
 msgid "Journals"
 msgstr "Diarios"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger___last_update
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger____last_update
 msgid "Last Modified on"
 msgstr "Última Modificación en"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_last_page
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__last_page
 msgid "Last Page"
 msgstr "Última Página"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_write_uid
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__write_uid
 msgid "Last Updated by"
 msgstr "Ultima actualización por"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_write_date
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__write_date
 msgid "Last Updated on"
 msgstr "Última actualización en"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_note
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__note
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
 msgid "Notes"
 msgstr "Notas"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_other_tax_ids
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_has_error_counter
+msgid "Number of error"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,help:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,help:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,help:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__other_tax_ids
 msgid "Other Taxes"
 msgstr "Otros Impuestos"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_document_type_other_taxes_amount
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_document_type__other_taxes_amount
 msgid "Other Taxes Amount"
 msgstr "Importe de Otros Impuestos"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
 msgid "Present"
 msgstr "Presentado"
 
@@ -247,17 +343,17 @@ msgid "Presented"
 msgstr "Presentado"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_presented_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__presented_ledger
 msgid "Presented Ledger"
 msgstr "Libro Presentado"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_presented_ledger_name
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__presented_ledger_name
 msgid "Presented Ledger Name"
 msgstr "Nombre del Libro presentado"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
 msgid "Print"
 msgstr "Imprimir"
 
@@ -279,12 +375,12 @@ msgid "Purchases VAT Ledger"
 msgstr "Libro IVA Compras"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_reference
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__reference
 msgid "Reference"
 msgstr "Referencia"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.res_config_settings_view_form
 msgid ""
 "Requerir número de página y libro presentado para setear un Libro de Iva "
 "como presentado \"require_vat_ledger_data\"."
@@ -308,34 +404,39 @@ msgid "Sales VAT Ledger"
 msgstr "Libro IVA Ventas"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_date_from
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__date_from
 msgid "Start Date"
 msgstr "Fecha Inicio"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_state
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__state
 msgid "State"
 msgstr "Provincia"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
 msgid "Summary"
 msgstr "Resumen"
 
 #. module: l10n_ar_account_vat_ledger
 #: model:ir.model,name:l10n_ar_account_vat_ledger.model_account_tax
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_tax_amount_tax
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_afip_responsability_type_amount_tax
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_tax__amount_tax
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_afip_responsability_type__amount_tax
 msgid "Tax"
 msgstr "Impuesto"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_name
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_tax__tax_group_id
+msgid "Tax Group"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__name
 msgid "Titile"
 msgstr "Título"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
 msgid "To Draft"
 msgstr "A Borrador"
 
@@ -352,50 +453,65 @@ msgid "To set \"Presented\" you must upload the \"Presented Ledger\" first"
 msgstr "Para establecer \"Presentado\" primero debe subir el \"Libro Presentado\""
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_document_type_amount_total
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_tax_amount_total
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_afip_responsability_type_amount_total
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_document_type__amount_total
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_tax__amount_total
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_afip_responsability_type__amount_total
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
 msgid "Total"
 msgstr "Total"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_type
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__type
 msgid "Type"
 msgstr "Tipo"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_document_type_amount_untaxed
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_tax_amount_untaxed
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_afip_responsability_type_amount_untaxed
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_document_type__amount_untaxed
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_tax__amount_untaxed
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_afip_responsability_type__amount_untaxed
 msgid "Untaxed"
 msgstr "Base"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_document_type_vat_amount
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_document_type__vat_amount
 msgid "VAT Amount"
 msgstr "Importe de IVA"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
-#: model:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_tree
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_vat_ledger.account_vat_ledger_tree
 msgid "VAT Ledger"
 msgstr "Libro IVA"
 
 #. module: l10n_ar_account_vat_ledger
-#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger_vat_tax_ids
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__vat_tax_ids
 msgid "VAT Taxes"
 msgstr "Impuestos de IVA"
 
 #. module: l10n_ar_account_vat_ledger
-#: code:addons/l10n_ar_account_vat_ledger/models/account_invoice.py:112
+#: model:ir.model.fields,field_description:l10n_ar_account_vat_ledger.field_account_vat_ledger__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: model:ir.model.fields,help:l10n_ar_account_vat_ledger.field_account_vat_ledger__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: l10n_ar_account_vat_ledger
+#: code:addons/l10n_ar_account_vat_ledger/models/account_invoice.py:104
 #, python-format
 msgid ""
 "You can't validate/cancel an invoice of this date if the VAT Ledger Report "
 "for this month has already been presented."
 msgstr ""
-
-#. module: l10n_ar_account_vat_ledger
-#: model:ir.model,name:l10n_ar_account_vat_ledger.model_res_config_settings
-msgid "res.config.settings"
-msgstr "res.config.settings"

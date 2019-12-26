@@ -1,0 +1,509 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * l10n_ar_partner
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# Federico La Torre <3doeste@gmail.com>, 2019
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-10 18:47+0000\n"
+"PO-Revision-Date: 2019-08-13 20:53+0000\n"
+"Last-Translator: Federico La Torre <3doeste@gmail.com>, 2019\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_ar_partner
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner_id_category__afip_code
+msgid "AFIP Code"
+msgstr "Código de AFIP"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_AN
+msgid "Acta nacimiento"
+msgstr "Acta de Nacimiento"
+
+#. module: l10n_ar_partner
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_country__afip_code
+msgid "Afip Code"
+msgstr "Código de AFIP"
+
+#. module: l10n_ar_partner
+#: model:res.groups,name:l10n_ar_partner.group_multiple_id_numbers
+msgid "Allow Multiple Id Numbers on Partners"
+msgstr "Permitir Múltiples Identificaciones en Partners"
+
+#. module: l10n_ar_partner
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.partner_info
+msgid "Billing information"
+msgstr "Datos de facturación"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CDI
+msgid "CDI"
+msgstr "CDI"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CIBAR
+msgid "CI Bs. As. RNP"
+msgstr "CI Bs. As. RNP"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CBA
+msgid "CI Buenos Aires"
+msgstr "CI Buenos Aires"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CCat
+msgid "CI Catamarca"
+msgstr "CI Catamarca"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CICha
+msgid "CI Chaco"
+msgstr "CI Chaco"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CIChu
+msgid "CI Chubut"
+msgstr "CI Chubut"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CCorr
+msgid "CI Corrientes"
+msgstr "CI Corrientes"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CCor
+msgid "CI Córdoba"
+msgstr "CI Córdoba"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CIER
+msgid "CI Entre Ríos"
+msgstr "CI Entre Ríos"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CIF
+msgid "CI Formosa"
+msgstr "CI Formosa"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CIJ
+msgid "CI Jujuy"
+msgstr "CI Jujuy"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CILP
+msgid "CI La Pampa"
+msgstr "CI La Pampa"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CILR
+msgid "CI La Rioja"
+msgstr "CI La Rioja"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CIMen
+msgid "CI Mendoza"
+msgstr "CI Mendoza"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CIMis
+msgid "CI Misiones"
+msgstr "CI Misiones"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CIN
+msgid "CI Neuquén"
+msgstr "CI Neuquén"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CPF
+msgid "CI Policía Federal"
+msgstr "CI Policía Federal"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CIRN
+msgid "CI Río Negro"
+msgstr "CI Río Negro"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CIS
+msgid "CI Salta"
+msgstr "CI Salta"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CISJ
+msgid "CI San Juan"
+msgstr "CI San Juan"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CISL
+msgid "CI San Luis"
+msgstr "CI San Luis"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CISC
+msgid "CI Santa Cruz"
+msgstr "CI Santa Cruz"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CISF
+msgid "CI Santa Fe"
+msgstr "CI Santa Fe"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CISdE
+msgid "CI Santiago del Estero"
+msgstr "CI Santiago del Estero"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CITdF
+msgid "CI Tierra del Fuego"
+msgstr "CI Tierra del Fuego"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CIT
+msgid "CI Tucumán"
+msgstr "CI Tucumán"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CIe
+msgid "CI extranjera"
+msgstr "CI extranjera"
+
+#. module: l10n_ar_partner
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_country__cuit_otro
+msgid "CUIT otro"
+msgstr ""
+
+#. module: l10n_ar_partner
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_country__cuit_fisica
+msgid "CUIT persona fisica"
+msgstr ""
+
+#. module: l10n_ar_partner
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_country__cuit_juridica
+msgid "CUIT persona juridica"
+msgstr ""
+
+#. module: l10n_ar_partner
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.view_company_inherit_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.view_partner_form
+msgid "Category"
+msgstr "Categoría"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CdM
+msgid "Certificado de Migración"
+msgstr "Certificado de Migración"
+
+#. module: l10n_ar_partner
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.partner_info
+msgid ""
+"Changing your document type is not allowed. Please contact us directly for "
+"this operation."
+msgstr ""
+"Cambiar tu tipo de documento no esta permitido. Por favor contáctenos "
+"directamente para realizar esta operación."
+
+#. module: l10n_ar_partner
+#: model:ir.model,name:l10n_ar_partner.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: l10n_ar_partner
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.partner_info
+msgid "Company Name"
+msgstr "Nombre de la Empresa"
+
+#. module: l10n_ar_partner
+#: model:ir.model,name:l10n_ar_partner.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,shortcut:l10n_ar_partner.coop
+msgid "Coop."
+msgstr "Coop."
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,name:l10n_ar_partner.coop
+msgid "Cooperativa"
+msgstr "Cooperativa"
+
+#. module: l10n_ar_partner
+#: model:ir.model,name:l10n_ar_partner.model_res_country
+msgid "Country"
+msgstr "País"
+
+#. module: l10n_ar_partner
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_company__cuit
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner__cuit
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_users__cuit
+msgid "Cuit"
+msgstr "CUIT"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CUIL
+msgid "Código Único de Identificación Laboral"
+msgstr "Código Único de Identificación Laboral"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_CUIT
+msgid "Código Único de Identificación Tributaria"
+msgstr "Código Único de Identificación Tributaria"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,name:l10n_ar_partner.phd
+msgid "Doctor en Filosofía"
+msgstr "Doctor en Filosofía"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_DNI
+msgid "Documento Nacional de Identidad"
+msgstr "Documento Nacional de Identidad"
+
+#. module: l10n_ar_partner
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner__formated_cuit
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_users__formated_cuit
+msgid "Formated Cuit"
+msgstr "CUIT formateado"
+
+#. module: l10n_ar_partner
+#: code:addons/l10n_ar_partner/models/res_partner_id_number.py:35
+#, python-format
+msgid ""
+"Id Number must be unique per id category!\n"
+"Same number is only allowed for partner with parent/child relation"
+msgstr ""
+"El número de identificación debe ser único por categoría!\n"
+"Números iguales se permiten solamente para partners en la cadena padre/hijo"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,shortcut:l10n_ar_partner.ing
+msgid "Ing."
+msgstr "Ing."
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,name:l10n_ar_partner.ing
+msgid "Ingeniero"
+msgstr "Ingeniero"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_LC
+msgid "LC"
+msgstr "LC"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_LE
+msgid "LE"
+msgstr "LE"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,shortcut:l10n_ar_partner.lic
+msgid "Lic."
+msgstr "Lic."
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,name:l10n_ar_partner.lic
+msgid "Licenciado"
+msgstr "Licenciado"
+
+#. module: l10n_ar_partner
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.view_company_inherit_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.view_partner_form
+msgid "Main Identification"
+msgstr "Identificación principal"
+
+#. module: l10n_ar_partner
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_company__main_id_category_id
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner__main_id_category_id
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_users__main_id_category_id
+msgid "Main Identification Category"
+msgstr "Categoría de identificación principal"
+
+#. module: l10n_ar_partner
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_company__main_id_number
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner__main_id_number
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_users__main_id_number
+msgid "Main Identification Number"
+msgstr "Número de identificación principal"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,shortcut:l10n_ar_partner.med
+msgid "Med."
+msgstr "Med."
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,name:l10n_ar_partner.med
+msgid "Médico"
+msgstr "Médico"
+
+#. module: l10n_ar_partner
+#: code:addons/l10n_ar_partner/models/res_partner.py:48
+#, python-format
+msgid "No CUIT configured for partner [%i] %s"
+msgstr "No hay CUIT configurado para el partner [%i] %s"
+
+#. module: l10n_ar_partner
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.view_company_inherit_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.view_partner_form
+msgid "Number"
+msgstr "Número"
+
+#. module: l10n_ar_partner
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.partner_info
+msgid "Número de Documento"
+msgstr "Número de Documento"
+
+#. module: l10n_ar_partner
+#: model:ir.model,name:l10n_ar_partner.model_res_partner_id_category
+msgid "Partner ID Category"
+msgstr "Categoría de ID del Contacto"
+
+#. module: l10n_ar_partner
+#: model:ir.model,name:l10n_ar_partner.model_res_partner_id_number
+msgid "Partner ID Number"
+msgstr "Número de ID del Contacto"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_PAS
+msgid "Pasaporte"
+msgstr "Pasaporte"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,shortcut:l10n_ar_partner.phd
+msgid "PhD."
+msgstr "PhD."
+
+#. module: l10n_ar_partner
+#: code:addons/l10n_ar_partner/controllers/portal.py:30
+#, python-format
+msgid "Please add the document number."
+msgstr "Por favor agregue el número de documento."
+
+#. module: l10n_ar_partner
+#: code:addons/l10n_ar_partner/controllers/portal.py:34
+#, python-format
+msgid "Please add the type of document."
+msgstr "Por favor agregue el tipo de documento."
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,shortcut:l10n_ar_partner.sa
+msgid "S.A."
+msgstr "S.A."
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,shortcut:l10n_ar_partner.sdh
+msgid "S.D.H."
+msgstr "S.D.H."
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,shortcut:l10n_ar_partner.srl
+msgid "S.R.L."
+msgstr "S.R.L."
+
+#. module: l10n_ar_partner
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner_id_category__sequence
+#: model:ir.model.fields,field_description:l10n_ar_partner.field_res_partner_id_number__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,name:l10n_ar_partner.sr
+msgid "Señor"
+msgstr "Señor"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,name:l10n_ar_partner.sra
+msgid "Señora"
+msgstr "Señora"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,name:l10n_ar_partner.srta
+msgid "Señorita"
+msgstr "Señorita"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_Sigd
+msgid "Sin identificar/venta global diaria"
+msgstr "Sin identificar/venta global diaria"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,name:l10n_ar_partner.sa
+msgid "Sociedad Anónima"
+msgstr "Sociedad Anónima"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,name:l10n_ar_partner.srl
+msgid "Sociedad Limitada"
+msgstr "Sociedad Limitada"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,name:l10n_ar_partner.sdh
+msgid "Sociedad de Hecho"
+msgstr "Sociedad de Hecho"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,shortcut:l10n_ar_partner.sr
+msgid "Sr"
+msgstr "Sr"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,shortcut:l10n_ar_partner.sra
+msgid "Sra"
+msgstr "Sra"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,shortcut:l10n_ar_partner.srta
+msgid "Srta"
+msgstr "Srta"
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,shortcut:l10n_ar_partner.tec
+msgid "Tec."
+msgstr "Tec."
+
+#. module: l10n_ar_partner
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.partner_info
+msgid "Tipo de Documento"
+msgstr "Tipo de Documento"
+
+#. module: l10n_ar_partner
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.partner_info
+msgid "Tipo de Documento..."
+msgstr "Tipo de Documento..."
+
+#. module: l10n_ar_partner
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.partner_info
+msgid "Tipo de Responsabilidad AFIP"
+msgstr "Tipo de Responsabilidad AFIP"
+
+#. module: l10n_ar_partner
+#: model_terms:ir.ui.view,arch_db:l10n_ar_partner.partner_info
+msgid "Tipo de Responsabilidad AFIP..."
+msgstr "Tipo de Responsabilidad AFIP..."
+
+#. module: l10n_ar_partner
+#: model:res.partner.title,name:l10n_ar_partner.tec
+msgid "Técnico"
+msgstr "Técnico"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_UpApP
+msgid "Usado por Anses para Padrón"
+msgstr "Usado por Anses para Padrón"
+
+#. module: l10n_ar_partner
+#: model:res.partner.id_category,name:l10n_ar_partner.dt_ET
+msgid "en trámite"
+msgstr "en trámite"

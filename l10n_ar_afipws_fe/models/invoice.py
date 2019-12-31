@@ -77,7 +77,7 @@ class AccountInvoice(models.Model):
 
     afip_barcode = fields.Char(
         compute='_compute_barcode',
-        string='AFIP Barcode'
+        string='AFIP Barcode (for backward compatibility)'
     )
     # backport of v13 for qweb report
     l10n_ar_afip_barcode = fields.Char(

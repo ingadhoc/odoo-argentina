@@ -684,3 +684,13 @@ class AccountInvoice(models.Model):
     def write(self, vals):
         self.change_incoterms(vals)
         return super(AccountInvoice, self).write(vals)
+
+    @api.model
+    def _prepare_refund(self, invoice, date_invoice=None, date=None, description=None, journal_id=None):
+        values = super(AccountInvoice, self)._prepare_refund(
+            invoice, date_invoice=date_invoice, date=date, description=description, journal_id=journal_id)
+        # TODO this origin should be set on account_document module
+        values['origin'] = invoice.document_number or invoice.number
+        values['afip_service_start'] = invoice.afip_service_start
+        values['afip_service_end'] = invoice.afip_service_end
+        return values

@@ -114,6 +114,43 @@
         <field name="montos_no_sujetos_a_retencion">7870</field>
     </record>
 
+    <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_60">
+        <field name="anexo_referencia">Art. 90.3</field>
+        <field name="codigo_de_regimen">60</field>
+        <field name="concepto_referencia">Dividendos y utilidades asimilables. Art. 90.3 de la ley. Alícuota 7%.</field>
+        <field name="porcentaje_inscripto">7.00</field>
+        <field name="porcentaje_no_inscripto">7.00</field>
+        <field name="montos_no_sujetos_a_retencion">0</field>
+    </record>
+
+    <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_61">
+        <field name="anexo_referencia">Art. 90.3</field>
+        <field name="codigo_de_regimen">61</field>
+        <field name="concepto_referencia">Dividendos y utilidades asimilables. Art. 90.3 de la ley. Alícuota 13%.</field>
+        <field name="porcentaje_inscripto">13.00</field>
+        <field name="porcentaje_no_inscripto">13.00</field>
+        <field name="montos_no_sujetos_a_retencion">0</field>
+    </record>
+
+    <!-- TODO: si alguien pide implementamos estos regimenes pero hay que adaptar el exportador de sicore para que agregue los campos adicionales de beneficiaros del exterior y ademas que mapee a impuesto 218 en vez de 217 -->
+    <!-- <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_62">
+        <field name="anexo_referencia">Art. 90.3</field>
+        <field name="codigo_de_regimen">62</field>
+        <field name="concepto_referencia">Dividendos y utilidades asimilables. Art. 90.3 de la ley. Beneficiarios del exterior. Alícuota 7%.</field>
+        <field name="porcentaje_inscripto">7.00</field>
+        <field name="porcentaje_no_inscripto">7.00</field>
+        <field name="montos_no_sujetos_a_retencion">0</field>
+    </record>
+
+    <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_63">
+        <field name="anexo_referencia">Art. 90.3</field>
+        <field name="codigo_de_regimen">63</field>
+        <field name="concepto_referencia">Dividendos y utilidades asimilables. Art. 90.3 de la ley. Beneficiarios del exterior. Alícuota 13%.</field>
+        <field name="porcentaje_inscripto">13.00</field>
+        <field name="porcentaje_no_inscripto">13.00</field>
+        <field name="montos_no_sujetos_a_retencion">0</field>
+    </record> -->
+
     <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_9">
         <field name="anexo_referencia">Anexo II, inc. f)</field>
         <field name="codigo_de_regimen">78</field>

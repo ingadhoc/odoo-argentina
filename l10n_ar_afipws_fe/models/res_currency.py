@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api, _
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 import logging
 
@@ -44,7 +44,15 @@ class ResCurrency(models.Model):
 
     @api.multi
     def action_get_pyafipws_currency_rate(self):
-        raise UserError(self.get_pyafipws_currency_rate()[1])
+        rate = self.get_pyafipws_currency_rate()
+        if rate[0] != 0:
+            self.env['res.currency.rate'].create({
+                'currency_id': self.id, 
+                'rate': 1 / rate[0],
+                'name': fields.Date.today(),  # rate[2],
+                'company_id': self.env.user.company_id.id
+            })
+        _logger.info('Rate: %s, rate msg: %s' % (rate[0], rate[1]))
 
     @api.multi
     def get_pyafipws_currency_rate(self, afip_ws='wsfe', company=False):

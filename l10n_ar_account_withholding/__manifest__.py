@@ -49,6 +49,7 @@
         # usa las lineas
         # 'l10n_ar_aeroo_base',
         'report_aeroo',
+        'account_tax_python',
     ],
     'external_dependencies': {
         'python': ['pyafipws'],

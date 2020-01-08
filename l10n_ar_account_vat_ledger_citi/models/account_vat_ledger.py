@@ -402,8 +402,7 @@ class AccountVatLedger(models.Model):
                     (inv.document_type_id.code in [
                         '19', '20', '21', '16', '55', '81', '82', '83',
                         '110', '111', '112', '113', '114', '115', '116',
-                        '117', '118', '119', '120', '201', '202', '203',
-                        '206', '207', '208', '211', '212', '213'] and
+                        '117', '118', '119', '120'] and
                         '00000000' or
                         fields.Date.from_string(
                             inv.date_due or inv.date_invoice).strftime(

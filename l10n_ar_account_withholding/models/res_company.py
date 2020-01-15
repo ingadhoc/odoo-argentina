@@ -221,9 +221,9 @@ class ResCompany(models.Model):
         # Verificar que el comprobante tenga fecha dentro de la vigencia
         if not (from_date <= date_date < to_date):
             raise UserError(
-                    'No se puede obtener automáticamente la alicuota para la '
-                    'fecha %s. Por favor, ingrese la misma manualmente '
-                    'en el partner.' % date)
+                'No se puede obtener automáticamente la alicuota para la '
+                'fecha %s. Por favor, ingrese la misma manualmente '
+                'en el partner.' % date)
 
         data = {
             'alicuota_percepcion': alicuota_percepcion,

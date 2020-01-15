@@ -75,7 +75,7 @@ class ResPartner(models.Model):
             # y esta seleccionado otro que no es cuit
             # igualmente, si es un partner del extranjero intentamos devolver
             # cuit fisica o juridica del pais
-            if rec.main_id_category_id.afip_code != 80:
+            if rec.main_id_category_id.afip_code != 80 or not rec.main_id_number:
                 country = rec.country_id
                 if country and country.code != 'AR':
                     if rec.is_company:

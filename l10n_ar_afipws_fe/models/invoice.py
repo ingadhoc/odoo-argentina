@@ -107,6 +107,12 @@ class AccountInvoice(models.Model):
         'Validation Type',
         compute='_compute_validation_type',
     )
+    afip_fce_es_anulacion = fields.Boolean(
+        string='FCE: Es anulacion?',
+        help='Solo utilizado en comprobantes MiPyMEs (FCE) del tipo débito o crédito. Debe informar:\n'
+        '- SI: sí el comprobante asociado (original) se encuentra rechazado por el comprador\n'
+        '- NO: sí el comprobante asociado (original) NO se encuentra rechazado por el comprador'
+    )
 
     @api.depends('journal_id', 'afip_auth_code')
     def _compute_validation_type(self):
@@ -190,6 +196,21 @@ class AccountInvoice(models.Model):
         # that happens if you choose the modify option of the credit note
         # wizard. A mapping of which documents can be reported as related
         # documents would be a better solution
+        code_rules = [
+            ([2, 3], [1, 2, 3, 4, 5, 34, 39, 60, 63, 88, 991]),
+            ([7, 8], [6, 7, 8, 9, 10, 35, 40, 61, 64, 88, 991]),
+            ([12, 13], [11, 12, 13, 15]),
+            ([19], [88, 89]),
+            ([20, 21], [88, 89, 19, 20, 21]),
+            ([52, 53], [51, 52, 53, 54, 88, 991]),
+            ([1, 6, 51], [88, 991]),
+            ([201, 206, 211], [91, 990, 991, 993, 994, 995]),
+            ([202, 203], [201, 202, 203]),
+            ([207, 208], [206, 207, 208]),
+            ([212, 213], [211, 212, 213])
+        ]
+        available_codes = list(filter(lambda x: int(self.document_type_id.code) in x[0], code_rules))
+        available_codes = available_codes[0][1] if available_codes else []
         if self.document_type_internal_type in ['debit_note', 'credit_note'] \
                 and self.origin:
             return self.search([
@@ -199,6 +220,7 @@ class AccountInvoice(models.Model):
                 ('id', '!=', self.id),
                 ('document_type_id.document_letter_id', '=', self.document_type_id.document_letter_id.id),
                 ('document_type_id', '!=', self.document_type_id.id),
+                ('document_type_id.code', 'in', available_codes),
                 ('state', 'not in',
                     ['draft', 'proforma', 'proforma2', 'cancel'])],
                 limit=1)
@@ -547,6 +569,13 @@ print "Observaciones:", wscdc.Obs
                 else:
                     forma_pago = obs_comerciales = None
 
+                # 1671 Report fecha_pago with format YYYMMDD
+                # 1672 Is required only doc_type 19. concept (2,4)
+                # 1673 If doc_type != 19 should not be reported.
+                # 1674 doc_type 19 concept (2,4). date should be >= invoice date
+                fecha_pago = datetime.strftime(fields.Datetime.from_string(inv.date_due), '%Y%m%d') \
+                    if int(doc_afip_code) == 19 and tipo_expo in [2, 4] and inv.date_due else ''
+
                 idioma_cbte = 1     # invoice language: spanish / español
 
                 # TODO tal vez podemos unificar este criterio con el del
@@ -582,7 +611,7 @@ print "Observaciones:", wscdc.Obs
                     nombre_cliente, cuit_pais_cliente, domicilio_cliente,
                     id_impositivo, moneda_id, moneda_ctz, obs_comerciales,
                     obs_generales, forma_pago, incoterms,
-                    idioma_cbte, incoterms_ds
+                    idioma_cbte, incoterms_ds, fecha_pago,
                 )
             elif afip_ws == 'wsbfe':
                 zona = 1  # Nacional (la unica devuelta por afip)
@@ -624,11 +653,7 @@ print "Observaciones:", wscdc.Obs
                             opcional_id=23,
                             valor=inv.name)
                 elif int(doc_afip_code) in [202, 203, 207, 208, 212, 213]:
-                    # si es una NC y si el valor es el mismo al comprobante original entonces es una anulacion
-                    if int(doc_afip_code) in [203, 208, 213] and CbteAsoc.amount_total == self.amount_total:
-                        valor = 'S'
-                    else:
-                        valor = 'N'
+                    valor = inv.afip_fce_es_anulacion and 'S' or 'N'
                     ws.AgregarOpcional(
                         opcional_id=22,
                         valor=valor)

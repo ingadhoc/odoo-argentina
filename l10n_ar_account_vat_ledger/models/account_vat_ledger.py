@@ -113,6 +113,10 @@ class AccountVatLedger(models.Model):
         string="AFIP Responsabilities",
         compute="_compute_data"
     )
+    statement_vat_line_ids = fields.Many2many(
+        'account.move.line',
+        compute='_compute_statement_vat_lines',
+    )
 
     @api.model
     def get_tax_groups_columns(self):
@@ -132,6 +136,19 @@ class AccountVatLedger(models.Model):
             ('IVA 27%', tg_27),
             # ('Perc. IVA', tg_per_iva),
         ]
+
+    @api.multi
+    @api.depends('journal_ids', 'date_from', 'date_to')
+    def _compute_statement_vat_lines(self):
+        for rec in self:
+            rec.statement_vat_line_ids = self.env['account.move.line'].search([
+                ('journal_id.type', 'in', ['cash', 'bank']),
+                ('company_id', '=', rec.company_id.id),
+                ('date', '>=', rec.date_from),
+                ('date', '<=', rec.date_to),
+                ('tax_line_id.tax_group_id.type', '=', 'tax'),
+                ('tax_line_id.tax_group_id.tax', '=', 'vat'),
+            ])
 
     @api.multi
     @api.depends('journal_ids', 'date_from', 'date_to')

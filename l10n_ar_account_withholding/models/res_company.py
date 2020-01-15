@@ -207,29 +207,25 @@ class ResCompany(models.Model):
         if code == 3:
             alicuota_percepcion = self.cdba_alicuota_no_sincripto_percepcion
             alicuota_retencion = self.cdba_alicuota_no_sincripto_retencion
-            from_date = date_date + relativedelta(day=1)
-            to_date = date_date + relativedelta(day=1, days=-1, months=+1)
         elif code != 0:
             raise UserError(json_body.get("message"))
         else:
             dict_alic = json_body.get("sdtConsultaAlicuotas")
             alicuota_percepcion = float(dict_alic.get("CRD_ALICUOTA_PER"))
             alicuota_retencion = float(dict_alic.get("CRD_ALICUOTA_RET"))
-            from_date = fields.Date.from_string(dict_alic.get("CRD_FECHA_INICIO"))
-            to_date = fields.Date.from_string(dict_alic.get("CRD_FECHA_FIN"))
 
-        # Verificar que el comprobante tenga fecha dentro de la vigencia
-        if not (from_date <= date_date < to_date):
-            raise UserError(
-                'No se puede obtener automáticamente la alicuota para la '
-                'fecha %s. Por favor, ingrese la misma manualmente '
-                'en el partner.' % date)
+            # Verificar que el comprobante tenga fecha dentro de la vigencia
+            from_date_date = fields.Date.from_string(dict_alic.get("CRD_FECHA_INICIO"))
+            to_date_date = fields.Date.from_string(dict_alic.get("CRD_FECHA_FIN"))
+            if not (from_date_date <= date_date < to_date_date):
+                raise UserError(
+                    'No se puede obtener automáticamente la alicuota para la '
+                    'fecha %s. Por favor, ingrese la misma manualmente '
+                    'en el partner.' % date)
 
         data = {
             'alicuota_percepcion': alicuota_percepcion,
             'alicuota_retencion': alicuota_retencion,
-            'from_date': from_date,
-            'to_date': to_date,
         }
 
         _logger.info("We've got the following data: \n%s" % data)

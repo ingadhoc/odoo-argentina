@@ -220,6 +220,8 @@ class AccountTax(models.Model):
                     commercial_partner,
                     date,
                 )
+                cordoba_data['from_date'] = from_date
+                cordoba_data['to_date'] = to_date
                 cordoba_data['partner_id'] = commercial_partner.id
                 cordoba_data['company_id'] = company.id
                 cordoba_data['tag_id'] = cdba_tag.id

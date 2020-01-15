@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from odoo import fields, models, api, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, RedirectWarning
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -155,7 +155,18 @@ class AfipwsConnection(models.Model):
         wsdl = self.afip_ws_url
 
         # connect to the webservice and call to the test method
-        ws.Conectar("", wsdl or "", "")
+        try:
+            ws.Conectar("", wsdl or "", "")
+        except Exception as error:
+            if 'xml.parsers.expat.ExpatError: mismatched tag' in repr(error) or \
+               'Conexión reinicializada por la máquina remota' in repr(error) or \
+               "module 'httplib2' has no attribute 'SSLHandshakeError'" in repr(error):
+                action = self.env.ref('l10n_ar_afipws.action_afip_padron')
+                msg = _('It seems like AFIP service is not available.\nPlease try again later or try manually')
+                raise RedirectWarning(msg, action.id, _('Go and find data manually'))
+            raise UserError(
+                'There was a connection problem to AFIP. Contact your Odoo Provider. Error\n\n%s' % repr(error))
+
         cuit = self.company_id.cuit_required()
         ws.Cuit = cuit
         ws.Token = self.token

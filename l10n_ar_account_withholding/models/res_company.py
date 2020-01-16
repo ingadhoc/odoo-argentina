@@ -9,7 +9,7 @@ from odoo.exceptions import UserError
 import logging
 import json
 import requests
-from dateutil.relativedelta import relativedelta
+# from dateutil.relativedelta import relativedelta
 _logger = logging.getLogger(__name__)
 
 

@@ -7,6 +7,9 @@ except ImportError:
 # from pyafipws.padron import PadronAFIP
 from odoo.exceptions import UserError
 import logging
+import json
+import requests
+# from dateutil.relativedelta import relativedelta
 _logger = logging.getLogger(__name__)
 
 
@@ -35,6 +38,12 @@ class ResCompany(models.Model):
     )
     arba_alicuota_no_sincripto_percepcion = fields.Float(
         'Arba: Alicuota no inscripto percepción',
+    )
+    cdba_alicuota_no_sincripto_retencion = fields.Float(
+        'Rentas Córdoba: Alícuota no inscripto retención'
+    )
+    cdba_alicuota_no_sincripto_percepcion = fields.Float(
+        'Rentas Córdoba: Alícuota no inscripto percepción'
     )
 
     @api.model
@@ -165,4 +174,60 @@ class ResCompany(models.Model):
             'to_date': to_date,
         }
         _logger.info('We get the following data: \n%s' % data)
+        return data
+
+    def get_cordoba_data(self, partner, date):
+        """ Obtener alícuotas desde app.rentascordoba.gob.ar
+        :param partner: El partner sobre el cual trabajamos
+        :param date: La fecha del comprobante
+        :param from_date: Fecha de inicio de validez de alícuota por defecto
+        :param to_date: Fecha de fin de validez de alícuota por defecto
+        Devuelve diccionario de datos
+        """
+        _logger.info('Getting withholding data from rentascordoba.gob.ar')
+        date_date = fields.Date.from_string(date)
+
+        # Establecer parámetros de solicitud
+        url = "https://app.rentascordoba.gob.ar/rentas/rest/svcGetAlicuotas"
+        payload = {'body': partner.main_id_number}
+        headers = {'content-type': 'application/json'}
+
+        # Realizar solicitud
+        r = requests.post(url, data=json.dumps(payload), headers=headers)
+        json_body = r.json()
+
+        if r.status_code != 200:
+            raise UserError('Error al contactar rentascordoba.gob.ar. '
+                            'El servidor respondió: \n\n%s' % json_body)
+
+        code = json_body.get("errorCod")
+
+        # Capturar Códigos de Error.
+        # 3 => No Inscripto, 2 => No pasible, 1 => CUIT incorrecta, 0 => OK
+        if code == 3:
+            alicuota_percepcion = self.cdba_alicuota_no_sincripto_percepcion
+            alicuota_retencion = self.cdba_alicuota_no_sincripto_retencion
+        elif code != 0:
+            raise UserError(json_body.get("message"))
+        else:
+            dict_alic = json_body.get("sdtConsultaAlicuotas")
+            alicuota_percepcion = float(dict_alic.get("CRD_ALICUOTA_PER"))
+            alicuota_retencion = float(dict_alic.get("CRD_ALICUOTA_RET"))
+
+            # Verificar que el comprobante tenga fecha dentro de la vigencia
+            from_date_date = fields.Date.from_string(dict_alic.get("CRD_FECHA_INICIO"))
+            to_date_date = fields.Date.from_string(dict_alic.get("CRD_FECHA_FIN"))
+            if not (from_date_date <= date_date < to_date_date):
+                raise UserError(
+                    'No se puede obtener automáticamente la alicuota para la '
+                    'fecha %s. Por favor, ingrese la misma manualmente '
+                    'en el partner.' % date)
+
+        data = {
+            'alicuota_percepcion': alicuota_percepcion,
+            'alicuota_retencion': alicuota_retencion,
+        }
+
+        _logger.info("We've got the following data: \n%s" % data)
+
         return data

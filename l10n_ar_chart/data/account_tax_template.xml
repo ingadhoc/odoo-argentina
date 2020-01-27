@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-  <data noupdate="0">
+  <data>
 
 <!-- EXENTO -->
         <record id="ri_tax_percepcion_iva_aplicada" model="account.tax.template">

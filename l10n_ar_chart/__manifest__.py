@@ -33,8 +33,8 @@
         # # in that case
         # '../l10n_ar_account/demo/account_journal_demo.xml',
     ],
-    'installable': False,
+    'installable': True,
     'images': [
     ],
-    'version': '12.0.1.2.0',
+    'version': "13.0.1.0.0",
 }

@@ -14,6 +14,7 @@ class ResCompany(models.Model):
         readonly=False,
     )
 
+    # TODO this field could be defined directly on l10n_ar_account_withholding
     arba_cit = fields.Char(
         'CIT ARBA',
         help='Clave de Identificación Tributaria de ARBA',

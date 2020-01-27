@@ -5,6 +5,10 @@ from odoo import models, fields
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
+    arba_cit = fields.Char(
+        related='company_id.arba_cit',
+        readonly=False,
+    )
     regimenes_ganancias_ids = fields.Many2many(
         related='company_id.regimenes_ganancias_ids',
         readonly=False,
@@ -30,11 +34,11 @@ class ResConfigSettings(models.TransientModel):
         readonly=False,
     )
     cdba_alicuota_no_sincripto_retencion = fields.Float(
-        related='company_id.cdba_alicuota_no_sincripto_retencion'
+        related='company_id.cdba_alicuota_no_sincripto_retencion',
         readonly=False,
     )
     cdba_alicuota_no_sincripto_percepcion = fields.Float(
-        related='company_id.cdba_alicuota_no_sincripto_percepcion'
+        related='company_id.cdba_alicuota_no_sincripto_percepcion',
         readonly=False,
     )
     group_partner_tax_withholding_amount_type = fields.Boolean(

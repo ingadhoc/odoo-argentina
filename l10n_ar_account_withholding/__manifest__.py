@@ -35,6 +35,7 @@
         'views/res_partner_view.xml',
         'views/account_tax_view.xml',
         'data/tabla_ganancias_data.xml',
+        'data/account_tax_withholding_template.xml',
     ],
     'demo': [
         'demo/ir_parameter.xml',
@@ -42,7 +43,7 @@
     ],
     'depends': [
         'account_withholding_automatic',
-        'l10n_ar_edi',
+        'l10n_ar_ux',
         # para ganancias
         # deberiamos requerir l10n_ar_aeroo_base pero preferimos no hacerlo
         # para no sumar dependencinas. Se deberia requerir porque el reporte

@@ -54,6 +54,7 @@ class AccountPaymentGroup(models.Model):
     def change_retencion_ganancias(self):
         if self.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC']:
             self.retencion_ganancias = 'no_aplica'
+            self.regimen_ganancias_id = False
         else:
             cia_regs = self.company_regimenes_ganancias_ids
             partner_regimen = (

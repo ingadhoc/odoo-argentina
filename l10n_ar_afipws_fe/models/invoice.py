@@ -712,7 +712,7 @@ print "Observaciones:", wscdc.Obs
             # analize line items - invoice detail
             # wsfe do not require detail
             if afip_ws != 'wsfe':
-                for line in inv.invoice_line_ids:
+                for line in inv.invoice_line_ids.filtered(lambda x: not x.display_type):
                     codigo = line.product_id.default_code
                     # unidad de referencia del producto si se comercializa
                     # en una unidad distinta a la de consumo

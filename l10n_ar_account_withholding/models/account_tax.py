@@ -44,7 +44,8 @@ class AccountTax(models.Model):
     def get_period_payments_domain(self, payment_group):
         previos_payment_groups_domain, previos_payments_domain = super(
             AccountTax, self).get_period_payments_domain(payment_group)
-        if self.withholding_type == 'tabla_ganancias':
+        if self.withholding_type == 'tabla_ganancias' and payment_group.retencion_ganancias == 'nro_regimen' \
+           and payment_group.regimen_ganancias_id:
             previos_payment_groups_domain += [
                 ('regimen_ganancias_id', '=',
                     payment_group.regimen_ganancias_id.id)]
@@ -173,6 +174,8 @@ class AccountTax(models.Model):
 
             agip_tag = self.env.ref('l10n_ar_account.tag_tax_jurisdiccion_901')
             arba_tag = self.env.ref('l10n_ar_account.tag_tax_jurisdiccion_902')
+            cdba_tag = self.env.ref('l10n_ar_account.tag_tax_jurisdiccion_904')
+
             if arba_tag and arba_tag.id in self.tag_ids.ids:
                 arba_data = company.get_arba_data(
                     commercial_partner,
@@ -213,6 +216,17 @@ class AccountTax(models.Model):
                 agip_data['company_id'] = company.id
                 agip_data['tag_id'] = agip_tag.id
                 alicuot = partner.arba_alicuot_ids.sudo().create(agip_data)
+            elif cdba_tag and cdba_tag.id in self.tag_ids.ids:
+                cordoba_data = company.get_cordoba_data(
+                    commercial_partner,
+                    date,
+                )
+                cordoba_data['from_date'] = from_date
+                cordoba_data['to_date'] = to_date
+                cordoba_data['partner_id'] = commercial_partner.id
+                cordoba_data['company_id'] = company.id
+                cordoba_data['tag_id'] = cdba_tag.id
+                alicuot = partner.arba_alicuot_ids.sudo().create(cordoba_data)
         return alicuot
 
     def _compute_amount(

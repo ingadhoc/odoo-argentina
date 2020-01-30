@@ -167,10 +167,8 @@ class AccountTax(models.Model):
         if not alicuot and \
                 commercial_partner.afip_responsability_type_id.code in \
                 ['1', '1FM', '2', '3', '4', '6', '11', '13']:
-            date_date = fields.Date.from_string(date)
-            from_date = (date_date + relativedelta(day=1)).strftime('%Y%m%d')
-            to_date = (date_date + relativedelta(
-                day=1, days=-1, months=+1)).strftime('%Y%m%d')
+            from_date = fields.Date.to_string(date + relativedelta(day=1))
+            to_date = fields.Date.to_string(date + relativedelta(day=1, days=-1, months=+1))
 
             agip_tag = self.env.ref('l10n_ar_account.tag_tax_jurisdiccion_901')
             arba_tag = self.env.ref('l10n_ar_account.tag_tax_jurisdiccion_902')

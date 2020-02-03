@@ -1,0 +1,50 @@
+<odoo>
+    <record id="l10n_ar_account.dc_liq_s_a" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_liq_s_b" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_com_a_m" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_con_a_m" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_com_b_m" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_con_b_m" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_liq_uci_a" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_liq_uci_b" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+    <record id="l10n_ar_account.dc_liq_prim_gr" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+     <record id="l10n_ar_account.dc_nc_liq_uci_a" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+     <record id="l10n_ar_account.dc_nd_liq_uci_a" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+     <record id="l10n_ar_account.dc_nd_liq_uci_b" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+     <record id="l10n_ar_account.dc_nc_liq_uci_c" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+     <record id="l10n_ar_account.dc_bs_no_reg" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+     <record id="l10n_ar_account.dc_liq_sec_gr" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+     <record id="l10n_ar_account.dc_cert_ele_gr" model="account.document.type">
+        <field name="export_to_citi" eval='True'/>
+    </record>
+</odoo>

@@ -772,10 +772,12 @@ print "Observaciones:", wscdc.Obs
                     ws.AutorizarComprobante()
                     vto = ws.Vencimiento
                 elif afip_ws == 'wsfex':
-                    ws.Authorize(inv.id)
+                    last_id = ws.GetLastID()
+                    ws.Authorize(last_id+1)
                     vto = ws.FchVencCAE
                 elif afip_ws == 'wsbfe':
-                    ws.Authorize(inv.id)
+                    last_id = ws.GetLastID()
+                    ws.Authorize(last_id+1)
                     vto = ws.Vencimiento
             except SoapFault as fault:
                 msg = 'Falla SOAP %s: %s' % (

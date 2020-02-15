@@ -92,6 +92,12 @@ class AccountVatLedger(models.Model):
         #         amount = -1.0 * amount
         # Al final volvimos a agregar esto, lo necesitabamos por ej si se pasa
         # base negativa de no gravado
+        # si se usa alguno de estos tipos de doc para rectificativa hay que pasarlos restando
+        # seguramente para algunos otros tambien pero realmente no se usan y el citi tiende a depreciarse
+        # y el uso de internal_type a cambiar
+        if invoice and invoice.document_type_id.code in ['39', '40', '41', '66', '99'] \
+           and invoice.type in ['in_refund', 'out_refund']:
+            amount = -amount
 
         if amount < 0:
             template = "-{:0>%dd}" % (padding - 1)

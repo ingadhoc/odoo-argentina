@@ -4,7 +4,7 @@
     <record model="ir.ui.view" id="res_config_settings_view_form">
         <field name="name">res.config.settings.view.form.inherit.l10n_ar_afip_ws</field>
         <field name="model">res.config.settings</field>
-        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="inherit_id" ref="l10n_ar_edi.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <div name="argentina_localization" position="inside">
                 <div class="col-xs-12 col-md-6 o_setting_box">
@@ -78,7 +78,8 @@
                     </div>
                 </div>
             </div>
-            <div name="arba-content-group">
+            <!-- TODO enable when l10n_ar_ux -->
+            <!-- <div name="arba-content-group">
                 <div class="row">
                     <label for="arba_alicuota_no_sincripto_retencion" class="col-md-6 o_light_label" string="Alícuota retención no inscripto"/>
                     <field name="arba_alicuota_no_sincripto_retencion" class="oe_inline"/>
@@ -87,7 +88,7 @@
                     <label for="arba_alicuota_no_sincripto_percepcion" class="col-md-6 o_light_label" string="Alícuota percepción no inscripto"/>
                     <field name="arba_alicuota_no_sincripto_percepcion" class="oe_inline"/>
                 </div>
-            </div>
+            </div> -->
         </field>
     </record>
 

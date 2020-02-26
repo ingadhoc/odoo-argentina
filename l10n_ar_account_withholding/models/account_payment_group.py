@@ -39,16 +39,17 @@ class AccountPaymentGroup(models.Model):
         compute='_company_regimenes_ganancias',
     )
 
-    @api.multi
     @api.depends('company_id.regimenes_ganancias_ids')
     def _company_regimenes_ganancias(self):
         """
         Lo hacemos con campo computado y no related para que solo se setee
         y se exija si es pago de o a proveedor
         """
-        for rec in self.filtered(lambda x: x.partner_type == 'supplier'):
-            rec.company_regimenes_ganancias_ids = (
-                rec.company_id.regimenes_ganancias_ids)
+        for rec in self:
+            if rec.partner_type == 'supplier':
+                rec.company_regimenes_ganancias_ids = rec.company_id.regimenes_ganancias_ids
+            else:
+                rec.company_regimenes_ganancias_ids = rec.env['afip.tabla_ganancias.alicuotasymontos']
 
     @api.onchange('commercial_partner_id')
     def change_retencion_ganancias(self):

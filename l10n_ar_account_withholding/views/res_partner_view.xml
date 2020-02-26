@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record model="ir.ui.view" id="view_partner_form">
+    <!-- TODO enable when l10n_ar_ux -->
+    <!-- <record model="ir.ui.view" id="view_partner_form">
         <field name="name">res.partner.form.inherit</field>
-        <field name="inherit_id" ref="l10n_ar_account.view_partner_property_form"/>
+        <field name="inherit_id" ref="l10n_ar_ux.view_partner_property_form"/>
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
             <field name="imp_ganancias_padron" position="after">
@@ -10,13 +11,12 @@
             </field>
             <group name="others_col_1">
                 <field name="drei"/>
-                <!-- <field name="drei_number"/> -->
             </group>
             <group name="others" position="after">
                 <label for="arba_alicuot_ids"/>
                 <field name="arba_alicuot_ids"/>
             </group>
         </field>
-    </record>
+    </record> -->
 
 </odoo>

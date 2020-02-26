@@ -14,30 +14,27 @@
 Agregado de CBU a bancos y listado de Bancos Argentinos
 =======================================================
 
-Listado de entidades financieras habilitadas por el BCRA.
-
-Este módulo le permite tener a disposición el listado actualizado de las entidades bancarias de la República Argentina.
+* Listado de entidades financieras habilitadas por el BCRA en la República Argentina.
+* Filtro para buscar las cuentas bancarias por nombre de banco
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Do this ...
+#. Just install the module
 
 Configuration
 =============
 
 To configure this module, you need to:
 
-#. Go to ...
+#. Nothing to do
 
 Usage
 =====
 
 To use this module, you need to:
-
-#. Go to ...
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

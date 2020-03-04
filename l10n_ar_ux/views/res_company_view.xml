@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_company_form" model="ir.ui.view">
+        <field name="name">res.company.form.inherit</field>
+        <field name="inherit_id" ref="l10n_ar.view_company_form"/>
+        <field name="model">res.company</field>
+        <field name="arch" type="xml">
+
+            <!-- make some fields required if is an Argentian Company -->
+            <field name="country_id" position="attributes">
+                <attribute name="required">True</attribute>
+            </field>
+            <field name="vat" position="attributes">
+                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
+            </field>
+            <field name="state_id" position="attributes">
+                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
+            </field>
+            <field name="city" position="attributes">
+                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
+            </field>
+            <field name="street" position="attributes">
+                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
+            </field>
+            <field name="zip" position="attributes">
+                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
+            </field>
+            <field name="l10n_ar_afip_responsibility_type_id" position="attributes">
+                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
+            </field>
+            <field name="l10n_ar_afip_start_date" position="attributes">
+                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
+            </field>
+            <field name="l10n_ar_gross_income_type" position="attributes">
+                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
+            </field>
+            <field name="l10n_ar_gross_income_number" position="after">
+                <field name="gross_income_jurisdiction_ids" widget="many2many_tags" placeholder="Other Jurisdictions" class="oe_inline" attrs="{'invisible': [('l10n_ar_gross_income_type', '!=', 'multilateral')], 'required': [('l10n_ar_gross_income_type', '=', 'multilateral')]}"/>
+            </field>
+
+        </field>
+    </record>
+
+</odoo>

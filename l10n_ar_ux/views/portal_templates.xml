@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="partner_info" name="Argentinian partner">
+        <div class="clearfix"/>
+        <h3>Billing information</h3>
+        <div class="row">
+
+            <!-- Add company name -->
+            <t t-if="partner.commercial_partner_id.is_company and partner.commercial_partner_id != partner">
+                <div t-attf-class="form-group #{error.get('company_name') and 'has-error' or ''} col-xl-6">
+                    <label class="control-label" for="company_name">Company Name</label>
+                    <p class="form-control" t-esc="partner.commercial_company_name" readonly="1"/>
+                </div>
+            </t>
+
+            <!-- Add document type -->
+            <div t-attf-class="form-group #{error.get('l10n_latam_identification_type_id') and 'has-error' or ''} col-xl-6">
+                <label class="control-label" for="l10n_latam_identification_type_id">Document Type</label>
+                <input name="commercial_partner_id" class="form-control" t-att-value="partner.commercial_partner_id.id" type='hidden'/>
+                <t t-set="document_type" t-value="partner.commercial_partner_id.l10n_latam_identification_type_id"/>
+                <t t-if="document_type">
+                    <p class="form-control" t-esc="document_type.name" readonly="1" title="Changing your document type is not allowed. Please contact us directly for this operation."/>
+                    <input name="l10n_latam_identification_type_id" class="form-control" t-att-value="document_type.id" type='hidden'/>
+                </t>
+                <t t-else="">
+                    <select name="l10n_latam_identification_type_id" class="form-control">
+                        <option value="">Document Type...</option>
+                        <t t-foreach="identification_types or []" t-as="document_identification">
+                            <option t-att-value="document_identification.id" t-att-selected="str(document_identification.id) == l10n_latam_identification_type_id">
+                                <t t-esc="document_identification.name"/>
+                            </option>
+                        </t>
+                    </select>
+                </t>
+            </div>
+
+            <!-- Add document number -->
+            <div t-attf-class="form-group #{error.get('vat') and 'o_has_error' or ''} col-xl-6">
+                <label class="col-form-label" for="vat">Document Number</label>
+                <input type="text" name="vat" t-attf-class="form-control #{error.get('vat') and 'is-invalid' or ''}" t-att-value="partner.commercial_partner_id.vat or vat" t-att-readonly="'1' if partner.commercial_partner_id.vat else None" t-att-title="'Changing your document number is not allowed. Please contact us directly for this operation.' if partner.commercial_partner_id.vat else None"/>
+            </div>
+
+            <!-- Add AFIP Responsibility -->
+            <div t-attf-class="form-group #{error.get('l10n_ar_afip_responsibility_type_id') and 'has-error' or ''} col-xl-6">
+                <label class="control-label" for="l10n_ar_afip_responsibility_type_id">AFIP Responsibility</label>
+                <t t-set="afip_responsibility" t-value="partner.commercial_partner_id.l10n_ar_afip_responsibility_type_id"/>
+                <t t-if="afip_responsibility">
+                    <p class="form-control" t-esc="afip_responsibility.name" readonly="1" title="Changing your document type is not allowed. Please contact us directly for this operation."/>
+                    <input name="l10n_ar_afip_responsibility_type_id" class="form-control" t-att-value="afip_responsibility.id" type='hidden'/>
+                </t>
+                <t t-else="">
+                    <select name="l10n_ar_afip_responsibility_type_id" class="form-control">
+                        <option value="">AFIP Responsibility...</option>
+                        <t t-foreach="afip_responsibilities or []" t-as="afip_res">
+                            <option t-att-value="afip_res.id" t-att-selected="str(afip_res.id) == l10n_ar_afip_responsibility_type_id">
+                                <t t-esc="afip_res.name"/>
+                            </option>
+                        </t>
+                    </select>
+                </t>
+            </div>
+
+        </div>
+    </template>
+
+    <template id="portal_my_details" name="portal_my_details" inherit_id="portal.portal_my_details">
+
+        <xpath expr="//label[@for='company_name']/.." position="replace"/>
+        <xpath expr="//label[@for='vat']/.." position="replace"/>
+
+        <xpath expr="//button[@type='submit']/.." position="before">
+            <t t-call="l10n_ar_ux.partner_info"/>
+        </xpath>
+
+    </template>
+
+</odoo>

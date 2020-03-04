@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="True">
+
+    <record model="account.tax.group" id="tax_group_retencion_iva">
+        <field name="name">Retención IVA</field>
+        <!-- <field name="tax">vat</field>
+        <field name="type">withholding</field>
+        <field name="application">national_taxes</field> -->
+        <field name="l10n_ar_tribute_afip_code">01</field>
+    </record>
+
+    <record model="account.tax.group" id="tax_group_retencion_ganancias">
+        <field name="name">Retención Ganancias</field>
+        <!-- <field name="tax">profits</field>
+        <field name="type">withholding</field>
+        <field name="application">national_taxes</field> -->
+        <field name="l10n_ar_tribute_afip_code">01</field>
+    </record>
+
+    <record model="account.tax.group" id="tax_group_retencion_iibb">
+        <field name="name">Retención IIBB</field>
+        <!-- <field name="tax">gross_income</field>
+        <field name="type">withholding</field>
+        <field name="application">provincial_taxes</field> -->
+        <field name="l10n_ar_tribute_afip_code">02</field>
+    </record>
+
+    <record model="account.tax.group" id="tax_group_retencion_drei">
+        <field name="name">Retención DREI</field>
+        <!-- <field name="tax">other</field>
+        <field name="type">withholding</field>
+        <field name="application">municipal_taxes</field> -->
+        <field name="l10n_ar_tribute_afip_code">03</field>
+    </record>
+
+</odoo>

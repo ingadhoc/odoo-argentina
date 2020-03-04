@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_afip_concept_form" model="ir.ui.view">
+        <field name="name">afip.concept.form</field>
+        <field name="model">afip.concept</field>
+        <field name="arch" type="xml">
+            <form string="AFIP concepts">
+                <group>
+                    <field name="name"/>
+                    <field name='code'/>
+                    <field name='active'/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_afip_concept_tree" model="ir.ui.view">
+        <field name="name">afip.concept.tree</field>
+        <field name="model">afip.concept</field>
+        <field name="arch" type="xml">
+            <tree string="AFIP concepts">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_afip_concept">
+        <field name="name">AFIP concept</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">afip.concept</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Concepts" action="act_afip_concept" id="menu_action_afip_concept" sequence="30" parent="l10n_ar.menu_afip_config"/>
+
+</odoo>

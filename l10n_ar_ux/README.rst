@@ -10,14 +10,23 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-===========================
-Argentinian Localization UX
-===========================
+=========================
+Argentinian Accounting UX
+=========================
 
 This module extends the l10n_ar module to add some usability improvesment:
 
-1. Change USD symbol to "USD" instead of "$". This to avoid confusion when using multi company environment with ARS and USD at the same time.
-2. Change postion of EUR symbol, Put it before the amounts in order to match to the ARS and USD currencies format,
+#. Change USD symbol to "USD" instead of "$". This to avoid confusion when using multi company environment with ARS and USD at the same time.
+#. Change postion of EUR symbol, Put it before the amounts in order to match to the ARS and USD currencies format,
+#. Add portal support for AFIP responsability, and Identification type fields.
+#. Show Currency Rate preview on invoice before posting.
+#. Show final Currency Rate on invoice when already posted.
+#. Add account tag data for Argentina (include jurisdiccion ones)
+#. Add tax groups for withholding
+#. Show Name fantasy in the partner form view.
+#. Make some fields in company required if company is Argentina: vat, state_id, country_id, city, street, zip.
+#. Set Non Monetary tag to accounts depending of the account type
+#. Show Gross Income Jurisdiction in both partner and company
 
 Installation
 ============

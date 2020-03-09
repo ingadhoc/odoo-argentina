@@ -12,7 +12,8 @@ class AccountChartTemplate(models.Model):
     def _load(self, sale_tax_rate, purchase_tax_rate, company):
         """ Set non monetary tag when installing chart of account """
         res = super()._load(sale_tax_rate, purchase_tax_rate, company)
-        self.env['account.account'].set_non_monetary_tag(company)
+        if company.country_id == self.env.ref('base.ar'):
+            self.env['account.account'].set_non_monetary_tag(company)
         return res
 
     def _create_bank_journals(self, company, acc_template_ref):

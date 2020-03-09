@@ -9,11 +9,13 @@
     'summary': '',
     'depends': [
         'l10n_ar',
+        'account_check',
     ],
     'data': [
         'data/res_currency_data.xml',
         'data/account_account_tag_data.xml',
         'data/account_tax_group_data.xml',
+        'data/account_chart_template_data.xml',
         'views/portal_templates.xml',
         'views/account_move_view.xml',
         'views/res_company_view.xml',
@@ -21,6 +23,7 @@
         'views/afip_concept_view.xml',
         'views/afip_activity_view.xml',
         'views/afip_tax_view.xml',
+        'views/res_config_settings_views.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [

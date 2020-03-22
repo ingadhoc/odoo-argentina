@@ -12,7 +12,7 @@ class AccountAccount(models.Model):
     @api.model
     def set_non_monetary_tag(self, company):
         """ Set <Non Monetary> tag to the corresponding accounts taking into account the account type """
-        non_monetary_tag = self.env.ref('l10n_ar_ux.non_monetary_tag')
+        non_monetary_tag = self.env.ref('l10n_ar_ux.no_monetaria_tag')
         xml_ids = [
             'account.data_account_type_non_current_assets',
             'account.data_account_type_fixed_assets',

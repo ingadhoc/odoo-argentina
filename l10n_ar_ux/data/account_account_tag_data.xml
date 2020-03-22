@@ -65,7 +65,7 @@
         <field name="country_id" ref="base.ar"/>
     </record>
 
-    <record id="non_monetary_tag" model="account.account.tag">
+    <record id="no_monetaria_tag" model="account.account.tag">
         <field name="name">Non Monetary</field>
         <field name="applicability">accounts</field>
         <field name="country_id" ref="base.ar"/>

@@ -16,6 +16,7 @@
         'data/account_account_tag_data.xml',
         'data/account_tax_group_data.xml',
         'data/account_chart_template_data.xml',
+        'data/account_tax_template_data.xml',
         'views/portal_templates.xml',
         'views/account_move_view.xml',
         'views/res_company_view.xml',

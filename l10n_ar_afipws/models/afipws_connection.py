@@ -158,7 +158,7 @@ class AfipwsConnection(models.Model):
         try:
             ws.Conectar("", wsdl or "", "")
         except Exception as error:
-            if 'xml.parsers.expat.ExpatError: mismatched tag' in repr(error) or \
+            if 'ExpatError' in repr(error) or 'mismatched tag' in repr(error) or \
                'Conexión reinicializada por la máquina remota' in repr(error) or \
                "module 'httplib2' has no attribute 'SSLHandshakeError'" in repr(error):
                 action = self.env.ref('l10n_ar_afipws.action_afip_padron')

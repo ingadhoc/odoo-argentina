@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <!-- other certificate menu in accounting, we use this in planner -->
-    <menuitem name="Certificates" action="l10n_ar_afipws.act_afipws_certificate_alias" id="menu_action_afipws_certificate_alias" sequence="99" parent="l10n_ar_account.menu_afip_config"/>
-</odoo>

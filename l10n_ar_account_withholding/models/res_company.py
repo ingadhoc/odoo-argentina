@@ -211,6 +211,9 @@ class ResCompany(models.Model):
         if code == 3:
             alicuota_percepcion = self.cdba_alicuota_no_sincripto_percepcion
             alicuota_retencion = self.cdba_alicuota_no_sincripto_retencion
+        elif code == 2:
+            alicuota_percepcion = 0.0
+            alicuota_retencion = 0.0
         elif code != 0:
             raise UserError(json_body.get("message"))
         else:

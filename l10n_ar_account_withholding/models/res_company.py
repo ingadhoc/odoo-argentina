@@ -220,16 +220,16 @@ class ResCompany(models.Model):
             dict_alic = json_body.get("sdtConsultaAlicuotas")
             alicuota_percepcion = float(dict_alic.get("CRD_ALICUOTA_PER"))
             alicuota_retencion = float(dict_alic.get("CRD_ALICUOTA_RET"))
-
-            # Verificar que el comprobante tenga fecha dentro de la vigencia
-            from_date_date = fields.Date.from_string(dict_alic.get("CRD_FECHA_INICIO"))
-            to_date_date = fields.Date.from_string(dict_alic.get("CRD_FECHA_FIN"))
-            if not (from_date_date <= date_date < to_date_date):
-                raise UserError(
-                    'No se puede obtener automáticamente la alicuota para la '
-                    'fecha %s. Por favor, ingrese la misma manualmente '
-                    'en el partner.' % date)
-
+            # Verificamos si el par_cod no es para los recien inscriptos, que vienen con fecha "0000-00-00"
+            if dict_alic.get("CRD_PAR_CODIGO") != 'NUE_INS':
+                # Verificar que el comprobante tenga fecha dentro de la vigencia
+                from_date_date = fields.Date.from_string(dict_alic.get("CRD_FECHA_INICIO"))
+                to_date_date = fields.Date.from_string(dict_alic.get("CRD_FECHA_FIN"))
+                if not (from_date_date <= date_date < to_date_date):
+                    raise UserError(
+                        'No se puede obtener automáticamente la alicuota para la '
+                        'fecha %s. Por favor, ingrese la misma manualmente '
+                        'en el partner.' % date)
         data = {
             'alicuota_percepcion': alicuota_percepcion,
             'alicuota_retencion': alicuota_retencion,

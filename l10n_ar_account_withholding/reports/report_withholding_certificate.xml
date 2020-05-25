@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_withholding_certificate_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <t t-set="custom_header" t-value="'l10n_ar.custom_header'"/>
+                <t t-set="report_date" t-value="o.payment_date"/>
+                <t t-set="report_number" t-value="o.withholding_number or o.name"/>
+                <t t-set="report_name" t-value="'CERTIFICADO DE RETENCIÓN'"/>
+                <t t-set="header_address" t-value="o.company_id.partner_id"/>
+
+                <t t-set="custom_footer">
+                    <div class="row">
+                        <div name="footer_left_column" class="col-8">
+                            Nombre y Apellido Firmante:
+                            <br/>Cargo:
+                        </div>
+                        <div name="footer_right_column" class="col-4">
+                            Firma Responsable
+                        </div>
+                    </div>
+                </t>
+            <div class="page">
+                <div id="informations" class="row mt8 mb8">
+                    <div class="col-6">
+
+                        <!-- IDENTIFICACION (ADQUIRIENTE-LOCATARIO-PRESTARIO) -->
+
+                        <!-- (14) Apellido uy Nombre: Denominicacion o Razon Soclial -->
+                        <strong>Customer: </strong><span t-field="o.partner_id.name"/>
+
+                        <!-- (15) Domicilio Comercial -->
+                        <br/>
+                        <span t-esc="o.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True, "no_tag_br": True}'/>
+
+                        <!-- (16) Responsabilidad AFIP -->
+                        <strong>VAT Cond: </strong><span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
+
+                        <!-- (17) CUIT -->
+                        <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
+                            <br/><strong><t t-esc="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-field="o.partner_id.l10n_ar_formatted_vat"/>
+                        </t>
+
+                    </div>
+                </div>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th class="text-center" colspan="2"><strong>Datos de la retención practicada</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width: 50%;" class="text-right">
+                                Impuesto:
+                            </td>
+                            <td class="text-left">
+                                <span t-field="o.tax_withholding_id.description"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">
+                                Régimen / Descripción:
+                            </td>
+                            <td class="text-left">
+                                <span t-field="o.communication"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">
+                                Comprobante que origina la retención:
+                            </td>
+                            <td class="text-left">
+                                <span t-field="o.payment_group_id.document_number"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">
+                                Importe del comprobante que origina la retención:
+                            </td>
+                            <td class="text-left">
+                                <span t-field="o.withholding_base_amount"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">
+                                Importe de la retención:
+                            </td>
+                            <td class="text-left">
+                                <span t-field="o.amount"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_withholding_certificate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="o.partner_id.lang"/>
+                <t t-call="l10n_ar_account_withholding.report_withholding_certificate_document" t-lang="lang"/>
+            </t>
+        </t>
+    </template>
+
+    <report
+        string="Certificado de Retención"
+        id="action_report_withholding_certificate"
+        model="account.payment"
+        report_type="qweb-pdf"
+        name="l10n_ar_account_withholding.report_withholding_certificate"
+        file="l10n_ar_account_withholding.report_withholding_certificate"
+        print_report_name="'Certificado de Retención Slip - %s' % (object.withholding_number or '')"
+    />
+
+</odoo>

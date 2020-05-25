@@ -26,7 +26,7 @@
         'security/ir.model.access.csv',
         'security/security.xml',
         'wizard/res_config_settings_views.xml',
-        'reports/certificado_de_retencion_report.xml',
+        'reports/report_withholding_certificate.xml',
         'views/account_payment_group_view.xml',
         'views/afip_tabla_ganancias_escala_view.xml',
         'views/afip_tabla_ganancias_alicuotasymontos_view.xml',
@@ -39,17 +39,10 @@
     ],
     'demo': [
         'demo/ir_parameter.xml',
-        # 'demo/demo.xml',
     ],
     'depends': [
         'account_withholding_automatic',
         'l10n_ar_ux',
-        # para ganancias
-        # deberiamos requerir l10n_ar_aeroo_base pero preferimos no hacerlo
-        # para no sumar dependencinas. Se deberia requerir porque el reporte
-        # usa las lineas
-        # 'l10n_ar_aeroo_base',
-        'report_aeroo',
     ],
     'external_dependencies': {
         'python': ['pyafipws'],

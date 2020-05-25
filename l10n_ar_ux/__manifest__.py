@@ -10,6 +10,9 @@
     'depends': [
         'l10n_ar',
         'account_check',
+        # for payment group report
+        'account_withholding',
+        'account_payment_group_document',
     ],
     'data': [
         'data/res_currency_data.xml',
@@ -25,6 +28,7 @@
         'views/afip_activity_view.xml',
         'views/afip_tax_view.xml',
         'views/res_config_settings_views.xml',
+        'reports/report_payment_group.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [

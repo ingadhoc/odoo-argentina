@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_payment_group_document" inherit_id="account_payment_group.report_payment_group_document">
+        <t t-set="o" position="after">
+            <t t-set="custom_header" t-value="'l10n_ar.custom_header'"/>
+            <t t-set="report_date" t-value="o.payment_date"/>
+            <t t-set="document_letter" t-value="'X'"/>
+            <t t-set="document_legend" t-value="'Doc. no válido como factura'"/>
+            <t t-set="report_number" t-value="o.document_number"/>
+            <t t-set="report_name" t-value="o.partner_type == 'supplier' and 'Orden de pago' or 'Recibo'"/>
+            <t t-set="header_address" t-value="o.receiptbook_id.report_partner_id or o.company_id.partner_id"/>
+
+            <t t-set="custom_footer">
+                <div class="row">
+                    <div name="footer_left_column" class="col-8">
+                        Observaciones: <span t-field="o.notes"/>
+                    </div>
+                    <div name="footer_right_column" class="col-4">
+                        <span class="text-center">Firma y Aclaración</span>
+                        <div class="text-right" name="pager" t-if="report_type == 'pdf'">
+                            Page: <span class="page"/> / <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+        <div id="informations" position="inside">
+            <div class="col-6">
+
+                <!-- IDENTIFICACION (ADQUIRIENTE-LOCATARIO-PRESTARIO) -->
+
+                <!-- (14) Apellido uy Nombre: Denominicacion o Razon Soclial -->
+                <strong><span t-raw="o.partner_type == 'supplier' and 'Proveedor: ' or 'Cliente: '"/></strong><span t-field="o.partner_id.name"/>
+
+                <!-- (15) Domicilio Comercial -->
+                <br/>
+                <span t-esc="o.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True, "no_tag_br": True}'/>
+
+                <!-- (16) Responsabilidad AFIP -->
+                <strong>VAT Cond: </strong><span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
+
+                <!-- (17) CUIT -->
+                <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
+                    <br/><strong><t t-esc="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-field="o.partner_id.l10n_ar_formatted_vat"/>
+                </t>
+
+            </div>
+        </div>
+        <div id="informations" position="after">
+            <br/>
+            <table class="table table-sm o_main_table" name="payments_table">
+                <thead>
+                    <tr>
+                        <th><span>Pagos</span></th>
+                        <th class="text-right"><span>Importe</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="o.mapped('payment_ids.check_ids').sorted(key=lambda r:r.payment_date or r.issue_date)" t-as="line">
+                        <tr>
+                            <td><span t-raw='"Cheque nro %s - %s" % (line.name, line.bank_id.name or line.journal_id.name)'/><span t-if="line.payment_date"> - Venc. <span t-field="line.payment_date"/></span></td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-field="line.amount_company_currency"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <t t-foreach="o.payment_ids.filtered(lambda x: x.tax_withholding_id)" t-as="line">
+                        <tr>
+                            <td><span t-raw='"%s - %s" % (line.tax_withholding_id.name, line.withholding_number or line.name)'/></td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-field="line.signed_amount_company_currency"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <t t-foreach="o.payment_ids.filtered(lambda x: not x.tax_withholding_id and not x.check_ids)" t-as="line">
+                        <tr>
+                            <td><span t-raw='"%s%s" % (line.journal_id.name, line.other_currency and " (%s %s)" % (formatLang(line.signed_amount), line.currency_id.name) or "")'/></td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-field="line.signed_amount_company_currency"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><strong><span>Total Pagado</span></strong></td>
+                        <td class="text-right">
+                            <strong><span class="text-nowrap" t-field="o.payments_amount"/></strong>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <br/>
+            <table class="table table-sm o_main_table" name="matching_table">
+                <thead>
+                    <tr>
+                        <th><span>Comprobantes Imputados</span></th>
+                        <th class="text-center"><span>Fecha Venc.</span></th>
+                        <th class="text-right"><span>Importe Original</span></th>
+                        <th class="text-right"><span>Importe Imputado</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="o.with_context(payment_group_id=o.id).matched_move_line_ids" t-as="line">
+                        <tr>
+                            <td><span t-field='line.move_id.display_name'/></td>
+                            <td class="text-center">
+                                <span class="text-nowrap" t-field="line.date_maturity"/>
+                            </td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-raw="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-raw="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.payment_group_matched_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </tr>
+                    </t>
+                    <tr t-if="o.unmatched_amount">
+                        <td>A cuenta</td>
+                        <td class="text-center"/>
+                        <td class="text-right o_price_total"/>
+                        <td class="text-right o_price_total">
+                            <span class="text-nowrap" t-field="o.unmatched_amount"/>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3"><strong><span>Total Imputado</span></strong></td>
+                        <td class="text-right">
+                            <strong><span class="text-nowrap" t-raw="o.unmatched_amount + o.matched_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <br/>
+            <table class="table table-sm o_main_table" name="open_table" t-if="o.partner_type=='customer'">
+                <thead>
+                    <tr>
+                        <th><span>Comprobantes Pendientes al</span><span t-raw="datetime.datetime.today()" t-options='{"widget": "date"}'/></th>
+                        <th class="text-center"><span>Fecha Venc.</span></th>
+                        <th class="text-right"><span>Importe Original</span></th>
+                        <th class="text-right"><span>Saldo</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.internal_type', '=', o.partner_type=='customer' and 'receivable' or 'payable'), ('reconciled', '=', False), ('account_id.deprecated', '=', False), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)])" t-as="line">
+                        <tr>
+                            <td><span t-field='line.move_id.display_name'/></td>
+                            <td class="text-center">
+                                <span class="text-nowrap" t-field="line.date_maturity"/>
+                            </td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-field="line.balance"/>
+                            </td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-field="line.amount_residual"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3"><strong><span>Total Pendiente</span></strong></td>
+                        <td class="text-right">
+                            <strong><span class="text-nowrap" t-raw="sum(o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.internal_type', '=', o.partner_type=='customer' and 'receivable' or 'payable'), ('reconciled', '=', False), ('account_id.deprecated', '=', False), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)]).mapped('amount_residual'))" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </template>
+
+</odoo>

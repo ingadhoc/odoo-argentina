@@ -1,2 +1,1 @@
 ingadhoc-account-payment https://github.com/ingadhoc/account-payment
-ingadhoc-aeroo_reports https://github.com/ingadhoc/aeroo_reports

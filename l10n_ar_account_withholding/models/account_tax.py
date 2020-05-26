@@ -32,7 +32,7 @@ class AccountTax(models.Model):
             x.type_tax_use in ['sale', 'purchase'] and
             x.amount_type == 'partner_tax') or (
             x.type_tax_use in ['customer', 'supplier'] and
-            x.withholding_type == 'partner_tax')) and not x.tag_ids)
+            x.withholding_type == 'partner_tax')) and not x.invoice_repartition_line_ids.mapped('tag_ids'))
         if recs:
             raise UserError(_(
                 'Si utiliza Cálculo de impuestos igual a "Alícuota en el '
@@ -149,7 +149,7 @@ class AccountTax(models.Model):
         commercial_partner = partner.commercial_partner_id
         company = self.company_id
         alicuot = partner.arba_alicuot_ids.search([
-            ('tag_id', 'in', self.tag_ids.ids),
+            ('tag_id', 'in', self.invoice_repartition_line_ids.mapped('tag_ids').ids),
             ('company_id', '=', company.id),
             ('partner_id', '=', commercial_partner.id),
             '|',

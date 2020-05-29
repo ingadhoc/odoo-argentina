@@ -193,7 +193,7 @@ class ResCompany(models.Model):
 
         # Establecer parámetros de solicitud
         url = "https://app.rentascordoba.gob.ar/rentas/rest/svcGetAlicuotas"
-        payload = {'body': partner.main_id_number}
+        payload = {'body': partner.vat}
         headers = {'content-type': 'application/json'}
 
         # Realizar solicitud

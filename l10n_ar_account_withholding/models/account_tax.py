@@ -169,8 +169,9 @@ class AccountTax(models.Model):
             agip_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_901')
             arba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_902')
             cdba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_904')
+            invoice_tags = self.invoice_repartition_line_ids.mapped('tag_ids')
 
-            if arba_tag and arba_tag.id in self.tag_ids.ids:
+            if arba_tag and arba_tag.id in invoice_tags.ids:
                 arba_data = company.get_arba_data(
                     commercial_partner,
                     from_date, to_date,
@@ -190,7 +191,7 @@ class AccountTax(models.Model):
                 arba_data['company_id'] = company.id
                 arba_data['tag_id'] = arba_tag.id
                 alicuot = partner.arba_alicuot_ids.sudo().create(arba_data)
-            elif agip_tag and agip_tag.id in self.tag_ids.ids:
+            elif agip_tag and agip_tag.id in invoice_tags.ids:
                 agip_data = company.get_agip_data(
                     commercial_partner,
                     date,
@@ -210,7 +211,7 @@ class AccountTax(models.Model):
                 agip_data['company_id'] = company.id
                 agip_data['tag_id'] = agip_tag.id
                 alicuot = partner.arba_alicuot_ids.sudo().create(agip_data)
-            elif cdba_tag and cdba_tag.id in self.tag_ids.ids:
+            elif cdba_tag and cdba_tag.id in invoice_tags.ids:
                 cordoba_data = company.get_cordoba_data(
                     commercial_partner,
                     date,

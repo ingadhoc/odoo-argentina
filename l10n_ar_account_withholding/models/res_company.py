@@ -99,7 +99,7 @@ class ResCompany(models.Model):
         Method to be called
         """
         self.ensure_one()
-        cuit = self.partner_id.cuit_required()
+        cuit = self.partner_id.ensure_vat()
 
         if not self.arba_cit:
             raise UserError(_(
@@ -134,7 +134,7 @@ class ResCompany(models.Model):
         # to_date = date + relativedelta(
         #     day=1, days=-1, months=+1).strftime('%Y%m%d')
 
-        cuit = partner.cuit_required()
+        cuit = partner.ensure_vat()
 
         _logger.info(
             'Getting ARBA data for cuit %s from date %s to date %s' % (

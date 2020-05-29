@@ -161,7 +161,7 @@ class AccountTax(models.Model):
         ], limit=1)
         # solo buscamos en padron para estas responsabilidades
         if not alicuot and \
-                commercial_partner.afip_responsability_type_id.code in \
+                commercial_partner.l10n_ar_afip_responsibility_type_id.code in \
                 ['1', '1FM', '2', '3', '4', '6', '11', '13']:
             from_date = fields.Date.to_string(date + relativedelta(day=1))
             to_date = fields.Date.to_string(date + relativedelta(day=1, days=-1, months=+1))

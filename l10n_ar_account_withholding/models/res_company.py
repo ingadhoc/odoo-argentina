@@ -103,9 +103,7 @@ class ResCompany(models.Model):
 
         if not self.arba_cit:
             raise UserError(_(
-                'You must configure ARBA CIT on company %s') % (
-                    self.name))
-
+                'You must configure ARBA CIT on company %s') % (self.name))
         ws = IIBB()
         environment_type = self._get_arba_environment_type()
         _logger.info(
@@ -130,10 +128,6 @@ class ResCompany(models.Model):
     def get_arba_data(self, partner, from_date, to_date):
         self.ensure_one()
 
-        # from_date = date + relativedelta(day=1).strftime('%Y%m%d')
-        # to_date = date + relativedelta(
-        #     day=1, days=-1, months=+1).strftime('%Y%m%d')
-
         cuit = partner.ensure_vat()
 
         _logger.info(
@@ -141,8 +135,8 @@ class ResCompany(models.Model):
                 from_date, to_date, cuit))
         ws = self.arba_connect()
         ws.ConsultarContribuyentes(
-            from_date,
-            to_date,
+            from_date.strftime('%Y%m%d'),
+            to_date.strftime('%Y%m%d'),
             cuit)
 
         if ws.Excepcion:
@@ -174,8 +168,6 @@ class ResCompany(models.Model):
                 ws.AlicuotaRetencion.replace(',', '.')),
             'grupo_percepcion': ws.GrupoPercepcion,
             'grupo_retencion': ws.GrupoRetencion,
-            'from_date': from_date,
-            'to_date': to_date,
         }
         _logger.info('We get the following data: \n%s' % data)
         return data

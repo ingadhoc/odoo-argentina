@@ -1,1 +1,3 @@
+httplib2>=0.7
+git+https://github.com/pysimplesoap/pysimplesoap@stable_py3k
 git+https://github.com/ingadhoc/pyafipws@py3k

@@ -163,8 +163,8 @@ class AccountTax(models.Model):
         if not alicuot and \
                 commercial_partner.l10n_ar_afip_responsibility_type_id.code in \
                 ['1', '1FM', '2', '3', '4', '6', '11', '13']:
-            from_date = fields.Date.to_string(date + relativedelta(day=1))
-            to_date = fields.Date.to_string(date + relativedelta(day=1, days=-1, months=+1))
+            from_date = date + relativedelta(day=1)
+            to_date = date + relativedelta(day=1, days=-1, months=+1)
 
             agip_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_901')
             arba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_902')
@@ -190,6 +190,8 @@ class AccountTax(models.Model):
                 arba_data['partner_id'] = commercial_partner.id
                 arba_data['company_id'] = company.id
                 arba_data['tag_id'] = arba_tag.id
+                arba_data['from_date'] = from_date
+                arba_data['to_date'] = to_date
                 alicuot = partner.arba_alicuot_ids.sudo().create(arba_data)
             elif agip_tag and agip_tag.id in invoice_tags.ids:
                 agip_data = company.get_agip_data(

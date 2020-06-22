@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from collections import OrderedDict
 from ast import literal_eval
 import base64
 import logging
@@ -389,7 +390,7 @@ class AccountVatLedger(models.Model):
                 # TODO ver que no se informe un codigo si no correpsonde,
                 # tal vez da error
                 # TODO ADIVINAR E IMPLEMENTAR, VA A DAR ERROR
-                inv.fiscal_position_id.afip_code or '0',
+                inv.fiscal_position_id.afip_code or ' ',
             ]
 
             if self.type == 'sale':
@@ -541,7 +542,7 @@ class AccountVatLedger(models.Model):
         hacemos los comprobantes
         """
         self.ensure_one()
-        res = {}
+        res = OrderedDict()
         # only vat taxes with codes 3, 4, 5, 6, 8, 9
         # segun: http://contadoresenred.com/regimen-de-informacion-de-
         # compras-y-ventas-rg-3685-como-cargar-la-informacion/
@@ -550,11 +551,9 @@ class AccountVatLedger(models.Model):
         # usamos mapped por si hay afip codes duplicados (ej. manual y
         # auto)
         if impo:
-            invoices = self.get_citi_invoices().filtered(
-                lambda r: r.document_type_id.code == '66')
+            invoices = self.get_citi_invoices().filtered(lambda r: r.document_type_id.code == '66')
         else:
-            invoices = self.get_citi_invoices().filtered(
-                lambda r: r.document_type_id.code != '66')
+            invoices = self.get_citi_invoices().filtered(lambda r: r.document_type_id.code != '66')
         for inv in invoices:
             lines = []
             is_zero = inv.currency_id.is_zero

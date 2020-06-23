@@ -708,7 +708,7 @@ print "Observaciones:", wscdc.Obs
             # wsfe do not require detail
             if afip_ws != 'wsfe':
                 for line in inv.invoice_line_ids:
-                    codigo = line.product_id.default_code
+                    codigo = line.product_id.product_tmpl_id.l10n_ar_ncm_code or line.product_id.default_code
                     # unidad de referencia del producto si se comercializa
                     # en una unidad distinta a la de consumo
                     # uom is not mandatory, if no UOM we use "unit"

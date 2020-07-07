@@ -135,6 +135,12 @@ class AccountInvoice(models.Model):
         '- SI: sí el comprobante asociado (original) se encuentra rechazado por el comprador\n'
         '- NO: sí el comprobante asociado (original) NO se encuentra rechazado por el comprador'
     )
+    afip_asoc_period_start = fields.Date(
+        'Perido Asociado Desde',
+        help='Agregue este valor sólo si es una nota de débito o crédito y no tiene comprobante original asociado')
+    afip_asoc_period_end = fields.Date(
+        'Perido Asociado Hasta',
+        help='Agregue este valor sólo si es una nota de débito o crédito y no tiene comprobante original asociado')
 
     @api.depends('journal_id', 'afip_auth_code')
     def _compute_validation_type(self):
@@ -297,7 +303,7 @@ class AccountInvoice(models.Model):
                         x.invoice_id.afip_result in ['A', 'O'] and x.invoice_id.afip_auth_code).mapped('invoice_id')
                     return original_entry[0] if original_entry else self.env['account.invoice']
         else:
-            return self.browse()
+            return self.env['account.invoice']
 
     @api.multi
     def invoice_validate(self):
@@ -779,6 +785,13 @@ print "Observaciones:", wscdc.Obs
                         CbteAsoc.invoice_number,
                         self.company_id.cuit,
                         afip_ws != 'wsmtxca' and CbteAsoc.date_invoice.strftime('%Y%m%d') or CbteAsoc.date_invoice.strftime('%Y-%m-%d'),
+                    )
+            else:
+                if afip_ws == 'wsfe' and self.document_type_id.internal_type in ['credit_note', 'debit_note'] and  \
+                   self.afip_asoc_period_start and self.afip_asoc_period_end:
+                    ws.AgregarPeriodoComprobantesAsociados(
+                        fecha_desde=self.afip_asoc_period_start.replace("-", ""),
+                        fecha_hasta=self.afip_asoc_period_end.replace("-", ""),
                     )
 
             # analize line items - invoice detail

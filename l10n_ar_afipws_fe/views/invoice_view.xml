@@ -44,6 +44,10 @@
 
             <xpath expr="//page[@name='other_info']//field[@name='origin']" position="after">
                 <field name="afip_fce_es_anulacion"/>
+                <label for="afip_asoc_period_start" string="Associated Period"/>
+                <div>
+                    <field name="afip_asoc_period_start" class="oe_inline"/> to <field name="afip_asoc_period_end" class="oe_inline"/>
+                </div>
             </xpath>
             <notebook>
                 <page string="AFIP" name="afip" attrs="{'invisible': [('document_type_internal_type', 'not in', ['invoice', 'debit_note', 'credit_note', 'receipt_invoice'])]}">

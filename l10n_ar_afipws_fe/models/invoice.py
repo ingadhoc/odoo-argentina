@@ -235,7 +235,7 @@ class AccountInvoice(models.Model):
             else:
                 if self.sudo().env.ref('base.module_sale').state == 'installed':
                     original_entry = self.mapped('invoice_line_ids.sale_line_ids.invoice_lines').filtered(
-                        lambda x: x.document_type_id.localization == 'argentina' and
+                        lambda x: x.invoice_id.document_type_id.localization == 'argentina' and
                         x.invoice_id.document_type_id.internal_type != self.document_type_id.internal_type and
                         x.invoice_id.afip_result in ['A', 'O'] and x.invoice_id.afip_auth_code).mapped('invoice_id')
                     return original_entry[0] if original_entry else self.env['account.invoice']

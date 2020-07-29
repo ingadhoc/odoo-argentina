@@ -822,6 +822,7 @@ print "Observaciones:", wscdc.Obs
 
             msg = u"\n".join([ws.Obs or "", ws.ErrMsg or ""])
             if not ws.CAE or ws.Resultado != 'A':
+                _logger.info('XmlRequest: %s\n\XmlResponse %s' % (ws.XmlRequest, ws.XmlResponse))
                 raise UserError(_('AFIP Validation Error. %s' % msg))
             # TODO ver que algunso campos no tienen sentido porque solo se
             # escribe aca si no hay errores

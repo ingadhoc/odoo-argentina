@@ -275,9 +275,12 @@ class AccountInvoice(models.Model):
             ([52, 53], [51, 52, 53, 54, 88, 991]),
             ([1, 6, 51], [88, 991]),
             ([201, 206, 211], [91, 990, 991, 993, 994, 995]),
-            ([202, 203], [201, 202, 203]),
-            ([207, 208], [206, 207, 208]),
-            ([212, 213], [211, 212, 213])
+            ([202, 203], [201, 202, 203] if self.afip_fce_es_anulacion
+                else [201, 91, 88, 988, 990, 991, 993, 994, 995, 996, 997]),
+            ([207, 208], [206, 207, 208] if self.afip_fce_es_anulacion
+                else [206, 91, 88, 988, 990, 991, 993, 994, 995, 996, 997]),
+            ([212, 213], [211, 212, 213] if self.afip_fce_es_anulacion
+                else [211, 91, 88, 988, 990, 991, 993, 994, 995, 996, 997]),
         ]
         available_codes = list(filter(lambda x: int(self.document_type_id.code) in x[0], code_rules))
         available_codes = available_codes[0][1] if available_codes else []

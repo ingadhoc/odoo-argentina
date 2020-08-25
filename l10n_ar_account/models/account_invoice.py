@@ -357,7 +357,7 @@ class AccountInvoice(models.Model):
                     company_id=rec.company_id.id,
                     date=rec.date_invoice or fields.Date.context_today(rec))
                 rec.computed_currency_rate = currency.compute(
-                    1., self.company_id.currency_id, round=False)
+                    1., rec.company_id.currency_id, round=False)
             else:
                 rec.computed_currency_rate = 1.0
 

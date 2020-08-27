@@ -19,7 +19,7 @@ class AccountMove(models.Model):
         for rec in self:
             if rec.currency_id and rec.company_id and (rec.currency_id != rec.company_id.currency_id):
                 rec.computed_currency_rate = rec.currency_id._convert(
-                    1.0, self.company_id.currency_id, self.company_id,
+                    1.0, rec.company_id.currency_id, rec.company_id,
                     date=rec.invoice_date or fields.Date.context_today(rec),
                     round=False)
             else:

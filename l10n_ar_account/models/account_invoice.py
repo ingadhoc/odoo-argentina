@@ -448,7 +448,7 @@ class AccountInvoice(models.Model):
                 if not journal_document_type and journal_document_types:
                     journal_document_type = journal_document_types[0]
 
-        if invoice_type == 'in_invoice':
+        if invoice_type in ['in_invoice', 'in_refund']:
             other_document_types = (commercial_partner.other_document_type_ids)
 
             domain = [

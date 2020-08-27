@@ -9,28 +9,16 @@
 
             <!-- make some fields required if is an Argentian Company -->
             <field name="vat" position="attributes">
-                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
-            </field>
-            <field name="state_id" position="attributes">
-                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
-            </field>
-            <field name="city" position="attributes">
-                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
-            </field>
-            <field name="street" position="attributes">
-                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
-            </field>
-            <field name="zip" position="attributes">
-                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
+                <attribute name="attrs">{'invisible': [('l10n_ar_country_code', '!=', 'AR')], 'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
             </field>
             <field name="l10n_ar_afip_responsibility_type_id" position="attributes">
-                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
+                <attribute name="attrs">{'invisible': [('l10n_ar_country_code', '!=', 'AR')], 'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
             </field>
             <field name="l10n_ar_afip_start_date" position="attributes">
-                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
+                <attribute name="attrs">{'invisible': [('l10n_ar_country_code', '!=', 'AR')], 'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
             </field>
             <field name="l10n_ar_gross_income_type" position="attributes">
-                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
+                <attribute name="attrs">{'invisible': [('l10n_ar_country_code', '!=', 'AR')], 'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
             </field>
             <field name="l10n_ar_gross_income_number" position="after">
                 <field name="gross_income_jurisdiction_ids" widget="many2many_tags" placeholder="Other Jurisdictions" class="oe_inline" attrs="{'invisible': [('l10n_ar_gross_income_type', '!=', 'multilateral')], 'required': [('l10n_ar_gross_income_type', '=', 'multilateral')]}"/>

@@ -74,7 +74,14 @@
                     </t>
                     <t t-foreach="o.payment_ids.filtered(lambda x: not x.tax_withholding_id and not x.check_ids)" t-as="line">
                         <tr>
-                            <td><span t-raw='"%s%s" % (line.journal_id.name, line.other_currency and " (%s %s)" % (formatLang(line.signed_amount), line.currency_id.name) or "")'/></td>
+                            <td>
+                              <span t-field="line.journal_id.name"/>
+                               <t t-if="line.other_currency">
+                                <span> (</span>
+                                <span  t-field="line.signed_amount" t-field-options='{"widget": "monetary",  "display_currency": "line.currency_id"}'/>
+                                <span>)</span>
+                              </t>
+                            </td>
                             <td class="text-right o_price_total">
                                 <span class="text-nowrap" t-field="line.signed_amount_company_currency"/>
                             </td>

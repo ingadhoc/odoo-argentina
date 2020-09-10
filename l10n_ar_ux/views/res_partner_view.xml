@@ -20,6 +20,7 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="l10n_ar.view_partner_property_form"/>
         <field name="arch" type="xml">
+            <group name="gross_income" position="replace"/>
             <page name="accounting" position="after">
                 <page string="Fiscal Data" name="fiscal_data" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}">
 

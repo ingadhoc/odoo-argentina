@@ -1,7 +1,8 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class AccountMove(models.Model):
+    """ Heredamos todos los metodos que de alguna manera llamen a tax.compute_all y les pasamos la fecha"""
     _inherit = "account.move"
 
     def _get_tax_factor(self):
@@ -13,7 +14,7 @@ class AccountMove(models.Model):
             tax_factor = 1.0 / 1.21
         return tax_factor
 
-    def get_taxes_values(self):
+    def _recompute_tax_lines(self, recompute_tax_base_amount=False):
         """
         Hacemos esto para disponer de fecha de factura y cia para calcular
         impuesto con código python (por ej. para ARBA).
@@ -21,27 +22,45 @@ class AccountMove(models.Model):
         desde un onchange (ver https://github.com/odoo/odoo/issues/7472)
         entonces usamos este artilugio
         """
-        invoice_date = self.invoice_date or fields.Date.context_today(self)
-        # hacemos try porque al llamarse desde acciones de servidor da error
-        try:
-            self.env.context.invoice_date = invoice_date
-            self.env.context.invoice_company = self.company_id
-        except Exception:
-            pass
-        return super().get_taxes_values()
+        invoice = self.reversed_entry_id or self
+        invoice_date = invoice.invoice_date or fields.Date.context_today(self)
+        self = self.with_context(invoice_date=invoice_date)
+        return super(AccountMove, self)._recompute_tax_lines(recompute_tax_base_amount=recompute_tax_base_amount)
+
+    @api.onchange('invoice_date', 'reversed_entry_id')
+    def _onchange_tax_date(self):
+        """ Si cambia la fecha o cambiamos el refund asociado tenemos que recalcular los impuestos """
+        self._onchange_invoice_date()
+        if self.invoice_line_ids.mapped('tax_ids').filtered(lambda x: x.amount_type == 'partner_tax'):
+            # si no recomputamos no se guarda el cambio en las lineas
+            self.line_ids._onchange_price_subtotal()
+            self._recompute_dynamic_lines(recompute_all_taxes=True)
 
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    def _compute_price(self):
-        # ver nota en get_taxes_values
-        invoice = self.move_id
+    def _get_price_total_and_subtotal(
+            self, price_unit=None, quantity=None, discount=None, currency=None,
+            product=None, partner=None, taxes=None, move_type=None):
+        invoice = self.move_id.reversed_entry_id or self.move_id
         invoice_date = invoice.invoice_date or fields.Date.context_today(self)
-        # hacemos try porque al llamarse desde acciones de servidor da error
-        try:
-            self.env.context.invoice_date = invoice_date
-            self.env.context.invoice_company = self.company_id
-        except Exception:
-            pass
-        return super()._compute_price()
+        self = self.with_context(invoice_date=invoice_date)
+        return super(AccountMoveLine, self)._get_price_total_and_subtotal(
+            price_unit=price_unit, quantity=quantity, discount=discount, currency=currency,
+            product=product, partner=partner, taxes=taxes, move_type=move_type)
+
+    def _get_fields_onchange_balance(
+            self, quantity=None, discount=None, balance=None, move_type=None,
+            currency=None, taxes=None, price_subtotal=None):
+        invoice = self.move_id.reversed_entry_id or self.move_id
+        invoice_date = invoice.invoice_date or fields.Date.context_today(self)
+        self = self.with_context(invoice_date=invoice_date)
+        return super(AccountMoveLine, self)._get_fields_onchange_balance(
+            quantity=quantity, discount=discount, balance=balance, move_type=move_type,
+            currency=currency, taxes=taxes, price_subtotal=price_subtotal)
+
+    # TODO faltaria heredar al momento de creacion porque se llama a _get_price_total_and_subtotal_model y no estamos
+    # teniendo en cuenta la fecha que podria pasarse en vals_list
+    # @api.model_create_multi
+    # def create(self, vals_list):

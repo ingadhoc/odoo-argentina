@@ -238,7 +238,7 @@ class AccountVatLedger(models.Model):
     def get_REGINFO_CV_CBTE(self, alicuotas):
         self.ensure_one()
         res = []
-        invoices = self.get_citi_invoices()
+        invoices = self.with_context(vat_book_original_currency=True).get_citi_invoices()
         if not self.citi_skip_invoice_tests:
             invoices.check_argentinian_invoice_taxes()
         if self.type == 'purchase':
@@ -588,7 +588,7 @@ class AccountVatLedger(models.Model):
 
             # we group by afip_code
             for afip_code in vat_taxes.mapped('tax_id.tax_group_id.afip_code'):
-                taxes = vat_taxes.filtered(
+                taxes = vat_taxes.with_context(vat_book_original_currency=True).filtered(
                     lambda x: x.tax_id.tax_group_id.afip_code == afip_code)
                 imp_neto = sum(taxes.mapped('cc_base'))
                 imp_liquidado = sum(taxes.mapped('cc_amount'))

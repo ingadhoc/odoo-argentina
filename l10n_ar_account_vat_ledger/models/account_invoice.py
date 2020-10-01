@@ -61,7 +61,7 @@ class AccountInvoice(models.Model):
                 date=rec.date_invoice or fields.Date.context_today(rec))
             if not currency:
                 return False
-            if rec.company_id.currency_id == currency:
+            if rec.company_id.currency_id == currency or self.env.context.get('vat_book_original_currency'):
                 rec.cc_amount_untaxed = rec.amount_untaxed
                 rec.cc_amount_tax = rec.amount_tax
                 rec.cc_amount_total = rec.amount_total

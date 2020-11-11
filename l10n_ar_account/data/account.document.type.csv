@@ -120,5 +120,32 @@ dc_fce_b_nc,1150,208,NOTA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) B,dl_b,NOTA DE C
 dc_fce_c_f,1160,211,FACTURA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) C,dl_c,FACTURA DE CREDITO ELECTRONICA,invoice,FCE-C,argentina,validator_numero_factura,True,zero
 dc_fce_c_nd,1170,212,NOTA DE DÉBITO ELECTRÓNICA MiPyME (FCE) C,dl_c,NOTA DE DEBITO ELECTRONICA,debit_note,NDE-C ,argentina,validator_numero_factura,True,zero
 dc_fce_c_nc,1180,213,NOTA DE CRÉDITO ELECTRÓNICA MiPyME (FCE) C,dl_c,NOTA DE CREDITO ELECTRONICA,credit_note,NCE-D,argentina,validator_numero_factura,True,zero
+dc_liq_cpst_a,1190,150,LIQUIDACIÓN DE COMPRA PRIMARIA PARA EL SECTOR TABACALERO A,dl_a,,in_document,LCT-A,argentina,validator_numero_factura,True,not_zero
+dc_liq_cpst_b,1200,151,LIQUIDACIÓN DE COMPRA PRIMARIA PARA EL SECTOR TABACALERO B,dl_b,,in_document,LCT-B,argentina,validator_numero_factura,True,zero
+dc_cvl_sa_a,1210,157,CUENTA DE VENTA Y LÍQUIDO PRODUCTO A – SECTOR AVÍCOLA,dl_a,,in_document,CVA-A,argentina,validator_numero_factura,True,not_zero
+dc_cvl_sa_b,1220,158,CUENTA DE VENTA Y LÍQUIDO PRODUCTO B – SECTOR AVÍCOLA,dl_b,,in_document,CVA-B,argentina,validator_numero_factura,True,zero
+dc_liq_c_sa_a,1230,159,LIQUIDACIÓN DE COMPRA A – SECTOR AVÍCOLA,dl_a,,in_document,LCA-A,argentina,validator_numero_factura,True,not_zero
+dc_liq_c_sa_b,1240,160,LIQUIDACIÓN DE COMPRA B – SECTOR AVÍCOLA,dl_b,,in_document,LCA-B,argentina,validator_numero_factura,True,zero
+dc_liq_cd_sa_a,1250,161,LIQUIDACIÓN DE COMPRA DIRECTA A - SECTOR AVÍCOLA,dl_a,,in_document,LCDA-A,argentina,validator_numero_factura,True,not_zero
+dc_liq_cd_sa_b,1260,162,LIQUIDACIÓN DE COMPRA DIRECTA B - SECTOR AVÍCOLA,dl_b,,in_document,LCDA-B,argentina,validator_numero_factura,True,zero
+dc_liq_cd_sa_c,1270,163,LIQUIDACIÓN DE COMPRA DIRECTA C - SECTOR AVÍCOLA,dl_c,,in_document,LCDA-C,argentina,validator_numero_factura,True,zero
+dc_liq_vd_sa_a,1280,164,LIQUIDACIÓN DE VENTA DIRECTA A - SECTOR AVÍCOLA,dl_a,,in_document,LVDA-A,argentina,validator_numero_factura,True,not_zero
+dc_liq_vd_sa_b,1290,165,LIQUIDACIÓN DE VENTA DIRECTA B - SECTOR AVÍCOLA,dl_b,,in_document,LVDA-B,argentina,validator_numero_factura,True,zero
+dc_liq_ccpc_a,1300,166,LIQUIDACIÓN DE CONTRATACIÓN DE CRIANZA POLLOS PARRILLEROS A,dl_a,,in_document,LCCP-A,argentina,validator_numero_factura,True,not_zero
+dc_liq_ccpc_b,1310,167,LIQUIDACIÓN DE CONTRATACIÓN DE CRIANZA POLLOS PARRILLEROS B,dl_b,,in_document,LCCP-B,argentina,validator_numero_factura,True,zero
+dc_liq_ccpc_c,1320,168,LIQUIDACIÓN DE CONTRATACIÓN DE CRIANZA POLLOS PARRILLEROS C,dl_c,,in_document,LCCP-C,argentina,validator_numero_factura,True,zero
+dc_liq_cpc_a,1330,169,LIQUIDACIÓN DE CRIANZA POLLOS PARRILLEROS A,dl_a,,in_document,LCPP-A,argentina,validator_numero_factura,True,not_zero
+dc_liq_cpc_b,1340,170,LIQUIDACIÓN DE CRIANZA POLLOS PARRILLEROS B,dl_b,,in_document,LCPP-B,argentina,validator_numero_factura,True,zero
+dc_liq_cca_a,1350,171,LIQUIDACIÓN DE COMPRA DE CAÑA DE AZÚCAR A,dl_a,,in_document,LCCA-A,argentina,validator_numero_factura,True,not_zero
+dc_liq_cca_b,1360,172,LIQUIDACIÓN DE COMPRA DE CAÑA DE AZÚCAR B,dl_b,,in_document,LCCA-B,argentina,validator_numero_factura,True,zero
+dc_cvl_sp_a,1370,180,CUENTA DE VENTA Y LÍQUIDO PRODUCTO A - SECTOR PECUARIO,dl_a,,in_document,CVP-A,argentina,validator_numero_factura,True,not_zero
+dc_cvl_sp_b,1380,182,CUENTA DE VENTA Y LÍQUIDO PRODUCTO B - SECTOR PECUARIO,dl_b,,in_document,CVP-B,argentina,validator_numero_factura,True,zero
+dc_liq_c_sp_a,1390,183,LIQUIDACIÓN DE COMPRA A - SECTOR PECUARIO,dl_a,,in_document,LCP-A,argentina,validator_numero_factura,True,not_zero
+dc_liq_c_sp_b,1400,185,LIQUIDACIÓN DE COMPRA B - SECTOR PECUARIO,dl_b,,in_document,LCP-B,argentina,validator_numero_factura,True,zero
+dc_liq_cd_sp_a,1410,186,LIQUIDACIÓN DE COMPRA DIRECTA A - SECTOR PECUARIO,dl_a,,in_document,LCDP-A,argentina,validator_numero_factura,True,not_zero
+dc_liq_cd_sp_b,1420,188,LIQUIDACIÓN DE COMPRA DIRECTA B - SECTOR PECUARIO,dl_b,,in_document,LCDP-B,argentina,validator_numero_factura,True,zero
+dc_liq_cd_sp_c,1430,189,LIQUIDACIÓN DE COMPRA DIRECTA C - SECTOR PECUARIO,dl_c,,in_document,LCDP-C,argentina,validator_numero_factura,True,zero
+dc_liq_vd_sp_a,1440,190,LIQUIDACIÓN DE VENTA DIRECTA A - SECTOR PECUARIO,dl_a,,in_document,LVDP-A,argentina,validator_numero_factura,True,not_zero
+dc_liq_vd_sp_b,1450,191,LIQUIDACIÓN DE VENTA DIRECTA B - SECTOR PECUARIO,dl_b,,in_document,LVDP-B,argentina,validator_numero_factura,True,zero
 ,,,,,,,,,,,
 ,,, ,,,,,,,,

@@ -9,7 +9,7 @@
 
             <!-- make some fields required if is an Argentian Company -->
             <field name="vat" position="attributes">
-                <attribute name="attrs">{'invisible': [('l10n_ar_country_code', '!=', 'AR')], 'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
+                <attribute name="attrs">{'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>
             </field>
             <field name="l10n_ar_afip_responsibility_type_id" position="attributes">
                 <attribute name="attrs">{'invisible': [('l10n_ar_country_code', '!=', 'AR')], 'required': [('l10n_ar_country_code', '=', 'AR')]}</attribute>

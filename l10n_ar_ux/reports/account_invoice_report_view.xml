@@ -9,6 +9,7 @@
                 <field name="move_id"/>
                 <field name="journal_id" optional="hide"/>
                 <field name="partner_id"/>
+                <field name="l10n_ar_state_id"/>
                 <field name="invoice_date"/>
                 <field name="invoice_user_id" optional="hide"/>
                 <field name="company_id" optional="hide"/>
@@ -20,8 +21,8 @@
                 <field name="price_unit"/>
                 <field name="discount" groups="product.group_discount_per_so_line"/>
                 <field name="discount_amount" sum="Total" optional="hide" groups="product.group_discount_per_so_line"/>
-                <field name="price_subtotal" sum="Total"/>
-                <field name="amount_total" sum="Total"/>
+                <field name="price_subtotal" sum="Total without taxe"/>
+                <field name="amount_total" sum="Total with taxes"/>
                 <field name="state"/>
                 <field name="invoice_payment_state" optional="hide"/>
                 <field name="invoice_currency_id" optional="hide"/>
@@ -44,6 +45,17 @@
                 <filter string="Journal Entry" name="groupby_move_id" context="{'group_by':'move_id'}"/>
                 <filter string="Invoice Currency" name="groupby_invoice_currency_id" context="{'group_by':'invoice_currency_id'}"/>
             </filter>
+        </field>
+    </record>
+
+    <record id="view_account_invoice_report_pivot" model="ir.ui.view">
+        <field name="name">account.invoice.report.pivot</field>
+        <field name="model">account.invoice.report</field>
+        <field name="inherit_id" ref="account.view_account_invoice_report_pivot"/>
+        <field name="arch" type="xml">
+            <pivot position="attributes">
+                <attribute name="disable_linking"></attribute>
+            </pivot>
         </field>
     </record>
 

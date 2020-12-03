@@ -11,7 +11,7 @@ class AccountMove(models.Model):
     computed_currency_rate = fields.Float(
         compute='_compute_currency_rate',
         string='Currency Rate (preview)',
-        digits=(16, 4),
+        digits=(16, 6),
     )
 
     @api.depends('currency_id', 'company_id', 'invoice_date')

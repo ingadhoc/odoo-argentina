@@ -44,13 +44,13 @@ class AccountInvoice(models.Model):
     currency_rate = fields.Float(
         string='Currency Rate',
         copy=False,
-        digits=(16, 4),
+        digits=(16, 6),
         # TODO make it editable, we have to change move create method
         readonly=True,
     )
     computed_currency_rate = fields.Float(
         string='Currency Rate',
-        digits=(16, 4),
+        digits=(16, 6),
         compute='_compute_currency_rate',
     )
     document_letter_id = fields.Many2one(

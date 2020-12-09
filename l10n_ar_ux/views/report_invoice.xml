@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="custom_header" inherit_id="l10n_ar.custom_header">
+        <img t-if="o.company_id.logo" position="replace">
+            <img t-if="header_address.image_1920" t-att-src="image_data_uri(header_address.image_1920)" style="max-height: 45px;" alt="Logo"/>
+        </img>
+    </template>
+
+
+</odoo>

@@ -189,7 +189,44 @@
             <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
         </record>
 
-        <record id="ri_tax_retencion_iibb_co_sufrida" model="account.tax.template">
+        <record id="ri_tax_retencion_iibb_ca_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Catamarca Sufrida</field>
+            <field name="description">Ret IIBB Catamarca S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_ca_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_ca_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_ob_sufrida" model="account.tax.template">
             <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
             <field name="name">Retención IIBB Córdoba Sufrida</field>
             <field name="description">Ret IIBB Córdoba S</field>
@@ -205,8 +242,8 @@
                 (0,0, {
                     'factor_percent': 100,
                     'repartition_type': 'tax',
-                    'account_id': ref('l10n_ar.base_retencion_iibb_co_sufrida'),
-                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_904')])],
+                    'account_id': ref('l10n_ar.base_retencion_iibb_ob_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
                 }),
             ]"/>
             <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
@@ -218,8 +255,304 @@
                 (0,0, {
                     'factor_percent': 100,
                     'repartition_type': 'tax',
-                    'account_id': ref('l10n_ar.base_retencion_iibb_co_sufrida'),
-                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_904')])],
+                    'account_id': ref('l10n_ar.base_retencion_iibb_ob_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_rr_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Corrientes Sufrida</field>
+            <field name="description">Ret IIBB Corrientes S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_rr_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_rr_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_er_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Entre Ríos Sufrida</field>
+            <field name="description">Ret IIBB Entre Ríos S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_er_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_er_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_ju_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Jujuy Sufrida</field>
+            <field name="description">Ret IIBB Jujuy S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_ju_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_ju_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_za_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Mendoza Sufrida</field>
+            <field name="description">Ret IIBB Mendoza S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_za_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_za_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_lr_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB La Rioja Sufrida</field>
+            <field name="description">Ret IIBB La Rioja S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_lr_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_lr_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_sa_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Salta Sufrida</field>
+            <field name="description">Ret IIBB Salta S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_sa_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_sa_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_nn_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB San Juan Sufrida</field>
+            <field name="description">Ret IIBB San Juan S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_nn_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_nn_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_sl_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB San Luis Sufrida</field>
+            <field name="description">Ret IIBB San Luis S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_sl_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_sl_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
                 }),
             ]"/>
             <field name="type_tax_use">customer</field>
@@ -257,6 +590,413 @@
                     'repartition_type': 'tax',
                     'account_id': ref('l10n_ar.base_retencion_iibb_sf_sufrida'),
                     'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_921')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_se_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Santiago del Estero Sufrida</field>
+            <field name="description">Ret IIBB Santiago del Estero S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_se_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_se_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_tn_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Tucumán Sufrida</field>
+            <field name="description">Ret IIBB Tucumán S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_tn_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_tn_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_ha_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Chaco Sufrida</field>
+            <field name="description">Ret IIBB Chaco S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_ha_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_ha_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_ct_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Chubut Sufrida</field>
+            <field name="description">Ret IIBB Chubut S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_ct_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_ct_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_fo_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Formosa Sufrida</field>
+            <field name="description">Ret IIBB Formosa S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_fo_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_fo_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_mi_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Misiones Sufrida</field>
+            <field name="description">Ret IIBB Misiones S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_mi_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_mi_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_ne_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Neuquén Sufrida</field>
+            <field name="description">Ret IIBB Neuquén S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_ne_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_ne_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_lp_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB La Pampa Sufrida</field>
+            <field name="description">Ret IIBB La Pampa S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_lp_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_lp_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_rn_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Río Negro Sufrida</field>
+            <field name="description">Ret IIBB Río Negro S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_rn_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_rn_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_az_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Santa Cruz Sufrida</field>
+            <field name="description">Ret IIBB Santa Cruz S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_az_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_az_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="type_tax_use">customer</field>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+        </record>
+
+        <record id="ri_tax_retencion_iibb_tf_sufrida" model="account.tax.template">
+            <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
+            <field name="name">Retención IIBB Tierra del Fuego Sufrida</field>
+            <field name="description">Ret IIBB Tierra del Fuego S</field>
+            <field name="sequence">4</field>
+            <field name="amount_type">fixed</field>
+            <field eval="0.0" name="amount"/>
+            <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_tf_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('l10n_ar.base_retencion_iibb_tf_sufrida'),
+                    'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_901')])],
                 }),
             ]"/>
             <field name="type_tax_use">customer</field>

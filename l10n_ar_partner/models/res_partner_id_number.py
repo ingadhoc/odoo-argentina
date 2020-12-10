@@ -42,4 +42,4 @@ class ResPartnerIdNumber(models.Model):
                     'is only allowed for partner with parent/child relation.\n'
                     '* Partner: "%s"\n'
                     '* Ids of Same Id Number Partners: %s') % (
-                        rec.partner_id.name, same_id_numbers.mapped('partner_id').ids))
+                        rec.partner_id.name, same_id_numbers.ids))

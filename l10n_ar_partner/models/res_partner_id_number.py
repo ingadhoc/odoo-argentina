@@ -39,4 +39,7 @@ class ResPartnerIdNumber(models.Model):
             if same_id_numbers:
                 raise ValidationError(_(
                     'Id Number must be unique per id category!\nSame number '
-                    'is only allowed for partner with parent/child relation'))
+                    'is only allowed for partner with parent/child relation.\n'
+                    '* Partner: "%s"\n'
+                    '* Ids of Same Id Number Partners: %s') % (
+                        rec.partner_id.name, same_id_numbers.ids))

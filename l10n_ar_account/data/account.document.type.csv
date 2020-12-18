@@ -40,8 +40,8 @@ dc_m_rg1415,380,56,COMPROBANTES M DEL ANEXO I  APARTADO A  INC F   R G  N  1415,
 dc_m_o_rg1415,390,57,OTROS COMPROBANTES M QUE CUMPLAN CON LA R G  N  1415,dl_m,,,,argentina,validator_numero_factura,True,not_zero
 dc_m_cvl,400,58,CUENTAS DE VENTA Y LIQUIDO PRODUCTO M,dl_m,,,,argentina,validator_numero_factura,True,not_zero
 dc_m_l,410,59,LIQUIDACIONES M,dl_m,,,,argentina,validator_numero_factura,True,not_zero
-dc_a_cvl,420,60,CUENTAS DE VENTA Y LIQUIDO PRODUCTO A,dl_a,,,,argentina,validator_numero_factura,True,not_zero
-dc_b_cvl,430,61,CUENTAS DE VENTA Y LIQUIDO PRODUCTO B,dl_b,,,,argentina,validator_numero_factura,True,zero
+dc_a_cvl,420,60,CUENTAS DE VENTA Y LIQUIDO PRODUCTO A,dl_a,CTA VTA LIQUIDO PRODUCTO,,LP-A,argentina,validator_numero_factura,True,not_zero
+dc_b_cvl,430,61,CUENTAS DE VENTA Y LIQUIDO PRODUCTO B,dl_b,CTA VTA LIQUIDO PRODUCTO,,LP-A,argentina,validator_numero_factura,True,zero
 dc_a_l,440,63,LIQUIDACIONES A,dl_a,,,,argentina,validator_numero_factura,True,not_zero
 dc_b_l,450,64,LIQUIDACIONES B,dl_b,,,,argentina,validator_numero_factura,True,zero
 dc_nc,460,65,"NOTAS DE CREDITO DE COMPROBANTES CON COD. 34, 39, 58, 59, 60, 63, 96, 97,",,,,,argentina,validator_numero_factura,,

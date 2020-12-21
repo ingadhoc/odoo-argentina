@@ -15,6 +15,7 @@ _logger = logging.getLogger(__name__)
 class AccountVatLedger(models.Model):
     _inherit = "account.vat.ledger"
 
+    txt_type = fields.Selection([('citi', 'Citi'), ('iva_digital', 'IVA Digital')], required=True, default='citi')
     citi_skip_invoice_tests = fields.Boolean(
         string='Skip invoice tests?',
         help='If you skip invoice tests probably you will have errors when '
@@ -37,6 +38,10 @@ class AccountVatLedger(models.Model):
         'REGINFO_CV_CBTE',
         readonly=True,
     )
+    REGINFO_CV_CBTE_IMPORTACIONES = fields.Text(
+        'REGINFO_CV_CBTE_IMPORTACIONES',
+        readonly=True,
+    )
     REGINFO_CV_CABECERA = fields.Text(
         'REGINFO_CV_CABECERA',
         readonly=True,
@@ -46,6 +51,16 @@ class AccountVatLedger(models.Model):
         readonly=True
     )
     vouchers_filename = fields.Char(
+        readonly=True,
+        compute='_compute_files',
+    )
+    impo_vouchers_file = fields.Binary(
+        _('Import Vouchers File'),
+        compute='_compute_files',
+        readonly=True
+    )
+    impo_vouchers_filename = fields.Char(
+        _('Import Vouchers Filename'),
         readonly=True,
         compute='_compute_files',
     )
@@ -110,6 +125,7 @@ class AccountVatLedger(models.Model):
     @api.multi
     @api.depends(
         'REGINFO_CV_CBTE',
+        'REGINFO_CV_CBTE_IMPORTACIONES',
         'REGINFO_CV_ALICUOTAS',
         'type',
         # 'period_id.name'
@@ -143,6 +159,14 @@ class AccountVatLedger(models.Model):
             )
             self.vouchers_file = base64.encodestring(
                 self.REGINFO_CV_CBTE.encode('ISO-8859-1'))
+        if self.REGINFO_CV_CBTE_IMPORTACIONES:
+            self.impo_vouchers_filename = _('Import Vouchers_%s_%s.txt') % (
+                self.type,
+                self.date_to,
+                # self.period_id.name
+            )
+            self.impo_vouchers_file = base64.encodestring(
+                self.REGINFO_CV_CBTE_IMPORTACIONES.encode('ISO-8859-1'))
 
     @api.multi
     def compute_citi_data(self):
@@ -162,7 +186,11 @@ class AccountVatLedger(models.Model):
                 lines += v
             self.REGINFO_CV_COMPRAS_IMPORTACIONES = '\r\n'.join(lines)
         alicuotas.update(impo_alicuotas)
-        self.get_REGINFO_CV_CBTE(alicuotas)
+        if self.txt_type == 'citi':
+            self.get_REGINFO_CV_CBTE(alicuotas)
+        else:
+            self.get_REGINFO_CV_CBTE(alicuotas, invoice_type='impo')
+            self.get_REGINFO_CV_CBTE(alicuotas, invoice_type='not_impo')
 
     @api.model
     def get_partner_document_code(self, partner):
@@ -208,11 +236,18 @@ class AccountVatLedger(models.Model):
                         repr(e)))
 
     @api.multi
-    def get_citi_invoices(self, return_skiped=False):
+    def get_citi_invoices(self, return_skiped=False, invoice_type='all'):
         self.ensure_one()
-        invoices = self.env['account.invoice'].search([
+        domain = [
             ('document_type_id.export_to_citi', '=', True),
-            ('id', 'in', self.invoice_ids.ids)], order='date_invoice asc')
+            ('id', 'in', self.invoice_ids.ids)]
+
+        if invoice_type == 'impo':
+            domain.append(('document_type_id.code', '=', '66'))
+        elif invoice_type == 'not_impo':
+            domain.append(('document_type_id.code', '!=', '66'))
+
+        invoices = self.env['account.invoice'].search(domain, order='date_invoice asc')
         if self.citi_skip_lines:
             skip_lines = literal_eval(self.citi_skip_lines)
             if isinstance(skip_lines, int):
@@ -226,10 +261,10 @@ class AccountVatLedger(models.Model):
         return invoices
 
     @api.multi
-    def get_REGINFO_CV_CBTE(self, alicuotas):
+    def get_REGINFO_CV_CBTE(self, alicuotas, invoice_type='all'):
         self.ensure_one()
         res = []
-        invoices = self.get_citi_invoices()
+        invoices = self.get_citi_invoices(invoice_type=invoice_type)
         if not self.citi_skip_invoice_tests:
             invoices.check_argentinian_invoice_taxes()
         if self.type == 'purchase':
@@ -465,7 +500,10 @@ class AccountVatLedger(models.Model):
                     self.format_amount(0, invoice=inv),
                 ]
             res.append(''.join(row))
-        self.REGINFO_CV_CBTE = '\r\n'.join(res)
+        if invoice_type == 'impo':
+            self.REGINFO_CV_CBTE_IMPORTACIONES = '\r\n'.join(res)
+        else:
+            self.REGINFO_CV_CBTE = '\r\n'.join(res)
 
     @api.multi
     def get_tax_row(self, invoice, base, code, tax_amount, impo=False):
@@ -550,10 +588,7 @@ class AccountVatLedger(models.Model):
         # si no hay alicuotas, sumamos una de esta con 0, 0, 0 en detalle
         # usamos mapped por si hay afip codes duplicados (ej. manual y
         # auto)
-        if impo:
-            invoices = self.get_citi_invoices().filtered(lambda r: r.document_type_id.code == '66')
-        else:
-            invoices = self.get_citi_invoices().filtered(lambda r: r.document_type_id.code != '66')
+        invoices = self.get_citi_invoices(invoice_type='impo' if impo else 'not_impo')
         for inv in invoices:
             lines = []
             is_zero = inv.currency_id.is_zero

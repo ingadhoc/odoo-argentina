@@ -7,5 +7,21 @@
         </img>
     </template>
 
+    <template id="report_invoice_document" inherit_id="l10n_ar.report_invoice_document">
+        <p name="comment" position="before">
+            <p t-if="o._fields.get('move_currency_id') and o.move_currency_id">
+                El total de este comprobante equivale a un total de <span t-raw="o.amount_total / o.move_inverse_currency_rate" t-options="{'widget': 'monetary', 'display_currency': o.move_currency_id}"/> a un tipo de cambio consignado de <span t-field="o.move_inverse_currency_rate"/>
+            </p>
+        </p>
+    </template>
+
+    <template id="report_invoice_document_with_payments" inherit_id="l10n_ar.report_invoice_document_with_payments">
+        <p name="comment" position="before">
+            <p t-if="o._fields.get('move_currency_id') and o.move_currency_id">
+                El total de este comprobante equivale a un total de <span t-raw="o.amount_total / o.move_inverse_currency_rate" t-options="{'widget': 'monetary', 'display_currency': o.move_currency_id}"/> a un tipo de cambio consignado de <span t-field="o.move_inverse_currency_rate"/>
+            </p>
+        </p>
+    </template>
+
 
 </odoo>

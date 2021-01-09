@@ -25,7 +25,6 @@ This module extends the l10n_ar module to add some usability improvesment:
 #. Add account tag data for Argentina (include jurisdiccion ones)
 #. Add tax groups for withholding
 #. Show Name fantasy in the partner form view.
-#. Make some fields in company required if company is Argentina: vat, state_id, country_id, city, street, zip.
 #. Set Non Monetary tag to accounts depending of the account type
 #. Show Gross Income Jurisdiction in both partner and company
 #. Add checks account link to chart template

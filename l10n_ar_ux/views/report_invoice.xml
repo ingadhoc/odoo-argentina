@@ -5,6 +5,16 @@
         <img t-if="o.company_id.logo" position="replace">
             <img t-if="header_address.image_1920" t-att-src="image_data_uri(header_address.image_1920)" style="max-height: 45px;" alt="Logo"/>
         </img>
+        <!-- tal vez tambien a este div principal le querramos cambiar la fuente como haciamos antes, aunque en realidad aparentemente ya no ex necesario, era algo asi:
+        <div t-att-style="o.company_id.external_report_layout_id.key == 'web.external_layout_standard' and 'font-size: 15px;'">
+         -->
+        <div position="inside">
+            <div t-if="not pre_printed_report and o.company_id.external_report_layout_id.key in ['web.external_layout_standard', 'web.external_layout_clean']" class="row zero_min_height">
+                <div class="col-12">
+                    <div style="border-bottom: 1px solid #dee2e6;"/>
+                </div>
+            </div>
+        </div>
     </template>
 
     <template id="report_invoice_document" inherit_id="l10n_ar.report_invoice_document">

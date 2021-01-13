@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_invoice_line_report_tree" model="ir.ui.view">
+        <field name="name">account.invoice.report.tree</field>
+        <field name="model">account.invoice.report</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'">
+                <field name="move_id"/>
+                <field name="journal_id" optional="hide"/>
+                <field name="partner_id"/>
+                <field name="invoice_date"/>
+                <field name="invoice_user_id" optional="hide"/>
+                <field name="company_id" optional="hide"/>
+                <field name="invoice_date_due" optional="hide"/>
+                <field name="product_id"/>
+                <field name="analytic_account_id" groups="analytic.group_analytic_accounting" optional="hide"/>
+                <field name="product_categ_id" optional="hide"/>
+                <field name="quantity" sum="Total"/>
+                <field name="price_unit"/>
+                <field name="discount" groups="product.group_discount_per_so_line"/>
+                <field name="discount_amount" sum="Total" optional="hide" groups="product.group_discount_per_so_line"/>
+                <field name="price_subtotal" sum="Total"/>
+                <field name="amount_total" sum="Total"/>
+                <field name="state"/>
+                <field name="invoice_payment_state" optional="hide"/>
+                <field name="invoice_currency_id" optional="hide"/>
+                <field name="currency_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_invoice_report_search" model="ir.ui.view">
+        <field name="name">account.invoice.report.search</field>
+        <field name="model">account.invoice.report</field>
+        <field name="inherit_id" ref="account.view_account_invoice_report_search"/>
+        <field name="arch" type="xml">
+            <filter name="supplier" position="after">
+                <separator/>
+                <filter name="invoice_date" string="Invoice Date" date="invoice_date"/>
+                <filter name="invoice_date_due" string="Due Date" date="invoice_date_due"/>
+            </filter>
+            <filter name='user' position="after">
+                <filter string="Journal Entry" name="groupby_move_id" context="{'group_by':'move_id'}"/>
+                <filter string="Invoice Currency" name="groupby_invoice_currency_id" context="{'group_by':'invoice_currency_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="action_account_invoice_line_report_all" model="ir.actions.act_window">
+        <field name="name">Invoices Lines Analysis</field>
+        <field name="res_model">account.invoice.report</field>
+        <field name="view_mode">tree,graph,pivot</field>
+        <field name="context">{'search_default_current':1}</field>
+        <field name="search_view_id" ref="account.view_account_invoice_report_search"/>
+    </record>
+
+    <menuitem action="action_account_invoice_line_report_all" id="menu_action_account_invoice_line_report_all" name="Invoice Lines Analysis" parent="account.account_reports_management_menu" sequence="3"/>
+</odoo>

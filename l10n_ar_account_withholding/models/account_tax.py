@@ -238,6 +238,7 @@ class AccountTax(models.Model):
                 date = self._context.date_invoice
             except Exception:
                 date = fields.Date.context_today(self)
+            partner = partner and partner.sudo()
             return base_amount * self.get_partner_alicuota_percepcion(
                 partner, date)
         else:

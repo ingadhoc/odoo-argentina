@@ -73,6 +73,16 @@ msgid "AFIP Message"
 msgstr "Mensaje del AFIP"
 
 #. module: l10n_ar_afipws_fe
+#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_account_invoice__afip_qr_code
+msgid "AFIP QR Code"
+msgstr "Código QR AFIP"
+
+#. module: l10n_ar_afipws_fe
+#: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_account_invoice__afip_qr_code_img
+msgid "AFIP QR Code Image"
+msgstr "Imagen del Código QR AFIP"
+
+#. module: l10n_ar_afipws_fe
 #: code:addons/l10n_ar_afipws_fe/models/invoice.py:800
 #: code:addons/l10n_ar_afipws_fe/models/invoice.py:802
 #: code:addons/l10n_ar_afipws_fe/models/invoice.py:806

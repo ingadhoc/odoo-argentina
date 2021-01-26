@@ -5,14 +5,20 @@
 from .pyi25 import PyI25
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
+from odoo.tools import float_repr
 import base64
 from io import BytesIO
 import logging
+import json
 import sys
 import traceback
 from datetime import datetime
 _logger = logging.getLogger(__name__)
 
+try:
+    import qrcode
+except ImportError:
+    qrcode = None
 try:
     from pysimplesoap.client import SoapFault
 except ImportError:
@@ -88,6 +94,14 @@ class AccountInvoice(models.Model):
         compute='_compute_barcode',
         string='AFIP Barcode Image'
     )
+    afip_qr_code = fields.Char(
+        compute='_compute_qr_code',
+        string='AFIP QR Code'
+    )
+    afip_qr_code_img = fields.Binary(
+        compute='_compute_qr_code',
+        string='AFIP QR Code Image'
+    )
     afip_message = fields.Text(
         string='AFIP Message',
         copy=False,
@@ -156,6 +170,34 @@ class AccountInvoice(models.Model):
             rec.afip_barcode = barcode
             rec.afip_barcode_img = rec._make_image_I25(barcode)
 
+    @api.depends('afip_auth_code')
+    def _compute_qr_code(self):
+        for rec in self:
+            qr_code = False
+            if rec.afip_auth_code and rec.afip_auth_mode in ['CAE', 'CAEA']:
+                data = {
+                    'ver': 1,
+                    'fecha': str(rec.date_invoice),
+                    'cuit': rec.company_id.partner_id._get_id_number_sanitize(),
+                    'ptoVta': rec.journal_id.point_of_sale_number,
+                    'tipoCmp': int(rec.document_type_id.code),
+                    'nroCmp': int(rec.invoice_number),
+                    'importe': float(float_repr(rec.amount_total, precision_digits=2)),
+                    'moneda': rec.currency_id.afip_code,
+                    'ctz': float(float_repr(rec.currency_rate, precision_digits=6)),
+                    'tipoCodAut': 'E' if rec.afip_auth_mode == 'CAE' else 'A',
+                    'codAut': int(rec.afip_auth_code),
+                }
+                if rec.commercial_partner_id.main_id_number:
+                    data.update({'nroDocRec': rec.commercial_partner_id._get_id_number_sanitize()})
+                if rec.commercial_partner_id.main_id_category_id:
+                    data.update({'tipoDocRec': rec.commercial_partner_id.main_id_category_id.afip_code})
+                qr_code = 'https://www.afip.gob.ar/fe/qr/?p=%s' % base64.b64encode(json.dumps(
+                    data).encode()).decode('ascii')
+
+            rec.afip_qr_code = qr_code
+            rec.afip_qr_code_img = rec._make_image_QR(qr_code)
+
     @api.model
     def _make_image_I25(self, barcode):
         "Generate the required barcode Interleaved of 7 image using PIL"
@@ -172,6 +214,19 @@ class AccountInvoice(models.Model):
             # get the result and encode it for openerp binary field:
             image = base64.b64encode(output.getvalue())
             output.close()
+
+    @api.model
+    def _make_image_QR(self, qr_code):
+        """ Generate the required QR code """
+        image = False
+        if qr_code:
+            qr_obj = qrcode.QRCode()
+            output = BytesIO()
+            qr_obj.add_data(qr_code)
+            qr_obj.make(fit=True)
+            qr_img = qr_obj.make_image()
+            qr_img.save(output)
+            image = base64.b64encode(output.getvalue())
         return image
 
     @api.model

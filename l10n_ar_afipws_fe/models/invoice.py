@@ -5,14 +5,20 @@
 from .pyi25 import PyI25
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
+from odoo.tools import float_repr
 import base64
 from io import BytesIO
 import logging
+import json
 import sys
 import traceback
 from datetime import datetime
 _logger = logging.getLogger(__name__)
 
+try:
+    import qrcode
+except ImportError:
+    qrcode = None
 try:
     from pysimplesoap.client import SoapFault
 except ImportError:
@@ -71,14 +77,13 @@ class AccountInvoice(models.Model):
     afip_cae_due = fields.Date(
         related='afip_auth_code_due'
     )
-
-    afip_barcode = fields.Char(
-        compute='_compute_barcode',
-        string='AFIP Barcode'
+    afip_qr_code = fields.Char(
+        compute='_compute_qr_code',
+        string='AFIP QR Code'
     )
-    afip_barcode_img = fields.Binary(
-        compute='_compute_barcode',
-        string='AFIP Barcode Image'
+    afip_qr_code_img = fields.Binary(
+        compute='_compute_qr_code',
+        string='AFIP QR Code Image'
     )
     afip_message = fields.Text(
         string='AFIP Message',
@@ -135,40 +140,46 @@ class AccountInvoice(models.Model):
                         validation_type = False
                 rec.validation_type = validation_type
 
-    @api.multi
     @api.depends('afip_auth_code')
-    def _compute_barcode(self):
+    def _compute_qr_code(self):
         for rec in self:
-            barcode = False
-            if rec.afip_auth_code:
-                cae_due = ''.join(
-                    [c for c in str(
-                        rec.afip_auth_code_due or '') if c.isdigit()])
-                barcode = ''.join(
-                    [str(rec.company_id.cuit),
-                        "%03d" % int(rec.document_type_id.code),
-                        "%05d" % int(rec.journal_id.point_of_sale_number),
-                        str(rec.afip_auth_code), cae_due])
-                barcode = barcode + rec.verification_digit_modulo10(barcode)
-            rec.afip_barcode = barcode
-            rec.afip_barcode_img = rec._make_image_I25(barcode)
+            qr_code = False
+            if rec.afip_auth_code and rec.afip_auth_mode in ['CAE', 'CAEA']:
+                data = {
+                    'ver': 1,
+                    'fecha': rec.date_invoice,
+                    'cuit': rec.company_id.partner_id._get_id_number_sanitize(),
+                    'ptoVta': rec.journal_id.point_of_sale_number,
+                    'tipoCmp': int(rec.document_type_id.code),
+                    'nroCmp': int(rec.invoice_number),
+                    'importe': float(float_repr(rec.amount_total, precision_digits=2)),
+                    'moneda': rec.currency_id.afip_code,
+                    'ctz': float(float_repr(rec.currency_rate, precision_digits=6)),
+                    'tipoCodAut': 'E' if rec.afip_auth_mode == 'CAE' else 'A',
+                    'codAut': int(rec.afip_auth_code),
+                }
+                if rec.commercial_partner_id.main_id_number:
+                    data.update({'nroDocRec': rec.commercial_partner_id._get_id_number_sanitize()})
+                if rec.commercial_partner_id.main_id_category_id:
+                    data.update({'tipoDocRec': rec.commercial_partner_id.main_id_category_id.afip_code})
+                qr_code = 'https://www.afip.gob.ar/fe/qr/?p=%s' % base64.b64encode(json.dumps(
+                    data, indent=None).encode('ascii')).decode('ascii')
+
+            rec.afip_qr_code = qr_code
+            rec.afip_qr_code_img = rec._make_image_QR(qr_code)
 
     @api.model
-    def _make_image_I25(self, barcode):
-        "Generate the required barcode Interleaved of 7 image using PIL"
+    def _make_image_QR(self, qr_code):
+        """ Generate the required QR code """
         image = False
-        if barcode:
-            # create the helper:
-            pyi25 = PyI25()
+        if qr_code:
+            qr_obj = qrcode.QRCode()
             output = BytesIO()
-            # call the helper:
-            bars = ''.join([c for c in barcode if c.isdigit()])
-            if not bars:
-                bars = "00"
-            pyi25.GenerarImagen(bars, output, extension="PNG")
-            # get the result and encode it for openerp binary field:
+            qr_obj.add_data(qr_code)
+            qr_obj.make(fit=True)
+            qr_img = qr_obj.make_image()
+            qr_img.save(output)
             image = base64.b64encode(output.getvalue())
-            output.close()
         return image
 
     @api.model

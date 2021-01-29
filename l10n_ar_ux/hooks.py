@@ -19,7 +19,7 @@ def document_types_not_updatable(cr, registry):
 
 def set_tax_included(cr, registry):
     _logger.info('Settig tax included by default')
-    env = api.Environment(cr, SUPERUSER_ID, {})
+    env = api.Environment(cr, SUPERUSER_ID, {'active_test': False})
     # if this option was never configured we set it as tax_included. This is useful for ecommerce
     # where in argentina normally ecommerce are b2c. account_ux and sale_ux areadly modify the backend
     # so that this does not affect backend users.

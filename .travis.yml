@@ -18,28 +18,9 @@ addons:
 #      https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
     packages:
       - expect-dev  # provides unbuffer utility
-      - python-lxml  # because pip installation is slow
-      - python-simplejson
-      - python-serial
-      - python-yaml
       # for aeroo
       - cups
       - libcups2-dev
-      # FE
-      - python-dev
-      - swig
-      - libffi-dev
-      - libssl-dev
-      - python-m2crypto
-      - python-httplib2
-#     Search your packages here:
-#       https://github.com/travis-ci/apt-package-whitelist/blob/master/ubuntu-precise
-#      - wkhtmltopdf  # only add if needed and check the before_install section below
-
-# set up an X server to run wkhtmltopdf.
-#before_install:
-#  - "export DISPLAY=:913.0"
-#  - "sh -e /etc/init.d/xvfb start"
 
 env:
   global:

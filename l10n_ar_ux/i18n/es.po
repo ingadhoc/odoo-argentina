@@ -3,16 +3,16 @@
 # 	* l10n_ar_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2021
 # Juan Rivero <jr@adhoc.com.ar>, 2021
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-18 19:14+0000\n"
+"POT-Creation-Date: 2021-02-01 12:19+0000\n"
 "PO-Revision-Date: 2020-02-04 14:45+0000\n"
-"Last-Translator: Juan Rivero <jr@adhoc.com.ar>, 2021\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2021\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,6 +24,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
 msgid "- Venc."
 msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_invoice_document
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_invoice_document_with_payments
+msgid "<br/><strong>PO Number:</strong>"
+msgstr "<br/><strong>Nro. de OC:</strong>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document

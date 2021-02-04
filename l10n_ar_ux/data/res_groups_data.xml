@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="True">
+    <function model="res.groups" name="write">
+        <value model="res.groups" eval="[ref('base.group_user')]"/>
+        <value model="res.groups" eval="{'implied_ids': [(4, ref('l10n_ar_ux.group_include_pending_receivable_documents'))]}"/>
+    </function>
+</odoo>

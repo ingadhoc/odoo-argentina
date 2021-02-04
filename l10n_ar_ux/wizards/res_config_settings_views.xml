@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="res_config_settings_view_form">
+        <field name="name">res.config.settings.view.form.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='account']/div" position="after">
+                <field name="l10n_ar_country_code" invisible="1"/>
+                <h2 attrs="{'invisible':[('l10n_ar_country_code', '!=', 'AR')]}">Argentina Localization</h2>
+                <div class="row mt16 o_settings_container" name="argentina_localization">
+                </div>
+            </xpath>
+            <xpath expr="//div[@data-key='account']//field[@name='module_account_payment']/../.." position="before">
+                <div class="col-xs-12 col-md-6 o_setting_box" title="This option enables open documents in the payment report.">
+                    <div class="o_setting_left_pane">
+                        <field name="group_include_pending_receivable_documents" widget="upgrade_boolean"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="group_include_pending_receivable_documents"/>
+                        <div class="text-muted">
+                           Si marca esta opción, cuando se imprima o envíe un Recibo de Clientes, se incluirá una sección con todos los Comprobantes abiertos, es decir, que tengan algún saldo pendiente.
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

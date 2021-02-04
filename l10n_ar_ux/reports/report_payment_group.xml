@@ -141,7 +141,7 @@
                 </tfoot>
             </table>
             <br/>
-            <table class="table table-sm o_main_table" name="open_table" t-if="o.partner_type=='customer'">
+            <table class="table table-sm o_main_table" name="open_table" t-if="o.partner_type=='customer'" groups="l10n_ar_ux.group_include_pending_receivable_documents">
                 <thead>
                     <tr>
                         <th><span>Comprobantes Pendientes al</span><span t-raw="datetime.datetime.today()" t-options='{"widget": "date"}'/></th>

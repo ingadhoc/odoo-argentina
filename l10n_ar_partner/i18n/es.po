@@ -469,6 +469,12 @@ msgid "Usado por Anses para Padrón"
 msgstr "Usado por Anses para Padrón"
 
 #. module: l10n_ar_partner
+#: code:addons/l10n_ar_partner/models/res_partner.py:242
+#, python-format
+msgid "We were not able to sanitize the identification number"
+msgstr "No pudimos limpiar el número de identificación"
+
+#. module: l10n_ar_partner
 #: model:res.partner.id_category,name:l10n_ar_partner.dt_ET
 msgid "en trámite"
 msgstr "en trámite"

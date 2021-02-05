@@ -233,3 +233,12 @@ class ResPartner(models.Model):
                 if self[r_field] == value:
                     values.pop(r_field, False)
         return values
+
+    @api.model
+    def _get_id_number_sanitize(self):
+        """ Sanitize the identification number. Return the digits/interger value of the identification number """
+        id_number = self.main_id_number.replace('.', '').replace(' ', '').replace('-', '')
+        if not id_number.isdigit():
+            raise UserError(_('We were not able to sanitize the identification number'))
+        res = int(id_number)
+        return res

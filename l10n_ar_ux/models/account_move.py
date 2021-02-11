@@ -3,6 +3,10 @@
 # directory
 ##############################################################################
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+import re
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class AccountMove(models.Model):
@@ -24,3 +28,40 @@ class AccountMove(models.Model):
                     round=False)
             else:
                 rec.computed_currency_rate = 1.0
+
+    @api.model
+    def _l10n_ar_get_document_number_parts(self, document_number, document_type_code):
+        """
+        For compatibility with old invoices/documents we replicate part of previous method
+        https://github.com/ingadhoc/odoo-argentina/blob/12.0/l10n_ar_account/models/account_invoice.py#L234
+        """
+        try:
+            return super()._l10n_ar_get_document_number_parts(document_number, document_type_code)
+        except Exception as e:
+            _logger.info('Error while getting document number parts, try with backward compatibility')
+        invoice_number = point_of_sale = False
+        if document_type_code in ['33', '99', '331', '332']:
+            point_of_sale = '0'
+            # leave only numbers and convert to integer
+            # otherwise use date as a number
+            if re.search(r'\d', document_number):
+                invoice_number = document_number
+            else:
+                invoice_number = rec.date_invoice
+        elif "-" in document_number:
+            splited_number = document_number.split('-')
+            invoice_number = splited_number.pop()
+            point_of_sale = splited_number.pop()
+        elif "-" not in document_number and len(document_number) == 12:
+            point_of_sale = document_number[:4]
+            invoice_number = document_number[-8:]
+        invoice_number = invoice_number and re.sub("[^0-9]", "", invoice_number)
+        point_of_sale = point_of_sale and re.sub("[^0-9]", "", point_of_sale)
+        if not point_of_sale or not point_of_sale:
+            raise ValidationError(_(
+                'No pudimos obtener el número de factura y de punto de venta para %s %s. Verifique que tiene un número '
+                'cargado similar a "00001-00000001"') % (document_type_code, document_number))
+        return {
+                'invoice_number': int(invoice_number),
+                'point_of_sale': int(point_of_sale),
+            }

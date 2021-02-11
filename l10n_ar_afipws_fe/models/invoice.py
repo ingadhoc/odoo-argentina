@@ -85,6 +85,17 @@ class AccountInvoice(models.Model):
         compute='_compute_qr_code',
         string='AFIP QR Code Image'
     )
+    # TODO do not used afip_barcode and afip_barcode_img are deprecated,
+    # use afip_qr_code fields instead, we leave this fields to avoid problems
+    # in stable versions and customized invoice reports.
+    afip_barcode = fields.Char(
+        compute='_compute_barcode',
+        string='AFIP Barcode'
+    )
+    afip_barcode_img = fields.Binary(
+        compute='_compute_barcode',
+        string='AFIP Barcode Image'
+    )
     afip_message = fields.Text(
         string='AFIP Message',
         copy=False,
@@ -180,6 +191,42 @@ class AccountInvoice(models.Model):
             qr_img = qr_obj.make_image()
             qr_img.save(output)
             image = base64.b64encode(output.getvalue())
+        return image
+
+    @api.multi
+    @api.depends('afip_auth_code')
+    def _compute_barcode(self):
+        for rec in self:
+            barcode = False
+            if rec.afip_auth_code:
+                cae_due = ''.join(
+                    [c for c in str(
+                        rec.afip_auth_code_due or '') if c.isdigit()])
+                barcode = ''.join(
+                    [str(rec.company_id.cuit),
+                        "%03d" % int(rec.document_type_id.code),
+                        "%05d" % int(rec.journal_id.point_of_sale_number),
+                        str(rec.afip_auth_code), cae_due])
+                barcode = barcode + rec.verification_digit_modulo10(barcode)
+            rec.afip_barcode = barcode
+            rec.afip_barcode_img = rec._make_image_I25(barcode)
+
+    @api.model
+    def _make_image_I25(self, barcode):
+        "Generate the required barcode Interleaved of 7 image using PIL"
+        image = False
+        if barcode:
+            # create the helper:
+            pyi25 = PyI25()
+            output = BytesIO()
+            # call the helper:
+            bars = ''.join([c for c in barcode if c.isdigit()])
+            if not bars:
+                bars = "00"
+            pyi25.GenerarImagen(bars, output, extension="PNG")
+            # get the result and encode it for openerp binary field:
+            image = base64.b64encode(output.getvalue())
+            output.close()
         return image
 
     @api.model

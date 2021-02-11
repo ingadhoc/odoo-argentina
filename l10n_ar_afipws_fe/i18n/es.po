@@ -48,6 +48,18 @@ msgid "AFIP"
 msgstr "AFIP"
 
 #. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:44
+#, python-format
+msgid "AFIP Barcode"
+msgstr "AFIP Barcode"
+
+#. module: l10n_ar_afipws_fe
+#: code:addons/l10n_ar_afipws_fe/models/invoice.py:48
+#, python-format
+msgid "AFIP Barcode Image"
+msgstr "AFIP Barcode Image"
+
+#. module: l10n_ar_afipws_fe
 #: model:ir.model.fields,field_description:l10n_ar_afipws_fe.field_account_invoice_afip_message
 msgid "AFIP Message"
 msgstr "Mensaje del AFIP"

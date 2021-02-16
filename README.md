@@ -1,5 +1,3 @@
-[![Runbot Status](http://runbot.adhoc.com.ar/runbot/badge/flat/6/13.0.svg)](http://runbot.adhoc.com.ar/runbot/repo/github-com-ingadhoc-odoo-argentina-6)
-[![Build Status](https://travis-ci.org/ingadhoc/odoo-argentina.svg?branch=13.0)](https://travis-ci.org/ingadhoc/odoo-argentina)
 [![Coverage Status](https://coveralls.io/repos/ingadhoc/odoo-argentina/badge.png?branch=13.0)](https://coveralls.io/r/ingadhoc/odoo-argentina?branch=13.0)
 [![Code Climate](https://codeclimate.com/github/ingadhoc/odoo-argentina/badges/gpa.svg)](https://codeclimate.com/github/ingadhoc/odoo-argentina)
 

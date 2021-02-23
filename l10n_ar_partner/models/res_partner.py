@@ -1,5 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+import re
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -233,3 +234,10 @@ class ResPartner(models.Model):
                 if self[r_field] == value:
                     values.pop(r_field, False)
         return values
+
+    @api.model
+    def _get_id_number_sanitize(self):
+        """ Sanitize the identification number. Return the digits/integer value of the identification number """
+        id_number = re.sub('[^0-9]', '', self.main_id_number)
+        res = int(id_number)
+        return res

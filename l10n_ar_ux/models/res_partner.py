@@ -14,7 +14,7 @@ class ResPartner(models.Model):
     )
 
     # AFIP Padron
-    start_date = fields.Date('Start-up Date')
+    start_date = fields.Date('Activities Start')
     estado_padron = fields.Char('Estado AFIP')
     imp_ganancias_padron = fields.Selection([
         ('NI', 'No Inscripto'),

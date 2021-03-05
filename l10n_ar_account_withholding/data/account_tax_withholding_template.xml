@@ -149,7 +149,7 @@
                 }),
             ]"/>
             <field name="type_tax_use">customer</field>
-            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb_caba"/>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
         </record>
 
         <record id="ri_tax_retencion_iibb_ba_sufrida" model="account.tax.template">
@@ -1008,6 +1008,7 @@
             <field name="name">Retención IIBB CABA Aplicada</field>
             <field name="description">Ret IIBB CABA A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1037,7 +1038,7 @@
                 }),
             ]"/>
             <field name="type_tax_use">supplier</field>
-            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb_caba"/>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
         </record>
 
         <record id="ri_tax_retencion_iibb_ba_aplicada" model="account.tax.template">
@@ -1045,6 +1046,7 @@
             <field name="name">Retención IIBB ARBA Aplicada</field>
             <field name="description">Ret IIBB ARBA A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1082,6 +1084,7 @@
             <field name="name">Retención IIBB Catamarca Aplicada</field>
             <field name="description">Ret IIBB Catamarca A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1119,6 +1122,7 @@
             <field name="name">Retención IIBB Córdoba Aplicada</field>
             <field name="description">Ret IIBB Córdoba A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1156,6 +1160,7 @@
             <field name="name">Retención IIBB Corrientes Aplicada</field>
             <field name="description">Ret IIBB Corrientes A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1193,6 +1198,7 @@
             <field name="name">Retención IIBB Entre Ríos Aplicada</field>
             <field name="description">Ret IIBB Entre Ríos A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1230,6 +1236,7 @@
             <field name="name">Retención IIBB Jujuy Aplicada</field>
             <field name="description">Ret IIBB Jujuy A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1267,6 +1274,7 @@
             <field name="name">Retención IIBB Mendoza Aplicada</field>
             <field name="description">Ret IIBB Mendoza A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1304,6 +1312,7 @@
             <field name="name">Retención IIBB La Rioja Aplicada</field>
             <field name="description">Ret IIBB La Rioja A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1341,6 +1350,7 @@
             <field name="name">Retención IIBB Salta Aplicada</field>
             <field name="description">Ret IIBB Salta A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1378,6 +1388,7 @@
             <field name="name">Retención IIBB San Juan Aplicada</field>
             <field name="description">Ret IIBB San Juan A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1415,6 +1426,7 @@
             <field name="name">Retención IIBB San Luis Aplicada</field>
             <field name="description">Ret IIBB San Luis A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1452,6 +1464,7 @@
             <field name="name">Retención IIBB Santa Fe Aplicada</field>
             <field name="description">Ret IIBB Santa Fe A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1489,6 +1502,7 @@
             <field name="name">Retención IIBB Santiago del Estero Aplicada</field>
             <field name="description">Ret IIBB Santiago del Estero A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1526,6 +1540,7 @@
             <field name="name">Retención IIBB Tucumán Aplicada</field>
             <field name="description">Ret IIBB Tucumán A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1563,6 +1578,7 @@
             <field name="name">Retención IIBB Chaco Aplicada</field>
             <field name="description">Ret IIBB Chaco A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1600,6 +1616,7 @@
             <field name="name">Retención IIBB Chubut Aplicada</field>
             <field name="description">Ret IIBB Chubut A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1637,6 +1654,7 @@
             <field name="name">Retención IIBB Formosa Aplicada</field>
             <field name="description">Ret IIBB Formosa A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1674,6 +1692,7 @@
             <field name="name">Retención IIBB Misiones Aplicada</field>
             <field name="description">Ret IIBB Misiones A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1711,6 +1730,7 @@
             <field name="name">Retención IIBB Neuquén Aplicada</field>
             <field name="description">Ret IIBB Neuquén A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1748,6 +1768,7 @@
             <field name="name">Retención IIBB La Pampa Aplicada</field>
             <field name="description">Ret IIBB La Pampa A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1785,6 +1806,7 @@
             <field name="name">Retención IIBB Río Negro Aplicada</field>
             <field name="description">Ret IIBB Río Negro A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1822,6 +1844,7 @@
             <field name="name">Retención IIBB Santa Cruz Aplicada</field>
             <field name="description">Ret IIBB Santa Cruz A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
@@ -1859,6 +1882,7 @@
             <field name="name">Retención IIBB Tierra del Fuego Aplicada</field>
             <field name="description">Ret IIBB Tierra del Fuego A</field>
             <field name="sequence">4</field>
+            <field name="active" eval="False"/>
             <field name="amount_type">fixed</field>
             <field eval="0.0" name="amount"/>
             <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),

@@ -17,7 +17,7 @@
         <field name="l10n_ar_tribute_afip_code">01</field>
     </record>
 
-    <record model="account.tax.group" id="tax_group_retencion_iibb">
+    <record model="account.tax.group" id="tax_group_retencion_iibb_caba">
         <field name="name">Retención IIBB CABA</field>
         <!-- <field name="tax">gross_income</field>
         <field name="type">withholding</field>

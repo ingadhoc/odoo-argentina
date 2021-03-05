@@ -149,7 +149,7 @@
                 }),
             ]"/>
             <field name="type_tax_use">customer</field>
-            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb_caba"/>
         </record>
 
         <record id="ri_tax_retencion_iibb_ba_sufrida" model="account.tax.template">
@@ -1038,7 +1038,7 @@
                 }),
             ]"/>
             <field name="type_tax_use">supplier</field>
-            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb"/>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb_caba"/>
         </record>
 
         <record id="ri_tax_retencion_iibb_ba_aplicada" model="account.tax.template">

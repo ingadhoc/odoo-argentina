@@ -184,7 +184,7 @@ class AccountInvoice(models.Model):
         """ Generate the required QR code """
         image = False
         if qr_code:
-            qr_obj = qrcode.QRCode()
+            qr_obj = qrcode.QRCode(box_size=3)
             output = BytesIO()
             qr_obj.add_data(qr_code)
             qr_obj.make(fit=True)

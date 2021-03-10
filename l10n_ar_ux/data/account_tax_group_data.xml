@@ -41,7 +41,7 @@
         <field name="l10n_ar_tribute_afip_code">02</field>
     </record>
 
-    <record model="account.tax.group" id="tax_group_retencion_iibb_ob">
+    <record model="account.tax.group" id="tax_group_retencion_iibb_co">
         <field name="name">Retención IIBB Córdoba</field>
         <!-- <field name="tax">gross_income</field>
         <field name="type">withholding</field>

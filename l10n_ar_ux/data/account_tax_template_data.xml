@@ -118,7 +118,7 @@
         ]"/>
     </record>
 
-    <record id="l10n_ar.ri_tax_percepcion_iibb_ob_sufrida" model="account.tax.template">
+    <record id="l10n_ar.ri_tax_percepcion_iibb_co_sufrida" model="account.tax.template">
         <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
             (0,0, {
                 'factor_percent': 100,
@@ -128,7 +128,7 @@
             (0,0, {
                 'factor_percent': 100,
                 'repartition_type': 'tax',
-                'account_id': ref('l10n_ar.base_percepcion_iibb_ob_sufrida'),
+                'account_id': ref('l10n_ar.base_percepcion_iibb_co_sufrida'),
                 'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_904')])],
             }),
         ]"/>
@@ -141,7 +141,7 @@
             (0,0, {
                 'factor_percent': 100,
                 'repartition_type': 'tax',
-                'account_id': ref('l10n_ar.base_percepcion_iibb_ob_sufrida'),
+                'account_id': ref('l10n_ar.base_percepcion_iibb_co_sufrida'),
                 'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_904')])],
             }),
         ]"/>

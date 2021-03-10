@@ -226,7 +226,7 @@
             <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb_ca"/>
         </record>
 
-        <record id="ri_tax_retencion_iibb_ob_sufrida" model="account.tax.template">
+        <record id="ri_tax_retencion_iibb_co_sufrida" model="account.tax.template">
             <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
             <field name="name">Retención IIBB Córdoba Sufrida</field>
             <field name="description">Ret IIBB Córdoba S</field>
@@ -242,7 +242,7 @@
                 (0,0, {
                     'factor_percent': 100,
                     'repartition_type': 'tax',
-                    'account_id': ref('l10n_ar.base_retencion_iibb_ob_sufrida'),
+                    'account_id': ref('l10n_ar.base_retencion_iibb_co_sufrida'),
                     'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_904')])],
                 }),
             ]"/>
@@ -255,12 +255,12 @@
                 (0,0, {
                     'factor_percent': 100,
                     'repartition_type': 'tax',
-                    'account_id': ref('l10n_ar.base_retencion_iibb_ob_sufrida'),
+                    'account_id': ref('l10n_ar.base_retencion_iibb_co_sufrida'),
                     'tag_ids': [(6, 0, [ref('l10n_ar_ux.tax_tag_a_cuenta_iibb'), ref('l10n_ar_ux.tag_tax_jurisdiccion_904')])],
                 }),
             ]"/>
             <field name="type_tax_use">customer</field>
-            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb_ob"/>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb_co"/>
         </record>
 
         <record id="ri_tax_retencion_iibb_rr_sufrida" model="account.tax.template">
@@ -1117,7 +1117,7 @@
             <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb_ca"/>
         </record>
 
-        <record id="ri_tax_retencion_iibb_ob_aplicada" model="account.tax.template">
+        <record id="ri_tax_retencion_iibb_co_aplicada" model="account.tax.template">
             <field name="chart_template_id" ref="l10n_ar.l10nar_ex_chart_template"/>
             <field name="name">Retención IIBB Córdoba Aplicada</field>
             <field name="description">Ret IIBB Córdoba A</field>
@@ -1134,7 +1134,7 @@
                 (0,0, {
                     'factor_percent': 100,
                     'repartition_type': 'tax',
-                    'account_id': ref('l10n_ar.ri_retencion_iibb_ob_aplicada'),
+                    'account_id': ref('l10n_ar.ri_retencion_iibb_co_aplicada'),
                     'tag_ids': [(6, 0, [ref('l10n_ar_ux.tag_ret_perc_iibb_aplicada')])],
                 }),
             ]"/>
@@ -1147,12 +1147,12 @@
                 (0,0, {
                     'factor_percent': 100,
                     'repartition_type': 'tax',
-                    'account_id': ref('l10n_ar.ri_retencion_iibb_ob_aplicada'),
+                    'account_id': ref('l10n_ar.ri_retencion_iibb_co_aplicada'),
                     'tag_ids': [(6, 0, [ref('l10n_ar_ux.tag_ret_perc_iibb_aplicada')])],
                 }),
             ]"/>
             <field name="type_tax_use">supplier</field>
-            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb_ob"/>
+            <field name="tax_group_id" ref="l10n_ar_ux.tax_group_retencion_iibb_co"/>
         </record>
 
         <record id="ri_tax_retencion_iibb_rr_aplicada" model="account.tax.template">

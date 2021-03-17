@@ -70,8 +70,10 @@ class AccountMove(models.Model):
         """ We overwrite original method odoo/odoo/l10n_latam_invoice_document in order to be able to search for
         document numbers that has POS of 4 or 5 digits. In 13.0 we will always have 5 digits, but we need this for
         compatibility of old version migrated clients that have used 4 digits POS numbers """
-        for rec in self.filtered(lambda x: x.is_purchase_document() and x.l10n_latam_use_documents
-                                 and x.l10n_latam_document_number):
+        others = self.filtered(lambda x: x.company_id.country_id.code != 'AR')
+        super(AccountMove, others)._check_unique_vendor_number()
+        for rec in (self - others).filtered(lambda x: x.is_purchase_document() and x.l10n_latam_use_documents
+                                            and x.l10n_latam_document_number):
 
             # Old 4 digits name
             number = rec._l10n_ar_get_document_number_parts(

@@ -91,3 +91,8 @@ class AccountMove(models.Model):
             ]
             if rec.search(domain):
                 raise ValidationError(_('Vendor bill number must be unique per vendor and company.'))
+
+    def _check_duplicate_supplier_reference(self):
+        """ We make reference only unique if you are not using documents.
+        Documents already guarantee to not encode twice same vendor bill """
+        return super(AccountMove, self.filtered(lambda x: not x.use_documents))._check_duplicate_supplier_reference()

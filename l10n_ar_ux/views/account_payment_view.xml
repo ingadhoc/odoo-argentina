@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_payment_form_inherited" model="ir.ui.view">
+        <field name="name">account.payment.form.inherited</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account_check.view_account_payment_form_inherited" />
+        <field name="arch" type="xml">
+            <!-- TODO tal vez habria que mejorar account_check que esta agregando dos groups y agrega mucho espacio en la vista y posicionar esto de otra manera.-->
+            <field name="check_id" position="before">
+                <field name="l10n_ar_partner_vat" attrs="{'invisible': ['|', '|', ('state', '!=', 'draft'), ('l10n_ar_partner_vat', '=', False), ('payment_method_code', 'not in', ['delivered_third_check', 'issue_check'])]}"/>
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -40,7 +40,7 @@ class AccountMove(models.Model):
         except Exception:
             _logger.info('Error while getting document number parts, try with backward compatibility')
         invoice_number = point_of_sale = False
-        if document_type_code in ['33', '99', '331', '332']:
+        if not document_type_code or document_type_code in ['33', '99', '331', '332']:
             point_of_sale = '0'
             # leave only numbers and convert to integer
             # otherwise use date as a number
@@ -56,9 +56,14 @@ class AccountMove(models.Model):
         invoice_number = invoice_number and re.sub("[^0-9]", "", invoice_number)
         point_of_sale = point_of_sale and re.sub("[^0-9]", "", point_of_sale)
         if not invoice_number or not point_of_sale:
-            raise ValidationError(_(
-                'No pudimos obtener el número de factura y de punto de venta para %s %s. Verifique que tiene un número '
-                'cargado similar a "00001-00000001"') % (document_type_code, document_number))
+            if document_type_code:
+                raise ValidationError(_(
+                    'No pudimos obtener el número de factura y de punto de venta para %s %s. Verifique que tiene un '
+                    'número cargado similar a "00001-00000001"') % (document_type_code, document_number))
+            else:
+                raise ValidationError(_(
+                    'El número de factura "%s" es incorrecto. El mismo debe contener al menos un caracter numérico') %
+                    document_number)
         return {
                 'invoice_number': int(invoice_number),
                 'point_of_sale': int(point_of_sale),

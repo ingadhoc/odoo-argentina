@@ -1,6 +1,6 @@
 {
     'name': 'Argentinian Accounting UX',
-    'version': "13.0.1.16.0",
+    'version': "13.0.1.17.0",
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -14,6 +14,7 @@
         # for payment group report
         'account_withholding',
         'account_payment_group_document',
+        'account_ux',
     ],
     'data': [
         'data/res_currency_data.xml',

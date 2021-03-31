@@ -19,4 +19,18 @@
         </field>
     </record>
 
+    <record id="view_move_form2" model="ir.ui.view">
+        <field name="name">account.move.inherit.view.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account_ux.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <!-- TODO 14.0 l10n_latam_sequence_id not used, need to use the field l10n_latam_manual_document_number -->
+            <button name="delete_number" postion="attributes">
+                <attribute name="attrs">{'invisible':[('l10n_latam_sequence_id', '!=', False), '|', ('state','!=','cancel'),'|',('name','=',False), ('name','=','/')]}</attribute>
+            </button>
+
+        </field>
+    </record>
+
 </odoo>

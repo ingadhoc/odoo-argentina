@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 # from odoo.exceptions import UserError
 
 
@@ -26,3 +26,23 @@ class ResConfigSettings(models.TransientModel):
     afip_auth_verify_type = fields.Selection(
         related='company_id.afip_auth_verify_type'
     )
+
+    l10n_ar_afip_fce_transmission = fields.Selection(
+        [('SCA', 'SCA - TRANSFERENCIA AL SISTEMA DE CIRCULACION ABIERTA'),
+         ('ADC', 'ADC - AGENTE DE DEPOSITO COLECTIVO')],
+        'FCE: Opción de Transmisión',
+        help="Este campo sera necesario cuando informes comprobantes del tipo FCE MiPyME")
+
+    @api.model
+    def get_values(self):
+        res = super(ResConfigSettings, self).get_values()
+        get_param = self.env['ir.config_parameter'].sudo().get_param
+        res.update(
+            l10n_ar_afip_fce_transmission=get_param('l10n_ar_edi.fce_transmission', ''),
+        )
+        return res
+
+    def set_values(self):
+        super(ResConfigSettings, self).set_values()
+        set_param = self.env['ir.config_parameter'].sudo().set_param
+        set_param('l10n_ar_edi.fce_transmission', self.l10n_ar_afip_fce_transmission)

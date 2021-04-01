@@ -712,6 +712,14 @@ print "Observaciones:", wscdc.Obs
                     ws.AgregarOpcional(
                         opcional_id=2101,
                         valor=inv.partner_bank_id.cbu)
+
+                    # agregamos tipo de transmision si esta definido
+                    transmission_type = self.env['ir.config_parameter'].sudo().get_param(
+                        'l10n_ar_edi.fce_transmission', '')
+                    if transmission_type:
+                        ws.AgregarOpcional(
+                            opcional_id=27,
+                            valor=transmission_type)
                 elif int(doc_afip_code) in [202, 203, 207, 208, 212, 213]:
                     valor = inv.afip_fce_es_anulacion and 'S' or 'N'
                     ws.AgregarOpcional(

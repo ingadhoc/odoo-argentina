@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_account_payment_group_invoice_wizard">
+        <field name="name">account.payment.group.invoice.wizard.form</field>
+        <field name="model">account.payment.group.invoice.wizard</field>
+        <field name="inherit_id" ref="account_payment_group.view_account_payment_group_invoice_wizard"/>
+        <field name="arch" type="xml">
+            <field name="date" position="after">
+                <field name="afip_asoc_period_start"/>
+                <field name="afip_asoc_period_end"/>
+                <field name="commercial_partner_id" invisible="1"/>
+                <field name="origin" domain="context.get('refund') and [('type', '=', 'out_invoice'), ('partner_id.commercial_partner_id', '=', commercial_partner_id), ('state', 'not in', ['draft', 'cancel'])] or [('type', 'in', ('out_invoice', 'out_refund')), ('partner_id.commercial_partner_id', '=', commercial_partner_id), ('state', 'not in', ['draft', 'cancel'])]"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

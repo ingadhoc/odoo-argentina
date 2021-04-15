@@ -26,6 +26,7 @@
         'security/ir.model.access.csv',
         'security/security.xml',
         'wizard/res_config_settings_views.xml',
+        'wizard/account_payment_group_invoice_wizard_view.xml',
         'reports/certificado_de_retencion_report.xml',
         'views/account_payment_group_view.xml',
         'views/afip_tabla_ganancias_escala_view.xml',
@@ -55,5 +56,5 @@
     },
     'installable': True,
     'name': 'Automatic Argentinian Withholdings on Payments',
-    'version': '12.0.1.2.0',
+    'version': '12.0.1.3.0',
 }

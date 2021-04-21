@@ -71,8 +71,8 @@ class AccountMove(models.Model):
         document numbers that has POS of 4 or 5 digits. In 13.0 we will always have 5 digits, but we need this for
         compatibility of old version migrated clients that have used 4 digits POS numbers """
         ar_purchase_use_document = self.filtered(
-            lambda x: x.is_purchase_document() and x.l10n_latam_use_documents and x.l10n_latam_document_number
-            and x.l10n_latam_document_type_id.code)
+            lambda x: x.company_id.country_id.code == 'AR' and x.is_purchase_document() and x.l10n_latam_use_documents
+            and x.l10n_latam_document_number and x.l10n_latam_document_type_id.code)
 
         super(AccountMove, self - ar_purchase_use_document)._check_unique_vendor_number()
         for rec in ar_purchase_use_document:

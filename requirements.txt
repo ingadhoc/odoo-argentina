@@ -1,5 +1,6 @@
 pyOpenSSL
-M2Crypto
+M2Crypto; python_version != '3.6'
+M2Crypto<=0.36.0; python_version == '3.6'
 httplib2>=0.7
 git+https://github.com/pysimplesoap/pysimplesoap@a330d9c4af1b007fe1436f979ff0b9f66613136e
 # fpdf>=1.7.2

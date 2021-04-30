@@ -113,6 +113,7 @@
         name="l10n_ar_account_withholding.report_withholding_certificate"
         file="l10n_ar_account_withholding.report_withholding_certificate"
         print_report_name="'Certificado de Retención Slip - %s' % (object.withholding_number or '')"
+        menu="False"
     />
 
 </odoo>

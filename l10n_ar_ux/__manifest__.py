@@ -28,6 +28,7 @@
         'views/afip_activity_view.xml',
         'views/afip_tax_view.xml',
         'views/report_invoice.xml',
+        'reports/report_account_transfer.xml',
         'views/account_payment_view.xml',
         'views/account_journal_views.xml',
         'wizards/res_config_settings_views.xml',

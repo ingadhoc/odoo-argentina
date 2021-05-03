@@ -99,3 +99,14 @@ class AccountMove(models.Model):
         Documents already guarantee to not encode twice same vendor bill """
         return super(
             AccountMove, self.filtered(lambda x: not x.l10n_latam_use_documents))._check_duplicate_supplier_reference()
+
+    def _get_name_invoice_report(self, report_xml_id):
+        """Use always argentinian like report (regardless use documents)"""
+        self.ensure_one()
+        if self.company_id.country_id.code == 'AR':
+            custom_report = {
+                'account.report_invoice_document_with_payments': 'l10n_ar.report_invoice_document_with_payments',
+                'account.report_invoice_document': 'l10n_ar.report_invoice_document',
+            }
+            return custom_report.get(report_xml_id) or report_xml_id
+        return super()._get_name_invoice_report(report_xml_id)

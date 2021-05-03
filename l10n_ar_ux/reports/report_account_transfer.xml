@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_account_transfer_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <t t-set="custom_header" t-value="'l10n_ar.custom_header'"/>
+                <t t-set="report_date" t-value="o.payment_date"/>
+                <t t-set="report_number" t-value="o.name"/>
+                <t t-set="report_name" t-value="'REPORTE DE TRANSFERENCIA'"/>
+                <t t-set="header_address" t-value="o.company_id.partner_id"/>
+
+                <t t-set="custom_footer">
+                    <div class="row">
+                        <div name="footer_left_column" class="col-8">
+                            Nombre y Apellido Firmante:
+                            <br/>Cargo:
+                        </div>
+                        <div name="footer_right_column" class="col-4">
+                            Firma Responsable
+                        </div>
+                    </div>
+                </t>
+            <div class="page">
+                <hr/>
+                <strong>Creado por:</strong>
+                <span t-field="o.create_uid.name"/>
+                <br/>
+                <strong>Total Transacción:</strong>
+                <span t-field="o.amount"/>
+                <br/>
+                <br/>
+                <strong>Cuenta de Origen:</strong>
+                <span t-field="o.journal_id.name"/>
+                <br/>
+                <strong>Cuenta de Destino:</strong>
+                <span t-field="o.destination_journal_id.name"/>
+                <br/>
+                <strong>Concepto:</strong>
+                <span t-field="o.communication"/>
+                <br/>
+                <br/>
+                <t t-if="o.check_ids">
+                    <strong>Cantidad de Cheques:</strong>
+                    <span t-esc="len(o.check_ids)"/>
+                    <br/>
+                    <strong>Listado de Cheques:</strong>
+                    <br/>
+                    <br/>
+                    <table class="table table-sm o_main_table">
+                        <thead>
+                            <tr>
+                                <td><strong>Nro de Cheque</strong></td>
+                                <td><strong>Fecha de Emisión</strong></td>
+                                <td><strong>Fecha de Pago</strong></td>
+                                <td><strong>Banco</strong></td>
+                                <td><strong>Monto</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.check_ids.sorted(key=lambda r:r.payment_date or r.issue_date)" t-as="check">
+                                <tr>
+                                    <td><span t-field="check.number"/></td>
+                                    <td><span t-field="check.issue_date"/></td>
+                                    <td><span t-field="check.payment_date"/></td>
+                                    <td><span t-field="check.bank_id.name"/></td>
+                                    <td><span t-field="check.amount"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_account_transfer">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="o.partner_id.lang"/>
+                <t t-call="l10n_ar_ux.report_account_transfer_document" t-lang="lang"/>
+            </t>
+        </t>
+    </template>
+
+    <report
+        string="Reporte de Transferencia"
+        id="action_report_account_transfer"
+        model="account.payment"
+        report_type="qweb-pdf"
+        name="l10n_ar_ux.report_account_transfer"
+        file="l10n_ar_ux.report_account_transfer"
+        print_report_name="'Reporte de transferencia'"
+    />
+
+</odoo>

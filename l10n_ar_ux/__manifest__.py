@@ -31,6 +31,7 @@
         'reports/report_account_transfer.xml',
         'views/account_payment_view.xml',
         'views/account_journal_views.xml',
+        'views/ir_actions_views.xml',
         'wizards/res_config_settings_views.xml',
         'reports/account_invoice_report_view.xml',
         'reports/report_payment_group.xml',

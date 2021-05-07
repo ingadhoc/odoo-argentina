@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <template id="report_invoice" inherit_id="account.report_invoice">
+        <t t-foreach="docs" position="replace">
+            <t t-foreach="l10n_ar_copies_list" t-as="copy_type">
+                <t>$0</t>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_invoice_with_payments" inherit_id="account.report_invoice_with_payments">
+        <t t-foreach="docs" position="replace">
+            <t t-foreach="l10n_ar_copies_list" t-as="copy_type">
+                <t>$0</t>
+            </t>
+        </t>
+    </template>
+
     <template id="custom_header" inherit_id="l10n_ar.custom_header">
+        <h4 position="after">
+            <strong><span tif="copy_type" t-esc="copy_type"/></strong>
+        </h4>
+
         <!-- usar datos de header_adress en vez de company -->
         <img t-if="o.company_id.logo" position="replace">
             <img t-if="header_address.image_1920" t-att-src="image_data_uri(header_address.image_1920)" style="max-height: 45px;" alt="Logo"/>

@@ -47,11 +47,13 @@ class AccountTax(models.Model):
         if self.withholding_type == 'tabla_ganancias' and payment_group.retencion_ganancias == 'nro_regimen' \
            and payment_group.regimen_ganancias_id:
             previos_payment_groups_domain += [
-                ('regimen_ganancias_id', '=',
-                    payment_group.regimen_ganancias_id.id)]
+                ('regimen_ganancias_id', '=', payment_group.regimen_ganancias_id.id),
+                ('retencion_ganancias', '=', 'nro_regimen'),
+            ]
             previos_payments_domain += [
-                ('payment_group_id.regimen_ganancias_id', '=',
-                    payment_group.regimen_ganancias_id.id)]
+                ('payment_group_id.regimen_ganancias_id', '=', payment_group.regimen_ganancias_id.id),
+                ('payment_group_id.retencion_ganancias', '=', 'nro_regimen'),
+            ]
         return (
             previos_payment_groups_domain,
             previos_payments_domain)

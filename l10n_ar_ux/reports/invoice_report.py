@@ -24,14 +24,14 @@ class AccountInvoiceReport(models.Model):
     # use monetary field instead of float
     amount_total = fields.Monetary()
     price_subtotal = fields.Monetary()
-    price_average = fields.Monetary()
+    price_average = fields.Monetary(group_operator="avg")
 
     _depends = {'account.move': ['currency_id'], 'account.move.line': ['price_unit', 'discount']}
 
     def _select(self):
         return super()._select() + """,
             line.price_unit,
-            line.id as line_id, 
+            line.id as line_id,
             move.currency_id as invoice_currency_id,
             line.discount,
             line.price_unit * line.quantity * line.discount/100 *

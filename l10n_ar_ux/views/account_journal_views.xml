@@ -6,6 +6,12 @@
         <field name="name">account.journal.form</field>
         <field name="inherit_id" ref="l10n_ar.view_account_journal_form"/>
         <field name="arch" type="xml">
+            <field name="l10n_ar_afip_pos_partner_id" position="after">
+                <field name="l10n_ar_document_type_ids" widget="many2many_tags" attrs="{'invisible': [('l10n_ar_afip_pos_system', '!=', 'not_applicable')], 'required': [('l10n_ar_afip_pos_system', '=', 'not_applicable')]}" domain="[('country_id.code', '=', l10n_latam_country_code)]"/>
+            </field>
+            <field name="l10n_ar_afip_pos_number" position="attributes">
+                <attribute name="attrs">{'invisible':['|', '|', '|', ('l10n_latam_country_code', '!=', 'AR'), ('l10n_latam_use_documents', '=', False), ('type', '!=', 'sale'), ('l10n_ar_afip_pos_system', '=', 'not_applicable')], 'required':[('l10n_latam_country_code', '=', 'AR'), ('l10n_latam_use_documents', '=', True), ('type', '=', 'sale'), ('l10n_ar_afip_pos_system', '!=', 'not_applicable')]}</attribute>
+            </field>
             <field name="l10n_ar_afip_pos_partner_id" position="attributes">
                 <attribute name="attrs">{'invisible':['|', ('l10n_latam_country_code', '!=', 'AR'), ('type', '!=', 'sale')], 'required':[('l10n_latam_country_code', '=', 'AR'), ('l10n_latam_use_documents', '=', True), ('type', '=', 'sale')]}</attribute>
             </field>

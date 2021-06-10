@@ -793,8 +793,8 @@ print "Observaciones:", wscdc.Obs
                 if afip_ws == 'wsfe' and self.document_type_id.internal_type in ['credit_note', 'debit_note'] and  \
                    self.afip_asoc_period_start and self.afip_asoc_period_end:
                     ws.AgregarPeriodoComprobantesAsociados(
-                        fecha_desde=self.afip_asoc_period_start.replace("-", ""),
-                        fecha_hasta=self.afip_asoc_period_end.replace("-", ""),
+                        fecha_desde=self.afip_asoc_period_start.strftime('%Y%m%d'),
+                        fecha_hasta=self.afip_asoc_period_end.strftime('%Y%m%d'),
                     )
 
             # analize line items - invoice detail

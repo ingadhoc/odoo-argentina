@@ -3,7 +3,7 @@
     <record model='account.document.letter' id='dl_a'>
         <field name='name'>A</field>
         <field name='issuer_ids' eval="[(6, 0, [ref('res_IVARI')])]"/>
-        <field name='receptor_ids' eval="[(6, 0, [ref('res_IVARNI'), ref('res_IVARI'), ref('res_IVARIFM')])]"/>
+        <field name='receptor_ids' eval="[(6, 0, [ref('res_IVARNI'), ref('res_IVARI'), ref('res_IVARIFM'), ref('res_RM'), ref('res_MON_SOCIAL')])]"/>
     </record>
     <record model='account.document.letter' id='dl_b'>
         <field name='name'>B</field>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="True">
+
+    <record model='account.document.letter' id='dl_a'>
+        <field name='receptor_ids' eval="[(6, 0, [ref('res_IVARNI'), ref('res_IVARI'), ref('res_IVARIFM'), ref('res_RM'), ref('res_MON_SOCIAL')])]"/>
+    </record>
+
+</odoo>

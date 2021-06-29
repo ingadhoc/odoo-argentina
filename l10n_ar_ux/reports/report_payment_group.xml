@@ -58,7 +58,12 @@
                 <tbody>
                     <t t-foreach="o.mapped('payment_ids.check_ids').sorted(key=lambda r:r.payment_date or r.issue_date)" t-as="line">
                         <tr>
-                            <td><span t-raw='"Cheque nro %s - %s" % (line.name, line.bank_id.name or line.journal_id.name)'/><span t-if="line.payment_date"> - Venc. <span t-field="line.payment_date"/></span></td>
+                            <td><span t-raw='"Cheque nro %s - %s" % (line.name, line.bank_id.name or line.journal_id.name)'/><span t-if="line.payment_date"> - Venc. <span t-field="line.payment_date"/></span>
+                            <t t-if="line.currency_id">
+                                <span> (</span>
+                                <span  t-field="line.amount" t-field-options='{"widget": "monetary",  "display_currency": "line.currency_id"}'/>
+                                <span>)</span>
+                            </t></td>
                             <td class="text-right o_price_total">
                                 <span class="text-nowrap" t-field="line.amount_company_currency"/>
                             </td>
@@ -66,7 +71,12 @@
                     </t>
                     <t t-foreach="o.payment_ids.filtered(lambda x: x.tax_withholding_id)" t-as="line">
                         <tr>
-                            <td><span t-raw='"%s - %s" % (line.tax_withholding_id.name, line.withholding_number or line.name)'/></td>
+                            <td><span t-raw='"%s - %s" % (line.tax_withholding_id.name, line.withholding_number or line.name)'/>
+                            <t t-if="line.other_currency">
+                                <span> (</span>
+                                <span  t-field="line.signed_amount" t-field-options='{"widget": "monetary",  "display_currency": "line.currency_id"}'/>
+                                <span>)</span>
+                            </t></td>
                             <td class="text-right o_price_total">
                                 <span class="text-nowrap" t-field="line.signed_amount_company_currency"/>
                             </td>

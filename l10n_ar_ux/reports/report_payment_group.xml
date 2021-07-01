@@ -103,6 +103,7 @@
                         <td><strong><span>Total Pagado</span></strong></td>
                         <td class="text-right">
                             <strong><span class="text-nowrap" t-field="o.payments_amount"/></strong>
+                            <strong t-if="len(o.payment_ids.mapped('currency_id')) == 1 and o.payment_ids.mapped('currency_id') != o.currency_id"> <span> (</span><span class="text-nowrap" t-esc="sum(o.payment_ids.mapped('signed_amount'))" t-options="{'widget': 'monetary', 'display_currency': o.payment_ids.mapped('currency_id')}"/><span>)</span></strong>
                         </td>
                     </tr>
                 </tfoot>

@@ -199,7 +199,7 @@ class AccountInvoice(models.Model):
                     r.tax_id.tax_group_id.afip_code not in
                     [0, 1, 2]) and r.base)
 
-            vat_amount = sum(vat_taxes.mapped('amount'))
+            vat_amount = sum(vat_taxes.mapped('amount_total'))
             rec.vat_tax_ids = vat_taxes
             rec.vat_taxable_ids = vat_taxables
             rec.vat_amount = vat_amount
@@ -234,7 +234,7 @@ class AccountInvoice(models.Model):
 
             # other taxes values
             not_vat_taxes = rec.tax_line_ids - vat_taxes
-            other_taxes_amount = sum(not_vat_taxes.mapped('amount'))
+            other_taxes_amount = sum(not_vat_taxes.mapped('amount_total'))
             rec.not_vat_tax_ids = not_vat_taxes
             rec.other_taxes_amount = other_taxes_amount
 

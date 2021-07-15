@@ -299,9 +299,18 @@
         <field name="anexo_referencia">Factura M</field>
         <field name="codigo_de_regimen">99</field>
         <field name="concepto_referencia">Factura M - Ganancias - Emisión de comprobantes con discriminación del gravamen.</field>
+        <field name="porcentaje_inscripto">6</field>
+        <field name="porcentaje_no_inscripto">6</field>
+        <field name="montos_no_sujetos_a_retencion">0</field>
+    </record>
+
+    <record model="afip.tabla_ganancias.alicuotasymontos" id="regimen_965">
+        <field name="anexo_referencia">Factura A con leyenda</field>
+        <field name="codigo_de_regimen">965</field>
+        <field name="concepto_referencia">Factura "A" con leyenda "OPERACIÓN SUJETA A RETENCIÓN" - Ganancias - Emisión de comprobantes con discriminación del gravamen.</field>
         <field name="porcentaje_inscripto">3</field>
         <field name="porcentaje_no_inscripto">3</field>
-        <field name="montos_no_sujetos_a_retencion">1000</field>
+        <field name="montos_no_sujetos_a_retencion">0</field>
     </record>
 
 <!--

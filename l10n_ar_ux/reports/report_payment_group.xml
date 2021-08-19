@@ -30,7 +30,7 @@
                 <!-- IDENTIFICACION (ADQUIRIENTE-LOCATARIO-PRESTARIO) -->
 
                 <!-- (14) Apellido uy Nombre: Denominicacion o Razon Soclial -->
-                <strong><span t-raw="o.partner_type == 'supplier' and 'Proveedor: ' or 'Cliente: '"/></strong><span t-field="o.partner_id.name"/>
+                <strong><span t-raw="o.partner_type == 'supplier' and 'Proveedor: ' or 'Cliente: '"/></strong><span t-field="o.partner_id.commercial_partner_id.name"/>
 
                 <!-- (15) Domicilio Comercial -->
                 <br/>

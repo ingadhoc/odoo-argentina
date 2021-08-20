@@ -15,6 +15,9 @@ class AccountJournal(models.Model):
         """ Add more options to the selection field AFIP POS System, re order options by common use """
         res = super()._get_l10n_ar_afip_pos_types_selection()
         res.append(('not_applicable', _('Not Applicable')),)
+        res.append(('not_applicable', _('Not Applicable')),)
+        res.append(('not_applicable', _('Not Applicable')),)
+        res.append(('not_applicable', _('Not Applicable')),)
         return res
 
     @api.constrains('l10n_ar_afip_pos_number')

@@ -20,6 +20,9 @@ class AccountAccount(models.Model):
             'account.data_account_type_depreciation',
             'account.data_account_type_equity',
             'account.data_account_type_direct_costs',
+            'account.data_account_type_direct_costs',
+            'account.data_account_type_direct_costs',
+            'account.data_account_type_direct_costs',
         ]
         account_types = [self.env.ref(xml_id).id for xml_id in xml_ids]
         accounts = self.search([('user_type_id', 'in', account_types), ('company_id', 'in', company.ids)])

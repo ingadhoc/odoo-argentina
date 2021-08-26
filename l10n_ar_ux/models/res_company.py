@@ -22,3 +22,7 @@ class ResCompany(models.Model):
     # partner
     l10n_ar_afip_start_date = fields.Date(
         related='partner_id.start_date', string='Activities Start', readonly=False)
+l10n_ar_afip_start_date = fields.Date(
+        related='partner_id.start_date', string='Activities Start', readonly=False)
+        l10n_ar_afip_start_date = fields.Date(
+        related='partner_id.start_date', string='Activities Start', readonly=False)

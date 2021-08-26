@@ -1,11 +1,13 @@
 ##############################################################################
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
+
+Commit 3
 ##############################################################################
 
 from odoo import api, fields, models
 
-
+### rompiendo todo en el código 
 class IrActionsReport(models.Model):
     _inherit = 'ir.actions.report'
 

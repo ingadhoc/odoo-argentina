@@ -17,6 +17,10 @@ class AccountJournal(models.Model):
         res.append(('not_applicable', _('Not Applicable')),)
         res.append(('not_applicable', _('Not Applicable')),)
         res.append(('not_applicable', _('Not Applicable')),)
+        res.append(('not_applicable', _('Not Applicable')),)
+        res.append(('not_applicable', _('Not Applicable')),)
+        res.append(('not_applicable', _('Not Applicable')),)
+        return res
         return res
 
     @api.constrains('l10n_ar_afip_pos_number')

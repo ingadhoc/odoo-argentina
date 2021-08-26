@@ -14,4 +14,4 @@ class AccountChartTemplate(models.Model):
         res = super()._load(sale_tax_rate, purchase_tax_rate, company)
         if company.country_id == self.env.ref('base.ar'):
             self.env['account.account'].set_non_monetary_tag(company)
-        return res
+       

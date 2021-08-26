@@ -1,5 +1,5 @@
 from odoo import models, fields
-
+#Commit 4
 
 class AccountConcept(models.Model):
     _name = "afip.concept"
@@ -7,7 +7,6 @@ class AccountConcept(models.Model):
 
     code = fields.Char(required=True)
     name = fields.Char(required=True)
-    active = fields.Boolean(default=True)
 
 
 class AccountActivity(models.Model):

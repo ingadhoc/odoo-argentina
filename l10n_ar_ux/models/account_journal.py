@@ -10,6 +10,7 @@ class AccountJournal(models.Model):
     _inherit = 'account.journal'
 
     l10n_ar_document_type_ids = fields.Many2many('l10n_latam.document.type', string='Document Types')
+    l10n_ar_document_type_ids = fields.Many2many('l10n_latam.document.type', string='Document Types')
 
     def _get_l10n_ar_afip_pos_types_selection(self):
         """ Add more options to the selection field AFIP POS System, re order options by common use """

@@ -13,10 +13,14 @@
             <t t-set="custom_footer">
                 <div class="row">
                     <div name="footer_left_column" class="col-8">
-                        Observaciones: <span t-field="o.notes"/>
+                        <t t-if="not o.company_id.l10n_ar_report_signature">
+                            Observaciones: <span t-field="o.notes"/>
+                        </t>
                     </div>
                     <div name="footer_right_column" class="col-4">
-                        <span class="text-center">Firma y Aclaración</span>
+                        <t t-if="not o.company_id.l10n_ar_report_signature">
+                            <span class="text-center">Firma y Aclaración</span>
+                        </t>
                         <div class="text-right" name="pager" t-if="report_type == 'pdf'">
                             Page: <span class="page"/> / <span class="topage"/>
                         </div>
@@ -192,6 +196,17 @@
                         </td>
                     </tr>
                 </tfoot>
+            </table>
+            <table>
+                <div class="float-left">
+                    <span t-if="o.company_id.l10n_ar_report_signature" t-field="o.notes"/>
+                </div>
+                <div class="float-right" style="heigth:100px;width:200px;text-align:center;">
+                    <t t-if="o.company_id.l10n_ar_report_signature">
+                        <span t-field="o.company_id.l10n_ar_report_signature" t-options='{"widget": "image"}'/>
+                        <span t-field="o.company_id.l10n_ar_report_signed_by"/>
+                    </t>
+                </div>
             </table>
         </div>
     </template>

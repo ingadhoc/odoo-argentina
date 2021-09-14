@@ -67,6 +67,12 @@
                 El total de este comprobante equivale a un total de <span t-raw="o.amount_total / o.move_inverse_currency_rate" t-options="{'widget': 'monetary', 'display_currency': o.move_currency_id}"/> a un tipo de cambio consignado de <span t-field="o.move_inverse_currency_rate"/>
             </p>
         </p>
+        <div id="qrcode" position="after">
+            <div t-if="o.company_id.country_id.code == 'AR' and o.journal_id.qr_code and o.invoice_payment_state != 'paid'">
+                <field name="qr_code_label"/>
+                <img t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=128&amp;height=128' % o.journal_id.qr_code"/>
+            </div>
+        </div>
     </template>
 
     <template id="report_invoice_document_with_payments" inherit_id="l10n_ar.report_invoice_document_with_payments">
@@ -82,6 +88,13 @@
                 El total de este comprobante equivale a un total de <span t-raw="o.amount_total / o.move_inverse_currency_rate" t-options="{'widget': 'monetary', 'display_currency': o.move_currency_id}"/> a un tipo de cambio consignado de <span t-field="o.move_inverse_currency_rate"/>
             </p>
         </p>
+
+        <div id="qrcode" position="after">
+            <div t-if="o.company_id.country_id.code == 'AR' and o.journal_id.qr_code and o.invoice_payment_state != 'paid'">
+                <strong class="text-center"><span t-field="o.journal_id.qr_code_label"/><br/><br/></strong>
+                <img t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=128&amp;height=128' % o.journal_id.qr_code"/>
+            </div>
+        </div>
     </template>
 
 

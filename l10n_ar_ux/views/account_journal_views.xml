@@ -15,6 +15,12 @@
             <field name="l10n_ar_afip_pos_partner_id" position="attributes">
                 <attribute name="attrs">{'invisible':['|', ('l10n_latam_country_code', '!=', 'AR'), ('type', '!=', 'sale')], 'required':[('l10n_latam_country_code', '=', 'AR'), ('l10n_latam_use_documents', '=', True), ('type', '=', 'sale')]}</attribute>
             </field>
+            <xpath expr="//page[@name='advanced_settings']/group" position="after">
+                <group string="QR-Code" attrs="{'invisible': [('qr_code', '=', False)]}">
+                    <field name="qr_code_label"/>
+                    <field name="qr_code"/>
+                </group>
+            </xpath>
 
         </field>
     </record>

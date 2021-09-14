@@ -10,6 +10,14 @@ class AccountJournal(models.Model):
     _inherit = 'account.journal'
 
     l10n_ar_document_type_ids = fields.Many2many('l10n_latam.document.type', string='Document Types')
+    qr_code_label = fields.Char(
+        string="QR Code Label",
+        help="String to display before the QR Code on the invoice report."
+    )
+    qr_code = fields.Char(
+        string="QR Code",
+        help="String to generate the QR Code that will be displayed on the invoice report."
+    )
 
     def _get_l10n_ar_afip_pos_types_selection(self):
         """ Add more options to the selection field AFIP POS System, re order options by common use """

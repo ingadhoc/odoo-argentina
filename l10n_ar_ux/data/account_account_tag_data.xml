@@ -6,17 +6,20 @@
     <record id="tag_a_cuenta_ganancias" model="account.account.tag">
         <field name="name">Pagos a Cuenta Ganancias</field>
         <field name="applicability">accounts</field>
+        <field name="applicability">accounts</field>
         <field name="country_id" ref="base.ar"/>
     </record>
 
     <record id="tag_a_cuenta_iva" model="account.account.tag">
         <field name="name">Pagos a Cuenta IVA</field>
         <field name="applicability">accounts</field>
+        <field name="applicability">accounts</field>
         <field name="country_id" ref="base.ar"/>
     </record>
 
     <record id="tag_iva_primer_parrafo" model="account.account.tag">
         <field name="name">IVA Primer Párrafo</field>
+        <field name="applicability">accounts</field>
         <field name="applicability">accounts</field>
         <field name="country_id" ref="base.ar"/>
     </record>

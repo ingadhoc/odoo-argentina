@@ -1,6 +1,6 @@
 {
     'name': 'Argentinian Accounting UX',
-    'version': "13.0.1.26.0",
+    'version': "13.0.1.27.0",
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -21,6 +21,7 @@
         'data/account_tax_group_data.xml',
         'data/account_chart_template_data.xml',
         'data/account_tax_template_data.xml',
+        'wizards/account_move_change_rate_views.xml',
         'views/portal_templates.xml',
         'views/account_move_view.xml',
         'views/res_partner_view.xml',

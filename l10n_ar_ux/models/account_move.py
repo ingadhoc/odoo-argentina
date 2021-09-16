@@ -119,3 +119,38 @@ class AccountMove(models.Model):
                 ('internal_type', 'in', ['credit_note'] if self.type in ['out_refund', 'in_refund'] else ['invoice', 'debit_note']),
                 ('id', 'in', self.journal_id.l10n_ar_document_type_ids.ids)]
         return domain
+
+    def post(self):
+        """ recompute debit/credit sending force_rate on context """
+        other_curr_ar_invoices = self.filtered(
+            lambda x: x.is_invoice() and
+            x.company_id.country_id == self.env.ref('base.ar') and x.currency_id != x.company_id.currency_id)
+        # llamamos a todos los casos de otra moneda y no solo a los que tienen "l10n_ar_currency_rate" porque odoo
+        # tiene una suerte de bug donde solo recomputa los debitos/creditos en ciertas condiciones, pero puede
+        # ser que esas condiciones no se cumplan y la cotizacion haya cambiado (por ejemplo la factura tiene fecha y
+        # luego se cambia la cotizacion, al validar no se recomputa). Si odoo recomputase en todos los casos seria
+        # solo necesario iterar los elementos con l10n_ar_currency_rate y hacer solo el llamado a super
+        for rec in other_curr_ar_invoices:
+            # si no tiene fecha en realidad en llamando a super ya se recomputa con el llamado a _onchange_invoice_date
+            # también se recomputa con algo de lock dates llamando a _onchange_invoice_date, pero por si no se dan
+            # esas condiciones o si odoo las cambia, llamamos al onchange_currency por las dudas
+            rec.with_context(
+                check_move_validity=False, force_rate=rec.l10n_ar_currency_rate)._onchange_currency()
+
+            # tambien tenemos que pasar force_rate aca por las dudas de que super entre en onchange_currency en los
+            # mismos casos mencionados recien
+            res = super(AccountMove, rec.with_context(force_rate=rec.l10n_ar_currency_rate)).post()
+        res = super(AccountMove, self - other_curr_ar_invoices).post()
+        return res
+
+    def _compute_invoice_taxes_by_group(self):
+        """ Esto es para arreglar una especie de bug de odoo que al imprimir el amount by group hace conversion
+        confiando en la cotización existente a ese momento pero esto puede NO ser real. Mandamos el inverso
+        del l10n_ar_currency_rate porque en este caso la conversión es al revez"""
+        other_curr_ar_invoices = self.filtered(
+            lambda x: x.is_invoice() and
+            x.company_id.country_id == self.env.ref('base.ar') and x.currency_id != x.company_id.currency_id)
+        for rec in other_curr_ar_invoices:
+            rate = 1.0 / rec.l10n_ar_currency_rate if rec.l10n_ar_currency_rate else False
+            super(AccountMove, rec.with_context(force_rate=rate))._compute_invoice_taxes_by_group()
+        return super(AccountMove, self - other_curr_ar_invoices)._compute_invoice_taxes_by_group()

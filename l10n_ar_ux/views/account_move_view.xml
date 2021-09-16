@@ -9,7 +9,11 @@
             <field name="currency_id" position="after">
                 <field name="l10n_ar_currency_rate" attrs="{'invisible': ['|', '|', ('l10n_ar_currency_rate', '=', False), ('l10n_ar_currency_rate', '=', 0.0), ('l10n_ar_currency_rate', '=', 1.0)]}"/>
                 <field name="computed_currency_rate" string="Currency Rate (preview)" attrs="{'invisible': ['|', ('l10n_ar_currency_rate', '!=', 0.0), ('computed_currency_rate', '=', 1.0)]}"/>
+                <button name="%(action_account_move_change_rate)d" type="action" string="(change rate)" attrs="{'invisible':['|', ('state','!=','draft'), ('computed_currency_rate', '=', 1.0)]}" class="oe_link"/>
             </field>
+            <button name="%(account_ux.action_account_change_currency)d" position="attributes">
+                <attribute name="string">(change currency)</attribute>
+            </button>
             <!-- permitimos modificar "Factura origne de la ND" para poder vincular ND creadas a mano -->
             <xpath expr="//group[@name='sale_info_group']/field[@name='debit_origin_id']" position="attributes">
                 <!-- <attribute name="attrs"></attribute> -->

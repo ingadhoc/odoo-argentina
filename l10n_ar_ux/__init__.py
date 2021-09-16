@@ -1,6 +1,7 @@
 ##############################################################################
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
+# Esto es una edición de prueba
 ##############################################################################
 from . import controllers
 from . import models

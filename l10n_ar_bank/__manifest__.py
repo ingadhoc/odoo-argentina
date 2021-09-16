@@ -1,4 +1,5 @@
 {
+    # Edición test - N/A
     "name": "Listado de Bancos Argentinos",
     'version': '13.0.1.0.0',
     'category': 'Localization/Argentina',

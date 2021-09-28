@@ -11,13 +11,15 @@
 
                 <t t-set="custom_footer">
                     <div class="row">
-                        <div name="footer_left_column" class="col-8">
-                            Nombre y Apellido Firmante:
-                            <br/>Cargo:
-                        </div>
-                        <div name="footer_right_column" class="col-4">
-                            Firma Responsable
-                        </div>
+                        <t t-if="not o.company_id.l10n_ar_report_signature">
+                            <div name="footer_left_column" class="col-8">
+                                Nombre y Apellido Firmante:
+                                <br/>Cargo:
+                            </div>
+                            <div name="footer_right_column" class="col-4">
+                                Firma Responsable
+                            </div>
+                        </t>
                     </div>
                 </t>
             <div class="page">
@@ -92,6 +94,15 @@
                         </tr>
                     </tbody>
                 </table>
+                <table>
+                    <div class="float-left"/>
+                    <div class="float-right" style="heigth:100px;width:200px;text-align:center;">
+                        <t t-if="o.company_id.l10n_ar_report_signature">
+                            <span t-field="o.company_id.l10n_ar_report_signature" t-options='{"widget": "image"}'/>
+                            <span t-field="o.company_id.l10n_ar_report_signed_by"/>
+                        </t>
+                    </div>
+              </table>
             </div>
         </t>
     </template>

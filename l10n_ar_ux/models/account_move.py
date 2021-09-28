@@ -17,6 +17,19 @@ class AccountMove(models.Model):
         string='Currency Rate (preview)',
         digits=(16, 6),
     )
+    l10n_ar_currency_rate = fields.Float(compute='_compute_l10n_ar_currency_rate', store=True)
+
+    @api.depends('reversed_entry_id')
+    def _compute_l10n_ar_currency_rate(self):
+        """ If it's a credit note on foreign currency and foreing currency is the same as original credit note, then
+        we use original invoice rate """
+        ar_reversed_other_currency = self.filtered(
+            lambda x: x.is_invoice() and x.reversed_entry_id and
+            x.company_id.country_id == self.env.ref('base.ar') and
+            x.currency_id != x.company_id.currency_id and
+            x.reversed_entry_id.currency_id == x.currency_id)
+        for rec in ar_reversed_other_currency:
+            rec.l10n_ar_currency_rate = rec.reversed_entry_id.l10n_ar_currency_rate
 
     @api.depends('currency_id', 'company_id', 'invoice_date')
     def _compute_currency_rate(self):

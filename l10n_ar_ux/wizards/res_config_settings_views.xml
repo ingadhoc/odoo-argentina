@@ -35,6 +35,20 @@
                     </div>
                 </div>
             </xpath>
+            <xpath expr="//div[@data-key='account']//field[@name='module_snailmail_account']/../.." position="after">
+                 <div class="col-12 col-lg-6 o_setting_box" attrs="{'invisible': ['|', ('group_multi_currency', '=', False), ('l10n_ar_country_code', '!=', 'AR')]}">
+                    <div class="o_setting_left_pane">
+                        <field name="l10n_ar_invoice_report_ars_amount"/>
+                    </div>
+                    <div class="o_setting_right_pane" id="snailmail_settings">
+                        <label for="l10n_ar_invoice_report_ars_amount"/>
+                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific."/>
+                        <div class="text-muted">
+                            Si activa esta opción, en los pdfs de las facturas en divisa extranjera, se incluirá una leyenda indicando a cuanto equivale el comprobante en ARS
+                        </div>
+                    </div>
+                </div>
+            </xpath>
         </field>
     </record>
 

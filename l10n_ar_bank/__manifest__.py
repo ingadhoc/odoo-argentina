@@ -13,7 +13,7 @@
         'data/res_bank.xml',
         'views/l10n_ar_bank.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

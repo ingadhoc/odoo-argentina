@@ -47,7 +47,7 @@
     'external_dependencies': {
         'python': ['pyafipws'],
     },
-    'installable': True,
+    'installable': False,
     'name': 'Automatic Argentinian Withholdings on Payments',
     'version': "13.0.1.4.0",
 }

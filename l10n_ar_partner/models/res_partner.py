@@ -83,16 +83,7 @@ class ResPartner(models.Model):
                     else:
                         rec.cuit = country.cuit_fisica
                 continue
-            cuit = rec.id_numbers.search([
-                ('partner_id', '=', rec.id),
-                ('category_id.afip_code', '=', 80),
-            ], limit=1)
-            # agregamos esto para el caso donde el registro todavia no se creo
-            # queremos el cuit para que aparezca el boton de refrescar de afip
-            if not cuit:
-                rec.cuit = rec.main_id_number
-            else:
-                rec.cuit = cuit.name
+            rec.cuit = rec.main_id_number if rec.main_id_category_id.afip_code == 80 else False
 
     @api.multi
     @api.depends(

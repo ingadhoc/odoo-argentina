@@ -15,7 +15,6 @@ Agregado de CBU a bancos y listado de Bancos Argentinos
 =======================================================
 
 * Listado de entidades financieras habilitadas por el BCRA en la República Argentina.
-* Filtro para buscar las cuentas bancarias por nombre de banco
 
 Installation
 ============

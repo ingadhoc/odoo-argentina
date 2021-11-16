@@ -7,7 +7,7 @@ try:
 except ImportError:
     IIBB = None
 # from pyafipws.padron import PadronAFIP
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, RedirectWarning
 import logging
 import json
 import requests
@@ -149,8 +149,12 @@ class ResCompany(models.Model):
             cuit)
 
         if ws.Excepcion:
-            raise UserError("%s\nExcepcion: %s" % (
-                ws.Traceback, ws.Excepcion))
+            action = self.env.ref('l10n_ar_account_withholding.act_company_jurisdiction_padron')
+            raise RedirectWarning(_(
+                "Obtuvimos un error de conexión con ARBA y no encontramos padrón almacenado para las fechas dadas.\n"
+                "Puede intentar nuevamente más tarde, cargar la alícuota manualmente en el partner o subir el archivo del padrón en: "),
+                action.id, _('Ir a Carga de Padrones'))
+            # raise UserError("%s\nExcepcion: %s" % (ws.Traceback, ws.Excepcion))
 
         # ' Hubo error general de ARBA?
         if ws.CodigoError:
@@ -179,6 +183,7 @@ class ResCompany(models.Model):
         }
         _logger.info('We get the following data: \n%s' % data)
         return data
+
 
     def get_cordoba_data(self, partner, date):
         """ Obtener alícuotas desde app.rentascordoba.gob.ar

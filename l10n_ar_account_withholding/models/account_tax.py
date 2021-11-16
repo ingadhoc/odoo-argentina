@@ -161,24 +161,48 @@ class AccountTax(models.Model):
             ('to_date', '=', False),
             ('to_date', '>=', date),
         ], limit=1)
+     
         # solo buscamos en padron para estas responsabilidades
         if not alicuot and \
                 commercial_partner.l10n_ar_afip_responsibility_type_id.code in \
                 ['1', '1FM', '2', '3', '4', '6', '11', '13']:
+
+            invoice_tags = self.invoice_repartition_line_ids.mapped('tag_ids')
+            padron_file = self.env['res.company.jurisdiction.padron'].search([
+                ('jurisdiction_id', 'in', invoice_tags.ids),
+                ('company_id', '=', company.id),
+                '|',
+                ('l10n_ar_padron_from_date', '=', False),
+                ('l10n_ar_padron_from_date', '<=', date),
+                '|',
+                ('l10n_ar_padron_to_date', '=', False),
+                ('l10n_ar_padron_to_date', '>=', date),
+        ], limit=1)
             from_date = date + relativedelta(day=1)
             to_date = date + relativedelta(day=1, days=-1, months=+1)
 
             agip_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_901')
             arba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_902')
             cdba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_904')
-            invoice_tags = self.invoice_repartition_line_ids.mapped('tag_ids')
+            if padron_file:
+                nro, alicuot_ret, alicuot_per = padron_file._get_aliquit(commercial_partner)
+                if nro:
+                    return partner.arba_alicuot_ids.sudo().create({
+                        'numero_comprobante': nro,
+                        'alicuota_retencion': float(alicuot_ret),
+                        'alicuota_percepcion': float(alicuot_per),
+                        'partner_id': commercial_partner.id,
+                        'company_id': company.id,
+                        'tag_id': padron_file.jurisdiction_id.id,
+                        'from_date': from_date,
+                        'to_date': to_date,
 
+                    })
             if arba_tag and arba_tag.id in invoice_tags.ids:
                 arba_data = company.get_arba_data(
                     commercial_partner,
                     from_date, to_date,
                 )
-
                 # si no hay numero de comprobante entonces es porque no
                 # figura en el padron, aplicamos alicuota no inscripto
                 if not arba_data['numero_comprobante']:

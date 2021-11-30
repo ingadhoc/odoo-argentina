@@ -18,8 +18,8 @@
             <!-- permitimos modificar "Factura origne de la ND" para poder vincular ND creadas a mano -->
             <xpath expr="//group[@name='sale_info_group']/field[@name='debit_origin_id']" position="attributes">
                 <!-- <attribute name="attrs"></attribute> -->
-                <attribute name="attrs">{'invisible': [('type', '!=', 'out_invoice')], 'readonly': [('state', '!=', 'draft')]}</attribute>
-                <attribute name="domain">[('type', 'in', ('out_invoice', 'out_refund')), ('partner_id.commercial_partner_id', '=', commercial_partner_id), ('state', '=', 'posted')]</attribute>
+                <attribute name="attrs">{'invisible': [('move_type', '!=', 'out_invoice')], 'readonly': [('state', '!=', 'draft')]}</attribute>
+                <attribute name="domain">[('move_type', 'in', ('out_invoice', 'out_refund')), ('partner_id.commercial_partner_id', '=', commercial_partner_id), ('state', '=', 'posted')]</attribute>
             </xpath>
         </field>
     </record>

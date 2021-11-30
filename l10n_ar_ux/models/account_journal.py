@@ -26,10 +26,10 @@ class AccountJournal(models.Model):
         if not self.l10n_ar_is_pos:
             self.l10n_ar_afip_pos_system = False
 
-    @api.depends('l10n_latam_country_code', 'type', 'l10n_latam_use_documents')
+    @api.depends('country_code', 'type', 'l10n_latam_use_documents')
     def _compute_l10n_ar_is_pos(self):
         ar_sale_use_documents = self.filtered(
-            lambda x: x.l10n_latam_country_code == 'AR' and x.type == 'sale' and x.l10n_latam_use_documents)
+            lambda x: x.country_code == 'AR' and x.type == 'sale' and x.l10n_latam_use_documents)
         ar_sale_use_documents.l10n_ar_is_pos = True
         (self - ar_sale_use_documents).l10n_ar_is_pos = False
 

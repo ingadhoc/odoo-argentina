@@ -22,11 +22,10 @@
                 <field name="discount" groups="product.group_discount_per_so_line"/>
                 <field name="discount_amount" sum="Total" optional="hide" groups="product.group_discount_per_so_line"/>
                 <field name="price_subtotal" sum="Total without taxe"/>
-                <field name="amount_total" sum="Total with taxes"/>
                 <field name="state"/>
-                <field name="invoice_payment_state" optional="hide"/>
+                <field name="payment_state" optional="hide"/>
                 <field name="invoice_currency_id" optional="hide"/>
-                <field name="currency_id" invisible="1"/>
+                <field name="company_currency_id" invisible="1"/>
             </tree>
         </field>
     </record>

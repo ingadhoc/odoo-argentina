@@ -34,7 +34,7 @@
                 <!-- IDENTIFICACION (ADQUIRIENTE-LOCATARIO-PRESTARIO) -->
 
                 <!-- (14) Apellido uy Nombre: Denominicacion o Razon Soclial -->
-                <strong><span t-raw="o.partner_type == 'supplier' and 'Proveedor: ' or 'Cliente: '"/></strong><span t-field="o.partner_id.commercial_partner_id.name"/>
+                <strong><span t-out="o.partner_type == 'supplier' and 'Proveedor: ' or 'Cliente: '"/></strong><span t-field="o.partner_id.commercial_partner_id.name"/>
 
                 <!-- (15) Domicilio Comercial -->
                 <br/>
@@ -64,7 +64,7 @@
                     <t t-foreach="o.mapped('payment_ids.check_ids').sorted(key=lambda r:r.payment_date or r.issue_date)" t-as="line">
                         <tr>
                             <td>
-                                <span t-raw='"Cheque %s nro %s - %s" % ("electrónico " if line.checkbook_id.issue_check_subtype == "electronic" else "", line.name, line.bank_id.name or line.journal_id.name)'/><span t-if="line.payment_date"> - Venc. <span t-field="line.payment_date"/></span>
+                                <span t-out='"Cheque %s nro %s - %s" % ("electrónico " if line.checkbook_id.issue_check_subtype == "electronic" else "", line.name, line.bank_id.name or line.journal_id.name)'/><span t-if="line.payment_date"> - Venc. <span t-field="line.payment_date"/></span>
                            </td>
                             <td  class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
                                 <t t-if="line.currency_id">
@@ -79,7 +79,7 @@
                     <t t-foreach="o.payment_ids.filtered(lambda x: x.tax_withholding_id)" t-as="line">
                         <tr>
                             <td>
-                                <span t-raw='"%s - %s" % (line.tax_withholding_id.name, line.withholding_number or line.name)'/>
+                                <span t-out='"%s - %s" % (line.tax_withholding_id.name, line.withholding_number or line.name)'/>
                             </td>
                             <td class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
                                 <t t-if="line.other_currency">
@@ -137,10 +137,10 @@
                                 <span class="text-nowrap" t-field="line.date_maturity"/>
                             </td>
                             <td class="text-right o_price_total">
-                                <span class="text-nowrap" t-raw="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                <span class="text-nowrap" t-out="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                             </td>
                             <td class="text-right o_price_total">
-                                <span class="text-nowrap" t-raw="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.payment_group_matched_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                <span class="text-nowrap" t-out="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.payment_group_matched_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                             </td>
                         </tr>
                     </t>
@@ -157,7 +157,7 @@
                     <tr>
                         <td colspan="3"><strong><span>Total Imputado</span></strong></td>
                         <td class="text-right">
-                            <strong><span class="text-nowrap" t-raw="o.unmatched_amount + o.matched_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
+                            <strong><span class="text-nowrap" t-out="o.unmatched_amount + o.matched_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
                         </td>
                     </tr>
                 </tfoot>
@@ -166,7 +166,7 @@
             <table class="table table-sm o_main_table" name="open_table" t-if="o.partner_type=='customer'" groups="l10n_ar_ux.group_include_pending_receivable_documents">
                 <thead>
                     <tr>
-                        <th><span>Comprobantes Pendientes al</span><span t-raw="datetime.datetime.today()" t-options='{"widget": "date"}'/></th>
+                        <th><span>Comprobantes Pendientes al</span><span t-out="datetime.datetime.today()" t-options='{"widget": "date"}'/></th>
                         <th class="text-center"><span>Fecha Venc.</span></th>
                         <th class="text-right"><span>Importe Original</span></th>
                         <th class="text-right"><span>Saldo</span></th>
@@ -192,7 +192,7 @@
                     <tr>
                         <td colspan="3"><strong><span>Total Pendiente</span></strong></td>
                         <td class="text-right">
-                            <strong><span class="text-nowrap" t-raw="sum(o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.internal_type', '=', o.partner_type=='customer' and 'receivable' or 'payable'), ('reconciled', '=', False), ('account_id.deprecated', '=', False), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)]).mapped('amount_residual'))" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
+                            <strong><span class="text-nowrap" t-out="sum(o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.internal_type', '=', o.partner_type=='customer' and 'receivable' or 'payable'), ('reconciled', '=', False), ('account_id.deprecated', '=', False), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)]).mapped('amount_residual'))" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
                         </td>
                     </tr>
                 </tfoot>

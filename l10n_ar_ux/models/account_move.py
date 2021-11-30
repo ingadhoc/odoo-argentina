@@ -118,7 +118,7 @@ class AccountMove(models.Model):
         self.ensure_one()
         if self.company_id.country_id.code == 'AR':
             custom_report = {
-                'account.report_invoice_document_with_payments': 'l10n_ar.report_invoice_document_with_payments',
+                # 'account.report_invoice_document_with_payments': 'l10n_ar.report_invoice_document_with_payments',
                 'account.report_invoice_document': 'l10n_ar.report_invoice_document',
             }
             return custom_report.get(report_xml_id) or report_xml_id

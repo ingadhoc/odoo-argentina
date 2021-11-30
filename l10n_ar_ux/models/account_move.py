@@ -97,7 +97,7 @@ class AccountMove(models.Model):
                 rec.l10n_latam_document_type_id.doc_code_prefix, number['point_of_sale'], number['invoice_number'])
 
             domain = [
-                ('type', '=', rec.type),
+                ('type', '=', rec.move_type),
                 # by validating name we validate l10n_latam_document_number and l10n_latam_document_type_id
                 '|', ('name', '=', old_name_compat), ('name', '=', rec.name),
                 ('company_id', '=', rec.company_id.id),
@@ -119,7 +119,6 @@ class AccountMove(models.Model):
         self.ensure_one()
         if self.company_id.country_id.code == 'AR':
             custom_report = {
-                'account.report_invoice_document_with_payments': 'l10n_ar.report_invoice_document_with_payments',
                 'account.report_invoice_document': 'l10n_ar.report_invoice_document',
             }
             return custom_report.get(report_xml_id) or report_xml_id
@@ -132,11 +131,11 @@ class AccountMove(models.Model):
             return [
                 ('id', 'in', self.journal_id.l10n_ar_document_type_ids.ids),
                 '|', ('code', 'in', self._get_l10n_ar_codes_used_for_inv_and_ref()),
-                ('internal_type', 'in', ['credit_note'] if self.type in ['out_refund', 'in_refund'] else ['invoice', 'debit_note']),
+                ('internal_type', 'in', ['credit_note'] if self.move_type in ['out_refund', 'in_refund'] else ['invoice', 'debit_note']),
             ]
         return super()._get_l10n_latam_documents_domain()
 
-    def post(self):
+    def _post(self, soft=True):
         """ recompute debit/credit sending force_rate on context """
         other_curr_ar_invoices = self.filtered(
             lambda x: x.is_invoice() and
@@ -155,18 +154,6 @@ class AccountMove(models.Model):
 
             # tambien tenemos que pasar force_rate aca por las dudas de que super entre en onchange_currency en los
             # mismos casos mencionados recien
-            res = super(AccountMove, rec.with_context(force_rate=rec.l10n_ar_currency_rate)).post()
-        res = super(AccountMove, self - other_curr_ar_invoices).post()
+            res = super(AccountMove, rec.with_context(force_rate=rec.l10n_ar_currency_rate))._post(soft=soft)
+        res = super(AccountMove, self - other_curr_ar_invoices)._post(soft=soft)
         return res
-
-    def _compute_invoice_taxes_by_group(self):
-        """ Esto es para arreglar una especie de bug de odoo que al imprimir el amount by group hace conversion
-        confiando en la cotización existente a ese momento pero esto puede NO ser real. Mandamos el inverso
-        del l10n_ar_currency_rate porque en este caso la conversión es al revez"""
-        other_curr_ar_invoices = self.filtered(
-            lambda x: x.is_invoice() and
-            x.company_id.country_id == self.env.ref('base.ar') and x.currency_id != x.company_id.currency_id)
-        for rec in other_curr_ar_invoices:
-            rate = 1.0 / rec.l10n_ar_currency_rate if rec.l10n_ar_currency_rate else False
-            super(AccountMove, rec.with_context(force_rate=rate))._compute_invoice_taxes_by_group()
-        return super(AccountMove, self - other_curr_ar_invoices)._compute_invoice_taxes_by_group()

@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
 
             <field name="l10n_latam_use_documents" position="after">
-                <field name="l10n_ar_is_pos" attrs="{'invisible':['|', '|', ('l10n_latam_country_code', '!=', 'AR'), ('l10n_latam_use_documents', '=', False), ('type', 'not in', ['sale', 'purchase'])]}"/>
+                <field name="l10n_ar_is_pos" attrs="{'invisible':['|', '|', ('country_code', '!=', 'AR'), ('l10n_latam_use_documents', '=', False), ('type', 'not in', ['sale', 'purchase'])]}"/>
             </field>
 
             <field name="l10n_ar_afip_pos_partner_id" position="after">
@@ -29,7 +29,7 @@
                 <attribute name="attrs">{'invisible':[('l10n_ar_is_pos', '=', False)], 'required':[('l10n_ar_is_pos', '=', True)]}</attribute>
             </field>
             <xpath expr="//page[@name='advanced_settings']/group" position="after">
-                <group string="QR-Code" attrs="{'invisible': ['|', '|', ('l10n_latam_country_code', '!=', 'AR'), ('type', '!=', 'sale'), ('l10n_latam_use_documents', '=', False)]}">
+                <group string="QR-Code" attrs="{'invisible': ['|', '|', ('country_code', '!=', 'AR'), ('type', '!=', 'sale'), ('l10n_latam_use_documents', '=', False)]}">
                     <field name="qr_code_label"/>
                     <field name="qr_code"/>
                 </group>

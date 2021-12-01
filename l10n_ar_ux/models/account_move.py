@@ -28,6 +28,7 @@ class AccountMove(models.Model):
             x.company_id.country_id == self.env.ref('base.ar') and
             x.currency_id != x.company_id.currency_id and
             x.reversed_entry_id.currency_id == x.currency_id)
+        self.filtered(lambda x: x.type == 'entry').l10n_ar_currency_rate = False
         for rec in ar_reversed_other_currency:
             rec.l10n_ar_currency_rate = rec.reversed_entry_id.l10n_ar_currency_rate
 

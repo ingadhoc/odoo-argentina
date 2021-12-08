@@ -197,11 +197,6 @@ msgid "Amount Total"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_view_form
-msgid "Argentina Localization"
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.partner_info
 msgid "Billing information"
 msgstr ""

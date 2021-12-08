@@ -33,14 +33,14 @@
 
                         <!-- (15) Domicilio Comercial -->
                         <br/>
-                        <span t-esc="o.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True, "no_tag_br": True}'/>
+                        <span t-out="o.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True, "no_tag_br": True}'/>
 
                         <!-- (16) Responsabilidad AFIP -->
                         <strong>VAT Cond: </strong><span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
 
                         <!-- (17) CUIT -->
                         <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
-                            <br/><strong><t t-esc="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-esc="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+                            <br/><strong><t t-out="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
                         </t>
 
                     </div>

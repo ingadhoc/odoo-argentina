@@ -41,7 +41,7 @@
                 <br/>
                 <t t-if="o.check_ids">
                     <strong>Cantidad de Cheques:</strong>
-                    <span t-esc="len(o.check_ids)"/>
+                    <span t-out="len(o.check_ids)"/>
                     <br/>
                     <strong>Listado de Cheques:</strong>
                     <br/>

@@ -13,7 +13,7 @@
         # 'account_check',
         # for payment group report
         # 'account_withholding',
-        # 'account_payment_group_document',
+        'account_payment_group',
     ],
     'data': [
         'data/res_currency_data.xml',

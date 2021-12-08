@@ -78,7 +78,7 @@ class AccountMove(models.Model):
                 'point_of_sale': int(point_of_sale),
             }
 
-    # @api.constrains('ref', 'move_type', 'partner_id', 'journal_id', 'invoice_date')
+    @api.constrains('ref', 'move_type', 'partner_id', 'journal_id', 'invoice_date')
     def _check_duplicate_supplier_reference(self):
         """ We make reference only unique if you are not using documents.
         Documents already guarantee to not encode twice same vendor bill """

@@ -51,13 +51,13 @@ class AccountMoveLine(models.Model):
             product=product, partner=partner, taxes=taxes, move_type=move_type)
 
     def _get_fields_onchange_balance(
-            self, quantity=None, discount=None, balance=None, move_type=None,
+            self, quantity=None, discount=None, amount_currency=None, move_type=None,
             currency=None, taxes=None, price_subtotal=None, force_computation=False):
         invoice = self.move_id.reversed_entry_id or self.move_id
         invoice_date = invoice.invoice_date or fields.Date.context_today(self)
         self = self.with_context(invoice_date=invoice_date)
         return super(AccountMoveLine, self)._get_fields_onchange_balance(
-            quantity=quantity, discount=discount, balance=balance, move_type=move_type,
+            quantity=quantity, discount=discount, amount_currency=amount_currency, move_type=move_type,
             currency=currency, taxes=taxes, price_subtotal=price_subtotal, force_computation=force_computation)
 
     # TODO faltaria heredar al momento de creacion porque se llama a _get_price_total_and_subtotal_model y no estamos

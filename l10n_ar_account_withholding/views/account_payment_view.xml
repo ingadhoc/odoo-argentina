@@ -9,7 +9,8 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="payment_method_code" invisible="1"/>
-                <button name="%(action_report_withholding_certificate)d" icon="fa-print " string="Print withholding voucher" type="action" attrs="{'invisible': ['|', ('payment_method_code', '!=', 'withholding'), ('partner_type', '!=', 'supplier')]}"/>
+                <field name="partner_type" invisible="1"/>
+                <button name="%(action_report_withholding_certificate)d" icon="fa-print " help="Print withholding voucher" type="action" attrs="{'invisible': ['|', ('payment_method_code', '!=', 'withholding'), ('partner_type', '!=', 'supplier')]}"/>
             </tree>
         </field>
     </record>
@@ -22,7 +23,8 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="payment_method_code" invisible="1"/>
-                <button name="%(action_report_withholding_certificate)d" icon="fa-print " string="Print withholding voucher" type="action" attrs="{'invisible': ['|', ('payment_method_code', '!=', 'withholding'), ('partner_type', '!=', 'supplier')]}"/>
+                <field name="partner_type" invisible="1"/>
+                <button name="%(action_report_withholding_certificate)d" icon="fa-print " help="Print withholding voucher" type="action" attrs="{'invisible': ['|', ('payment_method_code', '!=', 'withholding'), ('partner_type', '!=', 'supplier')]}"/>
             </tree>
         </field>
     </record>

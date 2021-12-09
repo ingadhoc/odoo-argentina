@@ -7,5 +7,6 @@ class AccountMoveReversal(models.TransientModel):
 
     def reverse_moves(self):
         """ Forzamos fecha de la factura original para que el amount total de la linea se calcule bien"""
-        self = self.with_context(invoice_date=self.move_id.date)
+        if self.move_ids:
+            self = self.with_context(invoice_date=self.move_ids[0].date)
         return super(AccountMoveReversal, self).reverse_moves()

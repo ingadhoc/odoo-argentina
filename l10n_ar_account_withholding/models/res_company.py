@@ -1,5 +1,7 @@
 from odoo import models, fields, api, _
 # import odoo.tools as tools
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 try:
     from pyafipws.iibb import IIBB
 except ImportError:

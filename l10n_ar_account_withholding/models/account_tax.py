@@ -9,13 +9,13 @@ class AccountTax(models.Model):
     amount_type = fields.Selection(
         selection_add=([
             ('partner_tax', 'Alícuota en el Partner'),
-        ])
+        ]), ondelete={'partner_tax': 'set default'}
     )
     withholding_type = fields.Selection(
         selection_add=([
             ('tabla_ganancias', 'Tabla Ganancias'),
             ('partner_tax', 'Alícuota en el Partner'),
-        ])
+        ]), ondelete={'tabla_ganancias': 'set default', 'partner_tax': 'set default'}
     )
     # default_alicuot = fields.Float(
     #     'Alícuota por defecto',
@@ -135,7 +135,7 @@ class AccountTax(models.Model):
                 vals['comment'] = "%s x %s" % (
                     base_amount, regimen.porcentaje_no_inscripto / 100.0)
             # TODO, tal vez sea mejor utilizar otro campo?
-            vals['communication'] = "%s - %s" % (
+            vals['ref'] = "%s - %s" % (
                 regimen.codigo_de_regimen, regimen.concepto_referencia)
             vals['period_withholding_amount'] = amount
         return vals

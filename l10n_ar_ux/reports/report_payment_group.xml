@@ -64,7 +64,7 @@
                     <t t-foreach="o.mapped('payment_ids.check_ids').sorted(key=lambda r:r.payment_date or r.issue_date)" t-as="line">
                         <tr>
                             <td>
-                                <span t-out='"Cheque %s nro %s - %s" % ("electrónico " if line.checkbook_id.issue_check_subtype == "electronic" else "", line.name, line.bank_id.name or line.journal_id.name)'/><span t-if="line.payment_date"> - Venc. <span t-field="line.payment_date"/></span>
+                                <span t-out='"Cheque %s nro %s - %s" % ("electrónico " if line.l10n_latam_checkbook_id.issue_check_subtype == "electronic" else "", line.name, line.bank_id.name or line.journal_id.name)'/><span t-if="line.payment_date"> - Venc. <span t-field="line.payment_date"/></span>
                            </td>
                             <td  class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
                                 <t t-if="line.currency_id">

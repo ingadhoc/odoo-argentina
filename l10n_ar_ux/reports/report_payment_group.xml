@@ -61,18 +61,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <t t-foreach="o.mapped('payment_ids.check_ids').sorted(key=lambda r:r.payment_date or r.issue_date)" t-as="line">
+                    <!-- TODO podriamos unir todos los pagos en un foreach y cambiar la descripción segun el tipo de pago, deberiamos hacer un sort acorde al inicio -->
+                    <t t-foreach="o.payment_ids.filtered(lambda x: x.payment_method_code in ['check_printing', 'new_third_checks', 'in_third_checks', 'out_third_checks']).sorted(key=lambda r:r.l10n_latam_check_payment_date or r.date)" t-as="line">
+                        <t t-set="check" t-value="line.l10n_latam_check_id or line"/>
                         <tr>
                             <td>
-                                <span t-out='"Cheque %s nro %s - %s" % ("electrónico " if line.l10n_latam_checkbook_id.issue_check_subtype == "electronic" else "", line.name, line.bank_id.name or line.journal_id.name)'/><span t-if="line.payment_date"> - Venc. <span t-field="line.payment_date"/></span>
+                                <span t-out='"Cheque %s nro %s - %s" % ("electrónico " if line.l10n_latam_checkbook_id.type == "electronic" else "", line.check_number, line.l10n_latam_check_bank_id.name or line.journal_id.name)'/><span t-if="line.l10n_latam_check_payment_date"> - Venc. <span t-field="line.l10n_latam_check_payment_date"/></span>
                            </td>
                             <td  class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
                                 <t t-if="line.currency_id">
-                                    <span class="text-nowrap" t-field="line.amount" t-field-options='{"widget": "monetary",  "display_currency": "line.currency_id"}'/>
+                                    <span class="text-nowrap" t-field="line.signed_amount" t-field-options='{"widget": "monetary",  "display_currency": "line.currency_id"}'/>
                                 </t>
                             </td>
                             <td class="text-right o_price_total">
-                                <span class="text-nowrap" t-field="line.amount_company_currency"/>
+                                <span class="text-nowrap" t-field="line.l10n_ar_amount_company_currency_signed"/>
                             </td>
                         </tr>
                     </t>
@@ -87,11 +89,11 @@
                                 </t>
                             </td>
                             <td class="text-right o_price_total">
-                                <span class="text-nowrap" t-field="line.signed_amount_company_currency"/>
+                                <span class="text-nowrap" t-field="line.l10n_ar_amount_company_currency_signed"/>
                             </td>
                         </tr>
                     </t>
-                    <t t-foreach="o.payment_ids.filtered(lambda x: not x.tax_withholding_id and not x.check_ids)" t-as="line">
+                    <t t-foreach="o.payment_ids.filtered(lambda x: not x.tax_withholding_id and x.payment_method_code not in ['check_printing', 'new_third_checks', 'in_third_checks', 'out_third_checks'])" t-as="line">
                         <tr>
                             <td>
                                 <span t-field="line.journal_id.name"/>
@@ -102,7 +104,7 @@
                               </t>
                             </td>
                             <td class="text-right o_price_total">
-                                <span class="text-nowrap" t-field="line.signed_amount_company_currency"/>
+                                <span class="text-nowrap" t-field="line.l10n_ar_amount_company_currency_signed"/>
                             </td>
                         </tr>
                     </t>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo noupdate="0">
-
-    <record id="l10n_ar.l10nar_base_chart_template" model="account.chart.template">
-        <field name="rejected_check_account_id" ref="l10n_ar.base_cheques_rechazados"/>
-        <field name="deferred_check_account_id" ref="l10n_ar.base_cheques_diferidos"/>
-    </record>
-
-</odoo>

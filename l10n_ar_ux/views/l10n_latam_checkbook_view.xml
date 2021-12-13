@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_checkbook_tree" model="ir.ui.view">
+        <field name="name">l10n_latam.checkbook.tree</field>
+        <field name="model">l10n_latam.checkbook</field>
+        <field name="inherit_id" ref="l10n_latam_check.view_account_checkbook_tree"/>
+        <field name="arch" type="xml">
+            <field name="range_to" position="after">
+                <field name="check_printing_type"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

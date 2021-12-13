@@ -30,6 +30,7 @@ This module extends the l10n_ar module to add some usability improvesment:
 #. Add a not nice implementation for duplicado/triplicado on invoices (and later on delivery slip with l10n_ar_stock)
 #. Add checks account link to chart template
 #. Send due date to journal items for checks payments
+#. Improove checks: add CUIT and add checkbooks print type (print with number, print without, no print)
 
 Installation
 ============

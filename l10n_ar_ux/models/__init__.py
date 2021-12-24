@@ -16,3 +16,4 @@ from . import ir_actions_report
 from . import account_journal
 from . import res_currency
 from . import l10n_latam_checkbook
+from . import account_fiscal_position

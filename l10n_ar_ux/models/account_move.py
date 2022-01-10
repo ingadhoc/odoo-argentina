@@ -31,13 +31,13 @@ class AccountMove(models.Model):
         for rec in ar_reversed_other_currency:
             rec.l10n_ar_currency_rate = rec.reversed_entry_id.l10n_ar_currency_rate
 
-    @api.depends('currency_id', 'company_id', 'invoice_date')
+    @api.depends('currency_id', 'company_id', 'date')
     def _compute_currency_rate(self):
         for rec in self:
             if rec.currency_id and rec.company_id and (rec.currency_id != rec.company_id.currency_id):
                 rec.computed_currency_rate = rec.currency_id._convert(
                     1.0, rec.company_id.currency_id, rec.company_id,
-                    date=rec.invoice_date or fields.Date.context_today(rec),
+                    date=rec.date or fields.Date.context_today(rec),
                     round=False)
             else:
                 rec.computed_currency_rate = 1.0

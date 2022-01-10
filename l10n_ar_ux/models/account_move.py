@@ -125,3 +125,17 @@ class AccountMove(models.Model):
             res = super(AccountMove, rec.with_context(force_rate=rec.l10n_ar_currency_rate))._post(soft=soft)
         res = super(AccountMove, self - other_curr_ar_invoices)._post(soft=soft)
         return res
+
+    def _l10n_ar_include_vat(self):
+        self.ensure_one()
+        if not self.l10n_latam_use_documents:
+            discriminate_taxes = self.journal_id.discriminate_taxes
+            if discriminate_taxes == 'yes':
+                return False
+            elif discriminate_taxes == 'no':
+                return True
+            else:
+                return not (
+                    self.company_id.l10n_ar_company_requires_vat and
+                    self.partner_id.l10n_ar_afip_responsibility_type_id.code in ['1'] or False)
+        return self.l10n_latam_document_type_id.l10n_ar_letter in ['B', 'C', 'X', 'R']

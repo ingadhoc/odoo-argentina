@@ -19,6 +19,16 @@ class AccountJournal(models.Model):
         help="String to generate the QR Code that will be displayed on the invoice report."
     )
     l10n_ar_is_pos = fields.Boolean(compute="_compute_l10n_ar_is_pos", store=True, readonly=False, string="Is AFIP POS?")
+    discriminate_taxes = fields.Selection(
+        [
+            ('yes', 'Yes'),
+            ('no', 'No'),
+            ('according_to_partner', 'According to partner VAT responsibility')
+        ],
+        string='Discriminate taxes?',
+        default='according_to_partner',
+        required=True,
+    )
 
     @api.onchange('l10n_ar_is_pos')
     def _onchange_l10n_ar_is_pos(self):

@@ -18,6 +18,7 @@ This module extends the l10n_ar module to add some usability improvesment:
 
 #. Set tax included by default (for ecommerce)
 #. Change USD symbol to "USD" instead of "$". This to avoid confusion when using multi company environment with ARS and USD at the same time.
+#. On journals without documents, add an option to discriminate or not vat taxes.
 #. Change postion of EUR symbol, Put it before the amounts in order to match to the ARS and USD currencies format,
 #. Add portal support for AFIP responsability, and Identification type fields.
 #. Show Currency Rate preview on invoice before posting.

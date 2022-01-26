@@ -6,3 +6,4 @@ access_afip_activity_all,access_afip_activity_all,model_afip_activity,,1,0,0,0
 access_afip_concept_all,access_afip_concept_all,model_afip_concept,,1,0,0,0
 access_afip_tax_all,access_afip_tax_all,model_afip_tax,,1,0,0,0
 access_account_move_change_rate,access_account_move_change_rate,l10n_ar_ux.model_account_move_change_rate,base.group_user,1,1,1,0
+l10n_ar_ux.access_account_payment_add_checks,access_account_payment_add_checks,l10n_ar_ux.model_account_payment_add_checks,base.group_user,1,1,1,0

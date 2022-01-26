@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_payment_group_form" model="ir.ui.view">
+        <field name="name">account.payment.group.form.inherited</field>
+        <field name="model">account.payment.group</field>
+        <field name="inherit_id" ref="account_payment_group.view_account_payment_group_form" />
+        <field name="arch" type="xml">
+            <field name="payment_ids" position="after">
+                <button
+                    name="%(action_account_payment_add_checks)d"
+                    class="oe_link"
+                    style="margin:12px 0px 12px 0px;"
+                    string="Add multiple checks"
+                    icon="fa-plus-circle"
+                    type="action"
+                    attrs="{'invisible':[('state','!=', 'draft')]}"
+                />
+            </field>
+        </field>
+    </record>
+
+</odoo>

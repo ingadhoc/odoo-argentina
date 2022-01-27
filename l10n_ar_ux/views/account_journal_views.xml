@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
 
             <field name="l10n_latam_use_documents" position="after">
-                <field name="discriminate_taxes" attrs="{'invisible':['|', '|', ('country_code', '!=', 'AR'), ('l10n_latam_use_documents', '=', True), ('type', 'not in', ['sale', 'purchase'])]}"/>
+                <field name="discriminate_taxes" attrs="{'invisible':['|', '|', ('country_code', '!=', 'AR'), ('l10n_latam_use_documents', '=', True), ('type', '!=', 'sale')]}"/>
                 <field name="l10n_ar_is_pos" attrs="{'invisible':['|', '|', ('country_code', '!=', 'AR'), ('l10n_latam_use_documents', '=', False), ('type', 'not in', ['sale', 'purchase'])]}"/>
             </field>
 

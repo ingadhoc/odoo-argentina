@@ -26,7 +26,7 @@ class AccountJournal(models.Model):
             ('according_to_partner', 'According to partner VAT responsibility')
         ],
         string='Discriminate taxes?',
-        default='according_to_partner',
+        default='no',
         required=True,
     )
 

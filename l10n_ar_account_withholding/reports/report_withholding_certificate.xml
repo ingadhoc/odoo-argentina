@@ -11,13 +11,15 @@
 
                 <t t-set="custom_footer">
                     <div class="row">
-                        <div name="footer_left_column" class="col-8">
-                            Nombre y Apellido Firmante:
-                            <br/>Cargo:
-                        </div>
-                        <div name="footer_right_column" class="col-4">
-                            Firma Responsable
-                        </div>
+                        <t t-if="not o.company_id.l10n_ar_report_signature">
+                            <div name="footer_left_column" class="col-8">
+                                Nombre y Apellido Firmante:
+                                <br/>Cargo:
+                            </div>
+                            <div name="footer_right_column" class="col-4">
+                                Firma Responsable
+                            </div>
+                        </t>
                     </div>
                 </t>
             <div class="page">
@@ -38,7 +40,7 @@
 
                         <!-- (17) CUIT -->
                         <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
-                            <br/><strong><t t-esc="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-field="o.partner_id.l10n_ar_formatted_vat"/>
+                            <br/><strong><t t-esc="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-esc="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
                         </t>
 
                     </div>
@@ -92,6 +94,15 @@
                         </tr>
                     </tbody>
                 </table>
+                <table>
+                    <div class="float-left"/>
+                    <div class="float-right" style="heigth:100px;width:200px;text-align:center;">
+                        <t t-if="o.company_id.l10n_ar_report_signature">
+                            <span t-field="o.company_id.l10n_ar_report_signature" t-options='{"widget": "image"}'/>
+                            <span t-field="o.company_id.l10n_ar_report_signed_by"/>
+                        </t>
+                    </div>
+              </table>
             </div>
         </t>
     </template>
@@ -113,6 +124,7 @@
         name="l10n_ar_account_withholding.report_withholding_certificate"
         file="l10n_ar_account_withholding.report_withholding_certificate"
         print_report_name="'Certificado de Retención Slip - %s' % (object.withholding_number or '')"
+        menu="False"
     />
 
 </odoo>

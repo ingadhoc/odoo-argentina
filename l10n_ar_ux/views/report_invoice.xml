@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <template id="report_invoice" inherit_id="account.report_invoice">
+        <t t-foreach="docs" position="replace">
+            <t t-foreach="l10n_ar_copies_list" t-as="copy_type">
+                <t>$0</t>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_invoice_with_payments" inherit_id="account.report_invoice_with_payments">
+        <t t-foreach="docs" position="replace">
+            <t t-foreach="l10n_ar_copies_list" t-as="copy_type">
+                <t>$0</t>
+            </t>
+        </t>
+    </template>
+
     <template id="custom_header" inherit_id="l10n_ar.custom_header">
+        <h4 position="after">
+            <strong><span tif="copy_type" t-esc="copy_type"/></strong>
+        </h4>
+
         <!-- usar datos de header_adress en vez de company -->
         <img t-if="o.company_id.logo" position="replace">
             <img t-if="header_address.image_1920" t-att-src="image_data_uri(header_address.image_1920)" style="max-height: 45px;" alt="Logo"/>
@@ -46,7 +66,21 @@
             <p t-if="o._fields.get('move_currency_id') and o.move_currency_id">
                 El total de este comprobante equivale a un total de <span t-raw="o.amount_total / o.move_inverse_currency_rate" t-options="{'widget': 'monetary', 'display_currency': o.move_currency_id}"/> a un tipo de cambio consignado de <span t-field="o.move_inverse_currency_rate"/>
             </p>
+            <p t-if="o.company_id.l10n_ar_invoice_report_ars_amount and o.currency_id != o.company_id.currency_id">
+                El total de este comprobante expresado en moneda de curso legal - Pesos Argentinos - asciende a <span t-esc="abs(o.amount_total_signed)" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+            </p>
         </p>
+        <div id="qrcode" position="after">
+            <div t-if="o.company_id.country_id.code == 'AR' and o.journal_id.qr_code and o.invoice_payment_state != 'paid'">
+                <div clas="row m-0 justify-content-center align-item-center">
+                    <div class="col-auto p-5 text-center">
+                        <h5><span t-field="o.journal_id.qr_code_label"/></h5>
+                        <br/>
+                        <img t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=128&amp;height=128' % o.journal_id.qr_code" style="height:100px"/>
+                    </div>
+                </div>
+            </div>
+        </div>
     </template>
 
     <template id="report_invoice_document_with_payments" inherit_id="l10n_ar.report_invoice_document_with_payments">
@@ -61,7 +95,22 @@
             <p t-if="o._fields.get('move_currency_id') and o.move_currency_id">
                 El total de este comprobante equivale a un total de <span t-raw="o.amount_total / o.move_inverse_currency_rate" t-options="{'widget': 'monetary', 'display_currency': o.move_currency_id}"/> a un tipo de cambio consignado de <span t-field="o.move_inverse_currency_rate"/>
             </p>
+            <p t-if="o.company_id.l10n_ar_invoice_report_ars_amount and o.currency_id != o.company_id.currency_id">
+                El total de este comprobante expresado en moneda de curso legal - Pesos Argentinos - asciende a <span t-esc="abs(o.amount_total_signed)" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+            </p>
         </p>
+
+        <div id="qrcode" position="after">
+            <div t-if="o.company_id.country_id.code == 'AR' and o.journal_id.qr_code and o.invoice_payment_state != 'paid'">
+                <div clas="row m-0 justify-content-center align-item-center">
+                    <div class="col-auto p-5 text-center">
+                        <h5><span t-field="o.journal_id.qr_code_label"/></h5>
+                        <br/>
+                        <img t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=128&amp;height=128' % o.journal_id.qr_code" style="height:100px"/>
+                    </div>
+                </div>
+            </div>
+        </div>
     </template>
 
 

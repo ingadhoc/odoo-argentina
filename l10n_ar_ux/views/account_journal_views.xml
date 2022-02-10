@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_journal_form" model="ir.ui.view">
+        <field name="model">account.journal</field>
+        <field name="name">account.journal.form</field>
+        <field name="inherit_id" ref="l10n_ar.view_account_journal_form"/>
+        <field name="arch" type="xml">
+
+            <field name="l10n_latam_use_documents" position="after">
+                <field name="l10n_ar_is_pos" attrs="{'invisible':['|', '|', ('l10n_latam_country_code', '!=', 'AR'), ('l10n_latam_use_documents', '=', False), ('type', 'not in', ['sale', 'purchase'])]}"/>
+            </field>
+
+            <field name="l10n_ar_afip_pos_partner_id" position="after">
+                <field name="l10n_ar_document_type_ids" widget="many2many_tags" attrs="{'invisible': ['|', '|', ('l10n_latam_use_documents', '=', False), '&amp;', ('type', '=', 'sale'), ('l10n_ar_is_pos', '=', True), '&amp;', ('type', '=', 'purchase'), ('l10n_ar_is_pos', '=', False)]}" domain="[('code', 'in', [
+                    '23', '24', '25', '26', '27', '28', '33', '43', '45', '46', '48', '58', '60', '61', '150', '151', '157',
+                    '158', '161', '162', '164', '166', '167', '171', '172', '180', '182', '186', '188', '332'])]"/>
+            </field>
+
+            <!-- AFIP POS fields only visible if journal is POS SYSTEM  -->
+            <field name="l10n_ar_afip_pos_system" position="attributes">
+                <attribute name="attrs">{'invisible':[('l10n_ar_is_pos', '=', False)], 'required':[('l10n_ar_is_pos', '=', True)]}</attribute>
+            </field>
+
+            <field name="l10n_ar_afip_pos_number" position="attributes">
+                <attribute name="attrs">{'invisible':[('l10n_ar_is_pos', '=', False)], 'required':[('l10n_ar_is_pos', '=', True)]}</attribute>
+            </field>
+            <field name="l10n_ar_afip_pos_partner_id" position="attributes">
+                <attribute name="attrs">{'invisible':['|', ('l10n_latam_country_code', '!=', 'AR'), ('type', 'not in', ['sale', 'purchase'])], 'required':[('l10n_ar_is_pos', '=', True)]}</attribute>
+            </field>
+            <xpath expr="//page[@name='advanced_settings']/group" position="after">
+                <group string="QR-Code" attrs="{'invisible': ['|', '|', ('l10n_latam_country_code', '!=', 'AR'), ('type', '!=', 'sale'), ('l10n_latam_use_documents', '=', False)]}">
+                    <field name="qr_code_label"/>
+                    <field name="qr_code"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

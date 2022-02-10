@@ -27,6 +27,7 @@ This module extends the l10n_ar module to add some usability improvesment:
 #. Show Name fantasy in the partner form view.
 #. Set Non Monetary tag to accounts depending of the account type
 #. Show Gross Income Jurisdiction in both partner and company
+#. Add a not nice implementation for duplicado/triplicado on invoices (and later on delivery slip with l10n_ar_stock)
 #. Add checks account link to chart template
 
 Installation

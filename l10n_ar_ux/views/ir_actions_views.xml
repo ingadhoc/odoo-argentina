@@ -1,0 +1,14 @@
+<odoo>
+
+    <record id="act_report_xml_view" model="ir.ui.view">
+        <field name="name">ir.actions.report</field>
+        <field name="model">ir.actions.report</field>
+        <field name="inherit_id" ref="base.act_report_xml_view"/>
+        <field name="arch" type="xml">
+            <field name="paperformat_id" position="after">
+                <field name="l10n_ar_copies" attrs="{'invisible': [('report_name', 'not in', ['stock.report_deliveryslip', 'account.report_invoice', 'account.report_invoice_with_payments'])]}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

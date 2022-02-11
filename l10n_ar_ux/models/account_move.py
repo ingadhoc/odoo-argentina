@@ -32,16 +32,19 @@ class AccountMove(models.Model):
         for rec in ar_reversed_other_currency:
             rec.l10n_ar_currency_rate = rec.reversed_entry_id.l10n_ar_currency_rate
 
-    @api.depends('currency_id', 'company_id', 'date')
+    @api.depends('currency_id', 'company_id', 'date', 'invoice_date')
     def _compute_currency_rate(self):
-        for rec in self:
-            if rec.currency_id and rec.company_id and (rec.currency_id != rec.company_id.currency_id):
-                rec.computed_currency_rate = rec.currency_id._convert(
-                    1.0, rec.company_id.currency_id, rec.company_id,
-                    date=rec.date or fields.Date.context_today(rec),
-                    round=False)
-            else:
-                rec.computed_currency_rate = 1.0
+        need_currency_rate = self.filtered(lambda x: x.currency_id and x.company_id and (x.currency_id != x.company_id.currency_id))
+        remaining = self - need_currency_rate
+        for rec in need_currency_rate:
+            rec.computed_currency_rate = rec.currency_id._convert(
+                1.0, rec.company_id.currency_id, rec.company_id,
+                # para previsualizar lo que sería la tasa usamos la fecha contable, sino usamos la fecha al día de hoy
+                # la fecha contable en facturas de venta realmente está seteada cuando el invoice_date está activo o
+                # posterior a la validación de la factura es por eso que comparamos invoice_date
+                date=rec.date if rec.invoice_date else fields.Date.context_today(rec),
+                round=False)
+        remaining.computed_currency_rate = 1.0
 
     @api.model
     def _l10n_ar_get_document_number_parts(self, document_number, document_type_code):

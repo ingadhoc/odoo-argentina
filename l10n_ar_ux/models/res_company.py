@@ -16,7 +16,7 @@ class ResCompany(models.Model):
     # TODO this field could be defined directly on l10n_ar_account_withholding
     arba_cit = fields.Char(
         'CIT ARBA',
-        help='Clave de Identificación Tributaria de ARBA',
+        help='Clave de Identificación Tributaria de ARBA (prueba)',
     )
     # la fecha de comienzo de actividades puede ser por cada punto de venta distinta, lo convertimos a related del
     # partner

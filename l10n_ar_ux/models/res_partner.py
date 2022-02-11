@@ -19,6 +19,8 @@ class ResPartner(models.Model):
     imp_ganancias_padron = fields.Selection([
         ('NI', 'No Inscripto'),
         ('AC', 'Activo'),
+        ('AC', 'Activo'),
+        ('EX', 'Exento'),
         ('EX', 'Exento'),
         ('NC', 'No corresponde')], 'Ganancias')
     imp_iva_padron = fields.Selection([

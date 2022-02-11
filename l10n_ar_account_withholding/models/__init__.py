@@ -5,6 +5,7 @@
 from . import res_company
 from . import account_tax
 from . import account_move
+from . import account_move_line
 from . import afip
 from . import account_payment_group
 from . import res_partner

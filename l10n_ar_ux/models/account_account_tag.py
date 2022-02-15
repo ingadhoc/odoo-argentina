@@ -10,4 +10,3 @@ class AccountAccountTag(models.Model):
     _inherit = 'account.account.tag'
 
     jurisdiction_code = fields.Char(size=3)
-    jurisdiction_code = fields.Char(size=3)

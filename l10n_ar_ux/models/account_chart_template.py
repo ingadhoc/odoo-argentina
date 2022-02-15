@@ -15,3 +15,5 @@ class AccountChartTemplate(models.Model):
         if company.country_id == self.env.ref('base.ar'):
             self.env['account.account'].set_non_monetary_tag(company)
         return res
+        
+Probando

@@ -24,6 +24,9 @@ class ResPartner(models.Model):
     imp_iva_padron = fields.Selection([
         ('NI', 'No Inscripto'),
         ('AC', 'Activo'),
+        ('AC', 'Activo'),
+        ('AC', 'Activo'),
+        ('AC', 'Activo'),
         ('EX', 'Exento'),
         ('NA', 'No alcanzado'),
         ('XN', 'Exento no alcanzado'),

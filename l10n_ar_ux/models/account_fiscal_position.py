@@ -38,7 +38,6 @@ class AccountFiscalPositionMp(models.Model):
             if company.country_id.code == 'AR':
                 self = self.with_context(company_code='AR')
         # odoo only match fiscal positions if partner has a country, we've many customers with partners with country_id = False
-        # so, for ARG, if no country is configured we use Argentina for the fiscal autodetection
         if not country_id and 'l10n_ar_afip_responsibility_type_id' in self._context:
             country_id = self.env.ref('base.ar').id
         return super()._get_fpos_by_region(country_id=country_id, state_id=state_id, zipcode=zipcode, vat_required=vat_required)

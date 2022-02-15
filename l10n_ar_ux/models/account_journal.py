@@ -17,6 +17,7 @@ class AccountJournal(models.Model):
     qr_code = fields.Char(
         string="QR Code",
         help="String to generate the QR Code that will be displayed on the invoice report."
+        help="String to generate the QR Code that will be displayed on the invoice report."
     )
     l10n_ar_is_pos = fields.Boolean(compute="_compute_l10n_ar_is_pos", store=True, readonly=False, string="Is AFIP POS?")
 

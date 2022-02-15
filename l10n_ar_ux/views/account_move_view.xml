@@ -15,12 +15,6 @@
                 <field name="computed_currency_rate" string="Currency Rate (preview)" attrs="{'invisible': ['|', ('l10n_ar_currency_rate', '!=', 0.0), ('other_currency', '=', False)]}"/>
                 <button name="%(action_account_move_change_rate)d" type="action" icon="fa-pencil" class="btn-link" attrs="{'invisible':['|', '|', ('state','!=','draft'), ('other_currency', '=', False), ('country_code', '!=', 'AR')]}"/>
             </button>
-            <!-- permitimos modificar "Factura origne de la ND" para poder vincular ND creadas a mano -->
-            <xpath expr="//group[@name='sale_info_group']/field[@name='debit_origin_id']" position="attributes">
-                <!-- <attribute name="attrs"></attribute> -->
-                <attribute name="attrs">{'invisible': [('move_type', '!=', 'out_invoice')], 'readonly': [('state', '!=', 'draft')]}</attribute>
-                <attribute name="domain">[('move_type', 'in', ('out_invoice', 'out_refund')), ('partner_id.commercial_partner_id', '=', commercial_partner_id), ('state', '=', 'posted')]</attribute>
-            </xpath>
         </field>
     </record>
 

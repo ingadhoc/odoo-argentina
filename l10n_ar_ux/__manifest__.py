@@ -1,6 +1,6 @@
 {
     'name': 'Argentinian Accounting UX',
-    'version': "15.0.1.1.0",
+    'version': "15.0.1.2.0",
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -8,7 +8,6 @@
     'license': 'AGPL-3',
     'summary': '',
     'depends': [
-        'account_debit_note',
         'l10n_ar',
         'l10n_latam_check',
         'account_withholding',

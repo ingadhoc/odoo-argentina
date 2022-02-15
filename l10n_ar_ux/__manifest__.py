@@ -1,6 +1,6 @@
 {
     'name': 'Argentinian Accounting UX',
-    'version': "13.0.1.34.0",
+    'version': "13.0.1.35.0",
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -8,7 +8,6 @@
     'license': 'AGPL-3',
     'summary': '',
     'depends': [
-        'account_debit_note',
         'l10n_ar',
         'account_check',
         # for payment group report

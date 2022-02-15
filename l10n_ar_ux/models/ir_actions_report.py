@@ -14,6 +14,7 @@ class IrActionsReport(models.Model):
             # ('original', 'Solo Original'),
             ('duplicado', 'Duplicado'), ('triplicado', 'Duplicado y Triplicado')],
         string="Agregar Duplicado/Triplicado",)
+        string="Agregar Duplicado/Triplicado",)
 
     @api.model
     def _get_rendering_context(self, docids, data):

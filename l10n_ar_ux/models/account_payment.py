@@ -32,3 +32,14 @@ class AccountPayment(models.Model):
         print_checkbooks = self.filtered(lambda x: x.l10n_latam_checkbook_id.check_printing_type != 'no_print')
         print_checkbooks.check_number = False
         return super(AccountPayment, self - print_checkbooks)._compute_check_number()
+
+    def action_mark_sent(self):
+        """ Check that the recordset is valid, set the payments state to sent and call print_checks() """
+        self.write({'is_move_sent': True})
+
+    def action_unmark_sent(self):
+        # restore action_unmark_sent functionality (it was cancelled l10n_latam_check)
+        if self.filtered('l10n_latam_checkbook_id'):
+            self.write({'is_move_sent': False})
+        else:
+            return super().action_unmark_sent()

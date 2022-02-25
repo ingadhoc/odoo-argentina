@@ -24,6 +24,15 @@
             <xpath expr="//field[@name='check_number'][2]" position="attributes">
                 <attribute name="attrs">{'invisible': ['|', ('payment_method_code', '!=', 'check_printing'), ('check_number', '=', False), ('l10n_latam_check_printing_type', '!=', 'no_print')], 'readonly': ['|', ('state', '!=', 'draft'), ('l10n_latam_check_printing_type', '!=', 'no_print')], 'required': [('l10n_latam_check_printing_type', '=', 'no_print')]}</attribute>
             </xpath>
+
         </field>
     </record>
+
+    <record model="ir.ui.menu" id="l10n_latam_check.menu_own_check">
+        <field name="parent_id" ref="account_payment_group.menu_finance_bank_and_cash"/>
+    </record>
+    <record model="ir.ui.menu" id="l10n_latam_check.menu_third_check">
+        <field name="parent_id" ref="account_payment_group.menu_finance_bank_and_cash"/>
+    </record>
+
 </odoo>

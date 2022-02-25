@@ -32,6 +32,7 @@ This module extends the l10n_ar module to add some usability improvesment:
 #. Add checks account link to chart template
 #. Send due date to journal items for checks payments
 #. Improove checks: add CUIT and add checkbooks print type (print with number, print without, no print)
+#. Move checks menu into bank and cash menu (this could be on a glue module between account_payment_group and l10n_latam_check)
 
 Installation
 ============

@@ -31,7 +31,7 @@ class AccountMoveChangeRate(models.TransientModel):
         self.currency_rate = self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate
 
     def confirm(self):
-        message = _("Currency rate changed from %s to %s") % (self.currency_rate, self.currency_rate)
+        message = _("Currency rate changed from %s to %s") % (self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate, self.currency_rate)
         self.move_id.message_post(body=message)
         self.move_id.l10n_ar_currency_rate = self.currency_rate
         return {'type': 'ir.actions.act_window_close'}

@@ -29,6 +29,7 @@ class AccountJournal(models.Model):
         default='no',
         required=True,
     )
+    l10n_ar_afip_pos_partner_id = fields.Many2one(string='Dirección Punto de venta')
 
     @api.onchange('l10n_ar_is_pos')
     def _onchange_l10n_ar_is_pos(self):

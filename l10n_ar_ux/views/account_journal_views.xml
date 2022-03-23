@@ -27,7 +27,7 @@
                 <attribute name="attrs">{'invisible':[('l10n_ar_is_pos', '=', False)], 'required':[('l10n_ar_is_pos', '=', True)]}</attribute>
             </field>
             <field name="l10n_ar_afip_pos_partner_id" position="attributes">
-                <attribute name="attrs">{'invisible':['|', ('country_code', '!=', 'AR'), ('type', 'not in', ['sale', 'purchase'])], 'required':[('l10n_ar_is_pos', '=', True)]}</attribute>
+                <attribute name="attrs">{'invisible':['|', ('country_code', '!=', 'AR'), ('type', 'not in', ['sale', 'purchase'])], 'required':['|',('l10n_ar_is_pos', '=', True), '&amp;', '&amp;',('l10n_latam_use_documents', '=', False), ('country_code', '=', 'AR'), ('type', '=', 'sale')]}</attribute>
             </field>
             <xpath expr="//page[@name='advanced_settings']/group" position="after">
                 <group string="QR-Code" attrs="{'invisible': ['|', '|', ('country_code', '!=', 'AR'), ('type', '!=', 'sale'), ('l10n_latam_use_documents', '=', False)]}">

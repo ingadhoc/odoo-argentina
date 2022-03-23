@@ -19,6 +19,7 @@ class AccountJournal(models.Model):
         help="String to generate the QR Code that will be displayed on the invoice report."
     )
     l10n_ar_is_pos = fields.Boolean(compute="_compute_l10n_ar_is_pos", store=True, readonly=False, string="Is AFIP POS?")
+    l10n_ar_afip_pos_partner_id = fields.Many2one(string='Dirección Punto de venta')
 
     @api.onchange('l10n_ar_is_pos')
     def _onchange_l10n_ar_is_pos(self):

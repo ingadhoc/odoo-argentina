@@ -37,13 +37,16 @@ class AccountMove(models.Model):
         need_currency_rate = self.filtered(lambda x: x.currency_id and x.company_id and (x.currency_id != x.company_id.currency_id))
         remaining = self - need_currency_rate
         for rec in need_currency_rate:
-            rec.computed_currency_rate = rec.currency_id._convert(
-                1.0, rec.company_id.currency_id, rec.company_id,
-                # para previsualizar lo que sería la tasa usamos la fecha contable, sino usamos la fecha al día de hoy
-                # la fecha contable en facturas de venta realmente está seteada cuando el invoice_date está activo o
-                # posterior a la validación de la factura es por eso que comparamos invoice_date
-                date=rec.date if rec.invoice_date else fields.Date.context_today(rec),
-                round=False)
+            if rec.l10n_ar_currency_rate:
+                rec.computed_currency_rate = rec.l10n_ar_currency_rate
+            else:
+                rec.computed_currency_rate = rec.currency_id._convert(
+                    1.0, rec.company_id.currency_id, rec.company_id,
+                    # para previsualizar lo que sería la tasa usamos la fecha contable, sino usamos la fecha al día de hoy
+                    # la fecha contable en facturas de venta realmente está seteada cuando el invoice_date está activo o
+                    # posterior a la validación de la factura es por eso que comparamos invoice_date
+                    date=rec.date if rec.invoice_date else fields.Date.context_today(rec),
+                    round=False)
         remaining.computed_currency_rate = 1.0
 
     @api.model
@@ -173,3 +176,18 @@ class AccountMove(models.Model):
             rate = 1.0 / rec.l10n_ar_currency_rate if rec.l10n_ar_currency_rate else False
             super(AccountMove, rec.with_context(force_rate=rate))._compute_invoice_taxes_by_group()
         return super(AccountMove, self - other_curr_ar_invoices)._compute_invoice_taxes_by_group()
+
+
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+
+    def _recompute_debit_credit_from_amount_currency(self):
+        force_currency_rate_lines = self.filtered(lambda x: x.move_id.l10n_ar_currency_rate)
+        for line in force_currency_rate_lines:
+            balance = line.amount_currency
+            company_currency = line.account_id.company_id.currency_id
+            balance = line.currency_id.with_context(force_rate=line.move_id.l10n_ar_currency_rate)._convert(balance, company_currency, line.account_id.company_id, line.move_id.date or fields.Date.today())
+            line.debit = balance > 0 and balance or 0.0
+            line.credit = balance < 0 and -balance or 0.0
+
+        super(AccountMoveLine, self - force_currency_rate_lines)._recompute_debit_credit_from_amount_currency()

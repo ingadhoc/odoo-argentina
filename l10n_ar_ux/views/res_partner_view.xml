@@ -7,7 +7,6 @@
         <field name="inherit_id" ref="l10n_ar.view_partner_property_form"/>
         <field name="arch" type="xml">
             <field name="l10n_ar_special_purchase_document_type_ids" position="replace"/>
-            <group name="gross_income" position="replace"/>
             <page name="accounting" position="after">
                 <page string="Fiscal Data" name="fiscal_data" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}">
 
@@ -31,18 +30,21 @@
                     </group>
                     <group string="Others" name="others">
                         <group name="others_col_1">
-                            <label for="l10n_ar_gross_income_number" string="Gross Income"/>
-                            <div>
-                                <field name="l10n_ar_gross_income_type" class="oe_inline"/>
-                                <field name="l10n_ar_gross_income_number" placeholder="Number..." class="oe_inline" attrs="{'invisible': [('l10n_ar_gross_income_type', 'not in', ['multilateral', 'local'])], 'required': [('l10n_ar_gross_income_type', 'in', ['multilateral', 'local'])]}"/>
-                                <field name="gross_income_jurisdiction_ids" widget="many2many_tags" placeholder="Other Jurisdictions" class="oe_inline" attrs="{'invisible': [('l10n_ar_gross_income_type', '!=', 'multilateral')]}"/>
-                            </div>
                         </group>
                         <group name="others_col_2">
                         </group>
                     </group>
                 </page>
             </page>
+
+            <group name="others_col_1" position="inside">
+                <label for="l10n_ar_gross_income_number" position="move"/>
+                <div name="gross_income" position="move"/>
+            </group>
+            <div name="gross_income" position="inside">
+                <field name="gross_income_jurisdiction_ids" widget="many2many_tags" placeholder="Other Jurisdictions" class="oe_inline" attrs="{'invisible': [('l10n_ar_gross_income_type', '!=', 'multilateral')]}"/>
+            </div>
+
         </field>
     </record>
 

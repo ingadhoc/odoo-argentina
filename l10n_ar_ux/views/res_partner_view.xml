@@ -7,7 +7,8 @@
         <field name="inherit_id" ref="l10n_ar.view_partner_property_form"/>
         <field name="arch" type="xml">
             <field name="l10n_ar_special_purchase_document_type_ids" position="replace"/>
-            <group name="gross_income" position="replace"/>
+            <div name="gross_income" position="replace"/>
+            <label for="l10n_ar_gross_income_number" position="replace"/>
             <page name="accounting" position="after">
                 <page string="Fiscal Data" name="fiscal_data" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}">
 

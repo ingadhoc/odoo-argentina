@@ -3,17 +3,16 @@
 # 	* l10n_ar_account_withholding
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
-# Juan Rivero <jr@adhoc.com.ar>, 2021
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0\n"
+"Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-18 19:14+0000\n"
-"PO-Revision-Date: 2020-03-09 12:54+0000\n"
-"Last-Translator: Juan Rivero <jr@adhoc.com.ar>, 2021\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"POT-Creation-Date: 2022-04-20 13:50+0000\n"
+"PO-Revision-Date: 2022-04-14 12:02+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/133229/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -27,23 +26,33 @@ msgid ""
 "    - Group of Taxes: The tax is a set of sub taxes.\n"
 "    - Fixed: The tax amount stays the same whatever the price.\n"
 "    - Percentage of Price: The tax amount is a % of the price:\n"
-"        e.g 100 * 10% = 110 (not price included)\n"
+"        e.g 100 * (1 + 10%) = 110 (not price included)\n"
 "        e.g 110 / (1 + 10%) = 100 (price included)\n"
 "    - Percentage of Price Tax Included: The tax amount is a division of the price:\n"
 "        e.g 180 / (1 - 10%) = 200 (not price included)\n"
 "        e.g 200 * (1 - 10%) = 180 (price included)\n"
 "        "
 msgstr ""
+"\n"
+"Grupo de impuestos: el impuesto es un conjunto de sub impuestos.\n"
+"     - Fijo: el importe del impuesto permanece igual independientemente del precio.\n"
+"     - Porcentaje del precio: el importe del impuesto es un % del precio:\n"
+"         Por ejemplo, 100 * (1 + 10%) = 110 (sin precio incluido)\n"
+"         por ejemplo, 110 / (1 + 10%) = 100 (precio incluido)\n"
+"     - Porcentaje del precio impuesto incluido: El importe del impuesto es una división del precio:\n"
+"         Por ejemplo, 180 / (1 - 10%) = 200 (sin precio incluido)\n"
+"         Por ejemplo, 200 * (1-10%) =  180  (precio incluido)\n"
+"        "
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__porcentaje_inscripto
 msgid "% Inscripto"
-msgstr "% Inscripto"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__porcentaje_no_inscripto
 msgid "% No Inscripto"
-msgstr "% No Inscripto"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.actions.report,print_report_name:l10n_ar_account_withholding.action_report_withholding_certificate
@@ -298,13 +307,13 @@ msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
 "specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
+"<span class=\"fa fa-lg fa-building-o\" title=\"Los valores configurados aquí"
+" son específicos de cada compañía.\" groups=\"base.group_multi_company\"/>"
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.report_withholding_certificate_document
 msgid "<strong>Customer: </strong>"
-msgstr ""
+msgstr "<strong>Cliente: </strong>"
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.report_withholding_certificate_document
@@ -314,7 +323,7 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.report_withholding_certificate_document
 msgid "<strong>VAT Cond: </strong>"
-msgstr ""
+msgstr "<strong>Cond. IVA: </strong>"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.actions.act_window,name:l10n_ar_account_withholding.act_afip_tabla_ganancias_alicuotasymontos
@@ -342,12 +351,12 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_account_move_reversal
 msgid "Account Move Reversal"
-msgstr ""
+msgstr "Revocación de movimiento en cuenta"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__res_partner__drei__activo
 msgid "Activo"
-msgstr "Activo"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_company__agip_alicuota_no_sincripto_percepcion
@@ -364,17 +373,17 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot__alicuota_percepcion
 msgid "Alicuota Percepcion"
-msgstr "Alicuota Percepcion"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot__alicuota_retencion
 msgid "Alicuota Retencion"
-msgstr "Alicuota Retencion"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.ui.menu,name:l10n_ar_account_withholding.menu_action_afip_tabla_ganancias_alicuotasymontos
 msgid "Alicuotas y Montos Ganancias"
-msgstr "Alicuotas y Montos Ganancias"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_config_settings__group_partner_tax_withholding_amount_type
@@ -404,12 +413,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner__arba_alicuot_ids
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_users__arba_alicuot_ids
 msgid "Alícuotas PERC-RET"
-msgstr "Alícuotas PERC-RET"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__anexo_referencia
 msgid "Anexo Referencia"
-msgstr "Anexo Referencia"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_company__arba_alicuota_no_sincripto_percepcion
@@ -441,7 +450,7 @@ msgstr "Base imponible usada para obtener el importe de retención"
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot__withholding_amount_type
 msgid "Base para retenciones"
-msgstr "Base para retenciones"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_config_settings__arba_cit
@@ -451,7 +460,7 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.actions.report,name:l10n_ar_account_withholding.action_report_withholding_certificate
 msgid "Certificado de Retención"
-msgstr "Certificado de Retención"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
@@ -471,12 +480,12 @@ msgstr "Código Hash"
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__codigo_de_regimen
 msgid "Codigo de regimen"
-msgstr "Codigo de regimen"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,help:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__codigo_de_regimen
 msgid "Codigo de regimen de inscripcion en impuesto a las ganancias."
-msgstr "Codigo de regimen de inscripcion en impuesto a las ganancias."
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_res_company
@@ -501,12 +510,12 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__concepto_referencia
 msgid "Concepto Referencia"
-msgstr "Concepto Referencia"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_res_config_settings
 msgid "Config Settings"
-msgstr "Parámetros de Configuración"
+msgstr "Opciones de configuración"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_res_partner
@@ -546,14 +555,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner__drei
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_users__drei
 msgid "DREI"
-msgstr "DREI"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__display_name
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_escala__display_name
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot__display_name
 msgid "Display Name"
-msgstr "Display Name"
+msgstr "Nombre mostrado"
 
 #. module: l10n_ar_account_withholding
 #: code:addons/l10n_ar_account_withholding/models/account_tax.py:0
@@ -565,7 +574,12 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,help:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__porcentaje_inscripto
 msgid "Elija -1 si se debe calcular s/escala"
-msgstr "Elija -1 si se debe calcular s/escala"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
+#: model:ir.model,name:l10n_ar_account_withholding.model_mail_compose_message
+msgid "Email composition wizard"
+msgstr "Asistente de redacción de correo electrónico"
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
@@ -584,7 +598,7 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.ui.menu,name:l10n_ar_account_withholding.menu_action_afip_tabla_ganancias_escala
 msgid "Escalas Ganancias"
-msgstr "Escalas Ganancias"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: code:addons/l10n_ar_account_withholding/models/res_company.py:0
@@ -634,7 +648,7 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__account_payment_group__retencion_ganancias__imposibilidad_retencion
 msgid "Imposibilidad de Retención"
-msgstr "Imposibilidad de Retención"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.report_withholding_certificate_document
@@ -648,13 +662,13 @@ msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_account_move
-msgid "Journal Entries"
-msgstr ""
+msgid "Journal Entry"
+msgstr "Asiento contable"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Apunte contable"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos____last_update
@@ -680,7 +694,7 @@ msgstr "Última actualización el"
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_escala__importe_desde
 msgid "Mas de $"
-msgstr "Mas de $"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__montos_no_sujetos_a_retencion
@@ -690,29 +704,29 @@ msgstr "Montos No Sujetos A Retención"
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_escala__porcentaje
 msgid "Más el %"
-msgstr "Más el %"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__res_partner__drei__no_activo
 msgid "No Activo"
-msgstr "No Activo"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__account_payment_group__retencion_ganancias__no_aplica
 msgid "No Aplica"
-msgstr "No Aplica"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.report_withholding_certificate_document
 msgid ""
 "Nombre y Apellido Firmante:\n"
-"                            <br/>Cargo:"
+"                                <br/>Cargo:"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__account_payment_group__retencion_ganancias__nro_regimen
 msgid "Nro Regimen"
-msgstr "Nro Regimen"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot__numero_comprobante
@@ -738,10 +752,9 @@ msgstr "Empresa"
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_account_payment_group
 msgid "Payment Group"
-msgstr "Grupo de Pagos"
+msgstr "Grupo de Pago"
 
 #. module: l10n_ar_account_withholding
-#: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.view_account_payment_from_group_tree
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.view_account_payment_tree
 msgid "Print withholding voucher"
 msgstr "Imprimir Comprobante de retención"
@@ -776,7 +789,7 @@ msgstr "Regímenes Ganancias"
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__res_company__agip_padron_type__regimenes_generales
 msgid "Regímenes Generales"
-msgstr "Regímenes Generales"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
@@ -798,7 +811,7 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_payment_group__retencion_ganancias
 msgid "Retención Ganancias"
-msgstr "Retención Ganancias"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.report_withholding_certificate_document
@@ -808,7 +821,7 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_escala__importe_excedente
 msgid "S/ Exced. de $"
-msgstr "S/ Exced. de $"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.view_res_partner_arba_alicuot_form
@@ -852,12 +865,12 @@ msgstr "Impuesto"
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_tax__amount_type
 msgid "Tax Computation"
-msgstr ""
+msgstr "Cálculo de impuestos"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,help:l10n_ar_account_withholding.field_account_tax__withholding_type
 msgid "The computation method for the tax amount."
-msgstr ""
+msgstr "Método de cálculo para el importe del impuesto."
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot__to_date
@@ -910,12 +923,12 @@ msgstr "Debe configurar el CIT de ARA en la compañía %s"
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_afip_tabla_ganancias_alicuotasymontos
 msgid "afip.tabla_ganancias.alicuotasymontos"
-msgstr "afip.tabla_ganancias.alicuotasymontos"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_afip_tabla_ganancias_escala
 msgid "afip.tabla_ganancias.escala"
-msgstr "afip.tabla_ganancias.escala"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.view_res_partner_arba_alicuot_form
@@ -925,4 +938,4 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_res_partner_arba_alicuot
 msgid "res.partner.arba_alicuot"
-msgstr "res.partner.arba_alicuot"
+msgstr ""

@@ -3,6 +3,7 @@
 # directory
 ##############################################################################
 from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
 
 
 class AccountMoveChangeRate(models.TransientModel):
@@ -25,6 +26,13 @@ class AccountMoveChangeRate(models.TransientModel):
         'account.move',
         default=get_move
     )
+
+    @api.constrains('currency_rate')
+    def _prevent_change_currency(self):
+        """prevent currency change when the invoice is not draft
+        """
+        if self.move_id.state != 'draft':
+            raise ValidationError(_('This invoice is not draft, reset it to draft to change currency rate'))
 
     @api.onchange('move_id')
     def _onchange_move(self):

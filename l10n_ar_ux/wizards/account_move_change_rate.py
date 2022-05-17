@@ -26,12 +26,19 @@ class AccountMoveChangeRate(models.TransientModel):
         default=get_move
     )
 
+    day_rate = fields.Boolean(
+        string="Use currency rate of the day", help="The currency rate on the invoice date will be used. If the invoice does not have a date, the currency rate will be used at the time of validation.")
+
     @api.onchange('move_id')
     def _onchange_move(self):
         self.currency_rate = self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate
 
     def confirm(self):
-        message = _("Currency rate changed from %s to %s") % (self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate, self.currency_rate)
+        if self.day_rate:
+            message = _("Currency rate changed from %s to %s") % (self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate, self.move_id.computed_currency_rate)
+            self.move_id.l10n_ar_currency_rate = 0.0
+        else:
+            message = _("Currency rate changed from %s to %s . Currency rate forced") % (self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate, self.currency_rate)
+            self.move_id.l10n_ar_currency_rate = self.currency_rate
         self.move_id.message_post(body=message)
-        self.move_id.l10n_ar_currency_rate = self.currency_rate
         return {'type': 'ir.actions.act_window_close'}

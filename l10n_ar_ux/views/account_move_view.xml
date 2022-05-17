@@ -13,7 +13,8 @@
                 <span class="oe_inline o_form_label mr-2" groups="base.group_multi_currency" attrs="{'invisible': ['|', ('state','!=','draft'), ('other_currency', '=', False)]}">-</span>
                 <field name="l10n_ar_currency_rate" attrs="{'invisible': ['|', '|', ('l10n_ar_currency_rate', '=', False), ('l10n_ar_currency_rate', '=', 0.0), ('other_currency', '=', False)]}"/>
                 <field name="computed_currency_rate" string="Currency Rate (preview)" attrs="{'invisible': ['|', ('l10n_ar_currency_rate', '!=', 0.0), ('other_currency', '=', False)]}"/>
-                <button name="%(action_account_move_change_rate)d" type="action" icon="fa-pencil" class="btn-link" attrs="{'invisible':['|', '|', ('state','!=','draft'), ('other_currency', '=', False), ('country_code', '!=', 'AR')]}"/>
+                <button name="%(action_account_move_change_rate)d" type="action" icon="fa-pencil" style="color:red" class="btn-link" attrs="{'invisible':['|', '|', '|' , '|', ('state','!=','draft'), ('other_currency', '=', False), ('country_code', '!=', 'AR'), ('l10n_ar_currency_rate', '=', 0.0), ('l10n_ar_currency_rate', '=', False)]}" help="Currency rate forced"/>
+                <button name="%(action_account_move_change_rate)d" type="action" icon="fa-pencil" class="btn-link" attrs="{'invisible':['|', '|', '|' , ('state','!=','draft'), ('other_currency', '=', False), ('country_code', '!=', 'AR'), ('l10n_ar_currency_rate', '!=', 0.0)]}"/>
             </button>
         </field>
     </record>

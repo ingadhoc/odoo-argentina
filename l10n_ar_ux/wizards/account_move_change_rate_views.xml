@@ -8,7 +8,8 @@
                 <p><strong>IMPORTANTE:</strong> el cambio de los importes en ARS se verán solo reflejados luego de validar el comprobante.</p>
                 <group>
                     <field name="move_id" invisible="1"/>
-                    <field name="currency_rate"/>
+                    <field name="currency_rate" attrs="{'invisible': [('day_rate','=', True)]}"/>
+                    <field name="day_rate"/>
                 </group>
                 <footer>
                     <button name="confirm" string="Change Rate" type="object" class="oe_highlight" />

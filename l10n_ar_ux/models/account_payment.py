@@ -16,7 +16,7 @@ class AccountPayment(models.Model):
         """ Add check name and operation on liquidity line """
         res = super()._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals)
         date_maturity = False
-        check = self if self.payment_method_line_id.code == 'new_third_checks' else self.l10n_latam_check_id
+        check = self if self.payment_method_line_id.code == 'new_third_party_checks' else self.l10n_latam_check_id
         if check:
             date_maturity = check.l10n_latam_check_payment_date
         elif self.payment_method_line_id.code == 'check_printing' and self.l10n_latam_check_payment_date:

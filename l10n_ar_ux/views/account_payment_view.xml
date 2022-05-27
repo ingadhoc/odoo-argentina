@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="account.view_account_payment_form" />
         <field name="arch" type="xml">
             <field name="l10n_latam_check_id" position="before">
-                <field name="l10n_ar_partner_vat" attrs="{'invisible': ['|', '|', ('state', '!=', 'draft'), ('l10n_ar_partner_vat', '=', False), ('payment_method_code', 'not in', ['out_third_checks', 'new_third_checks'])]}"/>
+                <field name="l10n_ar_partner_vat" attrs="{'invisible': ['|', '|', ('state', '!=', 'draft'), ('l10n_ar_partner_vat', '=', False), ('payment_method_code', 'not in', ['out_third_party_checks', 'new_third_party_checks'])]}"/>
             </field>
 
             <form>
@@ -31,7 +31,7 @@
     <record model="ir.ui.menu" id="l10n_latam_check.menu_own_check">
         <field name="parent_id" ref="account_payment_group.menu_finance_bank_and_cash"/>
     </record>
-    <record model="ir.ui.menu" id="l10n_latam_check.menu_third_check">
+    <record model="ir.ui.menu" id="l10n_latam_check.menu_third_party_check">
         <field name="parent_id" ref="account_payment_group.menu_finance_bank_and_cash"/>
     </record>
 

@@ -3,10 +3,40 @@
 # directory
 ##############################################################################
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
+from odoo.addons.l10n_ar.models.account_move import AccountMove
+from odoo.addons.l10n_latam_invoice_document.models.account_move import AccountMove as AccountMoveOriginal
 import re
 import logging
 _logger = logging.getLogger(__name__)
+
+
+def _inverse_l10n_latam_document_number(self):
+    """ Parche feo para poder usar liquidaciones hasta que se mezcle https://github.com/odoo/odoo/pull/78632 en
+    master"""
+    AccountMoveOriginal._inverse_l10n_latam_document_number(self)
+    to_review = self.filtered(lambda x: (
+        x.journal_id.l10n_ar_is_pos
+        and x.l10n_latam_document_type_id
+        and x.l10n_latam_document_number
+        and (x.l10n_latam_manual_document_number or not x.highest_name)
+    ))
+    for rec in to_review:
+        number = rec.l10n_latam_document_type_id._format_document_number(rec.l10n_latam_document_number)
+        current_pos = int(number.split("-")[0])
+        if current_pos != rec.journal_id.l10n_ar_afip_pos_number:
+            invoices = self.search([('journal_id', '=', rec.journal_id.id), ('posted_before', '=', True)], limit=1)
+            # If there is no posted before invoices the user can change the POS number (x.l10n_latam_document_number)
+            if (not invoices):
+                rec.journal_id.l10n_ar_afip_pos_number = current_pos
+                rec.journal_id._onchange_set_short_name()
+            # If not, avoid that the user change the POS number
+            else:
+                raise UserError(_('The document number can not be changed for this journal, you can only modify'
+                                    ' the POS number if there is not posted (or posted before) invoices'))
+
+
+AccountMove._inverse_l10n_latam_document_number = _inverse_l10n_latam_document_number
 
 
 class AccountMove(models.Model):
@@ -142,3 +172,10 @@ class AccountMove(models.Model):
                     self.company_id.l10n_ar_company_requires_vat and
                     self.partner_id.l10n_ar_afip_responsibility_type_id.code in ['1'] or False)
         return self.l10n_latam_document_type_id.l10n_ar_letter in ['B', 'C', 'X', 'R']
+
+    def _is_manual_document_number(self):
+        res = super()._is_manual_document_number()
+        # when issuer is supplier de numbering works opposite (supplier numerate invoices, customer encode bill)
+        if self.journal_id._l10n_ar_journal_issuer_is_supplier():
+            return not res
+        return res

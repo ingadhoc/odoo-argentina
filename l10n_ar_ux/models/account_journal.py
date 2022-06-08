@@ -55,11 +55,8 @@ class AccountJournal(models.Model):
             (self.type == 'sale' and not self.l10n_ar_is_pos) or
             (self.type == 'purchase' and self.l10n_ar_is_pos))
 
-    def write(self, values):
-        """ include the l10n_ar_document_type_ids changes as trigger to re compute the sequences """
-        res = super().write(values)
-        to_check = set(['l10n_ar_document_type_ids'])
-        if to_check.intersection(set(values.keys())):
-            for rec in self:
-                rec._l10n_ar_create_document_sequences()
-        return res
+    def _l10n_ar_journal_issuer_is_supplier(self):
+        self.ensure_one()
+        return self.l10n_latam_use_documents and (
+            (self.type == 'sale' and not self.l10n_ar_is_pos) or
+            (self.type == 'purchase' and self.l10n_ar_is_pos))

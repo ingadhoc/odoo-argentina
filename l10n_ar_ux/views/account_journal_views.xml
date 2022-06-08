@@ -13,7 +13,7 @@
             </field>
 
             <field name="l10n_ar_afip_pos_partner_id" position="after">
-                <field name="l10n_ar_document_type_ids" widget="many2many_tags" attrs="{'invisible': ['|', '|', ('l10n_latam_use_documents', '=', False), '&amp;', ('type', '=', 'sale'), ('l10n_ar_is_pos', '=', True), '&amp;', ('type', '=', 'purchase'), ('l10n_ar_is_pos', '=', False)]}" domain="[('code', 'in', [
+                <field name="l10n_ar_document_type_ids" widget="many2many_tags" attrs="{'invisible': ['|', '|', ('l10n_latam_use_documents', '=', False), '&amp;', ('type', '=', 'sale'), ('l10n_ar_is_pos', '=', True), '&amp;', ('type', '=', 'purchase'), ('l10n_ar_is_pos', '=', False)]}" domain="[('country_id.code', '=', country_code), ('code', 'in', [
                     '23', '24', '25', '26', '27', '28', '33', '43', '45', '46', '48', '58', '60', '61', '150', '151', '157',
                     '158', '161', '162', '164', '166', '167', '171', '172', '180', '182', '186', '188', '332'])]"/>
             </field>

@@ -105,7 +105,7 @@ class ResCompany(models.Model):
 
         if not self.arba_cit:
             raise UserError(_(
-                'You must configure ARBA CIT on company %s') % (self.name))
+                'You must configure CIT password on company %s') % (self.name))
 
         try:
             ws = IIBB()
@@ -159,8 +159,7 @@ class ResCompany(models.Model):
                 # on same period
                 _logger.info('CUIT %s not present on padron ARBA' % cuit)
             else:
-                raise UserError("%s\nError %s: %s" % (
-                    ws.MensajeError, ws.TipoError, ws.CodigoError))
+                self._process_message_error(ws)
 
         # no ponemos esto, si no viene alicuota es porque es cero entonces
         # if not ws.AlicuotaRetencion or not ws.AlicuotaPercepcion:
@@ -239,3 +238,9 @@ class ResCompany(models.Model):
         _logger.info("We've got the following data: \n%s" % data)
 
         return data
+
+    @api.model
+    def _process_message_error(self, ws):
+        message = ws.MensajeError
+        message = message.replace('<![CDATA[', '').replace(']]/>','')
+        raise UserError(_('No se pudo conectar a ARBA: %s - %s') % (ws.CodigoError, message))

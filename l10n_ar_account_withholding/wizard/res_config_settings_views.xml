@@ -54,6 +54,9 @@
                                 <label for="arba_alicuota_no_sincripto_percepcion" class="col-md-6 o_light_label" string="Alícuota percepción no inscripto"/>
                                 <field name="arba_alicuota_no_sincripto_percepcion" class="oe_inline"/>
                             </div>
+                            <div class="mt16">
+                                <button name="l10n_ar_arba_cit_test" type="object" class="oe_link oe_inline" string="⇒ Verificar Clave ARBA"/>
+                            </div>
                         </div>
                     </div>
                 </div>

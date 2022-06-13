@@ -917,8 +917,8 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: code:addons/l10n_ar_account_withholding/models/res_company.py:0
 #, python-format
-msgid "You must configure ARBA CIT on company %s"
-msgstr "Debe configurar el CIT de ARA en la compañía %s"
+msgid "You must configure CIT password on company %s"
+msgstr "Debe configurar la clave CIT de ARBA en la compañía %s"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_afip_tabla_ganancias_alicuotasymontos

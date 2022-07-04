@@ -14,7 +14,7 @@ class AccountMove(models.Model):
             tax_factor = 1.0 / 1.21
         return tax_factor
 
-    def _recompute_tax_lines(self, recompute_tax_base_amount=False):
+    def _recompute_tax_lines(self, recompute_tax_base_amount=False, tax_rep_lines_to_recompute=None):
         """
         Hacemos esto para disponer de fecha de factura y cia para calcular
         impuesto con código python (por ej. para ARBA).
@@ -25,7 +25,7 @@ class AccountMove(models.Model):
         invoice = self.reversed_entry_id or self
         invoice_date = invoice.invoice_date or fields.Date.context_today(self)
         self = self.with_context(invoice_date=invoice_date)
-        return super(AccountMove, self)._recompute_tax_lines(recompute_tax_base_amount=recompute_tax_base_amount)
+        return super(AccountMove, self)._recompute_tax_lines(recompute_tax_base_amount=recompute_tax_base_amount, tax_rep_lines_to_recompute=tax_rep_lines_to_recompute)
 
     @api.onchange('invoice_date', 'reversed_entry_id')
     def _onchange_tax_date(self):

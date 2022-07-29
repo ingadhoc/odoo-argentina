@@ -12,13 +12,9 @@ class Bank(models.Model):
     @api.model
     def update_bcra_code(self):
         for bank in self.search([]):
-            print("chequeando banco")
             if not bank.l10n_ar_bcra_code:
                 code = bank.get_external_id()[bank.id]
                 if code and code.startswith('l10n_ar_bank'):
-                    print("updating bank",bank, code)
                     bank.l10n_ar_bcra_code=code.split('.')[1]
-                else:
-                    print("ignoring bank",bank, code)
                     
                     

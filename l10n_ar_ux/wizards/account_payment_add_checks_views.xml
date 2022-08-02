@@ -6,8 +6,8 @@
         <field name="arch" type="xml">
             <form>
                 <field name="check_ids"
-                    domain="[('payment_method_code', '=', 'new_third_checks'), ('l10n_latam_check_current_journal_id', '!=', False), ('state', '=', 'posted')]"
-                    context="{'tree_view_ref': 'l10n_latam_check.view_account_third_check_tree'}"
+                    domain="[('payment_method_code', '=', 'new_third_party_checks'), ('l10n_latam_check_current_journal_id', '!=', False), ('state', '=', 'posted')]"
+                    context="{'tree_view_ref': 'l10n_latam_check.view_account_third_party_check_tree'}"
                     options="{'no_create': True}"/>
                 <footer>
                     <button

@@ -3,7 +3,7 @@
     'version': "13.0.1.39.0",
     'category': 'Localization/Argentina',
     'sequence': 14,
-    'author': 'ADHOC',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',

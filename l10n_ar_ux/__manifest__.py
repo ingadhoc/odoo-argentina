@@ -1,9 +1,9 @@
 {
-    'name': 'Argentinian Accounting UX edit',
+    'name': 'Argentinian Accounting UX edit2',
     'version': "13.0.1.39.0",
     'category': 'Localization/Argentina',
     'sequence': 14,
-    'author': 'ADHOC SA',
+    'author': 'ADHOC',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'summary': '',

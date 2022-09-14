@@ -49,7 +49,7 @@
         <field name='state' ref='base.state_ar_c'/>
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4319-8400</field>
-        <field name='email'>info@bicreditanstalt.com.ar</field>
+        <field name='email'>info@bicreditanstalt.com</field>
     </record>
     <record model='res.bank' id='00336'>
         <field name='name'>Banco Bradesco Argentina S.A.</field>

@@ -26,4 +26,7 @@ class ResCompany(models.Model):
     l10n_ar_report_signed_by = fields.Text('Aclaracion', copy=False)
     l10n_ar_invoice_report_ars_amount = fields.Boolean('Mostrar importe equivalente en ARS',
         default=False,
+
+
+        Tarea multiples PRs
     )

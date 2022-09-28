@@ -104,6 +104,7 @@ class AccountMove(models.Model):
 
             domain = [
                 ('type', '=', rec.type),
+                ('name', '!=', '/'),
                 # by validating name we validate l10n_latam_document_number and l10n_latam_document_type_id
                 '|', ('name', '=', old_name_compat), ('name', '=', rec.name),
                 ('company_id', '=', rec.company_id.id),

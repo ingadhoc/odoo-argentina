@@ -111,7 +111,41 @@ class AccountMove(models.Model):
                 'point_of_sale': int(point_of_sale),
             }
 
+<<<<<<< HEAD
     @api.constrains('ref', 'move_type', 'partner_id', 'journal_id', 'invoice_date')
+=======
+    # TODO this is only for compatibility with old versions, remove this method when go live to 14/15 version
+    @api.constrains('name', 'partner_id', 'company_id')
+    def _check_unique_vendor_number(self):
+        """ We overwrite original method odoo/odoo/l10n_latam_invoice_document in order to be able to search for
+        document numbers that has POS of 4 or 5 digits. In 13.0 we will always have 5 digits, but we need this for
+        compatibility of old version migrated clients that have used 4 digits POS numbers """
+        ar_purchase_use_document = self.filtered(
+            lambda x: x.company_id.country_id.code == 'AR' and x.is_purchase_document() and x.l10n_latam_use_documents
+            and x.l10n_latam_document_number and x.l10n_latam_document_type_id.code)
+
+        super(AccountMove, self - ar_purchase_use_document)._check_unique_vendor_number()
+        for rec in ar_purchase_use_document:
+            # Old 4 digits name
+            number = rec._l10n_ar_get_document_number_parts(
+                rec.l10n_latam_document_number, rec.l10n_latam_document_type_id.code)
+            old_name_compat = "%s %04d-%08d" % (
+                rec.l10n_latam_document_type_id.doc_code_prefix, number['point_of_sale'], number['invoice_number'])
+
+            domain = [
+                ('type', '=', rec.type),
+                ('name', '!=', '/'),
+                # by validating name we validate l10n_latam_document_number and l10n_latam_document_type_id
+                '|', ('name', '=', old_name_compat), ('name', '=', rec.name),
+                ('company_id', '=', rec.company_id.id),
+                ('id', '!=', rec.id),
+                ('commercial_partner_id', '=', rec.commercial_partner_id.id)
+            ]
+            if rec.search(domain):
+                raise ValidationError(_('Vendor bill number must be unique per vendor and company.'))
+
+    @api.constrains('ref', 'type', 'partner_id', 'journal_id', 'invoice_date')
+>>>>>>> bbc89541... temp
     def _check_duplicate_supplier_reference(self):
         """ We make reference only unique if you are not using documents.
         Documents already guarantee to not encode twice same vendor bill """

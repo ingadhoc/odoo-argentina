@@ -132,6 +132,8 @@
 
         <!-- remove default document title -->
         <h2 position="replace"/>
+        <h2 position="replace"/>
+        <h2 position="replace"/>
 
         <div id="informations" position="replace">
             <div id="l10n_ar_informations" class="row mt8 mb8">
@@ -164,11 +166,6 @@
 
                     <t t-if="o.payment_term_id" name="payment_term">
                         <br/><strong>Payment Terms: </strong><span t-field="o.payment_term_id.name"/>
-                    </t>
-
-                    <t t-if="o.partner_ref">
-                        <br/><strong>Your Order Reference:</strong>
-                        <span t-field="o.partner_ref"/>
                     </t>
 
                     <t t-if="o.partner_ref">

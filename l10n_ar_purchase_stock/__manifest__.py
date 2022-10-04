@@ -1,6 +1,10 @@
 {
     'name': 'Argentinian Purchase Stock',
+<<<<<<< HEAD
     'version': "15.0.1.0.0",
+=======
+    'version': "13.0.1.0.0",
+>>>>>>> 0f92103f... temp
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA',

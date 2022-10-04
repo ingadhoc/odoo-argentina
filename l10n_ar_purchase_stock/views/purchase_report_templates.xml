@@ -17,7 +17,10 @@
             </t>
         </t>
 
+<<<<<<< HEAD
         <div id="informations" position="replace"/>
+=======
+>>>>>>> 0f92103f... temp
     </template>
 
     <template id="report_purchaseorder_document" inherit_id="l10n_ar_purchase.report_purchaseorder_document">

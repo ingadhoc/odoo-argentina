@@ -63,7 +63,11 @@
 
                     <!-- (17) CUIT -->
                     <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
+<<<<<<< HEAD
                         <br/><strong><t t-out="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+=======
+                        <br/><strong><t t-raw="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-raw="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+>>>>>>> 0f92103f... temp
                     </t>
 
                 </div>
@@ -134,6 +138,10 @@
         <h2 position="replace"/>
         <h2 position="replace"/>
         <h2 position="replace"/>
+<<<<<<< HEAD
+=======
+        <h2 position="replace"/>
+>>>>>>> 0f92103f... temp
 
         <div id="informations" position="replace">
             <div id="l10n_ar_informations" class="row mt8 mb8">
@@ -153,7 +161,11 @@
 
                     <!-- (17) CUIT -->
                     <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
+<<<<<<< HEAD
                         <br/><strong><t t-out="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+=======
+                        <br/><strong><t t-raw="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-raw="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+>>>>>>> 0f92103f... temp
                     </t>
 
                 </div>

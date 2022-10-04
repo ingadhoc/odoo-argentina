@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_purchasequotation" inherit_id="purchase.report_purchasequotation">
+        <t t-call="purchase.report_purchasequotation_document" position="attributes">
+            <attribute name="t-call">#{ o._get_name_purchase_report('purchase.report_purchasequotation_document') }</attribute>
+        </t>
+    </template>
+
+    <template id="report_purchaseorder" inherit_id="purchase.report_purchaseorder">
+        <t t-call="purchase.report_purchaseorder_document" position="attributes">
+            <attribute name="t-call">#{ o._get_name_purchase_report('purchase.report_purchaseorder_document') }</attribute>
+        </t>
+    </template>
+
+    <!-- we force priority greater than 16 so that it dont break inheritance of report_saleorder_document_inherit_sale_stock. with this we are loosing the incoterm field added but that sale_stock view -->
+    <template id="report_purchasequotation_document" priority="20" inherit_id="purchase.report_purchasequotation_document" primary="True">
+
+        <!-- custom header and footer -->
+        <t t-set="o" position="after">
+            <t t-set="custom_header" t-value="'l10n_ar.custom_header'"/>
+            <t t-set="report_date" t-value="o.date_order"/>
+            <t t-set="report_number" t-value="o.name"/>
+            <!-- <t t-set="pre_printed_report" t-value="o.journal_id.l10n_ar_afip_pos_system == 'II_IM'"/> -->
+            <t t-set="document_letter" t-value="'X'"/>
+            <t t-set="document_legend">Invalid document as invoice</t>
+            <t t-set="report_name">Request for Quotation</t>
+
+            <t t-set="header_address" t-value="o.company_id.partner_id"/>
+
+            <t t-set="custom_footer">
+                <div class="row">
+                    <div name="footer_left_column" class="col-8 text-center">
+                    </div>
+                    <div name="footer_right_column" class="col-4 text-right">
+                        <div name="pager" t-if="report_type == 'pdf'">
+                            Page: <span class="page"/> / <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+
+        <!-- remove default partner address -->
+        <t t-set="address" position="replace"/>
+
+        <!-- remove default document title -->
+        <h2 position="replace">
+            <div id="l10n_ar_informations" class="row mt8 mb8">
+                <div class="col-6">
+
+                    <!-- IDENTIFICACION (ADQUIRIENTE-LOCATARIO-PRESTARIO) -->
+
+                    <!-- (14) Apellido uy Nombre: Denominicacion o Razon Soclial -->
+                    <strong>Supplier: </strong><span t-field="o.partner_id.commercial_partner_id.name"/>
+
+                    <!-- (15) Domicilio Comercial -->
+                    <br/>
+                    <span t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true, &quot;no_tag_br&quot;: True}"/>
+
+                    <!-- (16) Responsabilidad AFIP -->
+                    <strong>VAT Cond: </strong><span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
+
+                    <!-- (17) CUIT -->
+                    <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
+                        <br/><strong><t t-out="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+                    </t>
+
+                </div>
+                <div class="col-6">
+
+                    <t t-if="o.user_id">
+                        <strong>Purchase Representative:</strong>
+                        <span t-field="o.user_id"/>
+                    </t>
+
+                    <t t-if="o.payment_term_id" name="payment_term">
+                        <br/><strong>Payment Terms: </strong><span t-field="o.payment_term_id.name"/>
+                    </t>
+
+                    <t t-if="o.partner_ref">
+                        <br/><strong>Your Order Reference:</strong>
+                        <span t-field="o.partner_ref"/>
+                    </t>
+
+                    <t t-if="o.dest_address_id">
+                        <br/><strong>Shipping address:</strong>
+                        <span t-field="o.dest_address_id.name"/>
+                        <br/>
+                        <span t-field="o.dest_address_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true, &quot;no_tag_br&quot;: True}"/>
+                    </t>
+
+                </div>
+
+            </div>
+        </h2>
+
+    </template>
+
+    <!-- we force priority greater than 16 so that it dont break inheritance of report_saleorder_document_inherit_sale_stock. with this we are loosing the incoterm field added but that sale_stock view -->
+    <template id="report_purchaseorder_document" priority="20" inherit_id="purchase.report_purchaseorder_document" primary="True">
+
+        <!-- custom header and footer -->
+        <t t-set="o" position="after">
+            <t t-set="custom_header" t-value="'l10n_ar.custom_header'"/>
+            <t t-set="report_date" t-value="o.date_order"/>
+            <t t-set="report_number" t-value="o.name"/>
+            <!-- <t t-set="pre_printed_report" t-value="o.journal_id.l10n_ar_afip_pos_system == 'II_IM'"/> -->
+            <t t-set="document_letter" t-value="'X'"/>
+            <t t-set="document_legend">Invalid document as invoice</t>
+            <t t-set="report_name" t-if="o.state in ['draft', 'sent', 'to approve']">Request for Quotation</t>
+            <t t-set="report_name" t-if="o.state in ['purchase', 'done']">Purchase Order</t>
+            <t t-set="report_name" t-if="o.state == 'cancel'">Cancelled Purchase Order</t>
+
+            <t t-set="header_address" t-value="o.company_id.partner_id"/>
+
+            <t t-set="custom_footer">
+                <div class="row">
+                    <div name="footer_left_column" class="col-8 text-center">
+                    </div>
+                    <div name="footer_right_column" class="col-4 text-right">
+                        <div name="pager" t-if="report_type == 'pdf'">
+                            Page: <span class="page"/> / <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+
+        <!-- remove default partner address -->
+        <t t-set="address" position="replace"/>
+
+        <!-- remove default document title -->
+        <h2 position="replace"/>
+
+        <div id="informations" position="replace">
+            <div id="l10n_ar_informations" class="row mt8 mb8">
+                <div class="col-6">
+
+                    <!-- IDENTIFICACION (ADQUIRIENTE-LOCATARIO-PRESTARIO) -->
+
+                    <!-- (14) Apellido uy Nombre: Denominicacion o Razon Soclial -->
+                    <strong>Supplier: </strong><span t-field="o.partner_id.commercial_partner_id.name"/>
+
+                    <!-- (15) Domicilio Comercial -->
+                    <br/>
+                    <span t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true, &quot;no_tag_br&quot;: True}"/>
+
+                    <!-- (16) Responsabilidad AFIP -->
+                    <strong>VAT Cond: </strong><span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
+
+                    <!-- (17) CUIT -->
+                    <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
+                        <br/><strong><t t-out="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+                    </t>
+
+                </div>
+                <div class="col-6">
+
+                    <t t-if="o.user_id">
+                        <strong>Purchase Representative:</strong>
+                        <span t-field="o.user_id"/>
+                    </t>
+
+                    <t t-if="o.payment_term_id" name="payment_term">
+                        <br/><strong>Payment Terms: </strong><span t-field="o.payment_term_id.name"/>
+                    </t>
+
+                    <t t-if="o.partner_ref">
+                        <br/><strong>Your Order Reference:</strong>
+                        <span t-field="o.partner_ref"/>
+                    </t>
+
+                    <t t-if="o.partner_ref">
+                        <br/><strong>Your Order Reference:</strong>
+                        <span t-field="o.partner_ref"/>
+                    </t>
+
+                    <t t-if="o.dest_address_id">
+                        <br/><strong>Shipping address:</strong>
+                        <span t-field="o.dest_address_id.name"/>
+                        <br/>
+                        <span t-field="o.dest_address_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true, &quot;no_tag_br&quot;: True}"/>
+                    </t>
+
+                </div>
+
+            </div>
+        </div>
+
+    </template>
+
+</odoo>

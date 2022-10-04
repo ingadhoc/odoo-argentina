@@ -63,7 +63,7 @@
 
                     <!-- (17) CUIT -->
                     <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
-                        <br/><strong><t t-out="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+                        <br/><strong><t t-raw="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-raw="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
                     </t>
 
                 </div>
@@ -132,6 +132,9 @@
 
         <!-- remove default document title -->
         <h2 position="replace"/>
+        <h2 position="replace"/>
+        <h2 position="replace"/>
+        <h2 position="replace"/>
 
         <div id="informations" position="replace">
             <div id="l10n_ar_informations" class="row mt8 mb8">
@@ -151,7 +154,7 @@
 
                     <!-- (17) CUIT -->
                     <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
-                        <br/><strong><t t-out="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+                        <br/><strong><t t-raw="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-raw="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
                     </t>
 
                 </div>
@@ -164,11 +167,6 @@
 
                     <t t-if="o.payment_term_id" name="payment_term">
                         <br/><strong>Payment Terms: </strong><span t-field="o.payment_term_id.name"/>
-                    </t>
-
-                    <t t-if="o.partner_ref">
-                        <br/><strong>Your Order Reference:</strong>
-                        <span t-field="o.partner_ref"/>
                     </t>
 
                     <t t-if="o.partner_ref">

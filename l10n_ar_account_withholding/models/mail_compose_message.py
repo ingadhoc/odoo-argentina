@@ -3,12 +3,11 @@ from odoo.tools import safe_eval
 import base64
 import time
 
-
 class MailComposeMessage(models.TransientModel):
     _inherit = "mail.compose.message"
 
-    def onchange_template_id(self, template_id, composition_mode, model, res_id):
-        values = super().onchange_template_id(
+    def _onchange_template_id(self, template_id, composition_mode, model, res_id):
+        values = super()._onchange_template_id(
             template_id, composition_mode, model, res_id)
         if template_id and model == 'account.payment.group':
             payment_group = self.env[model].browse(res_id)
@@ -19,8 +18,8 @@ class MailComposeMessage(models.TransientModel):
                 return values
             attachment_ids = []
             for payment in payment_group.payment_ids.filtered(lambda p: p.payment_method_code == 'withholding'):
-                report_name = safe_eval(report.print_report_name, {'object': payment, 'time': time})
-                result, format = report.render(payment.ids)
+                report_name = safe_eval.safe_eval(report.print_report_name, {'object': payment})
+                result, format = report._render(payment.ids)
                 file = base64.b64encode(result)
                 data_attach = {
                     'name': report_name,

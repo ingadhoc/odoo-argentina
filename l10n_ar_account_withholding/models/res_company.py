@@ -1,9 +1,6 @@
 from odoo import models, fields, api, _
 # import odoo.tools as tools
-try:
-    from pyafipws.iibb import IIBB
-except ImportError:
-    IIBB = None
+from pyafipws.iibb import IIBB
 # from pyafipws.padron import PadronAFIP
 from odoo.exceptions import UserError
 import logging

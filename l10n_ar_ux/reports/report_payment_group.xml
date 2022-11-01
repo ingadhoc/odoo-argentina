@@ -66,7 +66,7 @@
                         <t t-set="check" t-value="line.l10n_latam_check_id or line"/>
                         <tr>
                             <td>
-                                <span t-out='"Cheque %s nro %s - %s" % ("electrónico " if line.l10n_latam_checkbook_id.type == "electronic" else "", line.check_number, line.l10n_latam_check_bank_id.name or line.journal_id.name)'/><span t-if="line.l10n_latam_check_payment_date"> - Venc. <span t-field="line.l10n_latam_check_payment_date"/></span>
+                                <span t-out='"Cheque %s nro %s - %s" % ("electrónico " if check.l10n_latam_checkbook_id.type == "electronic" else "", check.check_number, check.l10n_latam_check_bank_id.name or check.journal_id.name)'/><span t-if="check.l10n_latam_check_payment_date"> - Venc. <span t-field="check.l10n_latam_check_payment_date"/></span>
                            </td>
                             <td  class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
                                 <t t-if="line.currency_id">

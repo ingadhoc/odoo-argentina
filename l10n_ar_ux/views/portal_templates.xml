@@ -64,15 +64,15 @@
         </div>
     </template>
 
-    <template id="portal_my_details" name="portal_my_details" inherit_id="portal.portal_my_details">
-
+    <template id="portal_my_details_fields" name="portal_my_details_fields" inherit_id="portal.portal_my_details_fields">
         <xpath expr="//label[@for='company_name']/.." position="replace"/>
         <xpath expr="//label[@for='vat']/.." position="replace"/>
+    </template>
 
-        <xpath expr="//button[@type='submit']/.." position="before">
+    <template id="portal_my_details" name="portal_my_details" inherit_id="portal.portal_my_details">
+        <t t-call="portal.portal_my_details_fields" position="after">
             <t t-call="l10n_ar_ux.partner_info"/>
-        </xpath>
-
+        </t>
     </template>
 
 </odoo>

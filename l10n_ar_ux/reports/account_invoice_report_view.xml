@@ -15,7 +15,6 @@
                 <field name="company_id" optional="hide"/>
                 <field name="invoice_date_due" optional="hide"/>
                 <field name="product_id"/>
-                <field name="analytic_account_id" groups="analytic.group_analytic_accounting" optional="hide"/>
                 <field name="product_categ_id" optional="hide"/>
                 <field name="quantity" sum="Total"/>
                 <field name="price_unit"/>

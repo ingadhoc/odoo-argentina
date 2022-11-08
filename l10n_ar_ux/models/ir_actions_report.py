@@ -16,8 +16,8 @@ class IrActionsReport(models.Model):
         string="Agregar Duplicado/Triplicado",)
 
     @api.model
-    def _get_rendering_context(self, docids, data):
-        res = super()._get_rendering_context(docids, data)
+    def _get_rendering_context(self, report, docids, data):
+        res = super()._get_rendering_context(report, docids, data)
         l10n_ar_copies = ['']
         is_email = 'force_email' in self._context or 'default_subject' in self._context
         if not is_email and self.l10n_ar_copies:

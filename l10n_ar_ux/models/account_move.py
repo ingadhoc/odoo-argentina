@@ -139,27 +139,14 @@ class AccountMove(models.Model):
             ]
         return super()._get_l10n_latam_documents_domain()
 
-    def _post(self, soft=True):
-        """ recompute debit/credit sending force_rate on context """
+    def write(self, vals):
+        """ For ARG invoices with forced rate we call write sending force_rate so that correct amouns are computed """
         other_curr_ar_invoices = self.filtered(
-            lambda x: x.is_invoice() and
+            lambda x: x.is_invoice() and x.state == 'draft' and
             x.company_id.country_id == self.env.ref('base.ar') and x.currency_id != x.company_id.currency_id)
-        # llamamos a todos los casos de otra moneda y no solo a los que tienen "l10n_ar_currency_rate" porque odoo
-        # tiene una suerte de bug donde solo recomputa los debitos/creditos en ciertas condiciones, pero puede
-        # ser que esas condiciones no se cumplan y la cotizacion haya cambiado (por ejemplo la factura tiene fecha y
-        # luego se cambia la cotizacion, al validar no se recomputa). Si odoo recomputase en todos los casos seria
-        # solo necesario iterar los elementos con l10n_ar_currency_rate y hacer solo el llamado a super
         for rec in other_curr_ar_invoices:
-            # si no tiene fecha en realidad en llamando a super ya se recomputa con el llamado a _onchange_invoice_date
-            # también se recomputa con algo de lock dates llamando a _onchange_invoice_date, pero por si no se dan
-            # esas condiciones o si odoo las cambia, llamamos al onchange_currency por las dudas
-            rec.with_context(
-                check_move_validity=False, force_rate=rec.l10n_ar_currency_rate)._onchange_currency()
-
-            # tambien tenemos que pasar force_rate aca por las dudas de que super entre en onchange_currency en los
-            # mismos casos mencionados recien
-            res = super(AccountMove, rec.with_context(force_rate=rec.l10n_ar_currency_rate))._post(soft=soft)
-        res = super(AccountMove, self - other_curr_ar_invoices)._post(soft=soft)
+            res = super(AccountMove, rec.with_context(force_rate=rec.l10n_ar_currency_rate)).write(vals)
+        res = super(AccountMove, self - other_curr_ar_invoices).write(vals)
         return res
 
     def _l10n_ar_include_vat(self):

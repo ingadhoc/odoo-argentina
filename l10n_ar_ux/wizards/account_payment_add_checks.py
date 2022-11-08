@@ -15,6 +15,7 @@ class AccounTpaymentAddChecks(models.TransientModel):
             vals_list = [{
                 'l10n_latam_check_id': check.id,
                 'amount': check.amount,
+                'partner_id': payment_group.partner_id.id,
                 'payment_group_id': payment_group.id,
                 'payment_type': 'outbound',
                 'journal_id': check.l10n_latam_check_current_journal_id.id,

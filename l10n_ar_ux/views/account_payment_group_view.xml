@@ -11,10 +11,10 @@
                     name="%(action_account_payment_add_checks)d"
                     class="oe_link"
                     style="margin:12px 0px 12px 0px;"
-                    string="Add multiple checks"
+                    string="Entregar varios cheques"
                     icon="fa-plus-circle"
                     type="action"
-                    attrs="{'invisible':[('state','!=', 'draft')]}"
+                    attrs="{'invisible':[('state','not in', ['draft', 'confirmed'])]}"
                 />
             </field>
         </field>

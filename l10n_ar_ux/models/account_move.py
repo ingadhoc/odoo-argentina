@@ -104,15 +104,15 @@ class AccountMove(models.Model):
             ]
         return super()._get_l10n_latam_documents_domain()
 
-    def write(self, vals):
-        """ For ARG invoices with forced rate we call write sending force_rate so that correct amouns are computed """
-        other_curr_ar_invoices = self.filtered(
-            lambda x: x.is_invoice() and x.state == 'draft' and
-            x.company_id.country_id == self.env.ref('base.ar') and x.currency_id != x.company_id.currency_id)
-        for rec in other_curr_ar_invoices:
-            res = super(AccountMove, rec.with_context(force_rate=rec.l10n_ar_currency_rate)).write(vals)
-        res = super(AccountMove, self - other_curr_ar_invoices).write(vals)
-        return res
+    # def write(self, vals):
+    #     """ For ARG invoices with forced rate we call write sending force_rate so that correct amouns are computed """
+    #     other_curr_ar_invoices = self.filtered(
+    #         lambda x: x.is_invoice() and x.state == 'draft' and
+    #         x.company_id.country_id == self.env.ref('base.ar') and x.currency_id != x.company_id.currency_id)
+    #     for rec in other_curr_ar_invoices:
+    #         res = super(AccountMove, rec.with_context(force_rate=rec.l10n_ar_currency_rate)).write(vals)
+    #     res = super(AccountMove, self - other_curr_ar_invoices).write(vals)
+    #     return res
 
     def _l10n_ar_include_vat(self):
         self.ensure_one()

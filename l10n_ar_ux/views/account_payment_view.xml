@@ -9,22 +9,6 @@
             <field name="l10n_latam_check_id" position="before">
                 <field name="l10n_ar_partner_vat" attrs="{'invisible': ['|', '|', ('state', '!=', 'draft'), ('l10n_ar_partner_vat', '=', False), ('payment_method_code', 'not in', ['out_third_party_checks', 'new_third_party_checks'])]}"/>
             </field>
-
-            <form>
-                <field name="l10n_latam_check_printing_type" invisible="1"/>
-            </form>
-            <button name="print_checks" position="attributes">
-                <attribute name="attrs">{'invisible': ['|', '|', '|', ('payment_method_code', '!=', 'check_printing'), ('state', '!=', 'posted'), ('is_move_sent', '=', True), ('l10n_latam_check_printing_type', '=', 'no_print')]}</attribute>
-            </button>
-
-            <button name="print_checks" position="after">
-                <button name="action_mark_sent" class="oe_highlight" attrs="{'invisible': ['|', '|', '|', ('payment_method_code', '!=', 'check_printing'), ('state', '!=', 'posted'), ('is_move_sent', '=', True), ('l10n_latam_check_printing_type', '!=', 'no_print')]}" string="Mark Sent" type="object"/>
-            </button>
-
-            <xpath expr="//field[@name='check_number'][2]" position="attributes">
-                <attribute name="attrs">{'invisible': ['|', ('payment_method_code', '!=', 'check_printing'), ('check_number', '=', False), ('l10n_latam_check_printing_type', '!=', 'no_print')], 'readonly': ['|', ('state', '!=', 'draft'), ('l10n_latam_check_printing_type', '!=', 'no_print')], 'required': [('l10n_latam_check_printing_type', '=', 'no_print')]}</attribute>
-            </xpath>
-
         </field>
     </record>
 

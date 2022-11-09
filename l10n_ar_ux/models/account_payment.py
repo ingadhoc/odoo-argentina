@@ -5,7 +5,6 @@ class AccountPayment(models.Model):
     _inherit = 'account.payment'
 
     l10n_ar_partner_vat = fields.Char(related='partner_id.l10n_ar_vat', string='CUIT del destinatario')
-    l10n_latam_check_printing_type = fields.Selection(related='l10n_latam_checkbook_id.check_printing_type')
 
     @api.model
     def _get_trigger_fields_to_sincronize(self):
@@ -26,20 +25,3 @@ class AccountPayment(models.Model):
                 'date_maturity': date_maturity,
             })
         return res
-
-    @api.depends('journal_id', 'payment_method_code', 'l10n_latam_checkbook_id')
-    def _compute_check_number(self):
-        print_checkbooks = self.filtered(lambda x: x.l10n_latam_checkbook_id.check_printing_type != 'no_print')
-        print_checkbooks.check_number = False
-        return super(AccountPayment, self - print_checkbooks)._compute_check_number()
-
-    def action_mark_sent(self):
-        """ Check that the recordset is valid, set the payments state to sent and call print_checks() """
-        self.write({'is_move_sent': True})
-
-    def action_unmark_sent(self):
-        # restore action_unmark_sent functionality (it was cancelled l10n_latam_check)
-        if self.filtered('l10n_latam_checkbook_id'):
-            self.write({'is_move_sent': False})
-        else:
-            return super().action_unmark_sent()

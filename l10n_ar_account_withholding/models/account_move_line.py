@@ -1,13 +1,12 @@
-from odoo import models, fields
+from odoo import models
 
 
 class AccountMoveLine(models.Model):
 
     _inherit = 'account.move.line'
 
-    def compute_l10n_latam_prices_and_taxes(self):
-        """ When computing the prices and taxes compute we pass the invoice date
-        in order to properly compute the perception/retention rates """
+    def _compute_all_tax(self):
+        """ Mandamos en contexto el invoice_date para calculo de impuesto con partner aliquot"""
         for line in self:
-            invoice_date = line.move_id.invoice_date or fields.Date.context_today(self)
-            super(AccountMoveLine, line.with_context(invoice_date=invoice_date)).compute_l10n_latam_prices_and_taxes()
+            line = line.with_context(invoice_date=line.move_id.invoice_date)
+            super(AccountMoveLine, line)._compute_all_tax()

@@ -175,7 +175,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <t t-foreach="o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.internal_type', '=', o.partner_type=='customer' and 'receivable' or 'payable'), ('reconciled', '=', False), ('account_id.deprecated', '=', False), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)])" t-as="line">
+                    <t t-foreach="o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.account_type', '=', o.partner_type=='customer' and 'asset_receivable' or 'liability_payable'), ('reconciled', '=', False), ('account_id.deprecated', '=', False), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)])" t-as="line">
                         <tr>
                             <td><span t-field='line.move_id.display_name'/></td>
                             <td class="text-center">
@@ -194,7 +194,7 @@
                     <tr>
                         <td colspan="3"><strong><span>Total Pendiente</span></strong></td>
                         <td class="text-right">
-                            <strong><span class="text-nowrap" t-out="sum(o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.internal_type', '=', o.partner_type=='customer' and 'receivable' or 'payable'), ('reconciled', '=', False), ('account_id.deprecated', '=', False), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)]).mapped('amount_residual'))" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
+                            <strong><span class="text-nowrap" t-out="sum(o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.account_type', '=', o.partner_type=='customer' and 'asset_receivable' or 'liability_payable'), ('reconciled', '=', False), ('account_id.deprecated', '=', False), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)]).mapped('amount_residual'))" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
                         </td>
                     </tr>
                 </tfoot>

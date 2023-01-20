@@ -3,21 +3,21 @@
 # 	* l10n_ar_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e\n"
+"Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-25 14:39+0000\n"
-"PO-Revision-Date: 2022-04-14 12:01+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/133229/es/)\n"
+"POT-Creation-Date: 2023-01-13 13:51+0000\n"
+"PO-Revision-Date: 2023-01-13 13:51+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: l10n_ar_ux
 #: model:ir.actions.report,print_report_name:l10n_ar_ux.action_report_account_transfer
@@ -25,27 +25,8 @@ msgid "'Reporte de transferencia'"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,help:l10n_ar_ux.field_account_payment__l10n_latam_check_printing_type
-#: model:ir.model.fields,help:l10n_ar_ux.field_account_payment_register__l10n_latam_check_printing_type
-#: model:ir.model.fields,help:l10n_ar_ux.field_l10n_latam_checkbook__check_printing_type
-msgid ""
-"* No Print: number will be assigned while creating payment, no print button\n"
-"* Print with number: number will be assigned when creating the payment and will be printed on the check\n"
-"* Print without number: number will be assigned when printing the check (to verify it's corresponds with next check) and number won't be printed on the check"
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
 msgid "- Venc."
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
-msgid ""
-"<br/>\n"
-"                    <strong>Listado de Cheques:</strong>\n"
-"                    <br/>\n"
-"                    <br/>"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -97,15 +78,22 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
-msgid ""
-"<span class=\"oe_inline o_form_label ml-2 mr-2\" groups=\"base.group_multi_currency\" attrs=\"{'invisible': ['|', ('state','=','draft'), ('other_currency', '=', False)]}\">-</span>\n"
-"                <span class=\"oe_inline o_form_label mr-2\" groups=\"base.group_multi_currency\" attrs=\"{'invisible': ['|', ('state','!=','draft'), ('other_currency', '=', False)]}\">-</span>"
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span class=\"text-center\">Firma y Aclaración</span>"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
-msgid "<span class=\"text-center\">Firma y Aclaración</span>"
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
+msgid ""
+"<span groups=\"base.group_multi_currency\" attrs=\"{'invisible': ['|', "
+"('country_code', '!=', 'AR'), ('other_currency', '=', False)]}\">(</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
+msgid ""
+"<span groups=\"base.group_multi_currency\" attrs=\"{'invisible': ['|', "
+"('country_code', '!=', 'AR'), ('other_currency', '=', False)]}\">)</span>"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -170,27 +158,7 @@ msgstr ""
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
-msgid "<strong>Banco</strong>"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
-msgid "<strong>Cantidad de Cheques:</strong>"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
 msgid "<strong>Creado por:</strong>"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
-msgid "<strong>Fecha de Emisión</strong>"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
-msgid "<strong>Fecha de Pago</strong>"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -198,16 +166,6 @@ msgstr ""
 msgid ""
 "<strong>IMPORTANTE:</strong> el cambio de los importes en ARS se verán solo "
 "reflejados luego de validar el comprobante."
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
-msgid "<strong>Monto</strong>"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
-msgid "<strong>Nro de Cheque</strong>"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -333,13 +291,36 @@ msgid "Activo no alcanzado"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_payment_group_form
-msgid "Add multiple checks"
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_ir_actions_report__l10n_ar_copies
+msgid "Agregar Duplicado/Triplicado"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_ir_actions_report__l10n_ar_copies
-msgid "Agregar Duplicado/Triplicado"
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_account__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_account_tag__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_chart_template__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_fiscal_position__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_invoice_report__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move_change_rate__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment_add_checks__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_tax__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_activity__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_ir_actions_report__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_config_settings__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_currency__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__algolia_search
+msgid "Algolia Search"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
+msgid "Banco:"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -388,18 +369,6 @@ msgid "Check"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__l10n_latam_check_printing_type
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment_register__l10n_latam_check_printing_type
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_l10n_latam_checkbook__check_printing_type
-msgid "Check Printing Type"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model,name:l10n_ar_ux.model_l10n_latam_checkbook
-msgid "Checkbook"
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_company__arba_cit
 msgid "Clave de Identificación Tributaria de ARBA"
 msgstr ""
@@ -414,7 +383,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_res_company
 msgid "Companies"
-msgstr "Compañías"
+msgstr "Empresas"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.partner_info
@@ -488,13 +457,20 @@ msgid "Currency Rate (preview)"
 msgstr ""
 
 #. module: l10n_ar_ux
+#. odoo-python
 #: code:addons/l10n_ar_ux/wizards/account_move_change_rate.py:0
 #, python-format
 msgid "Currency rate changed from %s to %s"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_bank_statement_import_journal_creation__l10n_ar_afip_pos_partner_id
+#. odoo-python
+#: code:addons/l10n_ar_ux/wizards/account_move_change_rate.py:0
+#, python-format
+msgid "Currency rate changed from %s to %s . Currency rate forced"
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__l10n_ar_afip_pos_partner_id
 msgid "Dirección Punto de venta"
 msgstr ""
@@ -510,7 +486,6 @@ msgid "Discount Amount"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_bank_statement_import_journal_creation__discriminate_taxes
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__discriminate_taxes
 msgid "Discriminate taxes?"
 msgstr "¿Discriminar impuestos?"
@@ -540,7 +515,6 @@ msgid "Document Type..."
 msgstr "Tipo de Identificación..."
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_bank_statement_import_journal_creation__l10n_ar_document_type_ids
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__l10n_ar_document_type_ids
 msgid "Document Types"
 msgstr ""
@@ -579,6 +553,11 @@ msgid "Empleador Padron"
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_payment_group_form
+msgid "Entregar varios cheques"
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__estado_padron
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_users__estado_padron
 msgid "Estado AFIP"
@@ -593,6 +572,11 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__res_partner__imp_iva_padron__xn
 msgid "Exento no alcanzado"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
+msgid "Fecha de Pago:"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -640,7 +624,7 @@ msgstr "Jurisdicciones de Ingresos Brutos"
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__id
 msgid "ID"
-msgstr "ID"
+msgstr "ID (identificación)"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__imp_iva_padron
@@ -687,7 +671,6 @@ msgid "Invoices Statistics"
 msgstr "Estadísticas de facturas"
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_bank_statement_import_journal_creation__l10n_ar_is_pos
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__l10n_ar_is_pos
 msgid "Is AFIP POS?"
 msgstr ""
@@ -709,6 +692,7 @@ msgid "Journal Item"
 msgstr "Apunte contable"
 
 #. module: l10n_ar_ux
+#. odoo-python
 #: code:addons/l10n_ar_ux/models/res_partner.py:0
 #, python-format
 msgid ""
@@ -768,11 +752,6 @@ msgid "Logo"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_payment_form
-msgid "Mark Sent"
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__monotributo_padron
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_users__monotributo_padron
 msgid "Monotributo"
@@ -816,11 +795,6 @@ msgid "No Inscripto"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields.selection,name:l10n_ar_ux.selection__l10n_latam_checkbook__check_printing_type__no_print
-msgid "No Print"
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__res_partner__imp_iva_padron__na
 msgid "No alcanzado"
 msgstr ""
@@ -831,18 +805,15 @@ msgid "No corresponde"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: code:addons/l10n_ar_ux/models/account_move.py:0
-#, python-format
-msgid ""
-"No pudimos obtener el número de factura y de punto de venta para %s %s. "
-"Verifique que tiene un número cargado similar a \"00001-00000001\""
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
 msgid ""
 "Nombre y Apellido Firmante:\n"
 "                            <br/>Cargo:"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
+msgid "Nro de Cheque:"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -876,12 +847,14 @@ msgid "Payments"
 msgstr "Pagos"
 
 #. module: l10n_ar_ux
+#. odoo-python
 #: code:addons/l10n_ar_ux/controllers/portal.py:0
 #, python-format
 msgid "Please add the document number."
 msgstr "Por favor agregue el número de documento."
 
 #. module: l10n_ar_ux
+#. odoo-python
 #: code:addons/l10n_ar_ux/controllers/portal.py:0
 #, python-format
 msgid "Please add the type of document."
@@ -898,23 +871,11 @@ msgid "Price Subtotal"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields.selection,name:l10n_ar_ux.selection__l10n_latam_checkbook__check_printing_type__print_with_number
-msgid "Print with number"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields.selection,name:l10n_ar_ux.selection__l10n_latam_checkbook__check_printing_type__print_without_number
-msgid "Print without number"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_bank_statement_import_journal_creation__qr_code
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__qr_code
 msgid "QR Code"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_bank_statement_import_journal_creation__qr_code_label
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__qr_code_label
 msgid "QR Code Label"
 msgstr ""
@@ -923,11 +884,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_journal_form
 msgid "QR-Code"
 msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model,name:l10n_ar_ux.model_account_payment_register
-msgid "Register Payment"
-msgstr "Registrar pago"
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_ir_actions_report
@@ -1109,13 +1065,11 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,help:l10n_ar_ux.field_account_bank_statement_import_journal_creation__qr_code_label
 #: model:ir.model.fields,help:l10n_ar_ux.field_account_journal__qr_code_label
 msgid "String to display before the QR Code on the invoice report."
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,help:l10n_ar_ux.field_account_bank_statement_import_journal_creation__qr_code
 #: model:ir.model.fields,help:l10n_ar_ux.field_account_journal__qr_code
 msgid ""
 "String to generate the QR Code that will be displayed on the invoice report."
@@ -1132,6 +1086,22 @@ msgid "Taxes"
 msgstr "Impuestos"
 
 #. module: l10n_ar_ux
+#: model:ir.model.fields,help:l10n_ar_ux.field_account_move_change_rate__day_rate
+msgid ""
+"The currency rate on the invoice date will be used. If the invoice does not "
+"have a date, the currency rate will be used at the time of validation."
+msgstr ""
+
+#. module: l10n_ar_ux
+#. odoo-python
+#: code:addons/l10n_ar_ux/models/account_move.py:0
+#, python-format
+msgid ""
+"The document number can not be changed for this journal, you can only modify"
+" the POS number if there is not posted (or posted before) invoices"
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_company__gross_income_jurisdiction_ids
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_partner__gross_income_jurisdiction_ids
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_users__gross_income_jurisdiction_ids
@@ -1139,7 +1109,6 @@ msgid "The state of the company is cosidered the main jurisdiction"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,help:l10n_ar_ux.field_account_bank_statement_import_journal_creation__l10n_ar_afip_pos_partner_id
 #: model:ir.model.fields,help:l10n_ar_ux.field_account_journal__l10n_ar_afip_pos_partner_id
 msgid "This is the address used for invoice reports of this POS"
 msgstr ""
@@ -1153,7 +1122,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_line_report_tree
 msgid "Total"
-msgstr "Total"
+msgstr ""
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_line_report_tree
@@ -1164,6 +1133,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_invoice_report__price_unit
 msgid "Unit Price"
 msgstr "Precio unitario"
+
+#. module: l10n_ar_ux
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move_change_rate__day_rate
+msgid "Use currency rate of the day"
+msgstr ""
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form

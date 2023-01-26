@@ -72,3 +72,15 @@ class AccountMove(models.Model):
                     self.company_id.l10n_ar_company_requires_vat and
                     self.partner_id.l10n_ar_afip_responsibility_type_id.code in ['1'] or False)
         return self.l10n_latam_document_type_id.l10n_ar_letter in ['B', 'C', 'X', 'R']
+
+    @api.depends('l10n_latam_available_document_type_ids', 'debit_origin_id')
+    def _compute_l10n_latam_document_type(self):
+        """ Sobre escribimos este metodo porque es necesario para poder auto calcular el tipo de documento por defecto
+        de una nota de debito cuando no hay un debit_origin_id definido, puede ser porque simplemente no haya un
+        documento relacionado original o porque hay muchos documentos relacionados pero no puede ser asociados """
+        super()._compute_l10n_latam_document_type()
+        if self.env.context.get('internal_type') == 'debit_note':
+            for rec in self.filtered(lambda x: x.state == 'draft'):
+                document_types = rec.l10n_latam_available_document_type_ids._origin
+                document_types = document_types.filtered(lambda x: x.internal_type == 'debit_note')
+                rec.l10n_latam_document_type_id = document_types and document_types[0].id

@@ -69,12 +69,12 @@
                                 <span t-out='"Cheque %s nro %s - %s" % ("electrónico " if line.l10n_latam_checkbook_id.type == "electronic" else "", line.check_number, line.l10n_latam_check_bank_id.name or line.journal_id.name)'/><span t-if="line.l10n_latam_check_payment_date"> - Venc. <span t-field="line.l10n_latam_check_payment_date"/></span>
                            </td>
                             <td  class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
-                                <t t-if="line.currency_id">
-                                    <span class="text-nowrap" t-field="line.signed_amount" t-field-options='{"widget": "monetary",  "display_currency": "line.currency_id"}'/>
+                                <t t-if="check.currency_id">
+                                    <span class="text-nowrap" t-field="check.signed_amount" t-field-options='{"widget": "monetary",  "display_currency": "check.currency_id"}'/>
                                 </t>
                             </td>
                             <td class="text-right o_price_total">
-                                <span class="text-nowrap" t-field="line.l10n_ar_amount_company_currency_signed"/>
+                                <span class="text-nowrap" t-field="check.l10n_ar_amount_company_currency_signed"/>
                             </td>
                         </tr>
                     </t>

@@ -159,7 +159,7 @@ class ResCompany(models.Model):
                 # we still create the record so we don need to check it again
                 # on same period
                 _logger.info('CUIT %s not present on padron ARBA' % cuit)
-            if ws.CodigoError == '6':
+            elif ws.CodigoError == '6':
                 error = True
                 msg = "%s\n Error %s: %s" % (ws.MensajeError, ws.TipoError, ws.CodigoError)
                 _logger.error('Padron ARBA: %s' % msg)

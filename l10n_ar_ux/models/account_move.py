@@ -144,6 +144,6 @@ class AccountMove(models.Model):
     def _is_manual_document_number(self):
         res = super()._is_manual_document_number()
         # when issuer is supplier de numbering works opposite (supplier numerate invoices, customer encode bill)
-        if self.journal_id._l10n_ar_journal_issuer_is_supplier():
+        if self.country_code == 'AR' and self.journal_id._l10n_ar_journal_issuer_is_supplier():
             return not res
         return res

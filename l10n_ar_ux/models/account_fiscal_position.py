@@ -4,17 +4,16 @@ from odoo.addons.l10n_ar.models.account_fiscal_position import AccountFiscalPosi
 
 
 @api.model
-def get_fiscal_position(self, partner_id, delivery_id=None):
+def _get_fiscal_position(self, partner, delivery=None):
     company = self.env.company
     if company.country_id.code == "AR":
-        partner = self.env['res.partner'].browse(partner_id)
         self = self.with_context(
             company_code='AR',
             l10n_ar_afip_responsibility_type_id=partner.l10n_ar_afip_responsibility_type_id.id)
-    return super(AccountFiscalPosition, self).get_fiscal_position(partner_id, delivery_id=delivery_id)
+    return super(AccountFiscalPosition, self)._get_fiscal_position(partner, delivery=delivery)
 
 
-AccountFiscalPosition.get_fiscal_position = get_fiscal_position
+AccountFiscalPosition._get_fiscal_position = _get_fiscal_position
 
 
 class AccountFiscalPositionMp(models.Model):

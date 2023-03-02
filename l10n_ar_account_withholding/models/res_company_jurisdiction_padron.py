@@ -59,7 +59,8 @@ class ResCompanyJurisdictionPadron(models.Model):
     def descompress_file(self, file_padron):
         _logger.log(25, "Descompress zip file")
         ruta_extraccion = "/tmp"
-        file = base64.decodestring(file_padron)
+        # file = base64.decodestring(file_padron) -> this method is deprecated since Python 3.9
+        file = base64.decodebytes(file_padron)
         fobj = tempfile.NamedTemporaryFile(delete=False)
         fname = fobj.name
         fobj.write(file)

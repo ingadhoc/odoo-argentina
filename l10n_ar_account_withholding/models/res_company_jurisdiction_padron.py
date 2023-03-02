@@ -40,9 +40,11 @@ class ResCompanyJurisdictionPadron(models.Model):
 
     @api.constrains('jurisdiction_id')
     def check_jurisdiction_id(self):
-        arba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_902')
+        # arba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_902')
+        cdba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_904')
+
         for rec in self:
-            if rec.jurisdiction_id != arba_tag:
+            if rec.jurisdiction_id != cdba_tag:
                 raise ValidationError("El padron para (%s) no está implementado." % rec.jurisdiction_id.name)
 
     @api.depends('company_id', 'jurisdiction_id')

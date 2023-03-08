@@ -3,6 +3,7 @@
 # directory
 ##############################################################################
 from odoo import fields, models, api, _
+from odoo.tools import float_round
 
 
 class AccountMoveChangeRate(models.TransientModel):
@@ -35,10 +36,10 @@ class AccountMoveChangeRate(models.TransientModel):
 
     def confirm(self):
         if self.day_rate:
-            message = _("Currency rate changed from %s to %s") % (self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate, self.move_id.computed_currency_rate)
+            message = _("Currency rate changed from %s to %s") % (self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate, float_round(self.move_id.computed_currency_rate,2))
             self.move_id.l10n_ar_currency_rate = 0.0
         else:
-            message = _("Currency rate changed from %s to %s . Currency rate forced") % (self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate, self.currency_rate)
+            message = _("Currency rate changed from %s to %s . Currency rate forced") % (float_round(self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate, 2), float_round(self.currency_rate, 2))
             self.move_id.l10n_ar_currency_rate = self.currency_rate
         self.move_id.message_post(body=message)
         return {'type': 'ir.actions.act_window_close'}

@@ -8,5 +8,5 @@ class AccountMoveLine(models.Model):
     def _compute_currency_rate(self):
         forced = self.filtered(lambda x: x.move_id.l10n_ar_currency_rate)
         for rec in forced:
-            rec.currency_rate = rec.move_id.l10n_ar_currency_rate
+            rec.currency_rate = 1 / rec.move_id.l10n_ar_currency_rate if (rec.currency_id != rec.move_id.company_currency_id) else 1
         return super(AccountMoveLine, self - forced)._compute_currency_rate()

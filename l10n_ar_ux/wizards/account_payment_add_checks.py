@@ -7,6 +7,7 @@ class AccounTpaymentAddChecks(models.TransientModel):
     _description = "account.payment.add.checks"
 
     check_ids = fields.Many2many(comodel_name="account.payment")
+    company_id = fields.Many2one('res.company')
 
     def confirm(self):
         self.ensure_one()

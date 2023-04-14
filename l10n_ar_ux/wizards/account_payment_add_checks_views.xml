@@ -5,8 +5,9 @@
         <field name="model">account.payment.add.checks</field>
         <field name="arch" type="xml">
             <form>
+                <field name="company_id" invisible="1"/>
                 <field name="check_ids"
-                    domain="[('payment_method_code', '=', 'new_third_party_checks'), ('l10n_latam_check_current_journal_id', '!=', False), ('state', '=', 'posted')]"
+                    domain="[('payment_method_code', '=', 'new_third_party_checks'), ('l10n_latam_check_current_journal_id', '!=', False), ('state', '=', 'posted'), ('company_id', '=', company_id)]"
                     context="{'tree_view_ref': 'l10n_latam_check.view_account_third_party_check_tree'}"
                     options="{'no_create': True}"/>
                 <footer>

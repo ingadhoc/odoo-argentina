@@ -12,6 +12,7 @@
         'l10n_latam_check',
         'account_withholding',
         'account_payment_group',
+        'account_ux'
     ],
     'data': [
         'data/res_currency_data.xml',

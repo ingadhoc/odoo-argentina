@@ -10,21 +10,10 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-=============================
-Argentinian Sale Total Fields
-=============================
+============================
+Argentinian Purchase Report
+============================
 
-Add fields in sale orders so that you can print sale orders with vay included
-or not depending on VAT responsabilities
-
-NOTAS PARA MEJORAR Y TRADUCIR:
-* Para usar esta funcionalidad tnees que ir a la compania, pestañá config,
-grupo "sale" y setear si querés y el valor por defecto que querés que tome
-si no hay match (para el caso de facu sería "no_discriminated_default" de
-(manera predeterminada no se discrimnan los impuestos, es decir que si n
-tiene seteado nada el partner entonces no se discrimina)
-* En los presupuestos, igualmente, si lo quiere cambiar ,en la segunda pestaña
-hay un campo "vat discriminated", abajo de posición fiscal, donde se
 
 Installation
 ============

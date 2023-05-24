@@ -70,7 +70,7 @@
                            </td>
                             <td  class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
                                 <t t-if="check.currency_id">
-                                    <span class="text-nowrap" t-field="check.signed_amount" t-field-options='{"widget": "monetary",  "display_currency": "check.currency_id"}'/>
+                                    <span class="text-nowrap" t-field="check.amount_signed" t-field-options='{"widget": "monetary",  "display_currency": "check.currency_id"}'/>
                                 </t>
                             </td>
                             <td class="text-right o_price_total">
@@ -85,7 +85,7 @@
                             </td>
                             <td class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
                                 <t t-if="line.other_currency">
-                                    <span class="text-nowrap" t-field="line.signed_amount" t-field-options='{"widget": "monetary",  "display_currency": "line.currency_id"}'/>
+                                    <span class="text-nowrap" t-field="line.amount_signed" t-field-options='{"widget": "monetary",  "display_currency": "line.currency_id"}'/>
                                 </t>
                             </td>
                             <td class="text-right o_price_total">
@@ -100,7 +100,7 @@
                             </td>
                             <td class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
                                <t t-if="line.other_currency">
-                                <span class="text-nowrap" t-field="line.signed_amount" t-field-options='{"widget": "monetary",  "display_currency": "line.currency_id"}'/>
+                                <span class="text-nowrap" t-field="line.amount_signed" t-field-options='{"widget": "monetary",  "display_currency": "line.currency_id"}'/>
                               </t>
                             </td>
                             <td class="text-right o_price_total">
@@ -113,7 +113,7 @@
                     <tr>
                         <td><strong><span>Total Pagado</span></strong></td>
                         <td class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
-                            <strong t-if="len(o.payment_ids.mapped('currency_id')) == 1 and o.payment_ids.mapped('currency_id') != o.currency_id"> <span class="text-nowrap" t-out="sum(o.payment_ids.mapped('signed_amount'))" t-options="{'widget': 'monetary', 'display_currency': o.payment_ids.mapped('currency_id')}"/></strong>
+                            <strong t-if="len(o.payment_ids.mapped('currency_id')) == 1 and o.payment_ids.mapped('currency_id') != o.currency_id"> <span class="text-nowrap" t-out="sum(o.payment_ids.mapped('amount_signed'))" t-options="{'widget': 'monetary', 'display_currency': o.payment_ids.mapped('currency_id')}"/></strong>
                         </td>
                         <td class="text-right">
                             <strong><span class="text-nowrap" t-field="o.payments_amount"/></strong>

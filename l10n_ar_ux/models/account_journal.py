@@ -63,6 +63,7 @@ class AccountJournal(models.Model):
     def write(self, values):
         """ include the l10n_ar_document_type_ids changes as trigger to re compute the sequences """
         res = super().write(values)
+        res = super().write(values)
         to_check = set(['l10n_ar_document_type_ids'])
         if to_check.intersection(set(values.keys())):
             for rec in self:

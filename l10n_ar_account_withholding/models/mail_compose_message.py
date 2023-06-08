@@ -19,7 +19,7 @@ class MailComposeMessage(models.TransientModel):
             attachment_ids = []
             for payment in payment_group.payment_ids.filtered(lambda p: p.payment_method_code == 'withholding'):
                 report_name = safe_eval.safe_eval(report.print_report_name, {'object': payment})
-                result, format = report._render(payment.ids)
+                result, format = self.env['ir.actions.report']._render(report.report_name, payment.ids)
                 file = base64.b64encode(result)
                 data_attach = {
                     'name': report_name,

@@ -25,3 +25,16 @@ class AccountPayment(models.Model):
                 'date_maturity': date_maturity,
             })
         return res
+
+    @api.depends('payment_method_code', 'l10n_latam_check_id', 'check_number')
+    def _compute_payment_method_description(self):
+        check_payments = self.filtered(
+            lambda x: x.payment_method_code in ['check_printing', 'new_third_party_checks', 'out_third_party_checks', 'in_third_party_checks'])
+        for rec in check_payments:
+            if rec.l10n_latam_check_id:
+                checks_desc = rec.l10n_latam_check_id.check_number
+            else:
+                checks_desc = rec.check_number or ''
+            name = "%s: %s" % (rec.payment_method_line_id.display_name, checks_desc)
+            rec.payment_method_description = name
+        return super(AccountPayment, (self - check_payments))._compute_payment_method_description()

@@ -12,6 +12,7 @@
     'demo': [
     ],
     'installable': True,
+    'auto_install': True,
     'assets': {
     },
     'license': 'LGPL-3',

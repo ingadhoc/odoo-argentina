@@ -159,3 +159,9 @@ class AccountMove(models.Model):
                 document_types = rec.l10n_latam_available_document_type_ids._origin
                 document_types = document_types.filtered(lambda x: x.internal_type == 'debit_note')
                 rec.l10n_latam_document_type_id = document_types and document_types[0].id
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_forbid_parts_of_chain(self):
+        """Delete vendor bills without verifying if they are the last ones of the sequence chain."""
+        vendor = self.filtered(lambda x: x._is_manual_document_number() and x.l10n_latam_use_documents)
+        return super(AccountMove, self - vendor)._unlink_forbid_parts_of_chain()

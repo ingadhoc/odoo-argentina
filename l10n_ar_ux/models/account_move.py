@@ -90,3 +90,37 @@ class AccountMove(models.Model):
         if self.country_code == 'AR' and self.journal_id._l10n_ar_journal_issuer_is_supplier():
             return not res
         return res
+<<<<<<< HEAD
+||||||| parent of 5efb406 (temp)
+
+    @api.depends('l10n_latam_available_document_type_ids', 'debit_origin_id')
+    def _compute_l10n_latam_document_type(self):
+        """ Sobre escribimos este metodo porque es necesario para poder auto calcular el tipo de documento por defecto
+        de una nota de debito cuando no hay un debit_origin_id definido, puede ser porque simplemente no haya un
+        documento relacionado original o porque hay muchos documentos relacionados pero no puede ser asociados """
+        super()._compute_l10n_latam_document_type()
+        if self.env.context.get('internal_type') == 'debit_note':
+            for rec in self.filtered(lambda x: x.state == 'draft'):
+                document_types = rec.l10n_latam_available_document_type_ids._origin
+                document_types = document_types.filtered(lambda x: x.internal_type == 'debit_note')
+                rec.l10n_latam_document_type_id = document_types and document_types[0].id
+=======
+
+    @api.depends('l10n_latam_available_document_type_ids', 'debit_origin_id')
+    def _compute_l10n_latam_document_type(self):
+        """ Sobre escribimos este metodo porque es necesario para poder auto calcular el tipo de documento por defecto
+        de una nota de debito cuando no hay un debit_origin_id definido, puede ser porque simplemente no haya un
+        documento relacionado original o porque hay muchos documentos relacionados pero no puede ser asociados """
+        super()._compute_l10n_latam_document_type()
+        if self.env.context.get('internal_type') == 'debit_note':
+            for rec in self.filtered(lambda x: x.state == 'draft'):
+                document_types = rec.l10n_latam_available_document_type_ids._origin
+                document_types = document_types.filtered(lambda x: x.internal_type == 'debit_note')
+                rec.l10n_latam_document_type_id = document_types and document_types[0].id
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_forbid_parts_of_chain(self):
+        """Delete vendor bills without verifying if they are the last ones of the sequence chain."""
+        vendor = self.filtered(lambda x: x._is_manual_document_number() and x.l10n_latam_use_documents)
+        return super(AccountMove, self - vendor)._unlink_forbid_parts_of_chain()
+>>>>>>> 5efb406 (temp)

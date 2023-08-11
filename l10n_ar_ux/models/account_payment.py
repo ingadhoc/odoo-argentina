@@ -1,4 +1,5 @@
 from odoo import fields, models, api
+from odoo.exceptions import UserError
 
 
 class AccountPayment(models.Model):
@@ -52,3 +53,9 @@ class AccountPayment(models.Model):
         for rec in new_third_party_checks:
             rec.l10n_latam_check_bank_id = rec.partner_id.bank_ids[:1].bank_id or rec.l10n_latam_check_bank_id
         (self - new_third_party_checks).l10n_latam_check_bank_id = False
+
+    @api.constrains('l10n_latam_check_id')
+    def pay_with_same_check_repeatedly(self):
+        """ Prevent pay with same check more than one time in the same payment group. """
+        if len(self.payment_group_id.payment_ids.filtered('l10n_latam_check_id.payment_method_description')) != len(self.payment_group_id.payment_ids.mapped('l10n_latam_check_id.payment_method_description')):
+                raise UserError("There are two or more payment lines with the same check.")

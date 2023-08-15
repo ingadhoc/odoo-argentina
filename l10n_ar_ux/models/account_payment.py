@@ -21,9 +21,10 @@ class AccountPayment(models.Model):
         elif self.payment_method_line_id.code == 'check_printing' and self.l10n_latam_check_payment_date:
             date_maturity = self.l10n_latam_check_payment_date
         if date_maturity:
-            res[0].update({
-                'date_maturity': date_maturity,
-            })
+            for vals in res:
+                vals.update({
+                    'date_maturity': date_maturity,
+                })
         return res
 
     @api.depends('payment_method_code', 'l10n_latam_check_id', 'check_number')

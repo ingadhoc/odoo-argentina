@@ -39,3 +39,16 @@ class AccountPayment(models.Model):
             name = "%s: %s" % (rec.payment_method_line_id.display_name, checks_desc)
             rec.payment_method_description = name
         return super(AccountPayment, (self - check_payments))._compute_payment_method_description()
+
+    @api.onchange('l10n_latam_check_number')
+    def _inverse_l10n_latam_check_number(self):
+        """ Cuando se crea un payment group y no se guarda y luego se crean líneas de pago en dicho payment group de cheques de terceros indicando el número de cheque y posteriormente se guarda el payment group necesitamos que no se borre el banco que se indica en cada una de las líneas de pago. """
+        for rec in self:
+            rec.check_number = '%08d' % int(rec.l10n_latam_check_number) if rec.l10n_latam_check_number and rec.journal_id.company_id.country_id.code == "AR" and rec.l10n_latam_check_number.isdecimal() else rec.l10n_latam_check_number
+
+    def _compute_l10n_latam_check_bank_id(self):
+        """ Cuando se crea un payment group y no se guarda y luego se crean líneas de pago en dicho payment group de cheques de terceros indicando el banco correspondiente del cheque y posteriormente se guarda el payment group necesitamos que no se borre el banco que se indica en cada una de las líneas de pago. """
+        new_third_party_checks = self.filtered(lambda x: x.payment_method_line_id.code == 'new_third_party_checks')
+        for rec in new_third_party_checks:
+            rec.l10n_latam_check_bank_id = rec.partner_id.bank_ids[:1].bank_id or rec.l10n_latam_check_bank_id
+        (self - new_third_party_checks).l10n_latam_check_bank_id = False

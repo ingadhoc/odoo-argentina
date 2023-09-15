@@ -67,7 +67,7 @@
             </field>
             <!-- TODO mejorar esto, por ahora solo lo hacemos visible con este grupo ya que este grupo solo lo estamos usando en realidad para API, deberiamos ver de hacerlo de otra manera -->
             <notebook>
-                <page string="API" groups="l10n_ar_account_withholding.l10n_apartner_tax_withholding_amount_type">
+                <page string="API" groups="l10n_ar_account_withholding.partner_tax_withholding_amount_type">
                     <group>
                         <field name="api_codigo_articulo_retencion"/>
                         <field name="api_articulo_inciso_calculo_retencion"/>

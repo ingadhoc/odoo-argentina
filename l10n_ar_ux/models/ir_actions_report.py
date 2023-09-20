@@ -20,9 +20,9 @@ class IrActionsReport(models.Model):
         res = super()._get_rendering_context(report, docids, data)
         l10n_ar_copies = ['']
         is_email = 'force_email' in self._context or 'default_subject' in self._context
-        if not is_email and self.l10n_ar_copies:
+        if not is_email and report.l10n_ar_copies:
             l10n_ar_copies = ['ORIGINAL', 'DUPLICADO']
-            if self.l10n_ar_copies == 'triplicado':
+            if report.l10n_ar_copies == 'triplicado':
                 l10n_ar_copies += ['TRIPLICADO']
         res.update({
             'l10n_ar_copies_list': l10n_ar_copies,

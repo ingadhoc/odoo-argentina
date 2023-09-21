@@ -150,6 +150,11 @@ class AccountTax(models.Model):
 
     def get_partner_alicuot(self, partner, date):
         self.ensure_one()
+        if self._context.get('sale_order_commercial_partner_id'):
+            # si queremos calcular la percepción en una orden de venta
+            # tenemos que tener en cuenta la alícuota del partner de la orden de venta
+            # y no la alícuota de la compañía matriz de la dirección de entrega
+            partner = self._context['sale_order_commercial_partner_id']
         commercial_partner = partner.commercial_partner_id
         company = self.company_id
         alicuot = partner.arba_alicuot_ids.search([

@@ -7,8 +7,8 @@ class AccountPayment(models.Model):
     l10n_ar_partner_vat = fields.Char(related='partner_id.l10n_ar_vat', string='CUIT del destinatario')
 
     @api.model
-    def _get_trigger_fields_to_sincronize(self):
-        res = super()._get_trigger_fields_to_sincronize()
+    def _get_trigger_fields_to_synchronize(self):
+        res = super()._get_trigger_fields_to_synchronize()
         return res + ('l10n_latam_check_payment_date',)
 
     def _prepare_move_line_default_vals(self, write_off_line_vals=None):

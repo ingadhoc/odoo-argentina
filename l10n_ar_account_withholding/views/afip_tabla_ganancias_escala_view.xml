@@ -11,6 +11,7 @@
                 <field name="importe_fijo"/>
                 <field name="porcentaje"/>
                 <field name="importe_excedente"/>
+                <field name="codigo_de_regimen"/>
             </tree>
         </field>
     </record>

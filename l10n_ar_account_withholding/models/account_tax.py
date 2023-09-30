@@ -108,9 +108,11 @@ class AccountTax(models.Model):
                     # hacemos <= porque si es 0 necesitamos que encuentre
                     # la primer regla (0 es en el caso en que la no
                     # imponible sea mayor)
+                    codigo_de_regimen = '119' if regimen.codigo_de_regimen == '119' else ''
                     escala = self.env['afip.tabla_ganancias.escala'].search([
                         ('importe_desde', '<=', base_amount),
                         ('importe_hasta', '>', base_amount),
+                        ('codigo_de_regimen', '=', codigo_de_regimen)
                     ], limit=1)
                     if not escala:
                         raise UserError(

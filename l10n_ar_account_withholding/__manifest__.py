@@ -50,5 +50,11 @@
     },
     'installable': True,
     'name': 'Automatic Argentinian Withholdings on Payments',
+<<<<<<< HEAD
     'version': "16.0.1.1.0",
+||||||| parent of 0ea96c1 (temp)
+    'version': "15.0.1.3.0",
+=======
+    'version': "15.0.1.4.0",
+>>>>>>> 0ea96c1 (temp)
 }

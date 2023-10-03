@@ -106,3 +106,13 @@ class ResPartner(models.Model):
                 if self[r_field] == value:
                     values.pop(r_field, False)
         return values
+
+    @api.depends('vat')
+    def _compute_same_vat_partner_id(self):
+        for partner in self:
+            # use _origin to deal with onchange()
+            partner_id = partner._origin.id
+            if partner_id:
+                domain = [('id', '!=', partner_id), '!', ('id', 'child_of', partner_id)]
+            partner.same_vat_partner_id = bool(partner.vat) and not partner.parent_id and self.env['res.partner'].search(domain).filtered(
+                lambda p: p._get_id_number_sanitize() == partner._get_id_number_sanitize())

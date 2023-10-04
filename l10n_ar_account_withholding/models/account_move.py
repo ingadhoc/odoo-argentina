@@ -21,3 +21,9 @@ class AccountMove(models.Model):
             invoice = invoice.with_context(invoice_date=invoice.invoice_date)
             super(AccountMove, invoice)._compute_tax_totals()
         super(AccountMove, self - invoices)._compute_tax_totals()
+
+    def _l10n_ar_get_invoice_totals_for_report(self):
+        """ Mandamos en contexto el invoice_date para cauclo de impuesto con partner aliquot
+        cuando imprimos el reporte de factura """
+        self.ensure_one()
+        return super(AccountMove, self.with_context(invoice_date=self.invoice_date))._l10n_ar_get_invoice_totals_for_report()

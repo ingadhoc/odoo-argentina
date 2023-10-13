@@ -38,13 +38,6 @@ class ResCompanyJurisdictionPadron(models.Model):
         required=True,
     )
 
-    @api.constrains('jurisdiction_id')
-    def check_jurisdiction_id(self):
-        arba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_902')
-        for rec in self:
-            if rec.jurisdiction_id != arba_tag:
-                raise ValidationError("El padron para (%s) no está implementado." % rec.jurisdiction_id.name)
-
     @api.depends('company_id', 'jurisdiction_id')
     def name_get(self):
         res = []

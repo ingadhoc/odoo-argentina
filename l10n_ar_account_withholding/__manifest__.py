@@ -42,7 +42,7 @@
         'demo/ir_parameter.xml',
     ],
     'depends': [
-        'account_withholding_automatic',
+        # 'account_withholding_automatic',
         'l10n_ar_ux',
     ],
     'external_dependencies': {
@@ -50,5 +50,5 @@
     },
     'installable': False,
     'name': 'Automatic Argentinian Withholdings on Payments',
-    'version': "16.0.1.2.0",
+    'version': "16.5.1.0.0",
 }

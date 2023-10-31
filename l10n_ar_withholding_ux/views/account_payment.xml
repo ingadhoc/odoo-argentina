@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_payment_form" model="ir.ui.view">
+        <field name="name">account.payment.form.inherited</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="l10n_ar_withholding.view_account_payment_form" />
+        <field name="arch" type="xml">
+            <field name="l10n_ar_withholding_ids" position="replace">
+                <field name="l10n_ar_withholding_line_ids" nolabel="1" colspan="2"
+                        invisible="is_internal_transfer" readonly="state != 'draft'">
+                    <tree editable="bottom">
+                        <field name="withholding_sequence_id" column_invisible="True"/>
+                        <field name="company_id" column_invisible="True"/>
+                        <field name="currency_id" column_invisible="True"/>
+                        <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', '=', company_id)]" options="{'no_open': True, 'no_create': True}"/>
+                        <field name="name" readonly="withholding_sequence_id"/>
+                        <field name="base_amount"/>
+                        <field name="amount"/>
+                    </tree>
+                </field>
+            <field name="l10n_ar_amount_total"></field>
+            </field>
+        </field>
+    </record>
+</odoo>

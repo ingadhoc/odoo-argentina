@@ -36,19 +36,18 @@
         'views/res_partner_view.xml',
         'views/account_tax_view.xml',
         'data/tabla_ganancias_data.xml',
-        'data/account_tax_withholding_template.xml',
     ],
     'demo': [
         'demo/ir_parameter.xml',
     ],
     'depends': [
-        'account_withholding_automatic',
         'l10n_ar_ux',
+        'l10n_ar_withholding_ux',
     ],
     'external_dependencies': {
         'python': ['pyafipws'],
     },
-    'installable': False,
+    'installable': True,
     'name': 'Automatic Argentinian Withholdings on Payments',
     'version': "17.0.0.0.0",
 }

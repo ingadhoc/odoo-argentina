@@ -1,6 +1,6 @@
 from odoo.tests import common
 from odoo.exceptions import UserError
-import pprint
+
 
 class TestARBA(common.TransactionCase):
     def test_0_arbaconnect(self):

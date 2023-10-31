@@ -17,14 +17,6 @@ class AccountTax(models.Model):
             ('partner_tax', 'Alícuota en el Partner'),
         ]), ondelete={'tabla_ganancias': 'set default', 'partner_tax': 'set default'}
     )
-    # default_alicuot = fields.Float(
-    #     'Alícuota por defecto',
-    #     help="Alícuota por defecto para los partners que no figuran en el "
-    #     "padrón"
-    # )
-    # default_alicuot_copy = fields.Float(
-    #     related='default_alicuot',
-    # )
 
     @api.constrains('amount_type', 'withholding_type')
     def check_partner_tax_tag(self):
@@ -163,7 +155,7 @@ class AccountTax(models.Model):
             ('to_date', '=', False),
             ('to_date', '>=', date),
         ], limit=1)
-     
+
         # solo buscamos en padron para estas responsabilidades
         if not alicuot and \
                 commercial_partner.l10n_ar_afip_responsibility_type_id.code in \

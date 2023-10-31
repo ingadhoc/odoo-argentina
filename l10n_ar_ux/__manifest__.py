@@ -8,7 +8,7 @@
     'license': 'AGPL-3',
     'summary': '',
     'depends': [
-        'l10n_ar_withholding',
+        # '̀l10n_ar_withholding',
     ],
     'data': [
         'data/res_currency_data.xml',

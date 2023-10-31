@@ -11,6 +11,7 @@
     ],
     'data': [
         'data/res_bank.xml',
+        'views/res_bank.xml',
     ],
     'installable': True,
     'auto_install': False,

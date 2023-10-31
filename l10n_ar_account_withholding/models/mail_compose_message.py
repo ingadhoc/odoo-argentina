@@ -1,23 +1,24 @@
 from odoo import models
 from odoo.tools import safe_eval
 import base64
-import time
+
 
 class MailComposeMessage(models.TransientModel):
     _inherit = "mail.compose.message"
 
+    # TODO falta adaptar
     def _onchange_template_id(self, template_id, composition_mode, model, res_id):
         values = super()._onchange_template_id(
             template_id, composition_mode, model, res_id)
-        if template_id and model == 'account.payment.group':
-            payment_group = self.env[model].browse(res_id)
-            if payment_group.partner_type != 'supplier':
+        if template_id and model == 'account.payment':
+            payment = self.env[model].browse(res_id)
+            if payment.partner_type != 'supplier':
                 return values
             report = self.env.ref('l10n_ar_account_withholding.action_report_withholding_certificate', raise_if_not_found=False)
             if not report:
                 return values
             attachment_ids = []
-            for payment in payment_group.payment_ids.filtered(lambda p: p.payment_method_code == 'withholding'):
+            for payment in payment.payment_ids.filtered(lambda p: p.payment_method_code == 'withholding'):
                 report_name = safe_eval.safe_eval(report.print_report_name, {'object': payment})
                 result, format = self.env['ir.actions.report']._render(report.report_name, payment.ids)
                 file = base64.b64encode(result)

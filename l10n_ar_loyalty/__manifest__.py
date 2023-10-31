@@ -1,6 +1,6 @@
 {
     'name': 'l10n_ar Loyalty',
-    'version': "16.0.1.0.0",
+    'version': "16.5.0.0.0",
     'description': '',
     'author': 'ADHOC SA',
     'depends': [

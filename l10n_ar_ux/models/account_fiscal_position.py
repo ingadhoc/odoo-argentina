@@ -1,20 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import models, api
-from odoo.addons.l10n_ar.models.account_fiscal_position import AccountFiscalPosition
-
-
-@api.model
-def _get_fiscal_position(self, partner, delivery=None):
-    company = self.env.company
-    if company.country_id.code == "AR":
-        self = self.with_context(
-            company_code='AR',
-            l10n_ar_afip_responsibility_type_id=partner.l10n_ar_afip_responsibility_type_id.id)
-    return super(AccountFiscalPosition, self)._get_fiscal_position(partner, delivery=delivery)
-
-
-AccountFiscalPosition._get_fiscal_position = _get_fiscal_position
-
 
 class AccountFiscalPositionMp(models.Model):
 

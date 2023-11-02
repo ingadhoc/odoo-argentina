@@ -46,5 +46,5 @@
     'auto_install': True,
     'application': False,
     'post_init_hook': 'post_init_hook',
-    'post_load': 'monkey_patch_inverse_l10n_latam_document_number',
+    'post_load': 'monkey_patches',
 }

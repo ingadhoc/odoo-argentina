@@ -131,3 +131,15 @@ class AccountMove(models.Model):
         """Delete vendor bills without verifying if they are the last ones of the sequence chain."""
         vendor = self.filtered(lambda x: x._is_manual_document_number() and x.l10n_latam_use_documents)
         return super(AccountMove, self - vendor)._unlink_forbid_parts_of_chain()
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_forbid_parts_of_chain(self):
+        """Delete vendor bills without verifying if they are the last ones of the sequence chain."""
+        # Field l10n_latam_use_documents is defined in module l10n_latam_invoice_document but l10n_ax_ux doesn´t has it as depends.
+        l10n_latam_invoice_document_installed = self.env['ir.module.module'].search([
+            ('name', '=', 'l10n_latam_invoice_document'),
+            ('state', '=', 'installed'),
+        ])
+        if l10n_latam_invoice_document_installed:
+            vendor = self.filtered(lambda x: x._is_manual_document_number() and x.l10n_latam_use_documents)
+            return super(AccountMove, self - vendor)._unlink_forbid_parts_of_chain()

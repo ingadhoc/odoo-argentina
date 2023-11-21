@@ -7,9 +7,8 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-def set_tax_included(cr, registry):
+def set_tax_included(env):
     _logger.info('Settig tax included by default')
-    env = api.Environment(cr, SUPERUSER_ID, {'active_test': False})
     # if this option was never configured we set it as tax_included. This is useful for ecommerce
     # where in argentina normally ecommerce are b2c. account_ux and sale_ux areadly modify the backend
     # so that this does not affect backend users.
@@ -25,7 +24,7 @@ def set_tax_included(cr, registry):
             group.write({'implied_ids': [(4, env.ref('account.group_show_line_subtotals_tax_included').id)]})
 
 
-def post_init_hook(cr, registry):
+def post_init_hook(env):
     """Loaded after installing the module """
     _logger.info('Post init hook initialized')
-    set_tax_included(cr, registry)
+    # set_tax_included(env)

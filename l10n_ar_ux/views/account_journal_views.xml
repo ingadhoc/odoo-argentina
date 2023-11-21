@@ -8,29 +8,17 @@
         <field name="arch" type="xml">
 
             <field name="l10n_latam_use_documents" position="after">
-                <field name="discriminate_taxes" attrs="{'invisible':['|', '|', ('country_code', '!=', 'AR'), ('l10n_latam_use_documents', '=', True), ('type', '!=', 'sale')]}"/>
-                <field name="l10n_ar_is_pos" attrs="{'invisible':['|', '|', ('country_code', '!=', 'AR'), ('l10n_latam_use_documents', '=', False), ('type', 'not in', ['sale', 'purchase'])]}"/>
+                <field name="discriminate_taxes" invisible="country_code != 'AR' or l10n_latam_use_documents or type != 'sale'"/>
             </field>
 
-            <field name="l10n_ar_afip_pos_partner_id" position="after">
-                <field name="l10n_ar_document_type_ids" widget="many2many_tags" attrs="{'invisible': ['|', '|', ('l10n_latam_use_documents', '=', False), '&amp;', ('type', '=', 'sale'), ('l10n_ar_is_pos', '=', True), '&amp;', ('type', '=', 'purchase'), ('l10n_ar_is_pos', '=', False)]}" domain="[('country_id.code', '=', country_code), ('code', 'in', [
-                    '23', '24', '25', '26', '27', '28', '33', '43', '45', '46', '48', '58', '60', '61', '150', '151', '157',
-                    '158', '161', '162', '164', '166', '167', '171', '172', '180', '182', '186', '188', '332'])]"/>
-            </field>
-
-            <!-- AFIP POS fields only visible if journal is POS SYSTEM  -->
-            <field name="l10n_ar_afip_pos_system" position="attributes">
-                <attribute name="attrs">{'invisible':[('l10n_ar_is_pos', '=', False)], 'required':[('l10n_ar_is_pos', '=', True)]}</attribute>
-            </field>
-
-            <field name="l10n_ar_afip_pos_number" position="attributes">
-                <attribute name="attrs">{'invisible':[('l10n_ar_is_pos', '=', False)], 'required':[('l10n_ar_is_pos', '=', True)]}</attribute>
-            </field>
+            <!-- dejamos el campo visible aun sin use documents porque con l10n_ar_ux usamos reporte look and feel argentino aun sin documentos -->
             <field name="l10n_ar_afip_pos_partner_id" position="attributes">
-                <attribute name="attrs">{'invisible':['|', ('country_code', '!=', 'AR'), ('type', 'not in', ['sale', 'purchase'])], 'required':['|',('l10n_ar_is_pos', '=', True), '&amp;', '&amp;',('l10n_latam_use_documents', '=', False), ('country_code', '=', 'AR'), ('type', '=', 'sale')]}</attribute>
+                <attribute name="invisible">country_code != 'AR' or type not in ['sale', 'purchase']</attribute>
+                <attribute name="required">l10n_ar_is_pos or not l10n_latam_use_documents and country_code == 'AR' and type == 'sale'</attribute>
             </field>
+
             <xpath expr="//page[@name='advanced_settings']/group" position="after">
-                <group string="QR-Code" attrs="{'invisible': ['|', '|', ('country_code', '!=', 'AR'), ('type', '!=', 'sale'), ('l10n_latam_use_documents', '=', False)]}">
+                <group string="QR-Code" invisible="country_code != 'AR' or type != 'sale' or not l10n_latam_use_documents">
                     <field name="qr_code_label"/>
                     <field name="qr_code"/>
                 </group>

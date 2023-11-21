@@ -4,16 +4,16 @@
     <record id="view_move_form" model="ir.ui.view">
         <field name="name">account.move.form</field>
         <field name="model">account.move</field>
-        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="inherit_id" ref="account_ux.view_move_form"/>
         <field name="priority">30</field>
         <field name="arch" type="xml">
             <button name="%(account_ux.action_account_change_currency)d" position="after">
-                <span groups="base.group_multi_currency" attrs="{'invisible': [('other_currency', '=', False)]}">(</span>
-                <field name="l10n_ar_currency_rate" attrs="{'invisible': ['|', ('country_code', '!=', 'AR'), '|', '|', ('l10n_ar_currency_rate', '=', False), ('l10n_ar_currency_rate', '=', 0.0), ('other_currency', '=', False)]}"/>
-                <field name="computed_currency_rate" string="Currency Rate (preview)" attrs="{'invisible': ['|', ('country_code', '!=', 'AR'), '|', ('l10n_ar_currency_rate', '!=', 0.0), ('other_currency', '=', False)]}"/>
-                <span groups="base.group_multi_currency" attrs="{'invisible': [('other_currency', '=', False)]}">)</span>
-                <button name="%(action_account_move_change_rate)d" type="action" icon="fa-pencil" style="color:red" class="btn-link" attrs="{'invisible':['|', '|', '|' , '|', ('state','!=','draft'), ('other_currency', '=', False), ('country_code', '!=', 'AR'), ('l10n_ar_currency_rate', '=', 0.0), ('l10n_ar_currency_rate', '=', False)]}" title="Edit Rate"/>
-                <button name="%(action_account_move_change_rate)d" type="action" icon="fa-pencil" class="btn-link" attrs="{'invisible':['|', '|', '|' , ('state','!=','draft'), ('other_currency', '=', False), ('country_code', '!=', 'AR'), ('l10n_ar_currency_rate', '!=', 0.0)]}" title="Edit Rate"/>
+                <span groups="base.group_multi_currency" invisible="not other_currency">(</span>
+                <field name="l10n_ar_currency_rate" invisible="country_code != 'AR' or not l10n_ar_currency_rate or l10n_ar_currency_rate == 0.0 or not other_currency"/>
+                <field name="computed_currency_rate" string="Currency Rate (preview)" invisible="country_code != 'AR' or l10n_ar_currency_rate != 0.0 or not other_currency"/>
+                <span groups="base.group_multi_currency" invisible="not other_currency">)</span>
+                <button name="%(action_account_move_change_rate)d" type="action" icon="fa-pencil" style="color:red" class="btn-link" invisible="state != 'draft' or not other_currency or country_code != 'AR' or l10n_ar_currency_rate == 0.0 or not l10n_ar_currency_rate" title="Edit Rate"/>
+                <button name="%(action_account_move_change_rate)d" type="action" icon="fa-pencil" class="btn-link" invisible="state != 'draft' or not other_currency or country_code != 'AR' or l10n_ar_currency_rate != 0.0" title="Edit Rate"/>
             </button>
         </field>
     </record>

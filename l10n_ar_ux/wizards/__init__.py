@@ -4,4 +4,3 @@
 ##############################################################################
 from . import res_config_settings
 from . import account_move_change_rate
-from . import account_payment_add_checks

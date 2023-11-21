@@ -24,7 +24,7 @@
                 <field name="state"/>
                 <field name="payment_state" optional="hide"/>
                 <field name="invoice_currency_id" optional="hide"/>
-                <field name="company_currency_id" invisible="1"/>
+                <field name="company_currency_id" column_invisible="True"/>
             </tree>
         </field>
     </record>

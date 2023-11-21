@@ -59,17 +59,6 @@ class AccountMove(models.Model):
             return 'l10n_ar.report_invoice_document'
         return super()._get_name_invoice_report()
 
-    def _get_l10n_latam_documents_domain(self):
-        self.ensure_one()
-        # TODO: add prefix "_l10n_ar" to method use_specific_document_types
-        if self.company_id.country_id == self.env.ref('base.ar') and self.journal_id.use_specific_document_types():
-            return [
-                ('id', 'in', self.journal_id.l10n_ar_document_type_ids.ids),
-                '|', ('code', 'in', self._get_l10n_ar_codes_used_for_inv_and_ref()),
-                ('internal_type', 'in', ['credit_note'] if self.move_type in ['out_refund', 'in_refund'] else ['invoice', 'debit_note']),
-            ]
-        return super()._get_l10n_latam_documents_domain()
-
     def _l10n_ar_include_vat(self):
         self.ensure_one()
         if not self.l10n_latam_use_documents:
@@ -83,10 +72,3 @@ class AccountMove(models.Model):
                     self.company_id.l10n_ar_company_requires_vat and
                     self.partner_id.l10n_ar_afip_responsibility_type_id.code in ['1'] or False)
         return self.l10n_latam_document_type_id.l10n_ar_letter in ['B', 'C', 'X', 'R']
-
-    def _is_manual_document_number(self):
-        res = super()._is_manual_document_number()
-        # when issuer is supplier de numbering works opposite (supplier numerate invoices, customer encode bill)
-        if self.country_code == 'AR' and self.journal_id._l10n_ar_journal_issuer_is_supplier():
-            return not res
-        return res

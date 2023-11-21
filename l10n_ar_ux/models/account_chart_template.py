@@ -10,8 +10,9 @@ class AccountChartTemplate(models.Model):
     _inherit = 'account.chart.template'
 
     def _load(self, company):
-        """ Set non monetary tag when installing chart of account """
+        """ Set non monetary tag when installing chart of account EDIT"""
         res = super()._load(company)
         if company.country_id == self.env.ref('base.ar'):
             self.env['account.account'].set_non_monetary_tag(company)
+        "Test"
         return res

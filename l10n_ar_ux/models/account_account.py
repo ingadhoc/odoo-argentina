@@ -11,6 +11,7 @@ class AccountAccount(models.Model):
 
     @api.model
     def set_non_monetary_tag(self, company):
+        pass
         """ Set <Non Monetary> tag to the corresponding accounts taking into account the account type """
         non_monetary_tag = self.env.ref('l10n_ar_ux.no_monetaria_tag')
         account_types = [

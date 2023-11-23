@@ -30,6 +30,27 @@ class AccountJournal(models.Model):
         required=True,
     )
     l10n_ar_afip_pos_partner_id = fields.Many2one(string='Dirección Punto de venta')
+    l10n_latam_manual_checks = fields.Boolean(
+        compute="_compute_l10n_latam_manual_checks", store=True, readonly=False,
+        inverse='_inverse_l10n_latam_manual_checks', copy=False)
+
+    @api.model
+    def _get_checkbooks_by_default_country_codes(self):
+        """ Return the list of country codes for the countries where using checkbooks is enable by default """
+        return ["AR"]
+
+    @api.depends('outbound_payment_method_line_ids', 'company_id', 'check_manual_sequencing')
+    def _compute_l10n_latam_manual_checks(self):
+        arg_checks = self.filtered(
+                lambda x: not x.check_manual_sequencing and x.company_id.country_id.code in self._get_checkbooks_by_default_country_codes() and
+                'check_printing' in x.outbound_payment_method_line_ids.mapped('code'))
+        arg_checks.l10n_latam_manual_checks = True
+        # disable checkbook if manual sequencing was enable
+        self.filtered('check_manual_sequencing').l10n_latam_manual_checks = False
+
+    @api.onchange('l10n_latam_manual_checks')
+    def _inverse_l10n_latam_manual_checks(self):
+        self.filtered('l10n_latam_manual_checks').check_manual_sequencing = False
 
     @api.onchange('l10n_ar_is_pos')
     def _onchange_l10n_ar_is_pos(self):

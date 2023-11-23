@@ -1,5 +1,6 @@
 from odoo import fields, models, api
 
+# prueba
 
 class AccountPayment(models.Model):
     _inherit = 'account.payment'

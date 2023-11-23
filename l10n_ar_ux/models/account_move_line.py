@@ -1,6 +1,7 @@
 from odoo import models, api
 
 #otra prueba 
+
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 

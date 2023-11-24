@@ -1,6 +1,6 @@
 from odoo import models
 
-
+# otro comentario
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 

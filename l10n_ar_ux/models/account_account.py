@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import models, api
 
+# comentario de prueba 
 
 class AccountAccount(models.Model):
 

@@ -21,11 +21,11 @@ class AccountFiscalPositionMp(models.Model):
     _inherit = 'account.fiscal.position'
 
     @api.model
-    def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
+    def _search(self, domain, offset=0, limit=None, order=None, access_rights_uid=None):
         """ Take into account the partner afip responsibility in order to auto-detect the fiscal position """
         if self._context.get('company_code') == 'AR':
-            args += [('l10n_ar_afip_responsibility_type_ids', '=', self._context.get('l10n_ar_afip_responsibility_type_id'))]
-        return super()._search(args, offset, limit, order, count=count, access_rights_uid=access_rights_uid)
+            domain += [('l10n_ar_afip_responsibility_type_ids', '=', self._context.get('l10n_ar_afip_responsibility_type_id'))]
+        return super()._search(domain, offset=offset, limit=limit, order=order, access_rights_uid=access_rights_uid)
 
     def _onchange_afip_responsibility(self):
         return {}

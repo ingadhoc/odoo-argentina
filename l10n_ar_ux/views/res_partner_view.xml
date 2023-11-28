@@ -6,9 +6,10 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="l10n_ar.view_partner_property_form"/>
         <field name="arch" type="xml">
-            <field name="l10n_ar_special_purchase_document_type_ids" position="replace"/>
+            <!-- borramos este grupo que se crea en l10n_ar que no tiene sentido y deberia ser deprecado -->
+            <group name="accounting_documents" position="replace"/>
             <page name="accounting" position="after">
-                <page string="Fiscal Data" name="fiscal_data" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}">
+                <page string="Fiscal Data" name="fiscal_data" invisible="'AR'not in fiscal_country_codes or (not is_company and parent_id)">
 
                     <!-- add other documents -->
                     <group string="AFIP" name="afip">
@@ -36,13 +37,14 @@
                     </group>
                 </page>
             </page>
-
+            <!-- movemos el campo de gross income que odoo agrega en pestaña ventas y compras a fiscal info.
+            Podriamos meter todo en la solapa ventas y compras pero queda muy grande y ademas deberiamos cambiar logica de odoo para la nuestra donde solo mostramos gross income si es commercial entity -->
             <group name="others_col_1" position="inside">
-                <label for="l10n_ar_gross_income_number" position="move"/>
+                <label for="l10n_ar_gross_income_type" position="move"/>
                 <div name="gross_income" position="move"/>
             </group>
             <div name="gross_income" position="inside">
-                <field name="gross_income_jurisdiction_ids" widget="many2many_tags" placeholder="Other Jurisdictions" class="oe_inline" attrs="{'invisible': [('l10n_ar_gross_income_type', '!=', 'multilateral')]}"/>
+                <field name="gross_income_jurisdiction_ids" widget="many2many_tags" placeholder="Other Jurisdictions" class="oe_inline" invisible="l10n_ar_gross_income_type != 'multilateral'"/>
             </div>
 
         </field>

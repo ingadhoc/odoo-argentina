@@ -18,9 +18,13 @@
                 <field name="product_categ_id" optional="hide"/>
                 <field name="quantity" sum="Total"/>
                 <field name="price_unit"/>
+                <field name="price_average" optional="hide"/>
                 <field name="discount" groups="product.group_discount_per_so_line"/>
                 <field name="discount_amount" sum="Total" optional="hide" groups="product.group_discount_per_so_line"/>
-                <field name="price_subtotal" sum="Total without taxe"/>
+                <field name="price_subtotal_ic" sum="Total" optional="hide"/>
+                <field name="price_total" sum="Total" optional="hide"/>
+                <field name="price_subtotal" sum="Total"/>
+                <field name="total_cc" sum="Total"/>
                 <field name="state"/>
                 <field name="payment_state" optional="hide"/>
                 <field name="invoice_currency_id" optional="hide"/>

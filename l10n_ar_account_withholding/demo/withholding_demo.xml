@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <function model="account.tax" name="write">
+        <value model="account.tax" search="[('tax_group_id', '=', ref('l10n_ar_ux.tax_group_retencion_ganancias')), ('type_tax_use', '=', 'supplier')]"/>
+        <value eval="{
+          'withholding_type': 'tabla_ganancias',
+          'withholding_accumulated_payments': 'month',
+          'withholding_advances': True,
+          'withholding_amount_type': 'untaxed_amount',
+          }"/>
+    </function>
+
+    <record id="l10n_ar.company_ri" model="res.company">
+        <field name="regimenes_ganancias_ids" eval="[(6, 0, [ref('l10n_ar_account_withholding.regimen_1'), ref('l10n_ar_account_withholding.regimen_2')])]"/>
+    </record>
+
+    <record id="l10n_ar.res_partner_adhoc" model="res.partner">
+        <field name="imp_ganancias_padron">AC</field>
+        <field name="default_regimen_ganancias_id" ref="l10n_ar_account_withholding.regimen_2"/>
+    </record>
+
+  </data>
+</odoo>

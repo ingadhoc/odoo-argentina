@@ -171,7 +171,7 @@ class AccountTax(models.Model):
                 '|',
                 ('l10n_ar_padron_to_date', '=', False),
                 ('l10n_ar_padron_to_date', '>=', date),
-        ], limit=1)
+            ], limit=1)
             from_date = date + relativedelta(day=1)
             to_date = date + relativedelta(day=1, days=-1, months=+1)
 

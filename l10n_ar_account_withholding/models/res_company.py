@@ -1,5 +1,8 @@
 from odoo import models, fields, api, _
-# import odoo.tools as tools
+from odoo.exceptions import UserError, RedirectWarning
+import logging
+import json
+import requests
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 try:
@@ -7,10 +10,6 @@ try:
 except ImportError:
     IIBB = None
 # from pyafipws.padron import PadronAFIP
-from odoo.exceptions import UserError, RedirectWarning
-import logging
-import json
-import requests
 # from dateutil.relativedelta import relativedelta
 _logger = logging.getLogger(__name__)
 
@@ -260,5 +259,5 @@ class ResCompany(models.Model):
     @api.model
     def _process_message_error(self, ws):
         message = ws.MensajeError
-        message = message.replace('<![CDATA[', '').replace(']]/>','')
+        message = message.replace('<![CDATA[', '').replace(']]/>', '')
         raise UserError(_('Padron ARBA: %s - %s (%s)') % (ws.CodigoError, message, ws.TipoError))

@@ -14,7 +14,8 @@ class MailComposeMessage(models.TransientModel):
             payment = self.env[model].browse(res_id)
             if payment.partner_type != 'supplier':
                 return values
-            report = self.env.ref('l10n_ar_account_withholding.action_report_withholding_certificate', raise_if_not_found=False)
+            report = self.env.ref('l10n_ar_account_withholding.action_report_withholding_certificate',
+                                  raise_if_not_found=False)
             if not report:
                 return values
             attachment_ids = []
@@ -31,7 +32,8 @@ class MailComposeMessage(models.TransientModel):
                 }
                 attachment_ids.append(self.env['ir.attachment'].create(data_attach).id)
             if values.get('value', False) and values['value'].get('attachment_ids', []) or attachment_ids:
-                values_attachment_ids = values['value'].get('attachment_ids', False) and values['value']['attachment_ids'][0][2] or []
+                values_attachment_ids = values['value'].get('attachment_ids', False) and \
+                    values['value']['attachment_ids'][0][2] or []
                 values['value']['attachment_ids'] = [(6, 0, values_attachment_ids + attachment_ids)]
 
         return values

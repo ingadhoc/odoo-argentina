@@ -166,7 +166,9 @@ class ResCompany(models.Model):
                 msg = "%s\n Error %s: %s" % (ws.MensajeError, ws.TipoError, ws.CodigoError)
                 _logger.error('Padron ARBA: %s' % msg)
             else:
-                self._process_message_error(ws)
+                error = True
+                msg = (_('Padron ARBA: %s - %s (%s)') % (ws.CodigoError, message, ws.TipoError))
+                _logger.error('Padron ARBA: %s' % msg)
 
         if error:
             action = self.env.ref('l10n_ar_account_withholding.act_company_jurisdiction_padron')

@@ -28,7 +28,7 @@ This module extends the l10n_ar module to add some usability improvesment:
 #. Set Non Monetary tag to accounts depending of the account type
 #. Show Gross Income Jurisdiction on partners
 #. Add a not nice implementation for duplicado/triplicado on invoices (and later on delivery slip with l10n_ar_stock)
-#. Add CUIT when using checks
+#. Add CUIT when using checks or bank transfers
 #. Send due date to journal items for checks payments
 #. Move checks menu into bank and cash menu (this could be on a glue module between account_payment_group and l10n_latam_check)
 

@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="l10n_latam_check.view_account_payment_form_inherited" />
         <field name="arch" type="xml">
             <field name="l10n_latam_check_id" position="before">
-                <field name="l10n_ar_partner_vat" invisible="state != 'draft' or not l10n_ar_partner_vat or payment_method_code not in ['out_third_party_checks', 'new_third_party_checks']"/>
+                <field name="l10n_ar_partner_vat" invisible="state != 'draft' or not l10n_ar_partner_vat or (not show_partner_bank_account and payment_method_code not in ['out_third_party_checks', 'new_third_party_checks', 'check_printing'])"/>
             </field>
         </field>
     </record>

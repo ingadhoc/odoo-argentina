@@ -32,37 +32,37 @@ class AccountTax(models.Model):
                 ' utilizar esa misma etiqueta en las alícuotas configuradas en'
                 ' el partner. Revise los impuestos con id: %s') % recs.ids)
 
-    def get_period_payments_domain(self, payment_group):
-        previos_payment_groups_domain, previos_payments_domain = super(
-            AccountTax, self).get_period_payments_domain(payment_group)
-        if self.withholding_type == 'tabla_ganancias' and payment_group.retencion_ganancias == 'nro_regimen' \
-           and payment_group.regimen_ganancias_id:
-            previos_payment_groups_domain += [
-                ('regimen_ganancias_id', '=', payment_group.regimen_ganancias_id.id),
+    def get_period_payments_domain(self, payment):
+        previos_payments_domain, previos_payments_domain = super(
+            AccountTax, self).get_period_payments_domain(payment)
+        if self.withholding_type == 'tabla_ganancias' and payment.retencion_ganancias == 'nro_regimen' \
+           and payment.regimen_ganancias_id:
+            previos_payments_domain += [
+                ('regimen_ganancias_id', '=', payment.regimen_ganancias_id.id),
                 ('retencion_ganancias', '=', 'nro_regimen'),
             ]
             previos_payments_domain += [
-                ('payment_group_id.regimen_ganancias_id', '=', payment_group.regimen_ganancias_id.id),
-                ('payment_group_id.retencion_ganancias', '=', 'nro_regimen'),
+                ('payment_id.regimen_ganancias_id', '=', payment.regimen_ganancias_id.id),
+                ('payment_id.retencion_ganancias', '=', 'nro_regimen'),
             ]
         return (
-            previos_payment_groups_domain,
+            previos_payments_domain,
             previos_payments_domain)
 
-    def get_withholding_vals(self, payment_group):
-        commercial_partner = payment_group.commercial_partner_id
+    def get_withholding_vals(self, payment):
+        commercial_partner = payment.commercial_partner_id
 
         force_withholding_amount_type = None
         if self.withholding_type == 'partner_tax':
             alicuot_line = self.get_partner_alicuot(
                 commercial_partner,
-                payment_group.payment_date or fields.Date.context_today(self),
+                payment.date or fields.Date.context_today(self),
             )
             alicuota = alicuot_line.alicuota_retencion / 100.0
             force_withholding_amount_type = alicuot_line.withholding_amount_type
 
         vals = super(AccountTax, self).get_withholding_vals(
-            payment_group, force_withholding_amount_type)
+            payment, force_withholding_amount_type)
         base_amount = vals['withholdable_base_amount']
 
         if self.withholding_type == 'partner_tax':
@@ -71,10 +71,10 @@ class AccountTax(models.Model):
                 base_amount, alicuota)
             vals['period_withholding_amount'] = amount
         elif self.withholding_type == 'tabla_ganancias':
-            regimen = payment_group.regimen_ganancias_id
+            regimen = payment.regimen_ganancias_id
             imp_ganancias_padron = commercial_partner.imp_ganancias_padron
             if (
-                    payment_group.retencion_ganancias != 'nro_regimen' or
+                    payment.retencion_ganancias != 'nro_regimen' or
                     not regimen):
                 # if amount zero then we dont create withholding
                 amount = 0.0
@@ -129,8 +129,7 @@ class AccountTax(models.Model):
                 vals['comment'] = "%s x %s" % (
                     base_amount, regimen.porcentaje_no_inscripto / 100.0)
             # TODO, tal vez sea mejor utilizar otro campo?
-            vals['ref'] = "%s - %s" % (
-                regimen.codigo_de_regimen, regimen.concepto_referencia)
+            vals['ref'] = "%s - %s" % (regimen.codigo_de_regimen, regimen.concepto_referencia)
             vals['period_withholding_amount'] = amount
         return vals
 

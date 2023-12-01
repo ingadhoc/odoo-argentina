@@ -14,4 +14,22 @@
         </field>
     </record>
 
+    <record id="view_account_payment_form" model="ir.ui.view">
+        <field name="name">account.payment.form.inherited</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="l10n_ar_withholding.view_account_payment_form" />
+        <field name="arch" type="xml">
+            <form>
+                <field name="company_regimenes_ganancias_ids" invisible="1"/>
+            </form>
+            <field name="ref" position="after">
+                <label for="retencion_ganancias" invisible="not company_regimenes_ganancias_ids"/>
+                <div invisible="not company_regimenes_ganancias_ids">
+                    <field name="retencion_ganancias" class="oe_inline" readonly="state not in ['draft']" required="not company_regimenes_ganancias_ids and state == 'draft'"/>
+                    <field name="regimen_ganancias_id" class="oe_inline" readonly="state not in ['draft']" invisible="retencion_ganancias != 'nro_regimen'" required="retencion_ganancias == 'nro_regimen' and company_regimenes_ganancias_ids and state == 'draft'" domain="[('id', 'in', company_regimenes_ganancias_ids)]" options='{"no_open": True, "no_create": True}'/>
+                </div>
+            </field>
+        </field>
+    </record>
+
 </odoo>

@@ -9,9 +9,11 @@
     'summary': '',
     'depends': [
         'l10n_ar_withholding',
+        'account_payment_pro',
     ],
     'data': [
         'views/account_payment.xml',
+        'views/account_tax_view.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [

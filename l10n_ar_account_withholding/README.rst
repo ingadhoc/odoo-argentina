@@ -16,8 +16,9 @@ Automatic Argentinian Withholdings on Payments
 
 l10n_ar_withhlding --> account_withholding
 l10n_ar_withhlding_ux --> es lo que el día de mañana queremos que vaya en account_withholding/l10n_ar_withhlding
-l10n_ar_account_withholding --> mantentenmos todo lo super opinionado de argentina (sicore, partner aliquots, tema de percepciones, consumo de webservices)
-     --> hay mucha data de chart template que tenemos que borrar porque ahora está en l10n_ar_withhlding
+l10n_ar_account_withholding
+--> mantentenmos todo lo super opinionado de argentina (sicore, partner aliquots, tema de percepciones, consumo de webservices)
+--> hay mucha data de chart template que tenemos que borrar porque ahora está en l10n_ar_withhlding
 
 
 Tablas modificadas según: http://www.afip.gob.ar/noticias/20160526GananciasRegRetencionModificacion.asp

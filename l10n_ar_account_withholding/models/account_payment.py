@@ -16,17 +16,11 @@ class AccountPayment(models.Model):
         ('nro_regimen', 'Nro Regimen'),
     ],
         'Retención Ganancias',
-        readonly=True,
-        states={'draft': [('readonly', False)],
-                'confirmed': [('readonly', False)]}
     )
     regimen_ganancias_id = fields.Many2one(
         'afip.tabla_ganancias.alicuotasymontos',
         'Regimen Ganancias',
-        readonly=True,
         ondelete='restrict',
-        states={'draft': [('readonly', False)],
-                'confirmed': [('readonly', False)]}
     )
     company_regimenes_ganancias_ids = fields.Many2many(
         'afip.tabla_ganancias.alicuotasymontos',

@@ -11,9 +11,9 @@ class l10nArPaymentRegisterWithholding(models.TransientModel):
     name = fields.Char(string='Number')
     tax_id = fields.Many2one('account.tax', check_company=True, required=True)
     withholding_sequence_id = fields.Many2one(related='tax_id.l10n_ar_withholding_sequence_id')
-    base_amount = fields.Monetary(compute='_compute_base_amount', store=True, readonly=False,
-                                  required=True)
-    # base_amount = fields.Monetary(required=True)
+    # base_amount = fields.Monetary(compute='_compute_base_amount', store=True, readonly=False,
+    #                               required=True)
+    base_amount = fields.Monetary(required=True)
     amount = fields.Monetary(required=True, compute='_compute_amount', store=True, readonly=False)
 
     # def _compute_base_amount(self):

@@ -119,88 +119,89 @@ result = withholdable_base_amount * 0.10
                 return rule
         return False
 
-    def create_payment_withholdings(self, payment_group):
-        for tax in self.filtered(lambda x: x.withholding_type != 'none'):
-            payment_withholding = self.env[
-                'account.payment'].search([
-                    ('payment_group_id', '=', payment_group.id),
-                    ('tax_withholding_id', '=', tax.id),
-                    ('automatic', '=', True),
-                ], limit=1)
-            if (
-                    tax.withholding_user_error_message and
-                    tax.withholding_user_error_domain):
-                try:
-                    domain = literal_eval(tax.withholding_user_error_domain)
-                except Exception as e:
-                    raise ValidationError(_(
-                        'Could not eval rule domain "%s".\n'
-                        'This is what we get:\n%s' % (
-                            tax.withholding_user_error_domain, e)))
-                domain.append(('id', '=', payment_group.id))
-                if payment_group.search(domain):
-                    raise ValidationError(tax.withholding_user_error_message)
-            vals = tax.get_withholding_vals(payment_group)
+    # TODO borrar, esto lo deberia estar haciendo el wizard automatizando computo
+    # def create_payment_withholdings(self, payment_group):
+    #     for tax in self.filtered(lambda x: x.withholding_type != 'none'):
+    #         payment_withholding = self.env[
+    #             'account.payment'].search([
+    #                 ('payment_group_id', '=', payment_group.id),
+    #                 ('tax_withholding_id', '=', tax.id),
+    #                 ('automatic', '=', True),
+    #             ], limit=1)
+    #         if (
+    #                 tax.withholding_user_error_message and
+    #                 tax.withholding_user_error_domain):
+    #             try:
+    #                 domain = literal_eval(tax.withholding_user_error_domain)
+    #             except Exception as e:
+    #                 raise ValidationError(_(
+    #                     'Could not eval rule domain "%s".\n'
+    #                     'This is what we get:\n%s' % (
+    #                         tax.withholding_user_error_domain, e)))
+    #             domain.append(('id', '=', payment_group.id))
+    #             if payment_group.search(domain):
+    #                 raise ValidationError(tax.withholding_user_error_message)
+    #         vals = tax.get_withholding_vals(payment_group)
 
-            # we set computed_withholding_amount, hacemos round porque
-            # si no puede pasarse un valor con mas decimales del que se ve
-            # y terminar dando error en el asiento por debitos y creditos no
-            # son iguales, algo parecido hace odoo en el compute_all de taxes
-            currency = payment_group.currency_id
-            period_withholding_amount = currency.round(vals.get(
-                'period_withholding_amount', 0.0))
-            previous_withholding_amount = currency.round(vals.get(
-                'previous_withholding_amount'))
-            # withholding can not be negative
-            computed_withholding_amount = max(0, (
-                period_withholding_amount - previous_withholding_amount))
+    #         # we set computed_withholding_amount, hacemos round porque
+    #         # si no puede pasarse un valor con mas decimales del que se ve
+    #         # y terminar dando error en el asiento por debitos y creditos no
+    #         # son iguales, algo parecido hace odoo en el compute_all de taxes
+    #         currency = payment_group.currency_id
+    #         period_withholding_amount = currency.round(vals.get(
+    #             'period_withholding_amount', 0.0))
+    #         previous_withholding_amount = currency.round(vals.get(
+    #             'previous_withholding_amount'))
+    #         # withholding can not be negative
+    #         computed_withholding_amount = max(0, (
+    #             period_withholding_amount - previous_withholding_amount))
 
-            if not computed_withholding_amount:
-                # if on refresh no more withholding, we delete if it exists
-                if payment_withholding:
-                    payment_withholding.unlink()
-                continue
+    #         if not computed_withholding_amount:
+    #             # if on refresh no more withholding, we delete if it exists
+    #             if payment_withholding:
+    #                 payment_withholding.unlink()
+    #             continue
 
-            # we copy withholdable_base_amount on base_amount
-            # al final vimos con varios clientes que este monto base
-            # debe ser la base imponible de lo que se está pagando en este
-            # voucher
-            vals['withholding_base_amount'] = vals.get(
-                'withholdable_advanced_amount') + vals.get(
-                'withholdable_invoiced_amount')
-            vals['amount'] = computed_withholding_amount
-            vals['computed_withholding_amount'] = computed_withholding_amount
+    #         # we copy withholdable_base_amount on base_amount
+    #         # al final vimos con varios clientes que este monto base
+    #         # debe ser la base imponible de lo que se está pagando en este
+    #         # voucher
+    #         vals['withholding_base_amount'] = vals.get(
+    #             'withholdable_advanced_amount') + vals.get(
+    #             'withholdable_invoiced_amount')
+    #         vals['amount'] = computed_withholding_amount
+    #         vals['computed_withholding_amount'] = computed_withholding_amount
 
-            # por ahora no imprimimos el comment, podemos ver de llevarlo a
-            # otro campo si es de utilidad
-            vals.pop('comment')
-            if payment_withholding:
-                payment_withholding.write(vals)
-            else:
-                # TODO implementar devoluciones de retenciones
-                payment_method = self.env.ref(
-                    'account_withholding.'
-                    'account_payment_method_out_withholding')
-                journal = self.env['account.journal'].search([
-                    ('company_id', '=', tax.company_id.id),
-                    ('outbound_payment_method_line_ids.payment_method_id', '=', payment_method.id),
-                    ('type', 'in', ['cash', 'bank']),
-                ], limit=1)
-                if not journal:
-                    raise UserError(_(
-                        'No journal for withholdings found on company %s') % (
-                        tax.company_id.name))
+    #         # por ahora no imprimimos el comment, podemos ver de llevarlo a
+    #         # otro campo si es de utilidad
+    #         vals.pop('comment')
+    #         if payment_withholding:
+    #             payment_withholding.write(vals)
+    #         else:
+    #             # TODO implementar devoluciones de retenciones
+    #             payment_method = self.env.ref(
+    #                 'account_withholding.'
+    #                 'account_payment_method_out_withholding')
+    #             journal = self.env['account.journal'].search([
+    #                 ('company_id', '=', tax.company_id.id),
+    #                 ('outbound_payment_method_line_ids.payment_method_id', '=', payment_method.id),
+    #                 ('type', 'in', ['cash', 'bank']),
+    #             ], limit=1)
+    #             if not journal:
+    #                 raise UserError(_(
+    #                     'No journal for withholdings found on company %s') % (
+    #                     tax.company_id.name))
 
-                method = journal._get_available_payment_method_lines('outbound').filtered(
-                    lambda x: x.code == 'withholding')
+    #             method = journal._get_available_payment_method_lines('outbound').filtered(
+    #                 lambda x: x.code == 'withholding')
 
-                vals['journal_id'] = journal.id
-                vals['payment_method_line_id'] = method.id
-                vals['payment_type'] = 'outbound'
-                vals['partner_type'] = payment_group.partner_type
-                vals['partner_id'] = payment_group.partner_id.id
-                payment_withholding = payment_withholding.create(vals)
-        return True
+    #             vals['journal_id'] = journal.id
+    #             vals['payment_method_line_id'] = method.id
+    #             vals['payment_type'] = 'outbound'
+    #             vals['partner_type'] = payment_group.partner_type
+    #             vals['partner_id'] = payment_group.partner_id.id
+    #             payment_withholding = payment_withholding.create(vals)
+    #     return True
 
     def get_period_payments_domain(self, payment_group):
         """

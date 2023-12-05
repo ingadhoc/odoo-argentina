@@ -13,6 +13,7 @@
     ],
     'data': [
         'views/account_payment.xml',
+        'views/account_tax_view.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [

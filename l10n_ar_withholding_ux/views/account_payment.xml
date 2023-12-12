@@ -8,54 +8,63 @@
             <button name="action_post" position="after">
                 <button name="compute_withholdings" string="Compute Withholdings" type="object" invisible="partner_type != 'supplier' or state not in ['draft']"/>
             </button>
+
             <field name="unreconciled_amount" position="after">
                 <field name="withholdable_advanced_amount" invisible="state not in ['draft'] or partner_type != 'supplier'" readonly="state not in ['draft']"/>
             </field>
-            <field name="l10n_ar_withholding_ids" position="replace">
-                <field name="l10n_ar_withholding_line_ids" nolabel="1" colspan="2"
-                        invisible="is_internal_transfer" readonly="state != 'draft'">
-                    <!-- TODO hacer tree editable y de ultima con boton de edicion o similar si es una con acumulado. -->
-                    <!-- tal vez tree editable en customer y no editable en supplier -->
-                    <tree>
-                    <!-- <tree editable="bottom"> -->
-                        <field name="withholding_sequence_id" column_invisible="True"/>
-                        <field name="company_id" column_invisible="True"/>
-                        <field name="currency_id" column_invisible="True"/>
-                        <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', '=', company_id)]" options="{'no_open': True, 'no_create': True}"/>
-                        <field name="name" readonly="withholding_sequence_id"/>
-                        <field name="base_amount"/>
-                        <field name="amount"/>
-                    </tree>
-                    <form>
-                        <group>
-                            <group>
-                                <field name="withholding_sequence_id" invisible="True"/>
-                                <field name="company_id" invisible="True"/>
-                                <field name="currency_id" invisible="True"/>
-                                <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', '=', company_id)]" options="{'no_open': True, 'no_create': True}"/>
-                                <field name="name" readonly="withholding_sequence_id"/>
-                                <field name="base_amount"/>
-                                <field name="amount"/>
-                            </group>
-                            <group name="withholding_data">
-                                <field name="automatic" invisible="True"/>
-                                <field name="withholding_accumulated_payments" invisible="True"/>
-                                <field name="withholdable_invoiced_amount" invisible="not automatic"/>
-                                <field name="withholdable_advanced_amount" invisible="not automatic"/>
-                                <field name="accumulated_amount" invisible="not withholding_accumulated_payments"/>
-                                <field name="total_amount" invisible="not automatic"/>
-                                <field name="withholding_non_taxable_minimum" invisible="not automatic"/>
-                                <field name="withholding_non_taxable_amount" invisible="not automatic"/>
-                                <field name="withholdable_base_amount" invisible="not automatic"/>
-                                <field name="period_withholding_amount" invisible="not withholding_accumulated_payments"/>
-                                <field name="previous_withholding_amount" invisible="not withholding_accumulated_payments"/>
-                                <field name="computed_withholding_amount" invisible="not automatic"/>
-                            </group>
-                        </group>
-                    </form>
-                </field>
-            <field name="l10n_ar_amount_total"></field>
+
+            <field name="amount_company_currency_signed_pro" position="attributes">
+                <attribute name="name">l10n_ar_amount_total</attribute>
             </field>
+
+            <!-- sacamos grupo con retenciones nativas y creamos una nueva page -->
+            <group invisible="country_code != 'AR'" position="replace"/>
+            <notebook>
+                <page string="Retenciones">
+                    <field name="l10n_ar_withholding_line_ids" nolabel="1" colspan="2" invisible="is_internal_transfer" readonly="state != 'draft'">
+                        <!-- TODO hacer tree editable y de ultima con boton de edicion o similar si es una con acumulado. -->
+                        <!-- tal vez tree editable en customer y no editable en supplier -->
+                        <tree>
+                        <!-- <tree editable="bottom"> -->
+                            <field name="withholding_sequence_id" column_invisible="True"/>
+                            <field name="company_id" column_invisible="True"/>
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', '=', company_id)]" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="name" readonly="withholding_sequence_id"/>
+                            <field name="base_amount"/>
+                            <field name="amount"/>
+                        </tree>
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="withholding_sequence_id" invisible="True"/>
+                                    <field name="company_id" invisible="True"/>
+                                    <field name="currency_id" invisible="True"/>
+                                    <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', '=', company_id)]" options="{'no_open': True, 'no_create': True}"/>
+                                    <field name="name" readonly="withholding_sequence_id"/>
+                                    <field name="base_amount"/>
+                                    <field name="amount"/>
+                                </group>
+                                <group name="withholding_data">
+                                    <field name="automatic" invisible="True"/>
+                                    <field name="withholding_accumulated_payments" invisible="True"/>
+                                    <field name="withholdable_invoiced_amount" invisible="not automatic"/>
+                                    <field name="withholdable_advanced_amount" invisible="not automatic"/>
+                                    <field name="accumulated_amount" invisible="not withholding_accumulated_payments"/>
+                                    <field name="total_amount" invisible="not automatic"/>
+                                    <field name="withholding_non_taxable_minimum" invisible="not automatic"/>
+                                    <field name="withholding_non_taxable_amount" invisible="not automatic"/>
+                                    <field name="withholdable_base_amount" invisible="not automatic"/>
+                                    <field name="period_withholding_amount" invisible="not withholding_accumulated_payments"/>
+                                    <field name="previous_withholding_amount" invisible="not withholding_accumulated_payments"/>
+                                    <field name="computed_withholding_amount" invisible="not automatic"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+            </notebook>
+            <!-- <field name="l10n_ar_amount_total"></field> -->
         </field>
     </record>
 </odoo>

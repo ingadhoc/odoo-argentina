@@ -1,13 +1,13 @@
 from odoo import models, fields, api
 
 
-class l10nArPaymentRegisterWithholding(models.TransientModel):
+class l10nArPaymentRegisterWithholding(models.Model):
     _name = 'l10n_ar.payment.withholding'
     _description = 'Payment withholding lines'
 
     payment_id = fields.Many2one('account.payment', required=True, ondelete='cascade')
     company_id = fields.Many2one(related='payment_id.company_id')
-    currency_id = fields.Many2one(related='payment_id.currency_id')
+    currency_id = fields.Many2one(related='payment_id.company_currency_id')
     name = fields.Char(string='Number')
     tax_id = fields.Many2one('account.tax', check_company=True, required=True)
     withholding_sequence_id = fields.Many2one(related='tax_id.l10n_ar_withholding_sequence_id')
@@ -22,35 +22,36 @@ class l10nArPaymentRegisterWithholding(models.TransientModel):
     # TODO ver como podemos unificar o abstraer código en modelo abstract y re utilizar acá y en aml
     automatic = fields.Boolean()
     withholding_accumulated_payments = fields.Selection(related='tax_id.withholding_accumulated_payments',)
-    withholdable_invoiced_amount = fields.Float('Importe imputado sujeto a retencion', readonly=True,)
-    withholdable_advanced_amount = fields.Float('Importe a cuenta sujeto a retencion',)
-    accumulated_amount = fields.Float(readonly=True,)
-    total_amount = fields.Float(readonly=True,)
-    withholding_non_taxable_minimum = fields.Float('Non-taxable Minimum', readonly=True,)
-    withholding_non_taxable_amount = fields.Float('Non-taxable Amount', readonly=True,)
-    withholdable_base_amount = fields.Float(readonly=True,)
-    period_withholding_amount = fields.Float(readonly=True,)
-    previous_withholding_amount = fields.Float(readonly=True,)
-    computed_withholding_amount = fields.Float(readonly=True,)
+    withholdable_invoiced_amount = fields.Monetary('Importe imputado sujeto a retencion', readonly=True,)
+    withholdable_advanced_amount = fields.Monetary('Importe a cuenta sujeto a retencion',)
+    accumulated_amount = fields.Monetary(readonly=True,)
+    total_amount = fields.Monetary(readonly=True,)
+    withholding_non_taxable_minimum = fields.Monetary('Non-taxable Minimum', readonly=True,)
+    withholding_non_taxable_amount = fields.Monetary('Non-taxable Amount', readonly=True,)
+    withholdable_base_amount = fields.Monetary(readonly=True,)
+    period_withholding_amount = fields.Monetary(readonly=True,)
+    previous_withholding_amount = fields.Monetary(readonly=True,)
+    computed_withholding_amount = fields.Monetary(readonly=True,)
 
     # def _compute_base_amount(self):
 
-    # def _tax_compute_all_helper(self):
-    #     self.ensure_one()
-    #     # Computes the withholding tax amount provided a base and a tax
-    #     # It is equivalent to: amount = self.base * self.tax_id.amount / 100
-    #     taxes_res = self.tax_id.compute_all(
-    #         self.base_amount,
-    #         currency=self.payment_id.currency_id,
-    #         quantity=1.0,
-    #         product=False,
-    #         partner=False,
-    #         is_refund=False,
-    #     )
-    #     tax_amount = taxes_res['taxes'][0]['amount']
-    #     tax_account_id = taxes_res['taxes'][0]['account_id']
-    #     tax_repartition_line_id = taxes_res['taxes'][0]['tax_repartition_line_id']
-    #     return tax_amount, tax_account_id, tax_repartition_line_id
+    def _tax_compute_all_helper(self):
+        self.ensure_one()
+        # Computes the withholding tax amount provided a base and a tax
+        # It is equivalent to: amount = self.base * self.tax_id.amount / 100
+        taxes_res = self.tax_id.compute_all(
+            self.base_amount,
+            currency=self.payment_id.currency_id,
+            quantity=1.0,
+            product=False,
+            partner=False,
+            is_refund=False,
+        )
+        # tax_amount = taxes_res['taxes'][0]['amount']
+        tax_account_id = taxes_res['taxes'][0]['account_id']
+        tax_repartition_line_id = taxes_res['taxes'][0]['tax_repartition_line_id']
+        # return tax_amount, tax_account_id, tax_repartition_line_id
+        return tax_account_id, tax_repartition_line_id
 
     # @api.depends('tax_id', 'base_amount')
     # def _compute_amount(self):

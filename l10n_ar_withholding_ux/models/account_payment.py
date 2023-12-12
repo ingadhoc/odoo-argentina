@@ -12,7 +12,7 @@ class AccountPayment(models.Model):
         compute='_compute_l10n_ar_withholding_line_ids', readonly=False, store=True
     )
     l10n_ar_amount_total = fields.Monetary('Amount Total', compute='_compute_l10n_ar_amount_total', readonly=True,
-                                           help="Total amount after withholdings")
+                                           help="Total amount after withholdings", currency_field='company_currency_id')
 
     def _get_withholding_move_line_default_values(self):
         return {
@@ -22,7 +22,8 @@ class AccountPayment(models.Model):
     @api.depends('l10n_ar_withholding_line_ids.amount', 'amount', 'state')
     def _compute_l10n_ar_amount_total(self):
         for rec in self:
-            rec.l10n_ar_amount_total = rec.amount + sum(rec.l10n_ar_withholding_line_ids.mapped('amount'))
+            rec.l10n_ar_amount_total = rec.amount_company_currency_signed_pro + sum(rec.l10n_ar_withholding_line_ids.mapped('amount'))
+            # rec.l10n_ar_amount_total = rec.amount + sum(rec.l10n_ar_withholding_line_ids.mapped('amount'))
 
     @api.depends('state', 'move_id')
     def _compute_l10n_ar_withholding_line_ids(self):
@@ -35,55 +36,81 @@ class AccountPayment(models.Model):
             rec.l10n_ar_withholding_line_ids = l10n_ar_withholding_line_ids
 
     def _prepare_witholding_write_off_vals(self):
-
+        print ('aaaaaaaaaaaaaaa')
         self.ensure_one()
         write_off_line_vals = []
-        # conversion_rate = self._get_conversion_rate()
-        conversion_rate = 1
+        conversion_rate = self.exchange_rate or 1.0
         sign = 1
         if self.partner_type == 'supplier':
             sign = -1
         for line in self.l10n_ar_withholding_line_ids:
-            if not line.name:
-                if line.tax_id.l10n_ar_withholding_sequence_id:
-                    line.name = line.tax_id.l10n_ar_withholding_sequence_id.next_by_id()
-                else:
-                    raise UserError(_('Please enter withholding number for tax %s') % line.tax_id.name)
-            dummy, account_id, tax_repartition_line_id = line._tax_compute_all_helper()
-            balance = self.company_currency_id.round(line.amount * conversion_rate)
+            # nuestro approach esta quedando distinto al del wizard. En nuestras lineas tenemos los importes en moneda
+            # de la cia, por lo cual el line.amount aca representa eso y tenemos que convertirlo para el amount_currency
+            account_id, tax_repartition_line_id = line._tax_compute_all_helper()
+            amount_currency = self.currency_id.round(line.amount / conversion_rate)
             write_off_line_vals.append({
                     **self._get_withholding_move_line_default_values(),
                     'name': line.name,
                     'account_id': account_id,
-                    'amount_currency': sign * line.amount,
-                    'balance': sign * balance,
-                    'tax_base_amount': sign * line.base_amount,
+                    'amount_currency': sign * amount_currency,
+                    'balance': sign * line.amount,
+                    # este campo no existe mas
+                    # 'tax_base_amount': sign * line.base_amount,
                     'tax_repartition_line_id': tax_repartition_line_id,
             })
 
         for base_amount in list(set(self.l10n_ar_withholding_line_ids.mapped('base_amount'))):
             withholding_lines = self.l10n_ar_withholding_line_ids.filtered(lambda x: x.base_amount == base_amount)
-            nice_base_label = ','.join(withholding_lines.mapped('name'))
+            nice_base_label = ','.join(withholding_lines.filtered('name').mapped('name'))
             account_id = self.company_id.l10n_ar_tax_base_account_id.id
             base_amount = sign * base_amount
-            cc_base_amount = self.company_currency_id.round(base_amount * conversion_rate)
+            base_amount_currency = self.currency_id.round(base_amount / conversion_rate)
             write_off_line_vals.append({
                 **self._get_withholding_move_line_default_values(),
                 'name': _('Base Ret: ') + nice_base_label,
                 'tax_ids': [Command.set(withholding_lines.mapped('tax_id').ids)],
                 'account_id': account_id,
-                'balance': cc_base_amount,
-                'amount_currency': base_amount,
+                'balance': base_amount,
+                'amount_currency': base_amount_currency,
             })
             write_off_line_vals.append({
                 **self._get_withholding_move_line_default_values(),  # Counterpart 0 operation
                 'name': _('Base Ret Cont: ') + nice_base_label,
                 'account_id': account_id,
-                'balance': -cc_base_amount,
-                'amount_currency': -base_amount,
+                'balance': -base_amount,
+                'amount_currency': -base_amount_currency,
             })
 
         return write_off_line_vals
+
+    def action_post(self):
+        import pdb; pdb.set_trace()
+        for line in self.l10n_ar_withholding_line_ids:
+            if (not line.name or line.name == '/'):
+                if line.tax_id.l10n_ar_withholding_sequence_id:
+                    line.name = line.tax_id.l10n_ar_withholding_sequence_id.next_by_id()
+                else:
+                    raise UserError(_('Please enter withholding number for tax %s or configure a sequence on that tax') % line.tax_id.name)
+
+        return super().action_post()
+        #     elif not line.name:
+        #         line.name = '/'
+
+        # without_number = self.filtered(lambda x: x.tax_withholding_id and not x.withholding_number)
+
+        # without_sequence = without_number.filtered(
+        #     lambda x: not x.tax_withholding_id.withholding_sequence_id)
+        # if without_sequence:
+        #     raise UserError(_(
+        #         'No puede validar pagos con retenciones que no tengan número '
+        #         'de retención. Recomendamos agregar una secuencia a los '
+        #         'impuestos de retención correspondientes. Id de pagos: %s') % (
+        #         without_sequence.ids))
+
+        # # a los que tienen secuencia les setamos el numero desde secuencia
+        # for payment in (without_number - without_sequence):
+        #     payment.withholding_number = \
+        #         payment.tax_withholding_id.withholding_sequence_id.next_by_id()
 
     @api.model
     def _get_trigger_fields_to_synchronize(self):
@@ -112,17 +139,6 @@ class AccountPayment(models.Model):
                     line['debit'] += wth_amount
                     line['amount_currency'] += wth_amount
         return res
-
-    def _get_conversion_rate(self):
-        self.ensure_one()
-        if self.currency_id != self.source_currency_id:
-            return self.env['res.currency']._get_conversion_rate(
-                self.currency_id,
-                self.source_currency_id,
-                self.company_id,
-                self.date,
-            )
-        return 1.0
 
     ###################################################
     # desde account_withholding_automatic payment.group

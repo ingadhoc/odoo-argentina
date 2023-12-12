@@ -12,11 +12,16 @@ from odoo import models, fields, api
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    # automatic = fields.Boolean(
-    # )
-    # withholding_accumulated_payments = fields.Selection(
-    #     related='tax_line_id.withholding_accumulated_payments',
-    # )
+    # TODO ver si lo podemos borrar
+    automatic = fields.Boolean(
+    )
+    withholding_sequence_id = fields.Many2one(related='tax_line_id.l10n_ar_withholding_sequence_id')
+
+    withholding_accumulated_payments = fields.Selection(
+        related='tax_line_id.withholding_accumulated_payments',
+    )
+    base_amount = fields.Monetary()
+    tax_id = fields.Many2one('account.tax')
     # TODO todo esto deberia ir a un json
     # de hecho podemos revisar y lo que no necesitemos consultar para operar, podemos guardarlo en un memo, chatter o similar
     withholdable_invoiced_amount = fields.Float('Importe imputado sujeto a retencion', readonly=True,)
@@ -29,3 +34,21 @@ class AccountMoveLine(models.Model):
     period_withholding_amount = fields.Float(readonly=True,)
     previous_withholding_amount = fields.Float(readonly=True,)
     computed_withholding_amount = fields.Float(readonly=True,)
+
+    def _tax_compute_all_helper(self):
+        self.ensure_one()
+        # Computes the withholding tax amount provided a base and a tax
+        # It is equivalent to: amount = self.base * self.tax_id.amount / 100
+        taxes_res = self.tax_id.compute_all(
+            self.base_amount,
+            currency=self.payment_id.currency_id,
+            quantity=1.0,
+            product=False,
+            partner=False,
+            is_refund=False,
+        )
+        # tax_amount = taxes_res['taxes'][0]['amount']
+        tax_account_id = taxes_res['taxes'][0]['account_id']
+        tax_repartition_line_id = taxes_res['taxes'][0]['tax_repartition_line_id']
+        # return tax_amount, tax_account_id, tax_repartition_line_id
+        return tax_account_id, tax_repartition_line_id

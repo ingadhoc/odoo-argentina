@@ -7,10 +7,10 @@ class AccountPayment(models.Model):
 
     _inherit = 'account.payment'
 
-    l10n_ar_withholding_line_ids = fields.One2many(
-        'l10n_ar.payment.withholding', 'payment_id', string='Withholdings Lines',
-        compute='_compute_l10n_ar_withholding_line_ids', readonly=False, store=True
-    )
+    # l10n_ar_withholding_line_ids = fields.One2many(
+    #     'l10n_ar.payment.withholding', 'payment_id', string='Withholdings Lines',
+    #     compute='_compute_l10n_ar_withholding_line_ids', readonly=False, store=True
+    # )
     l10n_ar_amount_total = fields.Monetary('Amount Total', compute='_compute_l10n_ar_amount_total', readonly=True,
                                            help="Total amount after withholdings", currency_field='company_currency_id')
 
@@ -19,21 +19,21 @@ class AccountPayment(models.Model):
             'currency_id': self.currency_id.id,
         }
 
-    @api.depends('l10n_ar_withholding_line_ids.amount', 'amount', 'state')
+    @api.depends('l10n_ar_withholding_ids.balance', 'amount', 'state')
     def _compute_l10n_ar_amount_total(self):
         for rec in self:
-            rec.l10n_ar_amount_total = rec.amount_company_currency_signed_pro + sum(rec.l10n_ar_withholding_line_ids.mapped('amount'))
+            rec.l10n_ar_amount_total = rec.amount_company_currency_signed_pro + sum(rec.l10n_ar_withholding_ids.mapped('balance'))
             # rec.l10n_ar_amount_total = rec.amount + sum(rec.l10n_ar_withholding_line_ids.mapped('amount'))
 
-    @api.depends('state', 'move_id')
-    def _compute_l10n_ar_withholding_line_ids(self):
-        for rec in self:
-            l10n_ar_withholding_line_ids = [Command.clear()]
-            for line in rec.move_id.line_ids.filtered(lambda x: x.tax_line_id):
-                base = sum(rec.line_ids.filtered(lambda x: line.tax_line_id.id in x.tax_ids.ids).mapped('balance'))
-                l10n_ar_withholding_line_ids += [Command.create({'name': line.name, 'tax_id': line.tax_line_id.id,
-                                                                'base_amount': abs(base), 'amount': abs(line.balance)})]
-            rec.l10n_ar_withholding_line_ids = l10n_ar_withholding_line_ids
+    # @api.depends('state', 'move_id')
+    # def _compute_l10n_ar_withholding_line_ids(self):
+    #     for rec in self:
+    #         l10n_ar_withholding_line_ids = [Command.clear()]
+    #         for line in rec.move_id.line_ids.filtered(lambda x: x.tax_line_id):
+    #             base = sum(rec.line_ids.filtered(lambda x: line.tax_line_id.id in x.tax_ids.ids).mapped('balance'))
+    #             l10n_ar_withholding_line_ids += [Command.create({'name': line.name, 'tax_id': line.tax_line_id.id,
+    #                                                             'base_amount': abs(base), 'amount': abs(line.balance)})]
+    #         rec.l10n_ar_withholding_line_ids = l10n_ar_withholding_line_ids
 
     def _prepare_witholding_write_off_vals(self):
         print ('aaaaaaaaaaaaaaa')
@@ -43,24 +43,27 @@ class AccountPayment(models.Model):
         sign = 1
         if self.partner_type == 'supplier':
             sign = -1
-        for line in self.l10n_ar_withholding_line_ids:
+        for line in self.l10n_ar_withholding_ids:
             # nuestro approach esta quedando distinto al del wizard. En nuestras lineas tenemos los importes en moneda
             # de la cia, por lo cual el line.amount aca representa eso y tenemos que convertirlo para el amount_currency
             account_id, tax_repartition_line_id = line._tax_compute_all_helper()
-            amount_currency = self.currency_id.round(line.amount / conversion_rate)
-            write_off_line_vals.append({
-                    **self._get_withholding_move_line_default_values(),
-                    'name': line.name,
-                    'account_id': account_id,
-                    'amount_currency': sign * amount_currency,
-                    'balance': sign * line.amount,
-                    # este campo no existe mas
-                    # 'tax_base_amount': sign * line.base_amount,
-                    'tax_repartition_line_id': tax_repartition_line_id,
-            })
+            line.account_id = account_id
+            line.tax_repartition_line_id = tax_repartition_line_id
+            import pdb; pdb.set_trace()
+            amount_currency = self.currency_id.round(line.balance / conversion_rate)
+            # write_off_line_vals.append({
+            #         **self._get_withholding_move_line_default_values(),
+            #         'name': line.name,
+            #         'account_id': account_id,
+            #         'amount_currency': sign * amount_currency,
+            #         'balance': sign * line.amount,
+            #         # este campo no existe mas
+            #         # 'tax_base_amount': sign * line.base_amount,
+            #         'tax_repartition_line_id': tax_repartition_line_id,
+            # })
 
-        for base_amount in list(set(self.l10n_ar_withholding_line_ids.mapped('base_amount'))):
-            withholding_lines = self.l10n_ar_withholding_line_ids.filtered(lambda x: x.base_amount == base_amount)
+        for base_amount in list(set(self.l10n_ar_withholding_ids.mapped('base_amount'))):
+            withholding_lines = self.l10n_ar_withholding_ids.filtered(lambda x: x.base_amount == base_amount)
             nice_base_label = ','.join(withholding_lines.filtered('name').mapped('name'))
             account_id = self.company_id.l10n_ar_tax_base_account_id.id
             base_amount = sign * base_amount
@@ -84,8 +87,7 @@ class AccountPayment(models.Model):
         return write_off_line_vals
 
     def action_post(self):
-        import pdb; pdb.set_trace()
-        for line in self.l10n_ar_withholding_line_ids:
+        for line in self.l10n_ar_withholding_ids:
             if (not line.name or line.name == '/'):
                 if line.tax_id.l10n_ar_withholding_sequence_id:
                     line.name = line.tax_id.l10n_ar_withholding_sequence_id.next_by_id()
@@ -115,12 +117,12 @@ class AccountPayment(models.Model):
     @api.model
     def _get_trigger_fields_to_synchronize(self):
         res = super()._get_trigger_fields_to_synchronize()
-        return res + ('l10n_ar_withholding_line_ids',)
+        return res + ('l10n_ar_withholding_ids',)
 
     def _prepare_move_line_default_vals(self, write_off_line_vals=None):
         res = super()._prepare_move_line_default_vals(write_off_line_vals)
         res += self._prepare_witholding_write_off_vals()
-        wth_amount = sum(self.l10n_ar_withholding_line_ids.mapped('amount'))
+        wth_amount = sum(self.l10n_ar_withholding_ids.mapped('balance'))
         # TODO: EVALUAR
         # si cambio el valor de la cuenta de liquides quitando las retenciones el campo amount representa el monto que cancelo de la deuda
         # si cambio la cuenta de contraparte (agregando retenciones) el campo amount representa el monto neto que abono al partner
@@ -253,7 +255,7 @@ class AccountPayment(models.Model):
         # withholding can not be negative
         computed_withholding_amount = max(0, (period_withholding_amount - previous_withholding_amount))
 
-        payment_withholding = self.l10n_ar_withholding_line_ids.filtered(lambda x: x.tax_id == tax)
+        payment_withholding = self.l10n_ar_withholding_ids.filtered(lambda x: x.tax_line_id == tax)
         if not computed_withholding_amount:
             # if on refresh no more withholding, we delete if it exists
             if payment_withholding:
@@ -277,6 +279,7 @@ class AccountPayment(models.Model):
             # TODO implementar devoluciones de retenciones
             # TODO en vez de pasarlo asi usar un command create
             vals['payment_id'] = self.id
+            import pdb; pdb.set_trace()
             payment_withholding = payment_withholding.create(vals)
 
     # esto por ahora no tendria sentido

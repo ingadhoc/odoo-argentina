@@ -21,7 +21,7 @@
             <group invisible="country_code != 'AR'" position="replace"/>
             <notebook>
                 <page string="Retenciones">
-                    <field name="l10n_ar_withholding_line_ids" nolabel="1" colspan="2" invisible="is_internal_transfer" readonly="state != 'draft'">
+                    <field name="l10n_ar_withholding_ids" nolabel="1" colspan="2" invisible="is_internal_transfer" readonly="state != 'draft'">
                         <!-- TODO hacer tree editable y de ultima con boton de edicion o similar si es una con acumulado. -->
                         <!-- tal vez tree editable en customer y no editable en supplier -->
                         <tree>
@@ -32,18 +32,18 @@
                             <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', '=', company_id)]" options="{'no_open': True, 'no_create': True}"/>
                             <field name="name" readonly="withholding_sequence_id"/>
                             <field name="base_amount"/>
-                            <field name="amount"/>
+                            <field name="balance"/>
                         </tree>
                         <form>
                             <group>
                                 <group>
                                     <field name="withholding_sequence_id" invisible="True"/>
-                                    <field name="company_id" invisible="True"/>
+                                    <!-- <field name="company_id" invisible="True"/> -->
                                     <field name="currency_id" invisible="True"/>
-                                    <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', '=', company_id)]" options="{'no_open': True, 'no_create': True}"/>
+                                    <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', '=', parent.company_id)]" options="{'no_open': True, 'no_create': True}"/>
                                     <field name="name" readonly="withholding_sequence_id"/>
                                     <field name="base_amount"/>
-                                    <field name="amount"/>
+                                    <field name="balance"/>
                                 </group>
                                 <group name="withholding_data">
                                     <field name="automatic" invisible="True"/>

@@ -1,22 +1,23 @@
 from odoo import models, fields, api
 
 
-class l10nArPaymentRegisterWithholding(models.Model):
-    _name = 'l10n_ar.payment.withholding'
-    _description = 'Payment withholding lines'
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+    # _description = 'Payment withholding lines'
 
-    payment_id = fields.Many2one('account.payment', required=True, ondelete='cascade')
-    company_id = fields.Many2one(related='payment_id.company_id')
-    currency_id = fields.Many2one(related='payment_id.company_currency_id')
-    name = fields.Char(string='Number')
-    tax_id = fields.Many2one('account.tax', check_company=True, required=True)
-    withholding_sequence_id = fields.Many2one(related='tax_id.l10n_ar_withholding_sequence_id')
+    # payment_id = fields.Many2one('account.payment', required=True, ondelete='cascade')
+    # company_id = fields.Many2one(related='payment_id.company_id')
+    # currency_id = fields.Many2one(related='payment_id.currency_id')
+    # company_currency_id = fields.Many2one(related='payment_id.company_currency_id')
+    # name = fields.Char(string='Number')
+    # tax_id = fields.Many2one('account.tax', check_company=True, required=True)
+    # withholding_sequence_id = fields.Many2one(related='tax_id.l10n_ar_withholding_sequence_id')
     # base_amount = fields.Monetary(compute='_compute_base_amount', store=True, readonly=False,
     #                               required=True)
-    base_amount = fields.Monetary(required=True)
+    # base_amount = fields.Monetary(required=True)
     # por ahora dejamos amount a mano como era antes y que solo se compute con el compute withholdings desde arriba
     # luego vemos de hacer que toda la logica este acá
-    amount = fields.Monetary(required=True)
+    # amount = fields.Monetary(required=True)
     # amount = fields.Monetary(required=True, compute='_compute_amount', store=True, readonly=False)
 
     # TODO ver como podemos unificar o abstraer código en modelo abstract y re utilizar acá y en aml

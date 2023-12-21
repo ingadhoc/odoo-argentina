@@ -36,7 +36,6 @@ class AccountPayment(models.Model):
     #         rec.l10n_ar_withholding_line_ids = l10n_ar_withholding_line_ids
 
     def _prepare_witholding_write_off_vals(self):
-        print ('aaaaaaaaaaaaaaa')
         self.ensure_one()
         write_off_line_vals = []
         conversion_rate = self.exchange_rate or 1.0
@@ -47,20 +46,19 @@ class AccountPayment(models.Model):
             # nuestro approach esta quedando distinto al del wizard. En nuestras lineas tenemos los importes en moneda
             # de la cia, por lo cual el line.amount aca representa eso y tenemos que convertirlo para el amount_currency
             account_id, tax_repartition_line_id = line._tax_compute_all_helper()
-            line.account_id = account_id
-            line.tax_repartition_line_id = tax_repartition_line_id
-            import pdb; pdb.set_trace()
+            # line.account_id = account_id
+            # line.tax_repartition_line_id = tax_repartition_line_id
             amount_currency = self.currency_id.round(line.balance / conversion_rate)
-            # write_off_line_vals.append({
-            #         **self._get_withholding_move_line_default_values(),
-            #         'name': line.name,
-            #         'account_id': account_id,
-            #         'amount_currency': sign * amount_currency,
-            #         'balance': sign * line.amount,
-            #         # este campo no existe mas
-            #         # 'tax_base_amount': sign * line.base_amount,
-            #         'tax_repartition_line_id': tax_repartition_line_id,
-            # })
+            write_off_line_vals.append({
+                    **self._get_withholding_move_line_default_values(),
+                    'name': line.name,
+                    'account_id': account_id,
+                    'amount_currency': amount_currency,
+                    'balance': line.balance,
+                    # este campo no existe mas
+                    # 'tax_base_amount': sign * line.base_amount,
+                    'tax_repartition_line_id': tax_repartition_line_id,
+            })
 
         for base_amount in list(set(self.l10n_ar_withholding_ids.mapped('base_amount'))):
             withholding_lines = self.l10n_ar_withholding_ids.filtered(lambda x: x.base_amount == base_amount)
@@ -123,8 +121,9 @@ class AccountPayment(models.Model):
         res = super()._prepare_move_line_default_vals(write_off_line_vals)
         res += self._prepare_witholding_write_off_vals()
         wth_amount = sum(self.l10n_ar_withholding_ids.mapped('balance'))
+
         # TODO: EVALUAR
-        # si cambio el valor de la cuenta de liquides quitando las retenciones el campo amount representa el monto que cancelo de la deuda
+        # si cambio el valor de la cuenta de liquidez quitando las retenciones el campo amount representa el monto que cancelo de la deuda
         # si cambio la cuenta de contraparte (agregando retenciones) el campo amount representa el monto neto que abono al partner
         # Ambos caminos funcionan pero no se cual es mejor a nivel usabilidad. depende como realizemos el calculo automatico de la ret
         # liquidity_accounts = [x.id for x in self._get_valid_liquidity_accounts() if x]
@@ -279,7 +278,6 @@ class AccountPayment(models.Model):
             # TODO implementar devoluciones de retenciones
             # TODO en vez de pasarlo asi usar un command create
             vals['payment_id'] = self.id
-            import pdb; pdb.set_trace()
             payment_withholding = payment_withholding.create(vals)
 
     # esto por ahora no tendria sentido

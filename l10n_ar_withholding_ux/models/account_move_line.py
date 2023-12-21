@@ -20,8 +20,8 @@ class AccountMoveLine(models.Model):
     withholding_accumulated_payments = fields.Selection(
         related='tax_line_id.withholding_accumulated_payments',
     )
-    base_amount = fields.Monetary()
-    tax_id = fields.Many2one('account.tax')
+    base_amount = fields.Monetary(compute='_compute_base_amount', readonly=False)
+    tax_id = fields.Many2one('account.tax', compute='_compute_tax_id', readonly=False)
     # TODO todo esto deberia ir a un json
     # de hecho podemos revisar y lo que no necesitemos consultar para operar, podemos guardarlo en un memo, chatter o similar
     withholdable_invoiced_amount = fields.Float('Importe imputado sujeto a retencion', readonly=True,)
@@ -34,6 +34,15 @@ class AccountMoveLine(models.Model):
     period_withholding_amount = fields.Float(readonly=True,)
     previous_withholding_amount = fields.Float(readonly=True,)
     computed_withholding_amount = fields.Float(readonly=True,)
+
+    def _compute_tax_id(self):
+        for rec in self:
+            rec.tax_id = rec.tax_line_id
+
+    @api.depends('tax_id')
+    def _compute_base_amount(self):
+        for rec in self:
+            rec.base_amount = abs(sum(rec.move_id.line_ids.filtered(lambda x: rec.tax_line_id.id in x.tax_ids.ids).mapped('amount_currency')))
 
     def _tax_compute_all_helper(self):
         self.ensure_one()

@@ -46,19 +46,21 @@ class AccountPayment(models.Model):
             # nuestro approach esta quedando distinto al del wizard. En nuestras lineas tenemos los importes en moneda
             # de la cia, por lo cual el line.amount aca representa eso y tenemos que convertirlo para el amount_currency
             account_id, tax_repartition_line_id = line._tax_compute_all_helper()
-            # line.account_id = account_id
-            # line.tax_repartition_line_id = tax_repartition_line_id
-            amount_currency = self.currency_id.round(line.balance / conversion_rate)
-            write_off_line_vals.append({
-                    **self._get_withholding_move_line_default_values(),
-                    'name': line.name,
-                    'account_id': account_id,
-                    'amount_currency': amount_currency,
-                    'balance': line.balance,
-                    # este campo no existe mas
-                    # 'tax_base_amount': sign * line.base_amount,
-                    'tax_repartition_line_id': tax_repartition_line_id,
-            })
+            if isinstance(line.id, models.NewId):
+                amount_currency = self.currency_id.round(line.balance / conversion_rate)
+                write_off_line_vals.append({
+                        **self._get_withholding_move_line_default_values(),
+                        'name': line.name,
+                        'account_id': account_id,
+                        'amount_currency': amount_currency,
+                        'balance': line.balance,
+                        # este campo no existe mas
+                        # 'tax_base_amount': sign * line.base_amount,
+                        'tax_repartition_line_id': tax_repartition_line_id,
+                })
+            else:
+                line.account_id = account_id
+                line.tax_repartition_line_id = tax_repartition_line_id
 
         for base_amount in list(set(self.l10n_ar_withholding_ids.mapped('base_amount'))):
             withholding_lines = self.l10n_ar_withholding_ids.filtered(lambda x: x.base_amount == base_amount)
@@ -69,7 +71,7 @@ class AccountPayment(models.Model):
             write_off_line_vals.append({
                 **self._get_withholding_move_line_default_values(),
                 'name': _('Base Ret: ') + nice_base_label,
-                'tax_ids': [Command.set(withholding_lines.mapped('tax_id').ids)],
+                # 'tax_ids': [Command.set(withholding_lines.mapped('tax_id').ids)],
                 'account_id': account_id,
                 'balance': base_amount,
                 'amount_currency': base_amount_currency,
@@ -119,8 +121,43 @@ class AccountPayment(models.Model):
 
     def _prepare_move_line_default_vals(self, write_off_line_vals=None):
         res = super()._prepare_move_line_default_vals(write_off_line_vals)
+        import pdb; pdb.set_trace()
+        # for line in res:
+        #     if res['account_id'] in wittholding_accounts:
+        #         res.pop()
         res += self._prepare_witholding_write_off_vals()
-        wth_amount = sum(self.l10n_ar_withholding_ids.mapped('balance'))
+        wth_balance = sum(self.l10n_ar_withholding_ids.mapped('balance'))
+        wth_amount_currency = sum(self.l10n_ar_withholding_ids.mapped('amount_currency'))
+
+        # tratamos de recomponer el coutnerpart balance tal como lo hace odoo pero sin tener en cuenta las lineas de
+        # retenciones que ya fueron creadas anteriormente y que pueden estar siendo modificadas
+        write_off_line_vals_list = write_off_line_vals or []
+        # TODO podriamos hacer browse del tax para otros casos como los que se se hace descuento por pago adelantado con impuesto
+        # pero que la verdad no es aplicable a argentina. si hacemos browse luego verificariamos que sea de tipo retencion
+        write_off_amount_currency = sum(x['amount_currency'] for x in write_off_line_vals_list if not x.get('tax_line_id'))
+        write_off_balance = sum(x['balance'] for x in write_off_line_vals_list)
+        if self.payment_type == 'inbound':
+            # Receive money.
+            liquidity_amount_currency = self.amount
+        elif self.payment_type == 'outbound':
+            # Send money.
+            liquidity_amount_currency = -self.amount
+        else:
+            liquidity_amount_currency = 0.0
+        liquidity_balance = self.currency_id._convert(
+            liquidity_amount_currency,
+            self.company_id.currency_id,
+            self.company_id,
+            self.date,
+        )
+        counterpart_balance = -liquidity_balance - write_off_balance + wth_balance
+        counterpart_amount_currency = -liquidity_amount_currency - write_off_amount_currency - wth_amount_currency
+        # liquidity_lines, counterpart_lines, writeoff_lines = pay._seek_for_lines()
+        # counterpart_lines.write({
+        #     'balance': - (sum(liquidity_lines.mapped('balance')) + withholding_amount),
+        #     'amount_currency': - (sum(liquidity_lines.mapped('balanceamount_currency')) + withholding_amount),
+        # })
+
 
         # TODO: EVALUAR
         # si cambio el valor de la cuenta de liquidez quitando las retenciones el campo amount representa el monto que cancelo de la deuda
@@ -129,16 +166,34 @@ class AccountPayment(models.Model):
         # liquidity_accounts = [x.id for x in self._get_valid_liquidity_accounts() if x]
         valid_account_types = self._get_valid_payment_account_types()
 
+        # no podemos usar lo que viene en la line de counterpart como valor porque ya trae restadas las retenciones anteriores.
+        # entonces obtenemos el total a traves de la liquidity line y le sumamos las retenciones
+        # liquidity_lines_vals = [line for line in res if line['account_id'] in self._get_valid_liquidity_accounts().ids]
+        # debit = sum([line['debit'] for line in liquidity_lines_vals])
+        # credit = sum([line['credit'] for line in liquidity_lines_vals])
+        # amount_currency = sum([line['amount_currency'] for line in liquidity_lines_vals])
+
         for line in res:
             account_id = self.env['account.account'].browse(line['account_id'])
-            # if line['account_id'] in liquidity_accounts:
             if account_id.account_type in valid_account_types:
-                if line['credit']:
-                    line['credit'] += wth_amount
-                    line['amount_currency'] -= wth_amount
-                elif line['debit']:
-                    line['debit'] += wth_amount
-                    line['amount_currency'] += wth_amount
+                # balance = debit - credit
+                # balance += wth_balance
+                # amount_currency = line['amount_currency'] + amount_currency
+                line['debit'] = counterpart_balance if counterpart_balance > 0.0 else 0.0
+                line['credit'] = -counterpart_balance if counterpart_balance < 0.0 else 0.0
+                line['amount_currency'] = counterpart_amount_currency if counterpart_amount_currency < 0.0 else 0.0
+                
+        # 'credit': -liquidity_balance if liquidity_balance < 0.0 else 0.0,
+        #         line
+        #         if line['credit']:
+        #             line['credit'] = liquidity_lines_vals - wth_balance
+        #             line['amount_currency'] = wth_balance
+        #         elif line['debit']:
+        #             line['debit'] = liquidity_lines_vals + wth_balance
+        #             line['amount_currency'] += wth_balance
+                # deberia haber solo una, si se empiezan a soportar mas de una necesitamos otro approach o al menso va a funcionar y se lo vamos a sumar a la primera
+                break
+        import pdb; pdb.set_trace()
         return res
 
     ###################################################

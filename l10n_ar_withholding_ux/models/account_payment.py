@@ -58,9 +58,9 @@ class AccountPayment(models.Model):
                         # 'tax_base_amount': sign * line.base_amount,
                         'tax_repartition_line_id': tax_repartition_line_id,
                 })
-            else:
-                line.account_id = account_id
-                line.tax_repartition_line_id = tax_repartition_line_id
+            # else:
+            #     line.account_id = account_id
+            #     line.tax_repartition_line_id = tax_repartition_line_id
 
         for base_amount in list(set(self.l10n_ar_withholding_ids.mapped('base_amount'))):
             withholding_lines = self.l10n_ar_withholding_ids.filtered(lambda x: x.base_amount == base_amount)
@@ -85,6 +85,21 @@ class AccountPayment(models.Model):
             })
 
         return write_off_line_vals
+
+    def write(self, vals):
+        # OVERRIDE
+        # vals_copy = vals.copy()
+        l10n_ar_withholding_vals = {}
+        if 'l10n_ar_withholding_ids' in vals and not self._context.get('skip_invoice_sync'):
+            l10n_ar_withholding_vals = {'l10n_ar_withholding_ids': vals.pop('l10n_ar_withholding_ids')}
+        import pdb; pdb.set_trace()
+        if l10n_ar_withholding_vals:
+            res = super().with_context(skip_account_move_synchronization=True, skip_invoice_sync=True, check_move_validity=False).write(l10n_ar_withholding_vals)
+            self._synchronize_to_moves({'l10n_ar_withholding_ids'})
+        else:
+            res = super().write(vals)
+        # self.with_context(l10n_ar_withholding_vals=l10n_ar_withholding_vals)._synchronize_to_moves(set(vals.keys()))
+        return res
 
     def action_post(self):
         for line in self.l10n_ar_withholding_ids:

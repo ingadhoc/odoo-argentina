@@ -18,7 +18,7 @@ class AccountMove(models.Model):
         """ Mandamos en contexto el invoice_date para cauclo de impuesto con partner aliquot"""
         invoices = self.filtered(lambda x: x.is_invoice(include_receipts=True))
         for invoice in invoices:
-            invoice = invoice.with_context(invoice_date=invoice.invoice_date)
+            invoice = invoice.with_context(invoice_date=invoice.invoice_date if not invoice.reversed_entry_id else invoice.reversed_entry_id.invoice_date)
             super(AccountMove, invoice)._compute_tax_totals()
         super(AccountMove, self - invoices)._compute_tax_totals()
 

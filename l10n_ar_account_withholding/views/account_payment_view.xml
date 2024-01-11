@@ -25,7 +25,7 @@
             <field name="ref" position="after">
                 <label for="retencion_ganancias" invisible="not company_regimenes_ganancias_ids"/>
                 <div invisible="not company_regimenes_ganancias_ids">
-                    <field name="retencion_ganancias" class="oe_inline" readonly="state not in ['draft']" required="not company_regimenes_ganancias_ids and state == 'draft'"/>
+                    <field name="retencion_ganancias" class="oe_inline" readonly="state not in ['draft']" required="company_regimenes_ganancias_ids and state == 'draft'"/>
                     <field name="regimen_ganancias_id" class="oe_inline" readonly="state not in ['draft']" invisible="retencion_ganancias != 'nro_regimen'" required="retencion_ganancias == 'nro_regimen' and company_regimenes_ganancias_ids and state == 'draft'" domain="[('id', 'in', company_regimenes_ganancias_ids)]" options='{"no_open": True, "no_create": True}'/>
                 </div>
             </field>

@@ -349,11 +349,11 @@ class AccountPayment(models.Model):
             if self.state == 'posted':
                 if self.unreconciled_amount and \
                    self.withholdable_advanced_amount:
-                    withholdable_advanced_amount = self.unmatched_amount * (
+                    withholdable_advanced_amount = self.amount_residual * (
                         self.withholdable_advanced_amount /
                         self.unreconciled_amount)
                 else:
-                    withholdable_advanced_amount = self.unmatched_amount
+                    withholdable_advanced_amount = self.amount_residual
             else:
                 withholdable_advanced_amount = \
                     self.withholdable_advanced_amount

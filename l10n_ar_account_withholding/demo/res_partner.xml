@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="res.partner" id="l10n_ar.res_partner_adhoc">
+        <field name="imp_ganancias_padron">AC</field>
+        <field name="default_regimen_ganancias_id" eval="ref('l10n_ar_account_withholding.regimen_9')"></field>
+    </record>
+    <record model="res.partner.arba_alicuot" id="res_partner_adhoc_arba_alicuot">
+        <field name="company_id" eval="ref('l10n_ar.company_ri')"></field>
+        <field name="tag_id" eval="ref('l10n_ar_ux.tag_tax_jurisdiccion_921')"></field>
+        <field name="partner_id" eval="ref('l10n_ar.res_partner_adhoc')"></field>
+        <field name="alicuota_retencion" eval="3"></field>
+        <field name="withholding_amount_type">untaxed_amount</field>
+    </record>
+</odoo>
+

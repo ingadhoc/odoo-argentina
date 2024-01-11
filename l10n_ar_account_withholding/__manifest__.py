@@ -38,6 +38,9 @@
     ],
     'demo': [
         'demo/ir_parameter.xml',
+        'demo/account_tax.xml',
+        'demo/res_partner.xml',
+
     ],
     'depends': [
         'l10n_ar_ux',

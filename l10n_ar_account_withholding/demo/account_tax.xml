@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <function model="account.tax" name="write" context="{'active_test': False}">
+        <value model="account.tax" eval="[ref('account.{}_ri_tax_withholding_iibb_sf_applied'.format(ref('l10n_ar.company_ri')))]"/>
+        <value eval="{'withholding_type': 'partner_tax', 'withholding_advances': True, 'withholding_amount_type': 'untaxed_amount', 'withholding_non_taxable_minimum': 50000}"/>
+    </function>
+    <function model="account.tax.repartition.line" name="write" context="{'active_test': False}">
+        <value model="account.tax.repartition.line" eval="obj().search([('company_id', '=', ref('l10n_ar.company_ri')), 
+        ('account_id', '=',ref('account.{}_ri_retencion_iibb_sf_aplicada'.format(ref('l10n_ar.company_ri'))))]).ids"/>
+        <value eval="{'tag_ids': [(6,0,[ref('l10n_ar_ux.tag_tax_jurisdiccion_921'), ref('l10n_ar_ux.tag_ret_perc_iibb_aplicada')])]}"/>
+    </function>
+</odoo>

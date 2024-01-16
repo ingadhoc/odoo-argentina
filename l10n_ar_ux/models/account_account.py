@@ -16,6 +16,7 @@ class AccountAccount(models.Model):
         xml_ids = [
             'account.data_account_type_non_current_assets',
             'account.data_account_type_fixed_assets',
+            'account.data_account_type_fixed_assets',
             'account.data_account_type_other_income',
             'account.data_account_type_revenue',
             'account.data_account_type_expenses',

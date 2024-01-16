@@ -21,8 +21,6 @@ class AccountMove(models.Model):
 
     @api.depends('reversed_entry_id')
     def _compute_l10n_ar_currency_rate(self):
-        """ If it's a credit note on foreign currency and foreing currency is the same as original credit note, then
-        we use original invoice rate """
         ar_reversed_other_currency = self.filtered(
             lambda x: x.is_invoice() and x.reversed_entry_id and
             x.company_id.country_id == self.env.ref('base.ar') and

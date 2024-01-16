@@ -13,7 +13,6 @@ class ResPartner(models.Model):
         help='The state of the company is cosidered the main jurisdiction',
     )
 
-    # AFIP Padron
     start_date = fields.Date('Activities Start')
     estado_padron = fields.Char('Estado AFIP')
     imp_ganancias_padron = fields.Selection([

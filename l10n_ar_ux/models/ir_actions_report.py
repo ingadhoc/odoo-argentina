@@ -11,7 +11,7 @@ class IrActionsReport(models.Model):
 
     l10n_ar_copies = fields.Selection(
         selection=[
-            # ('original', 'Solo Original'),
+            ('original', 'Solo Original'),
             ('duplicado', 'Duplicado'), ('triplicado', 'Duplicado y Triplicado')],
         string="Agregar Duplicado/Triplicado",)
 
@@ -21,7 +21,7 @@ class IrActionsReport(models.Model):
         l10n_ar_copies = ['']
         is_email = 'force_email' in self._context or 'default_subject' in self._context
         if not is_email and self.l10n_ar_copies:
-            l10n_ar_copies = ['ORIGINAL', 'DUPLICADO']
+            l10n_ar_copies = ['ORIGINAL', 'DUPLICADOO']
             if self.l10n_ar_copies == 'triplicado':
                 l10n_ar_copies += ['TRIPLICADO']
         res.update({

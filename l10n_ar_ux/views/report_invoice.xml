@@ -71,7 +71,7 @@
             </p>
         </div>
         <div id="qrcode" position="after">
-            <div t-if="o.company_id.country_id.code == 'AR' and o.journal_id.qr_code and o.invoice_payment_state != 'paid'">
+            <div t-if="o.company_id.country_id.code == 'AR' and o.journal_id.qr_code and o.payment_state != 'paid'">
                 <div clas="row m-0 justify-content-center align-item-center">
                     <div class="col-auto p-5 text-center">
                         <h5><span t-field="o.journal_id.qr_code_label"/></h5>

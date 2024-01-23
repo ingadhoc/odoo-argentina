@@ -167,7 +167,7 @@ class ResCompany(models.Model):
                 _logger.error('Padron ARBA: %s' % msg)
             else:
                 error = True
-                msg = (_('Padron ARBA: %s - %s (%s)') % (ws.CodigoError, message, ws.TipoError))
+                msg = (_('Padron ARBA: %s - %s (%s)') % (ws.CodigoError, ws.MensajeError, ws.TipoError))
                 _logger.error('Padron ARBA: %s' % msg)
 
         if error:

@@ -90,3 +90,23 @@ class AccountMove(models.Model):
         if self.country_code == 'AR' and self.journal_id._l10n_ar_journal_issuer_is_supplier():
             return not res
         return res
+
+    def _post(self, soft=True):
+        """ MUY FEO: Forzamos el cambio de fecha de factura lo cual termina desencadenando que actualize las lineas de factura. El metodo que calcula la cotizacion tiene un lru_cache con el cual si mandamos la fecha a falso y volvemos a colocar la misma fecha previa trae la cotizacion vieja y no la actual. Por eso aca forzamos colocar una fecha que sabemos no se va a usar apra que luego si seteamos la fecha nuevamente se recalcule la cotizacion. Esto NO termina impactando en el mail.message de la factura.
+        Resuelve:
+
+        1. Caso de la factura creada dias atras y dejado en borrador, al validar calcula la cotizacion del dia y usa esa en el calculo
+        de la cantidad de pesos en el apunte contable
+        2. Si tenemos un invoice date ya, y posteior a la creacion de la factura se cambio la cotizacion, al validar la factura va a desestimar la cotizacion usada y va a tomar la actual en el sistema para ese dia.
+        3. Si forzamos cotizacion de la factura: va a funcionar bien, se mantiene la cotizacion que seleccionamos no importa si fijamos la fecha.
+
+        Hasta el momento solo usamos para l10n_ar, ver de evaluar si queremos que se use en otras locs?
+        """
+        other_currency_ar_invoices = self.filtered(lambda x: x.company_id.account_fiscal_country_id.code == "AR" and x.l10n_latam_use_documents and x.currency_id != x.company_currency_id and not x.l10n_ar_currency_rate)
+
+        for inv in other_currency_ar_invoices:
+            invoice_date = inv.invoice_date
+            inv.invoice_date = '1970-01-01'
+            inv.invoice_date = invoice_date or fields.Date.context_today(self)
+
+        return super()._post(soft=soft)

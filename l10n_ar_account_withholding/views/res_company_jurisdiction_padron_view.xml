@@ -25,7 +25,8 @@
                         <group>
                             <field name="company_id"/>
                             <field name="jurisdiction_id"/>
-                            <field name="file_padron"/>
+                            <field name="file_padron_fname" invisible="1" force_save="1"/>
+                            <field name="file_padron" filename="file_padron_fname"/>
                         </group>
                         <group>
                             <field name="l10n_ar_padron_from_date"/>

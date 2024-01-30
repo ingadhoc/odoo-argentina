@@ -3,16 +3,16 @@
 # 	* l10n_ar_account_withholding
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-13 14:03+0000\n"
-"PO-Revision-Date: 2023-01-13 14:03+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"POT-Creation-Date: 2024-01-30 13:07+0000\n"
+"PO-Revision-Date: 2024-01-30 13:07+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -302,15 +302,6 @@ msgid "030: Art.11 - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
-#: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
-msgid ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
-msgstr ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Los valores configurados aquí"
-" son específicos de cada compañía.\" groups=\"base.group_multi_company\"/>"
-
-#. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.report_withholding_certificate_document
 msgid "<strong>Customer: </strong>"
 msgstr "<strong>Cliente: </strong>"
@@ -378,23 +369,6 @@ msgid "Agip: Alicuota no inscripto retención"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_move__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_move_line__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_move_reversal__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_payment_group__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_tax__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_escala__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_mail_compose_message__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_company__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_company_jurisdiction_padron__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_config_settings__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot__algolia_search
-msgid "Algolia Search"
-msgstr ""
-
-#. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot__alicuota_percepcion
 msgid "Alicuota Percepcion"
 msgstr ""
@@ -421,16 +395,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__account_tax__amount_type__partner_tax
 #: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__account_tax__withholding_type__partner_tax
 msgid "Alícuota en el Partner"
-msgstr ""
-
-#. module: l10n_ar_account_withholding
-#: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
-msgid "Alícuota percepción no inscripto"
-msgstr ""
-
-#. module: l10n_ar_account_withholding
-#: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
-msgid "Alícuota retención no inscripto"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
@@ -487,11 +451,6 @@ msgid "Certificado de Retención"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
-#: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
-msgid "Clave CIT"
-msgstr ""
-
-#. module: l10n_ar_account_withholding
 #: model:ir.model.fields,help:l10n_ar_account_withholding.field_res_config_settings__arba_cit
 msgid "Clave de Identificación Tributaria de ARBA"
 msgstr ""
@@ -500,6 +459,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot__codigo_hash
 msgid "Codigo Hash"
 msgstr "Código Hash"
+
+#. module: l10n_ar_account_withholding
+#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_escala__codigo_de_regimen
+msgid "Codigo de Regimen"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__codigo_de_regimen
@@ -514,7 +478,7 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_res_company
 msgid "Companies"
-msgstr "Empresas"
+msgstr "Compañías"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_company_jurisdiction_padron__company_id
@@ -523,9 +487,9 @@ msgid "Company"
 msgstr "Compañía"
 
 #. module: l10n_ar_account_withholding
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_payment_group__company_regimenes_ganancias_ids
+#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_payment__company_regimenes_ganancias_ids
 msgid "Company Regimenes Ganancias"
-msgstr "Company Regímenes Ganancias"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.report_withholding_certificate_document
@@ -540,7 +504,7 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_res_config_settings
 msgid "Config Settings"
-msgstr "Opciones de configuración"
+msgstr "Ajustes de configuración"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_res_partner
@@ -613,15 +577,19 @@ msgstr "Asistente de redacción de correo electrónico"
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
 msgid ""
-"En la configuración de alícuotas de retenciones/percepciones de cada partner.\n"
-"                            Exige definir si la base de cálculo es según el total del comprobante o el valor neto de impuestos. Se utiliza por ej. en Santa Fe donde la base de cálculo para los inscriptios en convenio multilateral se realiza sobre el total (sin descontar impuestos)."
+"En la configuración de alícuotas de retenciones/percepciones de cada "
+"partner. Exige definir si la base de cálculo es según el total del "
+"comprobante o el valor neto de impuestos. Se utiliza por ej. en Santa Fe "
+"donde la base de cálculo para los inscriptios en convenio multilateral se "
+"realiza sobre el total (sin descontar impuestos)."
 msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
 msgid ""
-"En los proveedores podrá especificar cualquier régimen, y dicho regímen será utilizado por defecto en los pagos a ese proveedor.\n"
-"                            En los pagos podrá solo seleccionar manualemente alguno de los regímenes que defina a continuación."
+"En los proveedores podrá especificar cualquier régimen, y dicho regímen será"
+" utilizado por defecto en los pagos a ese proveedor.En los pagos podrá solo "
+"seleccionar manualemente alguno de los regímenes que defina a continuación."
 msgstr ""
 
 #. module: l10n_ar_account_withholding
@@ -655,6 +623,11 @@ msgid "From Date"
 msgstr "Desde Fecha"
 
 #. module: l10n_ar_account_withholding
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
+msgid "Ganacias"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot__grupo_percepcion
 msgid "Grupo Percepcion"
 msgstr "Grupo Percepción"
@@ -683,7 +656,7 @@ msgid "Importe del comprobante que origina la retención:"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
-#: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__account_payment_group__retencion_ganancias__imposibilidad_retencion
+#: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__account_payment__retencion_ganancias__imposibilidad_retencion
 msgid "Imposibilidad de Retención"
 msgstr ""
 
@@ -727,14 +700,6 @@ msgid "La conexión ha sido exitosa"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos____last_update
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_escala____last_update
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_company_jurisdiction_padron____last_update
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot____last_update
-msgid "Last Modified on"
-msgstr "Última Modificación el"
-
-#. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__write_uid
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_escala__write_uid
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_company_jurisdiction_padron__write_uid
@@ -771,7 +736,7 @@ msgid "No Activo"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
-#: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__account_payment_group__retencion_ganancias__no_aplica
+#: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__account_payment__retencion_ganancias__no_aplica
 msgid "No Aplica"
 msgstr ""
 
@@ -783,13 +748,6 @@ msgid "No se pudo conectar a ARBA: %s"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
-#. odoo-python
-#: code:addons/l10n_ar_account_withholding/models/res_company.py:0
-#, python-format
-msgid "No se pudo conectar a ARBA: %s - %s"
-msgstr ""
-
-#. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.report_withholding_certificate_document
 msgid ""
 "Nombre y Apellido Firmante:\n"
@@ -797,7 +755,7 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_account_withholding
-#: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__account_payment_group__retencion_ganancias__nro_regimen
+#: model:ir.model.fields.selection,name:l10n_ar_account_withholding.selection__account_payment__retencion_ganancias__nro_regimen
 msgid "Nro Regimen"
 msgstr ""
 
@@ -811,8 +769,13 @@ msgstr "Número Comprobante"
 #: code:addons/l10n_ar_account_withholding/models/res_company.py:0
 #, python-format
 msgid ""
-"Obtuvimos un error de conexión con ARBA y no encontramos padrón almacenado para las fechas dadas.\n"
-"Puede intentar nuevamente más tarde, cargar la alícuota manualmente en el partner o subir el archivo del padrón en: "
+"Obtuvimos un error al consultar el Padron ARBA.\n"
+"  %s\n"
+"\n"
+"Tiene las siguientes opciones:\n"
+"  1) Intentar nuevamente más tarde\n"
+"  2) Cargar la alícuota manualmente en el partner en cuestión\n"
+"  3) Subir el archivo del padrón utilizando el asistente de Carga de Padrones"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
@@ -820,6 +783,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_config_settings__agip_padron_type
 msgid "Padron AGIP"
 msgstr "Padrón AGIP"
+
+#. module: l10n_ar_account_withholding
+#. odoo-python
+#: code:addons/l10n_ar_account_withholding/models/res_company.py:0
+#: code:addons/l10n_ar_account_withholding/models/res_company.py:0
+#, python-format
+msgid "Padron ARBA: %s - %s (%s)"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.actions.act_window,name:l10n_ar_account_withholding.act_company_jurisdiction_padron
@@ -839,19 +810,14 @@ msgid "Padrones implementados:"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
-#: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
-msgid "Padrón a aplicar"
-msgstr ""
-
-#. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot__partner_id
 msgid "Partner"
 msgstr "Empresa"
 
 #. module: l10n_ar_account_withholding
-#: model:ir.model,name:l10n_ar_account_withholding.model_account_payment_group
-msgid "Payment Group"
-msgstr "Grupo de Pago"
+#: model:ir.model,name:l10n_ar_account_withholding.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.view_account_payment_tree
@@ -859,9 +825,9 @@ msgid "Print withholding voucher"
 msgstr "Imprimir Comprobante de retención"
 
 #. module: l10n_ar_account_withholding
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_payment_group__regimen_ganancias_id
+#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_payment__regimen_ganancias_id
 msgid "Regimen Ganancias"
-msgstr "Régimen ganancias"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner__default_regimen_ganancias_id
@@ -891,11 +857,6 @@ msgid "Regímenes Generales"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
-#: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
-msgid "Regímenes de ganancias en los que usualmente retiene"
-msgstr ""
-
-#. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_company__cdba_alicuota_no_sincripto_percepcion
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_config_settings__cdba_alicuota_no_sincripto_percepcion
 msgid "Rentas Córdoba: Alícuota no inscripto percepción"
@@ -908,7 +869,7 @@ msgid "Rentas Córdoba: Alícuota no inscripto retención"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_payment_group__retencion_ganancias
+#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_payment__retencion_ganancias
 msgid "Retención Ganancias"
 msgstr ""
 
@@ -929,12 +890,12 @@ msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
-msgid "Si es agente de Ret/Perc de AGIP especifique:"
+msgid "Si es agente de Ret/Perc de AGIP especifique."
 msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
-msgid "Si es agente de Ret/Perc de DGR Córdoba especifique:"
+msgid "Si es agente de Ret/Perc de DGR Córdoba especifique."
 msgstr ""
 
 #. module: l10n_ar_account_withholding
@@ -1045,6 +1006,11 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_res_partner_arba_alicuot
 msgid "res.partner.arba_alicuot"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
+#: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.res_config_settings_view_form
+msgid "withholding amount type"
 msgstr ""
 
 #. module: l10n_ar_account_withholding

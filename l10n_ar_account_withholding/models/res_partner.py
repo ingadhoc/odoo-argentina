@@ -33,7 +33,7 @@ class ResPartnerArbaAlicuot(models.Model):
     # TODO rename model to res.partner.tax or similar
     _name = "res.partner.arba_alicuot"
     _description = "res.partner.arba_alicuot"
-    _order = "to_date desc, from_date desc, tag_id, company_id"
+    _order = "to_date asc, from_date asc, tag_id, company_id"
 
     partner_id = fields.Many2one(
         'res.partner',

@@ -2,7 +2,7 @@ from odoo import models
 
 
 class AccountMove(models.Model):
-    """ Heredamos todos los metodos que de alguna manera llamen a tax.compute_all y les pasamos la fecha"""
+    """ Heredamos todos los metodos (a)que de alguna manera llamen a tax.compute_all y les pasamos la fecha"""
     _inherit = "account.move"
 
     def _get_tax_factor(self):

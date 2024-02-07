@@ -37,7 +37,7 @@ class ResPartnerArbaAlicuot(models.Model):
 
     partner_id = fields.Many2one(
         'res.partner',
-        required=True,
+        required=False,
         ondelete='cascade',
     )
     tag_id = fields.Many2one(

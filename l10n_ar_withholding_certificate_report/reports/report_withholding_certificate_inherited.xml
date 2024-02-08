@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="witholding_certificate_inherited" inherit_id="l10n_ar_account_withholding.report_withholding_certificate_document">
+        <xpath expr="//span[@t-field='o.tax_withholding_id.description']" position="replace">
+            <t t-if="o.tax_withholding_id.description">
+                <span t-field="o.tax_withholding_id.description"/>
+            </t>
+            <t t-else="">
+                <span t-field="o.payment_method_description"/>
+            </t>
+        </xpath>
+        <xpath expr="//span[@t-field='o.ref']" position="replace">
+            <t t-if="o.ref">
+                <span t-field="o.ref"/>
+            </t>
+            <t t-else="">
+                <t t-if=" 'IVA' in o.payment_method_description">
+                    RG5333
+                </t>
+                <t t-else="o.payment_group_id.retencion_ganancias == 'nro_regimen'">
+                    <t t-if="o.payment_group_id.retencion_ganancias == 'nro_regimen'">
+                        <span t-field="o.payment_group_id.regimen_ganancias_id.codigo_de_regimen"/>
+                    </t>    
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>

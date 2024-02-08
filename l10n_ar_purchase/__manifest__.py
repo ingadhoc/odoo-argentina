@@ -1,5 +1,5 @@
 {
-    'name': 'Argentinian Purchase',
+    'name': 'Argentinian Purchase TEST',
     'version': "17.0.0.0.0",
     'category': 'Localization/Argentina',
     'sequence': 14,

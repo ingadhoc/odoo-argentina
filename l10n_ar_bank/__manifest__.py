@@ -1,5 +1,5 @@
 {
-    "name": "Listado de Bancos Argentinos",
+    "name": "Listado de Bancos Argentinos 2",
     'version': "17.0.0.0.0",
     'category': 'Localization/Argentina',
     'sequence': 14,

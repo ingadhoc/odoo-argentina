@@ -17,7 +17,6 @@ class AccountMoveLine(models.Model):
     def _compute_withholding(self):
         for rec in self:
             if rec.tax_line_id and rec.payment_id:
-                rec.withholding_id = rec.payment_id.l10n_ar_withholding_line_ids.filtered(
-                    lambda x: x.tax_id == rec.tax_line_id and abs(rec.balance) == x.amount)
+                rec.withholding_id = rec.payment_id.l10n_ar_withholding_line_ids.filtered(lambda x: x.tax_id == rec.tax_line_id)
             else:
                 rec.withholding_id = False

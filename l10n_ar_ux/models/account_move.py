@@ -102,7 +102,10 @@ class AccountMove(models.Model):
 
         Hasta el momento solo usamos para l10n_ar, ver de evaluar si queremos que se use en otras locs?
         """
-        other_currency_ar_invoices = self.filtered(lambda x: x.company_id.account_fiscal_country_id.code == "AR" and x.l10n_latam_use_documents and x.currency_id != x.company_currency_id and not x.l10n_ar_currency_rate)
+        other_currency_ar_invoices = self.filtered(lambda x: x.company_id.account_fiscal_country_id.code == "AR" and x.l10n_latam_use_documents and x.currency_id != x.company_currency_id)
+
+        if 'force_compute_amount_fix_rate' not in self.env.context:
+            other_currency_ar_invoices = other_currency_ar_invoices.filtered(lambda x: not x.l10n_ar_currency_rate)
 
         for inv in other_currency_ar_invoices:
             invoice_date = inv.invoice_date

@@ -92,24 +92,27 @@ class AccountMove(models.Model):
         return res
 
     def _post(self, soft=True):
-        """ MUY FEO: Forzamos el cambio de fecha de factura lo cual termina desencadenando que actualize las lineas de factura. El metodo que calcula la cotizacion tiene un lru_cache con el cual si mandamos la fecha a falso y volvemos a colocar la misma fecha previa trae la cotizacion vieja y no la actual. Por eso aca forzamos colocar una fecha que sabemos no se va a usar apra que luego si seteamos la fecha nuevamente se recalcule la cotizacion. Esto NO termina impactando en el mail.message de la factura.
-        Resuelve:
+        """ Estamos sobreescribiendo este método para hacer cosas que en odoo oficial no se puede tanto previo como posterior a la validación de la factura. """
+        ar_invoices = self.filtered(lambda x: x.company_id.account_fiscal_country_id.code == "AR" )
 
-        1. Caso de la factura creada dias atras y dejado en borrador, al validar calcula la cotizacion del dia y usa esa en el calculo
-        de la cantidad de pesos en el apunte contable
-        2. Si tenemos un invoice date ya, y posteior a la creacion de la factura se cambio la cotizacion, al validar la factura va a desestimar la cotizacion usada y va a tomar la actual en el sistema para ese dia.
-        3. Si forzamos cotizacion de la factura: va a funcionar bien, se mantiene la cotizacion que seleccionamos no importa si fijamos la fecha.
-
-        Hasta el momento solo usamos para l10n_ar, ver de evaluar si queremos que se use en otras locs?
-        """
-        other_currency_ar_invoices = self.filtered(lambda x: x.company_id.account_fiscal_country_id.code == "AR" and x.l10n_latam_use_documents and x.currency_id != x.company_currency_id and not x.l10n_ar_currency_rate)
-
+        # Forzamos cambio de fecha en factura para actualizar cotización. Solucionamos problemas de cálculo en apunte contable y actualización de cotización. Solo usamos en l10n_ar. Considerar uso en otras locs. Resuelve:
+        #   1. Facturas creadas días atrás y dejadas en borrador usan cotización actual al validar.
+        #   2. Actualiza cotización si esta fue cambiada posterior a cuando fue usada en la factura.
+        #   3. Forzar cotización mantiene comportamiento correcto: usa la cotización forzada sin importar que fecha sea.
+        other_currency_ar_invoices = ar_invoices.filtered(lambda x: x.currency_id != x.company_currency_id and not x.l10n_ar_currency_rate)
         for inv in other_currency_ar_invoices:
             invoice_date = inv.invoice_date
             inv.invoice_date = '1970-01-01'
             inv.invoice_date = invoice_date or fields.Date.context_today(self)
 
-        return super()._post(soft=soft)
+        res = super()._post(soft=soft)
+
+        # para facturas argentinas y que no usen documentos tmb guardamos rate para mantener mismo comportamiento que en
+        # las que si y además porque nosotros siempre estamos mostrando la cotización (facturas con y sin). de esta
+        # manera queda mucho más consistente.
+        ar_invoices.filtered(lambda x: not x.l10n_latam_use_documents)._set_afip_rate()
+
+        return res
 
     @api.depends('l10n_latam_available_document_type_ids', 'debit_origin_id')
     def _compute_l10n_latam_document_type(self):

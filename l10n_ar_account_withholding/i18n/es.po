@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-13 14:03+0000\n"
+"POT-Creation-Date: 2024-01-31 13:29+0000\n"
 "PO-Revision-Date: 2023-01-13 14:03+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -34,14 +34,14 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"Grupo de impuestos: el impuesto es un conjunto de sub impuestos.\n"
-"     - Fijo: el importe del impuesto permanece igual independientemente del precio.\n"
-"     - Porcentaje del precio: el importe del impuesto es un % del precio:\n"
-"         Por ejemplo, 100 * (1 + 10%) = 110 (sin precio incluido)\n"
-"         por ejemplo, 110 / (1 + 10%) = 100 (precio incluido)\n"
-"     - Porcentaje del precio impuesto incluido: El importe del impuesto es una división del precio:\n"
-"         Por ejemplo, 180 / (1 - 10%) = 200 (sin precio incluido)\n"
-"         Por ejemplo, 200 * (1-10%) =  180  (precio incluido)\n"
+"Grupo de impuestos: El impuesto es un conjunto de sub impuestos.\n"
+" - Fijo: El importe del impuesto permanece igual independientemente del precio.\n"
+" - Porcentaje del precio: el importe del impuesto es un % del precio:\n"
+" Por ejemplo, 100 * (1 + 10%) = 110 (sin precio incluido)\n"
+"por ejemplo, 110 / (1 + 10%) = 100 (precio incluido)\n"
+"- Porcentaje del Precio con Impuesto Incluido: El importe del impuesto es una división del precio:\n"
+"Por ejemplo, 180 / (1 - 10%) = 200 (sin precio incluido)\n"
+"Por ejemplo, 200 * (1-10%) =  180  (precio incluido)\n"
 "        "
 
 #. module: l10n_ar_account_withholding
@@ -378,23 +378,6 @@ msgid "Agip: Alicuota no inscripto retención"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_move__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_move_line__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_move_reversal__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_payment_group__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_account_tax__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_escala__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_mail_compose_message__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_company__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_company_jurisdiction_padron__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_config_settings__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner__algolia_search
-#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot__algolia_search
-msgid "Algolia Search"
-msgstr ""
-
-#. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_partner_arba_alicuot__alicuota_percepcion
 msgid "Alicuota Percepcion"
 msgstr ""
@@ -502,6 +485,11 @@ msgid "Codigo Hash"
 msgstr "Código Hash"
 
 #. module: l10n_ar_account_withholding
+#: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_escala__codigo_de_regimen
+msgid "Codigo de Regimen"
+msgstr ""
+
+#. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_afip_tabla_ganancias_alicuotasymontos__codigo_de_regimen
 msgid "Codigo de regimen"
 msgstr ""
@@ -514,7 +502,7 @@ msgstr ""
 #. module: l10n_ar_account_withholding
 #: model:ir.model,name:l10n_ar_account_withholding.model_res_company
 msgid "Companies"
-msgstr "Empresas"
+msgstr "Compañías"
 
 #. module: l10n_ar_account_withholding
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_company_jurisdiction_padron__company_id
@@ -783,13 +771,6 @@ msgid "No se pudo conectar a ARBA: %s"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
-#. odoo-python
-#: code:addons/l10n_ar_account_withholding/models/res_company.py:0
-#, python-format
-msgid "No se pudo conectar a ARBA: %s - %s"
-msgstr ""
-
-#. module: l10n_ar_account_withholding
 #: model_terms:ir.ui.view,arch_db:l10n_ar_account_withholding.report_withholding_certificate_document
 msgid ""
 "Nombre y Apellido Firmante:\n"
@@ -811,8 +792,13 @@ msgstr "Número Comprobante"
 #: code:addons/l10n_ar_account_withholding/models/res_company.py:0
 #, python-format
 msgid ""
-"Obtuvimos un error de conexión con ARBA y no encontramos padrón almacenado para las fechas dadas.\n"
-"Puede intentar nuevamente más tarde, cargar la alícuota manualmente en el partner o subir el archivo del padrón en: "
+"Obtuvimos un error al consultar el Padron ARBA.\n"
+"  %s\n"
+"\n"
+"Tiene las siguientes opciones:\n"
+"  1) Intentar nuevamente más tarde\n"
+"  2) Cargar la alícuota manualmente en el partner en cuestión\n"
+"  3) Subir el archivo del padrón utilizando el asistente de Carga de Padrones"
 msgstr ""
 
 #. module: l10n_ar_account_withholding
@@ -820,6 +806,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_account_withholding.field_res_config_settings__agip_padron_type
 msgid "Padron AGIP"
 msgstr "Padrón AGIP"
+
+#. module: l10n_ar_account_withholding
+#. odoo-python
+#: code:addons/l10n_ar_account_withholding/models/res_company.py:0
+#: code:addons/l10n_ar_account_withholding/models/res_company.py:0
+#, python-format
+msgid "Padron ARBA: %s - %s (%s)"
+msgstr ""
 
 #. module: l10n_ar_account_withholding
 #: model:ir.actions.act_window,name:l10n_ar_account_withholding.act_company_jurisdiction_padron

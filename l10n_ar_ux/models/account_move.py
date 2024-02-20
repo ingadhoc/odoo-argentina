@@ -99,11 +99,22 @@ class AccountMove(models.Model):
         #   1. Facturas creadas días atrás y dejadas en borrador usan cotización actual al validar.
         #   2. Actualiza cotización si esta fue cambiada posterior a cuando fue usada en la factura.
         #   3. Forzar cotización mantiene comportamiento correcto: usa la cotización forzada sin importar que fecha sea.
+        # También corresponde recomputar el campo 'date' de la factura de proveedor sino tenemos el problema de que en
+        # facturas de proveedor con moneda diferente a la de la compañía, al momento de validar, en los apuntes
+        # contables se les asigna fecha de un día posterior a la fecha de bloqueo en lugar de la fecha de la factura.
+
         other_currency_ar_invoices = ar_invoices.filtered(lambda x: x.currency_id != x.company_currency_id and not x.l10n_ar_currency_rate)
+        today = fields.Date.context_today(self)
+        old_date = '1970-01-01'
         for inv in other_currency_ar_invoices:
             invoice_date = inv.invoice_date
-            inv.invoice_date = '1970-01-01'
-            inv.invoice_date = invoice_date or fields.Date.context_today(self)
+            inv.invoice_date = old_date
+            inv.invoice_date = invoice_date or today
+
+            if inv.move_type in ['in_invoice', 'in_refund']:
+                accounting_date = inv.date
+                inv.date = old_date
+                inv.date = accounting_date or today
 
         res = super()._post(soft=soft)
 

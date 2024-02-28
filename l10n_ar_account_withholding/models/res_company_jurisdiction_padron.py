@@ -29,6 +29,9 @@ class ResCompanyJurisdictionPadron(models.Model):
         "File",
         required=True,
     )
+    file_padron_fname = fields.Char(
+        "Filename",
+)
     l10n_ar_padron_from_date = fields.Date(
         "From Date",
         required=True,
@@ -41,8 +44,10 @@ class ResCompanyJurisdictionPadron(models.Model):
     @api.constrains('jurisdiction_id')
     def check_jurisdiction_id(self):
         arba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_902')
+        agip_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_901')
+        implemented_tag = arba_tag | agip_tag
         for rec in self:
-            if rec.jurisdiction_id != arba_tag:
+            if rec.jurisdiction_id not in implemented_tag:
                 raise ValidationError("El padron para (%s) no está implementado." % rec.jurisdiction_id.name)
 
     @api.depends('company_id', 'jurisdiction_id')
@@ -57,7 +62,7 @@ class ResCompanyJurisdictionPadron(models.Model):
     def descompress_file(self, file_padron):
         _logger.log(25, "Descompress zip file")
         ruta_extraccion = "/tmp"
-        file = base64.decodestring(file_padron)
+        file = base64.decodebytes(file_padron)
         fobj = tempfile.NamedTemporaryFile(delete=False)
         fname = fobj.name
         fobj.write(file)
@@ -65,9 +70,19 @@ class ResCompanyJurisdictionPadron(models.Model):
         f = open(fname, 'r+b')
         data = f.read()
         f.write(base64.b64decode(file_padron))
-        with zipfile.ZipFile(f, 'r') as zip_file:
-            zip_file.extractall(path=ruta_extraccion)
-            zip_file.close()
+
+        if self.file_padron_fname.split('.')[-1] == 'zip':
+            with zipfile.ZipFile(f, 'r') as zip_file:
+                zip_file.extractall(path=ruta_extraccion)
+                zip_file.close()
+        elif self.file_padron_fname.split('.')[-1] == 'rar':
+            from unrar import rarfile
+            rar = rarfile.RarFile(fname)
+            # extracted_file_name = rar.namelist()[0]
+            rar.extractall(path='/tmp')
+            # return '/tmp/' + extracted_file_name
+        else:
+            raise UserError(_('No se puede descomprimir este tipo de archivo'))
 
     def find_aliquot(self, path, cuit):
         """We try to find aliqut and number for a partner given

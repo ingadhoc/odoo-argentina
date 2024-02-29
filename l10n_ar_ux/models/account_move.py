@@ -75,17 +75,24 @@ class AccountMove(models.Model):
 
     def _post(self, soft=True):
         """ Estamos sobreescribiendo este método para hacer cosas que en odoo oficial no se puede tanto previo como posterior a la validación de la factura. """
-        ar_invoices = self.filtered(lambda x: x.company_id.account_fiscal_country_id.code == "AR" )
+        ar_invoices = self.filtered(lambda x: x.company_id.account_fiscal_country_id.code == "AR" and x.is_invoice(include_receipts=True))
 
         # Forzamos cambio de fecha en factura para actualizar cotización. Solucionamos problemas de cálculo en apunte contable y actualización de cotización. Solo usamos en l10n_ar. Considerar uso en otras locs. Resuelve:
         #   1. Facturas creadas días atrás y dejadas en borrador usan cotización actual al validar.
         #   2. Actualiza cotización si esta fue cambiada posterior a cuando fue usada en la factura.
         #   3. Forzar cotización mantiene comportamiento correcto: usa la cotización forzada sin importar que fecha sea.
         other_currency_ar_invoices = ar_invoices.filtered(lambda x: x.currency_id != x.company_currency_id and not x.l10n_ar_currency_rate)
+        today = fields.Date.context_today(self)
+        old_date = '1970-01-01'
         for inv in other_currency_ar_invoices:
             invoice_date = inv.invoice_date
-            inv.invoice_date = '1970-01-01'
-            inv.invoice_date = invoice_date or fields.Date.context_today(self)
+            inv.invoice_date = old_date
+            inv.invoice_date = invoice_date or today
+
+            if inv.move_type in ['in_invoice', 'in_refund']:
+                accounting_date = inv.date
+                inv.date = old_date
+                inv.date = accounting_date or today
 
         res = super()._post(soft=soft)
 

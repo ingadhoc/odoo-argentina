@@ -33,6 +33,7 @@
                             <field name="name" readonly="withholding_sequence_id"/>
                             <field name="base_amount"/>
                             <field name="amount"/>
+                            <button name="%(action_report_withholding_certificate)d" icon="fa-print " title="Print withholding voucher" type="action" invisible="parent.partner_type != 'supplier'"/>
                         </tree>
                         <form>
                             <group>

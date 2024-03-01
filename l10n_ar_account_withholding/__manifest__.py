@@ -26,7 +26,6 @@
         'security/ir.model.access.csv',
         'security/security.xml',
         'wizard/res_config_settings_views.xml',
-        'reports/report_withholding_certificate.xml',
         'views/afip_tabla_ganancias_escala_view.xml',
         'views/afip_tabla_ganancias_alicuotasymontos_view.xml',
         'views/account_payment_view.xml',

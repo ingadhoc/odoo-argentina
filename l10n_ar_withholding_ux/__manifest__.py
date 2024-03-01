@@ -12,6 +12,7 @@
         'account_payment_pro',
     ],
     'data': [
+        'reports/report_withholding_certificate.xml',
         'views/account_payment.xml',
         'views/account_tax_view.xml',
         'security/ir.model.access.csv',

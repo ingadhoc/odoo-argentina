@@ -1,4 +1,5 @@
-from odoo import models, fields, api
+from odoo import models, fields
+from odoo.exceptions import UserError
 
 
 class l10nArPaymentRegisterWithholding(models.Model):
@@ -52,6 +53,9 @@ class l10nArPaymentRegisterWithholding(models.Model):
         )
         # tax_amount = taxes_res['taxes'][0]['amount']
         tax_account_id = taxes_res['taxes'][0]['account_id']
+        if not tax_account_id:
+            raise UserError(
+                'El impuesto "%s" no tiene configurada una cuenta en la linea de reparticion.' % self.tax_id.name)
         tax_repartition_line_id = taxes_res['taxes'][0]['tax_repartition_line_id']
         # return tax_amount, tax_account_id, tax_repartition_line_id
         return tax_account_id, tax_repartition_line_id

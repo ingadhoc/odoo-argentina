@@ -40,6 +40,7 @@
     ],
     'demo': [
         'demo/ir_parameter.xml',
+        'demo/withholding_demo.xml',
     ],
     'depends': [
         'account_withholding_automatic',

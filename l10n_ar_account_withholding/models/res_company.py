@@ -136,6 +136,7 @@ class ResCompany(models.Model):
 
         # Por ahora no está soportado regimen de agip
         data = {           
+            'numero_comprobante': 0,
         }
         return data
 

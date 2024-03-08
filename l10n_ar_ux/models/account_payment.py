@@ -27,6 +27,7 @@ class AccountPayment(models.Model):
                 })
         return res
 
+<<<<<<< HEAD
     @api.depends('payment_method_code', 'l10n_latam_check_id', 'check_number')
     def _compute_payment_method_description(self):
         check_payments = self.filtered(
@@ -52,3 +53,38 @@ class AccountPayment(models.Model):
         for rec in new_third_party_checks:
             rec.l10n_latam_check_bank_id = rec.partner_id.bank_ids[:1].bank_id or rec.l10n_latam_check_bank_id
         (self - new_third_party_checks).l10n_latam_check_bank_id = False
+||||||| parent of aeb254d8 (temp)
+    @api.depends('journal_id', 'payment_method_code', 'l10n_latam_checkbook_id')
+    def _compute_check_number(self):
+        print_checkbooks = self.filtered(lambda x: x.l10n_latam_checkbook_id.check_printing_type != 'no_print')
+        print_checkbooks.check_number = False
+        return super(AccountPayment, self - print_checkbooks)._compute_check_number()
+
+    def action_mark_sent(self):
+        """ Check that the recordset is valid, set the payments state to sent and call print_checks() """
+        self.write({'is_move_sent': True})
+
+    def action_unmark_sent(self):
+        # restore action_unmark_sent functionality (it was cancelled l10n_latam_check)
+        if self.filtered('l10n_latam_checkbook_id'):
+            self.write({'is_move_sent': False})
+        else:
+            return super().action_unmark_sent()
+=======
+    @api.depends('journal_id', 'payment_method_code', 'l10n_latam_checkbook_id')
+    def _compute_check_number(self):
+        print_checkbooks = self.filtered(lambda x: x.l10n_latam_checkbook_id and x.l10n_latam_checkbook_id.check_printing_type != 'no_print')
+        print_checkbooks.check_number = False
+        return super(AccountPayment, self - print_checkbooks)._compute_check_number()
+
+    def action_mark_sent(self):
+        """ Check that the recordset is valid, set the payments state to sent and call print_checks() """
+        self.write({'is_move_sent': True})
+
+    def action_unmark_sent(self):
+        # restore action_unmark_sent functionality (it was cancelled l10n_latam_check)
+        if self.filtered('l10n_latam_checkbook_id'):
+            self.write({'is_move_sent': False})
+        else:
+            return super().action_unmark_sent()
+>>>>>>> aeb254d8 (temp)

@@ -29,7 +29,7 @@ class AccountPayment(models.Model):
 
     @api.depends('journal_id', 'payment_method_code', 'l10n_latam_checkbook_id')
     def _compute_check_number(self):
-        print_checkbooks = self.filtered(lambda x: x.l10n_latam_checkbook_id.check_printing_type != 'no_print')
+        print_checkbooks = self.filtered(lambda x: x.l10n_latam_checkbook_id and x.l10n_latam_checkbook_id.check_printing_type != 'no_print')
         print_checkbooks.check_number = False
         return super(AccountPayment, self - print_checkbooks)._compute_check_number()
 

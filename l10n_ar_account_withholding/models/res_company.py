@@ -130,9 +130,12 @@ class ResCompany(models.Model):
         return ws
 
     def get_agip_data(self, partner, date):
-        raise UserError(_(
-            'Falta configuración de credenciales de ADHOC para consulta de '
-            'Alícuotas de AGIP'))
+        # Por ahora no está soportado regimen de agip
+        data = {           
+        }        
+        # raise UserError(_(
+        #     'Falta configuración de credenciales de ADHOC para consulta de '
+        #     'Alícuotas de AGIP'))
 
     def get_arba_data(self, partner, from_date, to_date):
         self.ensure_one()

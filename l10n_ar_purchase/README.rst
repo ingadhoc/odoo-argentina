@@ -11,10 +11,15 @@
    :alt: License: AGPL-3
 
 ============================
-Argentinian Purchase Report
+Argentinean Purchase Report
 ============================
 
-Adapt purchase order report and quotation report to Argentinian localization
+Adapt purchase order report and quotation report to Argentinean localization. Replaces the native Odoo purchase report with a new one that has the same look and feel of the Argentinean electronic invoice.
+
+
+When a request for quotation is printed in an argentinean company then the report will contain the argentinean localization header with this leyend: "Invalid document as invoice". Then the header also will contain the information of the company that generates de purchase order such as name, address, telephone number, website, order number, date, fiscal position, vat, iibb number, date of activities start.
+Supplier data such as name, address, vat, vat cond, purchase representative, payment terms, order reference and shipping address are added below the header.
+If a purchase order is printed, the format is the same as the request for quotation but the name of the report changes depending on the status of the purchase order.
 
 Installation
 ============

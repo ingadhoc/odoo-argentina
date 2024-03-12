@@ -1,6 +1,12 @@
 {
     'name': 'Argentinian Accounting UX',
+<<<<<<< HEAD
     'version': "17.0.1.0.0",
+||||||| parent of 5a6a9f9b (temp)
+    'version': "16.0.1.9.0",
+=======
+    'version': "16.0.1.10.0",
+>>>>>>> 5a6a9f9b (temp)
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA',

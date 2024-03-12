@@ -25,7 +25,17 @@ class AccountInvoiceReport(models.Model):
             line.discount,
             line.price_unit * line.quantity * line.discount/100 *
                 (CASE WHEN move
+<<<<<<< HEAD
                 .move_type IN ('in_refund','out_refund','in_receipt') THEN -1 ELSE 1 END) as discount_amount
+||||||| parent of d9716af7 (temp)
+                .move_type IN ('in_refund','out_refund','in_receipt') THEN -1 ELSE 1 END) as discount_amount,
+            -line.balance * (line.price_total / NULLIF(line.price_subtotal, 0.0))    AS total_cc,
+            -line.price_subtotal as price_subtotal_ic
+=======
+                .move_type IN ('in_refund','out_refund','in_receipt') THEN -1 ELSE 1 END) as discount_amount,
+            -line.balance * (line.price_total / NULLIF(line.price_subtotal, 0.0))    AS total_cc,
+            line.price_subtotal * (CASE WHEN move.move_type IN ('in_refund', 'out_invoice') THEN 1 ELSE -1 END) as price_subtotal_ic
+>>>>>>> d9716af7 (temp)
             """
 
     def _group_by(self):

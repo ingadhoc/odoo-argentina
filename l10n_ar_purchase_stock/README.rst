@@ -11,9 +11,14 @@
    :alt: License: AGPL-3
 
 ============================
-Argentinian Purchase Report
+Argentinean Purchase Report
 ============================
 
+Adapt Argentinean purchase order report and quotation report.
+
+When a "request for quotation" or a "purchase order" are printed, it will be added in the supplier data this information:
+1) The incoterm code.
+2) The name of the warehouse and the partner`s warehouse address if there is no dropshipping address and the purchase order has a picking type with it`s warehouse.
 
 Installation
 ============

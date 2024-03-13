@@ -69,3 +69,10 @@ class AccountPayment(models.Model):
             self.regimen_ganancias_id = False
         elif self.company_regimenes_ganancias_ids:
             self.retencion_ganancias = 'nro_regimen'
+
+    def _get_name_receipt_report(self, report_xml_id):
+        # TODO tal vez mover este reporte y este metodo a l10n_ar_withholding_ux?
+        self.ensure_one()
+        if self.company_id.country_id.code == 'AR' and self.is_internal_transfer:
+            return 'l10n_ar_ux.report_account_transfer'
+        return super()._get_name_receipt_report(report_xml_id)

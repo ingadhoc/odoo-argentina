@@ -13,10 +13,6 @@
                 <field name="withholdable_advanced_amount" invisible="state not in ['draft'] or partner_type != 'supplier'" readonly="state not in ['draft']"/>
             </field>
 
-            <field name="amount_company_currency_signed_pro" position="attributes">
-                <attribute name="name">l10n_ar_amount_total</attribute>
-            </field>
-
             <!-- sacamos grupo con retenciones nativas y creamos una nueva page -->
             <group invisible="country_code != 'AR'" position="replace"/>
             <notebook>

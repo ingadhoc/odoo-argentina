@@ -11,19 +11,17 @@ class AccountPayment(models.Model):
         'l10n_ar.payment.withholding', 'payment_id', string='Withholdings Lines',
         # compute='_compute_l10n_ar_withholding_line_ids', readonly=False, store=True
     )
-    l10n_ar_amount_total = fields.Monetary('Amount Total', compute='_compute_l10n_ar_amount_total', readonly=True,
-                                           help="Total amount after withholdings", currency_field='company_currency_id')
 
     def _get_withholding_move_line_default_values(self):
         return {
             'currency_id': self.currency_id.id,
         }
 
-    @api.depends('l10n_ar_withholding_line_ids.amount', 'amount', 'state')
-    def _compute_l10n_ar_amount_total(self):
+    @api.depends('l10n_ar_withholding_line_ids.amount')
+    def _compute_payment_total(self):
+        super()._compute_payment_total()
         for rec in self:
-            rec.l10n_ar_amount_total = rec.amount_company_currency_signed_pro + sum(rec.l10n_ar_withholding_line_ids.mapped('amount'))
-            # rec.l10n_ar_amount_total = rec.amount + sum(rec.l10n_ar_withholding_line_ids.mapped('amount'))
+            rec.payment_total += sum(rec.l10n_ar_withholding_line_ids.mapped('amount'))
 
     # Por ahora no compuamos para no pisar cosas que pueda haber moficiado el usuario. Ademas que ya era así (manual)
     # en version anterior
@@ -159,11 +157,11 @@ class AccountPayment(models.Model):
                 continue
             matched_amount_untaxed = 0.0
             sign = rec.partner_type == 'supplier' and -1.0 or 1.0
-            for line in rec.matched_move_line_ids.with_context(payment_group_id=rec.id):
+            for line in rec.matched_move_line_ids.with_context(matched_payment_id=rec.id):
                 invoice = line.move_id
                 factor = invoice and invoice._get_tax_factor() or 1.0
                 # TODO implementar
-                matched_amount_untaxed += line.payment_group_matched_amount * factor
+                matched_amount_untaxed += line.payment_matched_amount * factor
             rec.matched_amount_untaxed = sign * matched_amount_untaxed
 
     @api.depends(
@@ -359,3 +357,14 @@ class AccountPayment(models.Model):
                 withholdable_advanced_amount = \
                     self.withholdable_advanced_amount
         return (withholdable_advanced_amount, withholdable_invoiced_amount)
+
+    def _get_name_receipt_report(self, report_xml_id):
+        """ Method similar to the '_get_name_invoice_report' of l10n_latam_invoice_document
+        Basically it allows different localizations to define it's own report
+        This method should actually go in a sale_ux module that later can be extended by different localizations
+        Another option would be to use report_substitute module and setup a subsitution with a domain
+        """
+        self.ensure_one()
+        if self.company_id.country_id.code == 'AR':
+            return 'l10n_ar_withholding_ux.report_payment_receipt_document'
+        return report_xml_id

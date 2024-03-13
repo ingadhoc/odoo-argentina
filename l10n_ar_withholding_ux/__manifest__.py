@@ -12,7 +12,8 @@
         'account_payment_pro',
     ],
     'data': [
-        'reports/report_withholding_certificate.xml',
+        'views/report_withholding_certificate_templates.xml',
+        'views/report_payment_receipt_templates.xml',
         'views/account_payment.xml',
         'views/account_tax_view.xml',
         'security/ir.model.access.csv',

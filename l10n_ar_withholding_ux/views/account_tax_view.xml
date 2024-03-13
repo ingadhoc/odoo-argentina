@@ -21,7 +21,7 @@
 
             <!-- TODO mejorar esta vista -->
             <xpath expr="//page" position="after">
-                <page string="Withholding computation" invisible="type_tax_use != 'none' or country_code != 'AR'">
+                <page string="Withholding computation" invisible="l10n_ar_withholding_payment_type != 'supplier'">
                     <group>
                         <group name="withholdings">
                             <label for="withholding_type"/>

@@ -12,7 +12,7 @@
             <group name="others_col_1">
                 <field name="drei"/>
             </group>
-            <group name="others" position="after">
+            <group name="others" position="before">
                 <label for="arba_alicuot_ids"/>
                 <field name="arba_alicuot_ids"/>
             </group>

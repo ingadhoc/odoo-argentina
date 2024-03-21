@@ -145,7 +145,7 @@ class ResCompany(models.Model):
         ws = self.arba_connect()
         ws.ConsultarContribuyentes(
             from_date.strftime('%Y%m%d'),
-            to_date.strftime('%Y%m%d'),
+            to_date.strftime('%Y'),
             cuit)
 
         error = False
@@ -173,10 +173,12 @@ class ResCompany(models.Model):
         if error:
             action = self.env.ref('l10n_ar_account_withholding.act_company_jurisdiction_padron')
             raise RedirectWarning(_(
-                "Obtuvimos un error al consultar el Padron ARBA.\n  %s\n\n"
+                "Hubo un error al consultar el Padron ARBA. "
+                "Para solucionarlo puede seguir los siguientes pasos, los cuales explicamos con más detalle en este video:\n %s\n\n"
                 "Tiene las siguientes opciones:\n  1) Intentar nuevamente más tarde\n"
                 "  2) Cargar la alícuota manualmente en el partner en cuestión\n"
-                "  3) Subir el archivo del padrón utilizando el asistente de Carga de Padrones") % msg,
+                "  3) Subir el archivo del padrón utilizando el Asistente de carga de padrones.\n\n"
+                "Error obtenido:\n%s\n\n") % ('https://www.youtube.com/watch?v=fE-RiokUyDs&t=22s', msg),
                 action.id, _('Ir a Carga de Padrones'))
 
         # no ponemos esto, si no viene alicuota es porque es cero entonces

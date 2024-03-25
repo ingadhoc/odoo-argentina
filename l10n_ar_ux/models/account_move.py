@@ -86,10 +86,11 @@ class AccountMove(models.Model):
 
     def _is_manual_document_number(self):
         res = super()._is_manual_document_number()
-        # when issuer is supplier de numbering works opposite (supplier numerate invoices, customer encode bill)
+        # when issuer is supplier de num    bering works opposite (supplier numerate invoices, customer encode bill)
         if self.country_code == 'AR' and self.journal_id._l10n_ar_journal_issuer_is_supplier():
             return not res
         return res
+
 
     def _post(self, soft=True):
         """ Estamos sobreescribiendo este método para hacer cosas que en odoo oficial no se puede tanto previo como posterior a la validación de la factura. """
@@ -107,14 +108,20 @@ class AccountMove(models.Model):
         today = fields.Date.context_today(self)
         old_date = '1970-01-01'
         for inv in other_currency_ar_invoices:
+            tax_list_origin = inv._origin.mapped('invoice_line_ids.tax_ids')
+            tax_total_origin=inv._origin.tax_totals
             invoice_date = inv.invoice_date
             inv.invoice_date = old_date
             inv.invoice_date = invoice_date or today
- 
+
             if inv.move_type in ['in_invoice', 'in_refund']:
                 accounting_date = inv.date
                 inv.date = old_date
                 inv.date = accounting_date or today
+            inv.with_context(
+                tax_list_origin=tax_list_origin,
+                tax_total_origin=tax_total_origin
+            )._compute_tax_totals()
 
         res = super()._post(soft=soft)
 

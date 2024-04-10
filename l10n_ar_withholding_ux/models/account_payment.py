@@ -1,6 +1,7 @@
+from ast import literal_eval
+
 from odoo import models, fields, api, Command, _
 from odoo.exceptions import UserError, ValidationError
-from ast import literal_eval
 
 
 class AccountPayment(models.Model):
@@ -104,7 +105,6 @@ class AccountPayment(models.Model):
     def _prepare_move_line_default_vals(self, write_off_line_vals=None):
         res = super()._prepare_move_line_default_vals(write_off_line_vals)
         res += self._prepare_witholding_write_off_vals()
-
         wth_amount = sum(self.l10n_ar_withholding_line_ids.mapped('amount'))
         # TODO: EVALUAR
         # si cambio el valor de la cuenta de liquides quitando las retenciones el campo amount representa el monto que cancelo de la deuda

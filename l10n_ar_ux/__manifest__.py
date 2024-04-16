@@ -30,7 +30,6 @@
         'views/ir_actions_views.xml',
         # 'wizards/res_config_settings_views.xml',
         'reports/account_invoice_report_view.xml',
-        # 'reports/report_payment.xml',
         'security/ir.model.access.csv',
         'security/l10n_ar_ux_security.xml',
         'data/res_groups_data.xml',

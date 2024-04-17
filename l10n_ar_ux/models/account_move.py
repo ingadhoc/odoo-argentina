@@ -97,13 +97,20 @@ class AccountMove(models.Model):
 
         PENDIENTE: NO logramos hacerlo: Actualiza cotización si esta fue cambiada posterior a cuando fue usada en la factura.
         """
+        # endpoint = functools.partial(method)
+        # functools.update_wrapper(endpoint, method)
+        # self.clear_caches()
+
         for rec in self:
             if rec.company_id.currency_id == rec.currency_id:
                 rec.l10n_ar_currency_rate = 1.0
             elif not rec.l10n_ar_currency_rate:
-                rec.write({'l10n_ar_currency_rate': self.env['res.currency']._get_conversion_rate(
+                updated_rate = self.env['res.currency']._get_conversion_rate(
                     from_currency=rec.currency_id,
                     to_currency=rec.company_id.currency_id,
                     company=rec.company_id,
                     date=rec.invoice_date or fields.Date.context_today(rec),
-                )})
+                )
+                print(" ------ updated rate %s" % updated_rate)
+                rec.line_ids._compute_currency_rate()
+                rec.write({'l10n_ar_currency_rate': updated_rate})

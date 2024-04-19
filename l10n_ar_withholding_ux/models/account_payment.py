@@ -18,6 +18,10 @@ class AccountPayment(models.Model):
             'currency_id': self.currency_id.id,
         }
 
+    def _get_payment_difference(self):
+        payment_difference = super()._get_payment_difference() - sum(self.l10n_ar_withholding_line_ids.mapped('amount'))
+        return payment_difference
+
     @api.depends('l10n_ar_withholding_line_ids.amount')
     def _compute_payment_total(self):
         super()._compute_payment_total()

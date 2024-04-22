@@ -114,6 +114,10 @@ result = withholdable_base_amount * 0.10
     def get_period_payments_domain(self, payment):
         """
         We make this here so it can be inherited by localizations
+        Para un determinado pago (para saber fecha, impuesto y demas) obtenemos dos dominios:
+        * previous_payments_domain: dominio para hacer search de payments que nos devuelva los pagos del mismo mes
+        que son base de este impuesto (por ej. en ganancias de mismo regimen y que aplica impuesto)
+        * previous_withholdings_domain: dominio para hacer search del impuesto aplicado en el mes
         """
         to_date = fields.Date.from_string(payment.date) or datetime.date.today()
         if self.withholding_accumulated_payments == 'month':
@@ -135,14 +139,12 @@ result = withholdable_base_amount * 0.10
         # on posted payment group, we remove the cancel payments (not the
         # draft ones as they are also considered by public_budget)
         previous_withholdings_domain = [
-            # TODO implementar, deberiamos ver los apuntes que fueron efectivamente retenciones
-            # ('partner_id.commercial_partner_id', '=', payment.commercial_partner_id.id),
-            # ('date', '<=', to_date),
-            # ('date', '>=', from_date),
-            # ('payment_id.state', 'not in', ['draft', 'cancel', 'confirmed']),
-            # ('state', '!=', 'cancel'),
-            # ('tax_withholding_id', '=', self.id),
-            # ('payment_id.id', '!=', payment.id),
+            ('payment_id.partner_id.commercial_partner_id', '=', payment.commercial_partner_id.id),
+            ('payment_id.date', '<=', to_date),
+            ('payment_id.date', '>=', from_date),
+            ('payment_id.state', '=', 'posted'),
+            ('tax_id', '=', self.id),
+            ('payment_id.id', '!=', payment.id),
         ]
         return (previous_payments_domain, previous_withholdings_domain)
 
@@ -161,15 +163,15 @@ result = withholdable_base_amount * 0.10
         accumulated_amount = previous_withholding_amount = 0.0
 
         if self.withholding_accumulated_payments:
-            previos_payments_domain, previos_payments_domain = (self.get_period_payments_domain(payment))
-            same_period_payments = self.env['account.payment'].search(previos_payments_domain)
+            previous_payments_domain, previous_withholdings_domain = (self.get_period_payments_domain(payment))
+            same_period_payments = self.env['account.payment'].search(previous_payments_domain)
 
             for same_period_payment in same_period_payments:
                 same_period_amounts = same_period_payment._get_withholdable_amounts(
                     withholding_amount_type, self.withholding_advances)
                 accumulated_amount += same_period_amounts[0] + same_period_amounts[1]
             previous_withholding_amount = sum(
-                self.env['account.payment'].search(previos_payments_domain).mapped('amount'))
+                self.env['l10n_ar.payment.withholding'].search(previous_withholdings_domain).mapped('amount'))
 
         total_amount = accumulated_amount + withholdable_advanced_amount + withholdable_invoiced_amount
         withholding_non_taxable_minimum = self.withholding_non_taxable_minimum

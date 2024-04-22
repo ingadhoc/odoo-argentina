@@ -33,21 +33,21 @@ class AccountTax(models.Model):
                 ' el partner. Revise los impuestos con id: %s') % recs.ids)
 
     def get_period_payments_domain(self, payment):
-        previos_payments_domain, previos_payments_domain = super(
+        previous_payments_domain, previous_withholdings_domain = super(
             AccountTax, self).get_period_payments_domain(payment)
         if self.withholding_type == 'tabla_ganancias' and payment.retencion_ganancias == 'nro_regimen' \
            and payment.regimen_ganancias_id:
-            previos_payments_domain += [
+            previous_payments_domain += [
                 ('regimen_ganancias_id', '=', payment.regimen_ganancias_id.id),
                 ('retencion_ganancias', '=', 'nro_regimen'),
             ]
-            previos_payments_domain += [
+            previous_withholdings_domain += [
                 ('payment_id.regimen_ganancias_id', '=', payment.regimen_ganancias_id.id),
                 ('payment_id.retencion_ganancias', '=', 'nro_regimen'),
             ]
         return (
-            previos_payments_domain,
-            previos_payments_domain)
+            previous_payments_domain,
+            previous_withholdings_domain)
 
     def get_withholding_vals(self, payment):
         commercial_partner = payment.commercial_partner_id

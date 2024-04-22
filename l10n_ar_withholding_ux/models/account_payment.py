@@ -161,7 +161,7 @@ class AccountPayment(models.Model):
                 continue
             matched_amount_untaxed = 0.0
             sign = rec.partner_type == 'supplier' and -1.0 or 1.0
-            for line in rec.matched_move_line_ids.with_context(matched_payment_id=rec.id):
+            for line in rec.matched_move_line_ids.with_context(matched_payment_ids=rec.ids):
                 invoice = line.move_id
                 factor = invoice and invoice._get_tax_factor() or 1.0
                 # TODO implementar
@@ -201,6 +201,8 @@ class AccountPayment(models.Model):
                 rec.payment_ids.filtered(lambda x: x.tax_withholding_id).mapped('amount'))
 
     def compute_withholdings(self):
+        # chequeamos lineas a pagar antes de computar impuestos para evitar trabajar sobre base erronea
+        self._check_to_pay_lines_account()
         for rec in self:
             if rec.partner_type != 'supplier':
                 continue

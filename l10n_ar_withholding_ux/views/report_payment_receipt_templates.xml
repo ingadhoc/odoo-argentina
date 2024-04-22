@@ -137,7 +137,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <t t-foreach="o.with_context(matched_payment_id=o.id).matched_move_line_ids" t-as="line">
+                    <t t-foreach="o.with_context(matched_payment_ids=o.ids).matched_move_line_ids" t-as="line">
                         <tr>
                             <td><span t-field='line.move_id.display_name'/></td>
                             <td class="text-center">

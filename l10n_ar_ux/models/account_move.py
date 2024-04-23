@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from odoo import models, fields, api, _
-
+from odoo.exceptions import UserError
 
 class AccountMove(models.Model):
     _inherit = "account.move"
@@ -93,9 +93,10 @@ class AccountMove(models.Model):
 
     def _post(self, soft=True):
         """ Estamos sobreescribiendo este método para hacer cosas que en odoo oficial no se puede tanto previo como posterior a la validación de la factura. """
-        ar_invoices = self.filtered(lambda x: x.company_id.account_fiscal_country_id.code == "AR" and x.is_invoice(include_receipts=True))
+        ar_invoices = self.filtered(lambda x: x.company_id.account_fiscal_country_id.code == "AR" and x.is_invoice(include_receipts=True)
+                                    and x.currency_id != x.company_currency_id and not x.l10n_ar_currency_rate)
 
-        # Forzamos cambio de fecha en factura para actualizar cotización. Solucionamos problemas de cálculo en apunte contable y actualización de cotización. Solo usamos en l10n_ar. Considerar uso en otras locs. Resuelve:
+        # Forzamos cambio de fecha en factura para actualizar cotización. Solucionamos problemas de cálculo en apunte contable y actualización de cotización. Solo usamos en l10n_ar para facturas de cliente. Considerar uso en otras locs. Resuelve:
         #   1. Facturas creadas días atrás y dejadas en borrador usan cotización actual al validar.
         #   2. Actualiza cotización si esta fue cambiada posterior a cuando fue usada en la factura.
         #   3. Forzar cotización mantiene comportamiento correcto: usa la cotización forzada sin importar que fecha sea.
@@ -103,18 +104,13 @@ class AccountMove(models.Model):
         # facturas de proveedor con moneda diferente a la de la compañía, al momento de validar, en los apuntes
         # contables se les asigna fecha de un día posterior a la fecha de bloqueo en lugar de la fecha de la factura.
 
-        other_currency_ar_invoices = ar_invoices.filtered(lambda x: x.currency_id != x.company_currency_id and not x.l10n_ar_currency_rate)
+        other_currency_sale_ar_invoices = ar_invoices.filtered(lambda x: x.is_sale_document())
         today = fields.Date.context_today(self)
         old_date = '1970-01-01'
-        for inv in other_currency_ar_invoices:
+        for inv in other_currency_sale_ar_invoices:
             invoice_date = inv.invoice_date
             inv.invoice_date = old_date
             inv.invoice_date = invoice_date or today
- 
-            if inv.move_type in ['in_invoice', 'in_refund']:
-                accounting_date = inv.date
-                inv.date = old_date
-                inv.date = accounting_date or today
 
         res = super()._post(soft=soft)
 
@@ -123,6 +119,19 @@ class AccountMove(models.Model):
         # manera queda mucho más consistente.
         ar_invoices.filtered(lambda x: not x.l10n_latam_use_documents)._set_afip_rate()
 
+        # Si detectamos alguna factura de proveedor en donde no coincida la cotizacion de la factura vs las que tienen la lista lanzamos
+        # un mensaje de error para no permitirle facturar.
+        other_currency_purchase_ar_invoices = ar_invoices.filtered(lambda x: x.is_purchase_document())
+        for bill in other_currency_purchase_ar_invoices:
+            diff_rate = bill.company_id.currency_id.compare_amounts(
+                bill.amount_total_signed,
+                bill.amount_total_in_currency_signed * bill.l10n_ar_currency_rate)
+            if diff_rate != 0:
+                raise UserError(_('La cotizacion a informar no coincide con la cotizacion utilizada en las lineas. Esta cambio posterior a la creacion de esta factura. Necesita corregir para poder validar. Por favor re-asginar la cotizacion correcta a la factura sea forzando la cotizacion o cambiando la fecha para actualizar/recalcular la cotizacion en las lineas\n\n- monto total %s\n- monto en pesos %s\n- cotizacion usada en las lineas %s\n- cotizacion informada %s') % (
+                    abs(bill.amount_total_in_currency_signed),
+                    abs(bill.amount_total_signed),
+                    abs(1.0 / (bill.amount_total_in_currency_signed / bill.amount_total_signed)),
+                    abs(bill.l10n_ar_currency_rate)))
         return res
 
     @api.depends('l10n_latam_available_document_type_ids', 'debit_origin_id')

@@ -6,34 +6,17 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="account.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <div id="pay_invoice_online_setting_container">
-                <div class="col-xs-12 col-md-6 o_setting_box" title="This option enables open documents in the payment report.">
-                    <div class="o_setting_left_pane">
-                        <field name="group_include_pending_receivable_documents" widget="upgrade_boolean"/>
-                    </div>
-                    <div class="o_setting_right_pane">
-                        <label for="group_include_pending_receivable_documents"/>
-                        <div class="text-muted">
-                           Si marca esta opción, cuando se imprima o envíe un Recibo de Clientes, se incluirá una sección con todos los Comprobantes abiertos, es decir, que tengan algún saldo pendiente.
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <xpath expr="//div[@data-key='account']//field[@name='module_snailmail_account']/../.." position="after">
-                 <div class="col-12 col-lg-6 o_setting_box" invisible="not group_multi_currency or country_code != 'AR'">
-                    <div class="o_setting_left_pane">
-                        <field name="l10n_ar_invoice_report_ars_amount"/>
-                    </div>
-                    <div class="o_setting_right_pane" id="snailmail_settings">
-                        <label for="l10n_ar_invoice_report_ars_amount"/>
-                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific."/>
-                        <div class="text-muted">
-                            Si activa esta opción, en los pdfs de las facturas en divisa extranjera, se incluirá una leyenda indicando a cuanto equivale el comprobante en ARS
-                        </div>
-                    </div>
-                </div>
+            <block id="pay_invoice_online_setting_container">
+                <setting title="This option enables open documents in the payment report." help="Si marca esta opción, cuando se imprima o envíe un Recibo de Clientes, se incluirá una sección con todos los Comprobantes abiertos, es decir, que tengan algún saldo pendiente.">
+                    <field name="group_include_pending_receivable_documents"/>
+                </setting>
+            </block>
+            <xpath expr="//app[@name='account']//field[@name='module_snailmail_account']/.." position="after">
+                <setting invisible="not group_multi_currency or country_code != 'AR'" company_dependent="1" help="Si activa esta opción, en los pdfs de las facturas en divisa extranjera, se incluirá una leyenda indicando a cuanto equivale el comprobante en ARS">
+                    <field name="l10n_ar_invoice_report_ars_amount"/>
+                </setting>
             </xpath>
-            <div id="bank_cash">
+            <block id="bank_cash">
                 <div class="col-12 col-lg-6 o_setting_box">
                     <div class="o_setting_left_pane"/>
                     <div class="o_setting_right_pane">
@@ -55,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </block>
         </field>
     </record>
 

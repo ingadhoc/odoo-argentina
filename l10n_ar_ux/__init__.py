@@ -11,6 +11,8 @@ from .hooks import post_init_hook
 
 from odoo.addons.l10n_ar.models.account_fiscal_position import AccountFiscalPosition
 
+def test_commit():
+    val= 0;
 
 def monkey_patches():
 

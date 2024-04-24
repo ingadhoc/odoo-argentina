@@ -1,10 +1,11 @@
 {
-    'name': 'Argentinian Accounting UX edit',
+    'name': 'Argentinian Accounting UX',
     'version': "17.0.1.0.0",
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
+    'license': 'AGPL-3',
     'license': 'AGPL-3',
     'summary': '',
     'depends': [

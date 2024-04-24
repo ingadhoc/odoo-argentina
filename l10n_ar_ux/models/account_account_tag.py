@@ -10,9 +10,3 @@ class AccountAccountTag(models.Model):
     _inherit = 'account.account.tag'
 
     jurisdiction_code = fields.Char(size=3)
-
-
-def test_commit():
-    val= 0
-    val2 = 2
-    val3 = val*val2

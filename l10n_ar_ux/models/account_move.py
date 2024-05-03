@@ -92,16 +92,24 @@ class AccountMove(models.Model):
         return res
 
     def _post(self, soft=True):
-        """ Estamos sobreescribiendo este método para hacer cosas que en odoo oficial no se puede tanto previo como posterior a la validación de la factura. """
-
-        # para facturas argentinas y que no usen documentos tmb guardamos rate para mantener mismo comportamiento que en
-        # las que si y además porque nosotros siempre estamos mostrando la cotización (facturas con y sin). de esta
-        # manera queda mucho más consistente
+        # estamos haciendo varias cosas acá:
+        # 1. para facturas sin documentos guardamos el rate (en l10n_ar solo se hace para las que usan documentos)
+        # 2. en vez de que el rate se seete luego de postear (que es lo que l10n_ar) lo hacaemos antes para garantizar que
+        # se actualicen los apuntes contables con el rate que efectivamente se va a autilizar
+        # hacemos el hack del +1 porque sin eso no termina de actualizar
+        # el metodo _set_afip_rate super lo llama pero no va a hacer nada porque ya llega con un de l10n_ar_currency_rate seteado
         not_use_doc_with_currency_ar_invoices = self.filtered(
             lambda x: x.company_id.account_fiscal_country_id.code == "AR" and x.is_invoice(include_receipts=True)
-            and x.currency_id != x.company_currency_id and not x.l10n_ar_currency_rate
-            and not x.l10n_latam_use_documents)
-        not_use_doc_with_currency_ar_invoices._set_afip_rate()
+            and x.currency_id != x.company_currency_id and not x.l10n_ar_currency_rate)
+        for rec in not_use_doc_with_currency_ar_invoices:
+            rate = self.env['res.currency']._get_conversion_rate(
+                        from_currency=rec.currency_id,
+                        to_currency=rec.company_id.currency_id,
+                        company=rec.company_id,
+                        date=rec.invoice_date or fields.Date.context_today(rec),
+                    )
+            rec.write({'l10n_ar_currency_rate': rate + 1, 'tax_totals': rec.tax_totals})
+            rec.write({'l10n_ar_currency_rate': rate, 'tax_totals': rec.tax_totals})
         res = super()._post(soft=soft)
         return res
 
@@ -116,24 +124,3 @@ class AccountMove(models.Model):
                 document_types = rec.l10n_latam_available_document_type_ids._origin
                 document_types = document_types.filtered(lambda x: x.internal_type == 'debit_note')
                 rec.l10n_latam_document_type_id = document_types and document_types[0].id
-
-    def _set_afip_rate(self):
-        """  Lo sobre escribimos por completo el metodo que esta en l10n_ar, Es igual el metodo, lo unico que cambio es que hacemos
-        un write explicito del campo l10n_ar_currency_rate. Esto lo hacemos para forzar el recomputo de la tasa y las lineas de factura
-        para que tengan correcto los montos en pesos segun la cotizacion usada. Esto resuelve los siguientes problemas
-
-            1. Facturas creadas días atrás y dejadas en borrador usen cotización actual al validar en lugar de la cotizacion del dia de creación.
-            3. Forzar cotización mantiene comportamiento correcto: usa la cotización forzada sin importar que fecha sea.
-
-        PENDIENTE: NO logramos hacerlo: Actualiza cotización si esta fue cambiada posterior a cuando fue usada en la factura.
-        """
-        for rec in self:
-            if rec.company_id.currency_id == rec.currency_id:
-                rec.l10n_ar_currency_rate = 1.0
-            elif not rec.l10n_ar_currency_rate:
-                rec.write({'l10n_ar_currency_rate': self.env['res.currency']._get_conversion_rate(
-                    from_currency=rec.currency_id,
-                    to_currency=rec.company_id.currency_id,
-                    company=rec.company_id,
-                    date=rec.invoice_date or fields.Date.context_today(rec),
-                )})

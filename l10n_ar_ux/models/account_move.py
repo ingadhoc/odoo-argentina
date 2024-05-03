@@ -107,14 +107,16 @@ class AccountMove(models.Model):
         today = fields.Date.context_today(self)
         old_date = '1970-01-01'
         for inv in other_currency_ar_invoices:
+            # en todos los casos pasamos el tax_totals para que account_invoice_tax pueda persistir los impuestos modificados
+            # lo podemos hacer "tranquilos" porque sabemos que no estamos cambiando importes
             invoice_date = inv.invoice_date
-            inv.invoice_date = old_date
-            inv.invoice_date = invoice_date or today
- 
+            inv.write({'invoice_date': old_date, 'tax_totals': inv.tax_totals})
+            inv.write({'invoice_date': invoice_date or today, 'tax_totals': inv.tax_totals})
+
             if inv.move_type in ['in_invoice', 'in_refund']:
                 accounting_date = inv.date
-                inv.date = old_date
-                inv.date = accounting_date or today
+                inv.write({'date': old_date, 'tax_totals': inv.tax_totals})
+                inv.write({'date': accounting_date or today, 'tax_totals': inv.tax_totals})
 
         res = super()._post(soft=soft)
 

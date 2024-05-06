@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pos-receipt-contact')]/t[@t-if='receipt.company.vat']" position="after">
+            <t t-if="receipt.company.l10n_ar_afip_responsibility_type_id">
+                <div>
+                    <t t-esc="receipt.company.l10n_ar_afip_responsibility_type_id[1]" />
+                </div>
+            </t>
+                <div>IBB: <t t-esc="receipt.company.l10n_ar_gross_income_number" />
+                    <t t-esc="receipt.company.l10n_ar_gross_income_type" />
+                </div>
+                <div>Inicio actividades: <t t-esc="receipt.company.l10n_ar_afip_start_date" />
+                </div>
+
+        </xpath>
+   </t>
+</templates>

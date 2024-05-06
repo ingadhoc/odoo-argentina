@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PartnerLine" t-inherit="point_of_sale.PartnerLine" owl="1">
+        <div class="company-field" position="after">
+            <t t-if="env.pos.isArgentineanCompany()">
+                <div class="afip-field">
+                    <t t-esc="props.partner.l10n_ar_afip_responsibility_type_id[1] or ''" />
+                </div>
+                <div class="vat-field">
+                    <t t-esc="props.partner.l10n_latam_identification_type_id[1] or ''" />
+                    <t t-esc="props.partner.vat or ''" />
+                </div>
+            </t>
+        </div>
+    </t>

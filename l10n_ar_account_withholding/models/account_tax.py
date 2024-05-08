@@ -249,11 +249,18 @@ class AccountTax(models.Model):
             self, base_amount, price_unit, quantity=1.0, product=None, partner=None, fixed_multiplicator=1):
         if self.amount_type == 'partner_tax':
             date = self._context.get('invoice_date', fields.Date.context_today(self))
+<<<<<<< HEAD
 
             # Parche para intentar que al intentar corregir el problema que surge al intentar consultar la alicuota
             # para la fecha que estamos usando para forzar la actualizacion de la cotizacion
             if not date or str(date) == '1970-01-01':
                 date = fields.Date.context_today(self)
+||||||| parent of 47ef581c (temp)
+=======
+
+            if not date:
+                date = fields.Date.context_today(self)
+>>>>>>> 47ef581c (temp)
             partner = partner and partner.sudo()
             return base_amount * self.sudo().get_partner_alicuota_percepcion(partner, date)
         else:

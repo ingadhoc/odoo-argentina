@@ -1,5 +1,5 @@
 {
-    'name': 'Argentinian Accounting UX',
+    'name': 'Argentinian Accounting UX edit',
     'version': "17.0.1.2.0",
     'category': 'Localization/Argentina',
     'sequence': 14,

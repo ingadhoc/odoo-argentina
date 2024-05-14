@@ -1,6 +1,6 @@
 {
     'name': 'Argentinian withholding UX',
-    'version': "17.0.1.1.0",
+    'version': "17.0.1.2.0",
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -16,6 +16,7 @@
         'views/report_payment_receipt_templates.xml',
         'views/account_payment.xml',
         'views/account_tax_view.xml',
+        'wizards/res_config_settings_views.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [

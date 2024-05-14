@@ -40,6 +40,13 @@ class AccountPayment(models.Model):
     #                                                             'base_amount': abs(base), 'amount': abs(line.balance)})]
     #         rec.l10n_ar_withholding_line_ids = l10n_ar_withholding_line_ids
 
+    def action_confirm(self):
+        self.filtered('company_id.automatic_withholdings').compute_withholdings()
+        res = super().action_confirm()
+        # por ahora primero computamos retenciones y luego conifmamos porque si no en caso de cheques siempre da error
+        # TODO tal vez mejorar y advertir de que se va a computar el importe?
+        return res
+
     def _prepare_witholding_write_off_vals(self):
         self.ensure_one()
         write_off_line_vals = []
@@ -200,7 +207,7 @@ class AccountPayment(models.Model):
             rec.withholdings_amount = sum(
                 rec.payment_ids.filtered(lambda x: x.tax_withholding_id).mapped('amount'))
 
-    def compute_withholdings(self):
+    def _compute_withholdings(self):
         # chequeamos lineas a pagar antes de computar impuestos para evitar trabajar sobre base erronea
         self._check_to_pay_lines_account()
         for rec in self:
@@ -215,8 +222,50 @@ class AccountPayment(models.Model):
                     ('l10n_ar_withholding_payment_type', '=', rec.partner_type),
                     ('company_id', '=', rec.company_id.id),
                 ])
-            # for tax in taxes:
+
             rec._upadte_withholdings(taxes)
+
+    def compute_withholdings(self):
+        checks_payments = self.filtered(lambda x: x.payment_method_code in ['in_third_party_checks', 'out_third_party_checks'])
+        (self - checks_payments)._compute_withholdings()
+        for rec in checks_payments.with_context(skip_account_move_synchronization=True):
+            rec.set_withholdable_advanced_amount()
+            rec._compute_withholdings()
+            # dejamos 230 porque el hecho de estar usando valor de "$2" abajo y subir de a un centavo hace podamos necesitar
+            # 200 intento solo en esa seccion
+            # deberiamos ver de ir aproximando de otra manera
+            remining_attemps = 230
+            while not rec.currency_id.is_zero(rec.payment_difference):
+                if remining_attemps == 0:
+                    raise UserError(
+                        'Máximo de intentos alcanzado. No pudimos computar el importe a pagar. El último importe a pagar'
+                        'al que llegamos fue "%s"' % rec.to_pay_amount)
+                remining_attemps -= 1
+                # el payment difference es negativo, para entenderlo mejor lo pasamos a postivo
+                # por ahora, arbitrariamente, si la diferencia es mayor a 2 vamos sumando la payment difference
+                # para llegar mas rapido al numero
+                # cuando ya estamos cerca del numero empezamos a sumar de a 1 centavo.
+                # no lo hacemos siempre sumando el difference porque podria ser que por temas de redondeo o escalamiento
+                # nos pasemos del otro lado
+                # TODO ver si conviene mejor hacer una ponderacion porcentual
+                if -rec.payment_difference > 2:
+                    rec.to_pay_amount -= rec.payment_difference
+                elif -rec.payment_difference > 0:
+                    rec.to_pay_amount += 0.01
+                elif rec.to_pay_amount > rec.amount:
+                    # este caso es por ej. si el cliente ya habia pre-completado con un to_pay_amount mayor al amount
+                    # del pago
+                    rec.to_pay_amount = 0.0
+                else:
+                    raise UserError(
+                        'Hubo un error al querer computar el importe a pagar. Llegamos a estos valores:\n'
+                        '* to_pay_amount: %s\n'
+                        '* payment_difference: %s\n'
+                        '* amount: %s'
+                        % (rec.to_pay_amount, rec.payment_difference, rec.amount))
+                rec.set_withholdable_advanced_amount()
+                rec._compute_withholdings()
+            rec.with_context(skip_account_move_synchronization=False)._synchronize_to_moves({'l10n_ar_withholding_line_ids'})
 
     def _upadte_withholdings(self, taxes):
         self.ensure_one()
@@ -274,13 +323,6 @@ class AccountPayment(models.Model):
                 commands.append(Command.create(vals))
         self.l10n_ar_withholding_line_ids = commands
 
-    # esto por ahora no tendria sentido
-    # def confirm(self):
-    #     res = super(AccountPaymentGroup, self).confirm()
-    #     for rec in self:
-    #         if rec.company_id.automatic_withholdings:
-    #             rec.compute_withholdings()
-    #     return res
 
     def _get_withholdable_amounts(
             self, withholding_amount_type, withholding_advances):

@@ -20,7 +20,7 @@ class ResCompany(models.Model):
         help='Clave de Identificación Tributaria de ARBA',
     )
     # la fecha de comienzo de actividades puede ser por cada punto de venta distinta, lo convertimos a related del
-    # partner
+    #   partner
     l10n_ar_afip_start_date = fields.Date(
         related='partner_id.start_date', string='Activities Start', readonly=False)
     l10n_ar_report_signature = fields.Image('Firma', copy=False, attachment=True)

@@ -45,13 +45,6 @@ class AccountMove(models.Model):
                     round=False)
         remaining.computed_currency_rate = 1.0
 
-    @api.constrains('ref', 'move_type', 'partner_id', 'journal_id', 'invoice_date')
-    def _check_duplicate_supplier_reference(self):
-        """ We make reference only unique if you are not using documents.
-        Documents already guarantee to not encode twice same vendor bill """
-        return super(
-            AccountMove, self.filtered(lambda x: not x.l10n_latam_use_documents))._check_duplicate_supplier_reference()
-
     def _get_name_invoice_report(self):
         """Use always argentinian like report (regardless use documents)"""
         self.ensure_one()

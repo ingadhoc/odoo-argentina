@@ -41,6 +41,16 @@ class AccountPayment(models.Model):
     #         rec.l10n_ar_withholding_line_ids = l10n_ar_withholding_line_ids
 
     def action_confirm(self):
+        checks_payments = self.filtered(lambda x: x.payment_method_code in ['in_third_party_checks', 'out_third_party_checks'])
+        for rec in checks_payments:
+            previous_to_pay = rec.to_pay_amount
+            rec.compute_withholdings()
+            if not rec.currency_id.is_zero(previous_to_pay - rec.to_pay_amount):
+                raise UserError(
+                    'Está pagando con un cheque y las retenciones que se aplicarán cambiarán el importe a pagar de %s a %s.\n'
+                    'Por favor, compute las retenciones para que el importe a pagar se actualice y luego confirme el pago.' % (
+                        previous_to_pay, rec.to_pay_amount
+                    ))
         self.filtered('company_id.automatic_withholdings').compute_withholdings()
         res = super().action_confirm()
         # por ahora primero computamos retenciones y luego conifmamos porque si no en caso de cheques siempre da error

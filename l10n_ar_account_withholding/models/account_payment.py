@@ -34,7 +34,7 @@ class AccountPayment(models.Model):
         y se exija si es pago de o a proveedor
         """
         for rec in self:
-            if rec.partner_type == 'supplier':
+            if rec.partner_type == 'supplier' and not rec.is_internal_transfer:
                 rec.company_regimenes_ganancias_ids = rec.company_id.regimenes_ganancias_ids
             else:
                 rec.company_regimenes_ganancias_ids = rec.env['afip.tabla_ganancias.alicuotasymontos']

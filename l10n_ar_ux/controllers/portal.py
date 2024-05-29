@@ -34,7 +34,10 @@ class L10nArCustomerPortal(CustomerPortal):
 
     @route()
     def account(self, redirect=None, **post):
-        if post:
+        partner = request.env.user.partner_id
+        if post and request.httprequest.method == 'POST':
+            if not partner.can_edit_vat():
+                post['country_id'] = str(partner.country_id.id)
             error, _error_message = self.details_form_validate(post)
             if not error:
                 post.pop('commercial_partner_id', False)

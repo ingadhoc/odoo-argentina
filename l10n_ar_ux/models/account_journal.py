@@ -1,6 +1,6 @@
 ##############################################################################
 # For copyright and license notices, see __manifest__.py file in module root
-# directory
+# directory edit1
 ##############################################################################
 from odoo import fields, models, api, _
 
@@ -12,6 +12,7 @@ class AccountJournal(models.Model):
     l10n_ar_document_type_ids = fields.Many2many('l10n_latam.document.type', string='Document Types')
     qr_code_label = fields.Char(
         string="QR Code Label",
+        help="String to display before the QR Code on the invoice report."
         help="String to display before the QR Code on the invoice report."
     )
     qr_code = fields.Char(

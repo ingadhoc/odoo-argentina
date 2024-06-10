@@ -89,9 +89,42 @@ class AccountMove(models.Model):
 
         res = super()._post(soft=soft)
 
+<<<<<<< HEAD
         # para facturas argentinas y que no usen documentos tmb guardamos rate para mantener mismo comportamiento que en
         # las que si y además porque nosotros siempre estamos mostrando la cotización (facturas con y sin). de esta
         # manera queda mucho más consistente.
         ar_invoices.filtered(lambda x: not x.l10n_latam_use_documents)._set_afip_rate()
 
         return res
+||||||| parent of 2499b2d6 (temp)
+    @api.depends('l10n_latam_available_document_type_ids', 'debit_origin_id')
+    def _compute_l10n_latam_document_type(self):
+        """ Sobre escribimos este metodo porque es necesario para poder auto calcular el tipo de documento por defecto
+        de una nota de debito cuando no hay un debit_origin_id definido, puede ser porque simplemente no haya un
+        documento relacionado original o porque hay muchos documentos relacionados pero no puede ser asociados """
+        super()._compute_l10n_latam_document_type()
+        if self.env.context.get('internal_type') == 'debit_note':
+            for rec in self.filtered(lambda x: x.state == 'draft'):
+                document_types = rec.l10n_latam_available_document_type_ids._origin
+                document_types = document_types.filtered(lambda x: x.internal_type == 'debit_note')
+                rec.l10n_latam_document_type_id = document_types and document_types[0].id
+=======
+    @api.depends('l10n_latam_available_document_type_ids', 'debit_origin_id')
+    def _compute_l10n_latam_document_type(self):
+        """ Sobre escribimos este metodo porque es necesario para poder auto calcular el tipo de documento por defecto
+        de una nota de debito cuando no hay un debit_origin_id definido, puede ser porque simplemente no haya un
+        documento relacionado original o porque hay muchos documentos relacionados pero no puede ser asociados """
+        super()._compute_l10n_latam_document_type()
+        if self.env.context.get('internal_type') == 'debit_note':
+            for rec in self.filtered(lambda x: x.state == 'draft'):
+                document_types = rec.l10n_latam_available_document_type_ids._origin
+                document_types = document_types.filtered(lambda x: x.internal_type == 'debit_note')
+                rec.l10n_latam_document_type_id = document_types and document_types[0].id
+
+    @api.model    
+    def _l10n_ar_get_document_number_parts(self, document_number, document_type_code):
+        # eliminamos todo lo que viene después '(' que es un sufijo que odoo agrega y que nosotros agregamos para
+        # forzar unicidad con cambios de approach al ir migrando de versiones
+        document_number = document_number.split('(')[0]
+        return super()._l10n_ar_get_document_number_parts(document_number, document_type_code)
+>>>>>>> 2499b2d6 (temp)

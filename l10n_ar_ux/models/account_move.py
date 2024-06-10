@@ -117,3 +117,10 @@ class AccountMove(models.Model):
                 document_types = rec.l10n_latam_available_document_type_ids._origin
                 document_types = document_types.filtered(lambda x: x.internal_type == 'debit_note')
                 rec.l10n_latam_document_type_id = document_types and document_types[0].id
+
+    @api.model    
+    def _l10n_ar_get_document_number_parts(self, document_number, document_type_code):
+        # eliminamos todo lo que viene después '(' que es un sufijo que odoo agrega y que nosotros agregamos para
+        # forzar unicidad con cambios de approach al ir migrando de versiones
+        document_number = document_number.split('(')[0]
+        return super()._l10n_ar_get_document_number_parts(document_number, document_type_code)

@@ -21,7 +21,7 @@ class ResCompany(models.Model):
         'afip.tabla_ganancias.alicuotasymontos',
         'res_company_tabla_ganancias_rel',
         'company_id', 'regimen_id',
-        'Regimenes Ganancia',
+        'Regímenes que usualmente retiene',
     )
     agip_padron_type = fields.Selection([
         ('regimenes_generales', 'Regímenes Generales')],

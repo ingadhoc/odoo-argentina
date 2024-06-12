@@ -106,3 +106,7 @@ class ResPartner(models.Model):
                 if self[r_field] == value:
                     values.pop(r_field, False)
         return values
+
+
+
+# cambios 2

@@ -3,6 +3,7 @@
 # directory
 ##############################################################################
 from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
 
 
 class AccountMoveChangeRate(models.TransientModel):
@@ -26,9 +27,20 @@ class AccountMoveChangeRate(models.TransientModel):
         default=get_move
     )
 
+<<<<<<< HEAD
     day_rate = fields.Boolean(
         string="Use currency rate of the day", help="The currency rate on the invoice date will be used. If the invoice does not have a date, the currency rate will be used at the time of validation.")
 
+||||||| parent of b2f2fc30... temp
+=======
+    @api.constrains('currency_rate')
+    def _prevent_change_currency(self):
+        """prevent currency change when the invoice is not draft
+        """
+        if self.move_id.state != 'draft':
+            raise ValidationError(_('This invoice is not draft, reset it to draft to change currency rate'))
+
+>>>>>>> b2f2fc30... temp
     @api.onchange('move_id')
     def _onchange_move(self):
         self.currency_rate = self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate

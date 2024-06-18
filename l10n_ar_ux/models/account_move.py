@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import models, fields, api, _
 
+#Modificacion para commit
 
 class AccountMove(models.Model):
     _inherit = "account.move"

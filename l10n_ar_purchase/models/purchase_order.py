@@ -1,5 +1,6 @@
 from odoo import models
 
+#Modificacion para commit
 
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"

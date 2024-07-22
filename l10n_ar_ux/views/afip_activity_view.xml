@@ -9,7 +9,7 @@
                 <group>
                     <field name="name"/>
                     <field name='code'/>
-                    <field name='active'/>
+                    <!-- <field name='active'/> -->
                 </group>
             </form>
         </field>

@@ -11,7 +11,7 @@ class AccountMove(models.Model):
     computed_currency_rate = fields.Float(
         compute='_compute_currency_rate',
         string='Currency Rate (preview)',
-        digits=(16, 6),
+        digits=(16, 10),
     )
     l10n_ar_currency_rate = fields.Float(compute='_compute_l10n_ar_currency_rate', store=True)
 

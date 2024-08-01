@@ -178,6 +178,10 @@ class AccountMove(models.Model):
             super(AccountMove, rec.with_context(force_rate=rate))._compute_invoice_taxes_by_group()
         return super(AccountMove, self - other_curr_ar_invoices)._compute_invoice_taxes_by_group()
 
+    def _compute_l10n_latam_document_type(self):
+        """ Do no recompute latam document type on customer invoices if that invoice was posted. """
+        sale_posted_before = self.filtered(lambda x: x.type in ['out_invoice', 'out_refund'] and x.l10n_latam_document_number)
+        super(AccountMove, self - sale_posted_before)._compute_l10n_latam_document_type()
 
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'

@@ -93,6 +93,7 @@ class AccountMove(models.Model):
         res = super(AccountMove, self - other_curr_ar_invoices)._post(soft=soft)
         return res
 
+<<<<<<< HEAD
     def _l10n_ar_include_vat(self):
         self.ensure_one()
         if not self.l10n_latam_use_documents:
@@ -113,6 +114,61 @@ class AccountMove(models.Model):
         if self.country_code == 'AR' and self.journal_id._l10n_ar_journal_issuer_is_supplier():
             return not res
         return res
+||||||| parent of 09d00f99 (temp)
+    def _compute_invoice_taxes_by_group(self):
+        """ Esto es para arreglar una especie de bug de odoo que al imprimir el amount by group hace conversion
+        confiando en la cotización existente a ese momento pero esto puede NO ser real. Mandamos el inverso
+        del l10n_ar_currency_rate porque en este caso la conversión es al revez"""
+        other_curr_ar_invoices = self.filtered(
+            lambda x: x.is_invoice() and
+            x.company_id.country_id == self.env.ref('base.ar') and x.currency_id != x.company_id.currency_id)
+        for rec in other_curr_ar_invoices:
+            rate = 1.0 / rec.l10n_ar_currency_rate if rec.l10n_ar_currency_rate else False
+            super(AccountMove, rec.with_context(force_rate=rate))._compute_invoice_taxes_by_group()
+        return super(AccountMove, self - other_curr_ar_invoices)._compute_invoice_taxes_by_group()
+
+
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+
+    def _recompute_debit_credit_from_amount_currency(self):
+        force_currency_rate_lines = self.filtered(lambda x: x.move_id.l10n_ar_currency_rate)
+        for line in force_currency_rate_lines:
+            balance = line.amount_currency
+            company_currency = line.account_id.company_id.currency_id
+            balance = line.currency_id.with_context(force_rate=line.move_id.l10n_ar_currency_rate)._convert(balance, company_currency, line.account_id.company_id, line.move_id.date or fields.Date.today())
+            line.debit = balance > 0 and balance or 0.0
+            line.credit = balance < 0 and -balance or 0.0
+=======
+    def _compute_invoice_taxes_by_group(self):
+        """ Esto es para arreglar una especie de bug de odoo que al imprimir el amount by group hace conversion
+        confiando en la cotización existente a ese momento pero esto puede NO ser real. Mandamos el inverso
+        del l10n_ar_currency_rate porque en este caso la conversión es al revez"""
+        other_curr_ar_invoices = self.filtered(
+            lambda x: x.is_invoice() and
+            x.company_id.country_id == self.env.ref('base.ar') and x.currency_id != x.company_id.currency_id)
+        for rec in other_curr_ar_invoices:
+            rate = 1.0 / rec.l10n_ar_currency_rate if rec.l10n_ar_currency_rate else False
+            super(AccountMove, rec.with_context(force_rate=rate))._compute_invoice_taxes_by_group()
+        return super(AccountMove, self - other_curr_ar_invoices)._compute_invoice_taxes_by_group()
+
+    def _compute_l10n_latam_document_type(self):
+        """ Do no recompute latam document type on customer invoices if that invoice was posted. """
+        sale_posted_before = self.filtered(lambda x: x.type in ['out_invoice', 'out_refund'] and x.l10n_latam_document_number)
+        super(AccountMove, self - sale_posted_before)._compute_l10n_latam_document_type()
+
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+
+    def _recompute_debit_credit_from_amount_currency(self):
+        force_currency_rate_lines = self.filtered(lambda x: x.move_id.l10n_ar_currency_rate)
+        for line in force_currency_rate_lines:
+            balance = line.amount_currency
+            company_currency = line.account_id.company_id.currency_id
+            balance = line.currency_id.with_context(force_rate=line.move_id.l10n_ar_currency_rate)._convert(balance, company_currency, line.account_id.company_id, line.move_id.date or fields.Date.today())
+            line.debit = balance > 0 and balance or 0.0
+            line.credit = balance < 0 and -balance or 0.0
+>>>>>>> 09d00f99 (temp)
 
     @api.depends('l10n_latam_available_document_type_ids', 'debit_origin_id')
     def _compute_l10n_latam_document_type(self):

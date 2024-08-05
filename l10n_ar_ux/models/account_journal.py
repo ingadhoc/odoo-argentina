@@ -16,6 +16,7 @@ class AccountJournal(models.Model):
     qr_code = fields.Char(
         string="QR Code",
         help="String to generate the QR Code that will be displayed on the invoice report."
+        help2="String to generate the QR Code that will be displayed on the invoice report."
     )
     discriminate_taxes = fields.Selection(
         [
@@ -25,6 +26,6 @@ class AccountJournal(models.Model):
         ],
         string='Discriminate taxes?',
         default='no',
-        required=True,
+        required=False,
     )
     l10n_ar_afip_pos_partner_id = fields.Many2one(string='Dirección Punto de venta')

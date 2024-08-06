@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-30 13:06+0000\n"
+"POT-Creation-Date: 2024-07-01 01:24+0000\n"
 "PO-Revision-Date: 2024-01-19 13:12+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -18,6 +18,92 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: l10n_ar_withholding_ux
+#: model:ir.actions.report,print_report_name:l10n_ar_withholding_ux.action_report_withholding_certificate
+msgid "'Certificado de Retención Slip - %s' % (object.name or '')"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "<span class=\"text-center\">Firma y Aclaración</span>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "<span>Comprobantes Imputados</span>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "<span>Comprobantes Pendientes al</span>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "<span>Fecha Venc.</span>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "<span>Importe Imputado</span>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "<span>Importe Original</span>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "<span>Importe</span>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "<span>Pagos</span>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "<span>Saldo</span>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "<strong><span>Total Imputado</span></strong>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "<strong><span>Total Pagado</span></strong>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "<strong><span>Total Pendiente</span></strong>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_withholding_certificate_document
+msgid "<strong>Customer: </strong>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_withholding_certificate_document
+msgid "<strong>Datos de la retención practicada</strong>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_withholding_certificate_document
+msgid "<strong>VAT Cond: </strong>"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "A cuenta"
+msgstr ""
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.view_account_tax_search
@@ -63,11 +149,6 @@ msgid "Amount"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux
-#: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_account_payment__l10n_ar_amount_total
-msgid "Amount Total"
-msgstr ""
-
-#. module: l10n_ar_withholding_ux
 #: model:ir.model.fields,help:l10n_ar_withholding_ux.field_account_tax__withholding_non_taxable_amount
 msgid "Amount to be substracted before applying alicuot"
 msgstr ""
@@ -80,6 +161,12 @@ msgstr ""
 #. module: l10n_ar_withholding_ux
 #: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_l10n_ar_payment_withholding__automatic
 msgid "Automatic"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_res_company__automatic_withholdings
+#: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_res_config_settings__automatic_withholdings
+msgid "Automatic Withholdings"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux
@@ -113,6 +200,16 @@ msgid "Based On Rule"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux
+#: model:ir.actions.report,name:l10n_ar_withholding_ux.action_report_withholding_certificate
+msgid "Certificado de Retención"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model:ir.model,name:l10n_ar_withholding_ux.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: l10n_ar_withholding_ux
 #: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_l10n_ar_payment_withholding__company_id
 msgid "Company"
 msgstr ""
@@ -120,6 +217,11 @@ msgstr ""
 #. module: l10n_ar_withholding_ux
 #: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_l10n_ar_payment_withholding__currency_id
 msgid "Company Currency"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_withholding_certificate_document
+msgid "Comprobante que origina la retención:"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux
@@ -131,6 +233,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_l10n_ar_payment_withholding__computed_withholding_amount
 msgid "Computed Withholding Amount"
 msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model:ir.model,name:l10n_ar_withholding_ux.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
 
 #. module: l10n_ar_withholding_ux
 #. odoo-python
@@ -167,8 +274,18 @@ msgid "Domain"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux
+#: model:ir.model.constraint,message:l10n_ar_withholding_ux.constraint_l10n_ar_payment_withholding_uniq_line
+msgid "El impuesto de retención debe ser único por pago"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
 #: model:ir.model.fields,help:l10n_ar_withholding_ux.field_account_tax_withholding_rule__percentage
 msgid "Enter % ratio between 0-1."
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_withholding_certificate_document
+msgid "Firma Responsable"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux
@@ -201,8 +318,23 @@ msgid "Importe a cuenta sujeto a retencion"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_withholding_certificate_document
+msgid "Importe de la retención:"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_withholding_certificate_document
+msgid "Importe del comprobante que origina la retención:"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
 #: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_l10n_ar_payment_withholding__withholdable_invoiced_amount
 msgid "Importe imputado sujeto a retencion"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_withholding_certificate_document
+msgid "Impuesto:"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux
@@ -228,6 +360,17 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux
+#: model:ir.model.fields,help:l10n_ar_withholding_ux.field_res_company__automatic_withholdings
+#: model:ir.model.fields,help:l10n_ar_withholding_ux.field_res_config_settings__automatic_withholdings
+msgid "Make withholdings automatically on payments confirmation"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.res_config_settings_view_form
+msgid "Make withholdings automatically on payments confirmation."
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
 #: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_account_payment__matched_amount_untaxed
 msgid "Matched Amount Untaxed"
 msgstr ""
@@ -235,6 +378,13 @@ msgstr ""
 #. module: l10n_ar_withholding_ux
 #: model:ir.model.fields.selection,name:l10n_ar_withholding_ux.selection__account_tax__withholding_accumulated_payments__month
 msgid "Month"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_withholding_certificate_document
+msgid ""
+"Nombre y Apellido Firmante:\n"
+"                                <br/>Cargo:"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux
@@ -264,6 +414,16 @@ msgstr ""
 #. module: l10n_ar_withholding_ux
 #: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_l10n_ar_payment_withholding__name
 msgid "Number"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "Observaciones:"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux
@@ -306,6 +466,11 @@ msgid "Previous Withholding Amount"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.view_account_payment_form
+msgid "Print withholding voucher"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
 #: model:ir.model.fields.selection,name:l10n_ar_withholding_ux.selection__account_tax__withholding_type__code
 msgid "Python Code"
 msgstr ""
@@ -328,6 +493,11 @@ msgstr ""
 #. module: l10n_ar_withholding_ux
 #: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_account_tax__withholding_rule_ids
 msgid "Rules"
+msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_withholding_certificate_document
+msgid "Régimen / Descripción:"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux
@@ -371,11 +541,6 @@ msgstr "Método de cálculo para el importe del impuesto."
 #: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_l10n_ar_payment_withholding__total_amount
 #: model:ir.model.fields.selection,name:l10n_ar_withholding_ux.selection__account_tax__withholding_amount_type__total_amount
 msgid "Total Amount"
-msgstr ""
-
-#. module: l10n_ar_withholding_ux
-#: model:ir.model.fields,help:l10n_ar_withholding_ux.field_account_payment__l10n_ar_amount_total
-msgid "Total amount after withholdings"
 msgstr ""
 
 #. module: l10n_ar_withholding_ux

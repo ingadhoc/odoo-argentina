@@ -6,21 +6,29 @@
         <field name="priority" eval="30"/>
         <field name="inherit_id" ref="account.view_account_payment_form" />
         <field name="arch" type="xml">
-            <button name="action_post" position="after">
-                <button name="compute_withholdings" string="Compute Withholdings" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft']"/>
-            </button>
-            <field name="unreconciled_amount" position="after">
-                <field name="withholdable_advanced_amount" invisible="state not in ['draft'] or partner_type != 'supplier'" readonly="state not in ['draft']"/>
-            </field>
             <!-- sacamos grupo con retenciones nativas y creamos una nueva page -->
             <group invisible="country_code != 'AR'" position="replace"/>
-            <notebook position="inside">
+
+            <label for="payment_total" position="before">
+                <label for="withholdings_amount" readonly="state != 'draft'" invisible="is_internal_transfer or not use_payment_pro"/>
+                <div invisible="is_internal_transfer or not use_payment_pro">
+                    <field name="withholdings_amount" string="Withholdings" class="oe_inline"/>
+                </div>
+            </label>
+            <div name="to_pay_amount">
+                <button name="compute_to_pay_amount_for_check" icon="fa-refresh" title="A partir del importe del pago (campo Importe) + ajuste, se calculan las retenciones y el importe a pagar. Útil por ejemplo para pagos con cheques donde el importe Importe no lo podemos cambiar" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft'] or payment_method_code not in ['in_third_party_checks', 'out_third_party_checks']" class="oe_inline oe_link"/>
+            </div>
+
+            <page name="paid" position="after">
                 <page string="Retenciones">
+                    <group>
+                        <field name="unreconciled_amount" invisible="1"/>
+                        <field name="withholdable_advanced_amount"
+                            invisible="state not in ['draft'] or partner_type != 'supplier' or unreconciled_amount &lt;= 0.0" readonly="state not in ['draft']" string="Base imponible del pago excedente"/>
+                    </group>
+                    <button name="compute_withholdings" string="Re Computar Retenciones" title="Re-computar retenciones a partir del 'Importe a Pagar'" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft']"/>
                     <field name="l10n_ar_withholding_line_ids" nolabel="1" colspan="2" invisible="is_internal_transfer" readonly="state != 'draft'">
-                        <!-- TODO hacer tree editable y de ultima con boton de edicion o similar si es una con acumulado. -->
-                        <!-- tal vez tree editable en customer y no editable en supplier -->
-                        <tree>
-                        <!-- <tree editable="bottom"> -->
+                        <tree editable="bottom">
                             <field name="withholding_sequence_id" column_invisible="True"/>
                             <field name="company_id" column_invisible="True"/>
                             <field name="currency_id" column_invisible="True"/>
@@ -28,40 +36,14 @@
                             <field name="name" readonly="withholding_sequence_id"/>
                             <field name="base_amount"/>
                             <field name="amount"/>
-                            <button name="%(action_report_withholding_certificate)d" icon="fa-print " title="Print withholding voucher" type="action" invisible="parent.partner_type != 'supplier'"/>
+                            <button name="%(action_report_withholding_certificate)d" icon="fa-print " title="Print withholding voucher" type="action" invisible="parent.partner_type != 'supplier' or parent.state == 'draft'"/>
+                            <button type="object" name="get_formview_action" icon="fa-pencil-square-o" title="open" help="Open"/>
                         </tree>
-                        <form>
-                            <group>
-                                <group>
-                                    <field name="withholding_sequence_id" invisible="True"/>
-                                    <field name="company_id" invisible="True"/>
-                                    <field name="currency_id" invisible="True"/>
-                                    <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', '=', company_id)]" options="{'no_open': True, 'no_create': True}"/>
-                                    <field name="name" readonly="withholding_sequence_id"/>
-                                    <field name="base_amount"/>
-                                    <field name="amount"/>
-                                </group>
-                                <group name="withholding_data">
-                                    <field name="automatic" invisible="True"/>
-                                    <field name="withholding_accumulated_payments" invisible="True"/>
-                                    <field name="withholdable_invoiced_amount" invisible="not automatic"/>
-                                    <field name="withholdable_advanced_amount" invisible="not automatic"/>
-                                    <field name="accumulated_amount" invisible="not withholding_accumulated_payments"/>
-                                    <field name="total_amount" invisible="not automatic"/>
-                                    <field name="withholding_non_taxable_minimum" invisible="not automatic"/>
-                                    <field name="withholding_non_taxable_amount" invisible="not automatic"/>
-                                    <field name="withholdable_base_amount" invisible="not automatic"/>
-                                    <field name="period_withholding_amount" invisible="not withholding_accumulated_payments"/>
-                                    <field name="previous_withholding_amount" invisible="not withholding_accumulated_payments"/>
-                                    <field name="computed_withholding_amount" invisible="not automatic"/>
-                                </group>
-                            </group>
-                        </form>
                     </field>
                 </page>
-            </notebook>
+            </page>
 
-            <!-- <field name="l10n_ar_amount_total"></field> -->
         </field>
     </record>
+
 </odoo>

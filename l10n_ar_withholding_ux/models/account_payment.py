@@ -12,21 +12,41 @@ class AccountPayment(models.Model):
         'l10n_ar.payment.withholding', 'payment_id', string='Withholdings Lines',
         # compute='_compute_l10n_ar_withholding_line_ids', readonly=False, store=True
     )
+    withholdings_amount = fields.Monetary(
+        compute='_compute_withholdings_amount',
+        currency_field='company_currency_id',
+    )
+
+    @api.depends('l10n_ar_withholding_line_ids.amount')
+    def _compute_withholdings_amount(self):
+        for rec in self:
+            rec.withholdings_amount = sum(rec.l10n_ar_withholding_line_ids.mapped('amount'))
 
     def _get_withholding_move_line_default_values(self):
         return {
             'currency_id': self.currency_id.id,
         }
 
-    def _get_payment_difference(self):
-        payment_difference = super()._get_payment_difference() - sum(self.l10n_ar_withholding_line_ids.mapped('amount'))
-        return payment_difference
-
     @api.depends('l10n_ar_withholding_line_ids.amount')
     def _compute_payment_total(self):
         super()._compute_payment_total()
         for rec in self:
             rec.payment_total += sum(rec.l10n_ar_withholding_line_ids.mapped('amount'))
+
+    @api.onchange('withholdings_amount')
+    def _onchange_withholdings(self):
+        for rec in self.filtered(lambda x: x.payment_method_code not in ['in_third_party_checks', 'out_third_party_checks']):
+            # el compute_withholdings o el _compute_withholdings?
+            rec.amount += rec.payment_difference
+            # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
+
+    @api.onchange('to_pay_amount', 'withholdable_advanced_amount')
+    def _onchange_to_pay_amount(self):
+        for rec in self:
+            # el compute_withholdings o el _compute_withholdings?
+            rec._compute_withholdings()
+            rec.amount += rec.payment_difference
+            # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
 
     # Por ahora no compuamos para no pisar cosas que pueda haber moficiado el usuario. Ademas que ya era así (manual)
     # en version anterior
@@ -208,15 +228,6 @@ class AccountPayment(models.Model):
         for rec in self:
             rec.withholdable_advanced_amount = rec.unreconciled_amount
 
-    @api.depends(
-        'payment_ids.tax_withholding_id',
-        'payment_ids.amount',
-    )
-    def _compute_withholdings_amount(self):
-        for rec in self:
-            rec.withholdings_amount = sum(
-                rec.payment_ids.filtered(lambda x: x.tax_withholding_id).mapped('amount'))
-
     def _compute_withholdings(self):
         # chequeamos lineas a pagar antes de computar impuestos para evitar trabajar sobre base erronea
         self._check_to_pay_lines_account()
@@ -236,8 +247,10 @@ class AccountPayment(models.Model):
             rec._upadte_withholdings(taxes)
 
     def compute_withholdings(self):
+        self._compute_withholdings()
+
+    def compute_to_pay_amount_for_check(self):
         checks_payments = self.filtered(lambda x: x.payment_method_code in ['in_third_party_checks', 'out_third_party_checks'])
-        (self - checks_payments)._compute_withholdings()
         for rec in checks_payments.with_context(skip_account_move_synchronization=True):
             rec.set_withholdable_advanced_amount()
             rec._compute_withholdings()

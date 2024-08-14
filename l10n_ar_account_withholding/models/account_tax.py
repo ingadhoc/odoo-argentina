@@ -66,7 +66,7 @@ class AccountTax(models.Model):
         base_amount = vals['withholdable_base_amount']
 
         if self.withholding_type == 'partner_tax':
-            amount = base_amount * (alicuota)
+            amount = base_amount * (alicuota) * self.ratio / 100
             vals['comment'] = "%s x %s" % (
                 base_amount, alicuota)
             vals['period_withholding_amount'] = amount
@@ -250,7 +250,7 @@ class AccountTax(models.Model):
         if self.amount_type == 'partner_tax':
             date = self._context.get('invoice_date', fields.Date.context_today(self))
             partner = partner and partner.sudo()
-            return base_amount * self.sudo().get_partner_alicuota_percepcion(partner, date)
+            return base_amount * self.sudo().get_partner_alicuota_percepcion(partner, date) * self.ratio / 100
         else:
             return super(AccountTax, self)._compute_amount(
                 base_amount, price_unit, quantity=quantity, product=product,

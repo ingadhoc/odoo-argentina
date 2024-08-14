@@ -47,6 +47,7 @@
                             </div>
                             <field name="withholding_non_taxable_minimum"/>
                             <field name="withholding_non_taxable_amount"/>
+                            <field name="ratio"/>
                             <field name="withholding_user_error_message"/>
                             <field name="withholding_user_error_domain" invisible="not withholding_user_error_message"/>
                         </group>

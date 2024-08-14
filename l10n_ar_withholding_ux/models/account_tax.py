@@ -80,6 +80,7 @@ result = withholdable_base_amount * 0.10
         'tax_withholding_id',
         'Rules',
     )
+    ratio = fields.Float(required=True, default=100, help="Ratio to apply to tax base amount")
 
     @api.constrains(
         'withholding_non_taxable_amount',
@@ -224,3 +225,10 @@ result = withholdable_base_amount * 0.10
             'automatic': True,
             'comment': comment,
         }
+
+    @api.constrains('ratio')
+    def _check_line_ids_percent(self):
+        """ Check that the total percent is not bigger than 100.0 """
+        for tax in self:
+            if not (0 < tax.ratio <= 100.0):
+                raise ValidationError(_('The total percentage (%s) should be less or equal to 100!', tax.ratio))

@@ -118,9 +118,15 @@ class AccountMove(models.Model):
                 document_types = document_types.filtered(lambda x: x.internal_type == 'debit_note')
                 rec.l10n_latam_document_type_id = document_types and document_types[0].id
 
-    @api.model    
+    @api.model
     def _l10n_ar_get_document_number_parts(self, document_number, document_type_code):
         # eliminamos todo lo que viene después '(' que es un sufijo que odoo agrega y que nosotros agregamos para
         # forzar unicidad con cambios de approach al ir migrando de versiones
         document_number = document_number.split('(')[0]
         return super()._l10n_ar_get_document_number_parts(document_number, document_type_code)
+
+    def _get_l10n_ar_codes_used_for_inv_and_ref(self):
+        """ Heredamos el método original que se encuentra en https://github.com/odoo/odoo/blob/16.0/addons/l10n_ar/models/account_move.py#L117 para que contenga el código de tipo de documento '60' CUENTAS DE VENTA Y LIQUIDO PRODUCTO A """
+        document_types = super()._get_l10n_ar_codes_used_for_inv_and_ref()
+        document_types.append('60')
+        return document_types

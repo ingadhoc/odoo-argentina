@@ -232,7 +232,7 @@ class AccountPayment(models.Model):
         # chequeamos lineas a pagar antes de computar impuestos para evitar trabajar sobre base erronea
         self._check_to_pay_lines_account()
         for rec in self:
-            if rec.partner_type != 'supplier':
+            if rec.partner_type != 'supplier' or not rec.commercial_partner_id:
                 continue
             # limpiamos el type por si se paga desde factura ya que el en ese
             # caso viene in_invoice o out_invoice y en search de tax filtrar

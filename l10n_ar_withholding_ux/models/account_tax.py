@@ -131,9 +131,9 @@ result = withholdable_base_amount * 0.10
             ('date', '<=', to_date),
             ('date', '>=', from_date),
             ('state', 'not in', ['draft', 'cancel', 'confirmed']),
-            ('id', '!=', payment.id),
             ('company_id', '=', payment.company_id.id),
         ]
+
         # for compatibility with public_budget we check state not in and not
         # state in posted. Just in case someone implements payments cancelled
         # on posted payment group, we remove the cancel payments (not the
@@ -144,8 +144,12 @@ result = withholdable_base_amount * 0.10
             ('payment_id.date', '>=', from_date),
             ('payment_id.state', '=', 'posted'),
             ('tax_id', '=', self.id),
-            ('payment_id.id', '!=', payment.id),
         ]
+
+        if not isinstance(payment.id, models.NewId):
+            previous_payments_domain.append(('id', '!=', payment.id))
+            previous_withholdings_domain.append(('id', '!=', payment.id))
+
         return (previous_payments_domain, previous_withholdings_domain)
 
     def get_withholding_vals(self, payment, force_withholding_amount_type=None):

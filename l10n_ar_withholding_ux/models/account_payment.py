@@ -40,13 +40,15 @@ class AccountPayment(models.Model):
             rec.amount += rec.payment_difference
             # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
 
-    @api.onchange('to_pay_amount', 'withholdable_advanced_amount')
-    def _onchange_to_pay_amount(self):
-        for rec in self:
-            # el compute_withholdings o el _compute_withholdings?
-            rec._compute_withholdings()
-            rec.force_amount_company_currency += rec.payment_difference
-            # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
+    # ver mensaje en commit
+    # @api.onchange('to_pay_amount', 'withholdable_advanced_amount', 'partner_id')
+    # def _onchange_to_pay_amount(self):
+    #     # para muchas retenciones es necesario que el partner este seteado, solo calculamos si viene definido
+    #     for rec in self.filtered('partner_id'):
+    #         # el compute_withholdings o el _compute_withholdings?
+    #         rec._compute_withholdings()
+    #         rec.force_amount_company_currency += rec.payment_difference
+    #         # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
 
     # Por ahora no compuamos para no pisar cosas que pueda haber moficiado el usuario. Ademas que ya era así (manual)
     # en version anterior

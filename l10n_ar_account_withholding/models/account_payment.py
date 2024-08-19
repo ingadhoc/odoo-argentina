@@ -42,15 +42,15 @@ class AccountPayment(models.Model):
     @api.onchange('commercial_partner_id')
     def change_retencion_ganancias(self):
         # si es exento en ganancias o no tiene clasificacion pero es monotributista, del exterior o consumidor final, sugerimos regimen no_aplica
-        if self.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC'] or (
-            not self.commercial_partner_id.imp_ganancias_padron and
-            self.commercial_partner_id.l10n_ar_afip_responsibility_type_id.code in ('5', '6', '9', '13')):
+        if self.partner_id.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC'] or (
+            not self.partner_id.commercial_partner_id.imp_ganancias_padron and
+            self.partner_id.commercial_partner_id.l10n_ar_afip_responsibility_type_id.code in ('5', '6', '9', '13')):
             self.retencion_ganancias = 'no_aplica'
             self.regimen_ganancias_id = False
         else:
             cia_regs = self.company_regimenes_ganancias_ids
             partner_regimen = (
-                self.commercial_partner_id.default_regimen_ganancias_id)
+                self.partner_id.commercial_partner_id.default_regimen_ganancias_id)
             if partner_regimen:
                 def_regimen = partner_regimen
             elif cia_regs:
@@ -62,9 +62,9 @@ class AccountPayment(models.Model):
     @api.onchange('company_regimenes_ganancias_ids')
     def change_company_regimenes_ganancias(self):
         # partner_type == 'supplier' ya lo filtra el company_regimenes_ga...
-        if self.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC'] or (
-            not self.commercial_partner_id.imp_ganancias_padron and
-            self.commercial_partner_id.l10n_ar_afip_responsibility_type_id.code in ('5', '6', '9', '13')):
+        if self.partner_id.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC'] or (
+            not self.partner_id.commercial_partner_id.imp_ganancias_padron and
+            self.partner_id.commercial_partner_id.l10n_ar_afip_responsibility_type_id.code in ('5', '6', '9', '13')):
             self.retencion_ganancias = 'no_aplica'
             self.regimen_ganancias_id = False
         elif self.company_regimenes_ganancias_ids:

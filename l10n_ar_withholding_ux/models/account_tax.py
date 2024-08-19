@@ -127,7 +127,7 @@ result = withholdable_base_amount * 0.10
         from_date = to_date + from_relative_delta
 
         previous_payments_domain = [
-            ('partner_id.commercial_partner_id', '=', payment.commercial_partner_id.id),
+            ('partner_id.commercial_partner_id', '=', payment.partner_id.commercial_partner_id.id),
             ('date', '<=', to_date),
             ('date', '>=', from_date),
             ('state', 'not in', ['draft', 'cancel', 'confirmed']),
@@ -139,7 +139,7 @@ result = withholdable_base_amount * 0.10
         # on posted payment group, we remove the cancel payments (not the
         # draft ones as they are also considered by public_budget)
         previous_withholdings_domain = [
-            ('payment_id.partner_id.commercial_partner_id', '=', payment.commercial_partner_id.id),
+            ('payment_id.partner_id.commercial_partner_id', '=', payment.partner_id.commercial_partner_id.id),
             ('payment_id.date', '<=', to_date),
             ('payment_id.date', '>=', from_date),
             ('payment_id.state', '=', 'posted'),

@@ -148,7 +148,7 @@ result = withholdable_base_amount * 0.10
 
         if not isinstance(payment.id, models.NewId):
             previous_payments_domain.append(('id', '!=', payment.id))
-            previous_withholdings_domain.append(('id', '!=', payment.id))
+            previous_withholdings_domain.append(('payment_id.id', '!=', payment.id))
 
         return (previous_payments_domain, previous_withholdings_domain)
 

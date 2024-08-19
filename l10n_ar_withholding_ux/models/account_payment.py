@@ -45,7 +45,7 @@ class AccountPayment(models.Model):
         for rec in self:
             # el compute_withholdings o el _compute_withholdings?
             rec._compute_withholdings()
-            rec.amount += rec.payment_difference
+            rec.force_amount_company_currency += rec.payment_difference
             # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
 
     # Por ahora no compuamos para no pisar cosas que pueda haber moficiado el usuario. Ademas que ya era así (manual)
@@ -232,7 +232,7 @@ class AccountPayment(models.Model):
         # chequeamos lineas a pagar antes de computar impuestos para evitar trabajar sobre base erronea
         self._check_to_pay_lines_account()
         for rec in self:
-            if rec.partner_type != 'supplier' or not rec.commercial_partner_id:
+            if rec.partner_type != 'supplier':
                 continue
             # limpiamos el type por si se paga desde factura ya que el en ese
             # caso viene in_invoice o out_invoice y en search de tax filtrar
@@ -240,6 +240,8 @@ class AccountPayment(models.Model):
             # y cobros)
             taxes = self.env['account.tax'].with_context(type=None).search([
                     ('type_tax_use', '=', 'none'),
+                    # TODo corroborar en 16
+                    ('withholding_type', '!=', 'none'),
                     ('l10n_ar_withholding_payment_type', '=', rec.partner_type),
                     ('company_id', '=', rec.company_id.id),
                 ])
@@ -248,6 +250,7 @@ class AccountPayment(models.Model):
 
     def compute_withholdings(self):
         self._compute_withholdings()
+        self._onchange_withholdings()
 
     def compute_to_pay_amount_for_check(self):
         checks_payments = self.filtered(lambda x: x.payment_method_code in ['in_third_party_checks', 'out_third_party_checks'])
@@ -345,7 +348,6 @@ class AccountPayment(models.Model):
                 vals['payment_id'] = self.id
                 commands.append(Command.create(vals))
         self.l10n_ar_withholding_line_ids = commands
-
 
     def _get_withholdable_amounts(
             self, withholding_amount_type, withholding_advances):

@@ -13,6 +13,7 @@
                 <label for="withholdings_amount" readonly="state != 'draft'" invisible="is_internal_transfer or not use_payment_pro"/>
                 <div invisible="is_internal_transfer or not use_payment_pro">
                     <field name="withholdings_amount" string="Withholdings" class="oe_inline"/>
+                    <button title="Re-computar retenciones a partir del 'Importe a Pagar'" icon="fa-refresh" type="object" name="compute_withholdings" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft']" class="oe_link"/>
                 </div>
             </label>
             <div name="to_pay_amount">
@@ -26,7 +27,8 @@
                         <field name="withholdable_advanced_amount"
                             invisible="state not in ['draft'] or partner_type != 'supplier' or unreconciled_amount &lt;= 0.0" readonly="state not in ['draft']" string="Base imponible del pago excedente"/>
                     </group>
-                    <button name="compute_withholdings" string="Re Computar Retenciones" title="Re-computar retenciones a partir del 'Importe a Pagar'" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft']"/>
+                    <!-- ver mensaje en commit -->
+                    <!-- <button name="compute_withholdings" string="Re Computar Retenciones" title="Re-computar retenciones a partir del 'Importe a Pagar'" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft']"/> -->
                     <field name="l10n_ar_withholding_line_ids" nolabel="1" colspan="2" invisible="is_internal_transfer" readonly="state != 'draft'">
                         <tree editable="bottom">
                             <field name="withholding_sequence_id" column_invisible="True"/>

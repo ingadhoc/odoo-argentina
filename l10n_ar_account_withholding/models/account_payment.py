@@ -16,11 +16,13 @@ class AccountPayment(models.Model):
         ('nro_regimen', 'Nro Regimen'),
     ],
         'Retención Ganancias',
+        compute='_compute_retencion_ganancias', store=True, readonly=False,
     )
     regimen_ganancias_id = fields.Many2one(
         'afip.tabla_ganancias.alicuotasymontos',
         'Regimen Ganancias',
         ondelete='restrict',
+        compute='_compute_retencion_ganancias', store=True, readonly=False,
     )
     company_regimenes_ganancias_ids = fields.Many2many(
         'afip.tabla_ganancias.alicuotasymontos',
@@ -39,8 +41,8 @@ class AccountPayment(models.Model):
             else:
                 rec.company_regimenes_ganancias_ids = rec.env['afip.tabla_ganancias.alicuotasymontos']
 
-    @api.onchange('commercial_partner_id')
-    def change_retencion_ganancias(self):
+    @api.depends('partner_id', 'company_id')
+    def _compute_retencion_ganancias(self):
         # si es exento en ganancias o no tiene clasificacion pero es monotributista, del exterior o consumidor final, sugerimos regimen no_aplica
         if self.partner_id.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC'] or (
             not self.partner_id.commercial_partner_id.imp_ganancias_padron and
@@ -57,18 +59,8 @@ class AccountPayment(models.Model):
                 def_regimen = cia_regs[0]
             else:
                 def_regimen = False
-            self.regimen_ganancias_id = def_regimen
-
-    @api.onchange('company_regimenes_ganancias_ids')
-    def change_company_regimenes_ganancias(self):
-        # partner_type == 'supplier' ya lo filtra el company_regimenes_ga...
-        if self.partner_id.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC'] or (
-            not self.partner_id.commercial_partner_id.imp_ganancias_padron and
-            self.partner_id.commercial_partner_id.l10n_ar_afip_responsibility_type_id.code in ('5', '6', '9', '13')):
-            self.retencion_ganancias = 'no_aplica'
-            self.regimen_ganancias_id = False
-        elif self.company_regimenes_ganancias_ids:
             self.retencion_ganancias = 'nro_regimen'
+            self.regimen_ganancias_id = def_regimen
 
     def _get_name_receipt_report(self, report_xml_id):
         # TODO tal vez mover este reporte y este metodo a l10n_ar_withholding_ux?

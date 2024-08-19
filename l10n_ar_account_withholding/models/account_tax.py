@@ -50,7 +50,7 @@ class AccountTax(models.Model):
             previous_withholdings_domain)
 
     def get_withholding_vals(self, payment):
-        commercial_partner = payment.commercial_partner_id
+        commercial_partner = payment.partner_id.commercial_partner_id
 
         force_withholding_amount_type = None
         if self.withholding_type == 'partner_tax':

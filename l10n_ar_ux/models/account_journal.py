@@ -4,7 +4,7 @@
 ##############################################################################
 from odoo import fields, models, api, _
 
-
+#CAMBIO ULTIMO EJERCICIO GIT
 class AccountJournal(models.Model):
 
     _inherit = 'account.journal'

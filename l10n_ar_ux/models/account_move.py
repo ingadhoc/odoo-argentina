@@ -3,6 +3,7 @@
 # directory
 ##############################################################################
 from odoo import models, fields, api, _
+from datetime import datetime
 
 
 class AccountMove(models.Model):
@@ -14,6 +15,23 @@ class AccountMove(models.Model):
         digits=(16, 6),
     )
     l10n_ar_currency_rate = fields.Float(compute='_compute_l10n_ar_currency_rate', store=True)
+    forced_rate = fields.Boolean(compute='_compute_forced_rate', store=False)
+
+    @api.depends('l10n_ar_currency_rate')
+    def _compute_forced_rate(self):
+        for rec in self:
+            rec.forced_rate = False
+
+            if rec.company_id.currency_id != rec.currency_id:
+                l10n_ar_currency_rate = self.env['res.currency']._get_conversion_rate(
+                    from_currency=rec.currency_id,
+                    to_currency=rec.company_id.currency_id,
+                    company=rec.company_id,
+                    date=rec.invoice_date or datetime.today(),
+                )
+
+                if rec.l10n_ar_currency_rate != l10n_ar_currency_rate:
+                    rec.forced_rate = True
 
     @api.depends('reversed_entry_id')
     def _compute_l10n_ar_currency_rate(self):

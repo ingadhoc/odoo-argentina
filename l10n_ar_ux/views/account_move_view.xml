@@ -15,6 +15,12 @@
                 <button name="%(action_account_move_change_rate)d" type="action" icon="fa-pencil" style="color:red" class="btn-link" attrs="{'invisible':['|', '|', '|' , '|', ('state','!=','draft'), ('other_currency', '=', False), ('country_code', '!=', 'AR'), ('l10n_ar_currency_rate', '=', 0.0), ('l10n_ar_currency_rate', '=', False)]}" title="Edit Rate"/>
                 <button name="%(action_account_move_change_rate)d" type="action" icon="fa-pencil" class="btn-link" attrs="{'invisible':['|', '|', '|' , ('state','!=','draft'), ('other_currency', '=', False), ('country_code', '!=', 'AR'), ('l10n_ar_currency_rate', '!=', 0.0)]}" title="Edit Rate"/>
             </button>
+            <xpath expr="//header" position="after">
+                <field name="forced_rate" invisible="1"/>
+                <div class="alert alert-warning" role="alert"  attrs="{'invisible': ['|', '|', '|', ('state','!=','draft'), ('name', '==', '/'), ('l10n_ar_currency_rate', '=', 0.0), ('forced_rate', '=', False)]}">
+                    La cotización se encuentra forzada en <field name="l10n_ar_currency_rate"/>, para reestablecerla deberá modificar manualmente la tasa de cambio o aplicar la cotización del día.
+                </div>
+            </xpath>
         </field>
     </record>
 

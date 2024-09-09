@@ -207,7 +207,7 @@
             </table>
             <table>
                 <div class="float-left">
-                    <span t-if="o.company_id.l10n_ar_report_signature" t-field="o.notes"/>
+                    <span t-if="o.company_id.l10n_ar_report_signature" t-field="o.ref"/>
                 </div>
                 <div class="float-right" style="heigth:100px;width:200px;text-align:center;">
                     <t t-if="o.company_id.l10n_ar_report_signature">

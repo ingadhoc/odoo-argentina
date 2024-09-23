@@ -81,3 +81,21 @@ class AccountJournal(models.Model):
         return self.l10n_latam_use_documents and (
             (self.type == 'sale' and not self.l10n_ar_is_pos) or
             (self.type == 'purchase' and self.l10n_ar_is_pos))
+
+    def _get_l10n_ar_afip_pos_types_selection(self):
+        """ Add new AFIP Pos type """
+        res = super()._get_l10n_ar_afip_pos_types_selection()
+        res.append(('CF', _('External Fiscal Controller')))
+        return res
+
+    def _get_codes_per_journal_type(self, afip_pos_system):
+        """ Add filter for External Fiscal Controller
+        NOTE: This can be removed in version 18.0 since has been already included in Odoo """
+        tique_codes = ['81', '82', '83', '110', '112', '113', '115', '116', '118', '119', '120']
+        if afip_pos_system == 'CF':
+            return tique_codes
+        res = super()._get_codes_per_journal_type(afip_pos_system)
+        for to_remove in ['80', '83']:
+            if to_remove in res:
+                res.remove(to_remove)
+        return res

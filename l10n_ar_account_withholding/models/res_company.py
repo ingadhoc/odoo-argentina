@@ -9,8 +9,6 @@ try:
     from pyafipws.iibb import IIBB
 except ImportError:
     IIBB = None
-# from pyafipws.padron import PadronAFIP
-# from dateutil.relativedelta import relativedelta
 _logger = logging.getLogger(__name__)
 
 

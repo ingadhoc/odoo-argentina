@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# Camila Vives, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-05 16:46+0000\n"
+"POT-Creation-Date: 2024-09-26 21:43+0000\n"
 "PO-Revision-Date: 2023-12-01 12:31+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Last-Translator: Camila Vives, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -61,7 +62,7 @@ msgstr "<br/><strong>Nro. de OC:</strong>"
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.partner_info
 msgid "<option value=\"\">AFIP Responsibility...</option>"
-msgstr ""
+msgstr "<option value=\"\">Responsabilidad AFIP...</option>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.partner_info
@@ -109,25 +110,25 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.partner_info
 msgid "AFIP Responsibility"
-msgstr ""
+msgstr "Responsabilidad AFIP"
 
 #. module: l10n_ar_ux
 #: model:ir.actions.act_window,name:l10n_ar_ux.act_afip_activity
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_activity_form
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_activity_tree
 msgid "AFIP activity"
-msgstr ""
+msgstr "Actividad AFIP"
 
 #. module: l10n_ar_ux
 #: model:ir.actions.act_window,name:l10n_ar_ux.act_afip_concept
 msgid "AFIP concept"
-msgstr ""
+msgstr "Concepto AFIP"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_concept_form
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_concept_tree
 msgid "AFIP concepts"
-msgstr ""
+msgstr "Conceptos AFIP"
 
 #. module: l10n_ar_ux
 #: model:ir.actions.act_window,name:l10n_ar_ux.act_afip_tax
@@ -214,16 +215,6 @@ msgid "Agregar Duplicado/Triplicado"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_invoice_report__price_average
-msgid "Average Price (CC)"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields,help:l10n_ar_ux.field_account_invoice_report__price_average
-msgid "Average Price in company currency"
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
 msgid "Banco:"
 msgstr ""
@@ -251,12 +242,12 @@ msgstr "Cancelar"
 #. module: l10n_ar_ux
 #: model:ir.actions.act_window,name:l10n_ar_ux.action_account_move_change_rate
 msgid "Change Currency Rate"
-msgstr ""
+msgstr "Modificar el tipo de cambio"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_move_change_rate
 msgid "Change Rate"
-msgstr ""
+msgstr "Modificar tipo de cambio"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.partner_info
@@ -277,7 +268,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__code
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__code
 msgid "Code"
-msgstr ""
+msgstr "Código"
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_res_company
@@ -295,11 +286,13 @@ msgid ""
 "Computed field that returns VAT or nothing if this one is not set for the "
 "partner"
 msgstr ""
+"Campo computado que devueve el VAT o vacío si este no está seteado para el "
+"socio"
 
 #. module: l10n_ar_ux
 #: model:ir.ui.menu,name:l10n_ar_ux.menu_action_afip_concept
 msgid "Concepts"
-msgstr ""
+msgstr "Conceptos"
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_res_config_settings
@@ -346,35 +339,25 @@ msgstr "Tasa de la moneda"
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__computed_currency_rate
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
 msgid "Currency Rate (preview)"
-msgstr ""
+msgstr "Tipo de cambio (vista previa)"
 
 #. module: l10n_ar_ux
 #. odoo-python
 #: code:addons/l10n_ar_ux/wizards/account_move_change_rate.py:0
 #, python-format
 msgid "Currency rate changed from %s to %s"
-msgstr ""
+msgstr "La cotización cambió de %s a %s."
 
 #. module: l10n_ar_ux
 #. odoo-python
 #: code:addons/l10n_ar_ux/wizards/account_move_change_rate.py:0
 #, python-format
 msgid "Currency rate changed from %s to %s . Currency rate forced"
-msgstr ""
+msgstr "La cotización cambió de %s a %s. Tipo de cambio forzado "
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__l10n_ar_afip_pos_partner_id
 msgid "Dirección Punto de venta"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_invoice_report__discount
-msgid "Discount (%)"
-msgstr "(%) Descuento"
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_invoice_report__discount_amount
-msgid "Discount Amount"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -401,11 +384,6 @@ msgid "Document Type"
 msgstr "Tipo de Identificación"
 
 #. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_report_search
-msgid "Due Date"
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__ir_actions_report__l10n_ar_copies__duplicado
 msgid "Duplicado"
 msgstr ""
@@ -418,7 +396,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
 msgid "Edit Rate"
-msgstr ""
+msgstr "Editar tipo de cambio"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_invoice_document
@@ -540,45 +518,17 @@ msgid "Integrante Sociedad"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_invoice_report__invoice_currency_id
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_report_search
-msgid "Invoice Currency"
-msgstr "Moneda de la Factura"
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_report_search
-msgid "Invoice Date"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.ui.menu,name:l10n_ar_ux.menu_action_account_invoice_line_report_all
-msgid "Invoice Lines Analysis"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.actions.act_window,name:l10n_ar_ux.action_account_invoice_line_report_all
-msgid "Invoices Lines Analysis"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model,name:l10n_ar_ux.model_account_invoice_report
-msgid "Invoices Statistics"
-msgstr "Estadísticas de facturas"
-
-#. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_journal
 msgid "Journal"
 msgstr "Diario"
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_move
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_report_search
 msgid "Journal Entry"
 msgstr "Asiento contable"
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_move_line
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_invoice_report__line_id
 msgid "Journal Item"
 msgstr "Apunte contable"
 
@@ -710,12 +660,15 @@ msgid ""
 "Jurisdiction %s is considered the main jurisdiction because it is the state "
 "of the company, please remove it from the jurisdiction list"
 msgstr ""
+"La jurisdicción %s es considerada como jurisdicción principal porque es la "
+"provincia de la compañía, por favor eliminarla de la lista de "
+"jurisdicciones. "
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_account_tag__jurisdiction_code
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_tax__jurisdiction_code
 msgid "Jurisdiction Code"
-msgstr ""
+msgstr "Código de jurisdicción"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
@@ -839,7 +792,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:account.account.tag,name:l10n_ar_ux.no_monetaria_tag
 msgid "Non Monetary"
-msgstr ""
+msgstr "No monetario"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
@@ -849,12 +802,12 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_partner_property_form
 msgid "Other Jurisdictions"
-msgstr ""
+msgstr "Otras Jurisdicciones"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_partner_property_form
 msgid "Others"
-msgstr ""
+msgstr "Otros"
 
 #. module: l10n_ar_ux
 #: model:account.account.tag,name:l10n_ar_ux.tag_a_cuenta_ganancias
@@ -900,17 +853,17 @@ msgstr "Por favor agregue el tipo de identificación."
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__qr_code
 msgid "QR Code"
-msgstr ""
+msgstr "Código QR"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__qr_code_label
 msgid "QR Code Label"
-msgstr ""
+msgstr "Etiqueta del código QR"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_journal_form
 msgid "QR-Code"
-msgstr ""
+msgstr "Código QR"
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_ir_actions_report
@@ -935,7 +888,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_account_move_change_rate__currency_rate
 msgid "Select a rate to apply on the invoice"
-msgstr ""
+msgstr "Selecciona una cotización para aplicar en la factura"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__res_partner__integrante_soc_padron__s
@@ -969,13 +922,15 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_account_journal__qr_code_label
 msgid "String to display before the QR Code on the invoice report."
-msgstr ""
+msgstr "Texto a mostrar antes del código QR en el reporte de la factura."
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_account_journal__qr_code
 msgid ""
 "String to generate the QR Code that will be displayed on the invoice report."
 msgstr ""
+"Texto para generar el código QR que será mostrado en el reporte de la "
+"factura."
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_tax
@@ -993,6 +948,8 @@ msgid ""
 "The currency rate on the invoice date will be used. If the invoice does not "
 "have a date, the currency rate will be used at the time of validation."
 msgstr ""
+"El tipo de cambio a utilizar será el de la fecha de la factura. Si la "
+"factura no tiene fecha, se utilizará el de la fecha de validación."
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_company__gross_income_jurisdiction_ids
@@ -1000,6 +957,7 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_users__gross_income_jurisdiction_ids
 msgid "The state of the company is cosidered the main jurisdiction"
 msgstr ""
+"La provincia de la compañía es considerada como la jurisdicción principal"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_account_journal__l10n_ar_afip_pos_partner_id
@@ -1010,44 +968,12 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
 msgid "This option enables open documents in the payment report."
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_invoice_report__price_total
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_line_report_tree
-msgid "Total"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_invoice_report__total_cc
-msgid "Total (CC)"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_invoice_report__price_unit
-msgid "Unit Price"
-msgstr "Precio unitario"
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_invoice_report__price_subtotal_ic
-msgid "Untaxed Total"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_invoice_report__price_subtotal
-msgid "Untaxed Total (CC)"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields,help:l10n_ar_ux.field_account_invoice_report__price_subtotal
-#: model:ir.model.fields,help:l10n_ar_ux.field_account_invoice_report__total_cc
-msgid "Untaxed Total in company currency"
-msgstr ""
+msgstr "Esta opción permite abrir documentos en el reporte de pago."
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move_change_rate__day_rate
 msgid "Use currency rate of the day"
-msgstr ""
+msgstr "Utilizar cotización del día"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form

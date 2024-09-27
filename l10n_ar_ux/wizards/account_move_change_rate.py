@@ -35,18 +35,14 @@ class AccountMoveChangeRate(models.TransientModel):
         self.currency_rate = self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate
 
     def confirm(self):
-        # Agrego este contexto para obtenerlo desde el modulo account_invoice_tax y evitar que se recompute el monto (amount_currency ) de los impuestos fijos
-        # al cambiar la cotizacion de la moneda
-        # Si bien no seria necesario si no esta instalado este modulo, nos evita un modulo puente
-        context = {
-                'tax_list_origin': self.move_id.mapped('invoice_line_ids.tax_ids'),
-                'tax_total_origin': self.move_id.tax_totals
-        }
         if self.day_rate:
-            message = _("Currency rate changed from %s to %s") % (self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate, float_round(self.move_id.computed_currency_rate,2))
-            self.move_id.with_context(context).l10n_ar_currency_rate = 0.0
+            message = _("The forced rate '%s' was removed, date rate will be use") % (self.move_id.l10n_ar_currency_rate)
+            rate = 0.0
         else:
-            message = _("Currency rate changed from %s to %s . Currency rate forced") % (float_round(self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate, 2), float_round(self.currency_rate, 2))
-            self.move_id.with_context(context).l10n_ar_currency_rate = self.currency_rate
+            message = _("Currency rate changed from '%s' to '%s' . Currency rate forced") % (float_round(self.move_id.l10n_ar_currency_rate or self.move_id.computed_currency_rate, 2), float_round(self.currency_rate, 2))
+            rate = self.currency_rate
+        # pasamos el tax_totals porque es lo que termina usando  account_invoice_tax para poder mantener impuestos forzados
+        # lo podemos hacer aca de anera segura porque sabemos que solo cambia rate y no cambia ningun importe
+        self.move_id.write({'l10n_ar_currency_rate': rate, 'tax_totals': self.move_id.tax_totals})
         self.move_id.message_post(body=message)
         return {'type': 'ir.actions.act_window_close'}

@@ -52,8 +52,19 @@ msgid "<strong>VAT Cond: </strong>"
 msgstr ""
 
 #. module: l10n_ar_purchase
+#: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.custom_header_purchaseorder
+msgid "Approve date:"
+msgstr ""
+
+#. module: l10n_ar_purchase
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchaseorder_document
 msgid "Cancelled Purchase Order"
+msgstr ""
+
+#. module: l10n_ar_purchase
+#: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.custom_header_purchasequotation
+#: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.custom_header_purchaseorder
+msgid "Date due:"
 msgstr ""
 
 #. module: l10n_ar_purchase

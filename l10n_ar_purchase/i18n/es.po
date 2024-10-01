@@ -56,22 +56,41 @@ msgid "<strong>VAT Cond: </strong>"
 msgstr "<strong>Cond. IVA: </strong>"
 
 #. module: l10n_ar_purchase
+<<<<<<< HEAD
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.custom_header_purchaseorder
 msgid "Approve date:"
 msgstr ""
 
 #. module: l10n_ar_purchase
+||||||| parent of 94336ba4 (temp)
+=======
+#: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.custom_header_purchaseorder
+msgid "Approve date:"
+msgstr "Fecha de aprobacion:"
+
+#. module: l10n_ar_purchase
+>>>>>>> 94336ba4 (temp)
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchaseorder_document
 msgid "Cancelled Purchase Order"
 msgstr "Pedido de compra cancelado"
 
 #. module: l10n_ar_purchase
+<<<<<<< HEAD
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.custom_header_purchaseorder
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.custom_header_purchasequotation
 msgid "Date due:"
 msgstr ""
 
 #. module: l10n_ar_purchase
+||||||| parent of 94336ba4 (temp)
+=======
+#: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.custom_header_purchasequotation
+#: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.custom_header_purchaseorder
+msgid "Date due:"
+msgstr "Fecha de vencimiento:"
+
+#. module: l10n_ar_purchase
+>>>>>>> 94336ba4 (temp)
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchaseorder_document
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchasequotation_document
 msgid "Invalid document as invoice"

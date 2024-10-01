@@ -1,6 +1,14 @@
 {
+<<<<<<< HEAD
     'name': 'Argentinean Purchase',
     'version': "17.0.1.1.0",
+||||||| parent of 94336ba4 (temp)
+    'name': 'Argentinian Purchase',
+    'version': "16.0.1.1.0",
+=======
+    'name': 'Argentinian Purchase',
+    'version': "16.0.1.2.0",
+>>>>>>> 94336ba4 (temp)
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA',

@@ -105,6 +105,12 @@
         <field name="country_id" ref="base.ar"/>
     </record>
 
+    <record id="tag_ret_sire_aplicada" model="account.account.tag">
+        <field name="name">Ret SIRE Aplicada</field>
+        <field name="applicability">taxes</field>
+        <field name="country_id" ref="base.ar"/>
+    </record>
+
     <!-- TODO ver si borramos, unificamos porque se liquidarian juntas -->
     <record id="tag_ret_perc_sicore_aplicada" model="account.account.tag">
         <field name="name">Ret/Perc SICORE Aplicada</field>

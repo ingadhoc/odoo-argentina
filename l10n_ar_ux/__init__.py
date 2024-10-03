@@ -7,7 +7,7 @@ from . import models
 from odoo import api
 from . import reports
 from . import wizards
-from .hooks import post_init_hook
+from .hooks import post_init_hook, uninstall_hook
 from odoo.addons.l10n_latam_invoice_document.models.account_move import AccountMove
 from odoo.addons.l10n_ar.models.account_move import AccountMove as AccountMoveAr
 from odoo.addons.l10n_ar.models.account_fiscal_position import AccountFiscalPosition

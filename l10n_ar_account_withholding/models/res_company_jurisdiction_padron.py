@@ -9,6 +9,7 @@ import logging
 import base64
 _logger = logging.getLogger(__name__)
 
+# Mejora de prueba 2 
 
 class ResCompanyJurisdictionPadron(models.Model):
     _name = "res.company.jurisdiction.padron"

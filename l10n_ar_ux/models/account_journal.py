@@ -11,7 +11,7 @@ class AccountJournal(models.Model):
 
     l10n_ar_document_type_ids = fields.Many2many('l10n_latam.document.type', string='Document Types')
     qr_code_label = fields.Char(
-        string="QR Code Label",
+        string="QR Code Labell",
         help="String to display before the QR Code on the invoice report."
     )
     qr_code = fields.Char(

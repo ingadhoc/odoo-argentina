@@ -5,6 +5,8 @@
 from odoo import api, SUPERUSER_ID
 import logging
 _logger = logging.getLogger(__name__)
+from odoo.addons.l10n_ar.models.account_move import AccountMove as AccountMoveAr
+from odoo.addons.l10n_ar.models.account_fiscal_position import AccountFiscalPosition
 
 
 def set_tax_included(cr, registry):
@@ -29,3 +31,16 @@ def post_init_hook(cr, registry):
     """Loaded after installing the module """
     _logger.info('Post init hook initialized')
     set_tax_included(cr, registry)
+
+
+def uninstall_hook(cr, registry):
+    def _inverse_l10n_latam_document_number(self):
+        AccountMoveAr._inverse_l10n_latam_document_number(self)
+
+    AccountMoveAr._inverse_l10n_latam_document_number = _inverse_l10n_latam_document_number
+
+    @api.model
+    def _get_fiscal_position(self, partner, delivery=None):
+        return super(AccountFiscalPosition, self)._get_fiscal_position(partner, delivery=delivery)
+
+    AccountFiscalPosition._get_fiscal_position = _get_fiscal_position

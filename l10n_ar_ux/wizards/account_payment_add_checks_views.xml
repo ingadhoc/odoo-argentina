@@ -7,7 +7,7 @@
             <form>
                 <field name="company_id" invisible="1"/>
                 <field name="check_ids"
-                    domain="[('state', '=', 'posted'), ('l10n_latam_check_current_journal_id.inbound_payment_method_line_ids.payment_method_id.code', '=', 'in_third_party_checks'), ('company_id', '=', company_id)]"
+                    domain="[('state', '=', 'posted'), ('payment_method_code', '=', 'new_third_party_checks'), ('l10n_latam_check_current_journal_id.inbound_payment_method_line_ids.payment_method_id.code', 'in', ['new_third_party_checks', 'in_third_party_checks']), ('company_id', '=', company_id)]"
                     context="{'tree_view_ref': 'l10n_latam_check.view_account_third_party_check_tree', 'search_view_ref': 'l10n_latam_check.view_account_payment_search'}"
                     options="{'no_create': True}"/>
                 <footer>

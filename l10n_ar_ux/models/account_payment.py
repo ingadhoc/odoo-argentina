@@ -1,4 +1,5 @@
 from odoo import fields, models, api
+from odoo.exceptions import ValidationError
 
 
 class AccountPayment(models.Model):
@@ -52,3 +53,19 @@ class AccountPayment(models.Model):
         for rec in new_third_party_checks:
             rec.l10n_latam_check_bank_id = rec.partner_id.bank_ids[:1].bank_id or rec.l10n_latam_check_bank_id
         (self - new_third_party_checks).l10n_latam_check_bank_id = False
+
+    def action_post(self):
+        # nosotros queremos bloquear tmb nros de cheques de terceros que sea unicos
+        # para esto chequeamos el campo computado de warnings que ya lo tiene incorporado
+        # NOTA: no mandamos todos los warnings de "self" juntos porque podría ser muy verbose (por ej. la
+        # leyenda de cheques duplicados en un mismo payment group apareceria varias veces si el cheque está repetido
+        # en el mismo payment group)
+        for rec in self:
+            if rec.l10n_latam_check_warning_msg:
+                raise ValidationError('%s' % rec.l10n_latam_check_warning_msg)
+        super(AccountPayment, self).action_post()
+        # validamos unicidad de cheques propios ya que la constraint _constrains_check_number_unique no lo valida
+        # correctamente porque no se ejecuta al cambiar el estado y esa constraint solo evalua payments posted.
+        # por esta razon es que tmb lo hacemos luego de super
+        for rec in self.filtered(lambda x: x.l10n_latam_manual_checks and x.payment_method_line_id.code == 'check_printing'):
+            rec._constrains_check_number_unique()

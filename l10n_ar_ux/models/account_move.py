@@ -83,3 +83,44 @@ class AccountMove(models.Model):
         if self.country_code == 'AR' and self.journal_id._l10n_ar_journal_issuer_is_supplier():
             return not res
         return res
+
+    def _post(self, soft=True):
+        # estamos haciendo varias cosas acá:
+        # 1. para facturas sin documentos guardamos el rate (en l10n_ar solo se hace para las que usan documentos)
+        # 2. en vez de que el rate se seete luego de postear (que es lo que l10n_ar) lo hacaemos antes para garantizar que
+        # se actualicen los apuntes contables con el rate que efectivamente se va a autilizar
+        # hacemos el hack del +1 porque sin eso no termina de actualizar
+        # el metodo _set_afip_rate super lo llama pero no va a hacer nada porque ya llega con un de l10n_ar_currency_rate seteado
+        not_use_doc_with_currency_ar_invoices = self.filtered(
+            lambda x: x.company_id.account_fiscal_country_id.code == "AR" and x.is_invoice(include_receipts=True)
+            and x.currency_id != x.company_currency_id and not x.l10n_ar_currency_rate)
+        for rec in not_use_doc_with_currency_ar_invoices:
+            rate = self.env['res.currency']._get_conversion_rate(
+                        from_currency=rec.currency_id,
+                        to_currency=rec.company_id.currency_id,
+                        company=rec.company_id,
+                        date=rec.invoice_date or fields.Date.context_today(rec),
+                    )
+            rec.write({'l10n_ar_currency_rate': rate + 1, 'tax_totals': rec.tax_totals})
+            rec.write({'l10n_ar_currency_rate': rate, 'tax_totals': rec.tax_totals})
+        res = super()._post(soft=soft)
+        return res
+
+    @api.depends('l10n_latam_available_document_type_ids', 'debit_origin_id')
+    def _compute_l10n_latam_document_type(self):
+        """ Sobre escribimos este metodo porque es necesario para poder auto calcular el tipo de documento por defecto
+        de una nota de debito cuando no hay un debit_origin_id definido, puede ser porque simplemente no haya un
+        documento relacionado original o porque hay muchos documentos relacionados pero no puede ser asociados """
+        super()._compute_l10n_latam_document_type()
+        if self.env.context.get('internal_type') == 'debit_note':
+            for rec in self.filtered(lambda x: x.state == 'draft'):
+                document_types = rec.l10n_latam_available_document_type_ids._origin
+                document_types = document_types.filtered(lambda x: x.internal_type == 'debit_note')
+                rec.l10n_latam_document_type_id = document_types and document_types[0].id
+
+    @api.model    
+    def _l10n_ar_get_document_number_parts(self, document_number, document_type_code):
+        # eliminamos todo lo que viene después '(' que es un sufijo que odoo agrega y que nosotros agregamos para
+        # forzar unicidad con cambios de approach al ir migrando de versiones
+        document_number = document_number.split('(')[0]
+        return super()._l10n_ar_get_document_number_parts(document_number, document_type_code)

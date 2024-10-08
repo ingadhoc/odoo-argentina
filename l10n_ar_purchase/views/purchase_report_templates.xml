@@ -13,12 +13,28 @@
         </t>
     </template>
 
+    <template id="custom_header_purchasequotation" inherit_id="l10n_ar.custom_header" primary="True">
+        <xpath expr="//div[hasclass('col-6', 'text-end')]/span[1]" position="replace">
+            <span t-att-style="'color: %s;' % o.company_id.secondary_color">Date due: </span>
+        </xpath>
+    </template>
+
+    <template id="custom_header_purchaseorder" inherit_id="l10n_ar.custom_header" primary="True">
+        <xpath expr="//div[hasclass('col-6', 'text-end')]/span[1]" position="replace">
+            <t t-if="o.state in ['purchase', 'done']">
+                <span t-att-style="'color: %s;' % o.company_id.secondary_color">Approve date: </span>
+            </t>
+            <t t-else="">
+                <span t-att-style="'color: %s;' % o.company_id.secondary_color">Date due: </span>
+            </t>
+        </xpath>
+    </template>
+
     <!-- we force priority greater than 16 so that it dont break inheritance of report_saleorder_document_inherit_sale_stock. with this we are loosing the incoterm field added but that sale_stock view -->
     <template id="report_purchasequotation_document" priority="20" inherit_id="purchase.report_purchasequotation_document" primary="True">
-
         <!-- custom header and footer -->
         <t t-set="o" position="after">
-            <t t-set="custom_header" t-value="'l10n_ar.custom_header'"/>
+            <t t-set="custom_header" t-value="'l10n_ar_purchase.custom_header_purchasequotation'"/>
             <t t-set="report_date" t-value="o.date_order"/>
             <t t-set="report_number" t-value="o.name"/>
             <!-- <t t-set="pre_printed_report" t-value="o.journal_id.l10n_ar_afip_pos_system == 'II_IM'"/> -->
@@ -99,11 +115,10 @@
 
     <!-- we force priority greater than 16 so that it dont break inheritance of report_saleorder_document_inherit_sale_stock. with this we are loosing the incoterm field added but that sale_stock view -->
     <template id="report_purchaseorder_document" priority="20" inherit_id="purchase.report_purchaseorder_document" primary="True">
-
         <!-- custom header and footer -->
         <t t-set="o" position="after">
-            <t t-set="custom_header" t-value="'l10n_ar.custom_header'"/>
-            <t t-set="report_date" t-value="o.date_order"/>
+            <t t-set="custom_header" t-value="'l10n_ar_purchase.custom_header_purchaseorder'"/>
+            <t t-set="report_date" t-value="o.date_approve if o.date_approve else o.date_order"/>
             <t t-set="report_number" t-value="o.name"/>
             <!-- <t t-set="pre_printed_report" t-value="o.journal_id.l10n_ar_afip_pos_system == 'II_IM'"/> -->
             <t t-set="document_letter" t-value="'X'"/>

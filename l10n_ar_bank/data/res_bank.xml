@@ -1046,4 +1046,28 @@
         <field name='phone'>011-4317-9000</field>
         <field name='email'>mariana.rodriguez@vwfs.com</field>
     </record>
+    <record model='res.bank' id='44089'>
+        <field name='name'>BANCO BMA S.A.U.</field>
+        <field name='bic'>ITAUARBA</field>
+        <field name='active'>1</field>
+        <field name='street'>Victoria Ocampo 360</field>
+        <field name='street2'></field>
+        <field name='city'>Buenos Aires</field>
+        <field name='state' ref='base.state_ar_b'/>
+        <field name='country' ref='base.ar'/>
+        <field name='phone'></field>
+        <field name='email'></field>
+    </record>
+    <record model='res.bank' id='44090'>
+        <field name='name'>BANCO BICA S.A.</field>
+        <field name='bic'>BICAARBS</field>
+        <field name='active'>1</field>
+        <field name='street'>Fryda Schultz de Mantovani 1560</field>
+        <field name='street2'></field>
+        <field name='city'>Santa Fe</field>
+        <field name='state' ref='base.state_ar_b'/>
+        <field name='country' ref='base.ar'/>
+        <field name='phone'></field>
+        <field name='email'></field>
+    </record>
 </odoo>

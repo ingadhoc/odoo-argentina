@@ -1,6 +1,6 @@
 {
     'name': 'Argentinian Accounting UX',
-    'version': "16.0.1.9.0",
+    'version': "16.0.1.13.0",
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -46,5 +46,5 @@
     'auto_install': True,
     'application': False,
     'post_init_hook': 'post_init_hook',
-    'post_load': 'monkey_patch_inverse_l10n_latam_document_number',
+    'post_load': 'monkey_patches',
 }

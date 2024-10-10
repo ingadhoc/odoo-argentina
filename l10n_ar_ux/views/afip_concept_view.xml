@@ -16,13 +16,13 @@
     </record>
 
     <record id="view_afip_concept_tree" model="ir.ui.view">
-        <field name="name">afip.concept.tree</field>
+        <field name="name">afip.concept.list</field>
         <field name="model">afip.concept</field>
         <field name="arch" type="xml">
-            <tree string="AFIP concepts">
+            <list string="AFIP concepts">
                 <field name="name"/>
                 <field name="code"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -30,7 +30,7 @@
         <field name="name">AFIP concept</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">afip.concept</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem name="Concepts" action="act_afip_concept" id="menu_action_afip_concept" sequence="30" parent="l10n_ar.menu_afip_config"/>

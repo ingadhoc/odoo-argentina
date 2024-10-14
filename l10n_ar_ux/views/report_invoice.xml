@@ -41,9 +41,7 @@
         <span t-field="o.company_id.l10n_ar_afip_start_date" position="attributes">
             <attribute name="t-field">header_address.start_date</attribute>
         </span>
-        <xpath expr="//div[hasclass('row')]" position="attributes">
-            <attribute name="style">margin-bottom: -50px;</attribute>
-        </xpath>
+
         <!-- tal vez tambien a este div principal le querramos cambiar la fuente como haciamos antes, aunque en realidad aparentemente ya no ex necesario, era algo asi:
         <div t-att-style="o.company_id.external_report_layout_id.key == 'web.external_layout_standard' and 'font-size: 15px;'">
          -->

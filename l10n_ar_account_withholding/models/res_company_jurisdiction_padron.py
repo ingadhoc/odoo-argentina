@@ -57,7 +57,10 @@ class ResCompanyJurisdictionPadron(models.Model):
     def descompress_file(self, file_padron):
         _logger.log(25, "Descompress zip file")
         ruta_extraccion = "/tmp"
-        file = base64.decodestring(file_padron)
+        try:
+            file = base64.b64decode(file_padron)
+        except:
+            file = base64.decodestring(file_padron)
         fobj = tempfile.NamedTemporaryFile(delete=False)
         fname = fobj.name
         fobj.write(file)

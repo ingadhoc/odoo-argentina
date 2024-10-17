@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="view_account_invoice_line_report_tree" model="ir.ui.view">
-        <field name="name">account.invoice.report.tree</field>
+        <field name="name">account.invoice.report.list</field>
         <field name="model">account.invoice.report</field>
         <field name="inherit_id" ref="account_ux.view_account_invoice_line_report_tree"/>
         <field name="arch" type="xml">

@@ -51,12 +51,6 @@
     'external_dependencies': {
         'python': ['pyafipws'],
     },
-<<<<<<< HEAD
     'installable': False,
-||||||| parent of fa570f2d (temp)
-    'installable': True,
-=======
-    'installable': True,
     'auto_install': ['l10n_ar'],
->>>>>>> fa570f2d (temp)
 }

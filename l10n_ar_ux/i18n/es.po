@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-08 18:04+0000\n"
+"POT-Creation-Date: 2024-10-22 17:43+0000\n"
 "PO-Revision-Date: 2023-12-01 12:31+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -220,6 +220,29 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_ir_actions_report__l10n_ar_copies
 msgid "Agregar Duplicado/Triplicado"
 msgstr ""
+
+#. module: l10n_ar_ux
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_account__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_account_tag__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_change_currency__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_chart_template__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_fiscal_position__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move_change_rate__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move_line__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_tax__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_activity__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_ir_actions_report__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_config_settings__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_currency__algolia_search
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__algolia_search
+msgid "Algolia Search"
+msgstr "Busqueda Avanzada"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document

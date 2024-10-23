@@ -9,10 +9,10 @@ from odoo.addons.portal.controllers.portal import CustomerPortal
 
 class L10nArCustomerPortal(CustomerPortal):
 
-    OPTIONAL_BILLING_FIELDS = CustomerPortal.OPTIONAL_BILLING_FIELDS + [
-        "commercial_partner_id", "l10n_latam_identification_type_id", "vat",
-        "l10n_ar_afip_responsibility_type_id",
-    ]
+    # OPTIONAL_BILLING_FIELDS = CustomerPortal.OPTIONAL_BILLING_FIELDS + [
+    #     "commercial_partner_id", "l10n_latam_identification_type_id", "vat",
+    #     "l10n_ar_afip_responsibility_type_id",
+    # ]
 
     def details_form_validate(self, data):
         """ When adding either document_type or document_number, this two should be setted """

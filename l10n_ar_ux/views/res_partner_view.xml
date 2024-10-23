@@ -6,8 +6,6 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="l10n_ar.view_partner_property_form"/>
         <field name="arch" type="xml">
-            <!-- borramos este grupo que se crea en l10n_ar que no tiene sentido y deberia ser deprecado -->
-            <group name="accounting_documents" position="replace"/>
             <page name="accounting" position="after">
                 <page string="Fiscal Data" name="fiscal_data" invisible="'AR'not in fiscal_country_codes or (not is_company and parent_id)">
 

@@ -2,15 +2,15 @@
 <odoo>
 
     <record model="ir.ui.view" id="view_res_company_jurisdiction_padron_tree">
-        <field name="name">res.company.jurisdiction.padron.tree.inherit</field>
+        <field name="name">res.company.jurisdiction.padron.list.inherit</field>
         <field name="model">res.company.jurisdiction.padron</field>
         <field name="arch" type="xml">
-            <tree string="Padron Alicuotas">
+            <list string="Padron Alicuotas">
                 <field name="jurisdiction_id"/>
                 <field name="company_id"/>
                 <field name="l10n_ar_padron_from_date"/>
                 <field name="l10n_ar_padron_to_date"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -49,7 +49,7 @@
         <field name="name">Padron Alicuotas</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.company.jurisdiction.padron</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem name="Padron de Alicuotas por compania" action="act_company_jurisdiction_padron" id="menu_action_company_jurisdiction_padron" sequence="100" parent="l10n_ar.menu_afip_config"/>

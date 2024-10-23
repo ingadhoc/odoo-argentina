@@ -2,10 +2,10 @@
 <odoo>
 
     <record id="view_res_partner_arba_alicuot_tree" model="ir.ui.view">
-        <field name="name">res.partner.arba_alicuot.tree</field>
+        <field name="name">res.partner.arba_alicuot.list</field>
         <field name="model">res.partner.arba_alicuot</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="company_id" groups="base.group_multi_company" options="{'no_create': True, 'no_open': True}"/>
                 <field name="tag_id" options="{'no_create': True, 'no_open': True}"/>
                 <field name="from_date"/>
@@ -14,7 +14,7 @@
                 <field name="alicuota_percepcion"/>
                 <field name="alicuota_retencion"/>
                 <field name="withholding_amount_type" groups="l10n_ar_account_withholding.partner_tax_withholding_amount_type"/>
-            </tree>
+            </list>
         </field>
     </record>
 

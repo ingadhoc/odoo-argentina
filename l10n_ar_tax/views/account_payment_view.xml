@@ -2,14 +2,14 @@
 <odoo>
 
     <record id="view_account_payment_tree" model="ir.ui.view">
-        <field name="name">account.payment.tree</field>
+        <field name="name">account.payment.list</field>
         <field name="model">account.payment</field>
         <field name="inherit_id" ref="account.view_account_payment_tree"/>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="payment_method_code" column_invisible="True"/>
                 <field name="partner_type" column_invisible="True"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -54,7 +54,7 @@
                     <!-- ver mensaje en commit -->
                     <!-- <button name="compute_withholdings" string="Re Computar Retenciones" title="Re-computar retenciones a partir del 'Importe a Pagar'" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft']"/> -->
                     <field name="l10n_ar_withholding_line_ids" nolabel="1" colspan="2" invisible="is_internal_transfer" readonly="state != 'draft'">
-                        <tree editable="bottom">
+                        <list editable="bottom">
                             <field name="withholding_sequence_id" column_invisible="True"/>
                             <field name="company_id" column_invisible="True"/>
                             <field name="currency_id" column_invisible="True"/>
@@ -64,7 +64,7 @@
                             <field name="amount"/>
                             <button name="%(action_report_withholding_certificate)d" icon="fa-print " title="Print withholding voucher" type="action" invisible="parent.partner_type != 'supplier' or parent.state == 'draft'"/>
                             <button type="object" name="get_formview_action" icon="fa-pencil-square-o" title="open" help="Open"/>
-                        </tree>
+                        </list>
                     </field>
                 </page>
             </page>

@@ -30,12 +30,12 @@
                             </div>
                             <field name="withholding_python_compute" invisible="withholding_type != 'code'" nolabel="1" colspan="2"/>
                             <field name="withholding_rule_ids" invisible="withholding_type != 'based_on_rule'" nolabel="1" colspan="2">
-                                <tree editable="bottom">
+                                <list editable="bottom">
                                     <field name="sequence" widget="handle"/>
                                     <field name="domain"/>
                                     <field name="percentage"/>
                                     <field name="fix_amount"/>
-                                </tree>
+                                </list>
                             </field>
                         </group>
                         <group invisible="withholding_type == 'none'">
@@ -71,7 +71,7 @@
     <record id="action_withholding_tax_form" model="ir.actions.act_window">
         <field name="name">AR Withholding Taxes</field>
         <field name="res_model">account.tax</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain" eval="False"/>
         <field name="context">{'search_default_customer': True, 'search_default_supplier': True, 'default_type_tax_use': 'supplier', 'active_test': False}</field>
         <field name="view_id" ref="account.view_tax_tree"/>

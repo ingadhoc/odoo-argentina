@@ -23,6 +23,6 @@ class AccountAccount(models.Model):
             'equity',
             'expense_direct_cost',
         ]
-        accounts = self.search([('account_type', 'in', account_types), ('company_id', 'in', company.ids)])
-        if accounts:
-            accounts.write({'tag_ids': [(4, non_monetary_tag.id)]})
+        # accounts = self.search([('account_type', 'in', account_types), ('company_id', 'in', company.ids)])
+        # if accounts:
+        #     accounts.write({'tag_ids': [(4, non_monetary_tag.id)]})

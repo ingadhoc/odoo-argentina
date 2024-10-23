@@ -17,5 +17,16 @@
         </field>
     </record> -->
 
+    <record id="view_tax_form_inherit" model="ir.ui.view">
+        <field name="name">account.tax.form.inherit</field>
+        <field name="model">account.tax</field>
+        <field name="inherit_id" ref="account_withholding_automatic.view_tax_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='withholding_type']" position="attributes">
+                <attribute name="attrs">{'required': [('country_code', '=', 'AR')]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
 

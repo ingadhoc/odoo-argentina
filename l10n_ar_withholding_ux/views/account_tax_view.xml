@@ -26,7 +26,7 @@
                         <group name="withholdings">
                             <label for="withholding_type"/>
                             <div>
-                                <field name="withholding_type" class="oe_inline"/>
+                                <field name="withholding_type" class="oe_inline" required="country_code == 'AR'"/>
                             </div>
                             <field name="withholding_python_compute" invisible="withholding_type != 'code'" nolabel="1" colspan="2"/>
                             <field name="withholding_rule_ids" invisible="withholding_type != 'based_on_rule'" nolabel="1" colspan="2">

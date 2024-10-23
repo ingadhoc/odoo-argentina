@@ -60,7 +60,6 @@ class AccountTax(models.Model):
         # ('balance', 'Balance')
     ],
         'Type',
-        required=True,
         default='none',
         help="The computation method for the tax amount."
     )

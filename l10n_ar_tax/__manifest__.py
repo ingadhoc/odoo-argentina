@@ -35,6 +35,9 @@
         'views/res_company_jurisdiction_padron_view.xml',
         'views/res_partner_view.xml',
         'views/account_tax_view.xml',
+        'views/report_withholding_certificate_templates.xml',
+        'views/report_payment_receipt_templates.xml',
+        'views/l10n_ar_payment_withholding_views.xml',
         'data/tabla_ganancias_data.xml',
     ],
     'demo': [
@@ -46,11 +49,13 @@
     'depends': [
         'l10n_ar',
         'l10n_ar_ux',
-        'l10n_ar_withholding_ux',
+        'l10n_ar_withholding',
+        'account_payment_pro',
     ],
     'external_dependencies': {
         'python': ['pyafipws'],
     },
     'installable': False,
     'auto_install': ['l10n_ar'],
+    'post_load': 'monkey_patch_synchronize_to_moves',
 }

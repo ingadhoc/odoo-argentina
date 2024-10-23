@@ -80,3 +80,4 @@
     <menuitem action="action_withholding_tax_form" id="menu_withholding_tax_form" parent="account.root_payment_menu" sequence="1"/>
 
 </odoo>
+

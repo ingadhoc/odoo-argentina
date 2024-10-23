@@ -46,6 +46,9 @@ class ResCompany(models.Model):
     cdba_alicuota_no_sincripto_percepcion = fields.Float(
         'Rentas Córdoba: Alícuota no inscripto percepción'
     )
+    automatic_withholdings = fields.Boolean(
+        help='Make withholdings automatically on payments confirmation'
+    )
 
     def _localization_use_withholdings(self):
         """ Argentinian localization use documents """

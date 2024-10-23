@@ -1,5 +1,9 @@
+##############################################################################
+# For copyright and license notices, see __manifest__.py file in module root
+# directory
+##############################################################################
 from . import models
-
+from . import wizard
 from odoo.addons.l10n_ar_withholding.models.account_payment import AccountPayment
 
 def monkey_patch_synchronize_to_moves():

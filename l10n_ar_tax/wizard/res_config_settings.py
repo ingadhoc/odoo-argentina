@@ -46,6 +46,10 @@ class ResConfigSettings(models.TransientModel):
         'Allow to choose base amount type for withholdings on partners',
         implied_group='l10n_ar_account_withholding.partner_tax_withholding_amount_type',
     )
+    automatic_withholdings = fields.Boolean(
+        related='company_id.automatic_withholdings',
+        readonly=False,
+    )
 
     def l10n_ar_arba_cit_test(self):
         self.ensure_one()

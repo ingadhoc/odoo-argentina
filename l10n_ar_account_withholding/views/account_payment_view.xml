@@ -20,7 +20,23 @@
         <field name="arch" type="xml">
             <form>
                 <field name="company_regimenes_ganancias_ids" invisible="1"/>
+                <field name="need_withholding_recompute" invisible="1"/>
             </form>
+            <xpath expr="//header/button[@name='action_post']" position="attributes">
+                <attribute name="invisible" add=" or (partner_type == 'supplier' and need_withholding_recompute)" separator=" "/>
+
+            </xpath>
+            <xpath expr="//header/button[@name='action_post']" position="after">
+                <button name="action_post" string="Confirm" type="object" class="oe_highlight" 
+                        invisible="not need_withholding_recompute or state != 'draft' or not partner_id or partner_type != 'supplier'" data-hotkey="q" 
+                        confirm="Are you sure you want to proceed? Have you reviewed the withholdings calculations?"/>
+            </xpath>
+            <sheet position="before">
+                <div class="alert alert-warning" role="alert" invisible="not need_withholding_recompute or state != 'draft' or not partner_id or partner_type != 'supplier'">
+                    Withholding may apply. We suggest compute them.
+                    <button name="compute_withholdings" type="object" class="btn btn-primary">Compute Withholdings</button>
+                </div>
+            </sheet>
             <field name="ref" position="after">
                 <label for="retencion_ganancias" string="Ret G." invisible="not company_regimenes_ganancias_ids"/>
                 <div invisible="not company_regimenes_ganancias_ids" class="o_row">

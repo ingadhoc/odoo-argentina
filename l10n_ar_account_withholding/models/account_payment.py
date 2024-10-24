@@ -26,6 +26,32 @@ class AccountPayment(models.Model):
         'afip.tabla_ganancias.alicuotasymontos',
         compute='_company_regimenes_ganancias',
     )
+    need_withholding_recompute = fields.Boolean(
+        compute="_compute_need_withholding_recompute",
+        store=True,
+        readonly=False
+    )
+
+    @api.depends('withholdable_advanced_amount', 'regimen_ganancias_id', 'retencion_ganancias', 'date', 'unreconciled_amount', 'to_pay_move_line_ids')
+    def _compute_need_withholding_recompute(self):
+        self.need_withholding_recompute = True
+
+    def compute_withholdings(self):
+        super()._compute_withholdings()
+        self.need_withholding_recompute = False
+
+    # estaria bueno re-incorporarlo pero para hacerlo:
+    # a) tenemos que ver que cuando creamos pago desde factura ya viaje la retencion de ganancias o convertirlas en campos calculados con pre compute?
+    # el tema es que no termina computando regimen de ganancias porque en "regimen = payment.regimen_ganancias_id" llega vacio
+    # b) ademas deberiamos mejorar logica de need_withholding_recompute porque al guardar se está pisando como que requiere recomputo
+    # @api.onchange('to_pay_amount', 'withholdable_advanced_amount', 'partner_id', 'regimen_ganancias_id', 'retencion_ganancias', 'date')
+    # def _onchange_to_pay_amount(self):
+    #     # para muchas retenciones es necesario que el partner este seteado, solo calculamos si viene definido
+    #     for rec in self.filtered('partner_id'):
+    #         # el compute_withholdings o el _compute_withholdings?
+    #         rec._compute_withholdings()
+    #         # rec.force_amount_company_currency += rec.payment_difference
+    #         # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
 
     # ver mensaje en commit
     # @api.onchange('retencion_ganancias', 'regimen_ganancias_id')

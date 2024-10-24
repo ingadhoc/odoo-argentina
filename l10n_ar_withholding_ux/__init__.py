@@ -1,5 +1,4 @@
 from . import models
-from . import wizards
 
 from odoo.addons.l10n_ar_withholding.models.account_payment import AccountPayment
 

@@ -20,7 +20,13 @@
         <field name="arch" type="xml">
             <form>
                 <field name="company_regimenes_ganancias_ids" invisible="1"/>
+                <field name="need_withholding_recompute" invisible="1"/>
             </form>
+            <sheet position="before">
+                <div class="alert alert-danger" role="alert" invisible="not need_withholding_recompute or state != 'draft' or not partner_id">
+                    Hay que recomputar TODO add button to reocmpute
+                </div>
+            </sheet>
             <field name="ref" position="after">
                 <label for="retencion_ganancias" string="Ret G." invisible="not company_regimenes_ganancias_ids"/>
                 <div invisible="not company_regimenes_ganancias_ids" class="o_row">

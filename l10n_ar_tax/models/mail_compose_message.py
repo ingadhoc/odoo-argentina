@@ -14,8 +14,7 @@ class MailComposeMessage(models.TransientModel):
             payment = self.env[model].browse(res_id)
             if payment.partner_type != 'supplier':
                 return values
-            report = self.env.ref('l10n_ar_account_withholding.action_report_withholding_certificate',
-                                  raise_if_not_found=False)
+            report = self.env.ref('l10n_ar_tax.action_report_withholding_certificate', raise_if_not_found=False)
             if not report:
                 return values
             attachment_ids = []

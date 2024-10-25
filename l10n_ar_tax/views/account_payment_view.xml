@@ -19,19 +19,10 @@
         <field name="priority" eval="30"/>
         <field name="inherit_id" ref="account.view_account_payment_form" />
         <field name="arch" type="xml">
-            <form>
-                <field name="company_regimenes_ganancias_ids" invisible="1"/>
-            </form>
-            <field name="ref" position="after">
-                <label for="retencion_ganancias" string="Ret G." invisible="not company_regimenes_ganancias_ids"/>
-                <div invisible="not company_regimenes_ganancias_ids" class="o_row">
-                    <field name="retencion_ganancias" readonly="state not in ['draft']" required="company_regimenes_ganancias_ids and state == 'draft'"/>
-                    <field name="regimen_ganancias_id" readonly="state not in ['draft']" invisible="retencion_ganancias != 'nro_regimen'" required="retencion_ganancias == 'nro_regimen' and company_regimenes_ganancias_ids and state == 'draft'" domain="[('id', 'in', company_regimenes_ganancias_ids)]" options='{"no_open": True, "no_create": True}'/>
-                </div>
-            </field>
 
             <!-- sacamos grupo con retenciones nativas y creamos una nueva page -->
-            <group invisible="country_code != 'AR'" position="replace"/>
+            <!-- Falta ajustar con nueva logica de tabs https://github.com/odoo/odoo/blob/18.0/addons/l10n_ar_withholding/views/account_payment_view.xml -->
+            <!-- <group invisible="country_code != 'AR'" position="replace"/> -->
 
             <label for="payment_total" position="before">
                 <label for="withholdings_amount" readonly="state != 'draft'" invisible="is_internal_transfer or not use_payment_pro"/>
@@ -44,8 +35,11 @@
                 <button name="compute_to_pay_amount_for_check" icon="fa-refresh" title="A partir del importe del pago (campo Importe) + ajuste, se calculan las retenciones y el importe a pagar. Útil por ejemplo para pagos con cheques donde el importe Importe no lo podemos cambiar" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft'] or payment_method_code not in ['in_third_party_checks', 'out_third_party_checks']" class="oe_inline oe_link"/>
             </div>
 
-            <page name="paid" position="after">
-                <page string="Retenciones">
+            <page name="withholdings_page" position="attributes">
+                <attribute name="invisible">country_code != 'AR' or state == 'draft'</attribute>
+            </page>
+            <page name="withholdings_page" position="after">
+                <page name="withholdings_page_editable" string="Withholdings" invisible="country_code != 'AR' or state != 'draft'">
                     <group>
                         <field name="unreconciled_amount" invisible="1"/>
                         <field name="withholdable_advanced_amount"
@@ -63,7 +57,6 @@
                             <field name="base_amount"/>
                             <field name="amount"/>
                             <button name="%(action_report_withholding_certificate)d" icon="fa-print " title="Print withholding voucher" type="action" invisible="parent.partner_type != 'supplier' or parent.state == 'draft'"/>
-                            <button type="object" name="get_formview_action" icon="fa-pencil-square-o" title="open" help="Open"/>
                         </list>
                     </field>
                 </page>

@@ -6,53 +6,43 @@
         <field name="model">account.tax</field>
         <field name="inherit_id" ref="account.view_tax_form"/>
         <field name="arch" type="xml">
-            <group name="advanced_booleans" position="attributes">
-                <attribute name="invisible">type_tax_use == 'none' and country_code == 'AR'</attribute>
-            </group>
-            <field name="amount_type" position="attributes">
-                <attribute name="invisible">type_tax_use == 'none' and country_code == 'AR'</attribute>
-            </field>
-            <label for="amount" position="attributes">
-                <attribute name="invisible">type_tax_use == 'none' and country_code == 'AR'</attribute>
-            </label>
-            <xpath expr="//group//div" position="attributes">
-                <attribute name="invisible">type_tax_use == 'none' and country_code == 'AR'</attribute>
+            <xpath expr="//field[@name='amount']/.." position="after">
+                <field name="l10n_ar_state_id" invisible="l10n_ar_tribute_afip_code != '07'" required="l10n_ar_tribute_afip_code == '07'" options="{'no_create': True}"/>
             </xpath>
+            <!-- limpiamos esta seccion que para retenciones no tiene sentido -->
+            <group name="advanced_booleans" position="attributes">
+                <attribute name="invisible">l10n_ar_withholding_payment_type</attribute>
+            </group>
 
-            <!-- TODO mejorar esta vista -->
-            <xpath expr="//page" position="after">
-                <page string="Withholding computation" invisible="l10n_ar_withholding_payment_type != 'supplier'">
+            <!-- TODO mejorar esto, por ahora solo lo hacemos visible con este grupo ya que este grupo solo lo estamos usando en realidad para API, deberiamos ver de hacerlo de otra manera -->
+            <!-- TODO agregar que sea de santa fe -->
+            <!-- <i class="fa fa-exclamation-circle" data-tooltip="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" title="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" aria-hidden="true"/>  -->
+            <!-- <group>
+                <field name="api_codigo_articulo_retencion" invisible="type_tax_use == 'none' and country_code == 'AR'"/>
+                <field name="api_articulo_inciso_calculo_retencion" invisible="type_tax_use == 'none' and country_code == 'AR'"/>
+                <field name="api_codigo_articulo_percepcion" invisible="l10n_ar_tribute_afip_code != '07'"/>
+                <field name="api_articulo_inciso_calculo_percepcion" invisible="l10n_ar_tribute_afip_code != '07'"/>
+            </group> -->
+            <!-- <sheet>
+                <p>
+                    Utilizado para la generación del TXT para SIRCAR.<br/>
+                    Tipo de Régimen de Retención/precición (código correspondiente según tabla definida por la jurisdicción).<br/>
+                    Puede consultar la tabla <a target="_blank" href="https://www.ca.gov.ar/sircar2">aquí</a>, sección "Instructivos y tablas" item "Tabla con la Tipificación de Regímenes..."
+                </p>
+            </sheet>
+                    <page string="SIRCAR">
+                        <group>
+                            <field name="regimen_percepcion"/>
+                            <field name="regimen_retencion"/>
+                        </group>
+                    </page> -->
+
+            <!-- <notebook>
+                <page string="API">
                     <group>
-                        <group name="withholdings">
-                            <label for="withholding_type"/>
-                            <div>
-                                <field name="withholding_type" class="oe_inline"/>
-                            </div>
-                            <field name="withholding_python_compute" invisible="withholding_type != 'code'" nolabel="1" colspan="2"/>
-                            <field name="withholding_rule_ids" invisible="withholding_type != 'based_on_rule'" nolabel="1" colspan="2">
-                                <list editable="bottom">
-                                    <field name="sequence" widget="handle"/>
-                                    <field name="domain"/>
-                                    <field name="percentage"/>
-                                    <field name="fix_amount"/>
-                                </list>
-                            </field>
-                        </group>
-                        <group invisible="withholding_type == 'none'">
-                            <field name="withholding_accumulated_payments"/>
-                            <field name="withholding_advances"/>
-                            <label for="withholding_amount_type" required="withholding_type != 'none'"/>
-                            <div for="withholding_amount_type" required="withholding_type != 'none'">
-                                <field name="withholding_amount_type" required="withholding_type != 'none'" class="oe_inline"/>
-                            </div>
-                            <field name="withholding_non_taxable_minimum"/>
-                            <field name="withholding_non_taxable_amount"/>
-                            <field name="withholding_user_error_message"/>
-                            <field name="withholding_user_error_domain" invisible="not withholding_user_error_message"/>
-                        </group>
                     </group>
                 </page>
-            </xpath>
+            </notebook> -->
         </field>
     </record>
 

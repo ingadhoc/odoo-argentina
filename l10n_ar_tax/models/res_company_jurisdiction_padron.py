@@ -24,7 +24,6 @@ class ResCompanyJurisdictionPadron(models.Model):
         domain="[('applicability', '=', 'taxes'),('jurisdiction_code', '!=', False)]",
         required=True,
     )
-
     file_padron = fields.Binary(
         "File",
         required=True,

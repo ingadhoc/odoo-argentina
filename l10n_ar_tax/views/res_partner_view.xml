@@ -3,20 +3,40 @@
 
     <record model="ir.ui.view" id="view_partner_form">
         <field name="name">res.partner.form.inherit</field>
-        <field name="inherit_id" ref="l10n_ar_ux.view_partner_property_form"/>
+        <field name="inherit_id" ref="l10n_ar_withholding.view_partner_form"/>
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
-            <field name="imp_ganancias_padron" position="after">
-                <field name="default_regimen_ganancias_id" invisible="imp_ganancias_padron in ['EX', 'NC']"/>
-            </field>
+            <xpath expr="//field[@name='l10n_ar_partner_tax_ids']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//page[@name='accounting']/group" position="after">
+                <group string="Sale Perceptions">
+                    <field name="l10n_ar_partner_perception_ids" nolabel="1" colspan="2">
+                        <list editable="top" limit="5">
+                            <field name="tax_id" options="{'no_create': True}" domain="[('type_tax_use', '=', 'sale')]"/>
+                            <field name="from_date" optional="show"/>
+                            <field name="to_date" optional="show"/>
+                            <field name="ref" optional="hide"/>
+                        </list>
+                    </field>
+                </group>
+                <group string="Purchase Withholding">
+                    <field name="l10n_ar_partner_tax_ids" nolabel="1" colspan="2">
+                        <list editable="top" limit="5">
+                            <field name="tax_id" options="{'no_create': True}" domain="[('l10n_ar_withholding_payment_type', '=', 'supplier')]"/>
+                            <field name="from_date" optional="show"/>
+                            <field name="to_date" optional="show"/>
+                            <field name="ref" optional="hide"/>
+                        </list>
+                    </field>
+                </group>
+            </xpath>
+
             <group name="others_col_1">
                 <field name="drei"/>
-            </group>
-            <group name="others" position="after">
-                <label for="arba_alicuot_ids"/>
-                <field name="arba_alicuot_ids"/>
             </group>
         </field>
     </record>
 
 </odoo>
+

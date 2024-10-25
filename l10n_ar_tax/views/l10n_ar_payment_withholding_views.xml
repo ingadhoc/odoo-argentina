@@ -16,20 +16,6 @@
                             <field name="base_amount"/>
                             <field name="amount"/>
                         </group>
-                        <group name="withholding_data">
-                            <field name="automatic" invisible="True"/>
-                            <field name="withholding_accumulated_payments" invisible="True"/>
-                            <field name="withholdable_invoiced_amount" invisible="not automatic"/>
-                            <field name="withholdable_advanced_amount" invisible="not automatic"/>
-                            <field name="accumulated_amount" invisible="not withholding_accumulated_payments"/>
-                            <field name="total_amount" invisible="not automatic"/>
-                            <field name="withholding_non_taxable_minimum" invisible="not automatic"/>
-                            <field name="withholding_non_taxable_amount" invisible="not automatic"/>
-                            <field name="withholdable_base_amount" invisible="not automatic"/>
-                            <field name="period_withholding_amount" invisible="not withholding_accumulated_payments"/>
-                            <field name="previous_withholding_amount" invisible="not withholding_accumulated_payments"/>
-                            <field name="computed_withholding_amount" invisible="not automatic"/>
-                        </group>
                     </group>
                 </sheet>
             </form>

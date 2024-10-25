@@ -2,30 +2,14 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api, fields
+from odoo import models, api, fields, Command, _
+from odoo.exceptions import UserError
 
 
 class AccountPayment(models.Model):
 
     _inherit = "account.payment"
 
-    retencion_ganancias = fields.Selection([
-        # _get_regimen_ganancias,
-        ('imposibilidad_retencion', 'Imposibilidad de Retención'),
-        ('no_aplica', 'No Aplica'),
-        ('nro_regimen', 'Nro Regimen'),
-    ],
-        'Retención Ganancias',
-    )
-    regimen_ganancias_id = fields.Many2one(
-        'afip.tabla_ganancias.alicuotasymontos',
-        'Regimen Ganancias',
-        ondelete='restrict',
-    )
-    company_regimenes_ganancias_ids = fields.Many2many(
-        'afip.tabla_ganancias.alicuotasymontos',
-        compute='_company_regimenes_ganancias',
-    )
     l10n_ar_withholding_line_ids = fields.One2many(
         'l10n_ar.payment.withholding', 'payment_id', string='Withholdings Lines',
         # compute='_compute_l10n_ar_withholding_line_ids', readonly=False, store=True
@@ -107,7 +91,8 @@ class AccountPayment(models.Model):
         for line in self.l10n_ar_withholding_line_ids:
             # nuestro approach esta quedando distinto al del wizard. En nuestras lineas tenemos los importes en moneda
             # de la cia, por lo cual el line.amount aca representa eso y tenemos que convertirlo para el amount_currency
-            account_id, tax_repartition_line_id = line._tax_compute_all_helper()
+
+            account_id, tax_repartition_line_id = line._tax_compute_all_helper()[1:]
             amount_currency = self.currency_id.round(line.amount / conversion_rate)
             write_off_line_vals.append({
                     **self._get_withholding_move_line_default_values(),
@@ -260,8 +245,6 @@ class AccountPayment(models.Model):
             # y cobros)
             taxes = self.env['account.tax'].with_context(type=None).search([
                     ('type_tax_use', '=', 'none'),
-                    # TODo corroborar en 16
-                    ('withholding_type', '!=', 'none'),
                     ('l10n_ar_withholding_payment_type', '=', rec.partner_type),
                     ('company_id', '=', rec.company_id.id),
                 ])
@@ -314,142 +297,179 @@ class AccountPayment(models.Model):
             rec.with_context(skip_account_move_synchronization=False)._synchronize_to_moves({'l10n_ar_withholding_line_ids'})
 
     def _upadte_withholdings(self, taxes):
+        """ prácticamente igual que payment register _compute_l10n_ar_withholding_ids """
         self.ensure_one()
-        commands = []
-        for tax in taxes:
-            if (
-                    tax.withholding_user_error_message and
-                    tax.withholding_user_error_domain):
-                try:
-                    domain = literal_eval(tax.withholding_user_error_domain)
-                except Exception as e:
-                    raise ValidationError(_(
-                        'Could not eval rule domain "%s".\n'
-                        'This is what we get:\n%s' % (tax.withholding_user_error_domain, e)))
-                domain.append(('id', '=', self.id))
-                if self.search(domain):
-                    raise ValidationError(tax.withholding_user_error_message)
-            vals = tax.get_withholding_vals(self)
+        date = self.date or datetime.date.today()
+        partner_taxes = self.env['l10n_ar.partner.tax'].search([
+            *self.env['l10n_ar.partner.tax']._check_company_domain(self.company_id),
+            '|', ('from_date', '<=', date), ('from_date', '=', False),
+            '|', ('to_date', '>=', date), ('to_date', '=', False),
+            ('partner_id', '=', self.partner_id.commercial_partner_id.id),
+            ('tax_id.l10n_ar_withholding_payment_type', '=', self.partner_type)
+        ])
+        self.l10n_ar_withholding_line_ids = [Command.clear()] + [Command.create({'tax_id': x.tax_id.id}) for x in partner_taxes]
 
-            # we set computed_withholding_amount, hacemos round porque
-            # si no puede pasarse un valor con mas decimales del que se ve
-            # y terminar dando error en el asiento por debitos y creditos no
-            # son iguales, algo parecido hace odoo en el compute_all de taxes
-            currency = self.currency_id
-            period_withholding_amount = currency.round(vals.get('period_withholding_amount', 0.0))
-            previous_withholding_amount = currency.round(vals.get('previous_withholding_amount'))
-            # withholding can not be negative
-            computed_withholding_amount = max(0, (period_withholding_amount - previous_withholding_amount))
+        # name = fields.Char(string='Number')
+        # ref = fields.Char()
+        # tax_id = fields.Many2one('account.tax', check_company=True, required=True)
+        # withholding_sequence_id = fields.Many2one(related='tax_id.l10n_ar_withholding_sequence_id')
+        # # base_amount = fields.Monetary(compute='_compute_base_amount', store=True, readonly=False,
+        # #                               required=True)
+        # base_amount = fields.Monetary(required=True)
+        # # por ahora dejamos amount a mano como era antes y que solo se compute con el compute withholdings desde arriba
+        # # luego vemos de hacer que toda la logica este acá
+        # amount = fields.Monetary(required=True)
+        # # amount = fields.Monetary(required=True, compute='_compute_amount', store=True, readonly=False)
 
-            payment_withholding = self.l10n_ar_withholding_line_ids.filtered(lambda x: x.tax_id == tax)
-            if not computed_withholding_amount:
-                # if on refresh no more withholding, we delete if it exists
-                if payment_withholding:
-                    commands.append(Command.delete(payment_withholding.id))
-                continue
+        # # TODO ver como podemos unificar o abstraer código en modelo abstract y re utilizar acá y en aml
+        # automatic = fields.Boolean()
+        # withholdable_invoiced_amount = fields.Monetary('Importe imputado sujeto a retencion', readonly=True,)
+        # withholdable_advanced_amount = fields.Monetary('Importe a cuenta sujeto a retencion',)
+        # accumulated_amount = fields.Monetary(readonly=True,)
+        # total_amount = fields.Monetary(readonly=True,)
+        # withholding_non_taxable_minimum = fields.Monetary('Non-taxable Minimum', readonly=True,)
+        # withholding_non_taxable_amount = fields.Monetary('Non-taxable Amount', readonly=True,)
+        # withholdable_base_amount = fields.Monetary(readonly=True,)
+        # period_withholding_amount = fields.Monetary(readonly=True,)
+        # previous_withholding_amount = fields.Monetary(readonly=True,)
+        # computed_withholding_amount = fields.Monetary(readonly=True,)
 
-            # we copy withholdable_base_amount on base_amount
-            # al final vimos con varios clientes que este monto base
-            # debe ser la base imponible de lo que se está pagando en este
-            # voucher
-            vals['base_amount'] = vals.get('withholdable_advanced_amount') + vals.get('withholdable_invoiced_amount')
-            vals['amount'] = computed_withholding_amount
-            vals['computed_withholding_amount'] = computed_withholding_amount
+        # commands = []
+        # for tax in taxes:
+        #     if (
+        #             tax.withholding_user_error_message and
+        #             tax.withholding_user_error_domain):
+        #         try:
+        #             domain = literal_eval(tax.withholding_user_error_domain)
+        #         except Exception as e:
+        #             raise ValidationError(_(
+        #                 'Could not eval rule domain "%s".\n'
+        #                 'This is what we get:\n%s' % (tax.withholding_user_error_domain, e)))
+        #         domain.append(('id', '=', self.id))
+        #         if self.search(domain):
+        #             raise ValidationError(tax.withholding_user_error_message)
+        #     vals = tax.get_withholding_vals(self)
 
-            # por ahora no imprimimos el comment, podemos ver de llevarlo a
-            # otro campo si es de utilidad
-            vals.pop('comment')
-            if payment_withholding:
-                commands.append(Command.update(payment_withholding.id, vals))
-                # payment_withholding.write(vals)
-            else:
-                # TODO implementar devoluciones de retenciones
-                # TODO en vez de pasarlo asi usar un command create
-                vals['payment_id'] = self.id
-                commands.append(Command.create(vals))
-        self.l10n_ar_withholding_line_ids = commands
+        #     # we set computed_withholding_amount, hacemos round porque
+        #     # si no puede pasarse un valor con mas decimales del que se ve
+        #     # y terminar dando error en el asiento por debitos y creditos no
+        #     # son iguales, algo parecido hace odoo en el compute_all de taxes
+        #     currency = self.currency_id
+        #     period_withholding_amount = currency.round(vals.get('period_withholding_amount', 0.0))
+        #     previous_withholding_amount = currency.round(vals.get('previous_withholding_amount'))
+        #     # withholding can not be negative
+        #     computed_withholding_amount = max(0, (period_withholding_amount - previous_withholding_amount))
 
-    def _get_withholdable_amounts(
-            self, withholding_amount_type, withholding_advances):
-        """ Method to help on getting withholding amounts from account.tax
-        """
-        self.ensure_one()
-        # Por compatibilidad con public_budget aceptamos
-        # pagos en otros estados no validados donde el matched y
-        # unmatched no se computaron, por eso agragamos la condición
-        if self.state == 'posted':
-            untaxed_field = 'matched_amount_untaxed'
-            total_field = 'matched_amount'
-        else:
-            untaxed_field = 'selected_debt_untaxed'
-            total_field = 'selected_debt'
+        #     payment_withholding = self.l10n_ar_withholding_line_ids.filtered(lambda x: x.tax_id == tax)
+        #     if not computed_withholding_amount:
+        #         # if on refresh no more withholding, we delete if it exists
+        #         if payment_withholding:
+        #             commands.append(Command.delete(payment_withholding.id))
+        #         continue
 
-        if withholding_amount_type == 'untaxed_amount':
-            withholdable_invoiced_amount = self[untaxed_field]
-        else:
-            withholdable_invoiced_amount = self[total_field]
+        #     # we copy withholdable_base_amount on base_amount
+        #     # al final vimos con varios clientes que este monto base
+        #     # debe ser la base imponible de lo que se está pagando en este
+        #     # voucher
+        #     vals['base_amount'] = vals.get('withholdable_advanced_amount') + vals.get('withholdable_invoiced_amount')
+        #     vals['amount'] = computed_withholding_amount
+        #     vals['computed_withholding_amount'] = computed_withholding_amount
 
-        withholdable_advanced_amount = 0.0
-        # if the unreconciled_amount is negative, then the user wants to make
-        # a partial payment. To get the right untaxed amount we need to know
-        # which invoice is going to be paid, we only allow partial payment
-        # on last invoice.
-        # If the payment is posted the withholdable_invoiced_amount is
-        # the matched amount
-        if self.withholdable_advanced_amount < 0.0 and \
-                self.to_pay_move_line_ids and self.state != 'posted':
-            withholdable_advanced_amount = 0.0
+        #     # por ahora no imprimimos el comment, podemos ver de llevarlo a
+        #     # otro campo si es de utilidad
+        #     vals.pop('comment')
+        #     if payment_withholding:
+        #         commands.append(Command.update(payment_withholding.id, vals))
+        #         # payment_withholding.write(vals)
+        #     else:
+        #         # TODO implementar devoluciones de retenciones
+        #         # TODO en vez de pasarlo asi usar un command create
+        #         vals['payment_id'] = self.id
+        #         commands.append(Command.create(vals))
+        # self.l10n_ar_withholding_line_ids = commands
 
-            sign = self.partner_type == 'supplier' and -1.0 or 1.0
-            sorted_to_pay_lines = sorted(
-                self.to_pay_move_line_ids,
-                key=lambda a: a.date_maturity or a.date)
+    # TODO borrar?
+    # def _get_withholdable_amounts(
+    #         self, withholding_amount_type, withholding_advances):
+    #     """ Method to help on getting withholding amounts from account.tax
+    #     """
+    #     self.ensure_one()
+    #     # Por compatibilidad con public_budget aceptamos
+    #     # pagos en otros estados no validados donde el matched y
+    #     # unmatched no se computaron, por eso agragamos la condición
+    #     if self.state == 'posted':
+    #         untaxed_field = 'matched_amount_untaxed'
+    #         total_field = 'matched_amount'
+    #     else:
+    #         untaxed_field = 'selected_debt_untaxed'
+    #         total_field = 'selected_debt'
 
-            # last line to be reconciled
-            partial_line = sorted_to_pay_lines[-1]
-            if sign * partial_line.amount_residual < \
-                    sign * self.withholdable_advanced_amount:
-                raise ValidationError(_(
-                    'Seleccionó deuda por %s pero aparentente desea pagar '
-                    ' %s. En la deuda seleccionada hay algunos comprobantes de'
-                    ' mas que no van a poder ser pagados (%s). Deberá quitar '
-                    ' dichos comprobantes de la deuda seleccionada para poder '
-                    'hacer el correcto cálculo de las retenciones.' % (
-                        self.selected_debt,
-                        self.to_pay_amount,
-                        partial_line.move_id.display_name,
-                        )))
+    #     if withholding_amount_type == 'untaxed_amount':
+    #         withholdable_invoiced_amount = self[untaxed_field]
+    #     else:
+    #         withholdable_invoiced_amount = self[total_field]
 
-            if withholding_amount_type == 'untaxed_amount' and \
-                    partial_line.move_id:
-                invoice_factor = partial_line.move_id._get_tax_factor()
-            else:
-                invoice_factor = 1.0
+    #     withholdable_advanced_amount = 0.0
+    #     # if the unreconciled_amount is negative, then the user wants to make
+    #     # a partial payment. To get the right untaxed amount we need to know
+    #     # which invoice is going to be paid, we only allow partial payment
+    #     # on last invoice.
+    #     # If the payment is posted the withholdable_invoiced_amount is
+    #     # the matched amount
+    #     if self.withholdable_advanced_amount < 0.0 and \
+    #             self.to_pay_move_line_ids and self.state != 'posted':
+    #         withholdable_advanced_amount = 0.0
 
-            # si el adelanto es negativo estamos pagando parcialmente una
-            # factura y ocultamos el campo sin impuesto ya que lo sacamos por
-            # el proporcional descontando de el iva a lo que se esta pagando
-            withholdable_invoiced_amount -= (
-                sign * self.unreconciled_amount * invoice_factor)
-        elif withholding_advances:
-            # si el pago esta publicado obtenemos los valores de los importes
-            # conciliados (porque el pago pudo prepararse como adelanto
-            # pero luego haberse conciliado y en ese caso lo estariamos sumando
-            # dos veces si lo usamos como base de otros pagos). Si estan los
-            # campos withholdable_advanced_amount y unreconciled_amount le
-            # sacamos el proporcional correspondiente
-            if self.state == 'posted':
-                if self.unreconciled_amount and \
-                   self.withholdable_advanced_amount:
-                    withholdable_advanced_amount = self.amount_residual * (
-                        self.withholdable_advanced_amount /
-                        self.unreconciled_amount)
-                else:
-                    withholdable_advanced_amount = self.amount_residual
-            else:
-                withholdable_advanced_amount = \
-                    self.withholdable_advanced_amount
-        return (withholdable_advanced_amount, withholdable_invoiced_amount)
+    #         sign = self.partner_type == 'supplier' and -1.0 or 1.0
+    #         sorted_to_pay_lines = sorted(
+    #             self.to_pay_move_line_ids,
+    #             key=lambda a: a.date_maturity or a.date)
+
+    #         # last line to be reconciled
+    #         partial_line = sorted_to_pay_lines[-1]
+    #         if sign * partial_line.amount_residual < \
+    #                 sign * self.withholdable_advanced_amount:
+    #             raise ValidationError(_(
+    #                 'Seleccionó deuda por %s pero aparentente desea pagar '
+    #                 ' %s. En la deuda seleccionada hay algunos comprobantes de'
+    #                 ' mas que no van a poder ser pagados (%s). Deberá quitar '
+    #                 ' dichos comprobantes de la deuda seleccionada para poder '
+    #                 'hacer el correcto cálculo de las retenciones.' % (
+    #                     self.selected_debt,
+    #                     self.to_pay_amount,
+    #                     partial_line.move_id.display_name,
+    #                     )))
+
+    #         if withholding_amount_type == 'untaxed_amount' and \
+    #                 partial_line.move_id:
+    #             invoice_factor = partial_line.move_id._get_tax_factor()
+    #         else:
+    #             invoice_factor = 1.0
+
+    #         # si el adelanto es negativo estamos pagando parcialmente una
+    #         # factura y ocultamos el campo sin impuesto ya que lo sacamos por
+    #         # el proporcional descontando de el iva a lo que se esta pagando
+    #         withholdable_invoiced_amount -= (
+    #             sign * self.unreconciled_amount * invoice_factor)
+    #     elif withholding_advances:
+    #         # si el pago esta publicado obtenemos los valores de los importes
+    #         # conciliados (porque el pago pudo prepararse como adelanto
+    #         # pero luego haberse conciliado y en ese caso lo estariamos sumando
+    #         # dos veces si lo usamos como base de otros pagos). Si estan los
+    #         # campos withholdable_advanced_amount y unreconciled_amount le
+    #         # sacamos el proporcional correspondiente
+    #         if self.state == 'posted':
+    #             if self.unreconciled_amount and \
+    #                self.withholdable_advanced_amount:
+    #                 withholdable_advanced_amount = self.amount_residual * (
+    #                     self.withholdable_advanced_amount /
+    #                     self.unreconciled_amount)
+    #             else:
+    #                 withholdable_advanced_amount = self.amount_residual
+    #         else:
+    #             withholdable_advanced_amount = \
+    #                 self.withholdable_advanced_amount
+    #     return (withholdable_advanced_amount, withholdable_invoiced_amount)
 
     def _get_name_receipt_report(self, report_xml_id):
         """ Method similar to the '_get_name_invoice_report' of l10n_latam_invoice_document
@@ -459,57 +479,52 @@ class AccountPayment(models.Model):
         """
         self.ensure_one()
         if self.company_id.country_id.code == 'AR':
-            return 'l10n_ar_withholding_ux.report_payment_receipt_document'
+            return 'l10n_ar_tax.report_payment_receipt_document'
         return report_xml_id
 
-    # ver mensaje en commit
-    # @api.onchange('retencion_ganancias', 'regimen_ganancias_id')
-    # def _onchange_ganancias(self):
-    #     # si cambian parametros de ganancias recomputamos retenciones tmb
-    #     self._onchange_to_pay_amount()
+    # @api.depends('company_id.regimenes_ganancias_ids')
+    # def _company_regimenes_ganancias(self):
+    #     """
+    #     Lo hacemos con campo computado y no related para que solo se setee
+    #     y se exija si es pago de o a proveedor
+    #     """
+    #     for rec in self:
+    #         if rec.partner_type == 'supplier' and not rec.is_internal_transfer:
+    #             rec.company_regimenes_ganancias_ids = rec.company_id.regimenes_ganancias_ids
+    #         else:
+    #             rec.company_regimenes_ganancias_ids = rec.env['afip.tabla_ganancias.alicuotasymontos']
 
-    @api.depends('company_id.regimenes_ganancias_ids')
-    def _company_regimenes_ganancias(self):
-        """
-        Lo hacemos con campo computado y no related para que solo se setee
-        y se exija si es pago de o a proveedor
-        """
-        for rec in self:
-            if rec.partner_type == 'supplier' and not rec.is_internal_transfer:
-                rec.company_regimenes_ganancias_ids = rec.company_id.regimenes_ganancias_ids
-            else:
-                rec.company_regimenes_ganancias_ids = rec.env['afip.tabla_ganancias.alicuotasymontos']
+    # REVISAR E IMPLEMENTAR
+    # @api.onchange('commercial_partner_id')
+    # def change_retencion_ganancias(self):
+    #     # si es exento en ganancias o no tiene clasificacion pero es monotributista, del exterior o consumidor final, sugerimos regimen no_aplica
+    #     if self.partner_id.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC'] or (
+    #         not self.partner_id.commercial_partner_id.imp_ganancias_padron and
+    #         self.partner_id.commercial_partner_id.l10n_ar_afip_responsibility_type_id.code in ('5', '6', '9', '13')):
+    #         self.retencion_ganancias = 'no_aplica'
+    #         self.regimen_ganancias_id = False
+    #     else:
+    #         cia_regs = self.company_regimenes_ganancias_ids
+    #         partner_regimen = (
+    #             self.partner_id.commercial_partner_id.default_regimen_ganancias_id)
+    #         if partner_regimen:
+    #             def_regimen = partner_regimen
+    #         elif cia_regs:
+    #             def_regimen = cia_regs[0]
+    #         else:
+    #             def_regimen = False
+    #         self.regimen_ganancias_id = def_regimen
 
-    @api.onchange('commercial_partner_id')
-    def change_retencion_ganancias(self):
-        # si es exento en ganancias o no tiene clasificacion pero es monotributista, del exterior o consumidor final, sugerimos regimen no_aplica
-        if self.partner_id.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC'] or (
-            not self.partner_id.commercial_partner_id.imp_ganancias_padron and
-            self.partner_id.commercial_partner_id.l10n_ar_afip_responsibility_type_id.code in ('5', '6', '9', '13')):
-            self.retencion_ganancias = 'no_aplica'
-            self.regimen_ganancias_id = False
-        else:
-            cia_regs = self.company_regimenes_ganancias_ids
-            partner_regimen = (
-                self.partner_id.commercial_partner_id.default_regimen_ganancias_id)
-            if partner_regimen:
-                def_regimen = partner_regimen
-            elif cia_regs:
-                def_regimen = cia_regs[0]
-            else:
-                def_regimen = False
-            self.regimen_ganancias_id = def_regimen
-
-    @api.onchange('company_regimenes_ganancias_ids')
-    def change_company_regimenes_ganancias(self):
-        # partner_type == 'supplier' ya lo filtra el company_regimenes_ga...
-        if self.partner_id.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC'] or (
-            not self.partner_id.commercial_partner_id.imp_ganancias_padron and
-            self.partner_id.commercial_partner_id.l10n_ar_afip_responsibility_type_id.code in ('5', '6', '9', '13')):
-            self.retencion_ganancias = 'no_aplica'
-            self.regimen_ganancias_id = False
-        elif self.company_regimenes_ganancias_ids:
-            self.retencion_ganancias = 'nro_regimen'
+    # @api.onchange('company_regimenes_ganancias_ids')
+    # def change_company_regimenes_ganancias(self):
+    #     # partner_type == 'supplier' ya lo filtra el company_regimenes_ga...
+    #     if self.partner_id.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC'] or (
+    #         not self.partner_id.commercial_partner_id.imp_ganancias_padron and
+    #         self.partner_id.commercial_partner_id.l10n_ar_afip_responsibility_type_id.code in ('5', '6', '9', '13')):
+    #         self.retencion_ganancias = 'no_aplica'
+    #         self.regimen_ganancias_id = False
+    #     elif self.company_regimenes_ganancias_ids:
+    #         self.retencion_ganancias = 'nro_regimen'
 
     def _get_name_receipt_report(self, report_xml_id):
         # TODO tal vez mover este reporte y este metodo a l10n_ar_withholding_ux?

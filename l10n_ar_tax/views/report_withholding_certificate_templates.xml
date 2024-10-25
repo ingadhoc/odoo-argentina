@@ -111,7 +111,7 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-set="lang" t-value="o.payment_id.partner_id.lang"/>
-                <t t-call="l10n_ar_withholding_ux.report_withholding_certificate_document" t-lang="lang"/>
+                <t t-call="report_withholding_certificate_document" t-lang="lang"/>
             </t>
         </t>
     </template>
@@ -119,11 +119,11 @@
     <record id="action_report_withholding_certificate" model="ir.actions.report">
         <field name="name">Certificado de Retención</field>
         <field name="model">l10n_ar.payment.withholding</field>
-        <field name="binding_model_id" ref="l10n_ar_withholding_ux.model_l10n_ar_payment_withholding"/>
+        <field name="binding_model_id" ref="model_l10n_ar_payment_withholding"/>
         <field name="report_type">qweb-pdf</field>
         <field name="print_report_name">'Certificado de Retención Slip - %s' % (object.name or '')</field>
-        <field name="report_name">l10n_ar_withholding_ux.report_withholding_certificate</field>
-        <field name="report_file">l10n_ar_withholding_ux.report_withholding_certificate</field>
+        <field name="report_name">report_withholding_certificate</field>
+        <field name="report_file">report_withholding_certificate</field>
     </record>
 
 </odoo>

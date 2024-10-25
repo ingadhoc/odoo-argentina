@@ -14,12 +14,11 @@
     </record>
 
     <!-- TODO esto deberia ir a un modulo l10n_latam_check_ux. Pero como principalmente lo usamos para ARG por ahora mantenemos aca (no lo queremos en account_ux porque no todos los clientes usan account_ux) -->
-    <!-- a la espera de account_internal_transfer -->
-    <!-- <record model="ir.ui.menu" id="l10n_latam_check.menu_own_check">
-        <field name="parent_id" ref="account_ux.menu_finance_bank_and_cash"/>
+    <record model="ir.ui.menu" id="l10n_latam_check.menu_own_check">
+        <field name="parent_id" ref="account_internal_transfer.menu_finance_bank_and_cash"/>
     </record>
     <record model="ir.ui.menu" id="l10n_latam_check.menu_third_party_check">
-        <field name="parent_id" ref="account_ux.menu_finance_bank_and_cash"/>
-    </record> -->
+        <field name="parent_id" ref="account_internal_transfer.menu_finance_bank_and_cash"/>
+    </record>
 
 </odoo>

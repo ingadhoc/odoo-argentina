@@ -6,8 +6,6 @@ class AccountPayment(models.Model):
     _inherit = 'account.payment'
 
     l10n_ar_partner_vat = fields.Char(related='partner_id.l10n_ar_vat', string='CUIT del destinatario')
-    # TODO borrar cuando este agregado nuevo modulo account_internal_transfer
-    is_internal_transfer = fields.Boolean()
 
     # @api.model
     # def _get_trigger_fields_to_synchronize(self):

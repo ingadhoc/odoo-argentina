@@ -9,7 +9,7 @@
     'summary': '',
     'depends': [
         'l10n_ar',
-        # 'l10n_ar_withholding',
+        'account_internal_transfer',
         'l10n_latam_check',
         'account_ux',
     ],

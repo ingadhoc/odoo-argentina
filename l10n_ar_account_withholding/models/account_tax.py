@@ -148,7 +148,7 @@ class AccountTax(models.Model):
             return arba.alicuota_percepcion / 100.0
         return 0.0
 
-    def get_partner_alicuot(self, partner, date):
+    def get_partner_alicuot(self, partner, date, line=None):
         self.ensure_one()
         commercial_partner = partner.commercial_partner_id
         company = self.company_id

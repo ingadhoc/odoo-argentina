@@ -248,7 +248,7 @@ class AccountTax(models.Model):
     def _compute_amount(
             self, base_amount, price_unit, quantity=1.0, product=None, partner=None, fixed_multiplicator=1):
         if self.amount_type == 'partner_tax':
-            date = self._context.get('invoice_date', fields.Date.context_today(self))
+            date = self._context.get('invoice_date') or fields.Date.context_today(self)
             partner = partner and partner.sudo()
             return base_amount * self.sudo().get_partner_alicuota_percepcion(partner, date)
         else:

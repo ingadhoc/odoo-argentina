@@ -16,7 +16,8 @@
                 <button name="%(action_account_move_change_rate)d" type="action" icon="fa-pencil" class="btn-link" invisible="state != 'draft' or not other_currency or country_code != 'AR' or l10n_ar_currency_rate != 0.0" title="Edit Rate"/>
             </button>
             <xpath expr="//header" position="after">
-                <div class="alert alert-warning" role="alert" invisible="not l10n_ar_currency_rate">
+                <field name="other_currency" invisible="1"/>
+                <div class="alert alert-warning" role="alert" groups="base.group_multi_currency" invisible="country_code != 'AR' or not l10n_ar_currency_rate or not other_currency or state != 'draft'">
                     La cotización se encuentra forzada en <field name="l10n_ar_currency_rate"/>, para reestablecerla deberá modificar manualmente la tasa de cambio o aplicar la cotización del día.
                 </div>
             </xpath>

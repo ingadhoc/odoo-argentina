@@ -103,6 +103,8 @@
                     <tr>
                         <td>
                             <span t-field="o.journal_id.name"/>
+                            <span class="text-nowrap" t-out="' - ' + o.l10n_latam_check_number if o.l10n_latam_check_number else False"></span>
+                            <span class="text-nowrap" t-out="' - ' + o.l10n_latam_check_id.l10n_latam_check_number if o.l10n_latam_check_id.l10n_latam_check_number else False"></span>
                         </td>
                         <!-- <td class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
                             <t t-if="line.other_currency">

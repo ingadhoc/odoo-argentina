@@ -17,7 +17,6 @@
             </t>
         </t>
 
-        <div id="informations" position="replace"/>
     </template>
 
     <template id="report_purchaseorder_document" inherit_id="l10n_ar_purchase.report_purchaseorder_document">

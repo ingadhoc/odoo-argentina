@@ -22,6 +22,9 @@ class AccountPaymentRegister(models.TransientModel):
     @api.depends('line_ids', 'partner_id')
     def _compute_fiscal_position_id(self):
         for rec in self:
+            if rec.partner_type != 'supplier' or rec.country_code != 'AR' or not rec.can_edit_wizard or (rec.can_group_payments and not rec.group_payment):
+                rec.l10n_ar_fiscal_position_id = False
+                continue
             # si estamos pagando todas las facturas de misma delivery address usamos este dato para computar la
             # fiscal position
             if len(rec.batches) == 1:

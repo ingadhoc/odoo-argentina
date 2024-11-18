@@ -20,10 +20,6 @@
         <field name="inherit_id" ref="account.view_account_payment_form" />
         <field name="arch" type="xml">
 
-            <!-- sacamos grupo con retenciones nativas y creamos una nueva page -->
-            <!-- Falta ajustar con nueva logica de tabs https://github.com/odoo/odoo/blob/18.0/addons/l10n_ar_withholding/views/account_payment_view.xml -->
-            <!-- <group invisible="country_code != 'AR'" position="replace"/> -->
-
             <label for="payment_total" position="before">
                 <label for="withholdings_amount" readonly="state != 'draft'" invisible="is_internal_transfer or not use_payment_pro"/>
                 <div invisible="is_internal_transfer or not use_payment_pro">
@@ -36,10 +32,10 @@
             </div>
 
             <page name="withholdings_page" position="attributes">
-                <attribute name="invisible">country_code != 'AR' or state == 'draft'</attribute>
+                <attribute name="invisible">use_payment_pro or country_code != 'AR'</attribute>
             </page>
             <page name="withholdings_page" position="after">
-                <page name="withholdings_page_editable" string="Withholdings" invisible="country_code != 'AR' or state != 'draft'">
+                <page name="withholdings_page_editable" string="Withholdings" invisible="not use_payment_pro or country_code != 'AR' or state != 'draft'">
                     <group>
                         <field name="unreconciled_amount" invisible="1"/>
                         <field name="withholdable_advanced_amount"

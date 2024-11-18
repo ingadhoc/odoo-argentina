@@ -11,13 +11,13 @@
         <field name="state_ids" eval="[(6, 0, [ref('base.state_ar_c')])]"/>
     </record>
 
-    <record id="fiscal_position_caba_perception" model="res.company.tax.ws">
+    <record id="fiscal_position_caba_perception" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="fiscal_position_caba"/>
         <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_percepcion_iibb_caba_aplicada'))"/>
         <field name="tax_type">perception</field>
         <field name="webservice">agip</field>
     </record>
-    <record id="fiscal_position_caba_withholding" model="res.company.tax.ws">
+    <record id="fiscal_position_caba_withholding" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="fiscal_position_caba"/>
         <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_iibb_caba_applied'))"/>
         <field name="tax_type">withholding</field>
@@ -34,13 +34,13 @@
         <field name="state_ids" eval="[(6, 0, [ref('base.state_ar_x')])]"/>
     </record>
 
-    <record id="fiscal_position_cordoba_perception" model="res.company.tax.ws">
+    <record id="fiscal_position_cordoba_perception" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="fiscal_position_cordoba"/>
         <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_percepcion_iibb_co_aplicada'))"/>
         <field name="tax_type">perception</field>
         <field name="webservice">rentas_cordoba</field>
     </record>
-    <record id="fiscal_position_cordoba_withholding" model="res.company.tax.ws">
+    <record id="fiscal_position_cordoba_withholding" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="fiscal_position_cordoba"/>
         <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_iibb_co_applied'))"/>
         <field name="tax_type">withholding</field>

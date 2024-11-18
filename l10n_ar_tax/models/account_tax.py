@@ -70,6 +70,6 @@ class AccountTax(models.Model):
 
     @api.ondelete(at_uninstall=False)
     def _check_tax_used_on_company_tax_ws(self):
-        ws = self.env['res.company.tax.ws'].search([('default_tax_id', 'in', self.ids)])
+        ws = self.env['account.fiscal.position.l10n_ar_tax'].search([('default_tax_id', 'in', self.ids)])
         if ws:
             raise UserError('error se esta usando en ws de estas cias %s' % ws.mapped('company_id.name'))

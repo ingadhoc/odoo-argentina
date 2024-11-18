@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from . import res_company_tax_ws
+from . import account_fiscal_position_l10n_ar_tax
 from . import res_company
 from . import account_tax
 from . import account_move

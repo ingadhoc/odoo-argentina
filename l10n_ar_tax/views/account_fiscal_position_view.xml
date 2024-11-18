@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <notebook>
                 <page string="Perceptions and Withholdings" invisible="'AR'not in fiscal_country_codes">
-                    <field name="tax_ws_ids">
+                    <field name="l10n_ar_tax_ids">
                         <list editable="bottom">
                             <field name="tax_type"/>
                             <field name="default_tax_id" domain="tax_template_domain" options="{'no_create': True}"/>

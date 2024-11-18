@@ -9,9 +9,9 @@ _logger = logging.getLogger(__name__)
 
 
 
-class ResCompanyTaxWs(models.Model):
-    _name = "res.company.tax.ws"
-    _description = "res.company.tax.ws"
+class AccountFiscalPositionL10nArTax(models.Model):
+    _name = "account.fiscal.position.l10n_ar_tax"
+    _description = "account.fiscal.position.l10n_ar_tax"
 
     fiscal_position_id = fields.Many2one('account.fiscal.position', required=True, ondelete='cascade')
     # ponemos default a los selectio porque al ser requeridos si no se comporta raro y parece que elige uno por defecto

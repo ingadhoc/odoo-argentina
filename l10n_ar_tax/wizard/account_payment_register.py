@@ -16,7 +16,7 @@ class AccountPaymentRegister(models.TransientModel):
         string='Fiscal Position',
         check_company=True,
         compute='_compute_fiscal_position_id', store=True, readonly=False,
-        domain=[('tax_ws_ids.tax_type', '=', 'withholding')],
+        domain=[('l10n_ar_tax_ids.tax_type', '=', 'withholding')],
     )
 
     @api.depends('line_ids', 'partner_id')
@@ -44,7 +44,7 @@ class AccountPaymentRegister(models.TransientModel):
         date = fields.Date.from_string(self.payment_date) or datetime.date.today()
 
         withholdings = [Command.clear()]
-        if self.l10n_ar_fiscal_position_id.tax_ws_ids:
+        if self.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:
             taxes = self.l10n_ar_fiscal_position_id._l10n_ar_add_taxes(self.partner_id, self.company_id, date, 'withholding')
             withholdings += [Command.create({'tax_id': x.id}) for x in taxes]
         self.l10n_ar_withholding_ids = withholdings

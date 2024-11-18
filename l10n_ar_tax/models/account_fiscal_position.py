@@ -7,7 +7,7 @@ class AccountFiscalPosition(models.Model):
     l10n_ar_tax_ids = fields.One2many('account.fiscal.position.l10n_ar_tax', 'fiscal_position_id')
 
     def _l10n_ar_add_taxes(self, partner, company, date, tax_type):
-        # TODO deberiamos unificar mucho de este codigo con _get_tax_domain, _upadte_withholdings y _check_tax_group_overlap
+        # TODO deberiamos unificar mucho de este codigo con _get_tax_domain, _compute_withholdings y _check_tax_group_overlap
         self.ensure_one()
         taxes = self.env['account.tax']
         for fp_tax in self.l10n_ar_tax_ids.filtered(lambda x: x.tax_type == tax_type):

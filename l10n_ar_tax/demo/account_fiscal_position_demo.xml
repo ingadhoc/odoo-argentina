@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- AGIP -->
+    <!-- AGIP + ganancias -->
     <record id="fiscal_position_caba_and_proffits" model="account.fiscal.position">
         <field name="name">IIBB CABA + ganancias</field>
         <field name="l10n_ar_afip_responsibility_type_ids" eval="[(6, 0, [ref('l10n_ar.res_IVARI')])]"/>
@@ -74,6 +74,20 @@
         <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_iibb_co_applied'))"/>
         <field name="tax_type">withholding</field>
         <field name="webservice">rentas_cordoba</field>
+    </record>
+
+    <!-- Ganancias -->
+    <record id="fiscal_position_proffits" model="account.fiscal.position">
+        <field name="name">Ret. ganancias</field>
+        <field name="l10n_ar_afip_responsibility_type_ids" eval="[(6, 0, [ref('l10n_ar.res_IVARI')])]"/>
+        <field name="auto_apply" eval="True"/>
+        <field name="company_id" ref="base.company_ri"/>
+    </record>
+
+    <record id="fiscal_position_proffits_prof_withholding" model="account.fiscal.position.l10n_ar_tax">
+        <field name="fiscal_position_id" ref="fiscal_position_proffits"/>
+        <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_earnings_incurred_group_21_insc'))"/>
+        <field name="tax_type">withholding</field>
     </record>
 
 </odoo>

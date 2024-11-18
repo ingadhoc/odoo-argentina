@@ -32,14 +32,19 @@
             </div>
 
             <page name="withholdings_page" position="attributes">
-                <attribute name="invisible">use_payment_pro or country_code != 'AR'</attribute>
+                <attribute name="invisible">is_internal_transfer or country_code != 'AR' or (state == 'draft' and use_payment_pro)</attribute>
             </page>
             <page name="withholdings_page" position="after">
-                <page name="withholdings_page_editable" string="Withholdings" invisible="not use_payment_pro or country_code != 'AR' or state != 'draft'">
+                <page name="withholdings_page_editable" string="Withholdings" invisible="is_internal_transfer or not use_payment_pro or country_code != 'AR' or state != 'draft'">
                     <group>
-                        <field name="unreconciled_amount" invisible="1"/>
-                        <field name="withholdable_advanced_amount"
-                            invisible="state not in ['draft'] or partner_type != 'supplier' or unreconciled_amount &lt;= 0.0" readonly="state not in ['draft']" string="Base imponible del pago excedente"/>
+                        <group>
+                            <field name="l10n_ar_fiscal_position_id" options="{'no_create': True}" />
+                        </group>
+                        <group>
+                            <field name="unreconciled_amount" invisible="1"/>
+                            <field name="withholdable_advanced_amount"
+                                invisible="state not in ['draft'] or partner_type != 'supplier' or unreconciled_amount &lt;= 0.0" readonly="state not in ['draft']" string="Base imponible del pago excedente"/>
+                        </group>
                     </group>
                     <!-- ver mensaje en commit -->
                     <!-- <button name="compute_withholdings" string="Re Computar Retenciones" title="Re-computar retenciones a partir del 'Importe a Pagar'" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft']"/> -->
@@ -48,7 +53,7 @@
                             <field name="withholding_sequence_id" column_invisible="True"/>
                             <field name="company_id" column_invisible="True"/>
                             <field name="currency_id" column_invisible="True"/>
-                            <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', '=', company_id)]" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', '=', company_id)]" options="{'no_create': True}"/>
                             <field name="name" readonly="withholding_sequence_id"/>
                             <field name="base_amount"/>
                             <field name="amount"/>

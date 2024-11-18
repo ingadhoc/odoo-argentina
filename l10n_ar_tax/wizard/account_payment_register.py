@@ -43,7 +43,7 @@ class AccountPaymentRegister(models.TransientModel):
         # no llamamos a super porque ahora estamos trabajando con fiscal positions
         # y solo agregamos taxes segun la FP que corresponda
         # super()._compute_l10n_ar_withholding_ids()
-        taxes = self.l10n_ar_withholding_ids.mapped('tax_id')
+        # taxes = self.l10n_ar_withholding_ids.mapped('tax_id')
         date = fields.Date.from_string(self.payment_date) or datetime.date.today()
 
         withholdings = [Command.clear()]

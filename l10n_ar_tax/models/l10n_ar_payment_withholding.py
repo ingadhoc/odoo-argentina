@@ -30,7 +30,7 @@ class l10nArPaymentRegisterWithholding(models.Model):
                 wth.base_amount = wth.payment_id.selected_debt
                 # wth.base_amount = wth.payment_id.amount
             else:
-                wth.base_amount = wth.payment_id.amount * wth.payment_id.selected_debt_untaxed
+                wth.base_amount = wth.payment_id.selected_debt_untaxed
                 # wth.base_amount = wth.payment_id.amount * sum(wth.payment_id.line_ids.mapped('move_id.amount_untaxed')) / sum(wth.payment_register_id.line_ids.mapped("move_id.amount_total"))
 
     def _tax_compute_all_helper(self):

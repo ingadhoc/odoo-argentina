@@ -13,13 +13,6 @@ class AccountMoveLine(models.Model):
                 rec.withholding_id = rec.payment_id.l10n_ar_withholding_line_ids.filtered(lambda x: x.tax_id == rec.tax_line_id)
             else:
                 rec.withholding_id = False
-
-    # def _compute_all_tax(self):
-    #     """ Mandamos en contexto el invoice_date para calculo de impuesto con partner aliquot"""
-    #     for line in self:
-    #         line = line.with_context(invoice_date=line.move_id.invoice_date if not line.move_id.reversed_entry_id else line.move_id.reversed_entry_id.invoice_date)
-    #         super(AccountMoveLine, line)._compute_all_tax()
-
     def _get_computed_taxes(self):
         taxes = super()._get_computed_taxes()
         # heredamos este metodo y no map_tax de fiscal positions porque el metod map_tax recibe solo taxes y no sabe

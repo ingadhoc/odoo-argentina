@@ -5,7 +5,8 @@
 from odoo import api, SUPERUSER_ID
 import logging
 _logger = logging.getLogger(__name__)
-
+from odoo.addons.l10n_ar.models.account_fiscal_position import AccountFiscalPosition
+from odoo.addons.l10n_ar.models.account_move import AccountMove as AccountMoveAr
 
 def set_tax_included(cr, registry):
     _logger.info('Settig tax included by default')
@@ -29,3 +30,16 @@ def post_init_hook(cr, registry):
     """Loaded after installing the module """
     _logger.info('Post init hook initialized')
     set_tax_included(cr, registry)
+
+
+def _revert_method(cls, name):
+    """ Revert the original method called ``name`` in the given class.
+        See :meth:`~._patch_method`.
+    """
+    method = getattr(cls, name)
+    setattr(cls, name, method.origin)
+
+
+def uninstall_hook(cr, registry):
+    _revert_method(AccountFiscalPosition, '_get_fiscal_position')
+    _revert_method(AccountMoveAr, '_inverse_l10n_latam_document_number')

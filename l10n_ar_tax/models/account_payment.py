@@ -261,7 +261,8 @@ class AccountPayment(models.Model):
         self._check_to_pay_lines_account()
         # metodo completamente analogo a payment.register._compute_l10n_ar_withholding_ids
         for rec in self:
-            date = rec.date or datetime.date.today()
+
+            date = rec.date or fields.Date.today()
             withholdings = [Command.clear()]
             if rec.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:
                 taxes = rec.l10n_ar_fiscal_position_id._l10n_ar_add_taxes(rec.partner_id, rec.company_id, date, 'withholding')

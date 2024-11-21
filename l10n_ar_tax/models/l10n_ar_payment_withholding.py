@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
@@ -22,16 +22,38 @@ class l10nArPaymentRegisterWithholding(models.Model):
 
     _sql_constraints = [('uniq_line', 'unique(tax_id, payment_id)', "El impuesto de retención debe ser único por pago")]
 
-    @api.depends('payment_id.amount', 'tax_id')
+    @api.depends('payment_id.withholdable_advanced_amount', 'payment_id.to_pay_amount', 'tax_id')
     def _compute_base_amount(self):
         """ practicamente mismo codigo que en l10n_ar.payment.register.withholding pero usamos campos "selected_debt_"""
         for wth in self:
+            # calculamos advance_amount
+            # si el adelanto es negativo estamos pagando parcialmente una
+            # factura y ocultamos el campo sin impuesto y el metodo _get_withholdable_advanced_amount nos devuelve
+            # el proporcional descontando de el iva a lo que se esta pagando
+            advance_amount = wth.payment_id.withholdable_advanced_amount
+            if advance_amount < 0.0:
+                sorted_to_pay_lines = sorted(wth.payment_id.to_pay_move_line_ids, key=lambda a: a.date_maturity or a.date)
+                # last line to be reconciled
+                partial_line = sorted_to_pay_lines[-1]
+                if -partial_line.amount_residual < -wth.payment_id.withholdable_advanced_amount:
+                    raise UserError(_(
+                        'Seleccionó deuda por %s pero aparentente desea pagar '
+                        '%s. En la deuda seleccionada hay algunos comprobantes de '
+                        'mas que no van a poder ser pagados (%s). Deberá quitar '
+                        'dichos comprobantes de la deuda seleccionada para poder '
+                        'hacer el correcto cálculo de las retenciones.' % (
+                            wth.payment_id.selected_debt,
+                            wth.payment_id.to_pay_amount,
+                            partial_line.move_id.display_name,
+                    )))
+                advance_amount = wth.payment_id.unreconciled_amount
+                if wth.tax_id.l10n_ar_tax_type != 'iibb_total':
+                    advance_amount = advance_amount * (wth.payment_id.selected_debt_untaxed / wth.payment_id.selected_debt)
+
             if wth.tax_id.l10n_ar_tax_type == 'iibb_total':
-                wth.base_amount = wth.payment_id.selected_debt
-                # wth.base_amount = wth.payment_id.amount
+                wth.base_amount = wth.payment_id.selected_debt + advance_amount
             else:
-                wth.base_amount = wth.payment_id.selected_debt_untaxed
-                # wth.base_amount = wth.payment_id.amount * sum(wth.payment_id.line_ids.mapped('move_id.amount_untaxed')) / sum(wth.payment_register_id.line_ids.mapped("move_id.amount_total"))
+                wth.base_amount = wth.payment_id.selected_debt_untaxed + advance_amount
 
     def _tax_compute_all_helper(self):
         """ practicamente mismo codigo que en l10n_ar.payment.register.withholding """

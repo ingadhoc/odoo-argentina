@@ -21,6 +21,7 @@ def _l10n_ar_update_taxes(env):
     ajustamos ciertos datos de los impuestos
     TODO la mayoria de esto deberia implementarse en odoo standard
     """
+
     # si tiene instalado chart ri o exento le actualizamos impuestos
     companies = env['res.company'].search([('chart_template', 'in', ('ar_ri', 'ar_ex'))])
     for company in companies:

@@ -13,6 +13,7 @@ class AccountMoveLine(models.Model):
                 rec.withholding_id = rec.payment_id.l10n_ar_withholding_line_ids.filtered(lambda x: x.tax_id == rec.tax_line_id)
             else:
                 rec.withholding_id = False
+
     def _get_computed_taxes(self):
         taxes = super()._get_computed_taxes()
         # heredamos este metodo y no map_tax de fiscal positions porque el metod map_tax recibe solo taxes y no sabe

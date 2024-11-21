@@ -2,17 +2,17 @@
 <odoo>
 
     <!-- activamos impuestos de caba, arba y cordoba -->
-    <function model="account.tax" name="write">
+    <function model="account.tax" name="write" context="{'active_test': False}">
         <value model="account.tax" eval="obj().search([('name', 'like', 'CABA'), ('company_id', '=', ref('base.company_ri'))]).ids"/>
         <value model="account.tax" eval="{'active': True}"/>
     </function>
 
-    <function model="account.tax" name="write">
+    <function model="account.tax" name="write" context="{'active_test': False}">
         <value model="account.tax" eval="obj().search([('name', 'like', 'CD'), ('company_id', '=', ref('base.company_ri'))]).ids"/>
         <value model="account.tax" eval="{'active': True}"/>
     </function>
 
-    <function model="account.tax" name="write">
+    <function model="account.tax" name="write" context="{'active_test': False}">
         <value model="account.tax" eval="obj().search([('name', 'like', 'ARBA'), ('company_id', '=', ref('base.company_ri'))]).ids"/>
         <value model="account.tax" eval="{'active': True}"/>
     </function>

@@ -51,6 +51,10 @@ Usage
 
 To use this module, you need to:
 
+Uninstall
+=========
+After uninstalling this module, redeploy the database to correctly remove monkey patches. 
+
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: http://runbot.adhoc.com.ar/

@@ -8,11 +8,12 @@
     'summary': '',
     'depends': [
         'base',
+        'l10n_ar',
     ],
     'data': [
         'data/res_bank.xml',
     ],
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
     'application': False,
 }

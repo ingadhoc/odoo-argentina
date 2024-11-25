@@ -81,6 +81,13 @@
                 </div>
             </div>
         </div>
+        <xpath expr="//div[@id='informations']/div[@class='col-6']/strong" position="replace">
+            <strong>
+                <t t-if="o.move_type == 'in_invoice'">Supplier: </t>
+                <t t-else="">Customer: </t>
+            </strong>
+            <span t-field="o.partner_id.commercial_partner_id.name"/>
+        </xpath>
     </template>
 
 

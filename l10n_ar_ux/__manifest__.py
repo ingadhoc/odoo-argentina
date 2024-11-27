@@ -1,6 +1,6 @@
 {
     'name': 'Argentinian Accounting UX',
-    'version': "18.0.1.0.0",
+    'version': "18.0.1.1.0",
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA',
@@ -10,8 +10,6 @@
     'depends': [
         'l10n_ar',
         'account_internal_transfer',
-        'l10n_latam_check',
-        'account_ux',
     ],
     'data': [
         'data/res_currency_data.xml',

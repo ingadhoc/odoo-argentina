@@ -42,6 +42,14 @@ class AccountPayment(models.Model):
             rec.l10n_ar_fiscal_position_id = self.env['account.fiscal.position'].with_company(rec.company_id)._get_fiscal_position(
                 address)
 
+    def copy(self, default=None):
+        """ al duplicar un pago no se trigerea el onchange de fiscal position y no se re-computan las lineas,
+        lo forzamos desde acá
+        """
+        new_recs = super().copy(default=default)
+        new_recs.compute_withholdings()
+        return new_recs
+
     @api.depends('l10n_ar_withholding_line_ids.amount')
     def _compute_withholdings_amount(self):
         for rec in self:
@@ -62,7 +70,10 @@ class AccountPayment(models.Model):
     def _onchange_withholdings(self):
         for rec in self.filtered(lambda x: x.payment_method_code not in ['in_third_party_checks', 'out_third_party_checks']):
             # el compute_withholdings o el _compute_withholdings?
-            rec.amount += rec.payment_difference
+            amount = rec.amount + rec.payment_difference
+            # no pasamos a importes negativos (por ej. si se ponene retenciones grandes) porque es molesto
+            # empieza a salir un raise que no deja editar cosas
+            rec.amount = amount if amount > 0 else 0
             # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
 
     # # ver mensaje en commit
@@ -205,6 +216,9 @@ class AccountPayment(models.Model):
         'Adjustment / Advance (untaxed)',
         help='Used for withholdings calculation',
         currency_field='company_currency_id',
+        compute='_compute_withholdable_advanced_amount',
+        copy=False,
+        store=True, readonly=False,
     )
     selected_debt_untaxed = fields.Monetary(
         # string='To Pay lines Amount',
@@ -251,8 +265,8 @@ class AccountPayment(models.Model):
                 selected_debt_untaxed += line.amount_residual * factor
             rec.selected_debt_untaxed = selected_debt_untaxed * (rec.partner_type == 'supplier' and -1.0 or 1.0)
 
-    @api.onchange('unreconciled_amount')
-    def set_withholdable_advanced_amount(self):
+    @api.depends('unreconciled_amount')
+    def _compute_withholdable_advanced_amount(self):
         for rec in self:
             rec.withholdable_advanced_amount = rec.unreconciled_amount
 

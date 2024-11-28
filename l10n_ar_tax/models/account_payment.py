@@ -115,7 +115,7 @@ class AccountPayment(models.Model):
             # nuestro approach esta quedando distinto al del wizard. En nuestras lineas tenemos los importes en moneda
             # de la cia, por lo cual el line.amount aca representa eso y tenemos que convertirlo para el amount_currency
 
-            account_id, tax_repartition_line_id = line._tax_compute_all_helper()[1:]
+            __, account_id, tax_repartition_line_id, __ = line._tax_compute_all_helper()
             amount_currency = self.currency_id.round(line.amount / conversion_rate)
             write_off_line_vals.append({
                     **self._get_withholding_move_line_default_values(),

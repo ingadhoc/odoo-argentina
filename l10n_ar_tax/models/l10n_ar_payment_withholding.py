@@ -11,8 +11,9 @@ class l10nArPaymentRegisterWithholding(models.Model):
     payment_id = fields.Many2one('account.payment', required=True, ondelete='cascade')
     company_id = fields.Many2one(related='payment_id.company_id')
     currency_id = fields.Many2one(related='payment_id.company_currency_id')
+    l10n_ar_tax_type = fields.Selection(related='tax_id.l10n_ar_tax_type')
     name = fields.Char(string='Number')
-    ref = fields.Char()
+    ref = fields.Text(compute='_compute_amount', store=True, readonly=False)
     tax_id = fields.Many2one('account.tax', check_company=True, required=True)
     withholding_sequence_id = fields.Many2one(related='tax_id.l10n_ar_withholding_sequence_id')
     base_amount = fields.Monetary(compute='_compute_base_amount', store=True, readonly=False)
@@ -104,7 +105,16 @@ class l10nArPaymentRegisterWithholding(models.Model):
         tax_account_id = taxes_res['taxes'][0]['account_id']
         tax_repartition_line_id = taxes_res['taxes'][0]['tax_repartition_line_id']
 
+        ref = False
         if self.tax_id.l10n_ar_tax_type in ['earnings', 'earnings_scale']:
+            f = self.currency_id.format
+            if net_amount <= 0:
+                ref = "{base_amount} + {same_period_base} - {non_taxable_amount} = {net_amount} (no corresponde aplicar)".format(
+                    base_amount=f(self.base_amount),
+                    same_period_base=f(same_period_base),
+                    non_taxable_amount=f(self.tax_id.l10n_ar_non_taxable_amount),
+                    net_amount=f(self.base_amount + same_period_base - self.tax_id.l10n_ar_non_taxable_amount),
+                )
             # if it is earnings scale we calculate according to the scale.
             if self.tax_id.l10n_ar_tax_type == 'earnings_scale':
                 escala = self.env['l10n_ar.earnings.scale.line'].search([
@@ -113,18 +123,40 @@ class l10nArPaymentRegisterWithholding(models.Model):
                     ('to_amount', '>', net_amount),
                 ], limit=1)
                 tax_amount = ((net_amount - escala.excess_amount) * escala.percentage / 100) + escala.fixed_amount
+                # for eg. (1000000.0 + 0.0 - 7870.0 - 1231231) * 7.0 % + 1231231 - 0.0
+                ref = ref or "({base_amount} + {same_period_base} - {non_taxable_amount} - {excess_amount}) * {aliquot}% + {fixed_amount} - {same_period_withholdings}".format(
+                    base_amount=f(self.base_amount),
+                    same_period_base=f(same_period_base),
+                    non_taxable_amount=f(self.tax_id.l10n_ar_non_taxable_amount),
+                    excess_amount = f(escala.excess_amount),
+                    aliquot=escala.percentage,
+                    fixed_amount=f(escala.fixed_amount),
+                    same_period_withholdings=f(same_period_withholdings),
+                )
+            else:
+                # for eg. (1000000.0 + 0.0 - 7870.0) * 7.0% - 0.0
+                ref = "({base_amount} + {same_period_base} - {non_taxable_amount}) * {aliquot}% - {same_period_withholdings}".format(
+                    base_amount=f(self.base_amount),
+                    same_period_base=f(same_period_base),
+                    non_taxable_amount=f(self.tax_id.l10n_ar_non_taxable_amount),
+                    aliquot=self.tax_id.amount,
+                    same_period_withholdings=f(same_period_withholdings),
+                )
             # deduct withholdings from the same period
             tax_amount -= same_period_withholdings
 
         l10n_ar_minimum_threshold = self.tax_id.l10n_ar_minimum_threshold
         if l10n_ar_minimum_threshold > tax_amount:
             tax_amount = 0.0
-        return tax_amount, tax_account_id, tax_repartition_line_id
+        return tax_amount, tax_account_id, tax_repartition_line_id, ref
 
     @api.depends('base_amount', 'tax_id')
     def _compute_amount(self):
         for line in self:
             if not line.tax_id:
                 line.amount = 0.0
+                line.ref = False
             else:
-                line.amount = line._tax_compute_all_helper()[0]
+                tax_amount, __, __, ref = line._tax_compute_all_helper()
+                line.amount = tax_amount
+                line.ref = ref

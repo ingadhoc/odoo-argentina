@@ -34,14 +34,15 @@ class AccountPayment(models.Model):
 
     @api.depends('withholdable_advanced_amount', 'regimen_ganancias_id', 'retencion_ganancias', 'date', 'unreconciled_amount', 'to_pay_move_line_ids')
     def _compute_need_withholding_recompute(self):
-        self.need_withholding_recompute = False
-        if self.partner_type == 'supplier' and self.env['account.tax'].with_context(type=None).search([
-            ('type_tax_use', '=', 'none'),
-            ('withholding_type', '!=', 'none'),
-            ('l10n_ar_withholding_payment_type', '=', self.partner_type),
-            ('company_id', '=', self.company_id.id),
-        ], limit=1):
-            self.need_withholding_recompute = True
+        for rec in self:
+            rec.need_withholding_recompute = False
+            if rec.partner_type == 'supplier' and rec.env['account.tax'].with_context(type=None).search([
+                ('type_tax_use', '=', 'none'),
+                ('withholding_type', '!=', 'none'),
+                ('l10n_ar_withholding_payment_type', '=', rec.partner_type),
+                ('company_id', '=', rec.company_id.id),
+            ], limit=1):
+                rec.need_withholding_recompute = True
 
     def compute_withholdings(self):
         super()._compute_withholdings()

@@ -33,7 +33,7 @@ class AccountMove(models.Model):
         need_currency_rate = self.filtered(lambda x: x.currency_id and x.company_id and (x.currency_id != x.company_id.currency_id))
         remaining = self - need_currency_rate
         for rec in need_currency_rate:
-            if rec.l10n_ar_currency_rate:
+            if rec.l10n_ar_currency_rate and rec.l10n_ar_currency_rate != 1.0:
                 rec.computed_currency_rate = rec.l10n_ar_currency_rate
             else:
                 rec.computed_currency_rate = rec.currency_id._convert(

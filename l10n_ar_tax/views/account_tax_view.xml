@@ -6,8 +6,16 @@
         <field name="model">account.tax</field>
         <field name="inherit_id" ref="account.view_tax_form"/>
         <field name="arch" type="xml">
+        <sheet position="before">
+            <!-- solo visible si es de IIBB aplicado (ventas o retenciones de compras) -->
+            <div class="alert alert-info" role="alert" invisible="(l10n_ar_tribute_afip_code != '07' and l10n_ar_tax_type not in ['iibb_untaxed', 'iibb_total']) or l10n_ar_type_tax_use not in ['sale', 'supplier']">
+                Para TXT de SIRCAR debe completar el campo regímen con el que corresponda según tabla definida por la jurisdicción.<br/>
+                Puede consultar la tabla <a target="_blank" href="https://www.ca.gov.ar/sircar2">aquí</a>, sección "Instructivos y tablas" item "Tabla con la Tipificación de Regímenes..."
+            </div>
+        </sheet>
             <xpath expr="//field[@name='amount']/.." position="after">
                 <field name="l10n_ar_state_id" invisible="l10n_ar_tribute_afip_code != '07'" required="l10n_ar_tribute_afip_code == '07'" options="{'no_create': True}"/>
+                <field name="l10n_ar_code" string="Regímen" invisible="(l10n_ar_tribute_afip_code != '07' and l10n_ar_tax_type not in ['iibb_untaxed', 'iibb_total']) or l10n_ar_type_tax_use not in ['sale', 'supplier']" options="{'no_create': True}"/>
             </xpath>
             <!-- limpiamos esta seccion que para retenciones no tiene sentido -->
             <group name="advanced_booleans" position="attributes">
@@ -17,32 +25,17 @@
             <!-- TODO mejorar esto, por ahora solo lo hacemos visible con este grupo ya que este grupo solo lo estamos usando en realidad para API, deberiamos ver de hacerlo de otra manera -->
             <!-- TODO agregar que sea de santa fe -->
             <!-- <i class="fa fa-exclamation-circle" data-tooltip="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" title="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" aria-hidden="true"/>  -->
-            <!-- <group>
-                <field name="api_codigo_articulo_retencion" invisible="type_tax_use == 'none' and country_code == 'AR'"/>
-                <field name="api_articulo_inciso_calculo_retencion" invisible="type_tax_use == 'none' and country_code == 'AR'"/>
-                <field name="api_codigo_articulo_percepcion" invisible="l10n_ar_tribute_afip_code != '07'"/>
-                <field name="api_articulo_inciso_calculo_percepcion" invisible="l10n_ar_tribute_afip_code != '07'"/>
-            </group> -->
-            <!-- <sheet>
-                <p>
-                    Utilizado para la generación del TXT para SIRCAR.<br/>
-                    Tipo de Régimen de Retención/precición (código correspondiente según tabla definida por la jurisdicción).<br/>
-                    Puede consultar la tabla <a target="_blank" href="https://www.ca.gov.ar/sircar2">aquí</a>, sección "Instructivos y tablas" item "Tabla con la Tipificación de Regímenes..."
-                </p>
-            </sheet>
-                    <page string="SIRCAR">
-                        <group>
-                            <field name="regimen_percepcion"/>
-                            <field name="regimen_retencion"/>
-                        </group>
-                    </page> -->
 
-            <!-- <notebook>
-                <page string="API">
+            <notebook>
+                <page string="API" invisible="l10n_ar_state_code != 'S' or country_code != 'AR' or l10n_ar_type_tax_use not in ['sale', 'supplier']">
                     <group>
+                        <field name="api_codigo_articulo_retencion" invisible="type_tax_use != 'none' or country_code != 'AR'"/>
+                        <field name="api_articulo_inciso_calculo_retencion" invisible="type_tax_use != 'none' or country_code != 'AR'"/>
+                        <field name="api_codigo_articulo_percepcion" invisible="l10n_ar_tribute_afip_code != '07'"/>
+                        <field name="api_articulo_inciso_calculo_percepcion" invisible="l10n_ar_tribute_afip_code != '07'"/>
                     </group>
                 </page>
-            </notebook> -->
+            </notebook>
         </field>
     </record>
 

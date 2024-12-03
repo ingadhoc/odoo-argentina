@@ -5,6 +5,7 @@ class AccountTax(models.Model):
     _inherit = "account.tax"
 
     l10n_ar_tribute_afip_code = fields.Selection(related='tax_group_id.l10n_ar_tribute_afip_code')
+    l10n_ar_state_code = fields.Char(related='l10n_ar_state_id.code')
     api_codigo_articulo_retencion = fields.Selection([
         ('001', '001: Art.1 - inciso A - (Res. Gral. 15/97 y Modif.)'),
         ('002', '002: Art.1 - inciso B - (Res. Gral. 15/97 y Modif.)'),

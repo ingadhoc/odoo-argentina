@@ -7,9 +7,8 @@
     </template>
 
     <!-- we force priority greater than 16 so that it dont break inheritance of report_saleorder_document_inherit_sale_stock. with this we are loosing the incoterm field added but that sale_stock view -->
-    <template id="report_payment_receipt_document" priority="20">
-        <t t-call="web.external_layout">
-            <t t-set="o" t-value="o.with_context(lang=lang)" />
+    <template id="report_payment_receipt_document" inherit_id="account.report_payment_receipt_document" primary="True" priority="16" >
+        <t t-set="o" position="after">
             <t t-set="custom_header" t-value="'l10n_ar.custom_header'"/>
             <t t-set="report_date" t-value="o.date"/>
             <t t-set="document_letter" t-value="'X'"/>
@@ -35,6 +34,8 @@
                     </div>
                 </div>
             </t>
+        </t>
+        <div class="page" position="replace">
             <div class="page">
                 <div id="informations" class="row mt8 mb8">
                     <div class="col-6">
@@ -216,7 +217,7 @@
                     </t>
                 </div>
             </table>
-        </t>
+        </div>
     </template>
 
 </odoo>

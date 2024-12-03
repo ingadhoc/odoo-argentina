@@ -1,0 +1,9 @@
+<odoo>
+
+    <template id="report_payment_receipt" inherit_id="account.report_payment_receipt">
+        <t t-call="account.report_payment_receipt_document" position="attributes">
+            <attribute name="t-call">#{ o._get_name_receipt_report('account.report_payment_receipt_document') }</attribute>
+        </t>
+    </template>
+
+</odoo>

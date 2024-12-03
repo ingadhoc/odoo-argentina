@@ -336,13 +336,6 @@ class AccountPayment(models.Model):
         Another option would be to use report_substitute module and setup a subsitution with a domain
         """
         self.ensure_one()
-        if self.company_id.country_id.code == 'AR':
+        if self.company_id.country_id.code == 'AR' and not self.is_internal_transfer:
             return 'l10n_ar_tax.report_payment_receipt_document'
-        return report_xml_id
-
-    def _get_name_receipt_report(self, report_xml_id):
-        # TODO tal vez mover este reporte y este metodo a l10n_ar_withholding_ux?
-        self.ensure_one()
-        if self.company_id.country_id.code == 'AR' and self.is_internal_transfer:
-            return 'l10n_ar_ux.report_account_transfer'
         return super()._get_name_receipt_report(report_xml_id)

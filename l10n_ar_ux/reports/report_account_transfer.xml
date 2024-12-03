@@ -1,54 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="report_account_transfer_document">
-        <t t-call="web.external_layout">
-            <t t-set="o" t-value="o.with_context(lang=lang)" />
-                <t t-set="custom_header" t-value="'l10n_ar.custom_header'"/>
-                <t t-set="report_date" t-value="o.date"/>
-                <t t-set="report_number" t-value="o.name"/>
-                <t t-set="report_name" t-value="'REPORTE DE TRANSFERENCIA'"/>
-                <t t-set="header_address" t-value="o.company_id.partner_id"/>
+    <template id="report_account_transfer_document" primary="True" inherit_id="account_internal_transfer.report_account_transfer_document" >
+        <h3 position="replace"/>
+        <t t-set="o" position="after">
+            <t t-set="custom_header" t-value="'l10n_ar.custom_header'"/>
+            <t t-set="report_date" t-value="o.date"/>
+            <t t-set="report_number" t-value="o.name"/>
+            <t t-set="report_name" t-value="'REPORTE DE TRANSFERENCIA'"/>
+            <t t-set="header_address" t-value="o.company_id.partner_id"/>
 
-                <t t-set="custom_footer">
-                    <div class="row">
-                        <div name="footer_left_column" class="col-8">
-                            Nombre y Apellido Firmante:
-                            <br/>Cargo:
-                        </div>
-                        <div name="footer_right_column" class="col-4">
-                            Firma Responsable
-                        </div>
+            <t t-set="custom_footer">
+                <div class="row">
+                    <div name="footer_left_column" class="col-8">
+                        Nombre y Apellido Firmante:
+                        <br/>Cargo:
                     </div>
-                </t>
-            <div class="page">
-                <hr/>
-                <strong>Creado por:</strong>
-                <span t-field="o.create_uid.name"/>
-                <br/>
-                <strong>Total Transacción:</strong>
-                <span t-field="o.amount"/>
-                <br/>
-                <br/>
-                <strong>Cuenta de Origen:</strong>
-                <span t-field="o.journal_id.name"/>
-                <br/>
-                <strong>Cuenta de Destino:</strong>
-                <span t-field="o.destination_journal_id.name"/>
-                <br/>
-                <strong>Concepto:</strong>
-                <span t-field="o.ref"/>
-                <br/>
-                <br/>
-                <strong t-if="o.l10n_latam_check_id.check_number">Nro de Cheque:</strong>
-                <span t-if="o.l10n_latam_check_id.check_number" t-field="o.l10n_latam_check_id.check_number"/>
-                <br t-if="o.l10n_latam_check_id.check_number"/>
-                <strong  t-if="o.l10n_latam_check_id.l10n_latam_check_payment_date">Fecha de Pago:</strong>
-                <span t-if="o.l10n_latam_check_id.l10n_latam_check_payment_date" t-field="o.l10n_latam_check_id.l10n_latam_check_payment_date"/>
-                <br t-if="o.l10n_latam_check_id.l10n_latam_check_payment_date" />
-                <strong t-if="o.l10n_latam_check_id.l10n_latam_check_bank_id">Banco:</strong>
-                <span t-field="o.l10n_latam_check_id.l10n_latam_check_bank_id"/>
-                <br/>
-            </div>
+                    <div name="footer_right_column" class="col-4">
+                        Firma Responsable
+                    </div>
+                </div>
+            </t>
         </t>
     </template>
 

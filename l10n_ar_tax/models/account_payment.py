@@ -291,7 +291,6 @@ class AccountPayment(models.Model):
     def compute_to_pay_amount_for_check(self):
         checks_payments = self.filtered(lambda x: x.payment_method_code in ['in_third_party_checks', 'out_third_party_checks'])
         for rec in checks_payments.with_context(skip_account_move_synchronization=True):
-            rec.set_withholdable_advanced_amount()
             rec._compute_withholdings()
             # dejamos 230 porque el hecho de estar usando valor de "$2" abajo y subir de a un centavo hace podamos necesitar
             # 200 intento solo en esa seccion
@@ -325,7 +324,6 @@ class AccountPayment(models.Model):
                         '* payment_difference: %s\n'
                         '* amount: %s'
                         % (rec.to_pay_amount, rec.payment_difference, rec.amount))
-                rec.set_withholdable_advanced_amount()
                 rec._compute_withholdings()
             rec.with_context(skip_account_move_synchronization=False)._synchronize_to_moves({'l10n_ar_withholding_line_ids'})
 

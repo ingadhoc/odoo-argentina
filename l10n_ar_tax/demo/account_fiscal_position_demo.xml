@@ -25,7 +25,7 @@
     </record>
     <record id="fiscal_position_caba_and_proffits_prof_withholding" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="fiscal_position_caba_and_proffits"/>
-        <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_earnings_incurred_group_21_insc'))"/>
+        <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_profits_regimen_21_insc'))"/>
         <field name="tax_type">withholding</field>
     </record>
 
@@ -71,7 +71,7 @@
     </record>
     <record id="fiscal_position_cordoba_withholding" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="fiscal_position_cordoba"/>
-        <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_iibb_co_applied'))"/>
+        <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_iibb_cba_incurred'))"/>
         <field name="tax_type">withholding</field>
         <field name="webservice">rentas_cordoba</field>
     </record>
@@ -86,7 +86,7 @@
 
     <record id="fiscal_position_proffits_prof_withholding" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="fiscal_position_proffits"/>
-        <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_earnings_incurred_group_21_insc'))"/>
+        <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_profits_regimen_21_insc'))"/>
         <field name="tax_type">withholding</field>
     </record>
 

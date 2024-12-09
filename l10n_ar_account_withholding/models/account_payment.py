@@ -44,10 +44,6 @@ class AccountPayment(models.Model):
             ], limit=1):
                 rec.need_withholding_recompute = True
 
-    def compute_withholdings(self):
-        super()._compute_withholdings()
-        self.need_withholding_recompute = False
-
     # estaria bueno re-incorporarlo pero para hacerlo:
     # a) tenemos que ver que cuando creamos pago desde factura ya viaje la retencion de ganancias o convertirlas en campos calculados con pre compute?
     # el tema es que no termina computando regimen de ganancias porque en "regimen = payment.regimen_ganancias_id" llega vacio

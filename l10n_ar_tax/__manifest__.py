@@ -19,7 +19,13 @@
 ##############################################################################
 {
     'name': 'Automatic Argentinian Withholdings on Payments',
+<<<<<<< HEAD:l10n_ar_tax/__manifest__.py
     'version': "18.0.1.0.0",
+||||||| parent of ed4224f3 (temp):l10n_ar_account_withholding/__manifest__.py
+    'version': "17.0.1.2.0",
+=======
+    'version': "17.0.1.3.0",
+>>>>>>> ed4224f3 (temp):l10n_ar_account_withholding/__manifest__.py
     'author': 'ADHOC SA,Odoo Community Association (OCA)',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',

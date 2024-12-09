@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_payment_tree" model="ir.ui.view">
+        <field name="name">account.payment.tree</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_tree"/>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="payment_method_code" column_invisible="True"/>
+                <field name="partner_type" column_invisible="True"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_payment_form" model="ir.ui.view">
+        <field name="name">account.payment.form.inherited</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="l10n_ar_withholding.view_account_payment_form" />
+        <field name="arch" type="xml">
+            <form>
+                <field name="company_regimenes_ganancias_ids" invisible="1"/>
+                <field name="need_withholding_recompute" invisible="1"/>
+            </form>
+            <xpath expr="//header/button[@name='action_post']" position="attributes">
+                <attribute name="invisible" add=" or (partner_type == 'supplier' and need_withholding_recompute)" separator=" "/>
+
+            </xpath>
+            <xpath expr="//header/button[@name='action_post']" position="after">
+                <button name="action_post" string="Confirm" type="object" class="oe_highlight" 
+                        invisible="not need_withholding_recompute or state != 'draft' or not partner_id or partner_type != 'supplier'" data-hotkey="q" 
+                        confirm="Are you sure you want to proceed? Have you reviewed the withholdings calculations?"/>
+            </xpath>
+            <sheet position="before">
+                <div class="alert alert-warning" role="alert" invisible="not need_withholding_recompute or state != 'draft' or not partner_id or partner_type != 'supplier' or is_internal_transfer">
+                    Withholding may apply. We suggest compute them.
+                    <button name="compute_withholdings" type="object" class="btn btn-primary">Compute Withholdings</button>
+                </div>
+            </sheet>
+            <field name="ref" position="after">
+                <label for="retencion_ganancias" string="Ret G." invisible="not company_regimenes_ganancias_ids"/>
+                <div invisible="not company_regimenes_ganancias_ids" class="o_row">
+                    <field name="retencion_ganancias" readonly="state not in ['draft']" required="company_regimenes_ganancias_ids and state == 'draft'"/>
+                    <field name="regimen_ganancias_id" readonly="state not in ['draft']" invisible="retencion_ganancias != 'nro_regimen'" required="retencion_ganancias == 'nro_regimen' and company_regimenes_ganancias_ids and state == 'draft'" domain="[('id', 'in', company_regimenes_ganancias_ids)]" options='{"no_open": True, "no_create": True}'/>
+                </div>
+            </field>
+        </field>
+    </record>
+
+</odoo>

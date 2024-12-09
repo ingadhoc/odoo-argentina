@@ -71,7 +71,7 @@
                 </thead>
                 <tbody>
                     <!-- TODO implementar cheques -->
-                    <!-- <t t-foreach="o.payment_ids.filtered(lambda x: x.payment_method_code in ['check_printing', 'new_third_party_checks', 'in_third_party_checks', 'out_third_party_checks']).sorted(key=lambda r:r.l10n_latam_check_payment_date or r.date)" t-as="line">
+                    <!-- <t t-foreach="o.payment_ids.filtered(lambda x: x.payment_method_code in ['check_printing', 'new_third_party_checks', 'in_third_party_checks', 'out_third_party_checks']).sorted(key=lambda r:r.l10n_latam_check_payment_date or r.l10n_latam_check_id.l10n_latam_check_payment_dat or r.date)" t-as="line">
                         <t t-set="check" t-value="line.l10n_latam_check_id or line"/>
                         <tr>
                             <td>

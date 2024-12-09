@@ -45,7 +45,7 @@ class AccountPayment(models.Model):
                 rec.need_withholding_recompute = True
 
     def compute_withholdings(self):
-        super()._compute_withholdings()
+        super().compute_withholdings()
         self.need_withholding_recompute = False
 
     # estaria bueno re-incorporarlo pero para hacerlo:

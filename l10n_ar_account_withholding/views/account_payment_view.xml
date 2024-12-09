@@ -32,7 +32,7 @@
                         confirm="Are you sure you want to proceed? Have you reviewed the withholdings calculations?"/>
             </xpath>
             <sheet position="before">
-                <div class="alert alert-warning" role="alert" invisible="not need_withholding_recompute or state != 'draft' or not partner_id or partner_type != 'supplier'">
+                <div class="alert alert-warning" role="alert" invisible="not need_withholding_recompute or state != 'draft' or not partner_id or partner_type != 'supplier' or is_internal_transfer">
                     Withholding may apply. We suggest compute them.
                     <button name="compute_withholdings" type="object" class="btn btn-primary">Compute Withholdings</button>
                 </div>

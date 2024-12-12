@@ -9,6 +9,7 @@
             <tree>
                 <field name="payment_method_code" column_invisible="True"/>
                 <field name="partner_type" column_invisible="True"/>
+                <button name="%(action_report_withholding_certificate)d" icon="fa-print" title="Print withholding voucher" help="Print withholding voucher" type="action" attrs="{'invisible': ['|', ('payment_method_code', '!=', 'withholding'), ('partner_type', '!=', 'supplier')]}"/>
             </tree>
         </field>
     </record>

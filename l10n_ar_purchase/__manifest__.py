@@ -1,6 +1,6 @@
 {
     'name': 'Argentinian Purchase',
-    'version': "16.0.1.2.0",
+    'version': "16.0.1.3.0",
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA',

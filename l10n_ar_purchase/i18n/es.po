@@ -40,6 +40,11 @@ msgstr "<br/><strong>Su referencia de pedido:</strong>"
 
 #. module: l10n_ar_purchase
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchaseorder_document
+msgid "<strong>% VAT</strong>"
+msgstr "<strong>% IVA</strong>"
+
+#. module: l10n_ar_purchase
+#: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchaseorder_document
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchasequotation_document
 msgid "<strong>Purchase Representative:</strong>"
 msgstr "<strong>Comprador:</strong>"

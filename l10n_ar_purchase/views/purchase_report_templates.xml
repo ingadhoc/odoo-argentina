@@ -150,6 +150,14 @@
         <h2 position="replace"/>
         <h2 position="replace"/>
 
+        <!-- use column vat instead of taxes and only if vat discriminated -->
+        <xpath expr="//th[@name='th_taxes']/strong" position="replace">
+            <strong>% VAT</strong>
+        </xpath>
+        <t t-set="taxes" position="attributes">
+            <attribute name="t-value">', '.join([(tax.description or tax.name) for tax in line.taxes_id.filtered(lambda x: x.tax_group_id.l10n_ar_vat_afip_code)])</attribute>
+        </t>
+
         <div id="informations" position="replace">
             <div id="l10n_ar_informations" class="row mt8 mb8">
                 <div class="col-6">

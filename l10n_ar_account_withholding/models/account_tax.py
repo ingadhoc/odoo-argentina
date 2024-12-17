@@ -23,7 +23,7 @@ class AccountTax(models.Model):
         recs = self.filtered(lambda x: ((
             x.type_tax_use in ['sale', 'purchase'] and
             x.amount_type == 'partner_tax') or (
-            x.type_tax_use in ['customer', 'supplier'] and
+            x.l10n_ar_withholding_payment_type in ['customer', 'supplier'] and
             x.withholding_type == 'partner_tax')) and not x.invoice_repartition_line_ids.mapped('tag_ids'))
         if recs:
             raise UserError(_(

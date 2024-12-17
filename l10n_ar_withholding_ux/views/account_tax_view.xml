@@ -73,7 +73,7 @@
         <field name="res_model">account.tax</field>
         <field name="view_mode">tree,form</field>
         <field name="domain" eval="False"/>
-        <field name="context">{'search_default_customer': True, 'search_default_supplier': True, 'default_type_tax_use': 'supplier', 'active_test': False}</field>
+        <field name="context">{'search_default_customer': True, 'search_default_supplier': True, 'default_type_tax_use': 'none', 'default_l10n_ar_withholding_payment_type': 'supplier', 'active_test': False}</field>
         <field name="view_id" ref="account.view_tax_tree"/>
     </record>
 

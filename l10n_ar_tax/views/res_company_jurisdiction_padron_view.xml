@@ -6,7 +6,7 @@
         <field name="model">res.company.jurisdiction.padron</field>
         <field name="arch" type="xml">
             <list string="Padron Alicuotas">
-                <field name="jurisdiction_id"/>
+                <field name="state_id"/>
                 <field name="company_id"/>
                 <field name="l10n_ar_padron_from_date"/>
                 <field name="l10n_ar_padron_to_date"/>
@@ -24,7 +24,7 @@
                     <group>
                         <group>
                             <field name="company_id"/>
-                            <field name="jurisdiction_id"/>
+                            <field name="state_id"/>
                             <field name="file_padron"/>
                         </group>
                         <group>

@@ -19,11 +19,9 @@ class ResCompanyJurisdictionPadron(models.Model):
         required=True,
         default=lambda self: self.env.company,
     )
-    jurisdiction_id = fields.Many2one(
-        "account.account.tag",
-        domain="[('applicability', '=', 'taxes'),('jurisdiction_code', '!=', False)]",
-        required=True,
-    )
+    state_id = fields.Many2one(
+        'res.country.state', string="Jurisdiction",
+        domain="[('country_id.code', '=', 'AR')]")
     file_padron = fields.Binary(
         "File",
         required=True,
@@ -37,19 +35,18 @@ class ResCompanyJurisdictionPadron(models.Model):
         required=True,
     )
 
-    @api.constrains('jurisdiction_id')
-    def check_jurisdiction_id(self):
-        arba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_902')
+    @api.constrains('state_id')
+    def check_state_id(self):
         for rec in self:
-            if rec.jurisdiction_id != arba_tag:
-                raise ValidationError("El padron para (%s) no está implementado." % rec.jurisdiction_id.name)
+            if rec.state_id.jurisdiction_code != '902':
+                raise ValidationError("El padron para (%s) no está implementado." % rec.state_id.name)
 
-    @api.depends('company_id', 'jurisdiction_id')
+    @api.depends('company_id', 'state_id')
     def name_get(self):
         res = []
         for padron in self:
             name = "%s: %s" % (padron.company_id.name,
-                               padron.jurisdiction_id.name)
+                               padron.state_id.name)
             res += [(padron.id, name)]
         return res
 

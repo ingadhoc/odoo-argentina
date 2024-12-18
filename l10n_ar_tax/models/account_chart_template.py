@@ -25,6 +25,35 @@ class AccountChartTemplate(models.AbstractModel):
         """ Agregamos etiquetas en repartition lines de impuestos de percepciones de iva, ganancias e ingresos brutos.  """
         # TODO deberia ir en odoo nativo
         company.ensure_one()
+        withholdings_domain = [
+            ('company_id', '=', company.id),
+            ('type_tax_use', '=', 'none'),
+            ('country_code', '=', 'AR'),
+            ('l10n_ar_withholding_payment_type', '=', 'supplier'),
+        ]
+        non_profits_domain = withholdings_domain + [('l10n_ar_tax_type', 'not in', ['earnings', 'earnings_scale'])]
+
+        for tax in self.env['account.tax'].with_context(active_test=False).search(non_profits_domain):
+            sequence = self.env['ir.sequence'].create({
+                'name': tax.invoice_label or tax.name,
+                'prefix': '%(year)s-',
+                'padding': 8,
+                'number_increment': 1,
+                'implementation': 'standard',
+                'company_id': company.id,
+            })
+            tax.l10n_ar_withholding_sequence_id = sequence.id
+
+        profits_domain = withholdings_domain + [('l10n_ar_tax_type', 'in', ['earnings', 'earnings_scale'])]
+        sequence = self.env['ir.sequence'].create({
+                'name': tax.invoice_label or 'Retención de Ganancias',
+                'prefix': '%(year)s-',
+                'padding': 8,
+                'number_increment': 1,
+                'implementation': 'standard',
+                'company_id': company.id,
+            })
+        self.env['account.tax'].with_context(active_test=False).search(profits_domain).l10n_ar_withholding_sequence_id = sequence.id
         # Retenciones aplicadas de iva
         impuesto_ret_iva_aplic = self.env.ref("account.%s_%s" % (company.id, 'ri_tax_withholding_vat_applied'), raise_if_not_found=False)
         if impuesto_ret_iva_aplic:

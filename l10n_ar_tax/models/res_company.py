@@ -13,11 +13,6 @@ _logger = logging.getLogger(__name__)
 class ResCompany(models.Model):
     _inherit = "res.company"
 
-    def _localization_use_withholdings(self):
-        """ Argentinian localization use documents """
-        self.ensure_one()
-        return True if self.country_id == self.env.ref('base.ar') else super()._localization_use_withholdings()
-
     @api.model
     def _get_arba_environment_type(self):
         """

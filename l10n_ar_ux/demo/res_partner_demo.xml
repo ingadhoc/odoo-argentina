@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="res.partner" id="l10n_ar.res_partner_adhoc">
+        <field name="l10n_ar_gross_income_type" eval="'multilateral'"/>
+        <field name="l10n_ar_gross_income_number" eval="123456"/>
+    </record>
+</odoo>
+

@@ -34,6 +34,7 @@
         'views/account_fiscal_position_view.xml'
     ],
     'demo': [
+        'demo/res_partner_demo.xml',
     ],
     'installable': True,
     'auto_install': True,

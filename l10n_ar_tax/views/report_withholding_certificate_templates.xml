@@ -57,16 +57,22 @@
                                 Impuesto:
                             </td>
                             <td class="text-left">
-                                <span t-field="o.tax_id.description"/>
+                                <!--
+                                    Si es ganancias, como los stax names son "feos" e invoice_label por ahora no lo populamos, mostramos campo invoice_label si está definido y si no sacamos un label por defecto 'Retención Ganancias'
+                                    Tal vez para IIBB y otros podamos hacer similar. En realidad lo ideal es modificar chart para que tenga invoice_label en todos los casos.
+                                -->
+                                <span t-if="o.tax_id.l10n_ar_tax_type in ['earnings', 'earnings_scale']" t-out="o.tax_id.invoice_label or 'Retención Ganancias'"/>
+                                <span t-else="" t-field="o.tax_id.invoice_label or o.tax_id.name"/>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-right">
-                                Régimen / Descripción:
+                                Régimen:
                             </td>
                             <td class="text-left">
-                                <span t-field="o.ref"/>
+                                <span t-field="o.tax_id.l10n_ar_code"/>
                             </td>
+
                         </tr>
                         <tr>
                             <td class="text-right">
@@ -111,7 +117,7 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-set="lang" t-value="o.payment_id.partner_id.lang"/>
-                <t t-call="report_withholding_certificate_document" t-lang="lang"/>
+                <t t-call="l10n_ar_tax.report_withholding_certificate_document" t-lang="lang"/>
             </t>
         </t>
     </template>
@@ -122,8 +128,8 @@
         <field name="binding_model_id" ref="model_l10n_ar_payment_withholding"/>
         <field name="report_type">qweb-pdf</field>
         <field name="print_report_name">'Certificado de Retención Slip - %s' % (object.name or '')</field>
-        <field name="report_name">report_withholding_certificate</field>
-        <field name="report_file">report_withholding_certificate</field>
+        <field name="report_name">l10n_ar_tax.report_withholding_certificate</field>
+        <field name="report_file">l10n_ar_tax.report_withholding_certificate</field>
     </record>
 
 </odoo>

@@ -23,7 +23,12 @@ class l10nArPaymentRegisterWithholding(models.Model):
 
     _sql_constraints = [('uniq_line', 'unique(tax_id, payment_id)', "El impuesto de retención debe ser único por pago")]
 
-    @api.depends('payment_id.withholdable_advanced_amount', 'payment_id.to_pay_amount', 'tax_id')
+    @api.depends(
+        'tax_id',
+        'payment_id.selected_debt',
+        'payment_id.selected_debt_untaxed',
+        'payment_id.unreconciled_amount',
+    )
     def _compute_base_amount(self):
         """ practicamente mismo codigo que en l10n_ar.payment.register.withholding pero usamos campos "selected_debt_"""
         for wth in self:
@@ -152,6 +157,7 @@ class l10nArPaymentRegisterWithholding(models.Model):
 
     @api.depends('base_amount', 'tax_id')
     def _compute_amount(self):
+        import pdb; pdb.set_trace()
         for line in self:
             if not line.tax_id:
                 line.amount = 0.0

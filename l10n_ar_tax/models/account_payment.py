@@ -247,14 +247,7 @@ class AccountPayment(models.Model):
                 matched_amount_untaxed += line.payment_matched_amount * factor
             rec.matched_amount_untaxed = sign * matched_amount_untaxed
 
-    @api.depends(
-        'to_pay_move_line_ids.amount_residual',
-        'to_pay_move_line_ids.amount_residual_currency',
-        'to_pay_move_line_ids.currency_id',
-        'to_pay_move_line_ids.move_id',
-        'date',
-        'currency_id',
-    )
+    @api.depends('to_pay_move_line_ids')
     def _compute_selected_debt_untaxed(self):
         for rec in self:
             selected_debt_untaxed = 0.0

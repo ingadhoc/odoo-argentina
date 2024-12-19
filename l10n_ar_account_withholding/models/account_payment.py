@@ -36,7 +36,7 @@ class AccountPayment(models.Model):
     def _compute_need_withholding_recompute(self):
         for rec in self:
             rec.need_withholding_recompute = False
-            if rec.partner_type == 'supplier' and rec.env['account.tax'].with_context(type=None).search([
+            if rec.partner_type == 'supplier' and not rec.is_internal_transfer and rec.env['account.tax'].with_context(type=None).search([
                 ('type_tax_use', '=', 'none'),
                 ('withholding_type', '!=', 'none'),
                 ('l10n_ar_withholding_payment_type', '=', rec.partner_type),

@@ -15,7 +15,7 @@
         </sheet>
             <xpath expr="//field[@name='amount']/.." position="after">
                 <field name="l10n_ar_state_id" invisible="l10n_ar_tribute_afip_code != '07'" required="l10n_ar_tribute_afip_code == '07'" options="{'no_create': True}"/>
-                <field name="l10n_ar_code" string="Regímen" invisible="(l10n_ar_tribute_afip_code != '07' and l10n_ar_tax_type not in ['iibb_untaxed', 'iibb_total']) or l10n_ar_type_tax_use not in ['sale', 'supplier']" options="{'no_create': True}"/>
+                <field name="l10n_ar_code" string="Regímen" invisible="l10n_ar_tribute_afip_code not in ['01', '06', '07'] or l10n_ar_type_tax_use not in ['sale', 'supplier']" options="{'no_create': True}"/>
             </xpath>
             <!-- limpiamos esta seccion que para retenciones no tiene sentido -->
             <group name="advanced_booleans" position="attributes">

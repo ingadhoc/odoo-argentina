@@ -41,9 +41,11 @@
                             <field name="l10n_ar_fiscal_position_id" options="{'no_create': True}" readonly="state not in ['draft']"/>
                         </group>
                         <group>
-                            <field name="unreconciled_amount" invisible="1"/>
-                            <field name="withholdable_advanced_amount"
-                                invisible="state not in ['draft'] or partner_type != 'supplier' or unreconciled_amount &lt;= 0.0" readonly="state not in ['draft']" string="Base imponible del pago excedente"/>
+                            <label for="withholdable_advanced_amount" invisible="state not in ['draft'] or partner_type != 'supplier' or unreconciled_amount &lt;= 0.0"/>
+                            <div name="withholdable_advanced_amount" invisible="state not in ['draft'] or partner_type != 'supplier' or unreconciled_amount &lt;= 0.0">
+                                <field name="withholdable_advanced_amount" readonly="state not in ['draft']" string="Base imponible del pago excedente" class="oe_inline"/>
+                                <span invisible="state != 'draft'" class="text-muted"> (del excedente <field name="unreconciled_amount" force_save="True" readonly="True" class="oe_inline"/>)</span>
+                            </div>
                         </group>
                     </group>
                     <!-- ver mensaje en commit -->

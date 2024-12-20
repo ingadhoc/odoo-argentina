@@ -157,7 +157,6 @@ class l10nArPaymentRegisterWithholding(models.Model):
 
     @api.depends('base_amount', 'tax_id')
     def _compute_amount(self):
-        import pdb; pdb.set_trace()
         for line in self:
             if not line.tax_id:
                 line.amount = 0.0

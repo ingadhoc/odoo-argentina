@@ -153,9 +153,9 @@
         <xpath expr="//th[@name='th_taxes']/strong" position="replace">
             <strong>% VAT</strong>
         </xpath>
-        <t t-set="taxes" position="attributes">
-            <attribute name="t-value">', '.join([(tax.description or tax.name) for tax in line.taxes_id.filtered(lambda x: x.tax_group_id.l10n_ar_vat_afip_code)])</attribute>
-        </t>
+        <xpath expr="//span[contains(@t-out, 'tax.invoice_label or tax.name')]" position="replace">
+            <span t-out="', '.join([(tax.invoice_label or tax.name) for tax in line.taxes_id.filtered(lambda x: x.tax_group_id.l10n_ar_vat_afip_code)])"/>
+        </xpath>
 
         <div id="informations" position="replace">
             <div id="l10n_ar_informations" class="row mt8 mb8">

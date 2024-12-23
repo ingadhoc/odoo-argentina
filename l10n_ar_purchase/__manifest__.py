@@ -1,12 +1,6 @@
 {
     'name': 'Argentinean Purchase',
-<<<<<<< HEAD
     'version': "18.0.1.0.0",
-||||||| parent of cc67e1ee (temp)
-    'version': "17.0.1.1.0",
-=======
-    'version': "17.0.1.2.0",
->>>>>>> cc67e1ee (temp)
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA',

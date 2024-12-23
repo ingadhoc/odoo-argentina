@@ -10,16 +10,6 @@ from odoo.addons.account.models.chart_template import template
 class AccountChartTemplate(models.AbstractModel):
     _inherit = 'account.chart.template'
 
-    @template('ar_ri', 'account.tax')
-    def _get_ar_ri_withholding_account_tax(self):
-        """ En caso de que se creen nuevas compañías argentinas responsable inscripto con su plan de cuentas correspondiente entonces a los impuestos creados de retenciones de ganancias e iva les agregamos el código de impuesto. """
-        taxes_creados = super()._get_ar_ri_withholding_account_tax()
-        if taxes_creados.get('ri_tax_withholding_ganancias_applied'):
-            taxes_creados.get('ri_tax_withholding_ganancias_applied')['l10n_ar_code'] = '01'
-        if taxes_creados.get('ri_tax_withholding_vat_applied'):
-            taxes_creados.get('ri_tax_withholding_vat_applied')['l10n_ar_code'] = '02'
-        return taxes_creados
-
     @api.model
     def _add_wh_taxes(self, company):
         """ Agregamos etiquetas en repartition lines de impuestos de percepciones de iva, ganancias e ingresos brutos.  """

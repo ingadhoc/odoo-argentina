@@ -14,6 +14,11 @@
 Argentinian Withholdings + Perceptions
 ======================================
 
+Este módulo imlementa:
+
+* Add tags on ar taxes repartition lines.
+* Add fiscal position demo records.
+
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: http://runbot.adhoc.com.ar/

@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from odoo import models, api, fields, Command, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class AccountPayment(models.Model):
@@ -204,6 +204,12 @@ class AccountPayment(models.Model):
                     line['debit'] += wth_amount
                     line['amount_currency'] += wth_amount
         return res
+
+    @api.constrains('l10n_ar_withholding_line_ids')
+    def _check_withholding_type(self):
+        for payment in self.filtered(lambda x: x.l10n_ar_withholding_line_ids and x.payment_type == 'inbound'):
+            if payment.l10n_ar_withholding_line_ids.filtered(lambda x: x.tax_id.l10n_ar_type_tax_use == 'supplier'):
+                raise ValidationError(_('It is not allowed to compute supplier withholdings on customer payments (Payment name: %s, id: %s).') % (payment.name, payment.id))
 
     ###################################################
     # desde account_withholding_automatic payment.group

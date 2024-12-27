@@ -3,6 +3,8 @@
 # directory
 ##############################################################################
 from odoo import models, api
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class AccountAccount(models.Model):
@@ -23,6 +25,8 @@ class AccountAccount(models.Model):
             'equity',
             'expense_direct_cost',
         ]
-        # accounts = self.search([('account_type', 'in', account_types), ('company_id', 'in', company.ids)])
-        # if accounts:
-        #     accounts.write({'tag_ids': [(4, non_monetary_tag.id)]})
+        if accounts := self.search([('account_type', 'in', account_types),
+                                    *self.env['account.account']._check_company_domain(company)])\
+                                    .filtered(lambda x: x.company_fiscal_country_code == 'AR'):
+            accounts.write({'tag_ids': [(4, non_monetary_tag.id)]})
+            _logger.info("Non Monetary tag is set on %s accounts ." % (company.name))

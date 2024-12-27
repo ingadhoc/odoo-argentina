@@ -9,9 +9,8 @@ class AccountChartTemplate(models.AbstractModel):
 
     _inherit = 'account.chart.template'
 
-    def _load(self, template_code, company, install_demo):
-        """ Set non monetary tag when installing chart of account """
-        res = super()._load(template_code, company, install_demo)
-        if template_code in ('ar_base', 'ar_ex', 'ar_ri'):
-            self.env['account.account'].set_non_monetary_tag(company)
+    def _load_data(self, data, ignore_duplicates=False):
+        res = super()._load_data(data, ignore_duplicates=ignore_duplicates)
+        if res.get('res.company'):
+            self.env['account.account'].set_non_monetary_tag(res['res.company'])
         return res

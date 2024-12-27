@@ -60,6 +60,14 @@
                 </div>
             </div>
             <br/>
+<<<<<<< HEAD:l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
+||||||| parent of 5c7e02e1 (temp):l10n_ar_ux/reports/report_payment_group.xml
+            <t t-set="counterpart_currency_available" t-value="env['account.payment']._fields.get('counterpart_currency_id')" />
+            <t t-set="foreign_currency_column" t-value="any(o.payment_ids.mapped(lambda x: x.other_currency or (counterpart_currency_available and x.counterpart_currency_id)))" />
+=======
+            <t t-set="counterpart_currency_available" t-value="env['account.payment']._fields.get('counterpart_currency_id')" />
+            <t t-set="foreign_currency_column" t-value="o.payment_ids.filtered(lambda x: x.other_currency or (counterpart_currency_available and x.counterpart_currency_id))"/>
+>>>>>>> 5c7e02e1 (temp):l10n_ar_ux/reports/report_payment_group.xml
             <table class="table table-sm o_main_table" name="payments_table">
                 <thead>
                     <tr>

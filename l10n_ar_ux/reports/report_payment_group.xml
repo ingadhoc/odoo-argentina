@@ -53,7 +53,7 @@
         <div id="informations" position="after">
             <br/>
             <t t-set="counterpart_currency_available" t-value="env['account.payment']._fields.get('counterpart_currency_id')" />
-            <t t-set="foreign_currency_column" t-value="any(o.payment_ids.mapped(lambda x: x.other_currency or (counterpart_currency_available and x.counterpart_currency_id)))" />
+            <t t-set="foreign_currency_column" t-value="o.payment_ids.filtered(lambda x: x.other_currency or (counterpart_currency_available and x.counterpart_currency_id))"/>
             <table class="table table-sm o_main_table" name="payments_table">
                 <thead>
                     <tr>

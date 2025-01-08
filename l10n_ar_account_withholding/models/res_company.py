@@ -227,15 +227,18 @@ class ResCompany(models.Model):
 
         # Capturar Códigos de Error.
         # 3 => No Inscripto, 2 => No pasible, 1 => CUIT incorrecta, 0 => OK
-        if code == 3:
+        alicuota_percepcion = 0.0
+        alicuota_retencion = 0.0
+        numero_comprobante = False
+        if code in [1, 3]:
+            # casos como adhoc devuelven 1, no encuentra el cuit.
+            # lo consideramos igual que no inscripto (no queremos que de raise)
+            # estamos guardando igual en el partner info del mensaje (numero_comprobante)
             alicuota_percepcion = self.cdba_alicuota_no_sincripto_percepcion
             alicuota_retencion = self.cdba_alicuota_no_sincripto_retencion
-        elif code == 2:
-            alicuota_percepcion = 0.0
-            alicuota_retencion = 0.0
-        elif code != 0:
-            raise UserError(json_body.get("message"))
-        else:
+            if code == 1:
+                numero_comprobante = json_body.get('message')
+        elif code == 0:
             dict_alic = json_body.get("sdtConsultaAlicuotas")
             alicuota_percepcion = float(dict_alic.get("CRD_ALICUOTA_PER"))
             alicuota_retencion = float(dict_alic.get("CRD_ALICUOTA_RET"))
@@ -249,10 +252,14 @@ class ResCompany(models.Model):
                         'No se puede obtener automáticamente la alicuota para la '
                         'fecha %s. Por favor, ingrese la misma manualmente '
                         'en el partner.' % date)
+        else:
+            numero_comprobante = json_body.get('message')
         data = {
             'alicuota_percepcion': alicuota_percepcion,
             'alicuota_retencion': alicuota_retencion,
         }
+        if numero_comprobante:
+            data['numero_comprobante'] = numero_comprobante
 
         _logger.info("We've got the following data: \n%s" % data)
 

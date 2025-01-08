@@ -103,13 +103,15 @@ class AccountFiscalPositionL10nArTax(models.Model):
             tax = self.default_tax_id
         else:
             tax = self._ensure_tax(aliquot)
-            self.env['l10n_ar.partner.tax'].create({
-                'partner_id': partner.id,
-                'tax_id': tax.id,
-                'from_date': from_date,
-                'to_date': to_date,
-                'ref': ref,
-            })
+        # por mas que sea no inscripto creamos partner aliquot porque si no en cada
+        # nueva linea o cambio se conecta a ws
+        self.env['l10n_ar.partner.tax'].create({
+            'partner_id': partner.id,
+            'tax_id': tax.id,
+            'from_date': from_date,
+            'to_date': to_date,
+            'ref': ref,
+        })
         return tax
 
     def _get_agip_data(self, partner, date, to_date):
@@ -205,15 +207,17 @@ class AccountFiscalPositionL10nArTax(models.Model):
                             'El servidor respondió: \n\n%s' % json_body)
 
         code = json_body.get("errorCod")
+        ref = json_body.get("message")
 
         # Capturar Códigos de Error.
         # 3 => No Inscripto, 2 => No pasible, 1 => CUIT incorrecta, 0 => OK
-        if code == 3:
+        # casos como adhoc devuelven 1, no encuentra el cuit.
+        # lo consideramos igual que no inscripto (no queremos que de raise)
+        # estamos guardando igual en el partner info del mensaje (ref)
+        if code in [3, 1]:
             aliquot = None
         elif code == 2:
             aliquot = 0.0
-        elif code != 0:
-            raise UserError(json_body.get("message"))
         else:
             dict_alic = json_body.get("sdtConsultaAlicuotas")
             aliquot = float(dict_alic.get("CRD_ALICUOTA_RET")) if self.tax_type == 'withholding' else float(dict_alic.get("CRD_ALICUOTA_PER"))
@@ -227,4 +231,5 @@ class AccountFiscalPositionL10nArTax(models.Model):
                         'No se puede obtener automáticamente la alicuota para la '
                         'fecha %s. Por favor, ingrese la misma manualmente '
                         'en el partner.' % date)
-        return aliquot, False
+
+        return aliquot, ref

@@ -38,7 +38,7 @@
                 <page name="withholdings_page_editable" string="Withholdings" invisible="is_internal_transfer or not use_payment_pro or country_code != 'AR'">
                     <group>
                         <group>
-                            <field name="l10n_ar_fiscal_position_id" options="{'no_create': True}" readonly="state not in ['draft']"/>
+                            <field name="l10n_ar_fiscal_position_id" options="{'no_create': True}" readonly="state not in ['draft']" invisible="partner_type != 'supplier'"/>
                         </group>
                         <group>
                             <label for="withholdable_advanced_amount" invisible="state not in ['draft'] or partner_type != 'supplier' or unreconciled_amount &lt;= 0.0"/>

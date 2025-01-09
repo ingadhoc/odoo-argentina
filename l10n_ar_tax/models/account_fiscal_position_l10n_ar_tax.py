@@ -31,12 +31,12 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 ('fiscal_position_id', '=', record.fiscal_position_id.id),
                 ('default_tax_id.tax_group_id', '=', record.default_tax_id.tax_group_id.id),
             ]
-            if self.tax_type == 'withholding':
+            if record.tax_type == 'withholding':
                 # TODO esto lo deberiamos borrar al ir a odoo 19 y solo usar los tax groups
                 # por ahora, para no renegar con scripts de migra que requieran crear tax groups para cada jurisdiccion y
                 # ademas luego tener que ajustar a lo que hagamos en 19, usamos la jursdiccion como elemento de agrupacion
                 # solo para retenciones
-                domain += [('default_tax_id.l10n_ar_state_id', '=', self.default_tax_id.l10n_ar_state_id.id)]
+                domain += [('default_tax_id.l10n_ar_state_id', '=', record.default_tax_id.l10n_ar_state_id.id)]
             conflicting_records = self.search(domain)
             if conflicting_records:
                 raise ValidationError("No puede haber dos impuestos del mismo grupo para la misma posicion fiscal.")

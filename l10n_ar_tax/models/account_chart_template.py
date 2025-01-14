@@ -139,6 +139,6 @@ class AccountChartTemplate(models.AbstractModel):
         # Llamamos a super para que se creen los impuestos
         res = super()._load(template_code, company, install_demo)
         company = company or self.env.company
-        if company.chart_template in ('ar_ri', 'ar_ex'):
+        if company.chart_template in ('ar_ri', 'ar_ex', 'ar_base'):
             self.sudo()._add_wh_taxes(company)
         return res

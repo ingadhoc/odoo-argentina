@@ -182,6 +182,12 @@ class AccountPayment(models.Model):
         res = super()._get_trigger_fields_to_synchronize()
         return res + ('l10n_ar_withholding_line_ids',)
 
+    @api.constrains('currency_id', 'company_id', 'l10n_ar_withholding_line_ids')
+    def _check_withholdings_and_currency(self):
+        for rec in self:
+            if rec.l10n_ar_withholding_line_ids and rec.currency_id != rec.company_id.currency_id:
+                raise UserError(_('Withholdings must be done in "%s" currency') % rec.company_id.currency_id.name)
+
     def _prepare_move_line_default_vals(self, write_off_line_vals=None, force_balance=None):
         res = super()._prepare_move_line_default_vals(write_off_line_vals, force_balance=force_balance)
         res += self._prepare_witholding_write_off_vals()

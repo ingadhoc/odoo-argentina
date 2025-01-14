@@ -47,8 +47,6 @@
             (0, 0, {'product_id': ref('l10n_ar.product_product_telefonia'), 'price_unit': 250.0, 'quantity': 1}),
             (0, 0, {'product_id': ref('product.product_product_25'), 'price_unit': 3245.0, 'quantity': 2}),
         ]"/>
-    </record>
-    <record id="demo_sup_invoice_adhoc_caba" model="account.move">
         <field name="l10n_latam_document_number">0001-00000339</field>
     </record>
     <function model="account.move" name="action_post">
@@ -67,8 +65,6 @@
             (0, 0, {'product_id': ref('l10n_ar.product_product_telefonia'), 'price_unit': 250.0, 'quantity': 1}),
             (0, 0, {'product_id': ref('product.product_product_25'), 'price_unit': 3245.0, 'quantity': 2}),
         ]"/>
-    </record>
-    <record id="demo_sup_invoice_adhoc_cordoba" model="account.move">
         <field name="l10n_latam_document_number">0001-00000539</field>
     </record>
     <function model="account.move" name="action_post">

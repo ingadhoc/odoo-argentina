@@ -1058,7 +1058,7 @@
         <field name='phone'></field>
         <field name='email'></field>
     </record>
-    <record model='res.bank' id='44090'>
+    <record model='res.bank' id='44091'>
         <field name='name'>BANCO BICA S.A.</field>
         <field name='bic'>BICAARBS</field>
         <field name='active'>1</field>

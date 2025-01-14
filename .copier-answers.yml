@@ -1,0 +1,13 @@
+# Do NOT update manually; changes here will be overwritten by Copier
+_commit: 719579f
+_src_path: https://github.com/ingadhoc/addons-repo-template.git
+description: 'ADHOC Odoo odoo-argentina Modules
+
+
+    '
+is_private: false
+name: ADHOC odoo-argentina
+odoo_version: 18.0
+pre_commit_ignore: []
+slug: ''
+

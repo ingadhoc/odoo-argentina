@@ -1,0 +1,152 @@
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E",        # pycodestyle errors
+    "W",        # pycodestyle warnings
+    "C90",      # mccabe
+    "F",        # pyflakes
+    "UP",       # pyupgrade
+    "I",        # isort
+]
+ignore = [
+    "UP008",    # pyupgrade: Use `super()` instead of `super(__class__, self)` (no autofix)
+    "UP031",    # pyupgrade: use format specifiers instead of percent format (no autofix)
+    "E712",     # avoid equality comparisons to False (no autofix)
+    "E721",     # do not compare types, use 'isinstance()' (no autofix)
+    "E722",     # do not use bare `except` (no autofix)
+    "E731",     # do not assign `lambda` expression, use a `def` (no autofix)
+    "E741",     # ambiguos variable name (no autofix)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "I001"]
+"__manifest__.py" = ["B018"]
+
+[tool.ruff.lint.pycodestyle]
+# line-length is set in [tool.ruff], and it's used by the formatter
+# in case the formatted can't autofix the line length, it will be reported as an error
+# only if it exceeds the max-line-length set here. We use 999 to effectively disable
+# this check.
+max-line-length = 999
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-wrap-aliases = true
+known-third-party = [
+    "dateutil",
+    "git",
+    "gnupg",
+    "openupgradelib",
+    "pkg_resources",
+    "psycopg2",
+    "requests",
+    "setuptools",
+    "urllib2",
+    "yaml",
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 20
+
+[tool.pylint.master]
+load-plugins = ["pylint_odoo"]
+score = false
+
+[tool.pylint.odoolint]
+manifest-required-authors = "ADHOC SA"
+manifest-required-keys = ["license"]
+manifest-deprecated-keys = ["description", "active"]
+license-allowed = [
+    "AGPL-3",
+    "GPL-2",
+    "GPL-2 or any later version",
+    "GPL-3",
+    "GPL-3 or any later version",
+    "LGPL-3",
+]
+
+[tool.pylint."messages control"]
+disable = "all"
+enable = [
+    "anomalous-backslash-in-string",
+    "api-one-deprecated",
+    "api-one-multi-together",
+    "assignment-from-none",
+    "attribute-deprecated",
+    "attribute-string-redundant",
+    "character-not-valid-in-resource-link",
+    "class-camelcase",
+    "consider-merging-classes-inherited",
+    "context-overridden",
+    "create-user-wo-reset-password",
+    "dangerous-default-value",
+    "dangerous-filter-wo-user",
+    "dangerous-qweb-replace-wo-priority",
+    "dangerous-view-replace-wo-priority",
+    "deprecated-data-xml-node",
+    "deprecated-openerp-xml-node",
+    "development-status-allowed",
+    "duplicate-id-csv",
+    "duplicate-key",
+    "duplicate-po-message-definition",
+    "duplicate-xml-fields",
+    "duplicate-xml-record-id",
+    "eval-referenced",
+    "eval-used",
+    # "except-pass",                    # Annoying
+    "external-request-timeout",
+    "file-not-used",
+    "incoherent-interpreter-exec-perm",
+    "invalid-commit",
+    "license-allowed",
+    "manifest-author-string",
+    "manifest-deprecated-key",
+    "manifest-maintainers-list",
+    "manifest-required-author",
+    "manifest-required-key",
+    # "manifest-version-format",        # Errors on non-migrated modules, and redundant with runbot
+    "method-compute",
+    "method-inverse",
+    "method-required-super",
+    "method-search",
+    "missing-newline-extrafiles",
+    # "missing-return",                 # Annoying. Not applicable for computed field methods
+    "odoo-addons-relative-import",
+    "old-api7-method-defined",
+    "openerp-exception-warning",
+    "po-msgstr-variables",
+    "po-syntax-error",
+    "pointless-statement",
+    "pointless-string-statement",
+    "print-used",
+    "redundant-keyword-arg",
+    "redundant-modulename-xml",
+    "reimported",
+    "relative-import",
+    "renamed-field-parameter",
+    "resource-not-exist",
+    "return-in-init",
+    "rst-syntax-error",
+    "sql-injection",
+    "str-format-used",
+    "test-folder-imported",
+    "too-few-format-args",
+    "translation-contains-variable",
+    "translation-field",
+    # "translation-positional-used",    # Annoying in our use case
+    # "translation-required",           # We don't always translate everything, and that's fine
+    "unnecessary-utf8-coding-comment",
+    "unreachable",
+    "use-vim-comment",
+    "wrong-tabs-instead-of-spaces",
+    "xml-attribute-translatable",
+    "xml-deprecated-qweb-directive",
+    "xml-deprecated-tree-attribute",
+    "xml-syntax-error"
+]
+
+[tool.pylint.reports]
+output-format = "colorized"
+msg-template = "{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}"

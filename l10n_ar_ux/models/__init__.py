@@ -5,7 +5,6 @@
 from . import account_account
 from . import account_chart_template
 from . import account_move
-from . import account_move_line
 from . import res_country_state
 from . import afip_padron
 from . import res_company

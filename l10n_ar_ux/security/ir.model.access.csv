@@ -5,4 +5,3 @@ access_afip_activity_manager,access_afip_activity_manager,model_afip_activity,ac
 access_afip_activity_all,access_afip_activity_all,model_afip_activity,base.group_user,1,0,0,0
 access_afip_concept_all,access_afip_concept_all,model_afip_concept,base.group_user,1,0,0,0
 access_afip_tax_all,access_afip_tax_all,model_afip_tax,base.group_user,1,0,0,0
-access_account_move_change_rate,access_account_move_change_rate,l10n_ar_ux.model_account_move_change_rate,base.group_user,1,1,1,0

@@ -205,10 +205,12 @@ class AccountPayment(models.Model):
             if account_id.account_type in valid_account_types:
                 if self.payment_type == 'inbound':
                     line['credit'] += wth_amount
-                    line['amount_currency'] -= wth_amount
+                    if not self._use_counterpart_currency():
+                        line['amount_currency'] -= wth_amount
                 elif self.payment_type == 'outbound':
                     line['debit'] += wth_amount
-                    line['amount_currency'] += wth_amount
+                    if not self._use_counterpart_currency():
+                        line['amount_currency'] += wth_amount
         return res
 
     ###################################################

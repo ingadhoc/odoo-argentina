@@ -62,7 +62,6 @@ class ResCompanyJurisdictionPadron(models.Model):
         fobj.write(file)
         fobj.close()
         f = open(fname, 'r+b')
-        data = f.read()
         f.write(base64.b64decode(file_padron))
         with zipfile.ZipFile(f, 'r') as zip_file:
             zip_file.extractall(path=ruta_extraccion)

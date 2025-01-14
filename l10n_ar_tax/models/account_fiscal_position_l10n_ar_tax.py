@@ -209,7 +209,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
         headers = {'content-type': 'application/json'}
 
         # Realizar solicitud
-        r = requests.post(url, data=json.dumps(payload), headers=headers)
+        r = requests.post(url, data=json.dumps(payload), headers=headers, timeout=10)
         json_body = r.json()
 
         if r.status_code != 200:

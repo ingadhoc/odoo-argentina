@@ -79,7 +79,7 @@ class AccountPayment(models.Model):
             else:
                 rec.company_regimenes_ganancias_ids = rec.env['afip.tabla_ganancias.alicuotasymontos']
 
-    @api.onchange('commercial_partner_id')
+    @api.onchange('partner_id', 'commercial_partner_id')
     def change_retencion_ganancias(self):
         # si es exento en ganancias o no tiene clasificacion pero es monotributista, del exterior o consumidor final, sugerimos regimen no_aplica
         if self.partner_id.commercial_partner_id.imp_ganancias_padron in ['EX', 'NC'] or (

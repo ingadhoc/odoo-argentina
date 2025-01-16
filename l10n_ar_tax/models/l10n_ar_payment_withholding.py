@@ -44,15 +44,7 @@ class l10nArPaymentRegisterWithholding(models.Model):
                 partial_line = sorted_to_pay_lines[-1]
                 if -partial_line.amount_residual < -wth.payment_id.withholdable_advanced_amount:
                     raise UserError(_(
-                        'Seleccionó deuda por %s pero aparentente desea pagar '
-                        '%s. En la deuda seleccionada hay algunos comprobantes de '
-                        'mas que no van a poder ser pagados (%s). Deberá quitar '
-                        'dichos comprobantes de la deuda seleccionada para poder '
-                        'hacer el correcto cálculo de las retenciones.' % (
-                            wth.payment_id.selected_debt,
-                            wth.payment_id.to_pay_amount,
-                            partial_line.move_id.display_name,
-                    )))
+                        'Seleccionó deuda por %s pero aparentente desea pagar %s. En la deuda seleccionada hay algunos comprobantes de mas que no van a poder ser pagados (%s). Deberá quitar dichos comprobantes de la deuda seleccionada para poder hacer el correcto cálculo de las retenciones.') % (wth.payment_id.selected_debt, wth.payment_id.to_pay_amount, partial_line.move_id.display_name))
                 advance_amount = wth.payment_id.unreconciled_amount
                 if wth.tax_id.l10n_ar_tax_type != 'iibb_total':
                     advance_amount = advance_amount * (wth.payment_id.selected_debt_untaxed / wth.payment_id.selected_debt)

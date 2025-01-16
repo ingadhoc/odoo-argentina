@@ -217,7 +217,6 @@ class AccountPayment(models.Model):
     )
     selected_debt_untaxed = fields.Monetary(
         # string='To Pay lines Amount',
-        string='Selected Debt Untaxed',
         compute='_compute_selected_debt_untaxed',
     )
     matched_amount_untaxed = fields.Monetary(

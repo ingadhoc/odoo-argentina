@@ -49,6 +49,7 @@
         'l10n_ar_ux',
         'l10n_ar_withholding',
         'account_payment_pro',
+        'l10n_latam_check_ux', # para reporte de pagos/recibos
     ],
     'external_dependencies': {
         'python': ['pyafipws'],

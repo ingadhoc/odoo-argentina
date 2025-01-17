@@ -12,7 +12,7 @@ class AccountPayment(models.Model):
 
     l10n_ar_withholding_line_ids = fields.One2many(
         'l10n_ar.payment.withholding', 'payment_id', string='Withholdings Lines',
-        # compute='_compute_l10n_ar_withholding_line_ids', readonly=False, store=True
+        compute='_compute_l10n_ar_withholding_line_ids', readonly=False, store=True
     )
     withholdings_amount = fields.Monetary(
         compute='_compute_withholdings_amount',
@@ -42,14 +42,6 @@ class AccountPayment(models.Model):
             rec.l10n_ar_fiscal_position_id = self.env['account.fiscal.position'].with_company(rec.company_id)._get_fiscal_position(
                 address)
 
-    def copy(self, default=None):
-        """ al duplicar un pago no se trigerea el onchange de fiscal position y no se re-computan las lineas,
-        lo forzamos desde acá
-        """
-        new_recs = super().copy(default=default)
-        new_recs.compute_withholdings()
-        return new_recs
-
     @api.depends('l10n_ar_withholding_line_ids.amount')
     def _compute_withholdings_amount(self):
         for rec in self:
@@ -66,9 +58,16 @@ class AccountPayment(models.Model):
         for rec in self:
             rec.payment_total += sum(rec.l10n_ar_withholding_line_ids.mapped('amount'))
 
+    # por ahora no nos funciona computarlas, se duplica el importe. Igual conceptualemnte el onchange acá por ahí
+    # está bien porque en realidad es una "sugerencia" actualizar el amount al usuario
+    # @api.depends('withholdings_amount')
+    # def _compute_amount(self):
+    #     latam_checks = self.filtered(lambda x: x._is_latam_check_payment())
+    #     super(AccountPayment, latam_checks)._compute_amount()
+    #     for rec in (self - latam_checks):
     @api.onchange('withholdings_amount')
     def _onchange_withholdings(self):
-        for rec in self.filtered(lambda x: x.payment_method_code not in ['in_third_party_checks', 'out_third_party_checks']):
+        for rec in self.filtered(lambda x: not x._is_latam_check_payment()):
             # el compute_withholdings o el _compute_withholdings?
             amount = rec.amount + rec.payment_difference
             # no pasamos a importes negativos (por ej. si se ponene retenciones grandes) porque es molesto
@@ -85,18 +84,6 @@ class AccountPayment(models.Model):
     #         rec._compute_withholdings()
     #         # rec.force_amount_company_currency += rec.payment_difference
     #         # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
-
-    # Por ahora no compuamos para no pisar cosas que pueda haber moficiado el usuario. Ademas que ya era así (manual)
-    # en version anterior
-    # @api.depends('state', 'move_id')
-    # def _compute_l10n_ar_withholding_line_ids(self):
-    #     for rec in self:
-    #         l10n_ar_withholding_line_ids = [Command.clear()]
-    #         for line in rec.move_id.line_ids.filtered(lambda x: x.tax_line_id):
-    #             base = sum(rec.line_ids.filtered(lambda x: line.tax_line_id.id in x.tax_ids.ids).mapped('balance'))
-    #             l10n_ar_withholding_line_ids += [Command.create({'name': line.name, 'tax_id': line.tax_line_id.id,
-    #                                                             'base_amount': abs(base), 'amount': abs(line.balance)})]
-    #         rec.l10n_ar_withholding_line_ids = l10n_ar_withholding_line_ids
 
     def action_confirm(self):
         checks_payments = self.filtered(lambda x: x.payment_method_code in ['in_third_party_checks', 'out_third_party_checks'])
@@ -271,12 +258,10 @@ class AccountPayment(models.Model):
         for rec in self:
             rec.withholdable_advanced_amount = rec.unreconciled_amount
 
-    def _compute_withholdings(self):
-        # chequeamos lineas a pagar antes de computar impuestos para evitar trabajar sobre base erronea
-        self._check_to_pay_lines_account()
+    @api.depends('l10n_ar_fiscal_position_id', 'partner_id', 'company_id', 'date')
+    def _compute_l10n_ar_withholding_line_ids(self):
         # metodo completamente analogo a payment.register._compute_l10n_ar_withholding_ids
         for rec in self:
-
             date = rec.date or fields.Date.today()
             withholdings = [Command.clear()]
             if rec.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:
@@ -284,15 +269,9 @@ class AccountPayment(models.Model):
                 withholdings += [Command.create({'tax_id': x.id}) for x in taxes]
             rec.l10n_ar_withholding_line_ids = withholdings
 
-    @api.onchange('l10n_ar_fiscal_position_id')
-    def compute_withholdings(self):
-        self._compute_withholdings()
-        self._onchange_withholdings()
-
     def compute_to_pay_amount_for_check(self):
         checks_payments = self.filtered(lambda x: x.payment_method_code in ['in_third_party_checks', 'out_third_party_checks'])
         for rec in checks_payments.with_context(skip_account_move_synchronization=True):
-            rec._compute_withholdings()
             # dejamos 230 porque el hecho de estar usando valor de "$2" abajo y subir de a un centavo hace podamos necesitar
             # 200 intento solo en esa seccion
             # deberiamos ver de ir aproximando de otra manera
@@ -325,7 +304,6 @@ class AccountPayment(models.Model):
                         '* payment_difference: %s\n'
                         '* amount: %s'
                         % (rec.to_pay_amount, rec.payment_difference, rec.amount))
-                rec._compute_withholdings()
             rec.with_context(skip_account_move_synchronization=False)._synchronize_to_moves({'l10n_ar_withholding_line_ids'})
 
     def _get_name_receipt_report(self, report_xml_id):

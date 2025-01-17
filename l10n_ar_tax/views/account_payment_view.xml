@@ -21,11 +21,7 @@
         <field name="arch" type="xml">
 
             <label for="payment_total" position="before">
-                <label for="withholdings_amount" readonly="state != 'draft'" invisible="is_internal_transfer or not use_payment_pro"/>
-                <div invisible="is_internal_transfer or not use_payment_pro">
-                    <field name="withholdings_amount" string="Withholdings" class="oe_inline"/>
-                    <button title="Re-computar retenciones a partir del 'Importe a Pagar'" icon="fa-refresh" type="object" name="compute_withholdings" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft']" class="oe_link"/>
-                </div>
+                <field name="withholdings_amount" string="Withholdings"/>
             </label>
             <div name="to_pay_amount">
                 <button name="compute_to_pay_amount_for_check" icon="fa-refresh" title="A partir del importe del pago (campo Importe) + ajuste, se calculan las retenciones y el importe a pagar. Útil por ejemplo para pagos con cheques donde el importe Importe no lo podemos cambiar" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft'] or payment_method_code not in ['in_third_party_checks', 'out_third_party_checks']" class="oe_inline oe_link"/>
@@ -48,8 +44,6 @@
                             </div>
                         </group>
                     </group>
-                    <!-- ver mensaje en commit -->
-                    <!-- <button name="compute_withholdings" string="Re Computar Retenciones" title="Re-computar retenciones a partir del 'Importe a Pagar'" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft']"/> -->
                     <field name="l10n_ar_withholding_line_ids" nolabel="1" colspan="2" invisible="is_internal_transfer" readonly="state != 'draft'">
                         <list editable="bottom">
                             <field name="withholding_sequence_id" column_invisible="True"/>

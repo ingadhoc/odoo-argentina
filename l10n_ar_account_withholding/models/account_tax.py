@@ -179,18 +179,16 @@ class AccountTax(models.Model):
             cdba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_904')
             if padron_file:
                 nro, alicuot_ret, alicuot_per = padron_file._get_aliquit(commercial_partner)
-                if nro:
-                    return partner.arba_alicuot_ids.sudo().create({
-                        'numero_comprobante': nro,
-                        'alicuota_retencion': float(alicuot_ret),
-                        'alicuota_percepcion': float(alicuot_per),
-                        'partner_id': commercial_partner.id,
-                        'company_id': company.id,
-                        'tag_id': padron_file.jurisdiction_id.id,
-                        'from_date': from_date,
-                        'to_date': to_date,
-
-                    })
+                return partner.arba_alicuot_ids.sudo().create({
+                    'numero_comprobante': nro or 'Alícuota no inscripto',
+                    'alicuota_retencion': float(alicuot_ret) or company.arba_alicuota_no_sincripto_retencion,
+                    'alicuota_percepcion': float(alicuot_per) or company.arba_alicuota_no_sincripto_percepcion,
+                    'partner_id': commercial_partner.id,
+                    'company_id': company.id,
+                    'tag_id': padron_file.jurisdiction_id.id,
+                    'from_date': from_date,
+                    'to_date': to_date,
+                })
             if arba_tag and arba_tag.id in invoice_tags.ids:
                 arba_data = company.get_arba_data(
                     commercial_partner,

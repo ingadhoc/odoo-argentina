@@ -18,6 +18,7 @@ def monkey_patches():
     # monkey patch
     orginal_method = AccountMove._inverse_l10n_latam_document_number
 
+    @api.onchange('l10n_latam_document_type_id', 'l10n_latam_document_number', 'partner_id')
     def _inverse_l10n_latam_document_number(self):
         """ Parche feo para poder usar liquidaciones. Eliminar al migrar a version 17 """
         orginal_method(self)

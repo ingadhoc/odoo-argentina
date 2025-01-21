@@ -55,7 +55,7 @@
         </t>
 
         <div name="comment" position="before">
-            <p t-if="o._fields.get('move_currency_id') and o.move_currency_id">
+            <p t-if="o._fields.get('move_currency_id') and o.move_currency_id and o.move_inverse_currency_rate  &gt; 0.0">
                 El total de este comprobante equivale a un total de <span t-out="o.amount_total / o.move_inverse_currency_rate" t-options="{'widget': 'monetary', 'display_currency': o.move_currency_id}"/> a un tipo de cambio consignado de <span t-field="o.move_inverse_currency_rate"/>
             </p>
             <p t-if="o.company_id.l10n_ar_invoice_report_ars_amount and o.currency_id != o.company_id.currency_id">

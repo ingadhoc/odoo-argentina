@@ -19,7 +19,7 @@
                 <label class="control-label" for="l10n_latam_identification_type_id">Document Type</label>
                 <input name="commercial_partner_id" class="form-control" t-att-value="partner.commercial_partner_id.id" type='hidden'/>
                 <t t-set="document_type" t-value="partner.commercial_partner_id.l10n_latam_identification_type_id"/>
-                <t t-if="document_type">
+                <t t-if="not partner_can_edit_vat">
                     <p class="form-control" t-out="document_type.name" readonly="1" title="Changing your document type is not allowed. Please contact us directly for this operation."/>
                     <input name="l10n_latam_identification_type_id" class="form-control" t-att-value="document_type.id" type='hidden'/>
                 </t>
@@ -27,7 +27,7 @@
                     <select name="l10n_latam_identification_type_id" class="form-control">
                         <option value="">Document Type...</option>
                         <t t-foreach="identification_types or []" t-as="document_identification">
-                            <option t-att-value="document_identification.id" t-att-selected="str(document_identification.id) == l10n_latam_identification_type_id">
+                            <option t-att-value="document_identification.id" t-att-selected="document_identification.id == latam_ident_type">
                                 <t t-out="document_identification.name"/>
                             </option>
                         </t>
@@ -38,14 +38,14 @@
             <!-- Add document number -->
             <div t-attf-class="form-group #{error.get('vat') and 'o_has_error' or ''} col-xl-6">
                 <label class="col-form-label" for="vat">Document Number</label>
-                <input type="text" name="vat" t-attf-class="form-control #{error.get('vat') and 'is-invalid' or ''}" t-att-value="partner.commercial_partner_id.vat or vat" t-att-readonly="'1' if partner.commercial_partner_id.vat else None" t-att-title="'Changing your document number is not allowed. Please contact us directly for this operation.' if partner.commercial_partner_id.vat else None"/>
+                <input type="text" name="vat" t-attf-class="form-control #{error.get('vat') and 'is-invalid' or ''}" t-att-value="partner.commercial_partner_id.vat or vat" t-att-readonly="'1' if not partner_can_edit_vat else None" t-att-title="'Changing your document number is not allowed. Please contact us directly for this operation.' if partner.commercial_partner_id.vat else None"/>
             </div>
 
             <!-- Add AFIP Responsibility -->
             <div t-attf-class="form-group #{error.get('l10n_ar_afip_responsibility_type_id') and 'has-error' or ''} col-xl-6">
                 <label class="control-label" for="l10n_ar_afip_responsibility_type_id">AFIP Responsibility</label>
                 <t t-set="afip_responsibility" t-value="partner.commercial_partner_id.l10n_ar_afip_responsibility_type_id"/>
-                <t t-if="afip_responsibility">
+                <t t-if="not partner_can_edit_vat">
                     <p class="form-control" t-out="afip_responsibility.name" readonly="1" title="Changing your document type is not allowed. Please contact us directly for this operation."/>
                     <input name="l10n_ar_afip_responsibility_type_id" class="form-control" t-att-value="afip_responsibility.id" type='hidden'/>
                 </t>
@@ -53,7 +53,7 @@
                     <select name="l10n_ar_afip_responsibility_type_id" class="form-control">
                         <option value="">AFIP Responsibility...</option>
                         <t t-foreach="afip_responsibilities or []" t-as="afip_res">
-                            <option t-att-value="afip_res.id" t-att-selected="str(afip_res.id) == l10n_ar_afip_responsibility_type_id">
+                            <option t-att-value="afip_res.id" t-att-selected="afip_res.id == afip_respo_type">
                                 <t t-out="afip_res.name"/>
                             </option>
                         </t>

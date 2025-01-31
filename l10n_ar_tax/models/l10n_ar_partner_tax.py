@@ -19,12 +19,12 @@ class L10nArPartnerTax(models.Model):
                 '|', ('from_date', '=', False), ('from_date', '<=', record.to_date or datetime.date.max),
                 '|', ('to_date', '=', False), ('to_date', '>=', record.from_date or datetime.date.min),
             ]
-            if self.tax_id.l10n_ar_withholding_payment_type == 'supplier':
+            if record.tax_id.l10n_ar_withholding_payment_type == 'supplier':
                 # TODO esto lo deberiamos borrar al ir a odoo 19 y solo usar los tax groups
                 # por ahora, para no renegar con scripts de migra que requieran crear tax groups para cada jurisdiccion y
                 # ademas luego tener que ajustar a lo que hagamos en 19, usamos la jursdiccion como elemento de agrupacion
                 # solo para retenciones
-                domain += [('tax_id.l10n_ar_state_id', '=', self.tax_id.l10n_ar_state_id.id)]
+                domain += [('tax_id.l10n_ar_state_id', '=', record.tax_id.l10n_ar_state_id.id)]
             conflicting_records = self.search(domain)
             if conflicting_records:
                 raise ValidationError(

@@ -23,7 +23,7 @@ def _l10n_ar_update_taxes(env):
     """
 
     # si tiene instalado chart ri o exento le actualizamos impuestos
-    companies = env['res.company'].search([('chart_template', 'in', ('ar_ri', 'ar_ex'))])
+    companies = env['res.company'].search([('chart_template', 'in', ('ar_base', 'ar_ri', 'ar_ex'))])
     for company in companies:
         env['account.chart.template']._add_wh_taxes(company)
 

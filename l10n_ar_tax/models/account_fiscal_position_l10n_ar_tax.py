@@ -90,6 +90,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 'amount': rate,
                 'active': True,
                 'name': name,
+                'l10n_ar_state_id': self.default_tax_id.l10n_ar_state_id,
             })
         return tax
 
@@ -105,6 +106,16 @@ class AccountFiscalPositionL10nArTax(models.Model):
             tax = self._ensure_tax(aliquot)
         # por mas que sea no inscripto creamos partner aliquot porque si no en cada
         # nueva linea o cambio se conecta a ws
+        if self.env.ref('base.user_demo', raise_if_not_found=False):
+            # Fix para que al cargar data demo al instalar demo_base_minimal no se termine creando 2 veces
+            # los mismos registros de 'l10n_ar.partner.tax'
+            if self.env['l10n_ar.partner.tax'].search([
+                ('partner_id', '=', partner.id), ('tax_id', '=', tax.id), ('from_date', '=', from_date),
+                ('to_date', '=', to_date), ('ref', '=', ref)]):
+                return self.env['account.tax']
+            # Fix para que al impuesto de demo 'P. IIBB CABA 3.0%' se le agregue la jurisdicción
+            if tax.tax_group_id == self.env.ref('account.%s_ri_tax_percepcion_iibb_caba_aplicada' % tax.company_id.id).tax_group_id:
+                tax.l10n_ar_state_id = self.env.ref('base.state_ar_c')
         self.env['l10n_ar.partner.tax'].create({
             'partner_id': partner.id,
             'tax_id': tax.id,

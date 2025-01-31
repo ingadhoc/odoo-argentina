@@ -95,7 +95,7 @@ class AccountChartTemplate(models.AbstractModel):
 
         profits_domain = withholdings_domain + [('l10n_ar_tax_type', 'in', ['earnings', 'earnings_scale'])]
         sequence = self.env['ir.sequence'].create({
-                'name': tax.invoice_label or 'Retención de Ganancias',
+                'name': 'Retención de Ganancias',
                 'prefix': '%(year)s-',
                 'padding': 8,
                 'number_increment': 1,

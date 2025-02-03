@@ -90,7 +90,6 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 'amount': rate,
                 'active': True,
                 'name': name,
-                'l10n_ar_state_id': self.default_tax_id.l10n_ar_state_id,
             })
         return tax
 

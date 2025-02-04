@@ -169,23 +169,17 @@ class AccountPayment(models.Model):
         res = super()._get_trigger_fields_to_synchronize()
         return res + ('l10n_ar_withholding_line_ids',)
 
-    @api.constrains('currency_id', 'company_id', 'l10n_ar_withholding_line_ids')
-    def _check_withholdings_and_currency(self):
-        for rec in self:
-            if rec.l10n_ar_withholding_line_ids and rec.currency_id != rec.company_id.currency_id:
-                raise UserError(_('Withholdings must be done in "%s" currency') % rec.company_id.currency_id.name)
-
     def _prepare_move_line_default_vals(self, write_off_line_vals=None, force_balance=None):
         res = super()._prepare_move_line_default_vals(write_off_line_vals, force_balance=force_balance)
         res += self._prepare_witholding_write_off_vals()
         wth_amount = sum(self.l10n_ar_withholding_line_ids.mapped('amount'))
+        conversion_rate = self.exchange_rate or 1.0
         # TODO: EVALUAR
         # si cambio el valor de la cuenta de liquides quitando las retenciones el campo amount representa el monto que cancelo de la deuda
         # si cambio la cuenta de contraparte (agregando retenciones) el campo amount representa el monto neto que abono al partner
         # Ambos caminos funcionan pero no se cual es mejor a nivel usabilidad. depende como realizemos el calculo automatico de la ret
         # liquidity_accounts = [x.id for x in self._get_valid_liquidity_accounts() if x]
         valid_account_types = self._get_valid_payment_account_types()
-
         for line in res:
             account_id = self.env['account.account'].browse(line['account_id'])
             # if line['account_id'] in liquidity_accounts:
@@ -193,11 +187,11 @@ class AccountPayment(models.Model):
                 if self.payment_type == 'inbound':
                     line['credit'] += wth_amount
                     if not self._use_counterpart_currency():
-                        line['amount_currency'] -= wth_amount
+                        line['amount_currency'] -= wth_amount / conversion_rate
                 elif self.payment_type == 'outbound':
                     line['debit'] += wth_amount
                     if not self._use_counterpart_currency():
-                        line['amount_currency'] += wth_amount
+                        line['amount_currency'] += wth_amount / conversion_rate
         return res
 
     ###################################################

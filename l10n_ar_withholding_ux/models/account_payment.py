@@ -149,6 +149,7 @@ class AccountPayment(models.Model):
         res = super()._prepare_move_line_default_vals(write_off_line_vals, force_balance=force_balance)
         res += self._prepare_witholding_write_off_vals()
         wth_amount = sum(self.l10n_ar_withholding_line_ids.mapped('amount'))
+        conversion_rate = self.exchange_rate or 1.0
         # TODO: EVALUAR
         # si cambio el valor de la cuenta de liquides quitando las retenciones el campo amount representa el monto que cancelo de la deuda
         # si cambio la cuenta de contraparte (agregando retenciones) el campo amount representa el monto neto que abono al partner
@@ -162,10 +163,10 @@ class AccountPayment(models.Model):
             if account_id.account_type in valid_account_types:
                 if self.payment_type == 'inbound':
                     line['credit'] += wth_amount
-                    line['amount_currency'] -= wth_amount
+                    line['amount_currency'] -= wth_amount / conversion_rate
                 elif self.payment_type == 'outbound':
                     line['debit'] += wth_amount
-                    line['amount_currency'] += wth_amount
+                    line['amount_currency'] += wth_amount / conversion_rate
         return res
 
     ###################################################

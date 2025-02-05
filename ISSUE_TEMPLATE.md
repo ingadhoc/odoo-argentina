@@ -1,22 +1,22 @@
 > **No me gusta mi camisa**
 >
 > *Version affectada:*
-> 
+>
 >  - 7.0 y encima
-> 
+>
 > *Pasos para reproducir:*
-> 
+>
 >  1. ponerse antes de un espejo
 >  2. prender la luz
 >  3. abrir los ojos
-> 
+>
 > *Lo que pasa actualmente:*
-> 
+>
 >  - Asusto
-> 
+>
 > *Lo que debe pasar:*
-> 
->  - Todo bien, listo para la fiesta 
+>
+>  - Todo bien, listo para la fiesta
 >
 > *Analisis profunda:*
 >

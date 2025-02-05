@@ -5,4 +5,3 @@
         <field name="l10n_ar_gross_income_number" eval="123456"/>
     </record>
 </odoo>
-

@@ -1,12 +1,13 @@
-from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
-from io import BytesIO
-import zipfile
-import tempfile
+import base64
+import logging
 import os
 import re
-import logging
-import base64
+import tempfile
+import zipfile
+
+from odoo import api, fields, models
+from odoo.exceptions import ValidationError
+
 _logger = logging.getLogger(__name__)
 
 
@@ -19,9 +20,7 @@ class ResCompanyJurisdictionPadron(models.Model):
         required=True,
         default=lambda self: self.env.company,
     )
-    state_id = fields.Many2one(
-        'res.country.state', string="Jurisdiction",
-        domain="[('country_id.code', '=', 'AR')]")
+    state_id = fields.Many2one("res.country.state", string="Jurisdiction", domain="[('country_id.code', '=', 'AR')]")
     file_padron = fields.Binary(
         "File",
         required=True,
@@ -35,18 +34,17 @@ class ResCompanyJurisdictionPadron(models.Model):
         required=True,
     )
 
-    @api.constrains('state_id')
+    @api.constrains("state_id")
     def check_state_id(self):
         for rec in self:
-            if rec.state_id.jurisdiction_code != '902':
+            if rec.state_id.jurisdiction_code != "902":
                 raise ValidationError("El padron para (%s) no está implementado." % rec.state_id.name)
 
-    @api.depends('company_id', 'state_id')
+    @api.depends("company_id", "state_id")
     def name_get(self):
         res = []
         for padron in self:
-            name = "%s: %s" % (padron.company_id.name,
-                               padron.state_id.name)
+            name = "%s: %s" % (padron.company_id.name, padron.state_id.name)
             res += [(padron.id, name)]
         return res
 
@@ -61,16 +59,15 @@ class ResCompanyJurisdictionPadron(models.Model):
         fname = fobj.name
         fobj.write(file)
         fobj.close()
-        f = open(fname, 'r+b')
+        f = open(fname, "r+b")
         f.write(base64.b64decode(file_padron))
-        with zipfile.ZipFile(f, 'r') as zip_file:
+        with zipfile.ZipFile(f, "r") as zip_file:
             zip_file.extractall(path=ruta_extraccion)
             zip_file.close()
 
     def find_aliquot(self, path, cuit):
-        """We try to find aliqut and number for a partner given
-        """
-        with open(path, "r") as fp:
+        """We try to find aliqut and number for a partner given"""
+        with open(path) as fp:
             aliq = False
             nro = False
             for line in fp.readlines():
@@ -83,9 +80,8 @@ class ResCompanyJurisdictionPadron(models.Model):
 
     def find_file(self, rootdir, type_code):
         res = False
-        date = str(self.l10n_ar_padron_from_date.month) + \
-            str(self.l10n_ar_padron_from_date.year)
-        pattern = "%s.{1}|.TXT\Z" % type_code + date
+        date = str(self.l10n_ar_padron_from_date.month) + str(self.l10n_ar_padron_from_date.year)
+        pattern = r"%s.{1}|.TXT\Z" % type_code + date
         for subdir, dirs, files in os.walk(rootdir):
             for f in files:
                 if re.search(pattern, f):

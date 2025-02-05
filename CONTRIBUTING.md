@@ -5,4 +5,3 @@ Please follow the official guide from [Odoo Argentina](https://github.com/ingadh
 ## Project Specific Guidelines
 
 This project does not have specific coding guidelines.
-

@@ -24,7 +24,7 @@
         'views/account_payment_view.xml',
         'views/account_journal_views.xml',
         'views/ir_actions_views.xml',
-        'wizards/res_config_settings_views.xml',
+        'views/res_config_settings_views.xml',
         'reports/account_invoice_report_view.xml',
         'security/ir.model.access.csv',
         'security/l10n_ar_ux_security.xml',

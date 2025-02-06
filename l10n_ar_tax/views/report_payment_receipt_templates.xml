@@ -84,7 +84,7 @@
                                 <span class="text-nowrap" t-out="check.amount if o.other_currency else secondary_currency.round(check.amount * secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>
                             </td>
                             <td class="text-right o_price_total">
-                                <span class="text-nowrap" t-out="check.amount * secondary_currency_rate if o.other_currency else o.company_currency_id.round(o.amount / secondary_currency_rate)"  t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                                <span class="text-nowrap" t-if="secondary_currency" t-out="check.amount * secondary_currency_rate if o.other_currency else o.company_currency_id.round(o.amount / secondary_currency_rate)"  t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
                             </td>
                         </tr>
                     </t>

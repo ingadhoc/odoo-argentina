@@ -83,5 +83,21 @@
         </div>
     </template>
 
+    <!-- Fixing the headers to make layouts work first and next pages -->
+
+    <template id="external_layout_standard_pt_0" inherit_id="web.external_layout_standard">
+        <div class="pt-5" position="attributes">
+            <attribute name="class">pt-0</attribute>
+        </div>
+    </template>
+
+    <template id="external_layout_boxed_pt_0" inherit_id="web.external_layout_boxed">
+        <div class="pt-5" position="attributes">
+            <attribute name="class">pt-0</attribute>
+        </div>
+    </template>
+
+    <!-- Bold and Striped layouts do not have pt-5, so they are not modified -->
+
 
 </odoo>

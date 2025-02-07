@@ -1,4 +1,5 @@
 from odoo import fields, models
+from odoo.exceptions import UserError
 
 
 class AccountFiscalPosition(models.Model):
@@ -11,6 +12,15 @@ class AccountFiscalPosition(models.Model):
         self.ensure_one()
         taxes = self.env["account.tax"]
         for fp_tax in self.l10n_ar_tax_ids.filtered(lambda x: x.tax_type == tax_type):
+            if fp_tax.default_tax_id.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
+                # Si se va a calcular retención de ganancias previamente queremos que tenga configurado el partner
+                # La inscripción imp_ganancias_padron que corresponda.
+                if partner.imp_ganancias_padron == False:
+                    raise UserError(
+                        self.env._("The partner %s does not have the profits inscription set." % partner.name)
+                    )
+                if partner.imp_ganancias_padron != "AC":
+                    continue
             domain = self.env["l10n_ar.partner.tax"]._check_company_domain(company)
             domain += [("tax_id.tax_group_id", "=", fp_tax.default_tax_id.tax_group_id.id)]
             if tax_type == "withholding":

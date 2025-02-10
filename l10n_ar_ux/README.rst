@@ -63,6 +63,10 @@ Bugs are tracked on `GitHub Issues
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 
+Known issues / Roadmap
+======================
+* Before installing this module, the account_ux module should be installed to avoid errors. This happens due to an unintentional dependency when adding functionality related to currency conversion.
+
 Credits
 =======
 

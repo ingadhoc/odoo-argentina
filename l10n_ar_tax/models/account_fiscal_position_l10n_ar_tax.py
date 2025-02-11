@@ -102,7 +102,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
         self.ensure_one()
         from_date = date + relativedelta(day=1)
         to_date = from_date + relativedelta(days=-1, months=+1)
-        aliquot, ref = getattr(self, "_get_%s_data" % self.webservice)(partner, date, to_date)
+        aliquot, ref = getattr(self, "_get_%s_data" % self.webservice)(partner, from_date, to_date)
         # devolvemos None si es no inscripto
         if aliquot is None:
             tax = self.default_tax_id
@@ -200,7 +200,9 @@ class AccountFiscalPositionL10nArTax(models.Model):
         # figura en el padron, aplicamos alicuota no inscripto
         if ws.NumeroComprobante:
             return (
-                ws.AlicuotaRetencion if self.tax_type == "withholding" else ws.AlicuotaPercepcion,
+                float(ws.AlicuotaRetencion.replace(",", "."))
+                if self.tax_type == "withholding"
+                else float(ws.AlicuotaPercepcion.replace(",", ".")),
                 "%s | %s | %s"
                 % (
                     ws.NumeroComprobante,

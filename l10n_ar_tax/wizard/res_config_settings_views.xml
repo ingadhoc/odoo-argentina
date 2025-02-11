@@ -11,7 +11,7 @@
                     <div class="content-group" invisible="country_code != 'AR'">
                         <div class="row mt16">
                             <label for="arba_cit" class="col-lg-3 o_light_label"/>
-                            <field name="arba_cit"/>
+                            <field name="arba_cit" password="True"/>
                         </div>
                         <div class="row mt16">
                             <button name="l10n_ar_arba_cit_test" type="object" class="oe_link oe_inline" string="⇒ Verificar Clave ARBA"/>

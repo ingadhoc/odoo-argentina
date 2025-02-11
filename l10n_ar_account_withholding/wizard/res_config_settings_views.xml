@@ -26,7 +26,7 @@
                     <div class="content-group" invisible="country_code != 'AR'">
                         <div class="row mt16">
                             <label for="arba_cit" class="col-lg-3 o_light_label"/>
-                            <field name="arba_cit"/>
+                            <field name="arba_cit" password="True"/>
                         </div>
                         <div class="row mt16">
                             <label for="arba_alicuota_no_sincripto_retencion" class="col-lg-3 o_light_label"/>

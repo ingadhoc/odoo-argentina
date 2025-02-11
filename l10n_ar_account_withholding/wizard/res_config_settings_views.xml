@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="res_config_settings_view_form">
+        <field name="name">res.config.settings.view.form.inherit.l10n_ar_afip_ws</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="l10n_ar.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='argentina_localization']" position="inside">
+                <setting id="ganancias_tax" string="Ganancias" company_dependent="1" title="En los proveedores podrá especificar cualquier régimen, y dicho regímen será utilizado por defecto en los pagos a ese proveedor.En los pagos podrá solo seleccionar manualemente alguno de los regímenes que defina a continuación.">
+                    <div class="content-group" invisible="country_code != 'AR'">
+                        <div class="row mt16">
+                            <label for="regimenes_ganancias_ids" class="col-lg-3 o_light_label"/>
+                            <field name="regimenes_ganancias_ids" widget="many2many_tags"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting id="withholding_amount_type" string="withholding amount type" company_dependent="1" title="En la configuración de alícuotas de retenciones/percepciones de cada partner. Exige definir si la base de cálculo es según el total del comprobante o el valor neto de impuestos. Se utiliza por ej. en Santa Fe donde la base de cálculo para los inscriptios en convenio multilateral se realiza sobre el total (sin descontar impuestos).">
+                    <div class="content-group" invisible="country_code != 'AR'">
+                        <div class="row mt16">
+                            <label for="group_partner_tax_withholding_amount_type" class="col-lg-3 o_light_label"/>
+                            <field name="group_partner_tax_withholding_amount_type"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting id="arba_cit" string="ARBA" company_dependent="1" title="Indique la clave CIT si utiliza padrón de ARBA de ret/perc de iibb.">
+                    <div class="content-group" invisible="country_code != 'AR'">
+                        <div class="row mt16">
+                            <label for="arba_cit" class="col-lg-3 o_light_label"/>
+                            <field name="arba_cit" password="True"/>
+                        </div>
+                        <div class="row mt16">
+                            <label for="arba_alicuota_no_sincripto_retencion" class="col-lg-3 o_light_label"/>
+                            <field name="arba_alicuota_no_sincripto_retencion"/>
+                        </div>
+                        <div class="row mt16">
+                            <label for="arba_alicuota_no_sincripto_percepcion" class="col-lg-3 o_light_label"/>
+                            <field name="arba_alicuota_no_sincripto_percepcion"/>
+                        </div>
+                        <div class="row mt16">
+                            <button name="l10n_ar_arba_cit_test" type="object" class="oe_link oe_inline" string="⇒ Verificar Clave ARBA"/>
+                        </div>
+
+                    </div>
+                </setting>
+                <setting id="agip_padron_type" string="AGIP" company_dependent="1" title="Si es agente de Ret/Perc de AGIP especifique.">
+                    <div class="content-group" invisible="country_code != 'AR'">
+                        <div class="row mt16">
+                            <label for="agip_padron_type" class="col-lg-3 o_light_label"/>
+                            <field name="agip_padron_type"/>
+                        </div>
+                        <div class="row mt16">
+                            <label for="agip_alicuota_no_sincripto_retencion" class="col-lg-3 o_light_label"/>
+                            <field name="agip_alicuota_no_sincripto_retencion"/>
+                        </div>
+                        <div class="row mt16">
+                            <label for="agip_alicuota_no_sincripto_percepcion" class="col-lg-3 o_light_label"/>
+                            <field name="agip_alicuota_no_sincripto_percepcion"/>
+                        </div>
+                    </div>
+                </setting>
+                <setting id="dgr_padron_type" string="DGR Córdoba" company_dependent="1" title="Si es agente de Ret/Perc de DGR Córdoba especifique.">
+                    <div class="content-group" invisible="country_code != 'AR'">
+                        <div class="row mt16">
+                            <label for="cdba_alicuota_no_sincripto_retencion" class="col-lg-3 o_light_label"/>
+                            <field name="cdba_alicuota_no_sincripto_retencion"/>
+                        </div>
+                        <div class="row mt16">
+                            <label for="cdba_alicuota_no_sincripto_percepcion" class="col-lg-3 o_light_label"/>
+                            <field name="cdba_alicuota_no_sincripto_percepcion"/>
+                        </div>
+                    </div>
+                </setting>
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

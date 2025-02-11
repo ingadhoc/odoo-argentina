@@ -1,4 +1,5 @@
-from odoo import fields, models
+from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class AccountFiscalPosition(models.Model):
@@ -36,3 +37,20 @@ class AccountFiscalPosition(models.Model):
                 partner_tax = fp_tax._get_missing_taxes(partner, date)
             taxes |= partner_tax
         return taxes
+
+    @api.constrains("l10n_ar_tax_ids")
+    def _check_tax_type(self):
+        """Aquellas retenciones/percepciones en la posición fiscal que tengan un impuesto por defecto de retención
+        entonces deberán tener tipo 'retención' y si son de percepción entonces deberán tener tipo 'percepcion'."""
+        if wrong_tax_type_records := self.l10n_ar_tax_ids.filtered(
+            lambda x: x.tax_type == "withholding"
+            and x.default_tax_id.type_tax_use != "none"
+            or x.tax_type == "perception"
+            and x.default_tax_id.type_tax_use == "none"
+        ):
+            raise ValidationError(
+                self.env._(
+                    "Perceptions/Withholdings with wrong document type %s."
+                    % ", ".join(wrong_tax_type_records.default_tax_id.mapped("name"))
+                )
+            )

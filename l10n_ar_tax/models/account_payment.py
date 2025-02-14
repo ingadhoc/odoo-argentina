@@ -34,11 +34,20 @@ class AccountPayment(models.Model):
     @api.depends("to_pay_move_line_ids", "partner_id")
     def _compute_fiscal_position_id(self):
         for rec in self:
+            # Busco si ya no se calcularon las retenciones en un pago anterior
+            # con el objetivo de no duplicar las retenciones
+            move_ids = rec.to_pay_move_line_ids.move_id.ids
+            payments = (
+                rec.env["account.payment"]
+                .search([])
+                .filtered(lambda x: any(move in x.reconciled_bill_ids.ids for move in move_ids))
+            )
             if (
                 rec.state != "draft"
                 or rec.partner_type != "supplier"
                 or rec.country_code != "AR"
                 or not rec.use_payment_pro
+                or payments.l10n_ar_fiscal_position_id
             ):
                 rec.l10n_ar_fiscal_position_id = False
                 continue

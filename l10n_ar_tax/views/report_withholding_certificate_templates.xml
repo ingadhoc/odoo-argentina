@@ -62,7 +62,7 @@
                                     Tal vez para IIBB y otros podamos hacer similar. En realidad lo ideal es modificar chart para que tenga invoice_label en todos los casos.
                                 -->
                                 <span t-if="o.tax_id.l10n_ar_tax_type in ['earnings', 'earnings_scale']" t-out="o.tax_id.invoice_label or 'Retención Ganancias'"/>
-                                <span t-else="" t-field="o.tax_id.invoice_label or o.tax_id.name"/>
+                                <span t-else="" t-out="o.tax_id.invoice_label or o.tax_id.name"/>
                             </td>
                         </tr>
                         <tr>

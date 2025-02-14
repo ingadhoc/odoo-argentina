@@ -92,7 +92,7 @@
                         <tr>
                             <td>
                                 <span t-if="line.tax_id.l10n_ar_tax_type in ['earnings', 'earnings_scale']" t-out="line.tax_id.invoice_label or 'Retención Ganancias'"/>
-                                <span t-else="" t-field="line.tax_id.invoice_label or line.tax_id.name"/>
+                                <span t-else="" t-out="line.tax_id.invoice_label or line.tax_id.name"/>
                             </td>
                             <td class="text-right" t-if="secondary_currency">
                                 <span class="text-nowrap" t-out="secondary_currency.round(line.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>

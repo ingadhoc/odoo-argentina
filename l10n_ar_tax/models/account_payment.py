@@ -39,6 +39,7 @@ class AccountPayment(models.Model):
                 or rec.partner_type != "supplier"
                 or rec.country_code != "AR"
                 or not rec.use_payment_pro
+                or self.env.context.get("create_and_new")
             ):
                 rec.l10n_ar_fiscal_position_id = False
                 continue

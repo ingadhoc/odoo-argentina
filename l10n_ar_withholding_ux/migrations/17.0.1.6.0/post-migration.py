@@ -1,11 +1,10 @@
 import logging
 
-from openupgradelib import openupgrade
+from odoo.upgrade import util
 
 logger = logging.getLogger(__name__)
 
 
-@openupgrade.migrate()
-def migrate(env, version):
+def migrate(cr, version):
     logger.info("Forzamos la actualización de la vista res_company_setting.xml en módulo account payment pro")
-    openupgrade.load_data(env, "account_payment_pro", "views/res_company_setting.xml")
+    util.update_record_from_xml(cr, "account_payment_pro.res_config_settings_view_form")

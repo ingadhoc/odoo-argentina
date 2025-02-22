@@ -5,7 +5,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
-class l10nArPaymentRegisterWithholding(models.Model):
+class l10nArPaymentWithholding(models.Model):
     _name = "l10n_ar.payment.withholding"
     _description = "Payment withholding lines"
 
@@ -39,6 +39,7 @@ class l10nArPaymentRegisterWithholding(models.Model):
             # factura y ocultamos el campo sin impuesto y el metodo _get_withholdable_advanced_amount nos devuelve
             # el proporcional descontando de el iva a lo que se esta pagando
             advance_amount = wth.payment_id.withholdable_advanced_amount
+            tax = wth._get_withholding_tax()
             if advance_amount < 0.0:
                 sorted_to_pay_lines = sorted(
                     wth.payment_id.to_pay_move_line_ids, key=lambda a: a.date_maturity or a.date
@@ -57,12 +58,12 @@ class l10nArPaymentRegisterWithholding(models.Model):
                         )
                     )
                 advance_amount = wth.payment_id.unreconciled_amount
-                if wth.tax_id.l10n_ar_tax_type != "iibb_total":
+                if tax.l10n_ar_tax_type != "iibb_total":
                     advance_amount = advance_amount * (
                         wth.payment_id.selected_debt_untaxed / wth.payment_id.selected_debt
                     )
 
-            if wth.tax_id.l10n_ar_tax_type == "iibb_total":
+            if tax.l10n_ar_tax_type == "iibb_total":
                 wth.base_amount = wth.payment_id.selected_debt + advance_amount
             else:
                 wth.base_amount = wth.payment_id.selected_debt_untaxed + advance_amount
@@ -72,47 +73,16 @@ class l10nArPaymentRegisterWithholding(models.Model):
         self.ensure_one()
         # Computes the withholding tax amount provided a base and a tax
         # It is equivalent to: amount = self.base * self.tax_id.amount / 100
-
+        tax = self._get_withholding_tax()
         # if it is earnings withholding, then we accumulate the tax base for the period
-        if self.tax_id.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
-            to_date = self.payment_id.date or datetime.date.today()
-            from_date = to_date + relativedelta(day=1)
-            # We search for the payments in the same month of the same regimen and the same code.
-            domain_same_period_withholdings = [
-                *self.env["account.move.line"]._check_company_domain(self.tax_id.company_id),
-                ("parent_state", "=", "posted"),
-                ("tax_line_id.l10n_ar_code", "=", self.tax_id.l10n_ar_code),
-                ("tax_line_id.l10n_ar_tax_type", "in", ["earnings", "earnings_scale"]),
-                ("partner_id", "=", self.payment_id.partner_id.commercial_partner_id.id),
-                ("date", "<=", to_date),
-                ("date", ">=", from_date),
-            ]
-            if same_period_partner_withholdings := self.env["account.move.line"]._read_group(
-                domain_same_period_withholdings, ["partner_id"], ["balance:sum"]
-            ):
-                same_period_withholdings = abs(same_period_partner_withholdings[0][1])
-            else:
-                same_period_withholdings = 0.0
-            domain_same_period_base = [
-                *self.env["account.move.line"]._check_company_domain(self.tax_id.company_id),
-                ("parent_state", "=", "posted"),
-                ("tax_ids.l10n_ar_code", "=", self.tax_id.l10n_ar_code),
-                ("tax_ids.l10n_ar_tax_type", "in", ["earnings", "earnings_scale"]),
-                ("partner_id", "=", self.payment_id.partner_id.commercial_partner_id.id),
-                ("date", "<=", to_date),
-                ("date", ">=", from_date),
-            ]
-            if same_period_partner_base := self.env["account.move.line"]._read_group(
-                domain_same_period_base, ["partner_id"], ["balance:sum"]
-            ):
-                same_period_base = abs(same_period_partner_base[0][1])
-            else:
-                same_period_base = 0.0
+        if tax.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
+            same_period_withholdings = self._get_same_period_withholdings_amount()
+            same_period_base = self._get_same_period_base_amount()
             net_amount = self.base_amount + same_period_base
         else:
             net_amount = self.base_amount
-        net_amount = max(0, net_amount - self.tax_id.l10n_ar_non_taxable_amount)
-        taxes_res = self.tax_id.compute_all(
+        net_amount = max(0, net_amount - tax.l10n_ar_non_taxable_amount)
+        taxes_res = tax.compute_all(
             net_amount,
             currency=self.payment_id.currency_id,
             quantity=1.0,
@@ -125,15 +95,15 @@ class l10nArPaymentRegisterWithholding(models.Model):
         tax_repartition_line_id = taxes_res["taxes"][0]["tax_repartition_line_id"]
 
         ref = False
-        if self.tax_id.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
+        if tax.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
             f = self.currency_id.format
             if net_amount <= 0:
-                ref = f"{f(self.base_amount)} + {f(same_period_base)} - {f(self.tax_id.l10n_ar_non_taxable_amount)} = {f(self.base_amount + same_period_base - self.tax_id.l10n_ar_non_taxable_amount)} (no corresponde aplicar)"
+                ref = f"{f(self.base_amount)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)} = {f(self.base_amount + same_period_base - tax.l10n_ar_non_taxable_amount)} (no corresponde aplicar)"
             # if it is earnings scale we calculate according to the scale.
-            if self.tax_id.l10n_ar_tax_type == "earnings_scale":
+            if tax.l10n_ar_tax_type == "earnings_scale":
                 escala = self.env["l10n_ar.earnings.scale.line"].search(
                     [
-                        ("scale_id", "=", self.tax_id.l10n_ar_scale_id.id),
+                        ("scale_id", "=", tax.l10n_ar_scale_id.id),
                         ("excess_amount", "<=", net_amount),
                         ("to_amount", ">", net_amount),
                     ],
@@ -143,15 +113,15 @@ class l10nArPaymentRegisterWithholding(models.Model):
                 # for eg. (1000000.0 + 0.0 - 7870.0 - 1231231) * 7.0 % + 1231231 - 0.0
                 ref = (
                     ref
-                    or f"({f(self.base_amount)} + {f(same_period_base)} - {f(self.tax_id.l10n_ar_non_taxable_amount)} - {f(escala.excess_amount)}) * {escala.percentage}% + {f(escala.fixed_amount)} - {f(same_period_withholdings)}"
+                    or f"({f(self.base_amount)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)} - {f(escala.excess_amount)}) * {escala.percentage}% + {f(escala.fixed_amount)} - {f(same_period_withholdings)}"
                 )
             else:
                 # for eg. (1000000.0 + 0.0 - 7870.0) * 7.0% - 0.0
-                ref = f"({f(self.base_amount)} + {f(same_period_base)} - {f(self.tax_id.l10n_ar_non_taxable_amount)}) * {self.tax_id.amount}% - {f(same_period_withholdings)}"
+                ref = f"({f(self.base_amount)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)}) * {tax.amount}% - {f(same_period_withholdings)}"
             # deduct withholdings from the same period
             tax_amount -= same_period_withholdings
 
-        l10n_ar_minimum_threshold = self.tax_id.l10n_ar_minimum_threshold
+        l10n_ar_minimum_threshold = tax.l10n_ar_minimum_threshold
         if l10n_ar_minimum_threshold > tax_amount:
             tax_amount = 0.0
         return tax_amount, tax_account_id, tax_repartition_line_id, ref
@@ -159,10 +129,85 @@ class l10nArPaymentRegisterWithholding(models.Model):
     @api.depends("base_amount", "tax_id")
     def _compute_amount(self):
         for line in self:
-            if not line.tax_id:
+            # TODO: usar _get_withholding_tax no deberia ser necesario
+            # si al pasar a draft modificamos la linea
+            tax_id = line._get_withholding_tax()
+            if not tax_id:
                 line.amount = 0.0
                 line.ref = False
             else:
                 tax_amount, __, __, ref = line._tax_compute_all_helper()
                 line.amount = tax_amount
                 line.ref = ref
+
+    ########################
+    # EARNING COMPUTE HELPERS
+    ########################
+
+    def _get_same_period_dates(self):
+        self.ensure_one()
+        to_date = self.payment_id.date or datetime.date.today()
+        from_date = to_date + relativedelta(day=1)
+        return to_date, from_date
+
+    def _get_same_period_withholdings_domain(self):
+        """Returns a heritable domain of earnings withholdings that
+        belong to the same regime, same commercial partner,
+        and from the month of payment between the 1st and the day of payment.
+        """
+        self.ensure_one()
+        to_date, from_date = self._get_same_period_dates()
+        tax_id = self._get_withholding_tax()
+        return [
+            *self.env["account.move.line"]._check_company_domain(tax_id.company_id),
+            ("parent_state", "=", "posted"),
+            ("tax_line_id.l10n_ar_code", "=", tax_id.l10n_ar_code),
+            ("tax_line_id.l10n_ar_tax_type", "in", ["earnings", "earnings_scale"]),
+            ("partner_id", "=", self.payment_id.partner_id.commercial_partner_id.id),
+            ("date", "<=", to_date),
+            ("date", ">=", from_date),
+        ]
+
+    def _get_same_period_withholdings_amount(self):
+        """Return Cummulated withholding amount"""
+        self.ensure_one()
+        # We search for the payments in the same month of the same regimen and the same code.
+        domain_same_period_withholdings = self._get_same_period_withholdings_domain()
+        if same_period_partner_withholdings := self.env["account.move.line"]._read_group(
+            domain_same_period_withholdings, ["partner_id"], ["balance:sum"]
+        ):
+            return abs(same_period_partner_withholdings[0][1])
+        return 0.0
+
+    def _get_same_period_base_domain(self):
+        """Returns a heritable domain of earnings bases that
+        belong to the same regime, same commercial partner,
+        and from the month of payment between the 1st and the day of payment.
+        """
+        self.ensure_one()
+        to_date, from_date = self._get_same_period_dates()
+        tax_id = self._get_withholding_tax()
+        return [
+            *self.env["account.move.line"]._check_company_domain(tax_id.company_id),
+            ("parent_state", "=", "posted"),
+            ("tax_ids.l10n_ar_code", "=", tax_id.l10n_ar_code),
+            ("tax_ids.l10n_ar_tax_type", "in", ["earnings", "earnings_scale"]),
+            ("partner_id", "=", self.payment_id.partner_id.commercial_partner_id.id),
+            ("date", "<=", to_date),
+            ("date", ">=", from_date),
+        ]
+
+    def _get_same_period_base_amount(self):
+        """Return Cummulated withholding base"""
+        self.ensure_one()
+        domain_same_period_base = self._get_same_period_base_domain()
+        if same_period_partner_base := self.env["account.move.line"]._read_group(
+            domain_same_period_base, ["partner_id"], ["balance:sum"]
+        ):
+            return abs(same_period_partner_base[0][1])
+        return 0.0
+
+    def _get_withholding_tax(self):
+        """Return the applicable withheld tax"""
+        self.ensure_one()
+        return self.tax_id

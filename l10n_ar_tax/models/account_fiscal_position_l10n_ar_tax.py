@@ -221,6 +221,10 @@ class AccountFiscalPositionL10nArTax(models.Model):
         :param to_date: Fecha de fin de validez de alícuota por defecto
         Devuelve diccionario de datos
         """
+        # Datos de prueba para instancias demo
+        if self.env.ref("base.user_demo", raise_if_not_found=False):
+            return (2.5 if self.tax_type == "withholding" else 3.0, "VALOR DUMMY | dummy")
+
         _logger.info("Getting withholding data from rentascordoba.gob.ar")
 
         # Establecer parámetros de solicitud
@@ -229,11 +233,17 @@ class AccountFiscalPositionL10nArTax(models.Model):
         headers = {"content-type": "application/json"}
 
         # Realizar solicitud
-        r = requests.post(url, data=json.dumps(payload), headers=headers, timeout=10)
-        json_body = r.json()
-
-        if r.status_code != 200:
-            raise UserError("Error al contactar rentascordoba.gob.ar. " "El servidor respondió: \n\n%s" % json_body)
+        try:
+            r = requests.post(url, data=json.dumps(payload), headers=headers, timeout=10)
+            json_body = r.json()
+        except requests.exceptions.Timeout:
+            msg = self.env._("Timeout error when getting data from rentascordoba.gob.ar")
+            _logger.warning("%s" % msg)
+            raise UserError("%s" % msg)
+        except requests.exceptions.RequestException as e:
+            msg = self.env._("Error when contacting rentascordoba.gob.ar. The server answered: \n%s" % str(e))
+            _logger.warning("%s" % msg)
+            raise UserError("%s" % msg)
 
         code = json_body.get("errorCod")
         ref = json_body.get("message")
@@ -261,9 +271,10 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 to_date_date = fields.Date.from_string(dict_alic.get("CRD_FECHA_FIN"))
                 if not (from_date_date <= date <= to_date_date):
                     raise UserError(
-                        "No se puede obtener automáticamente la alicuota para la "
-                        "fecha %s. Por favor, ingrese la misma manualmente "
-                        "en el partner." % date
+                        self.env._(
+                            "No se puede obtener automáticamente la alicuota para la fecha %s. Por favor, ingrese la misma manualmente en el partner."
+                        )
+                        % date
                     )
 
         return aliquot, ref

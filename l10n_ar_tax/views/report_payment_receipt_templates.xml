@@ -62,9 +62,16 @@
             </div>
             <br/>
             <table class="table table-sm o_main_table" name="payments_table">
+<<<<<<< HEAD:l10n_ar_tax/views/report_payment_receipt_templates.xml
                 <t t-set="secondary_currency" t-value="o.currency_id if o.other_currency else o.counterpart_currency_id"/>
                 <t t-set="secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else o.counterpart_exchange_rate"/>
+||||||| parent of 9d558369 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
+=======
+                <t t-set="secondary_currency" t-value="o.currency_id if o.other_currency else (o.counterpart_currency_id if env['account.payment']._fields.get('counterpart_currency_id') else o.currency_id)"/>                
+                <t t-set="secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else o.counterpart_exchange_rate"/>
+>>>>>>> 9d558369 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
                 <thead>
+
                     <tr>
                         <th><span>Pagos</span></th>
                         <th class="text-right" t-if="secondary_currency"><span>Importe divisa</span></th>
@@ -94,13 +101,24 @@
                                 <span t-if="line.tax_id.l10n_ar_tax_type in ['earnings', 'earnings_scale']" t-out="line.tax_id.invoice_label or 'Retención Ganancias'"/>
                                 <span t-else="" t-out="line.tax_id.invoice_label or line.tax_id.name"/>
                             </td>
+<<<<<<< HEAD:l10n_ar_tax/views/report_payment_receipt_templates.xml
                             <td class="text-right" t-if="secondary_currency">
                                 <span class="text-nowrap" t-out="secondary_currency.round(line.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>                                                           </td>
+||||||| parent of 9d558369 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
+                            <!-- <td class="text-right" t-if="o.other_currency">
+                                <span class="text-nowrap" t-field="line.amount" t-field-options='{"widget": "monetary",  "display_currency": "o.currency_id"}'/>
+                            </td> -->
+=======
+                             <td class="text-right" t-if="secondary_currency">
+                                <span class="text-nowrap" t-out="secondary_currency.round(line.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/> 
+                            </td>
+>>>>>>> 9d558369 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
                             <td class="text-right o_price_total">
                                 <span class="text-nowrap" t-field="line.amount"/>
                             </td>
                         </tr>
                     </t>
+<<<<<<< HEAD:l10n_ar_tax/views/report_payment_receipt_templates.xml
                     <!-- si queremos imprimir solo cuando tenemos apuntes tal vez este approach puede ser mas consistente -->
                     <!-- <t t-foreach="o.l10n_ar_withholding_ids" t-as="line">
                         <t t-set='sign' t-value="o.payment_type == 'outbound' and -1 or 1"/>
@@ -127,11 +145,29 @@
                         </td>
                     </tr>
                     <tr t-if="not o._is_latam_check_payment()">
+||||||| parent of 9d558369 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
+                    <tr>
+=======
+
+                    <tr>
+>>>>>>> 9d558369 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
                         <td>
                             <span t-field="o.journal_id.name"/>
                         </td>
+<<<<<<< HEAD:l10n_ar_tax/views/report_payment_receipt_templates.xml
                         <td class="text-right" t-if="secondary_currency">
                             <span class="text-nowrap" t-out="o.amount_signed if o.other_currency else secondary_currency.round(o.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>                        </td>
+||||||| parent of 9d558369 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
+                        <!-- <td class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
+                            <t t-if="line.other_currency">
+                            <span class="text-nowrap" t-field="line.amount_signed" t-field-options='{"widget": "monetary",  "display_currency": "line.currency_id"}'/>
+                            </t>
+                        </td> -->
+=======
+                        <td class="text-right" t-if="secondary_currency">   
+                            <span class="text-nowrap" t-out="secondary_currency.round(o.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>
+                        </td>
+>>>>>>> 9d558369 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
                         <td class="text-right o_price_total">
                             <span class="text-nowrap" t-out="o.company_currency_id.round(o.amount * secondary_currency_rate) if o.other_currency else o.amount" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
                         </td>

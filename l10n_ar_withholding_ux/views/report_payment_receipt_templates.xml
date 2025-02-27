@@ -61,11 +61,13 @@
             </div>
             <br/>
             <table class="table table-sm o_main_table" name="payments_table">
+                <t t-set="secondary_currency" t-value="o.currency_id if o.other_currency else (o.counterpart_currency_id if env['account.payment']._fields.get('counterpart_currency_id') else o.currency_id)"/>                
+                <t t-set="secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else o.counterpart_exchange_rate"/>
                 <thead>
+
                     <tr>
                         <th><span>Pagos</span></th>
-                        <!-- TODO implementar el other currency -->
-                        <!-- <th class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))"><span>Importe divisa</span></th> -->
+                        <th class="text-right" t-if="secondary_currency"><span>Importe divisa</span></th>
                         <th class="text-right"><span>Importe</span></th>
                     </tr>
                 </thead>
@@ -92,25 +94,24 @@
                             <td>
                                 <span t-out='"%s - %s" % (line.tax_id.name, line.name)'/>
                             </td>
-                            <!-- <td class="text-right" t-if="o.other_currency">
-                                <span class="text-nowrap" t-field="line.amount" t-field-options='{"widget": "monetary",  "display_currency": "o.currency_id"}'/>
-                            </td> -->
+                             <td class="text-right" t-if="secondary_currency">
+                                <span class="text-nowrap" t-out="secondary_currency.round(line.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/> 
+                            </td>
                             <td class="text-right o_price_total">
                                 <span class="text-nowrap" t-field="line.amount"/>
                             </td>
                         </tr>
                     </t>
+
                     <tr>
                         <td>
                             <span t-field="o.journal_id.name"/>
                             <span class="text-nowrap" t-out="' - ' + o.l10n_latam_check_number if o.l10n_latam_check_number else False"></span>
                             <span class="text-nowrap" t-out="' - ' + o.l10n_latam_check_id.l10n_latam_check_number if o.l10n_latam_check_id.l10n_latam_check_number else False"></span>
                         </td>
-                        <!-- <td class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
-                            <t t-if="line.other_currency">
-                            <span class="text-nowrap" t-field="line.amount_signed" t-field-options='{"widget": "monetary",  "display_currency": "line.currency_id"}'/>
-                            </t>
-                        </td> -->
+                        <td class="text-right" t-if="secondary_currency">   
+                            <span class="text-nowrap" t-out="secondary_currency.round(o.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>
+                        </td>
                         <td class="text-right o_price_total">
                             <span class="text-nowrap" t-field="o.amount"/>
                         </td>
@@ -119,9 +120,9 @@
                 <tfoot>
                     <tr>
                         <td><strong><span>Total Pagado</span></strong></td>
-                        <!-- <td class="text-right" t-if="any(o.mapped('payment_ids.other_currency'))">
-                            <strong t-if="len(o.payment_ids.mapped('currency_id')) == 1 and o.payment_ids.mapped('currency_id') != o.currency_id"> <span class="text-nowrap" t-out="sum(o.payment_ids.mapped('amount_signed'))" t-options="{'widget': 'monetary', 'display_currency': o.payment_ids.mapped('currency_id')}"/></strong>
-                        </td> -->
+                        <td class="text-right" t-if="secondary_currency">
+                            <strong><span class="text-nowrap" t-out="secondary_currency.round(o.payment_total / secondary_currency_rate)" t-options="{'widget': 'monetary', 'display_currency': secondary_currency}"/></strong>
+                        </td>
                         <td class="text-right">
                             <strong><span class="text-nowrap" t-field="o.payment_total"/></strong>
                         </td>

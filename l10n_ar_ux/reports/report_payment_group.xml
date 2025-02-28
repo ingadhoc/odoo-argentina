@@ -126,6 +126,7 @@
                         <th><span>Comprobantes Imputados</span></th>
                         <th class="text-center"><span>Fecha Venc.</span></th>
                         <th class="text-right"><span>Importe Original</span></th>
+                        <th class="text-right"><span>Importe en USD</span></th>
                         <th class="text-right"><span>Importe Imputado</span></th>
                     </tr>
                 </thead>
@@ -138,6 +139,9 @@
                             </td>
                             <td class="text-right o_price_total">
                                 <span class="text-nowrap" t-raw="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-raw="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.amount_currency" t-options='{"widget": "monetary", "display_currency": line.currency_id}'/>
                             </td>
                             <td class="text-right o_price_total">
                                 <span class="text-nowrap" t-raw="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.payment_group_matched_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
@@ -155,7 +159,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="3"><strong><span>Total Imputado</span></strong></td>
+                        <td colspan="4"><strong><span>Total Imputado</span></strong></td>
                         <td class="text-right">
                             <strong><span class="text-nowrap" t-raw="o.unmatched_amount + o.matched_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
                         </td>
@@ -190,7 +194,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="3"><strong><span>Total Pendiente</span></strong></td>
+                        <td colspan="4"><strong><span>Total Pendiente</span></strong></td>
                         <td class="text-right">
                             <strong><span class="text-nowrap" t-raw="sum(o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.internal_type', '=', o.partner_type=='customer' and 'receivable' or 'payable'), ('reconciled', '=', False), ('account_id.deprecated', '=', False), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)]).mapped('amount_residual'))" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
                         </td>

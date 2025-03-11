@@ -149,7 +149,8 @@ class AccountPayment(models.Model):
         res = super()._prepare_move_line_default_vals(write_off_line_vals, force_balance=force_balance)
         res += self._prepare_witholding_write_off_vals()
         wth_amount = sum(self.l10n_ar_withholding_line_ids.mapped('amount'))
-        conversion_rate = self.exchange_rate or 1.0
+        conversion_rate = (self.counterpart_exchange_rate if 'counterpart_exchange_rate' in
+                           self._fields else self.exchange_rate) or 1.0
         # TODO: EVALUAR
         # si cambio el valor de la cuenta de liquides quitando las retenciones el campo amount representa el monto que cancelo de la deuda
         # si cambio la cuenta de contraparte (agregando retenciones) el campo amount representa el monto neto que abono al partner

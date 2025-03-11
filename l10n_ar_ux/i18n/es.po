@@ -28,9 +28,37 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
 msgid ""
+<<<<<<< HEAD
 ", para reestablecerla deberá modificar manualmente la tasa de cambio o "
 "aplicar la cotización del día."
 msgstr ""
+||||||| parent of 342ffb88 (temp)
+"* Allows putting numbers manually\n"
+"* Enables Check Cash-In Date feature\n"
+"* Disables printing"
+msgstr ""
+"* Se le permite poner números manualmente\n"
+"* Nuevo campo para fecha de pago (Fecha de Pago del Cheque)\n"
+"* La impresión esta deshabilitada"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "- Venc."
+msgstr ""
+=======
+"* Allows putting numbers manually\n"
+"* Enables Check Cash-In Date feature\n"
+"* Disables printing"
+msgstr ""
+"* Se le permite poner números manualmente\n"
+"* Nuevo campo para fecha de pago (Fecha de Pago del Cheque)\n"
+"* La impresión esta deshabilitada"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "- Exp."
+msgstr "- Venc."
+>>>>>>> 342ffb88 (temp)
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
@@ -84,6 +112,20 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_ux
+<<<<<<< HEAD
+||||||| parent of 342ffb88 (temp)
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span class=\"text-center\">Firma y Aclaración</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+=======
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span class=\"text-center\">Signature and Clarification</span>"
+msgstr "<span class=\"text-center\">Firma y Aclaración</span>"
+
+#. module: l10n_ar_ux
+>>>>>>> 342ffb88 (temp)
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
 msgid ""
 "<span groups=\"base.group_multi_currency\" invisible=\"not "
@@ -93,9 +135,139 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
 msgid ""
+<<<<<<< HEAD
 "<span groups=\"base.group_multi_currency\" invisible=\"not "
 "other_currency\">)</span>"
 msgstr ""
+||||||| parent of 342ffb88 (temp)
+"<span groups=\"base.group_multi_currency\" attrs=\"{'invisible': "
+"[('other_currency', '=', False)]}\">)</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Comprobantes Imputados</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Comprobantes Pendientes al</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Fecha Venc.</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Importe Imputado</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Importe Original</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Importe divisa</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Importe</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Pagos</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Saldo</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<strong><span>Total Imputado</span></strong>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<strong><span>Total Pagado</span></strong>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<strong><span>Total Pendiente</span></strong>"
+msgstr ""
+=======
+"<span groups=\"base.group_multi_currency\" attrs=\"{'invisible': "
+"[('other_currency', '=', False)]}\">)</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Imputed Vouchers</span>"
+msgstr "<span>Comprobantes Imputados</span>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Vouchers Pending at </span>"
+msgstr "<span>Comprobantes Pendientes al </span>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Exp. Date</span>"
+msgstr "<span>Fecha Venc.</span>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Imputed Amount</span>"
+msgstr "<span>Importe Imputado</span>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Original Amount</span>"
+msgstr "<span>Importe Original</span>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Amount currency</span>"
+msgstr "<span>Importe divisa</span>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Amount</span>"
+msgstr "<span>Importe</span>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Payments</span>"
+msgstr "<span>Pagos</span>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Balance</span>"
+msgstr "<span>Saldo</span>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<strong><span>Total Imputed</span></strong>"
+msgstr "<strong><span>Total Imputado</span></strong>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<strong><span>Total Paid</span></strong>"
+msgstr "<strong><span>Total Pagado</span></strong>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<strong><span>Total Pending</span></strong>"
+msgstr "<strong><span>Total Pendiente</span></strong>"
+>>>>>>> 342ffb88 (temp)
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
@@ -110,6 +282,30 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_ux
+<<<<<<< HEAD
+||||||| parent of 342ffb88 (temp)
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<strong>VAT Cond: </strong>"
+msgstr "<strong>Cond. IVA: </strong>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "A cuenta"
+msgstr ""
+
+#. module: l10n_ar_ux
+=======
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<strong>VAT Cond: </strong>"
+msgstr "<strong>Cond. IVA: </strong>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "On account"
+msgstr "A cuenta"
+
+#. module: l10n_ar_ux
+>>>>>>> 342ffb88 (temp)
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_partner_property_form
 msgid "AFIP"
 msgstr ""
@@ -812,9 +1008,19 @@ msgid "Non Monetary"
 msgstr "No monetario"
 
 #. module: l10n_ar_ux
+<<<<<<< HEAD
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
 msgid "Nro de Cheque:"
 msgstr ""
+||||||| parent of 342ffb88 (temp)
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "Observaciones:"
+msgstr ""
+=======
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "Observations:"
+msgstr "Observaciones:"
+>>>>>>> 342ffb88 (temp)
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_partner_property_form

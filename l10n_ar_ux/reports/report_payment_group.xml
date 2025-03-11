@@ -14,12 +14,12 @@
                 <div class="row">
                     <div name="footer_left_column" class="col-8">
                         <t t-if="not o.company_id.l10n_ar_report_signature">
-                            Observaciones: <span t-field="o.notes"/>
+                            Observations: <span t-field="o.notes"/>
                         </t>
                     </div>
                     <div name="footer_right_column" class="col-4">
                         <t t-if="not o.company_id.l10n_ar_report_signature">
-                            <span class="text-center">Firma y Aclaración</span>
+                            <span class="text-center">Signature and Clarification</span>
                         </t>
                         <div class="text-right" name="pager" t-if="report_type == 'pdf'">
                             Page: <span class="page"/> / <span class="topage"/>
@@ -57,9 +57,9 @@
             <table class="table table-sm o_main_table" name="payments_table">
                 <thead>
                     <tr>
-                        <th><span>Pagos</span></th>
-                        <th class="text-right" t-if="foreign_currency_column"><span>Importe divisa</span></th>
-                        <th class="text-right"><span>Importe</span></th>
+                        <th><span>Payments</span></th>
+                        <th class="text-right" t-if="foreign_currency_column"><span>Amount currency</span></th>
+                        <th class="text-right"><span>Amount</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,7 +68,7 @@
                         <t t-set="check" t-value="line.l10n_latam_check_id or line"/>
                         <tr>
                             <td>
-                                <span t-out='"Cheque nro %s - %s - (%s)" % (check.check_number, check.l10n_latam_check_bank_id.name or check.journal_id.name, check.payment_method_line_id.name)'/><span t-if="check.l10n_latam_check_payment_date"> - Venc. <span t-field="check.l10n_latam_check_payment_date"/></span>
+                                <span t-out='"Cheque nro %s - %s - (%s)" % (check.check_number, check.l10n_latam_check_bank_id.name or check.journal_id.name, check.payment_method_line_id.name)'/><span t-if="check.l10n_latam_check_payment_date"> - Exp. <span t-field="check.l10n_latam_check_payment_date"/></span>
                            </td>
                             <td  class="text-right" t-if="foreign_currency_column">
                                 <t t-if="check.other_currency">
@@ -122,7 +122,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td><strong><span>Total Pagado</span></strong></td>
+                        <td><strong><span>Total Paid</span></strong></td>
                         <td class="text-right" t-if="foreign_currency_column">
                             <!-- TODO deberiamos sumar teniendo en cuenta tambien counterpart_currency_amount -->
                             <strong t-if="len(o.payment_ids.mapped('currency_id')) == 1 and o.payment_ids.mapped('currency_id') != o.currency_id"> <span class="text-nowrap" t-out="sum(o.payment_ids.mapped('amount_signed'))" t-options="{'widget': 'monetary', 'display_currency': o.payment_ids.mapped('currency_id')}"/></strong>
@@ -137,10 +137,10 @@
             <table class="table table-sm o_main_table" name="matching_table">
                 <thead>
                     <tr>
-                        <th><span>Comprobantes Imputados</span></th>
-                        <th class="text-center"><span>Fecha Venc.</span></th>
-                        <th class="text-right"><span>Importe Original</span></th>
-                        <th class="text-right"><span>Importe Imputado</span></th>
+                        <th><span>Imputed Vouchers</span></th>
+                        <th class="text-center"><span>Exp. Date</span></th>
+                        <th class="text-right"><span>Original Amount</span></th>
+                        <th class="text-right"><span>Imputed Amount</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -159,7 +159,7 @@
                         </tr>
                     </t>
                     <tr t-if="o.unmatched_amount">
-                        <td>A cuenta</td>
+                        <td>On account</td>
                         <td class="text-center"/>
                         <td class="text-right o_price_total"/>
                         <td class="text-right o_price_total">
@@ -169,7 +169,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="3"><strong><span>Total Imputado</span></strong></td>
+                        <td colspan="3"><strong><span>Total Imputed</span></strong></td>
                         <td class="text-right">
                             <strong><span class="text-nowrap" t-out="o.unmatched_amount + o.matched_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
                         </td>
@@ -180,10 +180,10 @@
             <table class="table table-sm o_main_table" name="open_table" t-if="o.partner_type=='customer'" groups="l10n_ar_ux.group_include_pending_receivable_documents">
                 <thead>
                     <tr>
-                        <th><span>Comprobantes Pendientes al</span><span t-out="datetime.datetime.today()" t-options='{"widget": "date"}'/></th>
-                        <th class="text-center"><span>Fecha Venc.</span></th>
-                        <th class="text-right"><span>Importe Original</span></th>
-                        <th class="text-right"><span>Saldo</span></th>
+                        <th><span>Vouchers Pending at </span><span t-out="datetime.datetime.today()" t-options='{"widget": "date"}'/></th>
+                        <th class="text-center"><span>Exp. Date</span></th>
+                        <th class="text-right"><span>Original Amount</span></th>
+                        <th class="text-right"><span>Balance</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -204,7 +204,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="3"><strong><span>Total Pendiente</span></strong></td>
+                        <td colspan="3"><strong><span>Total Pending</span></strong></td>
                         <td class="text-right">
                             <strong><span class="text-nowrap" t-out="sum(o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.account_type', '=', o.partner_type=='customer' and 'asset_receivable' or 'liability_payable'), ('reconciled', '=', False), ('account_id.deprecated', '=', False), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)]).mapped('amount_residual'))" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
                         </td>

@@ -28,8 +28,8 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "(Chequera electrónica)"
-msgstr ""
+msgid "(Electronic checkbook)"
+msgstr "(Chequera electrónica)"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
@@ -50,8 +50,8 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "- Venc."
-msgstr ""
+msgid "- Exp."
+msgstr "- Venc."
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__001
@@ -289,68 +289,68 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<span class=\"text-center\">Firma y Aclaración</span>"
-msgstr ""
+msgid "<span class=\"text-center\">Signature and Clarification</span>"
+msgstr "<span class=\"text-center\">Firma y Aclaración</span>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<span>Comprobantes Imputados</span>"
-msgstr ""
+msgid "<span>Imputed Amount</span>"
+msgstr "<span>Importe Imputado</span>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<span>Comprobantes Pendientes al</span>"
-msgstr ""
+msgid "<span>Pending Vouchers at </span>"
+msgstr "<span>Comprobantes Pendientes al </span>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<span>Fecha Venc.</span>"
-msgstr ""
+msgid "<span>Exp. Date</span>"
+msgstr "<span>Fecha Venc.</span>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<span>Importe Imputado</span>"
-msgstr ""
+msgid "<span>Imputed Vouchers</span>"
+msgstr "<span>Comprobantes Imputados</span>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<span>Importe Original</span>"
-msgstr ""
+msgid "<span>Original Amount</span>"
+msgstr "<span>Importe Original</span>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<span>Importe divisa</span>"
-msgstr ""
+msgid "<span>Amount currency</span>"
+msgstr "<span>Importe divisa</span>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<span>Importe</span>"
-msgstr ""
+msgid "<span>Amount</span>"
+msgstr "<span>Importe</span>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<span>Pagos</span>"
-msgstr ""
+msgid "<span>Payments</span>"
+msgstr "<span>Pagos</span>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<span>Saldo</span>"
-msgstr ""
+msgid "<span>Balance</span>"
+msgstr "<span>Saldo</span>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<strong><span>Total Imputado</span></strong>"
-msgstr ""
+msgid "<strong><span>Total Imputed</span></strong>"
+msgstr "<strong><span>Total Imputado</span></strong>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<strong><span>Total Pagado</span></strong>"
-msgstr ""
+msgid "<strong><span>Total Paid</span></strong>"
+msgstr "<strong><span>Total Pagado</span></strong>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<strong><span>Total Pendiente</span></strong>"
-msgstr ""
+msgid "<strong><span>Total Pending</span></strong>"
+msgstr "<strong><span>Total Pendiente</span></strong>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
@@ -366,12 +366,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
 msgid "<strong>VAT Cond: </strong>"
-msgstr "Conf. IVA:"
+msgstr "Cond. IVA:"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "A cuenta"
-msgstr ""
+msgid "On account"
+msgstr "A cuenta"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
@@ -514,7 +514,7 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "Check nro 123456"
+msgid "Check num 123456"
 msgstr "Cheque nro 123456"
 
 #. module: l10n_ar_tax
@@ -566,6 +566,11 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__create_date
 msgid "Created on"
 msgstr "Creado el"
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
+msgid "Customer:"
+msgstr "Cliente:"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__api_codigo_articulo_retencion
@@ -796,8 +801,8 @@ msgstr "Número"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "Observaciones:"
-msgstr ""
+msgid "Observations:"
+msgstr "Observaciones:"
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -940,6 +945,11 @@ msgstr "Deuda Seleccionada No Gravada"
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_state_code
 msgid "State Code"
 msgstr "Código de Estado"
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
+msgid "Supplier:"
+msgstr "Proveedor:"
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_tax

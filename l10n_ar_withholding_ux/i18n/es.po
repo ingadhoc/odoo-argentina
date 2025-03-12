@@ -28,63 +28,69 @@ msgstr ""
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "<span class=\"text-center\">Firma y Aclaración</span>"
-msgstr ""
+msgid "<span class=\"text-center\">Signature and Clarification</span>"
+msgstr "<span class=\"text-center\">Firma y Aclaración</span>"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "<span>Comprobantes Imputados</span>"
-msgstr ""
+msgid "<span>Imputed Vouchers</span>"
+msgstr "<span>Comprobantes Imputados</span>"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "<span>Comprobantes Pendientes al</span>"
-msgstr ""
+msgid "<span>Vouchers Pending at </span>"
+msgstr "<span>Comprobantes Pendientes al </span>"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "<span>Fecha Venc.</span>"
-msgstr ""
+msgid "<span>Exp. Date</span>"
+msgstr "<span>Fecha Venc.</span>"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "<span>Importe Imputado</span>"
-msgstr ""
+msgid "<span>Imputed Amount</span>"
+msgstr "<span>Importe Imputado</span>"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "<span>Importe Original</span>"
-msgstr ""
+msgid "<span>Original Amount</span>"
+msgstr "<span>Importe Original</span>"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "<span>Importe</span>"
-msgstr ""
+msgid "<span>Amount currency</span>"
+msgstr "<span>Importe divisa</span>"
+
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "<span>Pagos</span>"
-msgstr ""
+msgid "<span>Amount</span>"
+msgstr "<span>Importe</span>"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "<span>Saldo</span>"
-msgstr ""
+msgid "<span>Payments</span>"
+msgstr "<span>Pagos</span>"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "<strong><span>Total Imputado</span></strong>"
-msgstr ""
+msgid "<span>Balance</span>"
+msgstr "<span>Saldo</span>"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "<strong><span>Total Pagado</span></strong>"
-msgstr ""
+msgid "<strong><span>Total Imputed</span></strong>"
+msgstr "<strong><span>Total Imputado</span></strong>"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "<strong><span>Total Pendiente</span></strong>"
-msgstr ""
+msgid "<strong><span>Total Paid</span></strong>"
+msgstr "<strong><span>Total Pagado</span></strong>"
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "<strong><span>Total Pending</span></strong>"
+msgstr "<strong><span>Total Pendiente</span></strong>"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_withholding_certificate_document
@@ -104,8 +110,8 @@ msgstr "<strong>Cond. IVA: </strong>"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "A cuenta"
-msgstr ""
+msgid "On account"
+msgstr "A cuenta"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.view_account_payment_form
@@ -212,6 +218,12 @@ msgstr "Basado En Regla"
 #: model:ir.actions.report,name:l10n_ar_withholding_ux.action_report_withholding_certificate
 msgid "Certificado de Retención"
 msgstr ""
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "Client:"
+msgstr "Cliente:"
+
 
 #. module: l10n_ar_withholding_ux
 #: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_l10n_ar_payment_withholding__company_id
@@ -406,8 +418,8 @@ msgstr "Número"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
-msgid "Observaciones:"
-msgstr ""
+msgid "Observations:"
+msgstr "Observaciones:"
 
 #. module: l10n_ar_withholding_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.view_account_payment_form
@@ -520,6 +532,11 @@ msgstr "Deuda Seleccionada Sin Impuestos"
 #: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_account_tax_withholding_rule__sequence
 msgid "Sequence"
 msgstr "Secuencia"
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "Supplier:"
+msgstr "Proveedor:"
 
 #. module: l10n_ar_withholding_ux
 #: model:ir.model,name:l10n_ar_withholding_ux.model_account_tax

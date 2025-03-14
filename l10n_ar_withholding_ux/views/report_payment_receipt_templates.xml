@@ -61,8 +61,8 @@
             </div>
             <br/>
             <table class="table table-sm o_main_table" name="payments_table">
-                <t t-set="secondary_currency" t-value="o.currency_id if o.other_currency else (o.counterpart_currency_id if env['account.payment']._fields.get('counterpart_currency_id') else o.currency_id)"/>                
-                <t t-set="secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else o.counterpart_exchange_rate"/>
+                <t t-set="secondary_currency" t-value="o.currency_id if o.other_currency else (o.counterpart_currency_id if env['account.payment']._fields.get('counterpart_currency_id') else False)"/>                
+                <t t-set="secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else (o.counterpart_exchange_rate if env['account.payment']._fields.get('counterpart_exchange_rate') else False)"/>
                 <thead>
 
                     <tr>

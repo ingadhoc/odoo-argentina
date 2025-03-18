@@ -33,15 +33,12 @@
         "views/account_tax_view.xml",
         "views/report_payment_receipt_templates.xml",
         "views/l10n_ar_payment_withholding_views.xml",
-        "views/account_fiscal_position_view.xml",
-        "wizard/account_payment_register_views.xml",
         "wizard/res_config_settings_views.xml",
     ],
     "demo": [
         "demo/ir_parameter.xml",
         "demo/account_fiscal_position_demo.xml",
         "demo/account_tax_demo.xml",
-        "demo/res_partner_demo.xml",
         "demo/account_move_demo.xml",
     ],
     "depends": [

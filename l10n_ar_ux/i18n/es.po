@@ -377,6 +377,11 @@ msgid "Clave de Identificación Tributaria de ARBA"
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "Client:"
+msgstr "Cliente:"
+
+#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_activity__code
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__code
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__code
@@ -1075,6 +1080,11 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_ar_ux.field_account_journal__qr_code
 msgid ""
 "String to generate the QR Code that will be displayed on the invoice report."
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "Supplier:"
 msgstr ""
 
 #. module: l10n_ar_ux

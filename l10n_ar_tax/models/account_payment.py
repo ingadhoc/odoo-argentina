@@ -19,7 +19,7 @@ class AccountPayment(models.Model):
     )
     withholdings_amount = fields.Monetary(
         compute="_compute_withholdings_amount",
-        currency_field="company_currency_id",
+        currency_field="reconciliation_currency_id",
     )
     l10n_ar_fiscal_position_id = fields.Many2one(
         "account.fiscal.position",
@@ -54,10 +54,13 @@ class AccountPayment(models.Model):
                 self.env["account.fiscal.position"].with_company(rec.company_id)._get_fiscal_position(address)
             )
 
-    @api.depends("l10n_ar_withholding_line_ids.amount")
+    @api.depends("l10n_ar_withholding_line_ids.amount", "counterpart_exchange_rate", "reconciliation_currency_id")
     def _compute_withholdings_amount(self):
         for rec in self:
-            rec.withholdings_amount = sum(rec.l10n_ar_withholding_line_ids.mapped("amount"))
+            withholdings_amount = sum(rec.l10n_ar_withholding_line_ids.mapped("amount"))
+            if rec.company_currency_id != rec.reconciliation_currency_id and rec.counterpart_exchange_rate:
+                withholdings_amount = rec.company_id.currency_id.round(withholdings_amount / rec.counterpart_exchange_rate)
+            rec.withholdings_amount = withholdings_amount
 
     def _get_withholding_move_line_default_values(self):
         return {
@@ -68,7 +71,7 @@ class AccountPayment(models.Model):
     def _compute_payment_total(self):
         super()._compute_payment_total()
         for rec in self:
-            rec.payment_total += sum(rec.l10n_ar_withholding_line_ids.mapped("amount"))
+            rec.payment_total += rec.withholdings_amount
 
     # por ahora no nos funciona computarlas, se duplica el importe. Igual conceptualemnte el onchange acá por ahí
     # está bien porque en realidad es una "sugerencia" actualizar el amount al usuario

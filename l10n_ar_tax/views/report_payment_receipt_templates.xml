@@ -62,8 +62,17 @@
             </div>
             <br/>
             <table class="table table-sm o_main_table" name="payments_table">
+<<<<<<< HEAD:l10n_ar_tax/views/report_payment_receipt_templates.xml
                 <t t-set="secondary_currency" t-value="o.currency_id if o.other_currency else o.counterpart_currency_id"/>
                 <t t-set="secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else o.counterpart_exchange_rate"/>
+||||||| parent of 51862251 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
+                <t t-set="secondary_currency" t-value="o.currency_id if o.other_currency else (o.counterpart_currency_id if env['account.payment']._fields.get('counterpart_currency_id') else False)"/>                
+                <t t-set="secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else (o.counterpart_exchange_rate if env['account.payment']._fields.get('counterpart_exchange_rate') else False)"/>
+=======
+                <t t-set="has_pro_currency" t-value="env['account.payment']._fields.get('counterpart_currency_id')"/>
+                <t t-set="secondary_currency" t-value="o.currency_id if o.other_currency else (o.counterpart_currency_id if has_pro_currency else False)"/>                
+                <t t-set="secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else (o.counterpart_exchange_rate if has_pro_currency else False)"/>
+>>>>>>> 51862251 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
                 <thead>
                     <tr>
                         <th><span>Pagos</span></th>
@@ -91,8 +100,20 @@
                     <t t-foreach="o.l10n_ar_withholding_line_ids" t-as="line">
                         <tr>
                             <td>
+<<<<<<< HEAD:l10n_ar_tax/views/report_payment_receipt_templates.xml
                                 <span t-if="line.tax_id.l10n_ar_tax_type in ['earnings', 'earnings_scale']" t-out="line.tax_id.invoice_label or 'Retención Ganancias'"/>
                                 <span t-else="" t-out="line.tax_id.invoice_label or line.tax_id.name"/>
+||||||| parent of 51862251 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
+                                <span t-out='"%s - %s" % (line.tax_id.name, line.name)'/>
+                            </td>
+                             <td class="text-right" t-if="secondary_currency">
+                                <span class="text-nowrap" t-out="secondary_currency.round(line.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/> 
+=======
+                                <span t-out='"%s - %s" % (line.tax_id.name, line.name)'/>
+                            </td>
+                             <td class="text-right" t-if="secondary_currency">
+                                <span class="text-nowrap" t-out="secondary_currency.round(line.amount / secondary_currency_rate) if (has_pro_currency and o.counterpart_currency_id) else secondary_currency.round(line.amount)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/> 
+>>>>>>> 51862251 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
                             </td>
                             <td class="text-right" t-if="secondary_currency">
                                 <span class="text-nowrap" t-out="secondary_currency.round(line.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>                                                           </td>
@@ -125,15 +146,29 @@
                         <td class="text-right o_price_total">
                             <span class="text-nowrap" t-field="o.write_off_amount"/>
                         </td>
+<<<<<<< HEAD:l10n_ar_tax/views/report_payment_receipt_templates.xml
                     </tr>
                     <tr t-if="not o._is_latam_check_payment()">
                         <td>
                             <span t-field="o.journal_id.name"/>
+||||||| parent of 51862251 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
+                        <td class="text-right" t-if="secondary_currency">   
+                            <span class="text-nowrap" t-out="secondary_currency.round(o.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>
+=======
+                        <td class="text-right" t-if="secondary_currency">   
+                            <span class="text-nowrap" t-out="secondary_currency.round(o.amount / secondary_currency_rate) if (has_pro_currency and o.counterpart_currency_id) else secondary_currency.round(o.amount)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>
+>>>>>>> 51862251 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
                         </td>
                         <td class="text-right" t-if="secondary_currency">
                             <span class="text-nowrap" t-out="o.amount_signed if o.other_currency else secondary_currency.round(o.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>                        </td>
                         <td class="text-right o_price_total">
+<<<<<<< HEAD:l10n_ar_tax/views/report_payment_receipt_templates.xml
                             <span class="text-nowrap" t-out="o.company_currency_id.round(o.amount * secondary_currency_rate) if o.other_currency else o.amount" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+||||||| parent of 51862251 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
+                            <span class="text-nowrap" t-field="o.amount"/>
+=======
+                            <span class="text-nowrap" t-field="o.amount_company_currency_signed"/>
+>>>>>>> 51862251 (temp):l10n_ar_withholding_ux/views/report_payment_receipt_templates.xml
                         </td>
                     </tr>
                 </tbody>

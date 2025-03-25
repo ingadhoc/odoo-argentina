@@ -61,8 +61,9 @@
             </div>
             <br/>
             <table class="table table-sm o_main_table" name="payments_table">
-                <t t-set="secondary_currency" t-value="o.currency_id if o.other_currency else (o.counterpart_currency_id if env['account.payment']._fields.get('counterpart_currency_id') else False)"/>                
-                <t t-set="secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else (o.counterpart_exchange_rate if env['account.payment']._fields.get('counterpart_exchange_rate') else False)"/>
+                <t t-set="has_pro_currency" t-value="env['account.payment']._fields.get('counterpart_currency_id')"/>
+                <t t-set="secondary_currency" t-value="o.currency_id if o.other_currency else (o.counterpart_currency_id if has_pro_currency else False)"/>                
+                <t t-set="secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else (o.counterpart_exchange_rate if has_pro_currency else False)"/>
                 <thead>
 
                     <tr>
@@ -95,7 +96,7 @@
                                 <span t-out='"%s - %s" % (line.tax_id.name, line.name)'/>
                             </td>
                              <td class="text-right" t-if="secondary_currency">
-                                <span class="text-nowrap" t-out="secondary_currency.round(line.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/> 
+                                <span class="text-nowrap" t-out="secondary_currency.round(line.amount / secondary_currency_rate) if (has_pro_currency and o.counterpart_currency_id) else secondary_currency.round(line.amount)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/> 
                             </td>
                             <td class="text-right o_price_total">
                                 <span class="text-nowrap" t-field="line.amount"/>
@@ -110,10 +111,10 @@
                             <span class="text-nowrap" t-out="' - ' + o.l10n_latam_check_id.l10n_latam_check_number if o.l10n_latam_check_id.l10n_latam_check_number else False"></span>
                         </td>
                         <td class="text-right" t-if="secondary_currency">   
-                            <span class="text-nowrap" t-out="secondary_currency.round(o.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>
+                            <span class="text-nowrap" t-out="secondary_currency.round(o.amount / secondary_currency_rate) if (has_pro_currency and o.counterpart_currency_id) else secondary_currency.round(o.amount)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>
                         </td>
                         <td class="text-right o_price_total">
-                            <span class="text-nowrap" t-field="o.amount"/>
+                            <span class="text-nowrap" t-field="o.amount_company_currency_signed"/>
                         </td>
                     </tr>
                 </tbody>

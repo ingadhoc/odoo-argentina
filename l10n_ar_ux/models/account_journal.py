@@ -31,6 +31,16 @@ class AccountJournal(models.Model):
     )
     l10n_ar_afip_pos_partner_id = fields.Many2one(string='Dirección Punto de venta')
 
+    @api.depends('outbound_payment_method_line_ids', 'company_id.country_id.code', 'check_manual_sequencing')
+    def _compute_l10n_latam_use_checkbooks(self):
+        # re agregamos esta funcionalidad de activar checkbooks para argentina que odoo nos pidió sacar
+        arg_checks = self.filtered(
+            lambda x: not x.check_manual_sequencing and x.company_id.country_id.code in ['AR'] and
+            'check_printing' in x.outbound_payment_method_line_ids.mapped('code'))
+        arg_checks.l10n_latam_use_checkbooks = True
+        # disable checkbook if manual sequencing was enable
+        self.filtered('check_manual_sequencing').l10n_latam_use_checkbooks = False
+
     @api.onchange('l10n_ar_is_pos')
     def _onchange_l10n_ar_is_pos(self):
         # TODO on v15 move to standar and maybe make l10n_ar_afip_pos_system computed stored

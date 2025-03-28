@@ -13,9 +13,9 @@ class L10nArCustomerPortal(CustomerPortal):
     #     "l10n_ar_afip_responsibility_type_id",
     # ]
 
-    def details_form_validate(self, data):
+    def details_form_validate(self, data, partner_creation=False):
         """When adding either document_type or document_number, this two should be setted"""
-        error, error_message = super().details_form_validate(data)
+        error, error_message = super().details_form_validate(data, partner_creation=partner_creation)
 
         vat = data.get("vat")
         identification_type = data.get("l10n_latam_identification_type_id")

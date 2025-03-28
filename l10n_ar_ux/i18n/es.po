@@ -3,15 +3,15 @@
 # 	* l10n_ar_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-27 18:25+0000\n"
+"POT-Creation-Date: 2025-03-28 02:02+0000\n"
 "PO-Revision-Date: 2023-01-13 13:51+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -119,13 +119,18 @@ msgstr ""
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
-msgid "<span>Imputed Vouchers</span>"
-msgstr "<span>Comprobantes Imputados</span>"
+msgid "<span>Amount currency</span>"
+msgstr "<span>Importe divisa</span>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
-msgid "<span>Vouchers Pending at </span>"
-msgstr "<span>Comprobantes Pendientes al </span>"
+msgid "<span>Amount</span>"
+msgstr "<span>Importe</span>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Balance</span>"
+msgstr "<span>Saldo</span>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
@@ -139,18 +144,13 @@ msgstr "<span>Importe Imputado</span>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "<span>Imputed Vouchers</span>"
+msgstr "<span>Comprobantes Imputados</span>"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
 msgid "<span>Original Amount</span>"
 msgstr "<span>Importe Original</span>"
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
-msgid "<span>Amount currency</span>"
-msgstr "<span>Importe divisa</span>"
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
-msgid "<span>Amount</span>"
-msgstr "<span>Importe</span>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
@@ -159,8 +159,8 @@ msgstr "<span>Pagos</span>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
-msgid "<span>Balance</span>"
-msgstr "<span>Saldo</span>"
+msgid "<span>Vouchers Pending at </span>"
+msgstr "<span>Comprobantes Pendientes al </span>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
@@ -193,11 +193,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
 msgid "<strong>VAT Cond: </strong>"
 msgstr "<strong>Cond. IVA: </strong>"
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
-msgid "On account"
-msgstr "A cuenta"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_partner_property_form
@@ -817,6 +812,13 @@ msgid "No corresponde"
 msgstr ""
 
 #. module: l10n_ar_ux
+#. odoo-python
+#: code:addons/l10n_ar_ux/models/account_move.py:0
+#, python-format
+msgid "No pueden cancelarse documentos ya validados en AFIP (%s)."
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_account_transfer_document
 msgid ""
 "Nombre y Apellido Firmante:\n"
@@ -832,6 +834,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
 msgid "Observations:"
 msgstr "Observaciones:"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_payment_group_document
+msgid "On account"
+msgstr "A cuenta"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_partner_property_form

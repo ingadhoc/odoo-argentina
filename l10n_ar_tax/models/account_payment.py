@@ -121,7 +121,7 @@ class AccountPayment(models.Model):
         write_off_line_vals = []
         conversion_rate = self.exchange_rate or 1.0
         sign = 1
-        if self.partner_type == "supplier":
+        if self.payment_type == "outbound":
             sign = -1
         for line in self.l10n_ar_withholding_line_ids:
             # nuestro approach esta quedando distinto al del wizard. En nuestras lineas tenemos los importes en moneda

@@ -33,6 +33,24 @@
         <span t-field="o.company_id.l10n_ar_afip_start_date" position="attributes">
             <attribute name="t-field">header_address.start_date</attribute>
         </span>
+        <xpath expr="//div[hasclass('col-6')]//t[@t-if='not pre_printed_report']" position="replace">
+            <span t-field="o.company_id.partner_id.name"/>
+            <br/>
+            <div></div>
+            <t t-out="' - '.join([item for item in [
+                ', '.join([item for item in [header_address.street, header_address.street2] if item]),
+                header_address.city,
+                header_address.state_id and header_address.state_id.name,
+                header_address.zip,
+                header_address.country_id and header_address.country_id.name] if item])"/>
+            <br/>
+            <t t-out="o.company_id.extra_company_details"/>
+        </xpath>
+        <xpath expr="//div[@name='left-upper-side']//img" position="after">
+            <h6 t-att-style="'color: %s;' % o.company_id.primary_color">
+                <span t-out="o.company_id.report_header"/>
+            </h6>
+        </xpath>
 
         <!-- tal vez tambien a este div principal le querramos cambiar la fuente como haciamos antes, aunque en realidad aparentemente ya no ex necesario, era algo asi:
         <div t-att-style="o.company_id.external_report_layout_id.key == 'web.external_layout_standard' and 'font-size: 15px;'">
@@ -73,6 +91,9 @@
                 </div>
             </div>
         </div>
+        <xpath expr="//div[@name='footer_left_column']" position="inside">
+            <p><span t-out="o.company_id.report_footer"/></p>
+        </xpath>
     </template>
 
 

@@ -2,6 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+from lxml import html
 from odoo import fields, models
 
 
@@ -23,3 +24,13 @@ class ResCompany(models.Model):
     l10n_ar_report_signature = fields.Image("Firma", copy=False, attachment=True)
     l10n_ar_report_signed_by = fields.Text("Aclaracion", copy=False)
     l10n_ar_invoice_report_ars_amount = fields.Boolean("Mostrar importe equivalente en ARS", default=False)
+    extra_company_details = fields.Char(compute="_compute_extra_company_details")
+
+    def _compute_extra_company_details(self):
+        for company in self:
+            html_content = company.company_details or ""
+            doc = html.fromstring(html_content)
+            paragraphs = doc.xpath("//p//text()")
+            cleaned_text = " - ".join([line.strip() for line in paragraphs if line.strip()])
+
+            company.extra_company_details = cleaned_text

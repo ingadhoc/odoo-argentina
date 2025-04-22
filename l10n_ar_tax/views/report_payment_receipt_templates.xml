@@ -129,6 +129,7 @@
                     <tr t-if="not o._is_latam_check_payment()">
                         <td>
                             <span t-field="o.journal_id.name"/>
+                            <span t-field="o.payment_method_line_id.name"/>
                         </td>
                         <td class="text-right" t-if="secondary_currency">
                             <span class="text-nowrap" t-out="o.amount_signed if o.other_currency else secondary_currency.round(o.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>                        </td>

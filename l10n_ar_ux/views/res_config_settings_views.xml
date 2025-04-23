@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--3ra modificación-->
 <odoo>
 
     <record model="ir.ui.view" id="res_config_settings_inherit_view_form">

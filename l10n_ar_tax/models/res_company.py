@@ -4,12 +4,13 @@ import warnings
 from odoo import _, api, models
 from odoo.exceptions import UserError
 
+_logger = logging.getLogger(__name__)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 try:
     from pyafipws.iibb import IIBB
 except ImportError:
     IIBB = None
-_logger = logging.getLogger(__name__)
+    _logger.info("Ocurrió un problema en la importación de la librería 'pyafipws.iibb'")
 
 
 class ResCompany(models.Model):

@@ -148,10 +148,47 @@ class AccountFiscalPositionL10nArTax(models.Model):
         raise UserError(_("Falta configuración de credenciales de ADHOC para consulta de " "Alícuotas de AGIP"))
 
     def _get_arba_data(self, partner, date, to_date):
+        """Metodo que obtiene la alicuota de ARBA de un partner y fecha dado
+
+        :return: (float, string) alícuota y referencia
+
+        donde:
+            float valor alicuota (retencion o percepcion depende del caso)
+            string "numero comprobante codigohast GrupoRetencion/Percepcion"
+
+        Si hay un padron de alicuotas ya cargado en el sistema, lo usamos
+        para obtener la alícuota, sino consultamos el webservice de ARBA
+        """
         self.ensure_one()
 
         cuit = partner.ensure_vat()
         _logger.info("Getting ARBA data for cuit %s from date %s to date %s" % (date, to_date, cuit))
+
+        padron_file = self.env["res.company.jurisdiction.padron"].search(
+            [
+                ("state_id", "in", self.env.ref("base.state_ar_b").ids),
+                ("company_id", "=", self.fiscal_position_id.company_id.id),
+                "|",
+                ("l10n_ar_padron_from_date", "=", False),
+                ("l10n_ar_padron_from_date", "<=", date),
+                "|",
+                ("l10n_ar_padron_to_date", "=", False),
+                ("l10n_ar_padron_to_date", ">=", date),
+            ],
+            limit=1,
+        )
+        if padron_file:
+            nro, alicuot_ret, alicuot_per = padron_file._get_aliquit(partner)
+            if nro:
+                return (
+                    float(alicuot_ret.replace(",", "."))
+                    if self.tax_type == "withholding"
+                    else float(alicuot_per.replace(",", ".")),
+                    "Alicuota (archivo importado)",
+                )
+            else:
+                return None, "Alícuota no inscripto (archivo importado)"
+
         ws = self.fiscal_position_id.company_id.arba_connect()
         ws.ConsultarContribuyentes(date.strftime("%Y%m%d"), to_date.strftime("%Y%m%d"), cuit)
 

@@ -34,6 +34,8 @@ class ResCompanyJurisdictionPadron(models.Model):
         required=True,
     )
 
+    filename = fields.Char("File Name")
+
     @api.constrains("state_id")
     def check_state_id(self):
         for rec in self:

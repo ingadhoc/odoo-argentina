@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-10 15:33+0000\n"
+"POT-Creation-Date: 2025-05-24 15:00+0000\n"
 "PO-Revision-Date: 2024-12-05 18:38+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -490,8 +490,8 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "Check num 123456"
-msgstr "Cheque nro 123456"
+msgid "Check nro 123456"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_res_config_settings__arba_cit
@@ -830,6 +830,11 @@ msgstr "Pagar"
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__payment_id
 msgid "Payment"
 msgstr "Pago"
+
+#. module: l10n_ar_tax
+#: model:ir.actions.report,name:l10n_ar_tax.action_report_receipt_bundle
+msgid "Payment Receipt bundled"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_l10n_ar_payment_withholding

@@ -55,6 +55,7 @@
                             <field name="amount"/>
                             <field name="ref" optional="hide" readonly="l10n_ar_tax_type in ['earnings', 'earnings_scale']" force_save="1"/>
                             <button name="%(action_report_withholding_certificate)d" icon="fa-print " title="Print withholding voucher" type="action" invisible="parent.partner_type != 'supplier' or parent.state == 'draft'"/>
+                            <button name="action_l10n_ar_payment_withholding_tree" icon="fa-bars" title="Watch previous withholdings" type="object" invisible="parent.partner_type != 'supplier' or l10n_ar_tax_type not in ['earnings', 'earnings_scale']"/>
                         </list>
                     </field>
                 </page>

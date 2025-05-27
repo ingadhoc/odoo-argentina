@@ -211,3 +211,21 @@ class l10nArPaymentWithholding(models.Model):
         """Return the applicable withheld tax"""
         self.ensure_one()
         return self.tax_id
+
+    ##########
+    # ACTIONS
+    ##########
+
+    def action_l10n_ar_payment_withholding_tree(self):
+        """Open a tree view showing previous withholdings."""
+        same_period_withholdings = (
+            self.env["account.move.line"].search(self._get_same_period_withholdings_domain()).withholding_id
+        )
+        return {
+            "name": "Previous Withholdings",
+            "type": "ir.actions.act_window",
+            "res_model": "l10n_ar.payment.withholding",
+            "view_mode": "list",
+            "view_id": self.env.ref("l10n_ar_tax.view_l10n_ar_payment_withholding_tree").id,
+            "domain": [("id", "in", same_period_withholdings.ids)],
+        }

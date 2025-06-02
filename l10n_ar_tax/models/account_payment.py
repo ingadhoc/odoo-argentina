@@ -138,8 +138,7 @@ class AccountPayment(models.Model):
                     "account_id": account_id,
                     "amount_currency": sign * amount_currency,
                     "balance": sign * line.amount,
-                    # este campo no existe mas
-                    # 'tax_base_amount': sign * line.base_amount,
+                    "tax_base_amount": sign * line.base_amount,
                     "tax_repartition_line_id": tax_repartition_line_id,
                 }
             )

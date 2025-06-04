@@ -53,7 +53,10 @@ class AccountPayment(models.Model):
             else:
                 address = rec.partner_id
             rec.l10n_ar_fiscal_position_id = (
-                self.env["account.fiscal.position"].with_company(rec.company_id)._get_fiscal_position(address)
+                self.env["account.fiscal.position"]
+                .with_company(rec.company_id)
+                .with_context(l10n_ar_withholding=True)
+                ._get_fiscal_position(address)
             )
 
     @api.depends("l10n_ar_withholding_line_ids.amount")

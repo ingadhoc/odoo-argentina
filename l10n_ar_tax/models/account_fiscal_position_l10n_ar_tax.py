@@ -150,7 +150,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
         self.ensure_one()
 
         cuit = partner.ensure_vat()
-        _logger.info("Getting ARBA data for cuit %s from date %s to date %s" % (date, to_date, cuit))
+        _logger.info("Getting ARBA data for cuit %s from date %s to date %s" % (cuit, date, to_date))
         ws = self.fiscal_position_id.company_id.arba_connect()
         ws.ConsultarContribuyentes(date.strftime("%Y%m%d"), to_date.strftime("%Y%m%d"), cuit)
 

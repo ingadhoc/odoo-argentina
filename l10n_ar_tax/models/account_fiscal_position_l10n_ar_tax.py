@@ -199,17 +199,15 @@ class AccountFiscalPositionL10nArTax(models.Model):
         # si no hay numero de comprobante entonces es porque no
         # figura en el padron, aplicamos alicuota no inscripto
         if ws.NumeroComprobante:
-            return (
-                float(ws.AlicuotaRetencion.replace(",", "."))
-                if self.tax_type == "withholding"
-                else float(ws.AlicuotaPercepcion.replace(",", ".")),
-                "%s | %s | %s"
-                % (
-                    ws.NumeroComprobante,
-                    ws.CodigoHash,
-                    ws.GrupoRetencion if self.tax_type == "withholding" else ws.GrupoPercepcion,
-                ),
+            tax_data = "%s | %s | %s" % (
+                ws.NumeroComprobante,
+                ws.CodigoHash,
+                ws.GrupoRetencion if self.tax_type == "withholding" else ws.GrupoPercepcion,
             )
+            if self.tax_type == "withholding":
+                return (float(ws.AlicuotaRetencion.replace(",", ".")) if ws.AlicuotaRetencion else None, tax_data)
+            else:
+                return (float(ws.AlicuotaPercepcion.replace(",", ".")) if ws.AlicuotaPercepcion else None, tax_data)
         else:
             return None, ws.CodigoHash
 

@@ -74,6 +74,13 @@ class l10nArPaymentWithholding(models.Model):
         # Computes the withholding tax amount provided a base and a tax
         # It is equivalent to: amount = self.base * self.tax_id.amount / 100
         tax = self._get_withholding_tax()
+        if not tax.amount_type:
+            raise UserError(
+                _(
+                    "El impuesto de retención %s no tiene un tipo de cálculo definido. Por favor, defina el tipo de cálculo en la configuración del impuesto."
+                )
+                % tax.name
+            )
         # if it is earnings withholding, then we accumulate the tax base for the period
         if tax.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
             same_period_withholdings = self._get_same_period_withholdings_amount()

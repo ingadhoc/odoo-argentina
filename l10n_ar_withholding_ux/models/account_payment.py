@@ -1,6 +1,6 @@
 from ast import literal_eval
 
-from odoo import models, fields, api, Command, _
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 
@@ -419,23 +419,8 @@ class AccountPayment(models.Model):
             withholdable_invoiced_amount -= (
                 sign * self.unreconciled_amount * invoice_factor)
         elif withholding_advances:
-            # si el pago esta publicado obtenemos los valores de los importes
-            # conciliados (porque el pago pudo prepararse como adelanto
-            # pero luego haberse conciliado y en ese caso lo estariamos sumando
-            # dos veces si lo usamos como base de otros pagos). Si estan los
-            # campos withholdable_advanced_amount y unreconciled_amount le
-            # sacamos el proporcional correspondiente
-            if self.state == 'posted':
-                if self.unreconciled_amount and \
-                   self.withholdable_advanced_amount:
-                    withholdable_advanced_amount = self.amount_residual * (
-                        self.withholdable_advanced_amount /
-                        self.unreconciled_amount)
-                else:
-                    withholdable_advanced_amount = self.amount_residual
-            else:
-                withholdable_advanced_amount = \
-                    self.withholdable_advanced_amount
+            withholdable_advanced_amount = \
+                self.withholdable_advanced_amount
         return (withholdable_advanced_amount, withholdable_invoiced_amount)
 
     def _get_name_receipt_report(self, report_xml_id):

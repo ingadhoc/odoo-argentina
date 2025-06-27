@@ -35,6 +35,9 @@ class AccountFiscalPosition(models.Model):
             # agregamos taxes para grupos de impuestos que no estaban seteados en el partner
             if not partner_tax:
                 partner_tax = fp_tax._get_missing_taxes(partner, date)
+            if partner_tax.l10n_ar_tax_type not in ["earnings", "earnings_scale"] and partner_tax.amount == 0:
+                # si el impuesto no es de ganancias y su monto es 0, no lo agregamos
+                continue
             taxes |= partner_tax
         return taxes
 

@@ -14,7 +14,6 @@
     "data": [
         "data/res_currency_data.xml",
         "data/account_account_tag_data.xml",
-        # 'views/portal_templates.xml',
         "views/res_partner_view.xml",
         "views/afip_concept_view.xml",
         "views/afip_activity_view.xml",
@@ -37,5 +36,4 @@
     "installable": True,
     "auto_install": True,
     "application": False,
-    "post_init_hook": "post_init_hook",
 }

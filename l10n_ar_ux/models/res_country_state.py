@@ -13,7 +13,7 @@ class ResCountryState(models.Model):
     @api.depends()
     def _compute_jurisdiction_code(self):
         for rec in self:
-            if rec.country_id == "AR":
+            if rec.country_id.code == "AR":
                 rec.jurisdiction_code = {
                     "B": "902",
                     "K": "903",
@@ -39,6 +39,6 @@ class ResCountryState(models.Model):
                     "G": "922",
                     "V": "923",
                     "T": "924",
-                }.get(rec.l10n_ar_state_id.code, False)
+                }.get(rec.code, False)
             else:
                 rec.jurisdiction_code = False

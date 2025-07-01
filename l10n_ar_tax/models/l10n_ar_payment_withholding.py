@@ -74,6 +74,13 @@ class l10nArPaymentWithholding(models.Model):
         # Computes the withholding tax amount provided a base and a tax
         # It is equivalent to: amount = self.base * self.tax_id.amount / 100
         tax = self._get_withholding_tax()
+        if not tax.amount_type:
+            raise UserError(
+                _(
+                    "El impuesto de retención %s no tiene un tipo de cálculo definido. Por favor, defina el tipo de cálculo en la configuración del impuesto."
+                )
+                % tax.name
+            )
         # if it is earnings withholding, then we accumulate the tax base for the period
         if tax.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
             same_period_withholdings = self._get_same_period_withholdings_amount()
@@ -211,3 +218,21 @@ class l10nArPaymentWithholding(models.Model):
         """Return the applicable withheld tax"""
         self.ensure_one()
         return self.tax_id
+
+    ##########
+    # ACTIONS
+    ##########
+
+    def action_l10n_ar_payment_withholding_tree(self):
+        """Open a tree view showing previous withholdings."""
+        same_period_withholdings = (
+            self.env["account.move.line"].search(self._get_same_period_withholdings_domain()).withholding_id
+        )
+        return {
+            "name": "Previous Withholdings",
+            "type": "ir.actions.act_window",
+            "res_model": "l10n_ar.payment.withholding",
+            "view_mode": "list",
+            "view_id": self.env.ref("l10n_ar_tax.view_l10n_ar_payment_withholding_tree").id,
+            "domain": [("id", "in", same_period_withholdings.ids)],
+        }

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 15:00+0000\n"
+"POT-Creation-Date: 2025-07-03 05:05+0000\n"
 "PO-Revision-Date: 2024-12-05 18:38+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -208,8 +208,20 @@ msgid "014: Art.1 - inciso LL pto.1 - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__015
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__015
+msgid "015: Art. 10° inciso a - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_retencion__015
 msgid "015: Art.1 - inciso LL pto.2 - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__016
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__016
+msgid "016: Art. 10° inciso b - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -218,8 +230,20 @@ msgid "016: Art.1 - inciso LL pto.3 - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__017
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__017
+msgid "017: Art. 10° inciso d - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_retencion__017
 msgid "017: Art.1 - inciso LL pto.4 - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__018
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__018
+msgid "018: Art. 10° inciso e - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -228,8 +252,20 @@ msgid "018: Art.1 - inciso LL pto.5 - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__019
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__019
+msgid "019: Art. 10° inciso f - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_retencion__019
 msgid "019: Art.1 - inciso M - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__020
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__020
+msgid "020: Art. 10° inciso g - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -238,8 +274,20 @@ msgid "020: Art.2 - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__021
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__021
+msgid "021: Art. 10° inciso h - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_percepcion__021
 msgid "021: Art.10 - inciso A - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__022
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__022
+msgid "022: Art. 10° inciso i - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -248,13 +296,31 @@ msgid "022: Art.10 - inciso B - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__023
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__023
+msgid "023: Art. 10° inciso j - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_percepcion__023
 msgid "023: Art.10 - inciso D - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__024
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__024
+msgid "024: Art. 10° inciso l - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_percepcion__024
 msgid "024: Art.10 - inciso E - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__025
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__025
+msgid "025: Art. 10° inciso m - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -268,13 +334,31 @@ msgid "026: Art.10 - inciso G - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__027
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__027
+msgid "027: Art. 5° inciso 9 - (Res. Gral. 15/97 y Mod.)"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_percepcion__027
 msgid "027: Art.10 - inciso H - (Res. Gral. 15/97 y Modif.)"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__028
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__028
+msgid "028: Art. 5° inciso 9 - (Res. Gral. 15/97 y Mod.)"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_percepcion__028
 msgid "028: Art.10 - inciso I - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__029
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__029
+msgid "029: Art. 5° inciso 9 - (Res. Gral. 15/97 y Mod.)"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -285,6 +369,21 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_percepcion__030
 msgid "030: Art.11 - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_percepcion__031
+msgid "031: Art.10 - inciso M - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_percepcion__032
+msgid "032: Art.11 - (Res. Gral. 15/97 y Modif.)"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_percepcion__033
+msgid "033: Art.125 - inciso H - (Código Fiscal - mera compra)"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -575,6 +674,14 @@ msgstr "Impuesto por Defecto"
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__display_name
 msgid "Display Name"
 msgstr "Nombre a Mostrar"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
+msgid ""
+"El impuesto de retención %s no tiene un tipo de cálculo definido. Por favor,"
+" defina el tipo de cálculo en la configuración del impuesto."
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.constraint,message:l10n_ar_tax.constraint_l10n_ar_payment_withholding_uniq_line
@@ -988,6 +1095,11 @@ msgstr "Secuencia de retención"
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__l10n_ar_tax_type
 msgid "WTH Tax"
 msgstr "Impuesto de Retencion"
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
+msgid "Watch previous withholdings"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__webservice

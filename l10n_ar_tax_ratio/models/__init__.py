@@ -3,3 +3,4 @@
 # directory
 ##############################################################################
 from . import account_tax
+from . import l10n_ar_payment_withholding

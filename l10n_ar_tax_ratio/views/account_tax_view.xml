@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_tax_form" model="ir.ui.view">
+        <field name="name">account.tax.form</field>
+        <field name="model">account.tax</field>
+        <field name="inherit_id" ref="l10n_ar_tax.view_tax_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tax_group_id']" position="after">
+                <field name="ratio" string="Ratio %" invisible="country_code != 'AR' or l10n_ar_type_tax_use not in ('customer', 'supplier')"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

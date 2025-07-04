@@ -14,9 +14,9 @@
 Argentinean Withholding Ratio
 =============================
 
-Este módulo imlementa:
+Este módulo implementa:
 
-* Permite establecer un ratio de 1 a 100 en el impuesto y representa el porcentaje de base imponible que se tendrá en cuenta para aplicar el impuesto siempre y cuando la alícuota del impuesto se obtenega del partner. Si bien se puede usar ese ratio para cualquier impuesto en principio fue solicitado solo para Córdoba.
+* Permite establecer un ratio de 1 a 100 en el impuesto y representa el porcentaje de base imponible que se tendrá en cuenta para aplicar el impuesto, siempre y cuando el cálculo del impuesto sea de tipo porcentaje. Si bien se puede usar ese ratio para cualquier impuesto en principio fue solicitado solo para Córdoba.
 
 
 Installation

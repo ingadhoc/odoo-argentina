@@ -33,6 +33,7 @@ class l10nArPaymentWithholding(models.Model):
     )
     def _compute_base_amount(self):
         """practicamente mismo codigo que en l10n_ar.payment.register.withholding pero usamos campos "selected_debt_"""
+        self.payment_id._compute_to_pay_amount()
         for wth in self:
             # calculamos advance_amount
             # si el adelanto es negativo estamos pagando parcialmente una

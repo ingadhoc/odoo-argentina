@@ -115,3 +115,36 @@ class ResPartner(models.Model):
                 if self[r_field] == value:
                     values.pop(r_field, False)
         return values
+
+    @api.depends("vat")
+    def _compute_same_vat_partner_id(self):
+        """
+        Extendemos el método para que compute el mismo partner con el mismo número de identificación fiscal
+        (vat) sin importar si tiene o no el guión.
+        Esto es necesario porque el número de identificación fiscal puede ser ingresado con o sin guión
+        y queremos que se considere el mismo partner en ambos casos.
+        """
+        for partner in self:
+            # use _origin to deal with onchange()
+            partner_id = partner._origin.id
+            domain = []
+            if partner_id:
+                domain = [("id", "!=", partner_id), "!", ("id", "child_of", partner_id)]
+
+            # Compute same_vat_partner_id
+            same_vat_partners = (
+                self.env["res.partner"]
+                .search(domain)
+                .filtered(lambda p: p._get_id_number_sanitize() == partner._get_id_number_sanitize())
+                if bool(partner.vat) and not partner.parent_id
+                else self.env["res.partner"]
+            )
+            partner.same_vat_partner_id = same_vat_partners[:1] if same_vat_partners else False
+
+            # Compute same_company_registry_partner_id
+            same_registry_partners = (
+                self.env["res.partner"].search(domain + [("company_registry", "=", partner.company_registry)])
+                if bool(partner.company_registry) and not partner.parent_id
+                else self.env["res.partner"]
+            )
+            partner.same_company_registry_partner_id = same_registry_partners[:1] if same_registry_partners else False

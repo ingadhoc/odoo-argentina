@@ -7,6 +7,11 @@ class AccountTax(models.Model):
 
     l10n_ar_tribute_afip_code = fields.Selection(related="tax_group_id.l10n_ar_tribute_afip_code")
     l10n_ar_state_code = fields.Char(related="l10n_ar_state_id.code")
+    message_posted = fields.Boolean(
+        string="Mensaje Publicado",
+        default=False,
+        help="Indica si el mensaje de advertencia ya fue publicado.",
+    )
     api_codigo_articulo_retencion = fields.Selection(
         [
             ("001", "001: Art.1 - inciso A - (Res. Gral. 15/97 y Modif.)"),
@@ -96,3 +101,20 @@ class AccountTax(models.Model):
             raise UserError(
                 "Error se esta usando en ws de estas cias %s" % ws.mapped("fiscal_position_id.company_id.name")
             )
+
+    @api.onchange(
+        "amount", "amount_type", "repartition_line_ids", "invoice_repartition_line_ids", "refund_repartition_line_ids"
+    )
+    def _compute_reload_chart_template(self):
+        for rec in self:
+            original_rec = rec._origin
+
+            external_id = rec.get_external_id()
+            if external_id[rec.id].split(".")[0] == "account" and rec.message_posted is False:
+                original_rec.message_posted = True
+                return {
+                    "warning": {
+                        "title": "Modificando Plan Contable Oficial",
+                        "message": "Este impuesto pertenece al plan contable oficial. Las modificaciones pueden perderse al recargar el plan. Se recomienda crear un nuevo impuesto personalizado.",
+                    }
+                }

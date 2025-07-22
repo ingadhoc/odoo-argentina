@@ -2,7 +2,7 @@ from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import RedirectWarning, UserError
 
 
 class l10nArPaymentWithholding(models.Model):
@@ -109,6 +109,21 @@ class l10nArPaymentWithholding(models.Model):
                 ref = f"{f(self.base_amount)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)} = {f(self.base_amount + same_period_base - tax.l10n_ar_non_taxable_amount)} (no corresponde aplicar)"
             # if it is earnings scale we calculate according to the scale.
             if tax.l10n_ar_tax_type == "earnings_scale":
+                if not tax.l10n_ar_scale_id:
+                    raise RedirectWarning(
+                        _(
+                            "El impuesto de retención '%s' (id: %s) es de tipo escala de ganancias y no tiene definida una escala (campo l10n_ar_scale_id). Por favor, defina una escala en la configuración del impuesto."
+                        )
+                        % (tax.name, tax.id),
+                        {
+                            "view_mode": "form",
+                            "res_model": "account.tax",
+                            "type": "ir.actions.act_window",
+                            "res_id": tax.id,
+                            "views": [[False, "form"]],
+                        },
+                        _("Configurar impuesto"),
+                    )
                 escala = self.env["l10n_ar.earnings.scale.line"].search(
                     [
                         ("scale_id", "=", tax.l10n_ar_scale_id.id),

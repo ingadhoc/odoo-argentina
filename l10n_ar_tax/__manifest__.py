@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Automatic Argentinian Withholdings on Payments",
-    "version": "18.0.1.13.0",
+    "version": "18.0.1.14.0",
     "author": "ADHOC SA,Odoo Community Association (OCA)",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
@@ -31,6 +31,7 @@
         "views/res_company_jurisdiction_padron_view.xml",
         "views/res_partner_view.xml",
         "views/account_tax_view.xml",
+        "views/account_move_views.xml",
         "views/report_payment_receipt_templates.xml",
         "views/l10n_ar_payment_withholding_views.xml",
         "views/account_fiscal_position_view.xml",

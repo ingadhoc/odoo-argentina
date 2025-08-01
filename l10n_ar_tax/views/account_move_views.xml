@@ -1,0 +1,16 @@
+<odoo>
+
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="name">account.move.form</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <header position="after">
+                <div class="alert alert-warning" role="alert" invisible="invoice_date or not perceptions_fiscal_positon">
+                    Esta utilizando la posición fiscal <strong>"<field name="fiscal_position_id" options="{'no_open': True}" readonly="1"/>"</strong> que tiene impuestos de percepciones. Como las alicuotas podrían variar según la fecha del comprobante, cambiar la fecha o validar la factura re-computará los impuestos.
+                </div>
+            </header>
+        </field>
+    </record>
+
+</odoo>

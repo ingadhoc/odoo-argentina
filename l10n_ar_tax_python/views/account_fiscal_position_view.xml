@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_position_form" model="ir.ui.view">
+        <field name="name">account.fiscal.position.form</field>
+        <field name="model">account.fiscal.position</field>
+        <field name="inherit_id" ref="l10n_ar_tax.view_account_position_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='l10n_ar_tax_ids']/list" position="inside">
+                <button name="action_edit_python_formula"
+                        type="object"
+                        icon="fa-code"
+                        title="Edit Python Formula"
+                        invisible="webservice != 'python_formula'"
+                        class="btn-secondary"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vista popup para editar python_formula -->
+    <record id="view_l10n_ar_tax_python_formula_form" model="ir.ui.view">
+        <field name="name">account.fiscal.position.l10n_ar_tax.python.formula.form</field>
+        <field name="model">account.fiscal.position.l10n_ar_tax</field>
+        <field name="arch" type="xml">
+            <form string="Edit Python Formula">
+                <sheet>
+                    <group colspan="4">
+                        <field name="tax_type" readonly="1"/>
+                        <field name="default_tax_id" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="python_formula"
+                               widget="ace"
+                               options="{'mode': 'python'}"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Save" type="object" name="action_save_python_formula" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

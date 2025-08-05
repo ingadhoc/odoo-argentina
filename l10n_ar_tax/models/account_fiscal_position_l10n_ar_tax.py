@@ -85,8 +85,12 @@ class AccountFiscalPositionL10nArTax(models.Model):
         if not tax.active:
             tax.active = True
         if not tax:
-            # Usamos re.sub para reemplazar el patrón con el nuevo número seguido de '%'
-            name = re.sub(r"\b\d+(\.\d+)?\s*%", f"{rate}%", self.default_tax_id.name)
+            if "%" not in self.default_tax_id.name:
+                name = f"{self.default_tax_id.name} {rate}%"
+            else:
+                # Usamos re.sub para reemplazar el patrón con el nuevo número seguido de '%'
+                # Si ya tiene un porcentaje, lo reemplazamos
+                name = re.sub(r"\b\d+(\.\d+)?\s*%", f"{rate}%", self.default_tax_id.name)
 
             tax = self.default_tax_id.copy(
                 default={

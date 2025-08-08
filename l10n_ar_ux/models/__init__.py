@@ -17,3 +17,4 @@ from . import res_config_settings
 from . import ir_actions_report
 from . import account_journal
 from . import account_fiscal_position
+from . import l10n_ar_vat_book

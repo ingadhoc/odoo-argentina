@@ -7,7 +7,7 @@ from odoo.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
 
-
+"prueba 4"
 class AccountFiscalPositionL10nArTax(models.Model):
     _inherit = "account.fiscal.position.l10n_ar_tax"
 

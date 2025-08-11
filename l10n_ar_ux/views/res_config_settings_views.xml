@@ -11,6 +11,14 @@
                     <field name="group_include_pending_receivable_documents"/>
                 </setting>
             </block>
+            <xpath expr="//block[@id='argentina_localization']" position="inside">
+                <setting string="Activity" company_dependent="1" help="Principal registered activity of the company">
+                    <div class="content-group mt16">
+                        <label for="l10n_ar_afip_activity_id" class="o_form_label col-lg-3"/>
+                        <field name="l10n_ar_afip_activity_id" options="{'no_open': True}"/>
+                    </div>
+                </setting>
+            </xpath>
             <xpath expr="//app[@name='account']//field[@name='module_snailmail_account']/.." position="after">
                 <setting invisible="not group_multi_currency or country_code != 'AR'" company_dependent="1" help="Si activa esta opción, en los pdfs de las facturas en divisa extranjera, se incluirá una leyenda indicando a cuanto equivale el comprobante en ARS">
                     <field name="l10n_ar_invoice_report_ars_amount"/>

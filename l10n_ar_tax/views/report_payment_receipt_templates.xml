@@ -140,7 +140,7 @@
                             </td>
                         </tr>
                     </t>
-                    <t t-foreach="payment_bundle.filtered(lambda x: not x._is_latam_check_payment())" t-as="doc">
+                    <t t-foreach="payment_bundle.filtered(lambda x: not x._is_latam_check_payment() and x.amount != 0.0)" t-as="doc"  id="payment_bundle_doc">
                         <t t-set="doc_secondary_currency_rate" t-value="doc.exchange_rate if doc.other_currency else doc.counterpart_exchange_rate"/>
                         <tr>
                             <td>

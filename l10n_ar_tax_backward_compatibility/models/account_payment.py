@@ -1,10 +1,10 @@
 from odoo import fields, models
 
-
+"prueba 3"
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
-    is_backward_withholding_payment = fields.Boolean()
+    is_backward_withholding_payments = fields.Boolean()
 
     # TODO: Este metodo modifica el pago para que utilize el impuesto definido en el regime_tax_id
     # y cree el asiento al estilo 18

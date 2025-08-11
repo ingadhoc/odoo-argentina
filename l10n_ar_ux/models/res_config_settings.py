@@ -16,6 +16,10 @@ class ResConfigSettings(models.TransientModel):
         help="Si marca esta opción, cuando se imprima o envíe un Recibo de Clientes, se incluirá"
         " una sección con todos los Comprobantes abiertos, es decir, que tengan algún saldo pendiente",
     )
+    l10n_ar_afip_activity_id = fields.Many2one(
+        related="company_id.l10n_ar_afip_activity_id",
+        readonly=False,
+    )
 
     def clean_signature(self):
         self.l10n_ar_report_signature = False

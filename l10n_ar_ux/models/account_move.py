@@ -69,19 +69,6 @@ class AccountMove(models.Model):
             )
         return super().button_cancel()
 
-    def _get_activities_data(self):
-        """Returns the activities data to be sent to AFIP in the request"""
-        activities = [{"Id": code} for code in self.company_id.partner_id.actividades_padron.mapped("code")]
-        return activities
-
-    def wsfe_get_cae_request(self, client=None):
-        """Override to add activities data to the request"""
-        res = super().wsfe_get_cae_request(client=client)
-        if activities := self._get_activities_data():
-            ArrayOfActividad = client.get_type("ns0:ArrayOfActividad")
-            res.get("FeDetReq")[0].get("FECAEDetRequest").update({"Actividades": ArrayOfActividad(activities)})
-        return res
-
     def _post(self, soft=True):
         for line in (
             self.filtered(

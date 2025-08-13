@@ -218,11 +218,23 @@ class ResCompany(models.Model):
 
         # Realizar solicitud
         r = requests.post(url, data=json.dumps(payload), headers=headers)
-        json_body = r.json()
-
-        if r.status_code != 200:
-            raise UserError('Error al contactar rentascordoba.gob.ar. '
-                            'El servidor respondió: \n\n%s' % json_body)
+        error_msg = (
+            "No pudimos obtener la alícuota del webservices de rentascordoba.\n\n"
+            "Para asignar la alícuota de Córdoba a un contacto, siga estos pasos:\n"
+            "1) Consulte la alícuota del contacto en: https://www.rentascordoba.gob.ar/gestiones/consulta-alicuota\n"
+            "2) Cree manualmente la alícuota en la vista formulario del Contacto (solapa 'Datos Fiscales', "
+            "en esta documentación tiene un ejemplo de como hacerlo https://www.adhoc.inc/knowledge/article/7245 ).\n\n"
+            "En caso de dudas o si el problema persiste, comuníquese con nuestro equipo de Servicio de Asistencia."
+        )
+        status_code = r.status_code
+        if status_code != 200:
+            _logger.warning(f'Status code Webservice rentascordoba: {status_code}')
+            raise UserError(error_msg)
+        try:
+            json_body = r.json()
+        except Exception as e:
+            _logger.warning("%s" % str(e))
+            raise UserError("%s" % error_msg)
 
         code = json_body.get("errorCod")
 

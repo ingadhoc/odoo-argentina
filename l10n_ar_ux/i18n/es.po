@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 04:40+0000\n"
+"POT-Creation-Date: 2025-08-14 16:16+0000\n"
 "PO-Revision-Date: 2024-11-14 20:20+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -73,6 +73,11 @@ msgid "According to partner VAT responsibility"
 msgstr "De acuerdo a la responsabilidad de IVA"
 
 #. module: l10n_ar_ux
+#: model:ir.model,name:l10n_ar_ux.model_account_account
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__l10n_ar_report_signed_by
 msgid "Aclaracion"
 msgstr ""
@@ -114,6 +119,18 @@ msgid "Activities Start"
 msgstr "Inicio de las actividades"
 
 #. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_view_form
+msgid "Activity"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model:ir.model.fields,help:l10n_ar_ux.field_account_account__l10n_ar_afip_activity_id
+msgid ""
+"Activity associated with this account. If not set, the company's default "
+"activity will be used."
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__res_partner__imp_ganancias_padron__ac
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__res_partner__imp_iva_padron__ac
 msgid "Activo"
@@ -127,6 +144,11 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_ir_actions_report__l10n_ar_copies
 msgid "Agregar Duplicado/Triplicado"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_account__l10n_ar_afip_activity_id
+msgid "Associated Activity"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -536,6 +558,19 @@ msgstr "Por favor agregue el número de documento."
 #: code:addons/l10n_ar_ux/controllers/portal.py:0
 msgid "Please add the type of document."
 msgstr "Por favor agregue el tipo de identificación."
+
+#. module: l10n_ar_ux
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__l10n_ar_afip_activity_id
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_config_settings__l10n_ar_afip_activity_id
+msgid "Principal Activity"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model:ir.model.fields,help:l10n_ar_ux.field_res_company__l10n_ar_afip_activity_id
+#: model:ir.model.fields,help:l10n_ar_ux.field_res_config_settings__l10n_ar_afip_activity_id
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_view_form
+msgid "Principal registered activity of the company"
+msgstr ""
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__qr_code

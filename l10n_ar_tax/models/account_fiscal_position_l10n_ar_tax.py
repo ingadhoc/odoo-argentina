@@ -149,7 +149,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
         # si es base en data demo devolvemos una alicuota demo para que no falle la demo data
         if self.env.ref("base.user_demo", raise_if_not_found=False):
             return (2.5 if self.tax_type == "withholding" else 3.0, "VALOR DUMMY | dummy")
-        raise UserError(_("Falta configuración de credenciales de ADHOC para consulta de " "Alícuotas de AGIP"))
+        raise UserError(_("Falta configuración de credenciales de ADHOC para consulta de Alícuotas de AGIP"))
 
     def _get_arba_data(self, partner, date, to_date):
         """Metodo que obtiene la alicuota de ARBA de un partner y fecha dado
@@ -272,19 +272,29 @@ class AccountFiscalPositionL10nArTax(models.Model):
         payload = {"body": partner.vat}
         headers = {"content-type": "application/json"}
 
+        error_msg = self.env._(
+            "No pudimos obtener la alicuota del webservice de rentascordoba.\n\n"
+            "Para asignar la alícuota de Córdoba a un contacto, siga estos pasos:\n"
+            "1) Consulte la alícuota del contacto en: https://www.rentascordoba.gob.ar/gestiones/consulta-alicuota\n"
+            "2) Cree manualmente la alícuota en la vista formulario del Contacto (solapa 'Contabilidad').\n\n"
+            "En caso de dudas o si el problema persiste, comuníquese con nuestro equipo de Servicio de Asistencia.\n"
+            "Detalle del error:\n"
+        )
+
         # Realizar solicitud
         try:
             r = requests.post(url, data=json.dumps(payload), headers=headers, timeout=10)
-            json_body = r.json()
-        except requests.exceptions.Timeout:
-            msg = self.env._("Timeout error when getting data from rentascordoba.gob.ar")
-            _logger.warning("%s" % msg)
+        except requests.exceptions.Timeout as e:
+            msg = self.env._(error_msg + "Timeout error when getting data.")
+            _logger.warning("%s" % str(e))
             raise UserError("%s" % msg)
         except requests.exceptions.RequestException as e:
-            msg = self.env._("Error when contacting rentascordoba.gob.ar. The server answered: \n%s" % str(e))
-            _logger.warning("%s" % msg)
+            _logger.warning("%s" % str(e))
+            raise UserError("%s" % error_msg)
+        if r.status_code == 404:
+            msg = _(error_msg + "404 Not Found error.")
             raise UserError("%s" % msg)
-
+        json_body = r.json()
         code = json_body.get("errorCod")
         ref = json_body.get("message")
 

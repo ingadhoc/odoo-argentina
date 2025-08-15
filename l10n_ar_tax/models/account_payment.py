@@ -181,7 +181,14 @@ class AccountPayment(models.Model):
                 if not line.name or line.name == "/":
                     if line.tax_id.l10n_ar_withholding_sequence_id:
                         commands.append(
-                            Command.update(line.id, {"name": line.tax_id.l10n_ar_withholding_sequence_id.next_by_id()})
+                            Command.update(
+                                line.id,
+                                {
+                                    "name": line.tax_id.l10n_ar_withholding_sequence_id.next_by_id()
+                                    if line.amount
+                                    else "/"
+                                },
+                            )
                         )
                     else:
                         raise UserError(

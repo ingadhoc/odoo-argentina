@@ -97,7 +97,7 @@
                             </tr>
                         </t>
                     </t>
-                    <t t-foreach="payment_bundle.l10n_ar_withholding_line_ids" t-as="line">
+                    <t t-foreach="payment_bundle.l10n_ar_withholding_line_ids.filtered('amount')" t-as="line">
                         <tr>
                             <td>
                                 <span t-if="line.tax_id.l10n_ar_tax_type in ['earnings', 'earnings_scale']" t-out="line.tax_id.invoice_label or 'Retención Ganancias'"/>

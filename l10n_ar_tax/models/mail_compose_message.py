@@ -23,7 +23,7 @@ class MailComposeMessage(models.TransientModel):
                     return
 
                 attachments = []
-                for withholding in payment.l10n_ar_withholding_line_ids:
+                for withholding in payment.l10n_ar_withholding_line_ids.filtered("amount"):
                     report_name = safe_eval.safe_eval(report.print_report_name, {"object": withholding})
                     result, _ = self.env["ir.actions.report"]._render(report.report_name, withholding.ids)
                     file = base64.b64encode(result)

@@ -19,6 +19,8 @@ class ArgentinianReportCustomHandler(models.AbstractModel):
         '9': 2.5}
 
         res = []
+        # header = ['Fecha', 'Factura ID', 'Contacto', 'Factura Nombre', 'Alícuota IVA', 'Base Imponible', 'Importe Reportado', 'Importe Calculado', 'Diferencia']
+        # res.append(header)
         for inv in invoices:
             vat_taxes = inv._get_vat()
             for vat_tax in vat_taxes:
@@ -35,7 +37,7 @@ class ArgentinianReportCustomHandler(models.AbstractModel):
             invoices_domain = [('id', 'in', [inv[0] for inv in error])]
             raise RedirectWarning(
                 _('Existen comprobantes con diferencias mayores a 0.5 centavos en el cálculo de IVA.'
-                ' Para más información, haga click en el siguiente link: '),
+                ' Para más información, haga click en el siguiente link: https://www.adhoc.inc/knowledge/article/9963'),
                 {
                     'type': 'ir.actions.act_window',
                     'name': 'Invoices with differences',

@@ -2,7 +2,9 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields, api, _
+import base64
+
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -119,7 +121,7 @@ class AccountMove(models.Model):
                 document_types = document_types.filtered(lambda x: x.internal_type == 'debit_note')
                 rec.l10n_latam_document_type_id = document_types and document_types[0].id
 
-    @api.model    
+    @api.model
     def _l10n_ar_get_document_number_parts(self, document_number, document_type_code):
         # eliminamos todo lo que viene después '(' que es un sufijo que odoo agrega y que nosotros agregamos para
         # forzar unicidad con cambios de approach al ir migrando de versiones
@@ -135,3 +137,71 @@ class AccountMove(models.Model):
         if posted_in_afip := self.filtered(lambda x: x.state == "posted" and x.invoice_filter_type_domain == "sale" and x.l10n_ar_afip_auth_mode == "CAE" and x.l10n_ar_afip_auth_code):
             raise UserError(_("No pueden cancelarse documentos ya validados en AFIP (%s).", ",".join(posted_in_afip.mapped('name'))))
         return super().button_cancel()
+
+    def action_download_vat_differences_csv(self):
+        """Acción para descargar CSV con diferencias de IVA"""
+        try:
+            handler = self.env['l10n_ar.tax.report.handler']
+            vat_differences_data = handler._check_invoices(self)
+
+            if not vat_differences_data:
+                return {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'title': _('Información'),
+                        'message': _('No se encontraron diferencias de IVA para las facturas seleccionadas.'),
+                        'type': 'info',
+                    }
+                }
+
+            # Generar el contenido del CSV
+            csv_content = self._generate_vat_differences_csv(vat_differences_data)
+
+            # Crear archivo temporal para descarga
+            filename = 'diferencias_iva.csv'
+
+            # Crear el attachment
+            attachment = self.env['ir.attachment'].create({
+                'name': filename,
+                'type': 'binary',
+                'datas': base64.b64encode(csv_content.encode('utf-8')),
+                'res_model': 'account.move',
+                'mimetype': 'text/csv',
+            })
+
+            # Retornar acción de descarga
+            return {
+                'type': 'ir.actions.act_url',
+                'url': f'/web/content/{attachment.id}?download=1',
+                'target': 'new',
+            }
+        except Exception as e:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Error'),
+                    'message': _('Error al generar el CSV: %s') % str(e),
+                    'type': 'danger',
+                }
+            }
+
+    def _generate_vat_differences_csv(self, vat_differences_data):
+        """Genera el contenido del CSV con las diferencias de IVA"""
+        lines = []
+        header = ['Fecha', 'Factura ID', 'Contacto', 'Factura Nombre', 'Alícuota IVA', 'Base Imponible', 'Importe Reportado', 'Importe Calculado', 'Diferencia']
+        lines.append(','.join(header))
+        for inv_id, inv_name, vat_info, diff, calculated_amount in vat_differences_data:
+            line = [
+                str(inv_id),
+                inv_name,
+                str(vat_info[1]),
+                str(vat_info[0]),
+                str(vat_info[2]),
+                str(calculated_amount),
+                str(diff),
+            ]
+            lines.append(','.join(line))
+
+        return '\n'.join(lines) + '\n'

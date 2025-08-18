@@ -4,7 +4,10 @@
 
 exclude: |
   (?x)
+<<<<<<< before updating
 
+=======
+>>>>>>> after updating
   # We don't want to mess with tool-generated files
   .svg$|/tests/([^/]+/)?cassettes/|^.copier-answers.yml$|^.github/|^eslint.config.cjs|^prettier.config.cjs|
   # Library files can have extraneous formatting (even minimized)

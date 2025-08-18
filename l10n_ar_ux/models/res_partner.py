@@ -27,7 +27,7 @@ class ResPartner(models.Model):
             ("AC", "Activo"),
             ("EX", "Exento"),
             ("NA", "No alcanzado"),
-            ("NA", "No alcanzado"),
+             ("EX", "Exento"),
             ("XN", "Exento no alcanzado"),
             ("AN", "Activo no alcanzado"),
         ],

@@ -26,6 +26,7 @@ class AccountJournal(models.Model):
         """Add new AFIP Pos type"""
         res = super()._get_l10n_ar_afip_pos_types_selection()
         res.append(("CF", _("External Fiscal Controller")))
+        res.append(("CF", _("External Fiscal Controller")))
         return res
 
     def _get_codes_per_journal_type(self, afip_pos_system):

@@ -20,7 +20,7 @@ class AccountJournal(models.Model):
         default="no",
         required=True,
     )
-    l10n_ar_afip_pos_partner_id = fields.Many2one(string="Dirección Punto de venta")
+    l10n_ar_afip_pos_partner_id = fields.Many2one(string="Dirección  de venta")
 
     def _get_l10n_ar_afip_pos_types_selection(self):
         """Add new AFIP Pos type"""
@@ -30,7 +30,7 @@ class AccountJournal(models.Model):
         return res
 
     def _get_codes_per_journal_type(self, afip_pos_system):
-        """Add filter for External Fiscal Controller
+        """Add filter for Fiscal Controller
         NOTE: This can be removed in version 18.0 since has been already included in Odoo"""
         tique_codes = ["81", "82", "83", "110", "112", "113", "115", "116", "118", "119", "120"]
         if afip_pos_system == "CF":

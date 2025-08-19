@@ -5,8 +5,10 @@
 name: Delete PR branch from fork and base repo
 
 on:
-
-  deployment_status:
+  pull_request:
+    types: [closed]
+  pull_request_target:
+    types: [closed]
 
   # Trigger manual
   workflow_dispatch:
@@ -22,6 +24,8 @@ jobs:
     if: >
       github.repository_owner == 'ingadhoc' &&
       (
+        (github.event_name == 'pull_request' && github.event.pull_request.merged == false && github.event.sender.login == 'roboadhoc') ||
+        (github.event_name == 'pull_request_target' && github.event.pull_request.merged == false && github.event.sender.login == 'roboadhoc') ||
         (github.event_name == 'workflow_dispatch') ||
         (github.event_name == 'deployment_status' &&  github.event.deployment_status.state == 'success')
       )
@@ -90,6 +94,8 @@ jobs:
                 return;
               }
 
+            } else if (['pull_request', 'pull_request_target'].includes(context.eventName)) {
+              pullRequest = context.payload.pull_request;
             } else {
               core.setOutput('validation_passed', 'false');
               core.error(`Unsupported event type: ${context.eventName}`);

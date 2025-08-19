@@ -112,4 +112,33 @@
         <field name="country_id" ref="base.ar"/>
     </record>
 
+    <record id="tag_venta_bienes_de_uso" model="account.account.tag">
+        <field name="name">IVA Simple: Venta de Bienes de Uso</field>
+        <field name="applicability">accounts</field>
+        <field name="country_id" ref="base.ar"/>
+    </record>
+
+    <record id="tag_compra_bienes_de_uso" model="account.account.tag">
+        <field name="name">IVA Simple: Compra de Bienes de Uso</field>
+        <field name="applicability">accounts</field>
+        <field name="country_id" ref="base.ar"/>
+    </record>
+
+    <record id="tag_compra_bienes" model="account.account.tag">
+        <field name="name">IVA Simple: Compra de Bienes (excepto bienes de uso)</field>
+        <field name="applicability">accounts</field>
+        <field name="country_id" ref="base.ar"/>
+    </record>
+
+    <record id="tag_prestaciones_de_ss" model="account.account.tag">
+        <field name="name">IVA Simple: Compras - Prestaciones de Servicios</field>
+        <field name="applicability">accounts</field>
+        <field name="country_id" ref="base.ar"/>
+    </record>
+
+    <record id="tag_locaciones" model="account.account.tag">
+        <field name="name">IVA Simple: Compra - Locaciones</field>
+        <field name="applicability">accounts</field>
+        <field name="country_id" ref="base.ar"/>
+    </record>
 </odoo>

@@ -26,3 +26,9 @@ class ResCompany(models.Model):
     l10n_ar_afip_activity_id = fields.Many2one(
         "afip.activity", string="Principal Activity", help="Principal registered activity of the company"
     )
+    l10n_ar_iva_simple_default_tag = fields.Many2one(
+        "account.account.tag",
+        string="Default Tag for IVA Simple",
+        domain=[("name", "ilike", "IVA Simple: Compra")],
+        help="This tag will be used by default in taxes with IVA Simple",
+    )

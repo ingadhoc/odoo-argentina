@@ -53,6 +53,12 @@
                         <field name="l10n_ar_afip_activity_id" options="{'no_open': True}"/>
                     </div>
                 </setting>
+                <setting string="IVA Simple" company_dependent="1" help="This tag will be used by default in IVA Simple reports">
+                    <div class="content-group mt16">
+                        <label for="l10n_ar_iva_simple_default_tag" class="o_form_label col-lg-3"/>
+                        <field name="l10n_ar_iva_simple_default_tag" options="{'no_open': True}"/>
+                    </div>
+                </setting>
             </xpath>
         </field>
     </record>

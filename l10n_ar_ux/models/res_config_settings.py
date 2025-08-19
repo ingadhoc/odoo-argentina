@@ -20,6 +20,10 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.l10n_ar_afip_activity_id",
         readonly=False,
     )
+    l10n_ar_iva_simple_default_tag = fields.Many2one(
+        related="company_id.l10n_ar_iva_simple_default_tag",
+        readonly=False,
+    )
 
     def clean_signature(self):
         self.l10n_ar_report_signature = False

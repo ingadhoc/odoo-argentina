@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-05 15:44+0000\n"
+"POT-Creation-Date: 2025-08-25 05:44+0000\n"
 "PO-Revision-Date: 2024-01-19 13:12+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -572,6 +572,11 @@ msgstr "Importe Sin Impuestos"
 #: model:ir.model.fields,help:l10n_ar_withholding_ux.field_account_payment__withholdable_advanced_amount
 msgid "Used for withholdings calculation"
 msgstr "Utilizado en el cálculo de retenciones"
+
+#. module: l10n_ar_withholding_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_withholding_ux.report_payment_receipt_document
+msgid "Venc."
+msgstr ""
 
 #. module: l10n_ar_withholding_ux
 #: model:ir.model.fields,field_description:l10n_ar_withholding_ux.field_l10n_ar_payment_withholding__withholdable_base_amount

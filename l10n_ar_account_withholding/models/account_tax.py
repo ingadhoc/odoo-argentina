@@ -1,6 +1,7 @@
-from odoo import models, fields, api, _
-from odoo.exceptions import UserError
 from dateutil.relativedelta import relativedelta
+
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class AccountTax(models.Model):
@@ -163,7 +164,7 @@ class AccountTax(models.Model):
             ('to_date', '=', False),
             ('to_date', '>=', date),
         ], limit=1)
-     
+
         # solo buscamos en padron para estas responsabilidades
         if not alicuot and \
                 commercial_partner.l10n_ar_afip_responsibility_type_id.code in \
@@ -179,7 +180,8 @@ class AccountTax(models.Model):
                 '|',
                 ('l10n_ar_padron_to_date', '=', False),
                 ('l10n_ar_padron_to_date', '>=', date),
-        ], limit=1)
+            ], limit=1)
+
             from_date = date + relativedelta(day=1)
             to_date = date + relativedelta(day=1, days=-1, months=+1)
 

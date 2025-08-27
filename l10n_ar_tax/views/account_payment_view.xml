@@ -51,7 +51,8 @@
                             <field name="currency_id" column_invisible="True"/>
                             <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', 'parent_of', parent.company_id)]" options="{'no_create': True}"/>
                             <field name="name" readonly="withholding_sequence_id"/>
-                            <field name="base_amount"/>
+                            <field name="base_amount" column_invisible="parent.partner_type == 'supplier'" optional="hide"/>
+                            <field name="base_amount" column_invisible="parent.partner_type != 'supplier'"/>
                             <field name="amount"/>
                             <field name="ref" optional="hide" readonly="l10n_ar_tax_type in ['earnings', 'earnings_scale']" force_save="1"/>
                             <button name="%(action_report_withholding_certificate)d" icon="fa-print " title="Print withholding voucher" type="action" invisible="parent.partner_type != 'supplier' or parent.state == 'draft' or amount == 0"/>

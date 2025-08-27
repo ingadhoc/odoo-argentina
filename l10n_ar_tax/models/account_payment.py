@@ -84,7 +84,8 @@ class AccountPayment(models.Model):
     #     for rec in (self - latam_checks):
     @api.onchange("withholdings_amount")
     def _onchange_withholdings(self):
-        for rec in self.filtered(lambda x: not x._is_latam_check_payment()):
+        # solo queremos re-computar en pagos de proveedor
+        for rec in self.filtered(lambda x: x.partner_type == "supplier" and not x._is_latam_check_payment()):
             # el compute_withholdings o el _compute_withholdings?
             amount = rec.amount + rec.payment_difference
             # no pasamos a importes negativos (por ej. si se ponene retenciones grandes) porque es molesto
@@ -297,7 +298,7 @@ class AccountPayment(models.Model):
     @api.depends("l10n_ar_fiscal_position_id", "partner_id", "company_id", "date")
     def _compute_l10n_ar_withholding_line_ids(self):
         # metodo completamente analogo a payment.register._compute_l10n_ar_withholding_ids
-        for rec in self:
+        for rec in self.filtered(lambda x: x.partner_type == "supplier"):
             date = rec.date or fields.Date.today()
             withholdings = [Command.clear()]
             if rec.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:

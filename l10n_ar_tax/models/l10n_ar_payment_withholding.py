@@ -34,7 +34,7 @@ class l10nArPaymentWithholding(models.Model):
     def _compute_base_amount(self):
         """practicamente mismo codigo que en l10n_ar.payment.register.withholding pero usamos campos "selected_debt_"""
         self.payment_id._compute_to_pay_amount()
-        for wth in self:
+        for wth in self.filtered(lambda x: x.payment_id.partner_type == "supplier"):
             # calculamos advance_amount
             # si el adelanto es negativo estamos pagando parcialmente una
             # factura y ocultamos el campo sin impuesto y el metodo _get_withholdable_advanced_amount nos devuelve
@@ -151,7 +151,7 @@ class l10nArPaymentWithholding(models.Model):
 
     @api.depends("base_amount", "tax_id")
     def _compute_amount(self):
-        for line in self:
+        for line in self.filtered(lambda r: r.payment_id.partner_type == "supplier"):
             # TODO: usar _get_withholding_tax no deberia ser necesario
             # si al pasar a draft modificamos la linea
             tax_id = line._get_withholding_tax()

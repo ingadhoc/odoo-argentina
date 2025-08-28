@@ -1,0 +1,53 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_ar_tax_ratio
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-28 17:50+0000\n"
+"PO-Revision-Date: 2025-08-28 17:50+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: l10n_ar_tax_ratio
+#: model:ir.model,name:l10n_ar_tax_ratio.model_l10n_ar_payment_withholding
+msgid "Payment withholding lines"
+msgstr "Líneas de pago de retención"
+
+#. module: l10n_ar_tax_ratio
+#: model:ir.model.fields,field_description:l10n_ar_tax_ratio.field_account_tax__ratio
+msgid "Ratio"
+msgstr ""
+
+#. module: l10n_ar_tax_ratio
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax_ratio.view_tax_form
+msgid "Ratio %"
+msgstr ""
+
+#. module: l10n_ar_tax_ratio
+#: model:ir.model.fields,help:l10n_ar_tax_ratio.field_account_tax__ratio
+msgid "Ratio to apply to tax base amount."
+msgstr ""
+
+#. module: l10n_ar_tax_ratio
+#: model:ir.model,name:l10n_ar_tax_ratio.model_account_tax
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: l10n_ar_tax_ratio
+#. odoo-python
+#: code:addons/l10n_ar_tax_ratio/models/account_tax.py:0
+msgid ""
+"The total percentage (%s) should be greater than 0 and less than or equal to"
+" 100."
+msgstr ""

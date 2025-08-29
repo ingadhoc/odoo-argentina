@@ -76,8 +76,7 @@ class AccountMove(models.Model):
             )
             .mapped("line_ids")
             .filtered(
-                lambda x: x.tax_line_id
-                and x.currency_rate
+                lambda x: x.currency_rate
                 and not x.currency_id.is_zero(abs(x.amount_currency) / x.currency_rate - abs(x.balance))
             )
         ):

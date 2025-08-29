@@ -104,6 +104,14 @@ class AccountMove(models.Model):
                     )
             rec.write({'l10n_ar_currency_rate': rate + 1, 'tax_totals': rec.tax_totals})
             rec.write({'l10n_ar_currency_rate': rate, 'tax_totals': rec.tax_totals})
+
+        # Haciendo esto forzamos a que se recomputen los impuestos en la factura si hubo algún cambio
+        # en el rate de partner alicuot si l10n_ar_currency_rate está establecido
+        for rec in self.filtered('l10n_ar_currency_rate'):
+            rate = rec.l10n_ar_currency_rate
+            rec.write({'l10n_ar_currency_rate': rate + 1, 'tax_totals': rec.tax_totals})
+            rec.write({'l10n_ar_currency_rate': rate, 'tax_totals': rec.tax_totals})
+
         res = super()._post(soft=soft)
         return res
 

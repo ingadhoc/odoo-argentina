@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -69,3 +69,9 @@ class AccountPayment(models.Model):
         # por esta razon es que tmb lo hacemos luego de super
         for rec in self.filtered(lambda x: x.l10n_latam_manual_checks and x.payment_method_line_id.code == 'check_printing'):
             rec._constrains_check_number_unique()
+
+    @api.constrains("currency_id", "company_id", "tax_withholding_id")
+    def _check_withholdings_and_currency(self):
+        for rec in self:
+            if rec.tax_withholding_id and rec.currency_id != rec.company_id.currency_id and rec.country_code == "AR":
+                raise ValidationError(_('Withholdings must be done in "%s" currency') % rec.company_id.currency_id.name)

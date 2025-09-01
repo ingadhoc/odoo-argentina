@@ -47,9 +47,8 @@ class AccountMove(models.Model):
             fp_tax_groups = move.fiscal_position_id.l10n_ar_tax_ids.filtered(
                 lambda x: x.tax_type == "perception"
             ).mapped("default_tax_id.tax_group_id")
-            new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(
-                move.partner_id, move.company_id, move.date, "perception"
-            )
+            date = move.date if not move.reversed_entry_id else move.reversed_entry_id.date
+            new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(move.partner_id, move.company_id, date, "perception")
             for line in move.invoice_line_ids:
                 to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
                 if to_unlink._origin != new_taxes:

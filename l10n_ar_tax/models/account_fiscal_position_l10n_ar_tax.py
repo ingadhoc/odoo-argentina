@@ -48,7 +48,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
         taxes = self.env["account.tax"]
         for rec in self:
             if rec.webservice:
-                taxes += rec._get_tax_from_ws(partner, date)
+                taxes += rec.sudo()._get_tax_from_ws(partner, date)
             else:
                 taxes += rec.default_tax_id
         return taxes

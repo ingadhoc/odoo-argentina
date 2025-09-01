@@ -29,22 +29,38 @@ class AccountMove(models.Model):
             tax_factor = 1.0 / 1.21
         return tax_factor
 
-    def _post(self, soft=True):
-        self.filtered(lambda x: x.perceptions_fiscal_positon and not x.invoice_date).mapped(
-            "invoice_line_ids"
-        )._compute_tax_ids()
-        return super()._post(soft=soft)
+    def write(self, vals):
+        res = super().write(vals)
+        if "invoice_date" in vals:
+            self._l10n_ar_recompute_fiscal_position_taxes()
+        return res
 
     @api.onchange("invoice_date")
-    def _l10n_ar_onchange_invoice_date(self):
-        self.filtered(
+    def _l10n_ar_recompute_fiscal_position_taxes(self):
+        """Recalculamos las percepciones si cambiamos la fecha de la orden de venta. Para ello nos basamos en los
+        impuestos de la posicion fiscal, buscamos si hay impuestos existentes para los tax groups involucrados y los
+        reemplazamos por los nuevos impuestos.
+        """
+        for move in self.filtered(
             lambda x: x.is_sale_document(include_receipts=True) and x.perceptions_fiscal_positon and x.state == "draft"
-        ).mapped("invoice_line_ids")._compute_tax_ids()
+        ):
+            fp_tax_groups = move.fiscal_position_id.l10n_ar_tax_ids.filtered(
+                lambda x: x.tax_type == "perception"
+            ).mapped("default_tax_id.tax_group_id")
+            new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(
+                move.partner_id, move.company_id, move.date, "perception"
+            )
+            for line in move.invoice_line_ids:
+                to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
+                if to_unlink._origin != new_taxes:
+                    line.tax_ids = [(3, tax.id) for tax in to_unlink] + [
+                        (4, tax.id) for tax in new_taxes if tax not in line.tax_ids
+                    ]
 
     def copy(self, default=None):
         """Re computamos las percepciones al duplicar una factura porque puede ser que la factura venga de otro periodo
         o por alguna razón las percepciones hayan cambiado
         """
         recs = super().copy(default=default)
-        recs._l10n_ar_onchange_invoice_date()
+        recs._l10n_ar_recompute_fiscal_position_taxes()
         return recs

@@ -11,6 +11,8 @@ class AccountFiscalPosition(models.Model):
         # TODO deberiamos unificar mucho de este codigo con _get_tax_domain, _compute_withholdings y _check_tax_group_overlap
         self.ensure_one()
         taxes = self.env["account.tax"]
+        # garantizamos de siempre evaluar segun commercial partner que es donde se guardan y ven los impuestos
+        partner = partner.commercial_partner_id
         for fp_tax in self.l10n_ar_tax_ids.filtered(lambda x: x.tax_type == tax_type):
             domain = self.env["l10n_ar.partner.tax"]._check_company_domain(company)
             domain += [("tax_id.tax_group_id", "=", fp_tax.default_tax_id.tax_group_id.id)]

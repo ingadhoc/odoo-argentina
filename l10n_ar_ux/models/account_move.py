@@ -70,16 +70,15 @@ class AccountMove(models.Model):
         return super().button_cancel()
 
     def _post(self, soft=True):
-        for line in (
-            self.filtered(
-                lambda x: x.company_id.account_fiscal_country_id.code == "AR" and x.currency_id != x.company_currency_id
-            )
-            .mapped("line_ids")
-            .filtered(
-                lambda x: x.tax_line_id
-                and x.currency_rate
-                and not x.currency_id.is_zero(abs(x.amount_currency) / x.currency_rate - abs(x.balance))
-            )
+        ar_invoices = self.filtered(
+            lambda x: x.company_id.account_fiscal_country_id.code == "AR" and x.currency_id != x.company_currency_id
+        )
+        ar_invoice_line_ids = ar_invoices.mapped("invoice_line_ids").ids
+
+        for line in ar_invoices.mapped("line_ids").filtered(
+            lambda x: (x.tax_line_id or x.id in ar_invoice_line_ids)
+            and x.currency_rate
+            and not x.currency_id.is_zero(abs(x.amount_currency) / x.currency_rate - abs(x.balance))
         ):
             balance = line.company_id.currency_id.round(line.amount_currency / line.currency_rate)
             line.balance = balance

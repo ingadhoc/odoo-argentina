@@ -115,3 +115,18 @@ class ResPartner(models.Model):
                 if self[r_field] == value:
                     values.pop(r_field, False)
         return values
+
+    @api.onchange("vat", "country_id", "l10n_latam_identification_type_id")
+    def _onchange_ar_identification_fields(self):
+        """
+        Agregamos este onchange para que cuando el usuario modifique el VAT o el tipo de documento
+        se formatee el VAT automaticamente si es un CUIT o un DNI.
+        En v19 esto ya está hecho en este commit https://github.com/odoo/odoo/commit/ac95d2d6d80a368dfb190d0ac21da2af479a8488.
+        Traemos sólo lo necesario acá para tenerlo disponible en esta versión.
+        """
+        l10n_ar_partners = self.filtered(
+            lambda p: p.vat and (p.l10n_latam_identification_type_id.l10n_ar_afip_code or p.country_code == "AR")
+        )
+        for partner in l10n_ar_partners:
+            if id_number := partner._get_id_number_sanitize():
+                partner.vat = str(id_number)

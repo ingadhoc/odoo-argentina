@@ -28,6 +28,7 @@
     "data": ["views/account_fiscal_position_view.xml"],
     "demo": [
         "demo/account_fiscal_position_demo.xml",
+        "demo/res_partner_demo.xml",
     ],
     "depends": [
         "l10n_ar_tax",

@@ -41,7 +41,7 @@ class l10nArPaymentWithholding(models.Model):
             # el proporcional descontando de el iva a lo que se esta pagando
             advance_amount = wth.payment_id.withholdable_advanced_amount
             tax = wth._get_withholding_tax()
-            if advance_amount < 0.0:
+            if advance_amount < 0.0 and wth.payment_id.to_pay_move_line_ids:
                 sorted_to_pay_lines = sorted(
                     wth.payment_id.to_pay_move_line_ids, key=lambda a: a.date_maturity or a.date
                 )

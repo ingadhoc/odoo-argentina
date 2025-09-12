@@ -71,7 +71,9 @@ class AccountMove(models.Model):
 
     def _post(self, soft=True):
         ar_invoices = self.filtered(
-            lambda x: x.company_id.account_fiscal_country_id.code == "AR" and x.currency_id != x.company_currency_id
+            lambda x: x.company_id.account_fiscal_country_id.code == "AR"
+            and x.currency_id != x.company_currency_id
+            and x.document_type_internal_type == "invoice"
         )
         ar_invoice_line_ids = ar_invoices.mapped("invoice_line_ids").ids
 

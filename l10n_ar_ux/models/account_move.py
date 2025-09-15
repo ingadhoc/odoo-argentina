@@ -2,8 +2,9 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+
+from odoo import _, api, fields, models
 
 
 class AccountMove(models.Model):
@@ -89,15 +90,21 @@ class AccountMove(models.Model):
                     )
             rec.write({'l10n_ar_currency_rate': rate + 1, 'tax_totals': rec.tax_totals})
             rec.write({'l10n_ar_currency_rate': rate, 'tax_totals': rec.tax_totals})
-        for line in self.filtered(
-	        lambda x: x.company_id.account_fiscal_country_id.code == "AR"
-	        and x.currency_id != x.company_currency_id).mapped('line_ids').filtered(lambda x:
-	            x.tax_line_id
-	            and x.currency_rate
-	            and not x.currency_id.is_zero(abs(x.amount_currency) / x.currency_rate - abs(x.balance))
-	        ):
-	        balance = line.company_id.currency_id.round(line.amount_currency / line.currency_rate)
-	        line.balance = balance
+
+        ar_invoices = self.filtered(
+            lambda x: x.company_id.account_fiscal_country_id.code == "AR"
+            and x.currency_id != x.company_currency_id
+            and x.is_invoice()
+        )
+        ar_invoice_line_ids = ar_invoices.mapped("invoice_line_ids").ids
+
+        for line in ar_invoices.mapped("line_ids").filtered(
+            lambda x: (x.tax_line_id or x.id in ar_invoice_line_ids)
+            and x.currency_rate
+            and not x.currency_id.is_zero(abs(x.amount_currency) / x.currency_rate - abs(x.balance))
+        ):
+            balance = line.company_id.currency_id.round(line.amount_currency / line.currency_rate)
+            line.balance = balance
         res = super()._post(soft=soft)
         return res
 

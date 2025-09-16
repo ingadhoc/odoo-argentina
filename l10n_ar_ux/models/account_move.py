@@ -70,10 +70,14 @@ class AccountMove(models.Model):
         return super().button_cancel()
 
     def _post(self, soft=True):
+        # EXTEND account
+        """It fixes the rounding on invoice lines to ensure consistency with
+        the applied rate (currency is not company currency).This is only applied
+        on invoice move types."""
         ar_invoices = self.filtered(
             lambda x: x.company_id.account_fiscal_country_id.code == "AR"
             and x.currency_id != x.company_currency_id
-            and x.l10n_latam_document_type_id.internal_type == "invoice"
+            and x.is_invoice()
         )
         ar_invoice_line_ids = ar_invoices.mapped("invoice_line_ids").ids
 

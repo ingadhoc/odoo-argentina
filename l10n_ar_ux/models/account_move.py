@@ -2,8 +2,9 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+
+from odoo import _, api, fields, models
 
 
 class AccountMove(models.Model):
@@ -89,6 +90,7 @@ class AccountMove(models.Model):
                     )
             rec.write({'l10n_ar_currency_rate': rate + 1, 'tax_totals': rec.tax_totals})
             rec.write({'l10n_ar_currency_rate': rate, 'tax_totals': rec.tax_totals})
+<<<<<<< e8305370fc9a1d83f9cc8c6cf520c8426caf50d5
         for line in self.filtered(
 	        lambda x: x.company_id.account_fiscal_country_id.code == "AR"
 	        and x.currency_id != x.company_currency_id).mapped('line_ids').filtered(lambda x:
@@ -98,10 +100,58 @@ class AccountMove(models.Model):
 	        ):
 	        balance = line.company_id.currency_id.round(line.amount_currency / line.currency_rate)
 	        line.balance = balance
+||||||| 6904d85e7aaead2f2597850c87f6b3e8ff349977
+=======
+
+        ar_invoices = self.filtered(
+            lambda x: x.company_id.account_fiscal_country_id.code == "AR"
+            and x.currency_id != x.company_currency_id
+            and x.is_invoice()
+        )
+        ar_invoice_line_ids = ar_invoices.mapped("invoice_line_ids").ids
+
+        for line in ar_invoices.mapped("line_ids").filtered(
+            lambda x: (x.tax_line_id or x.id in ar_invoice_line_ids)
+            and x.currency_rate
+            and not x.currency_id.is_zero(abs(x.amount_currency) / x.currency_rate - abs(x.balance))
+        ):
+            balance = line.company_id.currency_id.round(line.amount_currency / line.currency_rate)
+            line.balance = balance
+>>>>>>> c1edc289c941ff8ddccdc8eaa0b1e6efedb98899
         res = super()._post(soft=soft)
         return res
 
+<<<<<<< e8305370fc9a1d83f9cc8c6cf520c8426caf50d5
     @api.model
+||||||| 6904d85e7aaead2f2597850c87f6b3e8ff349977
+    @api.depends('l10n_latam_available_document_type_ids', 'debit_origin_id')
+    def _compute_l10n_latam_document_type(self):
+        """ Sobre escribimos este metodo porque es necesario para poder auto calcular el tipo de documento por defecto
+        de una nota de debito cuando no hay un debit_origin_id definido, puede ser porque simplemente no haya un
+        documento relacionado original o porque hay muchos documentos relacionados pero no puede ser asociados """
+        super()._compute_l10n_latam_document_type()
+        if self.env.context.get('internal_type') == 'debit_note':
+            for rec in self.filtered(lambda x: x.state == 'draft'):
+                document_types = rec.l10n_latam_available_document_type_ids._origin
+                document_types = document_types.filtered(lambda x: x.internal_type == 'debit_note')
+                rec.l10n_latam_document_type_id = document_types and document_types[0].id
+
+    @api.model    
+=======
+    @api.depends('l10n_latam_available_document_type_ids', 'debit_origin_id')
+    def _compute_l10n_latam_document_type(self):
+        """ Sobre escribimos este metodo porque es necesario para poder auto calcular el tipo de documento por defecto
+        de una nota de debito cuando no hay un debit_origin_id definido, puede ser porque simplemente no haya un
+        documento relacionado original o porque hay muchos documentos relacionados pero no puede ser asociados """
+        super()._compute_l10n_latam_document_type()
+        if self.env.context.get('internal_type') == 'debit_note':
+            for rec in self.filtered(lambda x: x.state == 'draft'):
+                document_types = rec.l10n_latam_available_document_type_ids._origin
+                document_types = document_types.filtered(lambda x: x.internal_type == 'debit_note')
+                rec.l10n_latam_document_type_id = document_types and document_types[0].id
+
+    @api.model
+>>>>>>> c1edc289c941ff8ddccdc8eaa0b1e6efedb98899
     def _l10n_ar_get_document_number_parts(self, document_number, document_type_code):
         # eliminamos todo lo que viene después '(' que es un sufijo que odoo agrega y que nosotros agregamos para
         # forzar unicidad con cambios de approach al ir migrando de versiones

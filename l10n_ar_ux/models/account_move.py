@@ -47,10 +47,17 @@ class AccountMove(models.Model):
 
     @api.model
     def _l10n_ar_get_document_number_parts(self, document_number, document_type_code):
-        # eliminamos todo lo que viene después '(' que es un sufijo que odoo agrega y que nosotros agregamos para
-        # forzar unicidad con cambios de approach al ir migrando de versiones
-        document_number = document_number.split("(")[0]
-        return super()._l10n_ar_get_document_number_parts(document_number, document_type_code)
+        """Eliminamos todo lo que viene después '(' que es un sufijo que odoo agrega y que nosotros agregamos para
+        forzar unicidad con cambios de approach al ir migrando de versiones.
+        Captamos con un try/except para no romper en caso de que el formato no sea el esperado. En Odoo no podemos
+        replicarlo, por eso lo dejamos acá."""
+        try:
+            document_number = document_number.split("(")[0]
+            return super()._l10n_ar_get_document_number_parts(document_number, document_type_code)
+        except ValueError:
+            raise UserError(
+                _("The associated document number does not appear to be in the Argentine format: %s", document_number)
+            )
 
     def button_cancel(self):
         """

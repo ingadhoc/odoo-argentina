@@ -12,7 +12,7 @@
         "views/account_tax_view.xml",
     ],
     "demo": [],
-    "installable": True,
+    'installable': False,
     "auto_install": False,
     "application": False,
 }

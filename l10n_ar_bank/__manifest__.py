@@ -13,7 +13,7 @@
     "data": [
         "data/res_bank.xml",
     ],
-    'installable': False,
+    "installable": False,
     "auto_install": True,
     "application": False,
 }

@@ -33,6 +33,6 @@
     "depends": [
         "l10n_ar_tax",
     ],
-    'installable': False,
+    "installable": False,
     "auto_install": False,
 }

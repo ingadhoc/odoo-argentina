@@ -147,7 +147,7 @@
 
                         <!-- Precompute display amounts -->
                         <t t-set="display_amount" t-value="abs(doc.amount_signed) if all_same_type else doc.amount_signed"/>
-                        <t t-set="display_amount_secondary" t-value="secondary_currency.round((abs(doc.amount_signed) if all_same_type else doc.amount_signed) / doc_secondary_currency_rate) if secondary_currency else display_amount"/>
+                        <t t-set="display_amount_secondary" t-value="secondary_currency.round((abs(doc.amount_company_currency_signed) if all_same_type else doc.amount_signed) / doc_secondary_currency_rate) if secondary_currency else display_amount"/>
                         <t t-set="display_amount_company" t-value="doc.company_currency_id.round(display_amount_secondary * doc_secondary_currency_rate) if doc.other_currency else display_amount"/>
                         <tr>
                             <td>

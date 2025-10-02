@@ -10,59 +10,41 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-=======================================================
-Agregado de CBU a bancos y listado de Bancos Argentinos
-=======================================================
+===============================================
+CBU Addition to Banks and Argentine Bank List
+===============================================
 
-* Listado de entidades financieras habilitadas por el BCRA en la República Argentina.
+* Complete list of financial entities authorized by the BCRA in the Argentine Republic.
+* Includes contact information, addresses, and BIC/SWIFT codes of banks.
+* Compatible with Argentine localization (l10n_ar) to facilitate banking operations.
+
+Main Features
+=============
+
+* **83+ preloaded Argentine banks**: Includes both national and international banks operating in Argentina
+* **Information**: Name, BIC/SWIFT code, address, phone, email, city and province
+* **BCRA codes**: Uses official codes from the Central Bank of the Argentine Republic
+
 
 Installation
 ============
 
-To install this module, you need to:
-
-#. Just install the module
+#. This module is automatically installed when l10n_ar is installed (auto_install: True)
+#. If you need to install it manually: go to Apps > search "l10n_ar_bank" > Install
 
 Configuration
 =============
 
-To configure this module, you need to:
-
-#. Nothing to do
+#. No additional configuration required
+#. Banks are automatically loaded when installing the module
+#. Data is immediately available in Accounting > Configuration > Banks
 
 Usage
 =====
 
-To use this module, you need to:
+To use this module, you can:
 
-.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
-   :alt: Try me on Runbot
-   :target: http://runbot.adhoc.com.ar/
-
-Bug Tracker
-===========
-
-Bugs are tracked on `GitHub Issues
-<https://github.com/ingadhoc/odoo-argentina/issues>`_. In case of trouble, please
-check there if your issue has already been reported. If you spotted it first,
-help us smashing it by providing a detailed and welcomed feedback.
-
-Credits
-=======
-
-Images
-------
-
-* |company| |icon|
-
-Contributors
-------------
-
-Maintainer
-----------
-
-|company_logo|
-
-This module is maintained by the |company|.
-
-To contribute to this module, please visit https://www.adhoc.com.ar.
+#. **Configure company bank accounts**: Go to Contacts > Configuration > Bank Accounts and create a new account by selecting the desired bank from the list
+#. **Create contacts with banking information**: In contacts (customers/suppliers), you can select banks from the preloaded list
+#. **Invoicing**: Banking data is automatically used in reports and invoices
+#. **Transfers**: Facilitates the configuration of bank transfers with correct data

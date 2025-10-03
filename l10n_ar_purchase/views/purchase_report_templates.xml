@@ -21,7 +21,7 @@
 
     <template id="custom_header_purchaseorder" inherit_id="l10n_ar.custom_header" primary="True">
         <xpath expr="//div[hasclass('col-6', 'text-end')]/span[1]" position="replace">
-            <t t-if="o.state in ['purchase', 'done']">
+            <t t-if="o.state == 'purchase'">
                 <span t-att-style="'color: %s;' % o.company_id.secondary_color">Approve date: </span>
             </t>
             <t t-else="">
@@ -124,7 +124,7 @@
             <t t-set="document_letter" t-value="'X'"/>
             <t t-set="document_legend">Invalid document as invoice</t>
             <t t-set="report_name" t-if="o.state in ['draft', 'sent', 'to approve']">Request for Quotation</t>
-            <t t-set="report_name" t-if="o.state in ['purchase', 'done']">Purchase Order</t>
+            <t t-set="report_name" t-if="o.state == 'purchase'">Purchase Order</t>
             <t t-set="report_name" t-if="o.state == 'cancel'">Cancelled Purchase Order</t>
 
             <t t-set="header_address" t-value="o.company_id.partner_id"/>
@@ -153,8 +153,8 @@
         <xpath expr="//th[@name='th_taxes']/strong" position="replace">
             <strong>% VAT</strong>
         </xpath>
-        <xpath expr="//span[contains(@t-out, 'tax.invoice_label or tax.name')]" position="replace">
-            <span t-out="', '.join([(tax.invoice_label or tax.name) for tax in line.taxes_id.filtered(lambda x: x.tax_group_id.l10n_ar_vat_afip_code)])"/>
+        <xpath expr="//span[contains(@t-out, 'tax.tax_label for tax in line.tax_ids if tax.tax_label')]" position="replace">
+            <span t-out="', '.join([tax.tax_label for tax in line.tax_ids.filtered(lambda x: x.tax_group_id.l10n_ar_vat_afip_code) if tax.tax_label])"/>
         </xpath>
 
         <div id="informations" position="replace">

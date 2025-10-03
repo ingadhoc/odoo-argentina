@@ -14,33 +14,92 @@
 Argentinean Purchase Report
 ============================
 
-Adapt purchase order report and quotation report to Argentinean localization. Replaces the native Odoo purchase report with a new one that has the same look and feel of the Argentinean electronic invoice.
+This module adapts the purchase order and quotation reports to comply with Argentinean localization standards. It replaces the native Odoo purchase reports with customized templates that match the format and design of Argentinean electronic invoices.
 
+Features
+========
 
-When a request for quotation is printed in an argentinean company then the report will contain the argentinean localization header with this leyend: "Invalid document as invoice". Then the header also will contain the information of the company that generates de purchase order such as name, address, telephone number, website, order number, date, fiscal position, vat, iibb number, date of activities start.
-Supplier data such as name, address, vat, vat cond, purchase representative, payment terms, order reference and shipping address are added below the header.
-If a purchase order is printed, the format is the same as the request for quotation but the name of the report changes depending on the status of the purchase order.
+Report Customization
+--------------------
+
+* **Custom Header**: Adapts purchase reports to use the Argentinean localization header layout
+* **Document Identification**: Includes "Invalid document as invoice" legend for compliance
+* **Company Information**: Displays comprehensive company data including:
+
+  * Company name, address, telephone, and website
+  * VAT number and AFIP responsibility type
+  * IIBB (Gross Income Tax) number
+  * Date of business activities start
+
+* **Supplier Information**: Enhanced supplier section with:
+
+  * Supplier name and commercial address
+  * VAT condition and identification number
+  * AFIP responsibility type
+  * Purchase representative details
+
+Report Types
+------------
+
+* **Request for Quotation**: Customized quotation report with Argentinean format
+* **Purchase Order**: Adapted purchase order report that changes dynamically based on order status:
+
+  * Draft/Sent/To Approve: "Request for Quotation"
+  * Purchase/Done: "Purchase Order"
+  * Cancelled: "Cancelled Purchase Order"
+
+Tax Display
+-----------
+
+* **VAT Column**: Replaces generic "Taxes" column with "% VAT" column
+* **Tax Filtering**: Shows only VAT taxes with AFIP codes
+* **Tax Labels**: Displays proper tax names and invoice labels
+
+Additional Features
+-------------------
+
+* **Payment Terms**: Displays payment terms information
+* **Order References**: Shows supplier's order reference
+* **Shipping Address**: Includes delivery address when specified
+* **Approval Dates**: Shows approval date for confirmed orders
+* **Page Numbering**: Professional footer with page numbers
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Only need to install the module
+#. Install the module from the Apps menu
+#. No additional configuration is required
+
+The module automatically activates when working with Argentinean companies (country code "AR").
 
 Configuration
 =============
 
-To configure this module, you need to:
+No specific configuration is required. The module automatically:
 
-#. Nothing to configure
+* Detects Argentinean companies based on country code
+* Applies the localized reports to purchase orders and quotations
+* Uses the company's secondary color for styling elements
 
 Usage
 =====
 
-To use this module, you need to:
+Once installed, the module works automatically:
 
-#. Go to ...
+#. Create or edit a purchase order in an Argentinean company
+#. Print the quotation or purchase order
+#. The report will use the Argentinean localized format
+#. All company and supplier information will be displayed according to local requirements
+
+The reports include all necessary information for Argentinean business compliance and maintain professional formatting consistent with electronic invoice standards.
+
+Known Issues / Roadmap
+======================
+
+* The module inherits templates with high priority (20) to ensure proper functionality
+* Some fields from other modules (like incoterms from sale_stock) may not appear due to inheritance priorities
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

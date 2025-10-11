@@ -15,7 +15,7 @@ class ResCountryState(models.Model):
         for rec in self:
             if rec.country_id.code == "AR":
                 rec.jurisdiction_code = {
-                    "B": "902",
+                    "W": "902",
                     "K": "903",
                     "H": "906",
                     "U": "907",

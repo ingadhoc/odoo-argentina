@@ -24,5 +24,5 @@ class ResCompany(models.Model):
     l10n_ar_report_signed_by = fields.Text("Aclaracion", copy=False)
     l10n_ar_invoice_report_ars_amount = fields.Boolean("Mostrar importe equivalente en ARS", default=False)
     l10n_ar_afip_activity_id = fields.Many2one(
-        "afip.activity", string="Principal Activity", help="Principal registered activity of the company"
+        "afip.activity", string="Principal Activity"
     )

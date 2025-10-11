@@ -60,3 +60,6 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+# Ignorar la carpeta .vscode
+.vscode/

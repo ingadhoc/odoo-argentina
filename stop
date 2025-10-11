@@ -1,0 +1,486 @@
+[33mcommit e1d0d3a473addc7fb104cff160786ab36c834931[m[33m ([m[1;36mHEAD -> [m[1;32m17.0-h-091218-apa[m[33m, [m[1;31madhoc-dev/17.0-h-091218-apa[m[33m)[m
+Author: “Antonio <apa@adhoc.com.ar>
+Date:   Tue Jul 23 09:45:53 2024 -0300
+
+    Commit 3
+
+[33mcommit 18861700ee79fb78b9ec230b1e179fe69a8ac6bd[m
+Author: “Antonio <apa@adhoc.com.ar>
+Date:   Tue Jul 23 09:42:05 2024 -0300
+
+    COMMIT 2
+
+[33mcommit 1385cde713f27f612ac5a7ad9660c2851b9ba3d3[m
+Author: “Antonio <apa@adhoc.com.ar>
+Date:   Tue Jul 23 09:37:54 2024 -0300
+
+    Commit 1
+
+[33mcommit a1c494341583f0109fb76e056d38487190ac2d2c[m[33m ([m[1;31morigin/tmp.17.0[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/17.0[m[33m, [m[1;32m17.0[m[33m)[m
+Author: Pablo Montenegro <pam@adhoc.com.ar>
+Date:   Fri Jul 19 20:45:29 2024 +0000
+
+    [FIX] l10n_ar_bank: cambiar id a banco BICA
+    
+    closes ingadhoc/odoo-argentina#876
+    
+    Ticket: 77494
+    X-original-commit: 7b41fa10ab7a19260df6fb0efcdad8927f5562dd
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+    Signed-off-by: pablohmontenegro <pam@adhoc.com.ar>
+
+[33mcommit 14b8f1464297cb15206d43748bcdd305add93e44[m
+Author: Pablo Montenegro <pam@adhoc.com.ar>
+Date:   Tue Jul 16 17:48:29 2024 +0000
+
+    [ADD] l10n_ar_bank: agregar banco Bica
+    
+    closes ingadhoc/odoo-argentina#873
+    
+    Ticket: 77494
+    X-original-commit: 1ac65a5a1982cdfb49a14a56f6b0f8909e24933a
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+    Signed-off-by: pablohmontenegro <pam@adhoc.com.ar>
+
+[33mcommit e53ee1be112389a1d88573002537cd0ec305c3c8[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Tue May 21 13:42:41 2024 +0000
+
+    [IMP] l10n_ar_ux: uniqueness of checks
+    
+    closes ingadhoc/odoo-argentina#870
+    
+    X-original-commit: dc39d9a656a0a00d45e0efc1b2ce86815341e2eb
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+
+[33mcommit f8362cbf5b1d84508ebd1f247779bc79b372e1d0[m
+Author: Camila <cav@adhoc.com.ar>
+Date:   Wed Jun 19 17:00:49 2024 +0000
+
+    [FIX] l10n_ar_ux: sanitize document_number
+    
+    FW of https://github.com/ingadhoc/odoo-argentina/pull/862
+    Removes added characters (e.g. (1)) for repeated document numbers before sending them to l10n_ar method that returns document number parts
+    
+    closes ingadhoc/odoo-argentina#869
+    
+    Signed-off-by: Juan José Scarafía <jjs@adhoc.com.ar>
+
+[33mcommit 98b25de279fb04fa8766b6f1ad4c67531f7709cc[m
+Author: Maximiliano Mezzavilla <mem@adhoc.com.ar>
+Date:   Wed Jun 12 17:05:00 2024 +0000
+
+    [FIX] l10n_ar_bank: Agregamos los datos del banco BANCO BMA S.A.U.
+    
+    Ticket: 76130
+    El banco Macro compro el banco ITAU
+    
+    closes ingadhoc/odoo-argentina#865
+    
+    X-original-commit: acd4f45f098b5ca4489bd81f6ef880ac6e5b64e7
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+
+[33mcommit 11faa4d02dae0e2039d320090cef333ecde17e92[m
+Author: Pablo Montenegro <pam@adhoc.com.ar>
+Date:   Tue Jun 11 13:29:27 2024 +0000
+
+    [IMP] l10n_ar_account_withholding: cambiar nombre a setting de ganancias en ajustes
+    
+    closes ingadhoc/odoo-argentina#863
+    
+    Tarea: 39554
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+
+[33mcommit 19b79760d74f2923bd5f78edac28039228e146fb[m
+Author: Pablo Montenegro <pam@adhoc.com.ar>
+Date:   Wed May 29 20:17:20 2024 +0000
+
+    [FIX] l10n_ar_ux: error al cambiar mail desde portal
+    
+    closes ingadhoc/odoo-argentina#861
+    
+    Ticket: 73975
+    Signed-off-by: Filoquin adhoc <maq@adhoc.com.ar>
+
+[33mcommit 51983efcaa0b287127b2ec3a8b48982083ec3dd6[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Thu May 23 19:35:29 2024 +0000
+
+    [FIX] account_withholding: avoid proffits wth on itnernal transfers
+    
+    closes ingadhoc/odoo-argentina#860
+    
+    Related: ingadhoc/account-financial-tools#524
+    Related: ingadhoc/account-payment#491
+    Signed-off-by: Juan José Scarafía <jjs@adhoc.com.ar>
+
+[33mcommit ca15d869e1de443a3f14f173aeee34f60452102e[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Tue May 21 20:01:00 2024 +0000
+
+    [IMP] l10n_ar_withholding_ux: warn approve payment with checks
+    
+    closes ingadhoc/odoo-argentina#853
+    
+    Related: ingadhoc/account-payment#490
+    Signed-off-by: Juan José Scarafía <jjs@adhoc.com.ar>
+
+[33mcommit 0a7232c9fb5622a4e8822aebd6eb11022bb75d6d[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Tue May 14 20:38:55 2024 +0000
+
+    [IMP] _withholding_ux: add withholding computation for checks + double validation
+    
+    Part-of: ingadhoc/odoo-argentina#853
+
+[33mcommit 9a738345ea76007dc1c634e0755089d5182f5c99[m
+Author: Pablo Montenegro <pam@adhoc.com.ar>
+Date:   Thu May 16 11:57:19 2024 +0000
+
+    [FIX] l10n_ar_ux: eliminar método _check_duplicate_supplier_reference en account move
+    
+    Ticket: 75008
+    Eliminamos método _check_duplicate_supplier_reference (Hacemos referencia única sólo si no está utilizando documentos. Los documentos ya garantizan no codificar dos veces la misma factura del proveedor) debido a este cambio de parte de odoo
+    https://github.com/odoo/odoo/commit/9edff147a020d8edd078163056e2ab16a9e82395
+    
+    closes ingadhoc/odoo-argentina#856
+    
+    X-original-commit: 86c55603e641614ac29b73f7888c1be52e030f7b
+    Signed-off-by: rov-adhoc <rov@adhoc.com.ar>
+    Signed-off-by: pablohmontenegro <pam@adhoc.com.ar>
+
+[33mcommit 4162074f68e856a2e1568b75e3dfe57210f418e4[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Mon Apr 22 16:25:19 2024 -0300
+
+    [FIX] payment_pro: withholding computation
+
+[33mcommit ef54f855fe0ff430ae70e77496ebe34bce533060[m
+Author: Martin Quinteros <maq@adhoc.com.ar>
+Date:   Fri Apr 19 15:30:23 2024 -0300
+
+    [IMP] add inherit off method _get_payment_difences
+
+[33mcommit e19fe7e1d6861bab2fbb5b31cd56a66823818094[m
+Author: Pablo Montenegro <pam@adhoc.com.ar>
+Date:   Wed Apr 24 14:59:20 2024 +0000
+
+    [IMP] l10n_ar_ux: activar wizards/res_config_settings_views.xml
+    
+    closes ingadhoc/odoo-argentina#834
+    
+    Tarea: 34375
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+
+[33mcommit 5259eada284cf733ee69efb98ad0f69e330f840b[m
+Author: Pablo Montenegro <pam@adhoc.com.ar>
+Date:   Wed Apr 24 17:32:30 2024 +0000
+
+    [FIX] l10n_ar_ux: Forzamos la actualización de la vista res_partner_view.xml en módulo l10n_ar
+    
+    closes ingadhoc/odoo-argentina#837
+    
+    Ticket: 73784
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+
+[33mcommit fc343d8bb73d661cd9aec5893288ed65376e5e6b[m
+Author: fw-bot-adhoc <93535218+fw-bot-adhoc@users.noreply.github.com>
+Date:   Wed Apr 24 16:07:20 2024 -0300
+
+    [FW][FIX] l10n_ar_ux: change invoice_payment_state (#786)
+    
+    * [FIX] l10n_ar_ux: change invoice_payment_state
+    
+    ticket 70257
+    
+    X-original-commit: 48b03ec45ff07074d854b0134f39b99a5b6a2680
+    
+    * Update __manifest__.py
+    
+    ---------
+    
+    Co-authored-by: Ignacio Cainelli <ica@adhoc.com.ar>
+    Co-authored-by: Juan José Scarafía <jjs@adhoc.com.ar>
+
+[33mcommit d39839965a2b83bfd4886cb4c197fe99cba28670[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Mon Dec 11 10:21:20 2023 +0000
+
+    [FIX] l10n_ar_ux: invoice report sign and update manifest version
+    
+    closes ingadhoc/odoo-argentina#770
+    
+    closes ingadhoc/odoo-argentina#771
+    
+    Signed-off-by: Juan José Scarafía <jjs@adhoc.com.ar>
+
+[33mcommit b2b6b14ef45786f6d6c9da3a1d538b90025858c7[m
+Author: Juan José Scarafía <jjs@adhoc.com.ar>
+Date:   Tue Nov 28 21:33:12 2023 -0300
+
+    Update __manifest__.py
+
+[33mcommit 1145f2dd26b3e42f45b9e6ac9749bfc2dc1864a1[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Tue Nov 28 09:53:07 2023 +0000
+
+    [IMP] l10n_ar_ux: add currency amounts on invoice report
+    
+    X-original-commit: d15716c317b045dd81ef279073cc61b94f990415
+
+[33mcommit 25b6319829ef2dceda48fe1df1b999eac667078f[m
+Author: Pablo Montenegro <pam@adhoc.com.ar>
+Date:   Thu Mar 21 01:14:36 2024 +0000
+
+    [IMP] l10n_ar_account_withholding: optimizar mensaje error padron ARBA.
+    
+    closes ingadhoc/odoo-argentina#832
+    
+    Tarea: 37771
+    X-original-commit: 4d7df6801f92920c2596ee8f28dee3c263e597ce
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+    Signed-off-by: pablohmontenegro <pam@adhoc.com.ar>
+
+[33mcommit 8d1e7bc9b11a281d23fe91b8955956fd2950002e[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Tue Apr 16 20:32:53 2024 +0000
+
+    [FIX] _ux: method parameters
+    
+    closes ingadhoc/odoo-argentina#828
+    
+    Related: ingadhoc/account-payment#472
+    Signed-off-by: Juan José Scarafía <jjs@adhoc.com.ar>
+
+[33mcommit 595cf50ec9ac512a98496e2e0898eaeef90f9e57[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Tue Apr 16 19:40:45 2024 +0000
+
+    [REF] l10n_ar_ux: clean unused file
+    
+    Part-of: ingadhoc/odoo-argentina#828
+
+[33mcommit ef77488ac7814753a11aef6f06bc7a7298a6ae57[m
+Author: Martin Quinteros <maq@adhoc.com.ar>
+Date:   Wed Apr 10 19:45:04 2024 +0000
+
+    [FIX] l10n_ar_withholding_ux : Add monkey patch to clean _synchronize_to_moves
+    
+    Part-of: ingadhoc/odoo-argentina#828
+
+[33mcommit d63c96c10ef5381c0f88bee9099fb9b2872316a5[m
+Author: Rocío Vega <rov@adhoc.com.ar>
+Date:   Tue Apr 16 12:33:28 2024 +0000
+
+    [FIX] l10n_ar_withholding_ux: fix in account payment view with notebook element
+    
+    closes ingadhoc/odoo-argentina#829
+    
+    Signed-off-by: Juan José Scarafía <jjs@adhoc.com.ar>
+
+[33mcommit 4c1cad26ae385b79083c256fbda4f3e75d95619a[m
+Author: Pablo Montenegro <pam@adhoc.com.ar>
+Date:   Tue Mar 12 11:34:16 2024 +0000
+
+    [MIG] l10n_ar_purchase_stock: Migration to 17.0
+    
+    closes ingadhoc/odoo-argentina#820
+    
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+
+[33mcommit 83e707ca94869f91ccb7a8ddcddcb17e3c047085[m
+Author: Rocío Vega <rov@adhoc.com.ar>
+Date:   Fri Mar 22 11:55:27 2024 +0000
+
+    [FIX] l10n_ar_withholding_ux: fix in account_payment view
+    
+    closes ingadhoc/odoo-argentina#826
+    
+    Signed-off-by: Filoquin adhoc <maq@adhoc.com.ar>
+
+[33mcommit 78304cdd976bdd2c51f017e2df487c378597f18e[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Wed Mar 13 01:50:04 2024 +0000
+
+    [REF] hide computation fields on customer witholdings
+    
+    closes ingadhoc/odoo-argentina#821
+    
+    Related: ingadhoc/account-payment#469
+    Signed-off-by: Juan José Scarafía <jjs@adhoc.com.ar>
+
+[33mcommit 09723a4e327bcfc3b112aa48bad1fe2304ef755d[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Wed Mar 13 01:46:44 2024 +0000
+
+    [IMP] use internal transfer report
+    
+    Part-of: ingadhoc/odoo-argentina#821
+
+[33mcommit cbcadaff96f3c6c5814399424d3a895d2b59683a[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Wed Mar 13 01:23:20 2024 +0000
+
+    [IMP] new payment report and other fixes
+    
+    Part-of: ingadhoc/odoo-argentina#821
+
+[33mcommit df8b33ca10b2f88f5160399bd64d2a4e5984121b[m
+Author: Rocío Vega <rov@adhoc.com.ar>
+Date:   Thu Feb 29 15:45:02 2024 +0000
+
+    [FIX] l10n_ar_ux: fix in order to keep the original date if it exists
+    
+    closes ingadhoc/odoo-argentina#817
+    
+    X-original-commit: b75a9b00c1afd83dd74e9f3154c6237c3bd829e1
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+    Signed-off-by: rov-adhoc <rov@adhoc.com.ar>
+
+[33mcommit 858dc9675b903ed2e499fbe33c54453233c54bb6[m
+Author: Maximiliano Mezzavilla <mem@adhoc.com.ar>
+Date:   Thu Nov 2 19:03:46 2023 +0000
+
+    [FIX] l10n_ar_ux: monkey patch fiscal_position post_load
+    
+    closes ingadhoc/odoo-argentina#818
+    
+    Task: 34656
+    X-original-commit: f1cd6165ffb74dc9f8f6c4d304170f0770c9b763
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+    Signed-off-by: mem-adhoc <mem@adhoc.com.ar>
+
+[33mcommit ace25a3c060b617ff5e895560f8d6a36ef741aaf[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Fri Mar 1 01:13:19 2024 +0000
+
+    [IMP] withholding: minor fix and remove old data
+    
+    closes ingadhoc/odoo-argentina#812
+    
+    Signed-off-by: Juan José Scarafía <jjs@adhoc.com.ar>
+
+[33mcommit e013a4ccc56d9a368eaa0d23879d75f694a3da57[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Fri Mar 1 01:12:47 2024 +0000
+
+    [REF] fix with certificate and move module
+    
+    Part-of: ingadhoc/odoo-argentina#812
+
+[33mcommit 66f60a3e1c29e5053c5e3cbeffa03dbe59e5643b[m
+Author: Pablo Montenegro <pam@adhoc.com.ar>
+Date:   Fri Mar 8 18:08:52 2024 +0000
+
+    [MIG] l10n_ar_purchase: Migration to 17.0
+    
+    closes ingadhoc/odoo-argentina#816
+    
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+
+[33mcommit 977ed14dfbe54848314713106f450bf9c2e4b4b7[m
+Author: Martin Quinteros <maq@adhoc.com.ar>
+Date:   Tue Mar 5 14:05:52 2024 +0000
+
+    [IMP] Soporte para retenciones en pagos con 0
+    
+    closes ingadhoc/odoo-argentina#813
+    
+    Signed-off-by: Juan José Scarafía <jjs@adhoc.com.ar>
+
+[33mcommit d138dd335c7d4a9b5ec95ab53b7e2494a460c322[m
+Author: Juan José Scarafía <jjs@adhoc.com.ar>
+Date:   Mon Feb 19 22:37:19 2024 -0300
+
+    Update __manifest__.py
+
+[33mcommit ef87a0598bd11f312e6966e97f457928283fa21f[m
+Author: Martin Quinteros <maq@adhoc.com.ar>
+Date:   Thu Feb 8 13:28:04 2024 +0000
+
+    [FIX] l10n_ar_ux: fix QR code link
+    
+    X-original-commit: e12327fdb0359646d8dff524cf49abf4032303b2
+
+[33mcommit 42d585924cb7b6c162424f6cdf426e35252af9e4[m
+Author: Pablo Montenegro <pam@adhoc.com.ar>
+Date:   Thu Feb 15 18:49:16 2024 +0000
+
+    [IMP] l10n_ar: set rate on argentinean invoices.
+    
+    Ticket Adhoc: 70814
+    
+    Description of the issue/feature this PR addresses:
+    It is necessary to set afip rate to argentinean invoices.
+    
+    Current behavior before PR:
+    Afip rate is set on argentinean invoices only if only if invoice use documents.
+    
+    Desired behavior after PR is merged:
+    Afip rate is set on argentinean invoices.
+    
+    closes ingadhoc/odoo-argentina#805
+    
+    X-original-commit: bd5f6051d6d6334786d37f2cf7711378fe0cd36a
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+    Signed-off-by: pablohmontenegro <pam@adhoc.com.ar>
+
+[33mcommit 711f2a67ae4ca99b5cf449cf12a6ca9f04404706[m
+Author: Juan José Scarafia <jjs@adhoc.com.ar>
+Date:   Fri Feb 9 17:03:42 2024 -0300
+
+    [IMP] l10n_ar_withholding_ux: add constrint for unique tax per payment
+
+[33mcommit 0902d08a56c4826795c79032c9a95e5a5f0e2e3a[m
+Author: Katherine Zaoral <kz@adhoc.com.ar>
+Date:   Tue Jan 30 19:38:39 2024 +0000
+
+    [FIX] l10n_ar_account_withholding: trying to avoid
+    
+    closes ingadhoc/odoo-argentina#796
+    
+    X-original-commit: bfa6e117df4f946360378515ae9f305d3c27501c
+    Signed-off-by: pablohmontenegro <pam@adhoc.com.ar>
+    Signed-off-by: Katherine Zaoral <kz@adhoc.com.ar>
+
+[33mcommit 790a38f5d6756a85fa25941c56be4cb03b95f510[m
+Author: Katherine Zaoral <kz@adhoc.com.ar>
+Date:   Tue Jan 30 19:15:32 2024 +0000
+
+    [FIX] l10n_ar_account_withholding: message not defined
+    
+    use ws.MensajeError instead
+    
+    closes ingadhoc/odoo-argentina#794
+    
+    X-original-commit: 61d903370e8d24d3808be19a89768fabb3035eb0
+    Signed-off-by: pablohmontenegro <pam@adhoc.com.ar>
+
+[33mcommit b9e75f256bd1e78b0d8bc6d5a5a098d281fe2a08[m
+Author: ADHOC - Bot <bot@adhoc.com.ar>
+Date:   Tue Jan 30 15:18:19 2024 -0300
+
+    [I18N] Update translation terms from Transifex adhoc-odoo-17-0
+
+[33mcommit 06bdadb406a731eaf1a868fe7e6d69c602f95196[m
+Author: Pablo Montenegro <pam@adhoc.com.ar>
+Date:   Mon Jan 29 17:52:15 2024 -0300
+
+    [FIX] l10n_ar_account_withholding: bug al crear nota de crédito
+    Task: 34443
+    Error al crear nota de crédito desde factura de cliente. Video: https://drive.google.com/file/d/1EJMtFQ_0JN7DT9lM9H7sfPhw7gv4AxGr/view
+    
+    RPC_ERROR
+    Odoo Server Error
+    Traceback (most recent call last):
+      File "/home/odoo/src/odoo/odoo/http.py", line 1722, in _serve_db
+        return service_model.retrying(self._serve_ir_http, self.env)
+      File "/home/odoo/src/odoo/odoo/service/model.py", line 133, in retrying
+        result = func()
+      File "/home/odoo/src/odoo/odoo/http.py", line 1749, in _serve_ir_http
+        response = self.dispatcher.dispatch(rule.endpoint, args)
+      File "/home/odoo/src/odoo/odoo/http.py", line 1953, in dispatch
+        result = self.request.registry['ir.http']._dispatch(endpoint)
+      File "/home/odoo/src/odoo/odoo/addons/base/models/ir_http.py", line 222, in _dispatch
+        result = endpoint(**request.params)
+      File "/home/odoo/s

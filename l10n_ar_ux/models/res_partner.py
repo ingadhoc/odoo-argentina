@@ -32,6 +32,9 @@ class ResPartner(models.Model):
     monotributo_padron = fields.Selection([('N', 'No'), ('S', 'Si')], 'Monotributo')
     actividad_monotributo_padron = fields.Char()
     empleador_padron = fields.Boolean()
+    empleador_padron = fields.Boolean()
+    empleador_padron = fields.Boolean()
+    empleador_padron = fields.Boolean()
     actividades_padron = fields.Many2many(
         'afip.activity',
         'res_partner_afip_activity_rel',

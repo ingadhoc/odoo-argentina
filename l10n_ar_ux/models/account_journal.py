@@ -13,6 +13,10 @@ class AccountJournal(models.Model):
         string="QR Code Label",
         help="String to display before the QR Code on the invoice report."
     )
+    qr_code_name = fields.Char(
+        string = "Qr Code Name",
+        help = "String to showcase the name of the invoice related to the qr"
+    )
     qr_code = fields.Char(
         string="QR Code",
         help="String to generate the QR Code that will be displayed on the invoice report."

@@ -73,7 +73,15 @@ class AccountPayment(models.Model):
     def _compute_payment_total(self):
         super()._compute_payment_total()
         for rec in self:
-            rec.payment_total += sum(rec.l10n_ar_withholding_line_ids.mapped("amount"))
+            amount_sum = sum(rec.l10n_ar_withholding_line_ids.mapped("amount"))
+            if rec.payment_type == "inbound":
+                # Receive money.
+                withholding_sum = amount_sum
+            else:
+                # Send money.
+                withholding_sum = -amount_sum
+
+            rec.payment_total += withholding_sum
 
     # por ahora no nos funciona computarlas, se duplica el importe. Igual conceptualemnte el onchange acá por ahí
     # está bien porque en realidad es una "sugerencia" actualizar el amount al usuario

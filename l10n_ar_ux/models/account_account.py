@@ -20,7 +20,6 @@ class AccountAccount(models.Model):
             'income_other',
             'expense',
             'expense_depreciation',
-            'equity',
             'expense_direct_cost',
         ]
         accounts = self.search([('account_type', 'in', account_types), ('company_id', 'in', company.ids)])

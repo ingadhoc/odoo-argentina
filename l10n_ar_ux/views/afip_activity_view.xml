@@ -5,7 +5,7 @@
         <field name="name">afip.activity.form</field>
         <field name="model">afip.activity</field>
         <field name="arch" type="xml">
-            <form string="AFIP activity">
+            <form string="Activity">
                 <group>
                     <field name="name"/>
                     <field name='code'/>
@@ -19,7 +19,7 @@
         <field name="name">afip.activity.list</field>
         <field name="model">afip.activity</field>
         <field name="arch" type="xml">
-            <list string="AFIP activity">
+            <list string="Activities" default_order="code" create="true" edit="true" delete="true" editable="bottom">
                 <field name="name"/>
                 <field name="code"/>
             </list>
@@ -27,7 +27,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="act_afip_activity">
-        <field name="name">AFIP activity</field>
+        <field name="name">Activities</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">afip.activity</field>
         <field name="view_mode">list,form</field>

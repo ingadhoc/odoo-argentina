@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="account.view_account_list"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='account_type']" position="after">
-                <field name="l10n_ar_afip_activity_id" optional="hide"/>
+                <field name="l10n_ar_afip_activity_id" invisible="company_fiscal_country_code != 'AR' or account_type in ('asset_receivable', 'liability_payable', 'off_balance')" optional="hide"/>
             </xpath>
         </field>
     </record>
@@ -17,7 +17,7 @@
         <field name="inherit_id" ref="account.view_account_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='tag_ids']" position="after">
-                <field name="l10n_ar_afip_activity_id" invisible="company_fiscal_country_code != 'AR'" company_dependent="1"/>
+                <field name="l10n_ar_afip_activity_id" invisible="company_fiscal_country_code != 'AR' or account_type in ('asset_receivable', 'liability_payable', 'off_balance')" company_dependent="1"/>
             </xpath>
         </field>
     </record>

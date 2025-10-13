@@ -72,8 +72,14 @@ class AccountPayment(models.Model):
     @api.depends("l10n_ar_withholding_line_ids.amount")
     def _compute_payment_total(self):
         super()._compute_payment_total()
-        for rec in self:
-            rec.payment_total += sum(rec.l10n_ar_withholding_line_ids.mapped("amount"))
+        for rec in self.filtered("l10n_ar_withholding_line_ids"):
+            if (rec.payment_type == "outbound" and rec.partner_type == "customer") or (
+                rec.payment_type == "inbound" and rec.partner_type == "supplier"
+            ):
+                sign = -1
+            else:
+                sign = 1
+            rec.payment_total += sum(x * sign for x in rec.l10n_ar_withholding_line_ids.mapped("amount"))
 
     # por ahora no nos funciona computarlas, se duplica el importe. Igual conceptualemnte el onchange acá por ahí
     # está bien porque en realidad es una "sugerencia" actualizar el amount al usuario

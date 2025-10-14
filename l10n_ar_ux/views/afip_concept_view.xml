@@ -5,7 +5,7 @@
         <field name="name">afip.concept.form</field>
         <field name="model">afip.concept</field>
         <field name="arch" type="xml">
-            <form string="AFIP concepts">
+            <form string="ARCA concepts">
                 <group>
                     <field name="name"/>
                     <field name='code'/>
@@ -19,7 +19,7 @@
         <field name="name">afip.concept.list</field>
         <field name="model">afip.concept</field>
         <field name="arch" type="xml">
-            <list string="AFIP concepts">
+            <list string="ARCA concepts">
                 <field name="name"/>
                 <field name="code"/>
             </list>
@@ -27,7 +27,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="act_afip_concept">
-        <field name="name">AFIP concept</field>
+        <field name="name">ARCA concept</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">afip.concept</field>
         <field name="view_mode">list,form</field>

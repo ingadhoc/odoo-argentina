@@ -10,17 +10,16 @@
                 <page string="Fiscal Data" name="fiscal_data" invisible="'AR'not in fiscal_country_codes or (not is_company and parent_id)">
 
                     <!-- add other documents -->
-                    <group string="AFIP" name="afip">
-                        <group name="afip_col_1">
+                    <group string="ARCA" name="arca"> <!-- modificamos nombres porque no se heredan en otra parte, asi quedan bien nombradas-->
+                        <group name="arca_col_1">
                             <field name="start_date"/>
                             <field name="last_update_padron"/>
                             <field name="estado_padron"/>
                             <field name="integrante_soc_padron"/>
                             <field name="empleador_padron"/>
                         </group>
-                        <group name="afip_col_2">
+                        <group name="arca_col_2">
                             <field name="actividad_monotributo_padron"/>
-                            <field name="actividades_padron" widget="many2many_tags"/>
                             <field name="impuestos_padron" widget="many2many_tags"/>
                         </group>
                     </group>

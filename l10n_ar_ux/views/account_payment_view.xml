@@ -4,7 +4,7 @@
     <record id="view_account_payment_form" model="ir.ui.view">
         <field name="name">account.payment.form.inherited</field>
         <field name="model">account.payment</field>
-        <field name="inherit_id" ref="l10n_latam_check.view_account_payment_form_inherited" />
+        <field name="inherit_id" ref="account.view_account_payment_form" />
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
                 <!-- mostramos cuit cuando estamos haciendo transferencia o pagando con cheque ya que es util tenerlo a mano para hacer la transacción en el banco -->

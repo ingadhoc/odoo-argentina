@@ -5,7 +5,7 @@
         <field name="name">afip.tax.form</field>
         <field name="model">afip.tax</field>
         <field name="arch" type="xml">
-            <form string="AFIP tax">
+            <form string="ARCA tax">
                 <group>
                     <field name="name"/>
                     <field name='code'/>
@@ -19,7 +19,7 @@
         <field name="name">afip.tax.list</field>
         <field name="model">afip.tax</field>
         <field name="arch" type="xml">
-            <list string="AFIP tax">
+            <list string="ARCA tax">
                 <field name="name"/>
                 <field name="code"/>
             </list>
@@ -27,7 +27,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="act_afip_tax">
-        <field name="name">AFIP tax</field>
+        <field name="name">ARCA tax</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">afip.tax</field>
         <field name="view_mode">list,form</field>

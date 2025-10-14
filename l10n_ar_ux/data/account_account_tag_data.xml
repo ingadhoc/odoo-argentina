@@ -2,7 +2,7 @@
 <odoo>
 
     <!-- Others -->
-
+    <!-- TODO: ver si usamos o no este tag -->
     <record id="tag_a_cuenta_ganancias" model="account.account.tag">
         <field name="name">Pagos a Cuenta Ganancias</field>
         <field name="applicability">accounts</field>
@@ -33,6 +33,7 @@
         <field name="country_id" ref="base.ar"/>
     </record>
 
+    <!-- TODO: ver si usamos o no este tag -->
     <!-- Liquidaciones, por ahora solo para llevar la cuenta -->
 
     <record id="tag_liquidacion_de_iva" model="account.account.tag">

@@ -15,9 +15,9 @@ class ResPartner(models.Model):
         help="The state of the company is cosidered the main jurisdiction",
     )
 
-    # AFIP Padron
+    # ARCA Padron
     start_date = fields.Date("Activities Start")
-    estado_padron = fields.Char("Estado AFIP")
+    estado_padron = fields.Char("Estado ARCA")
     imp_ganancias_padron = fields.Selection(
         [("NI", "No Inscripto"), ("AC", "Activo"), ("EX", "Exento"), ("NC", "No corresponde")], "Ganancias"
     )
@@ -36,13 +36,6 @@ class ResPartner(models.Model):
     monotributo_padron = fields.Selection([("N", "No"), ("S", "Si")], "Monotributo")
     actividad_monotributo_padron = fields.Char()
     empleador_padron = fields.Boolean()
-    actividades_padron = fields.Many2many(
-        "afip.activity",
-        "res_partner_afip_activity_rel",
-        "partner_id",
-        "afip_activity_id",
-        "Actividades",
-    )
     impuestos_padron = fields.Many2many(
         "afip.tax", "res_partner_afip_tax_rel", "partner_id", "afip_tax_id", "Impuestos"
     )

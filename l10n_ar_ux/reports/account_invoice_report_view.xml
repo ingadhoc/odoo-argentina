@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-    <record id="view_account_invoice_line_report_tree" model="ir.ui.view">
+    <record id="account_invoice_report_view_tree" model="ir.ui.view">
         <field name="name">account.invoice.report.list</field>
         <field name="model">account.invoice.report</field>
-        <field name="inherit_id" ref="account_ux.view_account_invoice_line_report_tree"/>
+        <field name="inherit_id" ref="account.account_invoice_report_view_tree"/>
         <field name="arch" type="xml">
                 <field name="partner_id" position="after">
                     <field name="l10n_ar_state_id"/>

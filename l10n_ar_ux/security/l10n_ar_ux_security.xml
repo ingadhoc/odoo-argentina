@@ -2,7 +2,6 @@
 <odoo>
     <record id="group_include_pending_receivable_documents" model="res.groups">
         <field name="name">Mostrar comprobantes pendientes en Recibos de Clientes</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
     </record>
 
 </odoo>

@@ -23,7 +23,7 @@ class AccountJournal(models.Model):
     l10n_ar_afip_pos_partner_id = fields.Many2one(string="Dirección Punto de venta")
 
     def _get_l10n_ar_afip_pos_types_selection(self):
-        """Add new AFIP Pos type"""
+        """Add new ARCA Pos type"""
         res = super()._get_l10n_ar_afip_pos_types_selection()
         res.append(("CF", _("External Fiscal Controller")))
         return res

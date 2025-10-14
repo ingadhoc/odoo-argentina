@@ -22,7 +22,7 @@ class IrActionsReport(models.Model):
     def _get_rendering_context(self, report, docids, data):
         res = super()._get_rendering_context(report, docids, data)
         l10n_ar_copies = [""]
-        is_email = "force_email" in self._context or "default_subject" in self._context
+        is_email = "force_email" in self.env.context or "default_subject" in self.env.context
         if not is_email and report.l10n_ar_copies:
             l10n_ar_copies = ["ORIGINAL", "DUPLICADO"]
             if report.l10n_ar_copies == "triplicado":

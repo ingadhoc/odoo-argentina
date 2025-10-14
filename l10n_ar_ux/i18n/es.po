@@ -43,13 +43,6 @@ msgid "AFIP"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.actions.act_window,name:l10n_ar_ux.act_afip_activity
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_activity_form
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_activity_tree
-msgid "AFIP activity"
-msgstr "Actividad AFIP"
-
-#. module: l10n_ar_ux
 #: model:ir.actions.act_window,name:l10n_ar_ux.act_afip_concept
 msgid "AFIP concept"
 msgstr "Concepto AFIP"
@@ -88,7 +81,6 @@ msgid "Aclaracion:"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_activity__active
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__active
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__active
 msgid "Active"
@@ -101,17 +93,6 @@ msgid "Actividad Monotributo Padron"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__actividades_padron
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_users__actividades_padron
-msgid "Actividades"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.ui.menu,name:l10n_ar_ux.menu_action_afip_activity
-msgid "Activities"
-msgstr "Actividades"
-
-#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__l10n_ar_afip_start_date
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__start_date
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_users__start_date
@@ -121,13 +102,6 @@ msgstr "Inicio de las actividades"
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_view_form
 msgid "Activity"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields,help:l10n_ar_ux.field_account_account__l10n_ar_afip_activity_id
-msgid ""
-"Activity associated with this account. If not set, the company's default "
-"activity will be used."
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -147,11 +121,6 @@ msgid "Agregar Duplicado/Triplicado"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_account__l10n_ar_afip_activity_id
-msgid "Associated Activity"
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__arba_cit
 msgid "CIT ARBA"
 msgstr ""
@@ -167,7 +136,6 @@ msgid "Clave de Identificación Tributaria de ARBA"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_activity__code
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__code
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__code
 msgid "Code"
@@ -208,14 +176,12 @@ msgid "Country state"
 msgstr "Provincia del país"
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_activity__create_uid
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__create_uid
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_activity__create_date
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__create_date
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__create_date
 msgid "Created on"
@@ -237,7 +203,6 @@ msgid "Discriminate taxes?"
 msgstr "¿Discriminar impuestos?"
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_activity__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__display_name
 msgid "Display Name"
@@ -333,7 +298,6 @@ msgid "Gross Income Jurisdictions"
 msgstr "Jurisdicciones de Ingresos Brutos"
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_activity__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__id
 msgid "ID"
@@ -407,14 +371,12 @@ msgid "Last Update Padron"
 msgstr "Ultima Actualizacion de Padron"
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_activity__write_uid
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__write_uid
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__write_uid
 msgid "Last Updated by"
 msgstr "Ultima actualización por"
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_activity__write_date
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__write_date
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__write_date
 msgid "Last Updated on"
@@ -469,7 +431,6 @@ msgid "Mostrar importe equivalente en ARS"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_activity__name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__name
 msgid "Name"
@@ -560,14 +521,6 @@ msgid "Please add the type of document."
 msgstr "Por favor agregue el tipo de identificación."
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__l10n_ar_afip_activity_id
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_config_settings__l10n_ar_afip_activity_id
-msgid "Principal Activity"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields,help:l10n_ar_ux.field_res_company__l10n_ar_afip_activity_id
-#: model:ir.model.fields,help:l10n_ar_ux.field_res_config_settings__l10n_ar_afip_activity_id
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_view_form
 msgid "Principal registered activity of the company"
 msgstr ""
@@ -693,11 +646,6 @@ msgstr "No pueden cancelarse documentos ya validados en ARCA (%s)."
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_invoice_document
 msgid "a un tipo de cambio consignado de"
 msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.model,name:l10n_ar_ux.model_afip_activity
-msgid "afip.activity"
-msgstr "Actividad Afip"
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_afip_concept

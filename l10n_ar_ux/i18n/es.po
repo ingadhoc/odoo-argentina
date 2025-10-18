@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 16:16+0000\n"
+"POT-Creation-Date: 2025-10-17 19:36+0000\n"
 "PO-Revision-Date: 2024-11-14 20:20+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -41,13 +41,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_partner_property_form
 msgid "AFIP"
 msgstr ""
-
-#. module: l10n_ar_ux
-#: model:ir.actions.act_window,name:l10n_ar_ux.act_afip_activity
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_activity_form
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_activity_tree
-msgid "AFIP activity"
-msgstr "Actividad AFIP"
 
 #. module: l10n_ar_ux
 #: model:ir.actions.act_window,name:l10n_ar_ux.act_afip_concept
@@ -107,9 +100,11 @@ msgid "Actividades"
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model:ir.actions.act_window,name:l10n_ar_ux.act_afip_activity
 #: model:ir.ui.menu,name:l10n_ar_ux.menu_action_afip_activity
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_activity_tree
 msgid "Activities"
-msgstr "Actividades"
+msgstr "Actividad AFIP"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__l10n_ar_afip_start_date
@@ -120,6 +115,7 @@ msgstr "Inicio de las actividades"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_activity_form
 msgid "Activity"
 msgstr ""
 
@@ -128,6 +124,16 @@ msgstr ""
 msgid ""
 "Activity associated with this account. If not set, the company's default "
 "activity will be used."
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model:ir.model.constraint,message:l10n_ar_ux.constraint_afip_activity_code_unique
+msgid "Activity code must be unique"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model:ir.model.constraint,message:l10n_ar_ux.constraint_afip_activity_code_length
+msgid "Activity codes must be at most 6 characters long"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -562,14 +568,23 @@ msgstr "Por favor agregue el tipo de identificación."
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__l10n_ar_afip_activity_id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_config_settings__l10n_ar_afip_activity_id
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_view_form
 msgid "Principal Activity"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_view_form
+msgid ""
+"Principal registered activity of the company. This is used to generate the "
+"IVA Simple CSV Tax Reports"
 msgstr ""
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_company__l10n_ar_afip_activity_id
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_config_settings__l10n_ar_afip_activity_id
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_view_form
-msgid "Principal registered activity of the company"
+msgid ""
+"Principal registered activity of the company. This is used to generate the "
+"IVA Simple CSV Tax Reports."
 msgstr ""
 
 #. module: l10n_ar_ux

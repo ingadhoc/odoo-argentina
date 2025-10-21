@@ -10,36 +10,72 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-============================
-Argentinean Purchase Report
-============================
+==========================
+Argentinian Purchase Stock
+==========================
 
-Adapt Argentinean purchase order report and quotation report.
+This module enhances Argentinian purchase order and quotation reports by integrating stock and warehouse information.
 
-When a "request for quotation" or a "purchase order" are printed, it will be added in the supplier data this information:
-1) The incoterm code.
-2) The name of the warehouse and the partner`s warehouse address if there is no dropshipping address and the purchase order has a picking type with it`s warehouse.
+**Key Features:**
+
+* Adds Incoterm information to purchase documents
+* Displays warehouse shipping address when applicable
+* Integrates with Argentinian purchase localization (`l10n_ar_purchase`)
+* Automatically shows warehouse details for non-dropshipping orders
+
+**Enhanced Report Information:**
+
+When printing purchase orders or quotations, the following information is automatically added to the supplier section:
+
+#. **Incoterm Code**: Displays the selected incoterm for international trade terms
+#. **Shipping Address**: Shows warehouse name and address when:
+
+   * No dropshipping address is configured (`dest_address_id` is not set)
+   * The purchase order has a picking type with an associated warehouse
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Only need to install the module
+#. Have the `purchase_stock` and `l10n_ar_purchase` modules installed
+#. The module will be automatically installed when both dependencies are present (auto_install=True)
 
 Configuration
 =============
 
-To configure this module, you need to:
+No additional configuration is required. The module works automatically once installed.
 
-#. Nothing to configure
+**Optional Configuration:**
+
+* **Incoterms**: Configure incoterms in **Settings > Configuration > Incoterms** if you need specific international trade terms
+* **Warehouses**: Ensure your warehouses have proper addresses configured in **Inventory > Configuration > Warehouses**
 
 Usage
 =====
 
-To use this module, you need to:
+The module enhances purchase reports automatically:
 
-#. Go to ...
+#. **Creating Purchase Orders:**
+
+   * Go to **Purchase > Orders > Purchase Orders**
+   * Create or edit a purchase order
+   * Select an **Incoterm** if applicable
+   * Choose a **Deliver To** location (picking type with warehouse)
+
+#. **Printing Reports:**
+
+   * Print the purchase order or quotation
+   * The report will automatically include:
+
+     * Incoterm code (if configured)
+     * Warehouse shipping address (if no dropshipping address is set)
+
+#. **Report Enhancement Details:**
+
+   * **Incoterm Display**: Shows the incoterm code in the supplier information section
+   * **Warehouse Address**: Displays warehouse name and full address when conditions are met
+   * **Conditional Logic**: Only shows warehouse address when no specific dropshipping address is configured
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

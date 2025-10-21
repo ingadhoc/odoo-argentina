@@ -98,7 +98,10 @@ class l10nArPaymentWithholding(models.Model):
             partner=False,
             is_refund=False,
         )
-        tax_amount = taxes_res["taxes"][0]["amount"]
+        tax_amount = self.currency_id.round(taxes_res["total_included"] - taxes_res["total_excluded"])
+        # TODO: When Odoo fixes the compute_all method of account_tax, uncomment the line below and
+        # remove the line above. See Adhoc ticket 101778 for more information.
+        # tax_amount = taxes_res["taxes"][0]["amount"]
         tax_account_id = taxes_res["taxes"][0]["account_id"]
         tax_repartition_line_id = taxes_res["taxes"][0]["tax_repartition_line_id"]
 

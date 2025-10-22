@@ -1,9 +1,9 @@
 
-# Instrucciones para Copilot – Revisión de código Odoo (v18.0)
+# Instrucciones para Copilot – Revisión de código Odoo (v19.0)
 
 ## Contexto
 
-* El repositorio contiene **módulos Odoo** compatibles con la versión **v18.0** (o versiones compatibles cercanas).
+* El repositorio contiene **módulos Odoo** compatibles con la versión **v19.0** (o versiones compatibles cercanas).
 * El objetivo es **revisar cambios de código** y **sugerir mejoras seguras y relevantes**, sin hacer revisiones excesivamente estrictas.
 
 ---
@@ -171,7 +171,7 @@ Ejemplos de cambios estructurales:
 **Esqueleto mínimo (ejemplo):**
 
 ```python
-# scripts/pre_18.0_rename_partner_ref.py
+# scripts/pre_19.0_rename_partner_ref.py
 from odoo import api, SUPERUSER_ID
 
 def migrate(cr, registry):
@@ -186,7 +186,7 @@ def migrate(cr, registry):
 ```
 
 ```python
-# scripts/post_18.0_backfill_stored_amount_total.py
+# scripts/post_19.0_backfill_stored_amount_total.py
 from odoo import api, SUPERUSER_ID
 
 def migrate(cr, registry):
@@ -210,7 +210,7 @@ def migrate(cr, registry):
 | Manifest           | **Bump de versión obligatorio** si hay cambios en modelos/vistas/seguridad/datos; archivos referenciados |
 | Seguridad          | Accesos mínimos necesarios; reglas revisadas                                                             |
 | Migraciones        | **Si hay cambios estructurales, exigir script en `scripts/` (pre/post/end)** y describir qué hace     |
-| Rendimiento / ORM  | Evitar loops costosos; no SQL innecesario; aprovechar mejoras de v18.0                            |
+| Rendimiento / ORM  | Evitar loops costosos; no SQL innecesario; aprovechar mejoras de v19.0                            |
 | Ortografía & typos | Errores evidentes corregibles sin modificar idioma ni estilo                                             |
 
 ---
@@ -241,7 +241,7 @@ def migrate(cr, registry):
 
   * “El campo `partner_id` no se encuentra referenciado en la vista.”
   * “Este método redefine `write()` sin usar `super()`.”
-  * “En v18.0, `<tree>` ya no se usa; reemplazar por `<list>`.”
+  * “En v19.0, `<tree>` ya no se usa; reemplazar por `<list>`.”
   * “Tip: hay un error ortográfico en el nombre del parámetro.”
   * **Bump + migración:** “Se renombra `old_ref` → `new_ref`: falta **bump de versión** y **pre-script** en `scripts/` para copiar valores antes del upgrade; añadir **post-script** para recompute del stored.”
 

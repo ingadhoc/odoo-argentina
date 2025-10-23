@@ -74,7 +74,7 @@ class AccountFiscalPosition(models.Model):
             partner (res.partner): The partner for whom the fiscal position ranking
                 functions are being determined.
         """
-        if not self._context.get("l10n_ar_withholding") or self.env.company.country_id.code != "AR":
+        if not self.env.context.get("l10n_ar_withholding") or self.env.company.country_id.code != "AR":
             return super()._get_fpos_ranking_functions(partner)
         return [
             ("l10n_ar_tax_ids", lambda fpos: (any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids)))

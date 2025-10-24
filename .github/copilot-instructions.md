@@ -43,13 +43,11 @@
 * **Regla de versión (obligatoria):**
   Siempre que el diff incluya **modificaciones en**:
 
-  * definición de campos o modelos (`models/*.py`),
-  * vistas o datos XML (`views/*.xml`, `data/*.xml`, `report/*.xml`),
+  * definición de campos o modelos (`models/*.py`, `wizards/*.py`),
+  * vistas o datos XML (`views/*.xml`, `data/*.xml`, `report/*.xml`, `wizards/*.xml`),
   * seguridad (`security/*.csv`, `security/*.xml`),
     **y el `__manifest__.py` no incrementa `version`, sugerir el bump de versión** (por ejemplo, `1.0.0 → 1.0.1`).
-  * Cambios funcionales mínimos → **patch** (`x.y.Z`).
-  * Cambios de esquema o de compatibilidad → **minor** (`x.Y.0`).
-  * Cambios disruptivos (breaking changes) → **major** (`X.0.0`).
+  * Solo hacerlo una vez por revisión, aunque haya múltiples archivos afectados.
 
 ---
 
@@ -75,11 +73,12 @@
 
 ## Detección de cambios estructurales (esquema / datos)
 
-Cuando el diff sugiera **cambios de estructura de datos**, **siempre proponer** un **script de migración** en la carpeta `scripts/`, usando pre/post/end según corresponda (ver mapeo más abajo) **y recordar el bump de versión**.
+Cuando el diff sugiera **cambios de estructura de datos**, **siempre proponer** un **script de migración** en la carpeta `migrations/`, usando pre/post/end según corresponda (ver mapeo más abajo) **y recordar el bump de versión**.
 Ejemplos de cambios estructurales:
 
+* Carpeta dentro de `migrations/` debe ser la versión correspondiente en el manifest (e.g. `migrations/18.0.5.0/`).
 * Renombrar campos o modelos.
-* Cambiar tipos de campo (e.g. `Char → Many2one`, `Selection → Many2one`, `Float → Monetary`).
+* Cambiar tipos de campo (e.g. `Char → Many2one`, `Selection → Many2one`, etc.).
 * Quitar campos para reestructurar información en otros (split/merge).
 * Agregar campos `compute` **almacenados** (`store=True`) que requieren backfill.
 * Cambiar dominios/valores de `selection` (añadir/eliminar/renombrar keys).
@@ -153,13 +152,13 @@ Ejemplos de cambios estructurales:
 
 ---
 
-## Convenciones de scripts en `scripts/`
+## Convenciones de scripts en `migrations/`
 
-* Ubicación: `scripts/`
+* Ubicación: `migrations/`
 * Nombres sugeridos:
 
-  * `pre_<version>_<breve-descripcion>.py`
-  * `post_<version>_<breve-descripcion>.py`
+  * `pre_<breve-descripcion>.py`
+  * `post_<breve-descripcion>.py`
 * Requisitos:
 
   * Idempotentes (seguros si se ejecutan más de una vez).
@@ -171,7 +170,7 @@ Ejemplos de cambios estructurales:
 **Esqueleto mínimo (ejemplo):**
 
 ```python
-# scripts/pre_19.0_rename_partner_ref.py
+# migrations/18.0.4.0/pre_rename_partner_ref.py
 from odoo import api, SUPERUSER_ID
 
 def migrate(cr, registry):
@@ -186,7 +185,7 @@ def migrate(cr, registry):
 ```
 
 ```python
-# scripts/post_19.0_backfill_stored_amount_total.py
+# migrations/18.0.4.0/post_backfill_stored_amount_total.py
 from odoo import api, SUPERUSER_ID
 
 def migrate(cr, registry):
@@ -209,7 +208,7 @@ def migrate(cr, registry):
 | Vistas XML         | Herencias correctas; campos válidos; adaptación a cambios de versión (p.ej. `<list>` vs `<tree>`)        |
 | Manifest           | **Bump de versión obligatorio** si hay cambios en modelos/vistas/seguridad/datos; archivos referenciados |
 | Seguridad          | Accesos mínimos necesarios; reglas revisadas                                                             |
-| Migraciones        | **Si hay cambios estructurales, exigir script en `scripts/` (pre/post/end)** y describir qué hace     |
+| Migraciones        | **Si hay cambios estructurales, exigir script en `migrations/` (pre/post/end)** y describir qué hace     |
 | Rendimiento / ORM  | Evitar loops costosos; no SQL innecesario; aprovechar mejoras de v19.0                            |
 | Ortografía & typos | Errores evidentes corregibles sin modificar idioma ni estilo                                             |
 
@@ -219,7 +218,7 @@ def migrate(cr, registry):
 
 * **SI** el diff toca cualquiera de: `models/`, `views/`, `data/`, `report/`, `security/`, `wizards/`
   **Y** `__manifest__.py` no cambia `version` → **Sugerir bump**.
-* **SI** hay scripts `scripts/pre_*.py` o `scripts/post_*.py` nuevos → **Sugerir al menos minor bump**.
+* **SI** hay scripts `migrations/pre_*.py` o `migrations/post_*.py` nuevos → **Sugerir al menos minor bump**.
 * **SI** hay cambios que rompen compatibilidad (renombres, tipos, required sin default) → **Sugerir minor/major** según impacto.
 
 ---
@@ -241,9 +240,8 @@ def migrate(cr, registry):
 
   * “El campo `partner_id` no se encuentra referenciado en la vista.”
   * “Este método redefine `write()` sin usar `super()`.”
-  * “En v19.0, `<tree>` ya no se usa; reemplazar por `<list>`.”
   * “Tip: hay un error ortográfico en el nombre del parámetro.”
-  * **Bump + migración:** “Se renombra `old_ref` → `new_ref`: falta **bump de versión** y **pre-script** en `scripts/` para copiar valores antes del upgrade; añadir **post-script** para recompute del stored.”
+  * **Bump + migración:** “Se renombra `old_ref` → `new_ref`: falta **bump de versión** y **pre-script** en `migrations/` para copiar valores antes del upgrade; añadir **post-script** para recompute del stored.”
 
 * Evitar explicaciones largas o reescrituras completas salvo que el cambio sea claro y necesario.
 
@@ -252,5 +250,5 @@ def migrate(cr, registry):
 ## Resumen operativo para Copilot
 
 1. **Detecta cambios en modelos/vistas/seguridad/datos → exige bump de `version` en `__manifest__.py`.**
-2. **Si hay cambio estructural → propone y describe script(s) de migración en `scripts/` (pre/post/inline),** con enfoque idempotente y en lotes.
+2. **Si hay cambio estructural → propone y describe script(s) de migración en `migrations/` (pre/post/end),** con enfoque idempotente y en lotes.
 3. Mantén el feedback **concreto, breve y accionable**.

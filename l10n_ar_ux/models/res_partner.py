@@ -2,6 +2,7 @@ import logging
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
@@ -72,7 +73,7 @@ class ResPartner(models.Model):
         l10n_ar_afip_responsibility_type_id = data.get("l10n_ar_afip_responsibility_type_id", False)
 
         if vat and l10n_latam_identification_type_id:
-            commercial_partner = self.env["res.partner"].sudo().browse(int(data.get("commercial_partner_id")))
+            commercial_partner = request.env.user.partner_id.commercial_partner_id
             try:
                 values = {
                     "vat": vat,

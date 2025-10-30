@@ -20,6 +20,7 @@
                         </group>
                         <group name="arca_col_2">
                             <field name="actividad_monotributo_padron"/>
+                            <field name="actividades_padron" widget="many2many_tags"/>
                             <field name="impuestos_padron" widget="many2many_tags"/>
                         </group>
                     </group>

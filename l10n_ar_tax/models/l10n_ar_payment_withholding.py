@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from dateutil.relativedelta import relativedelta
 from odoo import _, api, fields, models
 from odoo.exceptions import RedirectWarning, UserError
@@ -172,7 +170,7 @@ class l10nArPaymentWithholding(models.Model):
 
     def _get_same_period_dates(self):
         self.ensure_one()
-        to_date = self.payment_id.date or datetime.date.today()
+        to_date = self.payment_id.date or fields.Date.context_today(self)
         from_date = to_date + relativedelta(day=1)
         return to_date, from_date
 

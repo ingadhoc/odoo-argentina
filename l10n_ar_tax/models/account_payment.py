@@ -313,6 +313,12 @@ class AccountPayment(models.Model):
                 )
                 withholdings += [Command.create({"tax_id": x.id}) for x in taxes]
             rec.l10n_ar_withholding_line_ids = withholdings
+            # Si hay retenciones que no son de ganancias y el importe a retener es 0 las quitamos
+            # Ejemplo: retenciones en pagos de notas de crédito (el monto base es negativo)
+            to_remove = rec.l10n_ar_withholding_line_ids.filtered(
+                lambda wth: wth.amount == 0 and wth.tax_id.l10n_ar_tax_type != "earnings_scale"
+            )
+            rec.l10n_ar_withholding_line_ids -= to_remove
 
     def compute_to_pay_amount_for_check(self):
         checks_payments = self.filtered(

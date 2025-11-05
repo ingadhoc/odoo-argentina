@@ -14,9 +14,9 @@ class TestARBA(common.TransactionCase):
         company = self.env["res.company"].create(
             {"name": "test_company", "partner_id": partner.id, "vat": "30697130841"}
         )
-        self.env.company = company
+        company = company.with_company(company)
         with self.assertRaisesRegex(UserError, "You must configure CIT"):
-            self.env.company.arba_connect()
+            company.arba_connect()
         company.vat = ""
         with self.assertRaisesRegex(UserError, "No VAT configured"):
-            self.env.company.arba_connect()
+            company.arba_connect()

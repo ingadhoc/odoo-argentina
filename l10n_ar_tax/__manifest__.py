@@ -37,20 +37,20 @@
         "views/account_fiscal_position_view.xml",
         "wizard/account_payment_register_views.xml",
         "wizard/res_config_settings_views.xml",
-    ],
-    "demo": [
         "demo/ir_parameter.xml",
         "demo/account_fiscal_position_demo.xml",
         "demo/account_tax_demo.xml",
         "demo/res_partner_demo.xml",
-        "demo/account_move_demo.xml",
+    ],
+    "demo": [
+        # "demo/account_move_demo.xml",
     ],
     "depends": [
         "l10n_ar",
         "l10n_ar_ux",
         "l10n_ar_withholding",
         "account_payment_pro",
-        "l10n_latam_check_ux",  # para reporte de pagos/recibos
+        # "l10n_latam_check_ux",  # para reporte de pagos/recibos
     ],
     "external_dependencies": {
         "python": ["pyafipws"],

@@ -20,7 +20,7 @@
 {
     "name": "Withholdings Python Formula",
     "summary": "Allow to use Python Formula in Argentinian Fiscal Positions",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "author": "ADHOC SA,Odoo Community Association (OCA)",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
@@ -33,6 +33,6 @@
     "depends": [
         "l10n_ar_tax",
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
 }

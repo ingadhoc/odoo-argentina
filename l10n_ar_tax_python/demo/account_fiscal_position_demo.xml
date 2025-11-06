@@ -58,9 +58,10 @@ elif partner.empleador_padron:
         <field name="tax_type">withholding</field>
         <field name="webservice">python_formula</field>
         <field name="python_formula">
-if partner.empleador_padron and 'limpieza' in partner.actividades_padron.mapped('name'):
-    aliquot = 0.06
-elif partner.empleador_padron:
+# no usamos actividades_padron ya que quedó en módulo enterprise
+# if partner.empleador_padron and 'limpieza' in partner.actividades_padron.mapped('name'):
+#     aliquot = 0.06
+if partner.empleador_padron:
     aliquot = 0.01
         </field>
     </record>
@@ -73,9 +74,10 @@ elif partner.empleador_padron:
         <field name="tax_type">withholding</field>
         <field name="webservice">python_formula</field>
         <field name="python_formula">
-if partner.empleador_padron and 'limpieza' in partner.actividades_padron.mapped('name'):
-    aliquot = 0.06
-elif partner.empleador_padron:
+# no usamos actividades_padron ya que quedó en módulo enterprise
+# if partner.empleador_padron and 'limpieza' in partner.actividades_padron.mapped('name'):
+#     aliquot = 0.06
+if partner.empleador_padron:
     aliquot = 0.01
         </field>
     </record>

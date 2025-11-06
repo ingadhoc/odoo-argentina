@@ -48,7 +48,6 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 self.python_formula,
                 local_dict,
                 mode="exec",
-                nocopy=True,
             )
             aliquot = local_dict.get("aliquot", None)
             if aliquot:

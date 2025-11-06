@@ -60,9 +60,9 @@ class AccountFiscalPosition(models.Model):
                 )
             )
 
-    def _get_fpos_ranking_functions(self, partner):
+    def _get_fpos_validation_functions(self, partner):
         """
-        Overrides the `_get_fpos_ranking_functions` method to include a custom ranking
+        Overrides the `_get_fpos_validation_functions` method to include a custom ranking
         function for fiscal positions based on Argentine withholding taxes.
         If the context does not include 'l10n_ar_withholding' or the company's country
         is not Argentina (country code "AR"), the method falls back to the parent class
@@ -74,8 +74,19 @@ class AccountFiscalPosition(models.Model):
             partner (res.partner): The partner for whom the fiscal position ranking
                 functions are being determined.
         """
+        functions = super()._get_fpos_validation_functions(partner)
         if not self.env.context.get("l10n_ar_withholding") or self.env.company.country_id.code != "AR":
-            return super()._get_fpos_ranking_functions(partner)
+            return functions
         return [
-            ("l10n_ar_tax_ids", lambda fpos: (any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids)))
-        ] + super()._get_fpos_ranking_functions(partner)
+            lambda fpos: any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids),
+        ] + functions
+
+    def map_tax(self, taxes):
+        """For argentinean fiscal positions without tax mapping we add domestic taxes because taxes are always required
+        on argentinean invoices so there is no use case for not having them.
+        The other alternative would be to add the new fiscal positions on every VAT tax but that would be a lot of work
+        for the user.
+        """
+        if not self.tax_ids and self.l10n_ar_tax_ids:
+            return self.company_id.domestic_fiscal_position_id.map_tax(taxes)
+        return super().map_tax(taxes)

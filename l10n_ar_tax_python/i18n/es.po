@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-06 16:44+0000\n"
+"POT-Creation-Date: 2025-11-06 20:49+0000\n"
 "PO-Revision-Date: 2025-11-06 16:44+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. module: l10n_ar_tax_python
 #: model:ir.model.fields,field_description:l10n_ar_tax_python.field_account_fiscal_position_l10n_ar_tax__display_name
 msgid "Display Name"
-msgstr "Nombre a Mostrar"
+msgstr "Nombre para mostrar"
 
 #. module: l10n_ar_tax_python
 #. odoo-python
@@ -40,7 +40,7 @@ msgstr ""
 #. module: l10n_ar_tax_python
 #: model:ir.model.fields,field_description:l10n_ar_tax_python.field_account_fiscal_position_l10n_ar_tax__id
 msgid "ID"
-msgstr ""
+msgstr "ID (identificación)"
 
 #. module: l10n_ar_tax_python
 #. odoo-python

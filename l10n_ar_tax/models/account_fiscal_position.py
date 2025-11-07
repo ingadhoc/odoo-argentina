@@ -102,6 +102,6 @@ class AccountFiscalPosition(models.Model):
         The other alternative would be to add the new fiscal positions on every VAT tax but that would be a lot of work
         for the user.
         """
-        if not self.tax_ids and self.l10n_ar_tax_ids:
+        if not self.tax_ids and self.l10n_ar_tax_ids and self != self.company_id.domestic_fiscal_position_id:
             return self.company_id.domestic_fiscal_position_id.map_tax(taxes)
         return super().map_tax(taxes)

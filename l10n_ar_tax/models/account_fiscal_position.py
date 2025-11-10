@@ -1,5 +1,5 @@
-from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import _, api, fields, models
+from odoo.exceptions import RedirectWarning, ValidationError
 
 
 class AccountFiscalPosition(models.Model):
@@ -37,7 +37,22 @@ class AccountFiscalPosition(models.Model):
             # agregamos taxes para grupos de impuestos que no estaban seteados en el partner
             if not partner_tax:
                 partner_tax = fp_tax._get_missing_taxes(partner, date)
-            if partner_tax.l10n_ar_tax_type != "earnings_scale" and partner_tax.amount == 0:
+            if len(partner_tax) > 1:
+                raise RedirectWarning(
+                    message=_(
+                        "El contacto '%(name)s' (id: %(id)s) tiene múltiples impuestos vigentes para el grupo "
+                        "de impuestos '%(tax_group)s' en la fecha '%(date)s' y compañía '%(company)s'. Ver "
+                        "solapa 'Contabilidad' de la vista formulario del contacto.",
+                        name=partner.name,
+                        id=partner.id,
+                        tax_group=fp_tax.default_tax_id.tax_group_id.name,
+                        date=date,
+                        company=company.name,
+                    ),
+                    action=partner.get_formview_action(),
+                    button_text=_("Editar contacto"),
+                )
+            if partner_tax and partner_tax.l10n_ar_tax_type != "earnings_scale" and partner_tax.amount == 0:
                 # se eliminan todos los impuestos cuyo monto sea 0, excepto los de tipo "earnings_scale"
                 continue
             taxes |= partner_tax

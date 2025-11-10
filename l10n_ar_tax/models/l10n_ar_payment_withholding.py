@@ -70,6 +70,12 @@ class l10nArPaymentWithholding(models.Model):
             else:
                 wth.base_amount = wth.payment_id.selected_debt_untaxed + advance_amount
 
+        # esto lo hicimos así para soportar el caso de una posición fiscal que tenga más de un impuesto con ratio,
+        # pero actualmente una misma posicion fiscal no puedo agregar 2 impuestos del mismo grupo (ej VAT Withholding)
+        # Lo dejamos por el momento con la aclaración por si en un futuro sacamos la constraint de los grupos de impuestos.
+        for wth in self.filtered(lambda x: x.tax_id.amount_type == "percent" and x.tax_id.ratio != 100):
+            wth.base_amount *= wth.tax_id.ratio / 100
+
     def _tax_compute_all_helper(self):
         """practicamente mismo codigo que en l10n_ar.payment.register.withholding"""
         self.ensure_one()

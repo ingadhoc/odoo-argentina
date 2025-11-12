@@ -17,14 +17,31 @@ class L10nArCustomerPortal(CustomerPortal):
         """When adding either document_type or document_number, this two should be setted"""
         error, error_message = super().details_form_validate(data, partner_creation=partner_creation)
 
+        # Get current partner to check existing values
+        partner = request.env.user.partner_id.commercial_partner_id
+
+        # Get values from form data or from existing partner
         vat = data.get("vat")
         identification_type = data.get("l10n_latam_identification_type_id")
-        if identification_type and not vat:
-            error["vat"] = "error"
-            error_message.append(_("Please add the document number."))
-        if vat and not identification_type:
-            error["l10n_latam_identification_type_id"] = "error"
-            error_message.append(_("Please add the type of document."))
+
+        # Only validate if user is trying to set one of these fields
+        # If both are in data (user is modifying them), validate they're both present
+        # If only one is in data and it's being set, check the other exists (in data or partner)
+        if "l10n_latam_identification_type_id" in data or "vat" in data:
+            has_identification_type = identification_type or (
+                "l10n_latam_identification_type_id" not in data and partner.l10n_latam_identification_type_id
+            )
+            has_vat = vat or ("vat" not in data and partner.vat)
+
+            # User is setting identification_type but vat is missing
+            if identification_type and not has_vat:
+                error["vat"] = "error"
+                error_message.append(_("Please add the document number."))
+            # User is setting vat but identification_type is missing
+            if vat and not has_identification_type:
+                error["l10n_latam_identification_type_id"] = "error"
+                error_message.append(_("Please add the type of document."))
+
         write_error, write_message = request.env["res.partner"].try_write_commercial(data)
         if write_error:
             error.update(write_error)

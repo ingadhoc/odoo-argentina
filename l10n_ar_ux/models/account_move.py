@@ -49,7 +49,8 @@ class AccountMove(models.Model):
     def _l10n_ar_get_document_number_parts(self, document_number, document_type_code):
         # eliminamos todo lo que viene después '(' que es un sufijo que odoo agrega y que nosotros agregamos para
         # forzar unicidad con cambios de approach al ir migrando de versiones
-        document_number = document_number.split("(")[0]
+        document_number = document_number if document_number else self.l10n_latam_document_number
+        document_number = document_number.split("(", 1)[0]
         return super()._l10n_ar_get_document_number_parts(document_number, document_type_code)
 
     def button_cancel(self):

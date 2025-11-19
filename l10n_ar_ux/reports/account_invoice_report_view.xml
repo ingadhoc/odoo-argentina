@@ -24,7 +24,7 @@
                 <field name="price_subtotal_ic" sum="Total" optional="hide"/>
                 <field name="price_total" sum="Total" optional="hide"/>
                 <field name="price_subtotal" sum="Total"/>
-                <field name="total_cc" sum="Total"/>
+                <field name="total_cc" sum="Total" optional="hide"/>
                 <field name="state"/>
                 <field name="payment_state" optional="hide"/>
                 <field name="invoice_currency_id" optional="hide"/>

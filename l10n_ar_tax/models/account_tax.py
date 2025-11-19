@@ -88,6 +88,10 @@ class AccountTax(models.Model):
         api_articulo_inciso_calculo_selection,
         string="Artículo/Inciso para el cálculo retención",
     )
+    # mejora de usabilidad, duplicar un impuesto mantiene la secuencia
+    l10n_ar_withholding_sequence_id = fields.Many2one(
+        copy=True,
+    )
 
     @api.ondelete(at_uninstall=False)
     def _check_tax_used_on_company_tax_fp(self):

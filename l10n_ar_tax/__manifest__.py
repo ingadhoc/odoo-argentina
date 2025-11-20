@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Automatic Argentinian Withholdings on Payments",
-    "version": "18.0.1.21.0",
+    "version": "19.0.1.1.0",
     "author": "ADHOC SA,Odoo Community Association (OCA)",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
@@ -50,12 +50,12 @@
         "l10n_ar_ux",
         "l10n_ar_withholding",
         "account_payment_pro",
-        "l10n_latam_check_ux",  # para reporte de pagos/recibos
+        "l10n_latam_check",  # para reporte de pagos/recibos
     ],
     "external_dependencies": {
         "python": ["pyafipws"],
     },
-    "installable": False,
+    "installable": True,
     "auto_install": ["l10n_ar"],
     "post_load": "monkey_patch_synchronize_to_moves",
     "post_init_hook": "_l10n_ar_update_taxes",

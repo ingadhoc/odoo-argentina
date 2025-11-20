@@ -2,6 +2,7 @@ import logging
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
@@ -40,13 +41,6 @@ class ResPartner(models.Model):
         "afip.tax", "res_partner_afip_tax_rel", "partner_id", "afip_tax_id", "Impuestos"
     )
     last_update_padron = fields.Date()
-    actividades_padron = fields.Many2many(
-        "l10n_ar.arca.activity",
-        "res_partner_arca_activity_rel",
-        "partner_id",
-        "arca_activity_id",
-        "Actividades",
-    )
 
     @api.constrains("gross_income_jurisdiction_ids", "state_id")
     def check_gross_income_jurisdictions(self):
@@ -72,7 +66,7 @@ class ResPartner(models.Model):
         l10n_ar_afip_responsibility_type_id = data.get("l10n_ar_afip_responsibility_type_id", False)
 
         if vat and l10n_latam_identification_type_id:
-            commercial_partner = self.env["res.partner"].sudo().browse(int(data.get("commercial_partner_id")))
+            commercial_partner = request.env.user.partner_id.commercial_partner_id
             try:
                 values = {
                     "vat": vat,

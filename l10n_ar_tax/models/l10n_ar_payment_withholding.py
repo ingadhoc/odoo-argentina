@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from dateutil.relativedelta import relativedelta
 from odoo import _, api, fields, models
 from odoo.exceptions import RedirectWarning, UserError
@@ -22,7 +20,10 @@ class l10nArPaymentWithholding(models.Model):
     # luego vemos de hacer que toda la logica este acá
     amount = fields.Monetary(compute="_compute_amount", store=True, readonly=False)
 
-    _sql_constraints = [("uniq_line", "unique(tax_id, payment_id)", "El impuesto de retención debe ser único por pago")]
+    _uniq_line = models.Constraint(
+        "unique(tax_id, payment_id)",
+        "El impuesto de retención debe ser único por pago",
+    )
 
     @api.depends(
         "tax_id",
@@ -68,6 +69,12 @@ class l10nArPaymentWithholding(models.Model):
                 wth.base_amount = wth.payment_id.selected_debt + advance_amount
             else:
                 wth.base_amount = wth.payment_id.selected_debt_untaxed + advance_amount
+
+        # esto lo hicimos así para soportar el caso de una posición fiscal que tenga más de un impuesto con ratio,
+        # pero actualmente una misma posicion fiscal no puedo agregar 2 impuestos del mismo grupo (ej VAT Withholding)
+        # Lo dejamos por el momento con la aclaración por si en un futuro sacamos la constraint de los grupos de impuestos.
+        for wth in self.filtered(lambda x: x.tax_id.amount_type == "percent" and x.tax_id.ratio != 100):
+            wth.base_amount *= wth.tax_id.ratio / 100
 
     def _tax_compute_all_helper(self):
         """practicamente mismo codigo que en l10n_ar.payment.register.withholding"""
@@ -172,7 +179,7 @@ class l10nArPaymentWithholding(models.Model):
 
     def _get_same_period_dates(self):
         self.ensure_one()
-        to_date = self.payment_id.date or datetime.date.today()
+        to_date = self.payment_id.date or fields.Date.context_today(self)
         from_date = to_date + relativedelta(day=1)
         return to_date, from_date
 

@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="view_account_payment_tree" model="ir.ui.view">
-        <field name="name">account.payment.list</field>
-        <field name="model">account.payment</field>
-        <field name="inherit_id" ref="account.view_account_payment_tree"/>
-        <field name="arch" type="xml">
-            <list>
-                <field name="payment_method_code" column_invisible="True"/>
-                <field name="partner_type" column_invisible="True"/>
-            </list>
-        </field>
-    </record>
-
     <record id="view_account_payment_form" model="ir.ui.view">
         <field name="name">account.payment.form.inherited</field>
         <field name="model">account.payment</field>
@@ -46,8 +34,6 @@
                     </group>
                     <field name="l10n_ar_withholding_line_ids" nolabel="1" colspan="2" invisible="is_internal_transfer" readonly="state != 'draft'">
                         <list editable="bottom">
-                            <field name="withholding_sequence_id" column_invisible="True"/>
-                            <field name="company_id" column_invisible="True"/>
                             <field name="currency_id" column_invisible="True"/>
                             <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', 'parent_of', parent.company_id)]" options="{'no_create': True}"/>
                             <field name="name" readonly="withholding_sequence_id"/>

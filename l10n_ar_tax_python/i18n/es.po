@@ -1,0 +1,85 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_ar_tax_python
+# 
+# Translators:
+# ADHOC - Bot <transbot@adhoc.com.ar>, 2025
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-06 20:49+0000\n"
+"PO-Revision-Date: 2025-11-06 16:44+0000\n"
+"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: l10n_ar_tax_python
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax_python.view_l10n_ar_tax_python_formula_form
+msgid "Cancel"
+msgstr ""
+
+#. module: l10n_ar_tax_python
+#: model:ir.model.fields,field_description:l10n_ar_tax_python.field_account_fiscal_position_l10n_ar_tax__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: l10n_ar_tax_python
+#. odoo-python
+#: code:addons/l10n_ar_tax_python/models/account_fiscal_position_l10n_ar_tax.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax_python.view_account_position_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax_python.view_l10n_ar_tax_python_formula_form
+msgid "Edit Python Formula"
+msgstr ""
+
+#. module: l10n_ar_tax_python
+#: model:ir.model.fields,field_description:l10n_ar_tax_python.field_account_fiscal_position_l10n_ar_tax__id
+msgid "ID"
+msgstr "ID (identificación)"
+
+#. module: l10n_ar_tax_python
+#. odoo-python
+#: code:addons/l10n_ar_tax_python/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid ""
+"No se puede usar el webservice 'python_formula' con un tipo de impuesto "
+"diferente a 'withholding'."
+msgstr ""
+
+#. module: l10n_ar_tax_python
+#: model:ir.model.fields,field_description:l10n_ar_tax_python.field_account_fiscal_position_l10n_ar_tax__python_formula
+#: model:ir.model.fields.selection,name:l10n_ar_tax_python.selection__account_fiscal_position_l10n_ar_tax__webservice__python_formula
+msgid "Python Formula"
+msgstr ""
+
+#. module: l10n_ar_tax_python
+#: model:ir.model.fields,help:l10n_ar_tax_python.field_account_fiscal_position_l10n_ar_tax__python_formula
+msgid ""
+"Python code to compute the tax amount.\n"
+"Available variables: partner, to_date, from_date, default_tax\n"
+"The code should return a variable named 'aliquot' Example: aliquot = 0.21 (for a tax of 21%)\n"
+msgstr ""
+
+#. module: l10n_ar_tax_python
+#: model:account.tax.group,name:l10n_ar_tax_python.vat_tax_group_ri
+msgid "Ret. SUSS"
+msgstr ""
+
+#. module: l10n_ar_tax_python
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax_python.view_l10n_ar_tax_python_formula_form
+msgid "Save"
+msgstr ""
+
+#. module: l10n_ar_tax_python
+#: model:ir.model.fields,field_description:l10n_ar_tax_python.field_account_fiscal_position_l10n_ar_tax__webservice
+msgid "Webservice"
+msgstr ""
+
+#. module: l10n_ar_tax_python
+#: model:ir.model,name:l10n_ar_tax_python.model_account_fiscal_position_l10n_ar_tax
+msgid "account.fiscal.position.l10n_ar_tax"
+msgstr ""

@@ -3,17 +3,15 @@
 # 	* l10n_ar_tax
 # 
 # Translators:
-# Camila Vives, 2025
-# Mariana Torres <mt@adhoc.com.ar>, 2025
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
+# ADHOC - Bot <transbot@adhoc.com.ar>, 2025
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 05:05+0000\n"
-"PO-Revision-Date: 2024-12-05 18:38+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
+"POT-Creation-Date: 2025-11-06 19:41+0000\n"
+"PO-Revision-Date: 2025-11-05 21:15+0000\n"
+"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -387,6 +385,12 @@ msgid "033: Art.125 - inciso H - (Código Fiscal - mera compra)"
 msgstr ""
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "404 Not Found error."
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span class=\"text-center\">Signature and Clarification</span>"
 msgstr "<span class=\"text-center\">Firma y Aclaración</span>"
@@ -624,6 +628,12 @@ msgid "Config Settings"
 msgstr "Ajustes de configuración"
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
+msgid "Configurar impuesto"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_res_partner
 msgid "Contact"
 msgstr "Contacto"
@@ -669,11 +679,23 @@ msgid "Default Tax"
 msgstr "Impuesto por Defecto"
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_register__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_partner_tax__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_mail_compose_message__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_res_partner__display_name
 msgid "Display Name"
-msgstr "Nombre a Mostrar"
+msgstr "Nombre para mostrar"
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -681,6 +703,15 @@ msgstr "Nombre a Mostrar"
 msgid ""
 "El impuesto de retención %s no tiene un tipo de cálculo definido. Por favor,"
 " defina el tipo de cálculo en la configuración del impuesto."
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
+msgid ""
+"El impuesto de retención '%s' (id: %s) es de tipo escala de ganancias y no "
+"tiene definida una escala (campo l10n_ar_scale_id). Por favor, defina una "
+"escala en la configuración del impuesto."
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -694,11 +725,8 @@ msgid "Email composition wizard"
 msgstr "Asistente de redacción de correo electrónico"
 
 #. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-msgid ""
-"Error when contacting rentascordoba.gob.ar. The server answered: \n"
-"%s"
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_move_form
+msgid "Esta utilizando la posición fiscal"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -713,6 +741,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__file_padron
 msgid "File"
 msgstr "Archivo"
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__filename
+msgid "File Name"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
@@ -750,28 +783,26 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_chart_template__id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move__id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move_line__id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_register__id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_partner_tax__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_mail_compose_message__id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_res_config_settings__id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID (identificación)"
 
 #. module: l10n_ar_tax
-#: model:account.fiscal.position,name:l10n_ar_tax.fiscal_position_caba
-msgid "IIBB CABA"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model:account.fiscal.position,name:l10n_ar_tax.fiscal_position_caba_and_proffits
-msgid "IIBB CABA + ganancias"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model:account.fiscal.position,name:l10n_ar_tax.fiscal_position_cordoba
-msgid "IIBB Córdoba"
-msgstr ""
-
-#. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_withholding_sequence_id
 #: model:ir.model.fields,help:l10n_ar_tax.field_l10n_ar_payment_withholding__withholding_sequence_id
 msgid ""
 "If no sequence provided then it will be required for you to enter "
@@ -854,6 +885,20 @@ msgstr "Importe Conciliado No Gravado"
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__res_partner__drei__no_activo
 msgid "No Activo"
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid ""
+"No pudimos obtener la alicuota del webservice de rentascordoba.\n"
+"\n"
+"Para asignar la alícuota de Córdoba a un contacto, siga estos pasos:\n"
+"1) Consulte la alícuota del contacto en: https://www.rentascordoba.gob.ar/gestiones/consulta-alicuota\n"
+"2) Cree manualmente la alícuota en la vista formulario del Contacto (solapa 'Contabilidad').\n"
+"\n"
+"En caso de dudas o si el problema persiste, comuníquese con nuestro equipo de Servicio de Asistencia.\n"
+"Detalle del error:\n"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -954,20 +999,35 @@ msgid "Payments"
 msgstr "Pagos"
 
 #. module: l10n_ar_tax
+#: model:account.fiscal.position,name:l10n_ar_tax.fiscal_position_caba
+msgid "Percepciones CABA"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:account.fiscal.position,name:l10n_ar_tax.fiscal_position_cordoba
+msgid "Percepciones Córdoba"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:account.fiscal.position,name:l10n_ar_tax.fiscal_position_caba_cordoba_perc
+msgid "Percepciones Córdoba + CABA"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__tax_type__perception
 msgid "Perception"
 msgstr "Percepción"
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_bank_statement_line__perceptions_fiscal_positon
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move__perceptions_fiscal_positon
+msgid "Perceptions Fiscal Positon"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_position_form
 msgid "Perceptions and Withholdings"
 msgstr "Percepciones y Retenciones"
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position.py:0
-msgid "Perceptions/Withholdings with wrong document type %s., "
-msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -995,11 +1055,6 @@ msgid "Ref"
 msgstr "Referencia"
 
 #. module: l10n_ar_tax
-#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_tax_form
-msgid "Regímen"
-msgstr ""
-
-#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__webservice__rentas_cordoba
 msgid "Rentas Cordoba"
 msgstr ""
@@ -1007,6 +1062,16 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:account.fiscal.position,name:l10n_ar_tax.fiscal_position_proffits
 msgid "Ret. ganancias"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:account.fiscal.position,name:l10n_ar_tax.fiscal_position_caba_and_proffits
+msgid "Retenciones CABA + Ganancias"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:account.fiscal.position,name:l10n_ar_tax.fiscal_position_cordoba_caba_and_proffits
+msgid "Retención IIBB Córdoba + CABA + GANANCIAS"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1068,7 +1133,7 @@ msgstr "El código del estado."
 #. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-msgid "Timeout error when getting data from rentascordoba.gob.ar"
+msgid "Timeout error when getting data."
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1078,7 +1143,7 @@ msgstr "Hasta"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_tribute_afip_code
-msgid "Tribute AFIP Code"
+msgid "Tribute ARCA Code"
 msgstr "Código tributo AFIP"
 
 #. module: l10n_ar_tax
@@ -1087,6 +1152,7 @@ msgid "Used for withholdings calculation"
 msgstr "Utilizado para el cálculo de retenciones"
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_withholding_sequence_id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__withholding_sequence_id
 msgid "WTH Sequence"
 msgstr "Secuencia de retención"
@@ -1147,6 +1213,21 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_tax_form
 msgid "aquí"
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid ""
+"https://docs.google.com/document/d/1Tb_0SGKexakuXMn_0in3Z5zLwoaVOgZhYwhQ7DiFjFw/edit"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_move_form
+msgid ""
+"que tiene impuestos de percepciones. Como las alicuotas podrían variar según"
+" la fecha del comprobante, cambiar la fecha o validar la factura re-"
+"computará los impuestos."
 msgstr ""
 
 #. module: l10n_ar_tax

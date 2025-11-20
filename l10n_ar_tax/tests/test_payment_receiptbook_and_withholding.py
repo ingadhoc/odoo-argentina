@@ -15,11 +15,8 @@ class TestPaymentReceiptbookAndWithholding(TestL10nArWithholdingArRi):
         2. Create IIBB CABA fiscal position for company '(AR) Responsable Inscripto (Unit Tests)' with CABA withholding tax.
         3. Create payment for vendor bill created on step 1.
         4. VALIDATION: draft payment move must not have name.
-        5. VALIDATION: draft payment move must have receiptbook.
-        6. Post payment created on step 3.
-        7. VALIDATION: payment move must have Document Number without document type.
-        8. VALIDATION: Document Type on payment move must be set.
-        9. VALIDATION: validate payment move lines amounts.
+        5. Post payment created on step 3.
+        6. VALIDATION: validate payment move lines amounts.
         """
         # 1. Create vendor bill for CABA partner and post.
         invoice = self.env["account.move"].create(
@@ -74,22 +71,10 @@ class TestPaymentReceiptbookAndWithholding(TestL10nArWithholdingArRi):
         # 4. VALIDATION: draft payment move must not have name.
         self.assertEqual(payment.move_id.name, False)
 
-        # 5. VALIDATION: draft payment move must have receiptbook.
-        self.assertNotEqual(payment.receiptbook_id.id, False)
-
-        # 6. Post payment created on step 3.
+        # 5. Post payment created on step 3.
         payment.action_post()
 
-        # 7. VALIDATION: payment move must have Document Number without document type.
-        self.assertEqual(payment.move_id.l10n_latam_document_number, "0001-00000001")
-
-        # 8. VALIDATION: Document Type on payment move must be set.
-        self.assertEqual(
-            self.env.ref("account_payment_pro_receiptbook.dc_orden_pago_x").id,
-            payment.move_id.l10n_latam_document_type_id.id,
-        )
-
-        # 9. VALIDATION: validate payment move lines amounts.
+        # 6. VALIDATION: validate payment move lines amounts.
         self.assertRecordValues(
             payment.move_id.line_ids.sorted("balance"),
             [

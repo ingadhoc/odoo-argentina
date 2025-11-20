@@ -1,5 +1,5 @@
-from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import _, api, fields, models
+from odoo.exceptions import RedirectWarning, ValidationError
 
 
 class AccountFiscalPosition(models.Model):
@@ -37,7 +37,22 @@ class AccountFiscalPosition(models.Model):
             # agregamos taxes para grupos de impuestos que no estaban seteados en el partner
             if not partner_tax:
                 partner_tax = fp_tax._get_missing_taxes(partner, date)
-            if partner_tax.l10n_ar_tax_type != "earnings_scale" and partner_tax.amount == 0:
+            if len(partner_tax) > 1:
+                raise RedirectWarning(
+                    message=_(
+                        "El contacto '%(name)s' (id: %(id)s) tiene múltiples impuestos vigentes para el grupo "
+                        "de impuestos '%(tax_group)s' en la fecha '%(date)s' y compañía '%(company)s'. Ver "
+                        "solapa 'Contabilidad' de la vista formulario del contacto.",
+                        name=partner.name,
+                        id=partner.id,
+                        tax_group=fp_tax.default_tax_id.tax_group_id.name,
+                        date=date,
+                        company=company.name,
+                    ),
+                    action=partner.get_formview_action(),
+                    button_text=_("Editar contacto"),
+                )
+            if partner_tax and partner_tax.l10n_ar_tax_type != "earnings_scale" and partner_tax.amount == 0:
                 # se eliminan todos los impuestos cuyo monto sea 0, excepto los de tipo "earnings_scale"
                 continue
             taxes |= partner_tax
@@ -60,9 +75,9 @@ class AccountFiscalPosition(models.Model):
                 )
             )
 
-    def _get_fpos_ranking_functions(self, partner):
+    def _get_fpos_validation_functions(self, partner):
         """
-        Overrides the `_get_fpos_ranking_functions` method to include a custom ranking
+        Overrides the `_get_fpos_validation_functions` method to include a custom ranking
         function for fiscal positions based on Argentine withholding taxes.
         If the context does not include 'l10n_ar_withholding' or the company's country
         is not Argentina (country code "AR"), the method falls back to the parent class
@@ -74,8 +89,19 @@ class AccountFiscalPosition(models.Model):
             partner (res.partner): The partner for whom the fiscal position ranking
                 functions are being determined.
         """
-        if not self._context.get("l10n_ar_withholding") or self.env.company.country_id.code != "AR":
-            return super()._get_fpos_ranking_functions(partner)
+        functions = super()._get_fpos_validation_functions(partner)
+        if not self.env.context.get("l10n_ar_withholding") or self.env.company.country_id.code != "AR":
+            return functions
         return [
-            ("l10n_ar_tax_ids", lambda fpos: (any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids)))
-        ] + super()._get_fpos_ranking_functions(partner)
+            lambda fpos: any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids),
+        ] + functions
+
+    def map_tax(self, taxes):
+        """For argentinean fiscal positions without tax mapping we add domestic taxes because taxes are always required
+        on argentinean invoices so there is no use case for not having them.
+        The other alternative would be to add the new fiscal positions on every VAT tax but that would be a lot of work
+        for the user.
+        """
+        if not self.tax_ids and self.l10n_ar_tax_ids and self != self.company_id.domestic_fiscal_position_id:
+            return self.company_id.domestic_fiscal_position_id.map_tax(taxes)
+        return super().map_tax(taxes)

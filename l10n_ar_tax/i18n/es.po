@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-06 19:41+0000\n"
+"POT-Creation-Date: 2025-11-21 21:17+0000\n"
 "PO-Revision-Date: 2025-11-05 21:15+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -699,6 +699,22 @@ msgstr "Nombre para mostrar"
 
 #. module: l10n_ar_tax
 #. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position.py:0
+msgid "Editar contacto"
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position.py:0
+msgid ""
+"El contacto '%(name)s' (id: %(id)s) tiene múltiples impuestos vigentes para "
+"el grupo de impuestos '%(tax_group)s' en la fecha '%(date)s' y compañía "
+"'%(company)s'. Ver solapa 'Contabilidad' de la vista formulario del "
+"contacto."
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
 #: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
 msgid ""
 "El impuesto de retención %s no tiene un tipo de cálculo definido. Por favor,"
@@ -1050,6 +1066,21 @@ msgid "Purchase Withholding"
 msgstr "Retención de Compra"
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__ratio
+msgid "Ratio"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_tax_form
+msgid "Ratio %"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__ratio
+msgid "Ratio to apply to tax base amount."
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__ref
 msgid "Ref"
 msgstr "Referencia"
@@ -1129,6 +1160,14 @@ msgstr "Tipo de Impuesto"
 #: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_state_code
 msgid "The state code."
 msgstr "El código del estado."
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_tax.py:0
+msgid ""
+"The total percentage (%s) should be greater than 0 and less than or equal to"
+" 100."
+msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python

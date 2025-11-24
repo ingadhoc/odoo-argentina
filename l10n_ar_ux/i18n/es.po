@@ -110,7 +110,7 @@ msgid "Agregar Duplicado/Triplicado"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__arba_cit
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__
 msgid "CIT ARBA"
 msgstr ""
 
@@ -120,7 +120,7 @@ msgid "CUIT del destinatario"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:ir.model.fields,help:l10n_ar_ux.field_res_company__arba_cit
+#: model:ir.model.fields,help:l10n_ar_ux.field_res_company__
 msgid "Clave de Identificación Tributaria de ARBA"
 msgstr ""
 

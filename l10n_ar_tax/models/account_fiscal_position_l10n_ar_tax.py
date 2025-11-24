@@ -5,7 +5,7 @@ import re
 import requests
 from dateutil.relativedelta import relativedelta
 from odoo import _, api, fields, models
-from odoo.exceptions import RedirectWarning, UserError, ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -193,65 +193,29 @@ class AccountFiscalPositionL10nArTax(models.Model):
             else:
                 return None, "Alícuota no inscripto (archivo importado)"
 
-        ws = self.fiscal_position_id.company_id.arba_connect()
-        ws.ConsultarContribuyentes(date.strftime("%Y%m%d"), to_date.strftime("%Y%m%d"), cuit)
-
-        error = False
-        msg = False
-        if ws.Excepcion:
-            error = True
-            msg = str((ws.Traceback, ws.Excepcion))
-            _logger.error("Padron ARBA: Excepcion %s" % msg)
-
-        # ' Hubo error general de ARBA?
-        if ws.CodigoError:
-            if ws.CodigoError == "11":
-                # we still create the record so we don need to check it again
-                # on same period
-                _logger.info("CUIT %s not present on padron ARBA" % cuit)
-            elif ws.CodigoError == "6":
-                error = True
-                msg = "%s\n Error %s: %s" % (ws.MensajeError, ws.TipoError, ws.CodigoError)
-                _logger.error("Padron ARBA: %s" % msg)
-            else:
-                error = True
-                msg = _("Padron ARBA: %s - %s (%s)") % (ws.MensajeError, ws.TipoError, ws.CodigoError)
-                _logger.error("Padron ARBA: %s" % msg)
-
-        if error:
-            action = self.env.ref("l10n_ar_tax.act_company_jurisdiction_padron")
-            raise RedirectWarning(
-                _(
-                    "Hubo un error al consultar el Padron ARBA. "
-                    "Para solucionarlo puede seguir los siguientes pasos, los cuales explicamos con más detalle en este video:\n %s\n\n"
-                    "Tiene las siguientes opciones:\n  1) Intentar nuevamente más tarde\n"
-                    "  2) Cargar la alícuota manualmente en el partner en cuestión\n"
-                    "  3) Subir el archivo del padrón utilizando el Asistente de carga de padrones.\n\n"
-                    "Error obtenido:\n%s\n\n"
-                )
-                % ("https://docs.google.com/document/d/1Tb_0SGKexakuXMn_0in3Z5zLwoaVOgZhYwhQ7DiFjFw/edit", msg),
-                action.id,
-                _("Ir a Carga de Padrones"),
-            )
-
-        # no ponemos esto, si no viene alicuota es porque es cero entonces
-        # if not ws.AlicuotaRetencion or not ws.AlicuotaPercepcion:
-        #     raise UserError('No pudimos obtener la AlicuotaRetencion')
-
-        # si no hay numero de comprobante entonces es porque no
-        # figura en el padron, aplicamos alicuota no inscripto
-        if ws.NumeroComprobante:
+        arba_cit = self.fiscal_position_id.arba_consultar_contribuyente(cuit, date, to_date)
+        if arba_cit.get("NumeroComprobante"):
             tax_data = "%s | %s | %s" % (
-                ws.NumeroComprobante,
-                ws.CodigoHash,
-                ws.GrupoRetencion if self.tax_type == "withholding" else ws.GrupoPercepcion,
+                arba_cit.get("NumeroComprobante"),
+                arba_cit.get("CodigoHash"),
+                arba_cit.get("GrupoRetencion") if self.tax_type == "withholding" else arba_cit.get("GrupoPercepcion"),
             )
             if self.tax_type == "withholding":
-                return (float(ws.AlicuotaRetencion.replace(",", ".")) if ws.AlicuotaRetencion else None, tax_data)
+                return (
+                    float(arba_cit.get("AlicuotaRetencion").replace(",", "."))
+                    if arba_cit.get("AlicuotaRetencion")
+                    else None,
+                    tax_data,
+                )
             else:
-                return (float(ws.AlicuotaPercepcion.replace(",", ".")) if ws.AlicuotaPercepcion else None, tax_data)
+                return (
+                    float(arba_cit.get("AlicuotaPercepcion").replace(",", "."))
+                    if arba_cit.get("AlicuotaPercepcion")
+                    else None,
+                    tax_data,
+                )
         else:
-            return None, ws.CodigoHash
+            return None, arba_cit.get("CodigoHash")
 
     def _get_rentas_cordoba_data(self, partner, date, to_date):
         """Obtener alícuotas desde app.rentascordoba.gob.ar

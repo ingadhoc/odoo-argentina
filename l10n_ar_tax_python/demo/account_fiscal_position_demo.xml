@@ -15,7 +15,7 @@
     </function>
 
     <function model="account.tax.group" name="write" context="{'active_test': False}">
-        <value model="account.tax.group" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'tax_group_withholding'))"/>
+        <value model="account.tax.group" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'tax_group_withholding_iva'))"/>
         <value model="account.tax.group" eval="{'name': 'Otras Retenciones'}"/>
     </function>
 

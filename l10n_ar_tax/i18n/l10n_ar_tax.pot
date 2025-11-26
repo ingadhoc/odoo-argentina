@@ -1,23 +1,19 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* l10n_ar_tax
-# 
-# Translators:
-# ADHOC - Bot <transbot@adhoc.com.ar>, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-21 21:17+0000\n"
-"PO-Revision-Date: 2025-11-05 21:15+0000\n"
-"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
-"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"POT-Creation-Date: 2025-11-22 02:07+0000\n"
+"PO-Revision-Date: 2025-11-22 02:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: \n"
 
 #. module: l10n_ar_tax
 #: model:ir.actions.report,print_report_name:l10n_ar_tax.action_report_withholding_certificate
@@ -27,7 +23,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "(Electronic checkbook)"
-msgstr "(Chequera electrónica)"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
@@ -44,7 +40,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "- Exp."
-msgstr "- Venc."
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
@@ -393,72 +389,72 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span class=\"text-center\">Signature and Clarification</span>"
-msgstr "<span class=\"text-center\">Firma y Aclaración</span>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Amount currency</span>"
-msgstr "<span>Importe divisa</span>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Amount</span>"
-msgstr "<span>Importe</span>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Balance</span>"
-msgstr "<span>Saldo</span>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Exp. Date</span>"
-msgstr "<span>Fecha Venc.</span>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Imputed Amount</span>"
-msgstr "<span>Importe Imputado</span>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Imputed Vouchers</span>"
-msgstr "<span>Comprobantes Imputados</span>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Original Amount</span>"
-msgstr "<span>Importe Original</span>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Payments</span>"
-msgstr "<span>Pagos</span>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Pending Vouchers at </span>"
-msgstr "<span>Comprobantes Pendientes al </span>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<strong><span>Total Imputed</span></strong>"
-msgstr "<strong><span>Total Imputado</span></strong>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<strong><span>Total Paid</span></strong>"
-msgstr "<strong><span>Total Pagado</span></strong>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<strong><span>Total Pending</span></strong>"
-msgstr "<strong><span>Total Pendiente</span></strong>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
 msgid "<strong>Customer: </strong>"
-msgstr "<strong>Cliente: </strong>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
@@ -469,7 +465,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
 msgid "<strong>VAT Cond: </strong>"
-msgstr "Cond. IVA:"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
@@ -492,12 +488,12 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_tax_search
 msgid "AR Customer Withholding"
-msgstr "AR Retencion de Clientes"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_tax_search
 msgid "AR Supplier Withholding"
-msgstr "AR Retención de Proveedor"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__webservice__arba
@@ -515,7 +511,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_chart_template
 msgid "Account Chart Template"
-msgstr "Plantilla de plan contable"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__res_partner__drei__activo
@@ -525,29 +521,29 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__withholdable_advanced_amount
 msgid "Adjustment / Advance (untaxed)"
-msgstr "Ajuste / Anticipo (no gravado)"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__amount
 msgid "Amount"
-msgstr "Importe"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_l10n_ar_partner_tax
 msgid "Argentinean Partner Taxes"
-msgstr "Impuestos de contactos argentinos"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_partner__l10n_ar_partner_perception_ids
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_users__l10n_ar_partner_perception_ids
 msgid "Argentinean Perception Taxes"
-msgstr "Impuestos de Percepción Argentinos"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_partner__l10n_ar_partner_tax_ids
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_users__l10n_ar_partner_tax_ids
 msgid "Argentinean Withholding Taxes"
-msgstr "Impuestos de Retención Argentinos"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__api_articulo_inciso_calculo_percepcion
@@ -562,7 +558,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__base_amount
 msgid "Base Amount"
-msgstr "Importe Base"
+msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -584,7 +580,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_config_settings__arba_cit
 msgid "CIT ARBA"
-msgstr "Clave CIT ARBA"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.actions.report,name:l10n_ar_tax.action_report_withholding_certificate
@@ -604,18 +600,18 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_res_company
 msgid "Companies"
-msgstr "Compañías"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__company_id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__company_id
 msgid "Company"
-msgstr "Empresa"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__currency_id
 msgid "Company Currency"
-msgstr "Moneda de la empresa"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
@@ -625,7 +621,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_res_config_settings
 msgid "Config Settings"
-msgstr "Ajustes de configuración"
+msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -636,26 +632,26 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_res_partner
 msgid "Contact"
-msgstr "Contacto"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__create_uid
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__create_uid
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__create_uid
 msgid "Created by"
-msgstr "Creado por"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__create_date
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__create_date
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__create_date
 msgid "Created on"
-msgstr "Creado el"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "Customer:"
-msgstr "Cliente:"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__api_codigo_articulo_retencion
@@ -676,7 +672,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__default_tax_id
 msgid "Default Tax"
-msgstr "Impuesto por Defecto"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_chart_template__display_name
@@ -695,7 +691,7 @@ msgstr "Impuesto por Defecto"
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_partner__display_name
 msgid "Display Name"
-msgstr "Nombre para mostrar"
+msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -738,7 +734,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_mail_compose_message
 msgid "Email composition wizard"
-msgstr "Asistente de redacción de correo electrónico"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_move_form
@@ -756,7 +752,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__file_padron
 msgid "File"
-msgstr "Archivo"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__filename
@@ -774,12 +770,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__l10n_ar_fiscal_position_id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_register__l10n_ar_fiscal_position_id
 msgid "Fiscal Position"
-msgstr "Posición fiscal"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__l10n_ar_padron_from_date
 msgid "From Date"
-msgstr "Desde"
+msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -815,7 +811,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_config_settings__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_partner__id
 msgid "ID"
-msgstr "ID (identificación)"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_withholding_sequence_id
@@ -824,8 +820,6 @@ msgid ""
 "If no sequence provided then it will be required for you to enter "
 "withholding number when registering one."
 msgstr ""
-"Si no se proporciona una secuencia, será necesario ingresar el número de "
-"retención al registrar una."
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
@@ -856,17 +850,17 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_move
 msgid "Journal Entry"
-msgstr "Asiento contable"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_move_line
 msgid "Journal Item"
-msgstr "Apunte contable"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__state_id
 msgid "Jurisdiction"
-msgstr "Jurisdicción"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position__l10n_ar_tax_ids
@@ -884,19 +878,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__write_uid
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__write_uid
 msgid "Last Updated by"
-msgstr "Última actualización realizada por"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__write_date
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__write_date
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__write_date
 msgid "Last Updated on"
-msgstr "Última Actualización el"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__matched_amount_untaxed
 msgid "Matched Amount Untaxed"
-msgstr "Importe Conciliado No Gravado"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__res_partner__drei__no_activo
@@ -941,17 +935,17 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__name
 msgid "Number"
-msgstr "Número"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "Observations:"
-msgstr "Observaciones:"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "On account"
-msgstr "A cuenta"
+msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -980,7 +974,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
-msgstr "Página: <span class=\"page\"/> / <span class=\"topage\"/>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_tax_form
@@ -992,12 +986,12 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_payment_register
 msgid "Pay"
-msgstr "Pagar"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__payment_id
 msgid "Payment"
-msgstr "Pago"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.actions.report,name:l10n_ar_tax.action_report_receipt_bundle
@@ -1007,12 +1001,12 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_l10n_ar_payment_withholding
 msgid "Payment withholding lines"
-msgstr "Líneas de pago de retención"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_payment
 msgid "Payments"
-msgstr "Pagos"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:account.fiscal.position,name:l10n_ar_tax.fiscal_position_caba
@@ -1032,7 +1026,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__tax_type__perception
 msgid "Perception"
-msgstr "Percepción"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_bank_statement_line__perceptions_fiscal_positon
@@ -1043,7 +1037,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_position_form
 msgid "Perceptions and Withholdings"
-msgstr "Percepciones y Retenciones"
+msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -1052,18 +1046,16 @@ msgid ""
 "Please enter withholding number for tax %s or configure a sequence on that "
 "tax"
 msgstr ""
-"Por favor ingrese un número de retención para el impuesto %s o configure una"
-" secuencia en ese impuesto"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
 msgid "Print withholding voucher"
-msgstr "Imprimir comprobante de retención"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_partner_form
 msgid "Purchase Withholding"
-msgstr "Retención de Compra"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__ratio
@@ -1083,7 +1075,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__ref
 msgid "Ref"
-msgstr "Referencia"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__webservice__rentas_cordoba
@@ -1113,7 +1105,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_partner_form
 msgid "Sale Perceptions"
-msgstr "Percepciones de Venta"
+msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -1128,38 +1120,38 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__selected_debt_untaxed
 msgid "Selected Debt Untaxed"
-msgstr "Deuda Seleccionada No Gravada"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_state_code
 msgid "State Code"
-msgstr "Código de Estado"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "Supplier:"
-msgstr "Proveedor:"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__tax_id
 msgid "Tax"
-msgstr "Impuesto"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__tax_template_domain
 msgid "Tax Template Domain"
-msgstr "Dominio de la Plantilla de Impuestos"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__tax_type
 msgid "Tax Type"
-msgstr "Tipo de Impuesto"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_state_code
 msgid "The state code."
-msgstr "El código del estado."
+msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -1178,28 +1170,28 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__l10n_ar_padron_to_date
 msgid "To Date"
-msgstr "Hasta"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_tribute_afip_code
 msgid "Tribute ARCA Code"
-msgstr "Código tributo AFIP"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_account_payment__withholdable_advanced_amount
 msgid "Used for withholdings calculation"
-msgstr "Utilizado para el cálculo de retenciones"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_withholding_sequence_id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__withholding_sequence_id
 msgid "WTH Sequence"
-msgstr "Secuencia de retención"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__l10n_ar_tax_type
 msgid "WTH Tax"
-msgstr "Impuesto de Retencion"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
@@ -1215,34 +1207,34 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move_line__withholding_id
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__tax_type__withholding
 msgid "Withholding"
-msgstr "Retención"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
 msgid "Withholdings"
-msgstr "Retenciones"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__withholdings_amount
 msgid "Withholdings Amount"
-msgstr "Importe de Retenciones"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__l10n_ar_withholding_line_ids
 msgid "Withholdings Lines"
-msgstr "Líneas de Retenciones"
+msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_payment.py:0
 msgid "Withholdings must be done in \"%s\" currency"
-msgstr "Las retenciones deberán realizarse en la moneda \"%s\" "
+msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/res_company.py:0
 msgid "You must configure CIT password on company %s"
-msgstr "Debe configurar la contraseña de CIT en la empresa %s"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_fiscal_position_l10n_ar_tax

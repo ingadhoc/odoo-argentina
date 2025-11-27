@@ -33,7 +33,7 @@ class AccountPayment(models.Model):
         domain=[("l10n_ar_tax_ids.tax_type", "=", "withholding")],
     )
 
-    @api.depends("to_pay_move_line_ids", "partner_id")
+    @api.depends("to_pay_move_line_ids", "partner_id", "payment_method_line_id")
     def _compute_fiscal_position_id(self):
         for rec in self:
             if (

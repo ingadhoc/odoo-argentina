@@ -6,14 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-22 02:07+0000\n"
-"PO-Revision-Date: 2025-11-22 02:07+0000\n"
+"POT-Creation-Date: 2025-12-03 10:14+0000\n"
+"PO-Revision-Date: 2025-12-03 10:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.arba_alicout_query
+msgid "&lt;?xml version = \"1.0\" encoding = \"utf-8\"?&gt;"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.actions.report,print_report_name:l10n_ar_tax.action_report_withholding_certificate
@@ -502,6 +507,12 @@ msgid "ARBA"
 msgstr ""
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company.py:0
+msgid "ARBA Error %s(%s): %s"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_form
 msgid ""
 "ARBA: por lo general no es necesario cargarlo aquí ya que las alícuotas se obtienen automáticamente mediante webservice.\n"
@@ -737,6 +748,18 @@ msgid "Email composition wizard"
 msgstr ""
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company.py:0
+msgid "Error parsing ARBA response"
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company.py:0
+msgid "Error parsing ARBA response: %s"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_move_form
 msgid "Esta utilizando la posición fiscal"
 msgstr ""
@@ -775,23 +798,6 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__l10n_ar_padron_from_date
 msgid "From Date"
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-msgid ""
-"Hubo un error al consultar el Padron ARBA. Para solucionarlo puede seguir los siguientes pasos, los cuales explicamos con más detalle en este video:\n"
-" %s\n"
-"\n"
-"Tiene las siguientes opciones:\n"
-"  1) Intentar nuevamente más tarde\n"
-"  2) Cargar la alícuota manualmente en el partner en cuestión\n"
-"  3) Subir el archivo del padrón utilizando el Asistente de carga de padrones.\n"
-"\n"
-"Error obtenido:\n"
-"%s\n"
-"\n"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -839,12 +845,6 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
 msgid "Indique la clave CIT si utiliza padrón de ARBA de ret/perc de iibb."
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-msgid "Ir a Carga de Padrones"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -945,13 +945,6 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "On account"
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-#: code:addons/l10n_ar_tax/models/res_company.py:0
-msgid "Padron ARBA: %s - %s (%s)"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1244,13 +1237,6 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_tax_form
 msgid "aquí"
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-msgid ""
-"https://docs.google.com/document/d/1Tb_0SGKexakuXMn_0in3Z5zLwoaVOgZhYwhQ7DiFjFw/edit"
 msgstr ""
 
 #. module: l10n_ar_tax

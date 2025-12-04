@@ -51,12 +51,13 @@ class AccountPaymentRegister(models.TransientModel):
         # y solo agregamos taxes segun la FP que corresponda
         # super()._compute_l10n_ar_withholding_ids()
         # taxes = self.l10n_ar_withholding_ids.mapped('tax_id')
-        date = fields.Date.from_string(self.payment_date) or datetime.date.today()
+        for rec in self:
+            date = fields.Date.from_string(rec.payment_date) or datetime.date.today()
 
-        withholdings = [Command.clear()]
-        if self.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:
-            taxes = self.l10n_ar_fiscal_position_id._l10n_ar_add_taxes(
-                self.partner_id, self.company_id, date, "withholding"
-            )
-            withholdings += [Command.create({"tax_id": x.id}) for x in taxes]
-        self.l10n_ar_withholding_ids = withholdings
+            withholdings = [Command.clear()]
+            if rec.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:
+                taxes = rec.l10n_ar_fiscal_position_id._l10n_ar_add_taxes(
+                    rec.partner_id, rec.company_id, date, "withholding"
+                )
+                withholdings += [Command.create({"tax_id": x.id}) for x in taxes]
+            rec.l10n_ar_withholding_ids = withholdings

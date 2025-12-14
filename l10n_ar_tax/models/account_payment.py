@@ -33,7 +33,7 @@ class AccountPayment(models.Model):
         domain=[("l10n_ar_tax_ids.tax_type", "=", "withholding")],
     )
 
-    @api.depends("to_pay_move_line_ids", "partner_id")
+    @api.depends("to_pay_move_line_ids", "partner_id", "payment_method_line_id")
     def _compute_fiscal_position_id(self):
         for rec in self:
             if (
@@ -98,6 +98,12 @@ class AccountPayment(models.Model):
             # empieza a salir un raise que no deja editar cosas
             rec.amount = amount if amount > 0 else 0
             # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
+
+    @api.onchange("partner_id")
+    def _onchange_partner_id(self):
+        for rec in self:
+            if rec.partner_id != rec._origin.partner_id:
+                rec._onchange_withholdings()
 
     # # ver mensaje en commit
     # @api.onchange('to_pay_amount', 'withholdable_advanced_amount', 'partner_id')

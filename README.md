@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/ingadhoc//badge.png?branch=18.0)](https://coveralls.io/r/ingadhoc/?branch=18.0)
+[![Coverage Status](https://coveralls.io/repos/ingadhoc//badge.png?branch=19.0)](https://coveralls.io/r/ingadhoc/?branch=19.0)
 [![Code Climate](https://codeclimate.com/github/ingadhoc//badges/gpa.svg)](https://codeclimate.com/github/ingadhoc/)
 
 # ADHOC odoo-argentina

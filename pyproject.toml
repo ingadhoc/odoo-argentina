@@ -27,9 +27,9 @@ ignore = [
 [tool.ruff.lint.pycodestyle]
 # line-length is set in [tool.ruff], and it's used by the formatter
 # in case the formatted can't autofix the line length, it will be reported as an error
-# only if it exceeds the max-line-length set here. We use 999 to effectively disable
+# only if it exceeds the max-line-length set here. We use 320 (max available value) to disable
 # this check.
-max-line-length = 999
+max-line-length = 320
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
@@ -45,6 +45,7 @@ known-third-party = [
     "urllib2",
     "yaml",
 ]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
 
 [tool.ruff.lint.mccabe]
 max-complexity = 20

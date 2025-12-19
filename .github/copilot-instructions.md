@@ -16,6 +16,7 @@
 
    * Si ya existe un docstring, puede sugerirse un estilo básico acorde a PEP8, pero **no será un error** si faltan `return`, tipos o parámetros documentados.
 5. No proponer cambios puramente estéticos (espacios, comillas simples vs dobles, orden de imports, etc.).
+6. Mantener el feedback **muy conciso** en los PRs: priorizar pocos puntos claros, evitar párrafos largos y no repetir el contexto que ya está explicado en la descripción del PR.
 
 ---
 
@@ -83,6 +84,8 @@
   * Caso ilustrativo: reemplazar listas armadas a mano con `result = self.env['res.partner'].search_fetch(domain=[('is_company', '=', True)], fields=['name', 'email', 'vat'])`.
 * Recordar que los writes vectorizados (`recordset.write`) y las operaciones en lotes evitan locks prolongados y mejoran la trazabilidad de auditoría del ORM.
   * Ejemplo recomendado: `partners.write({'comment': 'Actualizado masivamente'})` en lugar de iterar y escribir registro por registro.
+* Tener en cuenta la **navegación de campos relacionales** en Odoo: acceder a campos encadenados como `m.fiscal_position_id.l10n_ar_tax_ids` es seguro incluso cuando `fiscal_position_id` está vacío (devuelve un recordset vacío). Por eso, expresiones como `not m.fiscal_position_id.l10n_ar_tax_ids` ya cubren el caso en que no haya posición fiscal y **no hace falta** añadir un chequeo previo separado sobre `fiscal_position_id`.
+* Revisar accesos directos por índice en listas o recordsets, por ejemplo `lines[0].id`: si el conjunto está vacío puede lanzar `IndexError`. Copilot debe sugerir patrones más seguros (por ejemplo `if lines: first = lines[0]`) o, cuando sea posible, reescribir la lógica para trabajar sobre el recordset completo en lugar de un único elemento.
 
 ---
 
@@ -162,7 +165,7 @@ En estos casos **normalmente corresponde** proponer migración (salvo notas en c
      * asignar company/website por defecto,
      * o migrar datos entre reglas.
 
-> **Nota:** hemos eliminado explícitamente de esta lista el caso “Añadir `required=True` a campos existentes sin default” como condición automática de migración; Copilot no debe sugerir script de migración **solo** por ese motivo, salvo que en el diff se vea claro que hay datos históricos incompatibles.
+> **Nota:** No se incluye en esta lista el caso “Añadir `required=True` a campos existentes sin default” como condición automática de migración; Copilot no debe sugerir script de migración **solo** por ese motivo, salvo que en el diff se vea claro que hay datos históricos incompatibles.
 
 ---
 
@@ -221,6 +224,14 @@ En estos casos **normalmente corresponde** proponer migración (salvo notas en c
   * **Pre- o post-script** según el caso, para rellenar campos obligatorios (company, website, owner) y evitar que registros queden inaccesibles.
 
 > **Regla general:** si el cambio puede **romper durante el upgrade**, usa **pre-script**; si requiere **recalcular o reaplicar** después del código nuevo, usa **post-script**. Si se necesita una acción global al final, usa **end-script**.
+
+---
+
+## Cobertura de tests automatizados – reglas generales
+
+* Cuando el diff introduzca **funcionalidad nueva no trivial** (nuevos métodos con lógica compleja, nuevos flujos de negocio, refactors grandes, nuevas APIs, etc.), revisar si existe cobertura de tests razonable para esos cambios.
+* Si no se ve una cobertura clara, sugerir de forma **concreta y breve** qué tipo de test añadir (unitarios de modelo, tests de wizards, tours, pruebas sobre reportes, etc.), sin exigir una suite completa para cada cambio.
+* Para cambios pequeños o puramente cosméticos (ajustes en textos, vistas simples, pequeñas correcciones) **no hace falta** proponer la creación de tests nuevos.
 
 ---
 
@@ -304,10 +315,11 @@ def migrate(cr, registry):
   * **Bump + migración:** “Se renombra `old_ref` → `new_ref`: falta **bump de versión** y **pre-script** en `migrations/` para copiar valores antes del upgrade; añadir **post-script** para recompute del stored.”
 
 * Evitar explicaciones largas o reescrituras completas salvo que el cambio sea claro y necesario.
+* Priorizar comentarios en forma de **lista corta de puntos** (3–7 ítems) y frases breves en lugar de bloques de texto extensos.
 
 ---
 
-## Resumen operativo para Copilot (v18)
+## Resumen operativo para Copilot
 
 1. **Detecta cambios en modelos/vistas/seguridad/datos → exige bump de `version` en `__manifest__.py`.**
 2. **Si hay cambio estructural (según la lista actualizada) → propone y describe script(s) de migración en `migrations/` (pre/post/end)**, con enfoque idempotente y en lotes.

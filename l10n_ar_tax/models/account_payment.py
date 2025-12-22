@@ -55,8 +55,7 @@ class AccountPayment(models.Model):
             rec.l10n_ar_fiscal_position_id = (
                 self.env["account.fiscal.position"]
                 .with_company(rec.company_id)
-                # TODO revisar porque llega active_test=False acá
-                .with_context(l10n_ar_withholding=True, active_test=True)
+                .with_context(l10n_ar_withholding=True)
                 ._get_fiscal_position(address)
             )
 
@@ -456,8 +455,10 @@ class AccountPayment(models.Model):
 
     @api.depends("l10n_ar_fiscal_position_id", "partner_id", "company_id", "date")
     def _compute_l10n_ar_withholding_line_ids(self):
+        # no entiendo porque pero acá viene un active_test=False que se termina propagando a computed fields que
+        # también dependan de partner_id, por ahora forzamos active_test=True para que aguas arriba todo se compute bien
         # metodo completamente analogo a payment.register._compute_l10n_ar_withholding_ids
-        for rec in self.filtered(lambda x: x.partner_type == "supplier"):
+        for rec in self.with_context(active_test=True).filtered(lambda x: x.partner_type == "supplier"):
             date = rec.date or fields.Date.context_today(rec)
             withholdings = [Command.clear()]
             if rec.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:

@@ -55,7 +55,8 @@ class AccountPayment(models.Model):
             rec.l10n_ar_fiscal_position_id = (
                 self.env["account.fiscal.position"]
                 .with_company(rec.company_id)
-                .with_context(l10n_ar_withholding=True)
+                # TODO revisar porque llega active_test=False acá
+                .with_context(l10n_ar_withholding=True, active_test=True)
                 ._get_fiscal_position(address)
             )
 
@@ -65,9 +66,7 @@ class AccountPayment(models.Model):
             rec.withholdings_amount = sum(rec.l10n_ar_withholding_line_ids.mapped("amount"))
 
     def _get_withholding_move_line_default_values(self):
-        return {
-            "currency_id": self.currency_id.id,
-        }
+        return {}
 
     @api.depends("l10n_ar_withholding_line_ids.amount")
     def _compute_payment_total(self):
@@ -135,9 +134,9 @@ class AccountPayment(models.Model):
         return res
 
     def _prepare_witholding_write_off_vals(self):
+        """We don't send currency amounts because withholdings are always in company currency"""
         self.ensure_one()
         write_off_line_vals = []
-        conversion_rate = self.exchange_rate or 1.0
         sign = 1
         if self.payment_type == "outbound":
             sign = -1
@@ -146,13 +145,11 @@ class AccountPayment(models.Model):
             # de la cia, por lo cual el line.amount aca representa eso y tenemos que convertirlo para el amount_currency
 
             __, account_id, tax_repartition_line_id, __ = line._tax_compute_all_helper()
-            amount_currency = self.currency_id.round(line.amount / conversion_rate)
             write_off_line_vals.append(
                 {
                     **self._get_withholding_move_line_default_values(),
                     "name": line.name,
                     "account_id": account_id,
-                    "amount_currency": sign * amount_currency,
                     "balance": sign * line.amount,
                     "tax_base_amount": sign * line.base_amount,
                     "tax_repartition_line_id": tax_repartition_line_id,
@@ -164,7 +161,6 @@ class AccountPayment(models.Model):
             nice_base_label = ",".join(withholding_lines.filtered("name").mapped("name"))
             account_id = self.company_id.l10n_ar_tax_base_account_id.id
             base_amount = sign * base_amount
-            base_amount_currency = self.currency_id.round(base_amount / conversion_rate)
             write_off_line_vals.append(
                 {
                     **self._get_withholding_move_line_default_values(),
@@ -172,7 +168,6 @@ class AccountPayment(models.Model):
                     "tax_ids": [Command.set(withholding_lines.mapped("tax_id").ids)],
                     "account_id": account_id,
                     "balance": base_amount,
-                    "amount_currency": base_amount_currency,
                 }
             )
             write_off_line_vals.append(
@@ -181,7 +176,6 @@ class AccountPayment(models.Model):
                     "name": _("Base Ret Cont: ") + nice_base_label,
                     "account_id": account_id,
                     "balance": -base_amount,
-                    "amount_currency": -base_amount_currency,
                 }
             )
 
@@ -218,11 +212,22 @@ class AccountPayment(models.Model):
         res = super()._get_trigger_fields_to_synchronize()
         return res + ("l10n_ar_withholding_line_ids",)
 
-    @api.constrains("currency_id", "company_id", "l10n_ar_withholding_line_ids")
+    # TODO implementar cálculo de retenciones en pagos en moneda extranjera y borrar la constraint
+    @api.constrains("currency_id", "company_id", "l10n_ar_withholding_line_ids", "destination_account_id")
     def _check_withholdings_and_currency(self):
-        for rec in self:
-            if rec.l10n_ar_withholding_line_ids and rec.currency_id != rec.company_id.currency_id:
-                raise UserError(_('Withholdings must be done in "%s" currency') % rec.company_id.currency_id.name)
+        """Para todos los pagos con retenciones verificamos que la deuda se esté conciliando en moneda local
+        ya que todavía no tenemos implementado cálculos de retenciones ajustados por diferencia de cambio"""
+        for rec in self.filtered(
+            lambda x: x.l10n_ar_withholding_line_ids
+            and (x.currency_id != x.company_id.currency_id or x._use_counterpart_currency())
+        ):
+            # Verificar si la deuda está gestionada en moneda extranjera
+            dest_currency = rec.destination_account_id.currency_id
+            debt_in_foreign_currency = dest_currency and dest_currency != rec.company_id.currency_id
+            if not rec.company_id.reconcile_on_company_currency or debt_in_foreign_currency:
+                raise UserError(
+                    _("Withholdings are only implemented for debt managed in %s.") % rec.company_id.currency_id.name
+                )
 
     def _prepare_move_line_default_vals(self, write_off_line_vals=None, force_balance=None):
         res = super()._prepare_move_line_default_vals(write_off_line_vals, force_balance=force_balance)

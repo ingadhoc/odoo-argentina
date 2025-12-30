@@ -5,7 +5,7 @@
     <record id="fiscal_position_caba_cordoba_perc" model="account.fiscal.position">
         <field name="name">Percepciones Córdoba + CABA</field>
         <field name="l10n_ar_afip_responsibility_type_ids" eval="[(6, 0, [ref('l10n_ar.res_IVARI')])]"/>
-        <field name="sequence" eval="10"/>
+        <field name="sequence" eval="20"/>
         <field name="auto_apply" eval="True"/>
         <field name="country_id" ref="base.ar"/>
         <field name="company_id" ref="base.company_ri"/>
@@ -29,7 +29,7 @@
     <record id="fiscal_position_caba" model="account.fiscal.position">
         <field name="name">Percepciones CABA</field>
         <field name="l10n_ar_afip_responsibility_type_ids" eval="[(6, 0, [ref('l10n_ar.res_IVARI')])]"/>
-        <field name="sequence" eval="20"/>
+        <field name="sequence" eval="15"/>
         <field name="auto_apply" eval="True"/>
         <field name="country_id" ref="base.ar"/>
         <field name="company_id" ref="base.company_ri"/>
@@ -48,7 +48,7 @@
         <field name="name">Percepciones Córdoba</field>
         <field name="l10n_ar_afip_responsibility_type_ids" eval="[(6, 0, [ref('l10n_ar.res_IVARI')])]"/>
         <field name="auto_apply" eval="True"/>
-        <field name="sequence" eval="30"/>
+        <field name="sequence" eval="15"/>
         <field name="country_id" ref="base.ar"/>
         <field name="company_id" ref="base.company_ri"/>
         <field name="state_ids" eval="[(6, 0, [ref('base.state_ar_x')])]"/>
@@ -59,21 +59,6 @@
         <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_percepcion_iibb_co_aplicada'))"/>
         <field name="tax_type">perception</field>
         <field name="webservice">rentas_cordoba</field>
-    </record>
-
-    <!-- Ganancias -->
-    <record id="fiscal_position_proffits" model="account.fiscal.position">
-        <field name="name">Ret. ganancias</field>
-        <field name="l10n_ar_afip_responsibility_type_ids" eval="[(6, 0, [ref('l10n_ar.res_IVARI')])]"/>
-        <field name="auto_apply" eval="True"/>
-        <field name="sequence">70</field>
-        <field name="company_id" ref="base.company_ri"/>
-    </record>
-
-    <record id="fiscal_position_proffits_prof_withholding" model="account.fiscal.position.l10n_ar_tax">
-        <field name="fiscal_position_id" ref="fiscal_position_proffits"/>
-        <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ex_tax_withholding_profits_regimen_21_insc'))"/>
-        <field name="tax_type">withholding</field>
     </record>
 
     <!-- RET Córdoba + CABA + ganancias -->
@@ -124,6 +109,21 @@
     </record>
     <record id="fiscal_position_caba_and_proffits_prof_withholding" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="fiscal_position_caba_and_proffits"/>
+        <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ex_tax_withholding_profits_regimen_21_insc'))"/>
+        <field name="tax_type">withholding</field>
+    </record>
+
+    <!-- Ganancias -->
+    <record id="fiscal_position_proffits" model="account.fiscal.position">
+        <field name="name">Ret. ganancias</field>
+        <field name="l10n_ar_afip_responsibility_type_ids" eval="[(6, 0, [ref('l10n_ar.res_IVARI')])]"/>
+        <field name="auto_apply" eval="True"/>
+        <field name="sequence">100</field>
+        <field name="company_id" ref="base.company_ri"/>
+    </record>
+
+    <record id="fiscal_position_proffits_prof_withholding" model="account.fiscal.position.l10n_ar_tax">
+        <field name="fiscal_position_id" ref="fiscal_position_proffits"/>
         <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ex_tax_withholding_profits_regimen_21_insc'))"/>
         <field name="tax_type">withholding</field>
     </record>

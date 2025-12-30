@@ -217,8 +217,7 @@ class AccountPayment(models.Model):
         """Para todos los pagos con retenciones verificamos que la deuda se esté conciliando en moneda local
         ya que todavía no tenemos implementado cálculos de retenciones ajustados por diferencia de cambio"""
         for rec in self.filtered(
-            lambda x: x.l10n_ar_withholding_line_ids
-            and (x.currency_id != x.company_id.currency_id or x._use_counterpart_currency())
+            lambda x: x.l10n_ar_withholding_line_ids and (x.currency_id != x.company_id.currency_id)
         ):
             # Verificar si la deuda está gestionada en moneda extranjera
             dest_currency = rec.destination_account_id.currency_id

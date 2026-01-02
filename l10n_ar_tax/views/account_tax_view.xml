@@ -45,7 +45,10 @@
         <field name="inherit_id" ref="l10n_ar_withholding.view_tax_form-l10n_ar"/>
         <field name="arch" type="xml">
             <field name="l10n_ar_state_id" position="attributes">
-                <attribute name="invisible">l10n_ar_tax_type in ['earnings', 'earnings_scale'] or country_code != 'AR'</attribute>
+                <attribute name="invisible">True</attribute>
+            </field>
+            <field name="l10n_ar_withholding_sequence_id" position="attributes">
+                <attribute name="invisible">True</attribute>
             </field>
             <field name="l10n_ar_code" position="attributes">
                 <attribute name="invisible">country_code != 'AR'</attribute>

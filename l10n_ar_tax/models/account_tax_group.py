@@ -12,3 +12,13 @@ class AccountTaxGroup(models.Model):
             ("06", "06 - VAT perception or Withholding"),
         ]
     )
+    l10n_ar_state_id = fields.Many2one(
+        "res.country.state", string="Jurisdiction", ondelete="restrict", domain="[('country_id', '=?', country_id)]"
+    )
+    l10n_ar_withholding_sequence_id = fields.Many2one(
+        "ir.sequence",
+        string="WTH Sequence",
+        copy=True,  # mejora de usabilidad, duplicar un tax group mantiene la secuencia
+        check_company=True,
+        help="If no sequence provided then it will be required for you to enter withholding number when registering one.",
+    )

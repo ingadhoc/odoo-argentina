@@ -366,7 +366,9 @@ class AccountPayment(models.Model):
     def action_post(self):
         for rec in self:
             commands = []
-            for line in rec.l10n_ar_withholding_line_ids:
+            for line in rec.l10n_ar_withholding_line_ids.filtered(
+                lambda x: x.tax_id.l10n_ar_withholding_payment_type == "supplier"
+            ):
                 if not line.name or line.name == "/":
                     if line.tax_id.l10n_ar_withholding_sequence_id:
                         commands.append(
@@ -381,12 +383,15 @@ class AccountPayment(models.Model):
                         )
                     else:
                         raise UserError(
-                            _("Please enter withholding number for tax %s or configure a sequence on that tax")
+                            _("Please enter withholding number for tax %s or configure a sequence on the tax group.")
                             % line.tax_id.name
                         )
-            if commands:
-                rec.l10n_ar_withholding_line_ids = commands
-
+                if commands:
+                    rec.l10n_ar_withholding_line_ids = commands
+            for line in rec.l10n_ar_withholding_line_ids.filtered(
+                lambda x: x.tax_id.l10n_ar_withholding_payment_type == "customer" and (not x.name or x.name == "/")
+            ):
+                raise UserError(_("Please enter withholding number for tax %s.") % line.tax_id.name)
         return super().action_post()
 
     @api.model

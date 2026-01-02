@@ -16,12 +16,6 @@ class AccountFiscalPosition(models.Model):
         for fp_tax in self.l10n_ar_tax_ids.filtered(lambda x: x.tax_type == tax_type):
             domain = self.env["l10n_ar.partner.tax"]._check_company_domain(company)
             domain += [("tax_id.tax_group_id", "=", fp_tax.default_tax_id.tax_group_id.id)]
-            if tax_type == "withholding":
-                # TODO esto lo deberiamos borrar al ir a odoo 19 y solo usar los tax groups
-                # por ahora, para no renegar con scripts de migra que requieran crear tax groups para cada jurisdiccion y
-                # ademas luego tener que ajustar a lo que hagamos en 19, usamos la jursdiccion como elemento de agrupacion
-                # solo para retenciones
-                domain += [("tax_id.l10n_ar_state_id", "=", fp_tax.default_tax_id.l10n_ar_state_id.id)]
             domain += [
                 "|",
                 ("from_date", "<=", date),

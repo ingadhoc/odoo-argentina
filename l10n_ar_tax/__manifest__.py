@@ -31,6 +31,7 @@
         "views/account_payment_view.xml",
         "views/res_company_jurisdiction_padron_view.xml",
         "views/res_partner_view.xml",
+        "views/account_tax_group_view.xml",
         "views/account_tax_view.xml",
         "views/account_move_views.xml",
         "views/report_payment_receipt_templates.xml",

@@ -5,9 +5,8 @@ from odoo.exceptions import UserError, ValidationError
 class AccountTax(models.Model):
     _inherit = "account.tax"
 
-    # mejora de usabilidad, duplicar un impuesto mantiene la secuencia
     l10n_ar_withholding_sequence_id = fields.Many2one(
-        copy=True,
+        related="tax_group_id.l10n_ar_withholding_sequence_id", store=True, readonly=True
     )
     company_currency_id = fields.Many2one(related="company_id.currency_id")
 
@@ -37,6 +36,7 @@ class AccountTax(models.Model):
 
     l10n_ar_tribute_afip_code = fields.Selection(related="tax_group_id.l10n_ar_tribute_afip_code")
     l10n_ar_state_code = fields.Char(related="l10n_ar_state_id.code")
+    l10n_ar_state_id = fields.Many2one(related="tax_group_id.l10n_ar_state_id", store=True, readonly=True)
     api_codigo_articulo_retencion = fields.Selection(
         [
             ("001", "001: Art.1 - inciso A - (Res. Gral. 15/97 y Modif.)"),

@@ -11,6 +11,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4320-0600</field>
         <field name='email'>consultas.por.la.web@ar.abnamro.com</field>
+        <field name='bank_number'>005</field>
     </record>
     <record model='res.bank' id='00295'>
         <field name='name'>American Express Bank Ltd. Sociedad Anon</field>
@@ -24,6 +25,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4310-3000</field>
         <field name='email'>amex.bank.argentina@aexp.com</field>
+        <field name='bank_number'>295</field>
     </record>
     <record model='res.bank' id='00340'>
         <field name='name'>Bacs Banco De Credito Y Securitizacion S</field>
@@ -37,6 +39,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4347-1010</field>
         <field name='email'>bacs@bacs.com.ar</field>
+        <field name='bank_number'>340</field>
     </record>
     <record model='res.bank' id='00147'>
         <field name='name'>Banco B.I. Creditanstalt Sociedad Anonim</field>
@@ -50,6 +53,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4319-8400</field>
         <field name='email'>info@bicreditanstalt.com.ar</field>
+        <field name='bank_number'>147</field>
     </record>
     <record model='res.bank' id='00336'>
         <field name='name'>Banco Bradesco Argentina S.A.</field>
@@ -63,6 +67,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>01-4114-6111</field>
         <field name='email'>bradesco@arnet.com.ar</field>
+        <field name='bank_number'>336</field>
     </record>
     <record model='res.bank' id='00331'>
         <field name='name'>Banco Cetelem Argentina S.A.</field>
@@ -76,6 +81,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4796-8600</field>
         <field name='email'>comercial@cetelem.com.ar</field>
+        <field name="bank_number">331</field>
     </record>
     <record model='res.bank' id='00319'>
         <field name='name'>Banco Cmf S.A.</field>
@@ -89,6 +95,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4318-6800</field>
         <field name='email'>cmfb@cmfb.com.ar</field>
+        <field name='bank_number'>319</field>
     </record>
     <record model='res.bank' id='00389'>
         <field name='name'>Banco Columbia S.A.</field>
@@ -102,6 +109,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-43490300</field>
         <field name='email'>info@columbia.com.ar</field>
+        <field name='bank_number'>389</field>
     </record>
     <record model='res.bank' id='00299'>
         <field name='name'>Banco Comafi Sociedad Anonima</field>
@@ -115,6 +123,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4328-5555</field>
         <field name='email'>contactenos@comafi.com.ar</field>
+        <field name='bank_number'>299</field>
     </record>
     <record model='res.bank' id='00191'>
         <field name='name'>Banco Credicoop Cooperativo Limitado</field>
@@ -128,6 +137,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4320-5000</field>
         <field name='email'>credicoop@bancocredicoop.coop</field>
+        <field name='bank_number'>191</field>
     </record>
     <record model='res.bank' id='00094'>
         <field name='name'>Banco De Corrientes S.A.</field>
@@ -141,6 +151,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>03783-479300</field>
         <field name='email'>bcteservicios@bcoctes.com.ar</field>
+        <field name='bank_number'>094</field>
     </record>
     <record model='res.bank' id='00315'>
         <field name='name'>Banco De Formosa S.A.</field>
@@ -153,6 +164,7 @@
         <field name='state' ref='base.state_ar_p'/>
         <field name='country' ref='base.ar'/>
         <field name='phone'>03717-429200</field>
+        <field name='bank_number'>315</field>
     </record>
     <record model='res.bank' id='00007'>
         <field name='name'>Banco De Galicia Y Buenos Aires S.A.</field>
@@ -166,6 +178,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-6329-0000</field>
         <field name='email'>asuntosinstitucionales@bancogalicia.com.ar</field>
+        <field name='bank_number'>007</field>
     </record>
     <record model='res.bank' id='00300'>
         <field name='name'>Banco De Inversion Y Comercio Exterior S</field>
@@ -179,6 +192,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4313-9546</field>
         <field name='email'>comercial@bice.com.ar</field>
+        <field name='bank_number'>300</field>
     </record>
     <record model='res.bank' id='00029'>
         <field name='name'>Banco De La Ciudad De Buenos Aires</field>
@@ -192,6 +206,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4329-8600</field>
         <field name='email'>servicioalcliente@bancociudad.com.ar</field>
+        <field name='bank_number'>029</field>
     </record>
     <record model='res.bank' id='00011'>
         <field name='name'>Banco De La Nacion Argentina</field>
@@ -205,6 +220,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4347-6000</field>
         <field name='email'>telemarketing@bna.com.ar</field>
+        <field name='bank_number'>011</field>
     </record>
     <record model='res.bank' id='00093'>
         <field name='name'>Banco De La Pampa Sociedad De Economмa M</field>
@@ -218,6 +234,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>02954-451000</field>
         <field name='email'>infoweb@blp.com.ar</field>
+        <field name='bank_number'>093</field>
     </record>
     <record model='res.bank' id='00014'>
         <field name='name'>Banco De La Provincia De Buenos Aires</field>
@@ -231,6 +248,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4347-0000</field>
         <field name='email'>atencionalclienteBPBA@bapropagos.com.ar</field>
+        <field name='bank_number'>014</field>
     </record>
     <record model='res.bank' id='00020'>
         <field name='name'>Banco De La Provincia De Cordoba S.A.</field>
@@ -244,6 +262,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0351-4207200</field>
         <field name='email'>contgral@bancor.com.ar</field>
+        <field name='bank_number'>020</field>
     </record>
     <record model='res.bank' id='00269'>
         <field name='name'>Banco De La Republica Oriental Del Urugu</field>
@@ -257,6 +276,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4132-2000</field>
         <field name='email'>brou@broubsas.com.ar</field>
+        <field name='bank_number'>269</field>
     </record>
     <record model='res.bank' id='00045'>
         <field name='name'>Banco De San Juan S.A.</field>
@@ -270,6 +290,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0264-4291000</field>
         <field name='email'>sdirectorio@bancosanjuan.com</field>
+        <field name='bank_number'>045</field>
     </record>
     <record model='res.bank' id='00086'>
         <field name='name'>Banco De Santa Cruz S.A.</field>
@@ -283,6 +304,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>02966-441200</field>
         <field name='email'>sdirectorio@bancosantacruz.com</field>
+        <field name='bank_number'>086</field>
     </record>
     <record model='res.bank' id='00321'>
         <field name='name'>Banco De Santiago Del Estero S.A.</field>
@@ -296,6 +318,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0385-450-2300</field>
         <field name='email'>bsegerencia@arnet.com.ar</field>
+        <field name='bank_number'>321</field>
     </record>
     <record model='res.bank' id='00332'>
         <field name='name'>Banco De Servicios Financieros S.A.</field>
@@ -309,6 +332,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>-4003-7275</field>
         <field name='email'>comercial@cetelem.com.ar</field>
+        <field name='bank_number'>332</field>
     </record>
     <record model='res.bank' id='00338'>
         <field name='name'>Banco De Servicios Y Transacciones S.A.</field>
@@ -322,6 +346,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-5235-2300</field>
         <field name='email'>info@bancost.com.ar</field>
+        <field name='bank_number'>338</field>
     </record>
     <record model='res.bank' id='00198'>
         <field name='name'>Banco De Valores S.A.</field>
@@ -335,6 +360,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4323-6900</field>
         <field name='email'>info@banval.sba.com.ar</field>
+        <field name='bank_number'>198</field>
     </record>
     <record model='res.bank' id='00083'>
         <field name='name'>Banco Del Chubut S.A.</field>
@@ -348,6 +374,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>02965-482505</field>
         <field name='email'>contacto@chubutbank.com.ar</field>
+        <field name='bank_number'>083</field>
     </record>
     <record model='res.bank' id='00310'>
         <field name='name'>Banco Del Sol S.A.</field>
@@ -361,6 +388,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0221-4232403</field>
         <field name='email'>buzon@bancodelsol.com</field>
+        <field name='bank_number'>310</field>
     </record>
     <record model='res.bank' id='00060'>
         <field name='name'>Banco Del Tucuman S.A.</field>
@@ -374,6 +402,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0381-4503300</field>
         <field name='email'>bancodeltucuman@bancodeltucuman.com.ar</field>
+        <field name='bank_number'>060</field>
     </record>
     <record model='res.bank' id='00046'>
         <field name='name'>Banco Do Brasil S.A.</field>
@@ -387,6 +416,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>-4000-2700</field>
         <field name='email'>buenosaires@bb.com.br</field>
+        <field name='bank_number'>046</field>
     </record>
     <record model='res.bank' id='00303'>
         <field name='name'>Banco Finansur S.A.</field>
@@ -400,6 +430,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-43243400</field>
         <field name='email'>marketing@bancofinansur.com.ar</field>
+        <field name='bank_number'>303</field>
     </record>
     <record model='res.bank' id='00044'>
         <field name='name'>Banco Hipotecario S.A.</field>
@@ -413,6 +444,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4347-5000</field>
         <field name='email'>info@hipotecario.com.ar</field>
+        <field name='bank_number'>044</field>
     </record>
     <record model='res.bank' id='00322'>
         <field name='name'>Banco Industrial S.A.</field>
@@ -426,6 +458,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-5238-0200</field>
         <field name='email'>info@bancoindustrial.com.ar</field>
+        <field name='bank_number'>322</field>
     </record>
     <record model='res.bank' id='00259'>
         <field name='name'>Banco Itau Argentina S.A.</field>
@@ -438,6 +471,7 @@
         <field name='state' ref='base.state_ar_c'/>
         <field name='country' ref='base.ar'/>
         <field name='email'>consultasysugerenciasclientes@itau.com.ar</field>
+        <field name='bank_number'>259</field>
     </record>
     <record model='res.bank' id='00305'>
         <field name='name'>Banco Julio Sociedad Anonima</field>
@@ -451,6 +485,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0351-4213007</field>
         <field name='email'>gcia.administracion@bancojulio.com.ar</field>
+        <field name='bank_number'>305</field>
     </record>
     <record model='res.bank' id='00285'>
         <field name='name'>Banco Macro S.A.</field>
@@ -464,6 +499,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-5222-6500</field>
         <field name='email'>serviciosalcliente@macro.com.ar</field>
+        <field name='bank_number'>285</field>
     </record>
     <record model='res.bank' id='00254'>
         <field name='name'>Banco Mariva S.A.</field>
@@ -477,6 +513,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4321-2200</field>
         <field name='email'>tecnol@mariva.com.ar</field>
+        <field name='bank_number'>254</field>
     </record>
     <record model='res.bank' id='00341'>
         <field name='name'>Banco Masventas S.A.</field>
@@ -490,6 +527,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0387-4310298</field>
         <field name='email'>masventas@bancomasventas.com.ar</field>
+        <field name='bank_number'>341</field>
     </record>
     <record model='res.bank' id='00281'>
         <field name='name'>Banco Meridian S.A.</field>
@@ -503,6 +541,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4130-8500</field>
         <field name='email'>info@bancomeridian.com</field>
+        <field name='bank_number'>281</field>
     </record>
     <record model='res.bank' id='00065'>
         <field name='name'>Banco Municipal De Rosario</field>
@@ -516,6 +555,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0341-4256162</field>
         <field name='email'>cliente@bmros.com.ar</field>
+        <field name='bank_number'>065</field>
     </record>
     <record model='res.bank' id='00034'>
         <field name='name'>Banco Patagonia S.A.</field>
@@ -529,6 +569,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4132-6300</field>
         <field name='email'>bancopatagonia@bancopatagonia.com.ar</field>
+        <field name='bank_number'>034</field>
     </record>
     <record model='res.bank' id='00301'>
         <field name='name'>Banco Piano S.A.</field>
@@ -542,6 +583,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4394-2463</field>
         <field name='email'>info@piano.com.ar</field>
+        <field name='bank_number'>301</field>
     </record>
     <record model='res.bank' id='00306'>
         <field name='name'>Banco Privado De Inversiones Sociedad An</field>
@@ -555,6 +597,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4318-7300</field>
         <field name='email'>info@bancoprivado.com.ar</field>
+        <field name='bank_number'>306</field>
     </record>
     <record model='res.bank' id='00268'>
         <field name='name'>Banco Provincia De Tierra Del Fuego</field>
@@ -568,6 +611,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>02901-441600</field>
         <field name='email'>info@bancotdf.com.ar</field>
+        <field name='bank_number'>268</field>
     </record>
     <record model='res.bank' id='00097'>
         <field name='name'>Banco Provincia Del Neuquén Sociedad Anс</field>
@@ -581,6 +625,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0299-4496600</field>
         <field name='email'>institucional@bpn.com.ar</field>
+        <field name='bank_number'>097</field>
     </record>
     <record model='res.bank' id='00079'>
         <field name='name'>Banco Regional De Cuyo S.A.</field>
@@ -594,6 +639,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0261-4498800</field>
         <field name='email'>brc@bancoregional.com.ar</field>
+        <field name='bank_number'>079</field>
     </record>
     <record model='res.bank' id='00247'>
         <field name='name'>Banco Roela S.A.</field>
@@ -607,6 +653,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0351-4241777</field>
         <field name='email'>servicioalcliente@bancoroela.com.ar</field>
+        <field name='bank_number'>247</field>
     </record>
     <record model='res.bank' id='00277'>
         <field name='name'>Banco Saenz S.A.</field>
@@ -620,6 +667,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4342-6969</field>
         <field name='email'>contaduria@saenzsa.com.ar</field>
+        <field name='bank_number'>277</field>
     </record>
     <record model='res.bank' id='00072'>
         <field name='name'>Banco Santander Rio S.A.</field>
@@ -633,6 +681,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4341-1000</field>
         <field name='email'>info@santanderrio.com.ar</field>
+        <field name='bank_number'>072</field>
     </record>
     <record model='res.bank' id='00027'>
         <field name='name'>Banco Supervielle S.A.</field>
@@ -646,6 +695,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4324-8000</field>
         <field name='email'>Eduardo.Hospital@supervielle.com.ar</field>
+        <field name='bank_number'>027</field>
     </record>
     <record model='res.bank' id='00262'>
         <field name='name'>Bank Of America, National Association</field>
@@ -659,6 +709,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4317-3500</field>
         <field name='email'>alberto.filippini@bankofamerica.com</field>
+        <field name='bank_number'>262</field>
     </record>
     <record model='res.bank' id='00017'>
         <field name='name'>Bbva Banco Frances S.A.</field>
@@ -672,6 +723,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4346-4000</field>
         <field name='email'>mensajes@bancofrances.com.ar</field>
+        <field name='bank_number'>017</field>
     </record>
     <record model='res.bank' id='00266'>
         <field name='name'>Bnp Paribas</field>
@@ -685,6 +737,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4318-0318</field>
         <field name='email'>info@bnpparibas.com.ar</field>
+        <field name='bank_number'>266</field>
     </record>
     <record model='res.bank' id='65203'>
         <field name='name'>Caja De Credito "Cuenca" Cooperativa Lim</field>
@@ -698,6 +751,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4512-6000</field>
         <field name='email'>cuenca@cccuenca.com.ar</field>
+        <field name='bank_number'>65203</field>
     </record>
     <record model='res.bank' id='64085'>
         <field name='name'>Caja De Credito Cooperativa La Capital D</field>
@@ -711,6 +765,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-5252-0100</field>
         <field name='email'>correo@lacapitaldelplata.com.ar</field>
+        <field name='bank_number'>64085</field>
     </record>
     <record model='res.bank' id='00016'>
         <field name='name'>Citibank N.A.</field>
@@ -723,6 +778,7 @@
         <field name='state' ref='base.state_ar_c'/>
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4329-1000</field>
+        <field name='bank_number'>016</field>
     </record>
     <record model='res.bank' id='44077'>
         <field name='name'>Compañía Financiera Argentina S.A.</field>
@@ -736,6 +792,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4348-9999</field>
         <field name='email'>sac@cfa.com.ar</field>
+        <field name='bank_number'>44077</field>
     </record>
     <record model='res.bank' id='00325'>
         <field name='name'>Deutsche Bank S.A.</field>
@@ -749,6 +806,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4590-2800</field>
         <field name='email'>monica.mestre@db.com</field>
+        <field name='bank_number'>325</field>
     </record>
     <record model='res.bank' id='44092'>
         <field name='name'>Fiat Credito Compañía Financiera S.A.</field>
@@ -762,6 +820,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>01-4344-5700</field>
         <field name='email'>gabriela.bruno@fiatfinanciera.com.ar</field>
+        <field name='bank_number'>44092</field>
     </record>
     <record model='res.bank' id='44059'>
         <field name='name'>Ford Credit Compañía Financiera S.A.</field>
@@ -775,6 +834,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>-4510-8325</field>
         <field name='email'>fordcredit@fordmail.com.ar</field>
+        <field name='bank_number'>44059</field>
     </record>
     <record model='res.bank' id='44090'>
         <field name='name'>Ge Compañía Financiera S.A.</field>
@@ -788,6 +848,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4104-9600</field>
         <field name='email'>gemoney_ar@ge.com</field>
+        <field name='bank_number'>44090</field>
     </record>
     <record model='res.bank' id='44093'>
         <field name='name'>Gmac Compañía Financiera S.A.</field>
@@ -801,6 +862,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>01-4317-1900</field>
         <field name='email'>contactenos@gm.com</field>
+        <field name='bank_number'>44093</field>
     </record>
     <record model='res.bank' id='00150'>
         <field name='name'>Hsbc Bank Argentina S.A.</field>
@@ -814,6 +876,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4320-2800</field>
         <field name='email'>contactenos@hsbc.com.ar</field>
+        <field name='bank_number'>150</field>
     </record>
     <record model='res.bank' id='44096'>
         <field name='name'>John Deere Credit Compañía Financiera S.</field>
@@ -827,6 +890,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0341-410-5331</field>
         <field name='email'>jdca@johndeere.com</field>
+        <field name='bank_number'>44096</field>
     </record>
     <record model='res.bank' id='00165'>
         <field name='name'>Jpmorgan Chase Bank, National Associatio</field>
@@ -840,6 +904,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4325-8046</field>
         <field name='email'>gayoso_paola@jpmorgan.com</field>
+        <field name='bank_number'>165</field>
     </record>
     <record model='res.bank' id='00312'>
         <field name='name'>Mba Lazard Banco De Inversiones S. A.</field>
@@ -853,6 +918,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4319-5800</field>
         <field name='email'>mba@merchant.com.ar</field>
+        <field name='bank_number'>312</field>
     </record>
     <record model='res.bank' id='44094'>
         <field name='name'>Mercedes-Benz Compañía Financiera Argent</field>
@@ -866,6 +932,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>-4808-8900</field>
         <field name='email'>maria_fernanda.pellegrino@daimlerchrysler.com</field>
+        <field name='bank_number'>44094</field>
     </record>
     <record model='res.bank' id='44068'>
         <field name='name'>Metropolis Compañía Financiera S.A.</field>
@@ -879,6 +946,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-5554-5800</field>
         <field name='email'>mensajes@metropoliscf.com</field>
+        <field name='bank_number'>44068</field>
     </record>
     <record model='res.bank' id='45056'>
         <field name='name'>Montemar Compañía Financiera S.A.</field>
@@ -892,6 +960,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0261-4494500</field>
         <field name='email'>informes@montemarciafin.com.ar</field>
+        <field name='bank_number'>45056</field>
     </record>
     <record model='res.bank' id='45072'>
         <field name='name'>Multifinanzas Compañía Financiera S.A.</field>
@@ -905,6 +974,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4393-3953</field>
         <field name='email'>multifin@sinectis.com.ar</field>
+        <field name='bank_number'>45072</field>
     </record>
     <record model='res.bank' id='00386'>
         <field name='name'>Nuevo Banco De Entre Rios S.A.</field>
@@ -918,6 +988,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0343-4201200</field>
         <field name='email'>info@nuevobersa.com.ar</field>
+        <field name='bank_number'>386</field>
     </record>
     <record model='res.bank' id='00309'>
         <field name='name'>Nuevo Banco De La Rioja Sociedad Anonima</field>
@@ -931,6 +1002,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>03822-430575</field>
         <field name='email'>nblrsa@nblr.com.ar</field>
+        <field name='bank_number'>309</field>
     </record>
     <record model='res.bank' id='00330'>
         <field name='name'>Nuevo Banco De Santa Fe Sociedad Anonima</field>
@@ -944,6 +1016,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0341-4294200</field>
         <field name='email'>contactobc@bancobsf.com.ar</field>
+        <field name='bank_number'>330</field>
     </record>
     <record model='res.bank' id='00311'>
         <field name='name'>Nuevo Banco Del Chaco S. A.</field>
@@ -957,6 +1030,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>03722-447400</field>
         <field name='email'>nbchdir@nbch.com.ar</field>
+        <field name='bank_number'>311</field>
     </record>
     <record model='res.bank' id='44098'>
         <field name='name'>Psa Finance Argentina Compañía Financiera</field>
@@ -969,6 +1043,7 @@
         <field name='state' ref='base.state_ar_c'/>
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4131-6313</field>
+        <field name='bank_number'>44098</field>
     </record>
     <record model='res.bank' id='00339'>
         <field name='name'>Rci Banque</field>
@@ -981,6 +1056,7 @@
         <field name='state' ref='base.state_ar_c'/>
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4779-6068</field>
+        <field name='bank_number'>339</field>
     </record>
     <record model='res.bank' id='44095'>
         <field name='name'>Rombo Compañía Financiera S.A.</field>
@@ -993,6 +1069,7 @@
         <field name='state' ref='base.state_ar_c'/>
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4779-6065</field>
+        <field name='bank_number'>44095</field>
     </record>
     <record model='res.bank' id='00015'>
         <field name='name'>Industrial and Commercial Bank of China (Argentina) S.A.</field>
@@ -1006,6 +1083,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>0810-444-4652</field>
         <field name='email'>diego.jahoda@icbc.com.ar</field>
+        <field name='bank_number'>015</field>
     </record>
     <record model='res.bank' id='00018'>
         <field name='name'>The Bank Of Tokyo-Mitsubishi Ufj, Ltd.</field>
@@ -1019,6 +1097,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4348-2000</field>
         <field name='email'>btmu@ar.mufg.jp</field>
+        <field name='bank_number'>018</field>
     </record>
     <record model='res.bank' id='44099'>
         <field name='name'>Toyota Compañía Financiera De Argentina</field>
@@ -1032,6 +1111,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4341-7900</field>
         <field name='email'>info@ToyotaCFA.com.ar</field>
+        <field name='bank_number'>44099</field>
     </record>
     <record model='res.bank' id='44088'>
         <field name='name'>Volkswagen Credit Compañia Financiera S.</field>
@@ -1045,6 +1125,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'>011-4317-9000</field>
         <field name='email'>mariana.rodriguez@vwfs.com</field>
+        <field name='bank_number'>44088</field>
     </record>
     <record model='res.bank' id='44089'>
         <field name='name'>BANCO BMA S.A.U.</field>
@@ -1057,6 +1138,7 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'></field>
         <field name='email'></field>
+        <field name='bank_number'>44089</field>
     </record>
     <record model='res.bank' id='44091'>
         <field name='name'>BANCO BICA S.A.</field>
@@ -1069,5 +1151,6 @@
         <field name='country' ref='base.ar'/>
         <field name='phone'></field>
         <field name='email'></field>
+        <field name='bank_number'>44091</field>
     </record>
 </odoo>

@@ -28,10 +28,10 @@
             <attribute name="t-field">header_address.l10n_ar_formatted_vat</attribute>
         </span>
         <span t-out="o.company_id.l10n_ar_gross_income_type == 'exempt' and 'Exento' or o.company_id.l10n_ar_gross_income_number" position="attributes">
-            <attribute name="t-out">header_address.l10n_ar_gross_income_type == 'exempt' and 'Exento' or header_address.l10n_ar_gross_income_number</attribute>
+            <attribute name="t-out">header_address.commercial_partner_id.l10n_ar_gross_income_type == 'exempt' and 'Exento' or header_address.commercial_partner_id.l10n_ar_gross_income_number</attribute>
         </span>
         <span t-field="o.company_id.l10n_ar_afip_start_date" position="attributes">
-            <attribute name="t-field">header_address.start_date</attribute>
+            <attribute name="t-field">header_address.commercial_partner_id.start_date</attribute>
         </span>
 
         <!-- tal vez tambien a este div principal le querramos cambiar la fuente como haciamos antes, aunque en realidad aparentemente ya no ex necesario, era algo asi:

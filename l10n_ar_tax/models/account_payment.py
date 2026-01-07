@@ -327,7 +327,7 @@ class AccountPayment(models.Model):
             # Si hay retenciones que no son de ganancias y el importe a retener es 0 las quitamos
             # Ejemplo: retenciones en pagos de notas de crédito (el monto base es negativo)
             to_remove = rec.l10n_ar_withholding_line_ids.filtered(
-                lambda wth: wth.amount == 0 and wth.tax_id.l10n_ar_tax_type != "earnings_scale"
+                lambda wth: wth.amount == 0 and wth.tax_id.l10n_ar_tax_type not in ["earnings", "earnings_scale"]
             )
             rec.l10n_ar_withholding_line_ids -= to_remove
 

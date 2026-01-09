@@ -15,3 +15,4 @@ from . import l10n_ar_payment_withholding
 from . import account_fiscal_position
 from . import account_chart_template
 from . import l10n_ar_partner_tax
+from . import account_tax_group

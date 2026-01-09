@@ -2,43 +2,21 @@
 <odoo>
 
     <!-- TODO faltaria mejorar y utilizar cuentas contables de suss pero no las tenemos en el plan de cuentas -->
-    <!-- VAT (solo para probar python_formula, no realmente implementado)-->
-    <record id="vat_tax_group_ri" model="account.tax.group">
+    <record id="suss_tax_group" model="account.tax.group">
         <field name="name">Ret. SUSS</field>
         <field name="country_id" ref="base.ar"/>
         <field name="company_id" ref="base.company_ri"/>
+        <field name="tax_payable_account_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'base_saldo_a_favor_suss'))"/>
+        <field name="tax_receivable_account_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'base_saldo_a_favor_suss'))"/>
     </record>
 
-    <function model="account.tax" name="write" context="{'active_test': False}">
-        <value model="account.tax" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ex_tax_withholding_vat_applied'))"/>
-        <value model="account.tax" eval="{'tax_group_id': ref('l10n_ar_tax_python.vat_tax_group_ri')}"/>
-    </function>
-
-    <function model="account.tax.group" name="write" context="{'active_test': False}">
-        <value model="account.tax.group" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'tax_group_withholding_iva'))"/>
-        <value model="account.tax.group" eval="{'name': 'Otras Retenciones'}"/>
-    </function>
-
-    <!-- por ahorahacemos copy, para crearlo hay que crear las lines tmb (y las cuentas) -->
-    <!-- <record id="account_tax_suss_aplicado" model="account.tax">
-        <field name="name">Retención SUSS 0%</field>
-        <field name="amount_type">percent</field>
-        <field name="amount">0.0</field>
-        <field name="l10n_ar_withholding_payment_type">supplier</field>
-        <field name="country_id" ref="base.ar"/>
-        <field name="company_id" ref="base.company_ri"/>
-        <field name="tax_group_id" ref="vat_tax_group_ri"/>
-    </record> -->
-
     <function model="account.tax" name="copy" context="{'active_test': False}">
-        <value model="account.tax" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_vat_incurred'))"/>
-        <value eval="{'name': 'Retención SUSS 0%', 'description': 'Retención SUSS', 'tax_group_id': ref('l10n_ar_tax_python.vat_tax_group_ri')}"/>
+        <value model="account.tax" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ex_tax_withholding_vat_applied'))"/>
+        <value eval="{'name': 'Retención SUSS 0%', 'description': 'Retención SUSS', 'tax_group_id': ref('l10n_ar_tax_python.suss_tax_group')}"/>
     </function>
 
     <record id="fiscal_position_caba_and_proffits_suss" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="l10n_ar_tax.fiscal_position_caba_and_proffits"/>
-        <!-- <field name="default_tax_id" ref="account_tax_suss_aplicado"/> -->
-        <!-- <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ex_tax_withholding_vat_applied'))"/> -->
         <field name="default_tax_id" model="account.tax" search="[('name', '=', 'Retención SUSS 0%')]"/>
         <field name="tax_type">withholding</field>
         <field name="webservice">python_formula</field>
@@ -52,8 +30,6 @@ elif partner.empleador_padron:
 
     <record id="fiscal_position_cordoba_caba_and_proffits_suss" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="l10n_ar_tax.fiscal_position_cordoba_caba_and_proffits"/>
-        <!-- <field name="default_tax_id" ref="account_tax_suss_aplicado"/> -->
-        <!-- <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ex_tax_withholding_vat_applied'))"/> -->
         <field name="default_tax_id" model="account.tax" search="[('name', '=', 'Retención SUSS 0%')]"/>
         <field name="tax_type">withholding</field>
         <field name="webservice">python_formula</field>
@@ -68,8 +44,6 @@ if partner.empleador_padron:
 
     <record id="fiscal_position_proffits_prof_suss" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="l10n_ar_tax.fiscal_position_proffits"/>
-        <!-- <field name="default_tax_id" ref="account_tax_suss_aplicado"/> -->
-        <!-- <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ex_tax_withholding_vat_applied'))"/> -->
         <field name="default_tax_id" model="account.tax" search="[('name', '=', 'Retención SUSS 0%')]"/>
         <field name="tax_type">withholding</field>
         <field name="webservice">python_formula</field>

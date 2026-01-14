@@ -10,6 +10,7 @@
 
     * Permite utilizar operadores &, | y ~ para combinar condiciones de forma más legible y mantenible.
     * Se pueden utilizar sobre función `filtered`.
+    * También se puede usar `Domain('field', 'op', 'value')` o `Domain(domain)` donde domain es una lista como era habitual `[('field_1', 'op1', 'value1'), ('field_2', 'op2', 'value2'), ...]`.
   * nueva API para manejo de progresos en crons,
 
     * Se cambia `notify_progress` por `commit_progress` en crons, ej.
@@ -32,6 +33,7 @@
    * Si ya existe un docstring, puede sugerirse un estilo básico acorde a PEP8, pero **no será un error** si faltan `return`, tipos o parámetros documentados.
 5. No proponer cambios puramente estéticos (espacios, comillas simples vs dobles, orden de imports, etc.).
 6. Mantener el feedback **muy conciso** en los PRs: priorizar pocos puntos claros, evitar párrafos largos y no repetir el contexto que ya está explicado en la descripción del PR.
+7. Sobre traducciones: usar `_()` o `self.env._()` es indistinto; solo marcar si hay mensajes de error o textos no traducidos que deban serlo.
 
 ---
 
@@ -60,13 +62,7 @@
 * Confirmar que todos los archivos usados (vistas, seguridad, datos, reportes, wizards) estén referenciados en el manifest.
 * Verificar dependencias declaradas: que no falten módulos requeridos ni se declaren innecesarios.
 * **Regla de versión (obligatoria):**
-  Siempre que el diff incluya **modificaciones en**:
-
-  * definición de campos o modelos (`models/*.py`, `wizards/*.py`),
-  * vistas o datos XML (`views/*.xml`, `data/*.xml`, `report/*.xml`, `wizards/*.xml`),
-  * seguridad (`security/*.csv`, `security/*.xml`),
-
-  **y el `__manifest__.py` no incrementa `version`, sugerir el bump de versión** (por ejemplo, `1.0.0 → 1.0.1`).
+  Solo sugerir bump de versión si el `__manifest__.py` no incrementa `version` y se modificó la estructura de un modelo, una vista, o algún record .xml (ej. cambios en definición de campos, vistas XML, datos XML, seguridad).
 * Solo hacerlo una vez por revisión, aunque haya múltiples archivos afectados.
 
 ---
@@ -99,6 +95,7 @@
 * Si se ve `eval()` o domains construidos como strings a partir de input externo, advertir del riesgo de ejecución arbitraria y sugerir el uso de objetos `Domain` o listas de tuplas.
   * Ejemplo a evitar: `domain = "[('name','ilike','%s')]" % user_input; records = self.env['res.partner'].search(eval(domain))`.
   * Alternativa segura: `records = self.env['res.partner'].search([('name', 'ilike', user_input)])` o `Domain([('name', 'ilike', user_input)])`.
+  * Nota: En Odoo 19, `Domain('field', 'op', 'value')` es válido y no debe marcarse como incorrecto. Los operadores `&`, `|` y `~` pueden usarse sobre instancias de `Domain` para combinar condiciones.
 * Reforzar las recomendaciones de rendimiento conocidas: evitar `search([])` seguido de filtrado en Python, evitar loops con `write`/`search` uno a uno, y proponer alternativas como `search_count`, `mapped`, `filtered`, `browse(ids)` o `search_fetch` para lecturas planas.
   * Ejemplo de mejora: usar `gmail_count = self.env['res.partner'].search_count([('email', 'ilike', 'gmail')])` en lugar de recorrer todos los partners buscando “gmail”.
   * Para lecturas masivas, preferir `names = partners.mapped('name')` frente a acumular manualmente en un bucle, y usar `search_fetch` cuando se necesiten diccionarios planos.
@@ -279,7 +276,7 @@ En estos casos **normalmente corresponde** proponer migración (salvo notas en c
 | ------------------ | ------------------------------------------------------------------------------------------------------------ |
 | Modelos            | Relaciones válidas; constraints; uso de `@api.depends`; `super()` correcto                                   |
 | Vistas XML         | Herencias correctas; campos válidos; adaptación a componentes modernos (IA, secciones, etc.)                 |
-| Manifest           | **Bump de versión obligatorio** si hay cambios en modelos/vistas/seguridad/datos; archivos referenciados     |
+| Manifest           | **Bump de versión obligatorio** si hay cambios estructurales en modelos/vistas/records .xml; archivos referenciados     |
 | Seguridad          | Accesos mínimos necesarios; reglas revisadas, en especial para IA/VOIP/WhatsApp                              |
 | Migraciones        | **Si hay cambios estructurales (lista actualizada), sugerir scripts en `migrations/` y describir qué hacen** |
 | Rendimiento / ORM  | Evitar patrones anti-ORM; aprovechar las mejoras del ORM/registro en v19                                     |
@@ -289,7 +286,7 @@ En estos casos **normalmente corresponde** proponer migración (salvo notas en c
 
 ## Heurística práctica para el bump de versión
 
-* **SI** el diff toca cualquiera de: `models/`, `views/`, `data/`, `report/`, `security/`, `wizards/`
+* **SI** el diff modifica la estructura de un modelo, una vista, o algún record .xml (ej. cambios en definición de campos, vistas XML, datos XML, seguridad)
   **Y** `__manifest__.py` no cambia `version` → **Sugerir bump**.
 * **SI** hay scripts `migrations/pre_*.py` o `migrations/post_*.py` nuevos → **Sugerir al menos minor bump**.
 * **SI** hay cambios que rompen compatibilidad (renombres, tipos, limpieza agresiva de datos) → **Sugerir minor/major** según impacto.
@@ -310,12 +307,10 @@ En estos casos **normalmente corresponde** proponer migración (salvo notas en c
 
 ## Resumen operativo para Copilot
 
-1. **Detecta cambios en modelos/vistas/seguridad/datos → exige bump de `version` en `__manifest__.py`.**
+1. **Detecta cambios estructurales en modelos, vistas o records .xml → exige bump de `version` en `__manifest__.py` si no está incrementada.**
 2. **Si hay cambio estructural (según la lista actualizada) → propone y describe script(s) de migración en `migrations/` (pre/post/end)**, con enfoque idempotente y en lotes.
 3. Distingue entre:
 
    * **cuestiones generales**,
    * y **matices específicos de Odoo 19**, por ej. preferir la nueva API de constraints/índices cuando corresponda.
 4. Mantén el feedback **concreto, breve y accionable**.
-
-[^odoo19]: Resumen basado en las Odoo 19 Release Notes oficiales y artículos técnicos sobre cambios del ORM e índice/constraints en Odoo 19.

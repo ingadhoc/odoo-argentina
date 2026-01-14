@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_payment_register_form" model="ir.ui.view">
+        <field name="name">account.payment.register.form</field>
+        <field name="model">account.payment.register</field>
+        <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+        <field name="arch" type="xml">
+            <group name="group2">
+                <field name="l10n_ar_fiscal_position_id" options="{'no_create': True}" invisible="partner_type != 'supplier' or country_code != 'AR' or not can_edit_wizard or (can_group_payments and not group_payment)"/>
+            </group>
+        </field>
+    </record>
+</odoo>

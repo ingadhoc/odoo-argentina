@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_withholding_certificate_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <t t-set="custom_header" t-value="'l10n_ar.custom_header'"/>
+                <t t-set="report_date" t-value="o.payment_id.date"/>
+                <t t-set="report_number" t-value="o.name"/>
+                <t t-set="report_name" t-value="'CERTIFICADO DE RETENCIÓN'"/>
+                <t t-set="header_address" t-value="o.company_id.partner_id"/>
+
+                <t t-set="custom_footer">
+                    <div class="row">
+                        <t t-if="not o.company_id.l10n_ar_report_signature">
+                            <div name="footer_left_column" class="col-8">
+                                Nombre y Apellido Firmante:
+                                <br/>Cargo:
+                            </div>
+                            <div name="footer_right_column" class="col-4">
+                                Firma Responsable
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            <div class="page">
+                <div id="informations" class="row mt8 mb8">
+                    <div class="col-6">
+
+                        <!-- IDENTIFICACION (ADQUIRIENTE-LOCATARIO-PRESTARIO) -->
+
+                        <!-- (14) Apellido uy Nombre: Denominicacion o Razon Soclial -->
+                        <strong>Customer: </strong><span t-field="o.payment_id.partner_id.name"/>
+
+                        <!-- (15) Domicilio Comercial -->
+                        <br/>
+                        <span t-out="o.payment_id.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True, "no_tag_br": True}'/>
+
+                        <!-- (16) Responsabilidad AFIP -->
+                        <strong>VAT Cond: </strong><span t-field="o.payment_id.partner_id.l10n_ar_afip_responsibility_type_id"/>
+
+                        <!-- (17) CUIT -->
+                        <t t-if="o.payment_id.partner_id.vat and o.payment_id.partner_id.l10n_latam_identification_type_id.name and o.payment_id.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
+                            <br/><strong><t t-out="o.payment_id.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.payment_id.partner_id.l10n_ar_formatted_vat or o.payment_id.partner_id.vat"/>
+                        </t>
+
+                    </div>
+                </div>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th class="text-center" colspan="2"><strong>Datos de la retención practicada</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="tax" t-value="o._get_withholding_tax()"/>
+                        <tr>
+                            <td style="width: 50%;" class="text-right">
+                                Impuesto:
+                            </td>
+                            <td class="text-left">
+                                <!--
+                                    Si es ganancias, como los stax names son "feos" e invoice_label por ahora no lo populamos, mostramos campo invoice_label si está definido y si no sacamos un label por defecto 'Retención Ganancias'
+                                    Tal vez para IIBB y otros podamos hacer similar. En realidad lo ideal es modificar chart para que tenga invoice_label en todos los casos.
+                                -->
+                                <span t-if="tax.l10n_ar_tax_type in ['earnings', 'earnings_scale']" t-out="tax.invoice_label or 'Retención Ganancias'"/>
+                                <span t-else="" t-out="tax.invoice_label or tax.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">
+                                Régimen:
+                            </td>
+                            <td class="text-left">
+                                <span t-field="tax.l10n_ar_code"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="text-right">
+                                Comprobante que origina la retención:
+                            </td>
+                            <td class="text-left">
+                                <span t-field="o.payment_id.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">
+                                Importe del comprobante que origina la retención:
+                            </td>
+                            <td class="text-left">
+                                <span t-field="o.base_amount"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">
+                                Importe de la retención:
+                            </td>
+                            <td class="text-left">
+                                <span t-field="o.amount"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <div class="float-left"/>
+                    <div class="float-right" style="heigth:100px;width:200px;text-align:center;">
+                        <t t-if="o.company_id.l10n_ar_report_signature">
+                            <span t-field="o.company_id.l10n_ar_report_signature" t-options='{"widget": "image"}'/>
+                            <span t-field="o.company_id.l10n_ar_report_signed_by"/>
+                        </t>
+                    </div>
+              </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_withholding_certificate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="o.payment_id.partner_id.lang"/>
+                <t t-call="l10n_ar_tax.report_withholding_certificate_document" t-lang="lang"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_withholding_certificate" model="ir.actions.report">
+        <field name="name">Certificado de Retención</field>
+        <field name="model">l10n_ar.payment.withholding</field>
+        <field name="binding_model_id" ref="model_l10n_ar_payment_withholding"/>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">'Certificado de Retención Slip - %s' % (object.name or '')</field>
+        <field name="report_name">l10n_ar_tax.report_withholding_certificate</field>
+        <field name="report_file">l10n_ar_tax.report_withholding_certificate</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_l10n_ar_payment_withholding_form" model="ir.ui.view">
+        <field name="name">l10n_ar.payment.withholding.form</field>
+        <field name="model">l10n_ar.payment.withholding</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="currency_id" invisible="True"/>
+                            <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', 'parent_of', parent.company_id)]" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="name" readonly="withholding_sequence_id"/>
+                            <field name="base_amount"/>
+                            <field name="amount"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_l10n_ar_payment_withholding_tree" model="ir.ui.view">
+        <field name="name">l10n_ar.payment.withholding.tree</field>
+        <field name="model">l10n_ar.payment.withholding</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="payment_id"/>
+                <field name="withholding_sequence_id"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', '=', parent.company_id)]" options="{'no_create': True}"/>
+                <field name="name"/>
+                <field name="base_amount"/>
+                <field name="amount"/>
+                <field name="ref"/>
+            </list>
+            </field>
+    </record>
+</odoo>

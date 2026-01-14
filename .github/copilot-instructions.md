@@ -17,6 +17,7 @@
    * Si ya existe un docstring, puede sugerirse un estilo básico acorde a PEP8, pero **no será un error** si faltan `return`, tipos o parámetros documentados.
 5. No proponer cambios puramente estéticos (espacios, comillas simples vs dobles, orden de imports, etc.).
 6. Mantener el feedback **muy conciso** en los PRs: priorizar pocos puntos claros, evitar párrafos largos y no repetir el contexto que ya está explicado en la descripción del PR.
+7. Sobre traducciones: usar `_()` o `self.env._()` es indistinto; solo marcar si hay mensajes de error o textos no traducidos que deban serlo.
 
 ---
 
@@ -38,13 +39,7 @@
 * Confirmar que todos los archivos usados (vistas, seguridad, datos, reportes, wizards) estén referenciados en el manifest.
 * Verificar dependencias declaradas: que no falten módulos requeridos ni se declaren innecesarios.
 * **Regla de versión (obligatoria):**
-  Siempre que el diff incluya **modificaciones en**:
-
-  * definición de campos o modelos (`models/*.py`, `wizards/*.py`),
-  * vistas o datos XML (`views/*.xml`, `data/*.xml`, `report/*.xml`, `wizards/*.xml`),
-  * seguridad (`security/*.csv`, `security/*.xml`),
-
-  **y el `__manifest__.py` no incrementa `version`, sugerir el bump de versión** (por ejemplo, `1.0.0 → 1.0.1`).
+  Solo sugerir bump de versión si el `__manifest__.py` no incrementa `version` y se modificó la estructura de un modelo, una vista, o algún record .xml (ej. cambios en definición de campos, vistas XML, datos XML, seguridad).
 * Solo hacerlo una vez por revisión, aunque haya múltiples archivos afectados.
 
 ---
@@ -288,7 +283,7 @@ def migrate(cr, registry):
 | ------------------ | -------------------------------------------------------------------------------------------------------- |
 | Modelos            | Relaciones válidas; constraints; uso adecuado de `@api.depends`; `super()` correcto                      |
 | Vistas XML         | Herencias correctas; campos válidos; adaptación a cambios de versión (p.ej. `<list>` vs `<tree>`)        |
-| Manifest           | **Bump de versión obligatorio** si hay cambios en modelos/vistas/seguridad/datos; archivos referenciados |
+| Manifest           | **Bump de versión obligatorio** si hay cambios estructurales en modelos/vistas/records .xml; archivos referenciados |
 | Seguridad          | Accesos mínimos necesarios; reglas revisadas                                                             |
 | Migraciones        | **Si hay cambios estructurales, sugerir script en `migrations/` (pre/post/end)** y describir qué hace    |
 | Rendimiento / ORM  | Evitar loops costosos; no SQL innecesario; aprovechar las optimizaciones del ORM de la versión           |
@@ -298,7 +293,7 @@ def migrate(cr, registry):
 
 ## Heurística práctica para el bump de versión (general)
 
-* **SI** el diff toca cualquiera de: `models/`, `views/`, `data/`, `report/`, `security/`, `wizards/`
+* **SI** el diff modifica la estructura de un modelo, una vista, o algún record .xml (ej. cambios en definición de campos, vistas XML, datos XML, seguridad)
   **Y** `__manifest__.py` no cambia `version` → **Sugerir bump**.
 * **SI** hay scripts `migrations/pre_*.py` o `migrations/post_*.py` nuevos → **Sugerir al menos minor bump**.
 * **SI** hay cambios que rompen compatibilidad (renombres, cambios de tipo con impacto, limpieza masiva de datos) → **Sugerir minor/major** según impacto.
@@ -321,12 +316,10 @@ def migrate(cr, registry):
 
 ## Resumen operativo para Copilot
 
-1. **Detecta cambios en modelos/vistas/seguridad/datos → exige bump de `version` en `__manifest__.py`.**
+1. **Detecta cambios estructurales en modelos, vistas o records .xml → exige bump de `version` en `__manifest__.py` si no está incrementada.**
 2. **Si hay cambio estructural (según la lista actualizada) → propone y describe script(s) de migración en `migrations/` (pre/post/end)**, con enfoque idempotente y en lotes.
 3. Distingue entre:
 
    * **cuestiones generales** (válidas para cualquier versión),
    * y **matices específicos de Odoo 18** (por ejemplo, uso de `<list>`, passkeys, tours y comportamiento del framework).
 4. Mantén el feedback **concreto, breve y accionable**.
-
-[^odoo18]: Resumen basado en la documentación oficial de Odoo 18 Release Notes y artículos técnicos que analizan sus mejoras de rendimiento y UX.

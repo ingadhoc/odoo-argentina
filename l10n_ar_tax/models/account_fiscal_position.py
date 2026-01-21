@@ -77,24 +77,37 @@ class AccountFiscalPosition(models.Model):
 
     def _get_fpos_validation_functions(self, partner):
         """
-        Overrides the `_get_fpos_validation_functions` method to include a custom ranking
-        function for fiscal positions based on Argentine withholding taxes.
+        Overrides the `_get_fpos_validation_functions` method to include custom validation
+        functions for fiscal positions based on Argentine withholding taxes.
         If the context does not include 'l10n_ar_withholding' or the company's country
         is not Argentina (country code "AR"), the method falls back to the parent class
         implementation.
         When the context includes 'l10n_ar_withholding' and the company's country is
-        Argentina, the method adds a ranking function that prioritizes fiscal positions
+        Argentina, the method adds a validation function that requires fiscal positions
         containing taxes of type 'withholding' (`l10n_ar_tax_ids`).
+        For normal fiscal positions in Argentina (not in withholding context), it excludes
+        fiscal positions that are only for withholdings (no tax_ids, no account_ids, have
+        withholding taxes but no perception taxes).
         Args:
-            partner (res.partner): The partner for whom the fiscal position ranking
+            partner (res.partner): The partner for whom the fiscal position validation
                 functions are being determined.
         """
         functions = super()._get_fpos_validation_functions(partner)
-        if not self.env.context.get("l10n_ar_withholding") or self.env.company.country_id.code != "AR":
+        if self.env.context.get("l10n_ar_withholding") and self.env.company.country_id.code == "AR":
+            return [
+                lambda fpos: any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids),
+            ] + functions
+        elif not self.env.context.get("l10n_ar_withholding") and self.env.company.country_id.code == "AR":
+            return [
+                lambda fpos: not (
+                    not fpos.tax_ids
+                    and not fpos.account_ids
+                    and any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids)
+                    and not any(tax.tax_type == "perception" for tax in fpos.l10n_ar_tax_ids)
+                ),
+            ] + functions
+        else:
             return functions
-        return [
-            lambda fpos: any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids),
-        ] + functions
 
     def map_tax(self, taxes):
         """For argentinean fiscal positions without tax mapping we add domestic taxes because taxes are always required

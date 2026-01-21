@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-21 19:00+0000\n"
-"PO-Revision-Date: 2026-01-21 19:00+0000\n"
+"POT-Creation-Date: 2026-01-21 20:00+0000\n"
+"PO-Revision-Date: 2026-01-21 20:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -274,11 +274,6 @@ msgid "Ganancias"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_unaffected_earnings
-msgid "Ganancias en el año actual"
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__gross_income_jurisdiction_ids
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__gross_income_jurisdiction_ids
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_users__gross_income_jurisdiction_ids
@@ -305,16 +300,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__imp_iva_padron
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_users__imp_iva_padron
 msgid "IVA"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_iva_primer_parrafo
-msgid "IVA Primer Párrafo"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_impuestos_a_las_ganancias
-msgid "Impuesto a las ganancias"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -375,31 +360,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__write_date
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__write_date
 msgid "Last Updated on"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_liquidacion_iibb_aplicado
-msgid "Liquidación IIBB Aplicado"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_liquidacion_sicore_aplicado
-msgid "Liquidación SICORE Aplicado"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_liquidacion_de_ganancias
-msgid "Liquidación de Ganancias"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_liquidacion_de_iibb
-msgid "Liquidación de IIBB"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_liquidacion_de_iva
-msgid "Liquidación de IVA"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -477,28 +437,6 @@ msgid "Others"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_a_cuenta_ganancias
-#: model:account.account.tag,name:l10n_ar_ux.tax_tag_a_cuenta_ganancias
-msgid "Pagos a Cuenta Ganancias"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tax_tag_a_cuenta_iibb
-msgid "Pagos a Cuenta IIBB"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_a_cuenta_iva
-#: model:account.account.tag,name:l10n_ar_ux.tax_tag_a_cuenta_iva
-msgid "Pagos a Cuenta IVA"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tax_tag_a_cuenta_suss
-msgid "Pagos a Cuenta SUSS"
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_payment
 msgid "Payments"
 msgstr ""
@@ -526,16 +464,6 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.actions.report,name:l10n_ar_ux.action_report_account_transfer
 msgid "Reporte de Transferencia"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_ret_perc_iibb_aplicada
-msgid "Ret/Perc IIBB Aplicada"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_ret_perc_sicore_aplicada
-msgid "Ret/Perc SICORE Aplicada"
 msgstr ""
 
 #. module: l10n_ar_ux

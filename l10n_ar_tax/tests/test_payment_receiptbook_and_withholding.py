@@ -1,8 +1,8 @@
 from odoo import Command, fields
-from odoo.addons.l10n_ar_withholding.tests.test_withholding_ar_ri import TestL10nArWithholdingArRi
+from odoo.addons.l10n_ar_withholding.tests.test_withholding_ar_ri import TestArWithholdingArRi
 
 
-class TestPaymentReceiptbookAndWithholding(TestL10nArWithholdingArRi):
+class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
     def setUp(self):
         super().setUp()
         self.today = fields.Date.today()

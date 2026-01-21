@@ -1,10 +1,10 @@
 from odoo import Command, fields
-from odoo.addons.l10n_ar_withholding.tests.test_withholding_ar_ri import TestL10nArWithholdingArRi
+from odoo.addons.l10n_ar_withholding.tests.test_withholding_ar_ri import TestArWithholdingArRi
 from odoo.tests import tagged
 
 
 @tagged("-at_install", "post_install")
-class TestPaymentWithholdingValidation(TestL10nArWithholdingArRi):
+class TestPaymentWithholdingValidation(TestArWithholdingArRi):
     def setUp(self):
         super().setUp()
         self.today = fields.Date.today()

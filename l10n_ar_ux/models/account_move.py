@@ -97,3 +97,35 @@ class AccountMove(models.Model):
             line.balance = balance
         res = super()._post(soft=soft)
         return res
+
+    def wsfe_get_cae_request(self, client=None):
+        """
+        Sobrescribir para corregir el bug con AFIP Error Code 10015.
+
+        Cuando un contacto es "Consumidor Final" y NO tiene CUIT,
+        AFIP requiere que el DocNro esté vacío en lugar de enviar "0".
+        """
+        # Verificar si el método existe
+        if not hasattr(super(), "wsfe_get_cae_request"):
+            return super().wsfe_get_cae_request(client) if hasattr(super(), "wsfe_get_cae_request") else {}
+
+        # Llamar al método padre para obtener la rta original
+        res = super().wsfe_get_cae_request(client)
+
+        # Si es Consumidor Final sin CUIT, corregir DocNro
+        partner = self.commercial_partner_id
+        is_final_consumer = partner.l10n_ar_afip_responsibility_type_id == self.env.ref(
+            "l10n_ar.res_CF", raise_if_not_found=False
+        )
+        has_no_vat = not partner.vat
+
+        if is_final_consumer and has_no_vat:
+            # Para Consumidor Final sin CUIT, AFIP requiere:
+            # - DocTipo = 99 (SIGD)
+            # - DocNro vacío (no 0)
+            # Forzamos ambos valores para evitar el rechazo 10015.
+            res["DocTipo"] = 99
+        if "DocNro" in res and res["DocNro"] == 0:
+            res["DocNro"] = None  # AFIP acepta None/omitir para este caso
+
+        return res

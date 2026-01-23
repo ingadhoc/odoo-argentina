@@ -44,7 +44,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
             if conflicting_records:
                 raise ValidationError("No puede haber dos impuestos del mismo grupo para la misma posicion fiscal.")
 
-    def _get_missing_taxes(self, partner, date):
+    def _get_missing_taxes(self, partner, date, payment=None):
         taxes = self.env["account.tax"]
         for rec in self:
             if rec.webservice:

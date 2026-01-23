@@ -32,9 +32,9 @@ class AccountFiscalPositionL10nArTax(models.Model):
                     )
                 )
 
-    def _get_missing_taxes(self, partner, date):
+    def _get_missing_taxes(self, partner, date, payment=None):
         python_formula = self.filtered(lambda x: x.webservice == "python_formula")
-        taxes = super(AccountFiscalPositionL10nArTax, self - python_formula)._get_missing_taxes(partner, date)
+        taxes = super(AccountFiscalPositionL10nArTax, self - python_formula)._get_missing_taxes(partner, date, payment)
         from_date = date + relativedelta(day=1)
         to_date = from_date + relativedelta(days=-1, months=+1)
         for rec in python_formula:
@@ -43,9 +43,10 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 "to_date": to_date,
                 "from_date": from_date,
                 "default_tax": rec.default_tax_id,
+                "payment": payment,
             }
             safe_eval(
-                self.python_formula,
+                rec.python_formula,
                 local_dict,
                 mode="exec",
                 nocopy=True,

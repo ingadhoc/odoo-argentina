@@ -19,13 +19,13 @@ class TestARBA(common.TransactionCase):
         with self.assertRaisesRegex(UserError, "You must configure CIT"):
             company.arba_consultar_contribuyente(
                 "30697130841",
-                fields.Date.start_of(fields.Date.today(), "month").strftime("%Y%m%d"),
-                fields.Date.end_of(fields.Date.today(), "month").strftime("%Y%m%d"),
+                fields.Date.start_of(fields.Date.today(), "month"),
+                fields.Date.end_of(fields.Date.today(), "month"),
             )
         company.vat = ""
         with self.assertRaisesRegex(UserError, "No VAT configured"):
             company.arba_consultar_contribuyente(
                 "30697130841",
-                fields.Date.start_of(fields.Date.today(), "month").strftime("%Y%m%d"),
-                fields.Date.end_of(fields.Date.today(), "month").strftime("%Y%m%d"),
+                fields.Date.start_of(fields.Date.today(), "month"),
+                fields.Date.end_of(fields.Date.today(), "month"),
             )

@@ -21,8 +21,8 @@ class ResConfigSettings(models.TransientModel):
         try:
             self.fiscal_position_id.company_id.arba_consultar_contribuyente(
                 cuit,
-                fields.Date.start_of(fields.Date.today(), "month").strftime("%Y%m%d"),
-                fields.Date.end_of(fields.Date.today(), "month").strftime("%Y%m%d"),
+                fields.Date.start_of(fields.Date.today(), "month"),
+                fields.Date.end_of(fields.Date.today(), "month"),
             )
         except Exception as exp:
             raise UserError(_("No se pudo conectar a ARBA: %s") % str(exp))

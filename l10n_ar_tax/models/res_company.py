@@ -60,7 +60,7 @@ class ResCompany(models.Model):
         if root.tag == "COMPROBANTE":
             try:
                 alicouts = {
-                    "numeroComprobante": root.find(".//numeroComprobante").text,
+                    "NumeroComprobante": root.find(".//numeroComprobante").text,
                 }
                 # TODO Por ahora solo retornamos un contribuyente y por retrocompatibilidad
                 # deberiamos a mantenerlo cantidadContribuyentes == 1

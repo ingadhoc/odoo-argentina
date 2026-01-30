@@ -6,8 +6,13 @@ name: pre-commit
 
 on:
   push:
-    branches: "[0-9][0-9].0"
+    branches:
+      - "1[8-9].0"
+      - "[2-9][0-9].0"
   pull_request_target:
+    branches:
+      - "1[8-9].0*"
+      - "[2-9][0-9].0*"
 
 jobs:
   pre-commit:

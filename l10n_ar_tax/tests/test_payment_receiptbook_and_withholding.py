@@ -1,7 +1,9 @@
 from odoo import Command, fields
 from odoo.addons.l10n_ar_withholding.tests.test_withholding_ar_ri import TestL10nArWithholdingArRi
+from odoo.tests import tagged
 
 
+@tagged("post_install", "-at_install")
 class TestPaymentReceiptbookAndWithholding(TestL10nArWithholdingArRi):
     def setUp(self):
         super().setUp()

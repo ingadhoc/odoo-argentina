@@ -215,7 +215,12 @@ class AccountFiscalPositionL10nArTax(models.Model):
                     tax_data,
                 )
         else:
-            return None, arba_cit.get("CodigoHash")
+            ref = (
+                self.env._("%s | CUIT %s not present on padron ARBA") % (arba_cit.get("CodigoHash"), cuit)
+                if arba_cit.get("CodigoError") == "11"
+                else arba_cit.get("CodigoHash")
+            )
+            return None, ref
 
     def _get_rentas_cordoba_data(self, partner, date, to_date):
         """Obtener alícuotas desde app.rentascordoba.gob.ar

@@ -251,7 +251,12 @@ class AccountFiscalPositionL10nArTax(models.Model):
             else:
                 return (float(ws.AlicuotaPercepcion.replace(",", ".")) if ws.AlicuotaPercepcion else None, tax_data)
         else:
-            return None, ws.CodigoHash
+            ref = (
+                self.env._("%s | CUIT %s not present on padron ARBA") % (ws.CodigoHash, cuit)
+                if ws.CodigoError == "11"
+                else ws.CodigoHash
+            )
+            return None, ref
 
     def _get_rentas_cordoba_data(self, partner, date, to_date):
         """Obtener alícuotas desde app.rentascordoba.gob.ar

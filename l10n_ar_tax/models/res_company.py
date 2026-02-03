@@ -36,11 +36,9 @@ class ResCompany(models.Model):
     @api.model
     def get_arba_login_url(self, environment_type):
         if environment_type == "production":
-            arba_login_url = "https://dfe.arba.gov.ar/DomicilioElectronico/" "SeguridadCliente/dfeServicioConsulta.do"
+            arba_login_url = "https://dfe.arba.gov.ar/DomicilioElectronico/SeguridadCliente/dfeServicioConsulta.do"
         else:
-            arba_login_url = (
-                "https://dfe.test.arba.gov.ar/DomicilioElectronico" "/SeguridadCliente/dfeServicioConsulta.do"
-            )
+            arba_login_url = "https://dfe.test.arba.gov.ar/DomicilioElectronico/SeguridadCliente/dfeServicioConsulta.do"
         return arba_login_url
 
     def arba_connect(self):
@@ -76,6 +74,6 @@ class ResCompany(models.Model):
 
     @api.model
     def _process_message_error(self, ws):
-        message = ws.MensajeError
+        message = str(ws.MensajeError)
         message = message.replace("<![CDATA[", "").replace("]]/>", "")
         raise UserError(_("Padron ARBA: %s - %s (%s)") % (ws.CodigoError, message, ws.TipoError))

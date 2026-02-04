@@ -29,6 +29,8 @@ repos:
       - id: check-docstring-first
       - id: check-executables-have-shebangs
       - id: check-merge-conflict
+        args: ['--assume-in-merge']
+        exclude: '\.rst$'
       - id: check-symlinks
       - id: check-xml
       - id: check-yaml

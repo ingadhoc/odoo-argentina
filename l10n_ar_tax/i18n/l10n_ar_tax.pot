@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-23 21:00+0000\n"
-"PO-Revision-Date: 2025-12-23 21:00+0000\n"
+"POT-Creation-Date: 2026-01-20 19:04+0000\n"
+"PO-Revision-Date: 2026-01-20 19:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -386,6 +386,11 @@ msgid "033: Art.125 - inciso H - (Código Fiscal - mera compra)"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax_group__l10n_ar_tribute_afip_code__06
+msgid "06 - VAT perception or Withholding"
+msgstr ""
+
+#. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
 msgid "404 Not Found error."
@@ -568,6 +573,15 @@ msgid "Artículo/Inciso para el cálculo retención"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
+msgid ""
+"Atención: La deuda se está cancelando en moneda extranjera. Podría ser "
+"necesario actualizar las bases de las retenciones teniendo en cuenta la "
+"diferencia de cambio, puede ajustar la base imponible de las mismas antes de"
+" validar."
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__base_amount
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__base_amount
 msgid "Base Amount"
@@ -696,6 +710,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_register__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax_group__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_partner_tax__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__display_name
@@ -812,6 +827,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_register__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax_group__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_partner_tax__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__id
@@ -1141,6 +1157,11 @@ msgid "Tax"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model,name:l10n_ar_tax.model_account_tax_group
+msgid "Tax Group"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__tax_template_domain
 msgid "Tax Template Domain"
 msgstr ""
@@ -1176,6 +1197,7 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_tribute_afip_code
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax_group__l10n_ar_tribute_afip_code
 msgid "Tribute ARCA Code"
 msgstr ""
 
@@ -1212,6 +1234,11 @@ msgid "Withholding"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__withholding_warning
+msgid "Withholding Warning"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
 msgid "Withholdings"
 msgstr ""
@@ -1224,12 +1251,6 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__l10n_ar_withholding_line_ids
 msgid "Withholdings Lines"
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_payment.py:0
-msgid "Withholdings are only implemented for debt managed in %s."
 msgstr ""
 
 #. module: l10n_ar_tax

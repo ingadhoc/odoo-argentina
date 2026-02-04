@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* l10n_ar_ux
-# 
+#
 # Translators:
 # ADHOC - Bot <transbot@adhoc.com.ar>, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-21 21:15+0000\n"
+"POT-Creation-Date: 2026-01-21 20:00+0000\n"
 "PO-Revision-Date: 2025-10-28 14:06+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
 
 #. module: l10n_ar_ux
 #: model:ir.actions.report,print_report_name:l10n_ar_ux.action_report_account_transfer
@@ -33,7 +34,9 @@ msgstr "<br/><strong>Nro. de OC:</strong>"
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
 msgid ""
 "<span class=\"o_form_label\">Firma en reportes</span>\n"
-"                        <span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" aria-label=\"Values set here are company-specific.\" groups=\"base.group_multi_company\" role=\"img\"/>"
+"                        <span class=\"fa fa-lg fa-building-o\" "
+"title=\"Values set here are company-specific.\" aria-label=\"Values set here "
+"are company-specific.\" groups=\"base.group_multi_company\" role=\"img\"/>"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -195,6 +198,7 @@ msgstr "¿Discriminar impuestos?"
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__display_name
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_tax__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_ir_actions_report__display_name
@@ -214,11 +218,6 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__ir_actions_report__l10n_ar_copies__triplicado
 msgid "Duplicado y Triplicado"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_invoice_document
-msgid "El total de este comprobante equivale a un total de"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -284,11 +283,6 @@ msgid "Ganancias"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_unaffected_earnings
-msgid "Ganancias en el año actual"
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__gross_income_jurisdiction_ids
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__gross_income_jurisdiction_ids
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_users__gross_income_jurisdiction_ids
@@ -299,6 +293,7 @@ msgstr "Jurisdicciones de Ingresos Brutos"
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__id
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_tax__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_ir_actions_report__id
@@ -314,16 +309,6 @@ msgstr "ID (identificación)"
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__imp_iva_padron
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_users__imp_iva_padron
 msgid "IVA"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_iva_primer_parrafo
-msgid "IVA Primer Párrafo"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_impuestos_a_las_ganancias
-msgid "Impuesto a las ganancias"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -388,31 +373,6 @@ msgstr "Ultima actualización por"
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_tax__write_date
 msgid "Last Updated on"
 msgstr "Última actualización en"
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_liquidacion_iibb_aplicado
-msgid "Liquidación IIBB Aplicado"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_liquidacion_sicore_aplicado
-msgid "Liquidación SICORE Aplicado"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_liquidacion_de_ganancias
-msgid "Liquidación de Ganancias"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_liquidacion_de_iibb
-msgid "Liquidación de IIBB"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_liquidacion_de_iva
-msgid "Liquidación de IVA"
-msgstr ""
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.custom_header
@@ -489,28 +449,6 @@ msgid "Others"
 msgstr "Otros"
 
 #. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_a_cuenta_ganancias
-#: model:account.account.tag,name:l10n_ar_ux.tax_tag_a_cuenta_ganancias
-msgid "Pagos a Cuenta Ganancias"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tax_tag_a_cuenta_iibb
-msgid "Pagos a Cuenta IIBB"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_a_cuenta_iva
-#: model:account.account.tag,name:l10n_ar_ux.tax_tag_a_cuenta_iva
-msgid "Pagos a Cuenta IVA"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tax_tag_a_cuenta_suss
-msgid "Pagos a Cuenta SUSS"
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_payment
 msgid "Payments"
 msgstr "Pagos"
@@ -538,16 +476,6 @@ msgstr "Acción de informe"
 #. module: l10n_ar_ux
 #: model:ir.actions.report,name:l10n_ar_ux.action_report_account_transfer
 msgid "Reporte de Transferencia"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_ret_perc_iibb_aplicada
-msgid "Ret/Perc IIBB Aplicada"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model:account.account.tag,name:l10n_ar_ux.tag_ret_perc_sicore_aplicada
-msgid "Ret/Perc SICORE Aplicada"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -593,6 +521,11 @@ msgstr ""
 "factura."
 
 #. module: l10n_ar_ux
+#: model:ir.model,name:l10n_ar_ux.model_account_tax
+msgid "Tax"
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model:ir.ui.menu,name:l10n_ar_ux.menu_action_afip_tax
 msgid "Taxes"
 msgstr "Impuestos"
@@ -616,8 +549,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_account_journal__l10n_ar_afip_pos_partner_id
 msgid "This is the address used for invoice reports of this POS"
-msgstr ""
-"Esta dirección se utiliza para los informes de facturación de este PdV"
+msgstr "Esta dirección se utiliza para los informes de facturación de este PdV"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
@@ -638,11 +570,6 @@ msgstr "Si"
 #. odoo-python
 #: code:addons/l10n_ar_ux/models/account_move.py:0
 msgid "You cannot cancel documents already posted in ARCA (%s)."
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_invoice_document
-msgid "a un tipo de cambio consignado de"
 msgstr ""
 
 #. module: l10n_ar_ux

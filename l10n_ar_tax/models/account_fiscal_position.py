@@ -7,7 +7,7 @@ class AccountFiscalPosition(models.Model):
 
     l10n_ar_tax_ids = fields.One2many("account.fiscal.position.l10n_ar_tax", "fiscal_position_id")
 
-    def _l10n_ar_add_taxes(self, partner, company, date, tax_type):
+    def _l10n_ar_add_taxes(self, partner, company, date, tax_type, payment=None):
         # TODO deberiamos unificar mucho de este codigo con _get_tax_domain, _compute_withholdings y _check_tax_group_overlap
         self.ensure_one()
         taxes = self.env["account.tax"]
@@ -36,7 +36,7 @@ class AccountFiscalPosition(models.Model):
                 partner_tax = partner.l10n_ar_partner_tax_ids.filtered_domain(domain).mapped("tax_id")
             # agregamos taxes para grupos de impuestos que no estaban seteados en el partner
             if not partner_tax:
-                partner_tax = fp_tax._get_missing_taxes(partner, date)
+                partner_tax = fp_tax._get_missing_taxes(partner, date, payment)
             if len(partner_tax) > 1:
                 raise RedirectWarning(
                     message=_(

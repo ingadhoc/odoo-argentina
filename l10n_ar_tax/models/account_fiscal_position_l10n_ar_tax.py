@@ -62,7 +62,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
                         "Padrón no implementado para la provincia de %s." % record.default_tax_id.l10n_ar_state_id.name
                     )
 
-    def _get_missing_taxes(self, partner, date):
+    def _get_missing_taxes(self, partner, date, payment=None):
         taxes = self.env["account.tax"]
         for rec in self:
             if rec.webservice:

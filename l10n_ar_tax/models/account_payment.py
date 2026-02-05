@@ -400,7 +400,7 @@ class AccountPayment(models.Model):
             withholdings = [Command.clear()]
             if rec.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:
                 taxes = rec.l10n_ar_fiscal_position_id._l10n_ar_add_taxes(
-                    rec.partner_id, rec.company_id, date, "withholding"
+                    rec.partner_id, rec.company_id, date, "withholding", rec
                 )
                 withholdings += [Command.create({"tax_id": x.id}) for x in taxes]
             rec.l10n_ar_withholding_line_ids = withholdings

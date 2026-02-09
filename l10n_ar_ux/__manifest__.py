@@ -1,6 +1,6 @@
 {
     "name": "Argentinian Accounting UX",
-    "version": "18.0.1.9.0",
+    "version": "18.0.1.10.0",
     "category": "Localization/Argentina",
     "sequence": 14,
     "author": "ADHOC SA",
@@ -30,6 +30,7 @@
         "data/res_groups_data.xml",
         "views/account_fiscal_position_view.xml",
         "views/account_account_views.xml",
+        "views/account_move_debit_note_view.xml",
     ],
     "demo": [
         "demo/res_partner_demo.xml",

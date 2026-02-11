@@ -67,7 +67,7 @@ class AccountMove(models.Model):
             for line in move.filtered(lambda x: not x.reversed_entry_id).invoice_line_ids:
                 to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
                 if to_unlink._origin != new_taxes:
-                    line.tax_ids = [(3, tax.id) for tax in to_unlink] + [(4, tax.id) for tax in new_taxes]
+                    line.tax_ids = (line.tax_ids - to_unlink) | new_taxes
 
     def copy(self, default=None):
         """Re computamos las percepciones al duplicar una factura porque puede ser que la factura venga de otro periodo

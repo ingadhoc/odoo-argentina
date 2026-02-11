@@ -246,14 +246,15 @@ class AccountPayment(models.Model):
             account_id = self.env["account.account"].browse(line["account_id"])
             # if line['account_id'] in liquidity_accounts:
             if account_id.account_type in valid_account_types:
-                if self.payment_type == "inbound" and "credit" in line:
-                    line["credit"] += wth_amount
+                if self.payment_type == "inbound" and line.get("balance", 0) < 0:
+                    line["balance"] -= wth_amount
                     if not self._use_counterpart_currency():
                         line["amount_currency"] -= wth_amount / conversion_rate
-                elif self.payment_type == "outbound" and "debit" in line:
-                    line["debit"] += wth_amount
+                elif self.payment_type == "outbound" and line.get("balance", 0) > 0:
+                    line["balance"] += wth_amount
                     if not self._use_counterpart_currency():
                         line["amount_currency"] += wth_amount / conversion_rate
+
         return res
 
     ###################################################

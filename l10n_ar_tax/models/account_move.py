@@ -31,11 +31,11 @@ class AccountMove(models.Model):
 
     def write(self, vals):
         res = super().write(vals)
-        if "invoice_date" in vals:
+        if "invoice_date" in vals or "partner_id" in vals:
             self._l10n_ar_recompute_fiscal_position_taxes()
         return res
 
-    @api.onchange("invoice_date")
+    @api.onchange("invoice_date", "partner_id")
     def _l10n_ar_recompute_fiscal_position_taxes(self):
         """Recalculamos las percepciones si cambiamos la fecha de la orden de venta. Para ello nos basamos en los
         impuestos de la posicion fiscal, buscamos si hay impuestos existentes para los tax groups involucrados y los

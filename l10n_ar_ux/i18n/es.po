@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-21 20:00+0000\n"
+"POT-Creation-Date: 2026-02-11 14:03+0000\n"
 "PO-Revision-Date: 2025-10-28 14:06+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -183,6 +183,17 @@ msgstr "Creado el"
 #: model:ir.model,name:l10n_ar_ux.model_res_currency
 msgid "Currency"
 msgstr "Moneda"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_move_filter_debit_ar
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_move_line_filter_debit_ar
+msgid "Debit Note"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_filter_debit_ar
+msgid "Debit Notes"
+msgstr ""
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__l10n_ar_afip_pos_partner_id

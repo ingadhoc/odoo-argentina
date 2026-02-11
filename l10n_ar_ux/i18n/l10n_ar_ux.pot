@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-21 20:00+0000\n"
-"PO-Revision-Date: 2026-01-21 20:00+0000\n"
+"POT-Creation-Date: 2026-02-11 14:03+0000\n"
+"PO-Revision-Date: 2026-02-11 14:03+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -173,6 +173,17 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_res_currency
 msgid "Currency"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_move_filter_debit_ar
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_move_line_filter_debit_ar
+msgid "Debit Note"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_filter_debit_ar
+msgid "Debit Notes"
 msgstr ""
 
 #. module: l10n_ar_ux

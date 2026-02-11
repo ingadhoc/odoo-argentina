@@ -31,11 +31,24 @@ class AccountMove(models.Model):
 
     def write(self, vals):
         res = super().write(vals)
-        if "invoice_date" in vals or "partner_id" in vals:
+        if "invoice_date" in vals in vals:
             self._l10n_ar_recompute_fiscal_position_taxes()
         return res
 
-    @api.onchange("invoice_date", "partner_id")
+    @api.onchange("commercial_partner_id", "fiscal_position_id")
+    def _onchange_fpos_id_show_update_fpos(self):
+        """Si cambiamos el partner y la posicion fiscal es la misma (super no configuró show_update_fpos = True) y tiene impuestos de tipo percepcion, mostramos el boton de actualizar posicion fiscal
+        ya que las alícuotas pueden ser diferentes"""
+        super()._onchange_fpos_id_show_update_fpos()
+        if (
+            not self.show_update_fpos
+            and self.line_ids
+            and self.commercial_partner_id != self._origin.commercial_partner_id
+            and self.fiscal_position_id.l10n_ar_tax_ids.filtered(lambda x: x.tax_type == "perception")
+        ):
+            self.show_update_fpos = True
+
+    @api.onchange("invoice_date")
     def _l10n_ar_recompute_fiscal_position_taxes(self):
         """Recalculamos las percepciones si cambiamos la fecha de la orden de venta. Para ello nos basamos en los
         impuestos de la posicion fiscal, buscamos si hay impuestos existentes para los tax groups involucrados y los

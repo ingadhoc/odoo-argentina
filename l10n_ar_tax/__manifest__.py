@@ -19,7 +19,11 @@
 ##############################################################################
 {
     "name": "Automatic Argentinian Withholdings on Payments",
+<<<<<<< HEAD
     "version": "19.0.1.4.0",
+=======
+    "version": "18.0.1.24.0",
+>>>>>>> 9910e533 ([FIX] account_payment: adapt to new Odoo 18 withholding synchronization)
     "author": "ADHOC SA,Odoo Community Association (OCA)",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",

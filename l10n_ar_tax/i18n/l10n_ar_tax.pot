@@ -6,14 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-20 19:04+0000\n"
-"PO-Revision-Date: 2026-01-20 19:04+0000\n"
+"POT-Creation-Date: 2026-02-11 19:52+0000\n"
+"PO-Revision-Date: 2026-02-11 19:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "%s | CUIT %s not present on padron ARBA"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.arba_alicout_query

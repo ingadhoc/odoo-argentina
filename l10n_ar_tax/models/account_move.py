@@ -9,6 +9,8 @@ class AccountMove(models.Model):
     perceptions_fiscal_positon = fields.Boolean(
         compute="_compute_perceptions_fiscal_position",
     )
+    # Hacemos almacenado show_update_fpos para que funcione el _onchange_fpos_id_show_update_fpos
+    show_update_fpos = fields.Boolean(store=True)
 
     def _compute_perceptions_fiscal_position(self):
         """
@@ -31,11 +33,11 @@ class AccountMove(models.Model):
 
     def write(self, vals):
         res = super().write(vals)
-        if "invoice_date" in vals in vals:
+        if "invoice_date" in vals:
             self._l10n_ar_recompute_fiscal_position_taxes()
         return res
 
-    @api.onchange("commercial_partner_id", "fiscal_position_id")
+    @api.onchange("commercial_partner_id")
     def _onchange_fpos_id_show_update_fpos(self):
         """Si cambiamos el partner y la posicion fiscal es la misma (super no configuró show_update_fpos = True) y tiene impuestos de tipo percepcion, mostramos el boton de actualizar posicion fiscal
         ya que las alícuotas pueden ser diferentes"""
@@ -47,6 +49,11 @@ class AccountMove(models.Model):
             and self.fiscal_position_id.l10n_ar_tax_ids.filtered(lambda x: x.tax_type == "perception")
         ):
             self.show_update_fpos = True
+
+    def action_update_fpos_values(self):
+        """Queremos que desaparezca el botón 'Update Taxes and Accounts' una vez que se haga click en el."""
+        super().action_update_fpos_values()
+        self.show_update_fpos = False
 
     @api.onchange("invoice_date")
     def _l10n_ar_recompute_fiscal_position_taxes(self):

@@ -193,26 +193,34 @@ class AccountPayment(models.Model):
 
         return res
 
-    def _prepare_move_liquidity_lines(self, default_values):
-        """Si el importe del pago es el neto (monto de liquidez), debemos deshacer la resta que hace Odoo
-        de las retenciones sobre la línea de liquidez."""
-        wth_lines = self._prepare_move_withholding_lines({})
-        if wth_lines:
-            wth_balance = sum(x["balance"] for x in wth_lines)
-            wth_amount_currency = sum(x["amount_currency"] for x in wth_lines)
-            default_values["balance"] += wth_balance
-            default_values["amount_currency"] += wth_amount_currency
-        return super()._prepare_move_liquidity_lines(default_values)
+    def _prepare_move_lines_per_type(self, write_off_line_vals=None, force_balance=None):
+        res = super()._prepare_move_lines_per_type(write_off_line_vals=write_off_line_vals, force_balance=force_balance)
 
-    def _prepare_move_counterpart_lines(self, default_values):
-        """Si el importe del pago es el neto, la contraparte debe ser el bruto (neto + retenciones)."""
-        wth_lines = self._prepare_move_withholding_lines({})
+        # we adjust liquidity and counterpart lines because in ARG payment amount is already net of withholdings
+        # whereas odoo expects it to be gross and subtracts withholdings from it.
+        wth_lines = res.get("withholding_lines", [])
         if wth_lines:
-            wth_balance = sum(x["balance"] for x in wth_lines)
-            wth_amount_currency = sum(x["amount_currency"] for x in wth_lines)
-            default_values["balance"] -= wth_balance
-            default_values["amount_currency"] -= wth_amount_currency
-        return super()._prepare_move_counterpart_lines(default_values)
+            wth_balance = sum(line["balance"] for line in wth_lines)
+            wth_amount_currency = sum(line["amount_currency"] for line in wth_lines)
+
+            liquidity_lines = res.get("liquidity_lines", [])
+            has_checks = self.l10n_latam_new_check_ids | self.l10n_latam_move_check_ids
+            if not has_checks and liquidity_lines:
+                liquidity_lines[0]["balance"] += wth_balance
+                liquidity_lines[0]["amount_currency"] += wth_amount_currency
+                # if after adjustment the liquidity line is 0, we remove it
+                # esto podria ir a payment_pro y que cualquier liquidity line en zero no se cree (Es para caso de
+                # puro write off y/o solo retenciones)
+                if self.company_currency_id.is_zero(liquidity_lines[0]["balance"]):
+                    res["liquidity_lines"] = []
+
+            counterpart_lines = res.get("counterpart_lines", [])
+            if counterpart_lines:
+                # the counterpart line (debt) should be the gross amount (net + withholdings)
+                counterpart_lines[0]["balance"] -= wth_balance
+                counterpart_lines[0]["amount_currency"] -= wth_amount_currency
+
+        return res
 
     def action_post(self):
         for rec in self:

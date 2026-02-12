@@ -220,11 +220,11 @@ class AccountPayment(models.Model):
             # if line['account_id'] in liquidity_accounts:
             if account_id.account_type in valid_account_types:
                 if self.payment_type == "inbound":
-                    line["credit"] += wth_amount
+                    line["credit"] = line.get("credit", 0.0) + wth_amount
                     if not self._use_counterpart_currency():
                         line["amount_currency"] -= wth_amount / conversion_rate
                 elif self.payment_type == "outbound":
-                    line["debit"] += wth_amount
+                    line["debit"] = line.get("debit", 0.0) + wth_amount
                     if not self._use_counterpart_currency():
                         line["amount_currency"] += wth_amount / conversion_rate
         return res

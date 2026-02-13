@@ -9,8 +9,6 @@ class AccountMove(models.Model):
     perceptions_fiscal_positon = fields.Boolean(
         compute="_compute_perceptions_fiscal_position",
     )
-    # Hacemos almacenado show_update_fpos para que funcione el _onchange_fpos_id_show_update_fpos
-    show_update_fpos = fields.Boolean(store=True)
 
     def _compute_perceptions_fiscal_position(self):
         """
@@ -37,29 +35,13 @@ class AccountMove(models.Model):
             self._l10n_ar_recompute_fiscal_position_taxes()
         return res
 
-    @api.onchange("commercial_partner_id")
-    def _onchange_fpos_id_show_update_fpos(self):
-        """Si cambiamos el partner y la posicion fiscal es la misma (super no configuró show_update_fpos = True) y tiene impuestos de tipo percepcion, mostramos el boton de actualizar posicion fiscal
-        ya que las alícuotas pueden ser diferentes"""
-        super()._onchange_fpos_id_show_update_fpos()
-        if (
-            not self.show_update_fpos
-            and self.line_ids
-            and self.commercial_partner_id != self._origin.commercial_partner_id
-            and self.fiscal_position_id.l10n_ar_tax_ids.filtered(lambda x: x.tax_type == "perception")
-        ):
-            self.show_update_fpos = True
-
-    def action_update_fpos_values(self):
-        """Queremos que desaparezca el botón 'Update Taxes and Accounts' una vez que se haga click en el."""
-        super().action_update_fpos_values()
-        self.show_update_fpos = False
-
-    @api.onchange("invoice_date")
+    @api.onchange("invoice_date", "commercial_partner_id")
     def _l10n_ar_recompute_fiscal_position_taxes(self):
-        """Recalculamos las percepciones si cambiamos la fecha de la orden de venta. Para ello nos basamos en los
-        impuestos de la posicion fiscal, buscamos si hay impuestos existentes para los tax groups involucrados y los
+        """Recalculamos las percepciones si cambiamos la fecha de la orden de venta o el commercial partner.
+        IMPORTANTE: este metodo solo esta pensado para cambiar alicuota de MISMA fiscal position (por cambio en fecha o partner) pero no para cambiar los impuestos.
+        Para ello nos basamos en los impuestos de la posicion fiscal, buscamos si hay impuestos existentes para los tax groups involucrados y los
         reemplazamos por los nuevos impuestos.
+        NO lo hacemos para el cambio de fiscal_position_id porque el onchange de fiscal_position_id implementado en sale_ux ya recomputa todos los taxes
         """
         for move in self.filtered(
             lambda x: x.is_sale_document(include_receipts=True) and x.perceptions_fiscal_positon and x.state == "draft"

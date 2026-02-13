@@ -35,11 +35,13 @@ class AccountMove(models.Model):
             self._l10n_ar_recompute_fiscal_position_taxes()
         return res
 
-    @api.onchange("invoice_date")
+    @api.onchange("invoice_date", "commercial_partner_id")
     def _l10n_ar_recompute_fiscal_position_taxes(self):
-        """Recalculamos las percepciones si cambiamos la fecha de la orden de venta. Para ello nos basamos en los
-        impuestos de la posicion fiscal, buscamos si hay impuestos existentes para los tax groups involucrados y los
+        """Recalculamos las percepciones si cambiamos la fecha de la orden de venta o el commercial partner.
+        IMPORTANTE: este metodo solo esta pensado para cambiar alicuota de MISMA fiscal position (por cambio en fecha o partner) pero no para cambiar los impuestos.
+        Para ello nos basamos en los impuestos de la posicion fiscal, buscamos si hay impuestos existentes para los tax groups involucrados y los
         reemplazamos por los nuevos impuestos.
+        NO lo hacemos para el cambio de fiscal_position_id porque el onchange de fiscal_position_id implementado en sale_ux ya recomputa todos los taxes
         """
         for move in self.filtered(
             lambda x: x.is_sale_document(include_receipts=True) and x.perceptions_fiscal_positon and x.state == "draft"
@@ -47,14 +49,14 @@ class AccountMove(models.Model):
             fp_tax_groups = move.fiscal_position_id.l10n_ar_tax_ids.filtered(
                 lambda x: x.tax_type == "perception"
             ).mapped("default_tax_id.tax_group_id")
-            date = move.date if not move.reversed_entry_id else move.reversed_entry_id.date
-            new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(move.partner_id, move.company_id, date, "perception")
-            for line in move.invoice_line_ids:
+            new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(
+                move.partner_id, move.company_id, move.date, "perception"
+            )
+            # Solo queremos que se recomputen los impuestos en facturas de cliente/proveedor
+            for line in move.filtered(lambda x: not x.reversed_entry_id).invoice_line_ids:
                 to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
                 if to_unlink._origin != new_taxes:
-                    line.tax_ids = [(3, tax.id) for tax in to_unlink] + [
-                        (4, tax.id) for tax in new_taxes if tax not in line.tax_ids
-                    ]
+                    line.tax_ids = (line.tax_ids - to_unlink) | new_taxes
 
     def copy(self, default=None):
         """Re computamos las percepciones al duplicar una factura porque puede ser que la factura venga de otro periodo

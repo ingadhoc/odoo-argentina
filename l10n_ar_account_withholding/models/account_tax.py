@@ -161,7 +161,7 @@ class AccountTax(models.Model):
                 ['1', '1FM', '2', '3', '4', '6', '11', '13']:
 
             invoice_tags = self.invoice_repartition_line_ids.mapped('tag_ids')
-            padron_file = self.env['res.company.jurisdiction.padron'].search([
+            padron_files = self.env['res.company.jurisdiction.padron'].search([
                 ('jurisdiction_id', 'in', invoice_tags.ids),
                 ('company_id', '=', company.id),
                 '|',
@@ -170,17 +170,25 @@ class AccountTax(models.Model):
                 '|',
                 ('l10n_ar_padron_to_date', '=', False),
                 ('l10n_ar_padron_to_date', '>=', date),
-            ], limit=1)
+            ])
             from_date = date + relativedelta(day=1)
             to_date = date + relativedelta(day=1, days=-1, months=+1)
 
             agip_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_901')
             arba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_902')
             cdba_tag = self.env.ref('l10n_ar_ux.tag_tax_jurisdiccion_904')
-            if padron_file:
+            for padron_file in padron_files:
                 nro, alicuot_ret, alicuot_per = padron_file._get_aliquit(commercial_partner)
+                if padron_file.jurisdiction_id.jurisdiction_code != '921':
+                    numero_comprobante = nro or 'Alícuota no inscripto'
+                else:
+                    # si nro es True entonces NO figura en padrón
+                    if not nro:
+                        numero_comprobante = 'Alícuota creada desde padrón Santa Fe'
+                    else:
+                        numero_comprobante = 'Alícuota castigo. No figura en padrón Santa Fe'
                 return partner.arba_alicuot_ids.sudo().create({
-                    'numero_comprobante': nro or 'Alícuota no inscripto',
+                    'numero_comprobante': numero_comprobante,
                     'alicuota_retencion': float(alicuot_ret) or company.arba_alicuota_no_sincripto_retencion,
                     'alicuota_percepcion': float(alicuot_per) or company.arba_alicuota_no_sincripto_percepcion,
                     'partner_id': commercial_partner.id,

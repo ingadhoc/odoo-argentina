@@ -22,6 +22,7 @@ l10n_ar_account_withholding
 
 
 Tablas modificadas según: http://www.afip.gob.ar/noticias/20160526GananciasRegRetencionModificacion.asp
+Este módulo implementa el importador de Padrón PARP ret y perc SF - Santa Fe y ARBA.
 
 TODO:
     -A script de instalación sumarle algo tipo esto, por ahora se puede correr manual. En realidad solo es necesario si estamos en localización o algo que requiera doble validation

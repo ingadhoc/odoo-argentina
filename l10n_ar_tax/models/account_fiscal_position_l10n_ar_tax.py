@@ -18,7 +18,12 @@ class AccountFiscalPositionL10nArTax(models.Model):
     # ponemos default a los selectio porque al ser requeridos si no se comporta raro y parece que elige uno por defecto
     # pero que no esta seleccionado
     webservice = fields.Selection(
-        [("agip", "AGIP (Regimen General)"), ("arba", "ARBA"), ("rentas_cordoba", "Rentas Cordoba")],
+        [
+            ("agip", "AGIP (Regimen General)"),
+            ("arba", "ARBA"),
+            ("rentas_cordoba", "Rentas Cordoba"),
+            ("padron", "Archivo de padrón"),
+        ],
     )
     tax_template_domain = fields.Char(compute="_compute_tax_template_domain")
     default_tax_id = fields.Many2one("account.tax", required=True)
@@ -43,6 +48,19 @@ class AccountFiscalPositionL10nArTax(models.Model):
             conflicting_records = self.search(domain)
             if conflicting_records:
                 raise ValidationError("No puede haber dos impuestos del mismo grupo para la misma posicion fiscal.")
+
+    @api.constrains("webservice", "default_tax_id")
+    def _check_webservice_available(self):
+        for record in self:
+            if record.webservice == "padron":
+                if not record.default_tax_id.l10n_ar_state_id:
+                    raise ValidationError(
+                        "Impuesto %s sin provincia establecida, no puede consultar padrón" % record.default_tax_id.name
+                    )
+                if record.default_tax_id.l10n_ar_state_id.jurisdiction_code not in ["902", "921"]:
+                    raise ValidationError(
+                        "Padrón no implementado para la provincia de %s." % record.default_tax_id.l10n_ar_state_id.name
+                    )
 
     def _get_missing_taxes(self, partner, date):
         taxes = self.env["account.tax"]
@@ -115,6 +133,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
             tax = self._ensure_tax(aliquot)
         # por mas que sea no inscripto creamos partner aliquot porque si no en cada
         # nueva linea o cambio se conecta a ws
+        # TODO revisar porque necesitamos esto
         if self.env.ref("base.user_demo", raise_if_not_found=False):
             # Fix para que al cargar data demo al instalar demo_base_minimal no se termine creando 2 veces
             # los mismos registros de 'l10n_ar.partner.tax'
@@ -145,6 +164,28 @@ class AccountFiscalPositionL10nArTax(models.Model):
         )
         return tax
 
+    def _search_padron_file(self, state_id, date):
+        """Busca un archivo de padrón para una jurisdicción y fecha dadas
+        :param state_id: ID del estado/jurisdicción
+        :param date: Fecha para validar vigencia del padrón
+        :return: Registro de res.company.jurisdiction.padron o recordset vacío
+        """
+        self.ensure_one()
+        res = self.env["res.company.jurisdiction.padron"].search(
+            [
+                ("state_id", "in", state_id.ids),
+                ("company_id", "=", self.fiscal_position_id.company_id.id),
+                "|",
+                ("l10n_ar_padron_from_date", "=", False),
+                ("l10n_ar_padron_from_date", "<=", date),
+                "|",
+                ("l10n_ar_padron_to_date", "=", False),
+                ("l10n_ar_padron_to_date", ">=", date),
+            ],
+            limit=1,
+        )
+        return res
+
     def _get_agip_data(self, partner, date, to_date):
         # si es base en data demo devolvemos una alicuota demo para que no falle la demo data
         if self.env.ref("base.user_demo", raise_if_not_found=False):
@@ -168,30 +209,10 @@ class AccountFiscalPositionL10nArTax(models.Model):
         cuit = partner.ensure_vat()
         _logger.info("Getting ARBA data for cuit %s from date %s to date %s" % (date, to_date, cuit))
 
-        padron_file = self.env["res.company.jurisdiction.padron"].search(
-            [
-                ("state_id", "in", self.env.ref("base.state_ar_b").ids),
-                ("company_id", "=", self.fiscal_position_id.company_id.id),
-                "|",
-                ("l10n_ar_padron_from_date", "=", False),
-                ("l10n_ar_padron_from_date", "<=", date),
-                "|",
-                ("l10n_ar_padron_to_date", "=", False),
-                ("l10n_ar_padron_to_date", ">=", date),
-            ],
-            limit=1,
-        )
-        if padron_file:
-            nro, alicuot_ret, alicuot_per = padron_file._get_aliquit(partner)
-            if nro:
-                return (
-                    float(alicuot_ret.replace(",", "."))
-                    if self.tax_type == "withholding"
-                    else float(alicuot_per.replace(",", ".")),
-                    "Alicuota (archivo importado)",
-                )
-            else:
-                return None, "Alícuota no inscripto (archivo importado)"
+        # Si no existe padron NO devolvemos ref y pasamos a consultar alícuota al webservice
+        alicuot, ref = self._get_padron_data(partner, date, to_date)
+        if ref:
+            return alicuot, ref
 
         arba_cit = self.fiscal_position_id.company_id.arba_consultar_contribuyente(cuit, date, to_date)
         if arba_cit.get("NumeroComprobante"):
@@ -297,3 +318,54 @@ class AccountFiscalPositionL10nArTax(models.Model):
                     )
 
         return aliquot, ref
+
+    def _get_padron_data(self, partner, date, to_date):
+        """Método implementado para obtener alícuota de padrón ARBA y Santa Fe:
+        jurisdiction_code de Santa Fe = 921, de ARBA = 902
+        1) Santa Fe:
+         * si no existe padrón para el período correspondiente entonces devuelve UserError para que lo cargue.
+         * si existe padrón para el período correspondiente, busca el CUIT en el padrón y:
+            a) si lo encuentra devuelve la tasa y "Alícuota padrón Santa Fe",
+            b) si no lo encuentra devuelve None, "Alícuota no inscripto Santa Fe (archivo importado)"
+        2) ARBA:
+         * si no existe padrón devuelve None, None
+         * si existe padrón para el período correspondiente, busca el CUIT en el padrón y:
+            a) si lo encuentra devuelve la tasa y "Alícuota padrón ARBA (archivo importado)",
+            b) si no lo encuentra devuelve None, "Alícuota no inscripto ARBA (archivo importado)"
+
+        return: alicuot, ref
+        """
+        self.ensure_one()
+        state = self.default_tax_id.l10n_ar_state_id
+        padron_file = self._search_padron_file(state, date)
+        if not padron_file:
+            # si la consulta de padron viene por "contingencia" (por ej. se usa ws de arba o agip) y no hay padron, no queremos raise
+            if self.webservice != "padron":
+                return None, None
+            # Si se está consultando alícuota con tipo "padron" y no hay, entonces damos error.
+            raise UserError(
+                _(
+                    "No hay padrón subido para la fecha indicada %s a %s. Debe subirlo en 'Contabilidad / Configuración / AFIP / Padrón de Alícuotas por compañía' o cargar la alícuota manualmente en el contacto para el período en curso."
+                )
+                % (date, to_date)
+            )
+        nro, alicuot_ret, alicuot_per = padron_file._get_aliquot(partner)
+        if state.jurisdiction_code == "921":
+            if nro:
+                # en santa fe en realidad no hay nro, viene True/False (Segun si lo encontramos), por eso no devolvemos string genérica
+                return (
+                    alicuot_ret if self.tax_type == "withholding" else alicuot_per,
+                    "Alícuota padrón Santa Fe",
+                )
+            else:
+                return None, "Alícuota castigo. No figura en padrón Santa Fe"
+        if state.jurisdiction_code == "902":
+            if nro:
+                return (
+                    float(alicuot_ret.replace(",", "."))
+                    if self.tax_type == "withholding"
+                    else float(alicuot_per.replace(",", ".")),
+                    "Alícuota padrón ARBA (archivo importado)",
+                )
+            else:
+                return None, "Alícuota no inscripto ARBA (archivo importado)"

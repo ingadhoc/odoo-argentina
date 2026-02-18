@@ -38,8 +38,6 @@
 
 * Confirmar que todos los archivos usados (vistas, seguridad, datos, reportes, wizards) estén referenciados en el manifest.
 * Verificar dependencias declaradas: que no falten módulos requeridos ni se declaren innecesarios.
-* **Regla de versión (obligatoria):**
-  Solo sugerir bump de versión si el `__manifest__.py` no incrementa `version` y se modificó la estructura de un modelo, una vista, o algún record .xml (ej. cambios en definición de campos, vistas XML, datos XML, seguridad).
 * Solo hacerlo una vez por revisión, aunque haya múltiples archivos afectados.
 
 ---
@@ -61,7 +59,6 @@
 
 * Verificar los archivos `ir.model.access.csv` para nuevos modelos: deben tener permisos mínimos necesarios.
 * No proponer abrir acceso global sin justificación.
-* Si se agregan nuevos modelos o campos de control de acceso, **recordar el bump de versión** (ver sección de manifest).
 * Si se cambian `record rules`, revisar especialmente combinaciones multi-compañía y multi-website.
 
 ### Seguridad y rendimiento del ORM
@@ -86,7 +83,7 @@
 
 ## Cambios estructurales y scripts de migración – **cuestiones generales**
 
-Cuando el diff sugiera **cambios de estructura de datos**, **siempre evaluar** si corresponde proponer un **script de migración** en `migrations/` (pre/post/end) **y recordar el bump de versión**.
+Cuando el diff sugiera **cambios de estructura de datos**, **siempre evaluar** si corresponde proponer un **script de migración** en `migrations/` (pre/post/end).
 
 ### Reglas generales de estructura de `migrations/`
 
@@ -283,20 +280,10 @@ def migrate(cr, registry):
 | ------------------ | -------------------------------------------------------------------------------------------------------- |
 | Modelos            | Relaciones válidas; constraints; uso adecuado de `@api.depends`; `super()` correcto                      |
 | Vistas XML         | Herencias correctas; campos válidos; adaptación a cambios de versión (p.ej. `<list>` vs `<tree>`)        |
-| Manifest           | **Bump de versión obligatorio** si hay cambios estructurales en modelos/vistas/records .xml; archivos referenciados |
 | Seguridad          | Accesos mínimos necesarios; reglas revisadas                                                             |
 | Migraciones        | **Si hay cambios estructurales, sugerir script en `migrations/` (pre/post/end)** y describir qué hace    |
 | Rendimiento / ORM  | Evitar loops costosos; no SQL innecesario; aprovechar las optimizaciones del ORM de la versión           |
 | Ortografía & typos | Errores evidentes corregibles sin modificar idioma ni estilo                                             |
-
----
-
-## Heurística práctica para el bump de versión (general)
-
-* **SI** el diff modifica la estructura de un modelo, una vista, o algún record .xml (ej. cambios en definición de campos, vistas XML, datos XML, seguridad)
-  **Y** `__manifest__.py` no cambia `version` → **Sugerir bump**.
-* **SI** hay scripts `migrations/pre_*.py` o `migrations/post_*.py` nuevos → **Sugerir al menos minor bump**.
-* **SI** hay cambios que rompen compatibilidad (renombres, cambios de tipo con impacto, limpieza masiva de datos) → **Sugerir minor/major** según impacto.
 
 ---
 
@@ -307,7 +294,7 @@ def migrate(cr, registry):
   * “El campo `partner_id` no se encuentra referenciado en la vista.”
   * “Este método redefine `write()` sin usar `super()`.”
   * “Tip: hay un error ortográfico en el nombre del parámetro.”
-  * **Bump + migración:** “Se renombra `old_ref` → `new_ref`: falta **bump de versión** y **pre-script** en `migrations/` para copiar valores antes del upgrade; añadir **post-script** para recompute del stored.”
+  * **Migración:** “Se renombra `old_ref` → `new_ref`: falta **pre-script** en `migrations/` para copiar valores antes del upgrade; añadir **post-script** para recompute del stored.”
 
 * Evitar explicaciones largas o reescrituras completas salvo que el cambio sea claro y necesario.
 * Priorizar comentarios en forma de **lista corta de puntos** (3–7 ítems) y frases breves en lugar de bloques de texto extensos.
@@ -316,10 +303,10 @@ def migrate(cr, registry):
 
 ## Resumen operativo para Copilot
 
-1. **Detecta cambios estructurales en modelos, vistas o records .xml → exige bump de `version` en `__manifest__.py` si no está incrementada.**
-2. **Si hay cambio estructural (según la lista actualizada) → propone y describe script(s) de migración en `migrations/` (pre/post/end)**, con enfoque idempotente y en lotes.
-3. Distingue entre:
+1. **Si hay cambio estructural (según la lista actualizada) → propone y describe script(s) de migración en `migrations/` (pre/post/end)**, con enfoque idempotente y en lotes.
+2. Distingue entre:
 
    * **cuestiones generales** (válidas para cualquier versión),
    * y **matices específicos de Odoo 18** (por ejemplo, uso de `<list>`, passkeys, tours y comportamiento del framework).
-4. Mantén el feedback **concreto, breve y accionable**.
+
+3. Mantén el feedback **concreto, breve y accionable**.

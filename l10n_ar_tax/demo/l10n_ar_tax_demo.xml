@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Trigger demo data creation for l10n_ar_tax payment tests -->
+    <function model="account.chart.template" name="_install_l10n_ar_tax_demo">
+        <value eval="[ref('base.company_ri')]"/>
+    </function>
+
+</odoo>

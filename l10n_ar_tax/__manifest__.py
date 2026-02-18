@@ -44,6 +44,7 @@
         "demo/account_tax_demo.xml",
         "demo/res_partner_demo.xml",
         "demo/account_move_demo.xml",
+        "demo/l10n_ar_tax_demo.xml",
     ],
     "depends": [
         "l10n_ar",

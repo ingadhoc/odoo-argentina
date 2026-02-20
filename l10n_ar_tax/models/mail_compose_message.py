@@ -70,7 +70,7 @@ class MailComposeMessage(models.TransientModel):
         if not report:
             return mail_values_all
 
-        # Check if we're in mass_mail mode (uses commands) or comment mode (uses plain IDs)
+        # Chequeamos si estamos en envío masivo (usa comandos) o en modo comentario (usa IDs simples)
         email_mode = self.composition_mode == "mass_mail"
 
         payments = self.env["account.payment"].browse(res_ids).filtered(lambda p: p.partner_type == "supplier")
@@ -78,7 +78,7 @@ class MailComposeMessage(models.TransientModel):
             if payment.id not in mail_values_all:
                 continue
 
-            # Get existing attachments from parent method
+            # Traer adjuntos del método padre
             attachment_ids = mail_values_all[payment.id].get("attachment_ids", [])
 
             for withholding in payment.l10n_ar_withholding_line_ids.filtered("amount"):
@@ -89,9 +89,9 @@ class MailComposeMessage(models.TransientModel):
                     if len(res_ids) == 1:
                         # Buscar adjunto existente creado en la previsualización
                         existing_attachment = self.attachment_ids.filtered(
-                            lambda a: a.name == report_name
-                            and a.res_model == "mail.compose.message"
-                            and a.res_id == self.id
+                            lambda a: (
+                                a.name == report_name and a.res_model == "mail.compose.message" and a.res_id == self.id
+                            )
                         )
 
                         # Reutilizar:  cambiar res_model para que se vincule al mensaje
@@ -107,7 +107,11 @@ class MailComposeMessage(models.TransientModel):
                     else:
                         # Buscar si ya existe un attachment con el mismo nombre para evitar duplicados
                         existing_attachment = self.env["ir.attachment"].search(
-                            [("name", "=", report_name), ("res_model", "=", "mail.message"), ("res_id", "=", 0)],
+                            [
+                                ("name", "=", report_name),
+                                ("res_model", "=", "l10n_ar.payment.withholding"),
+                                ("res_id", "=", withholding.id),
+                            ],
                             limit=1,
                         )
 
@@ -122,8 +126,8 @@ class MailComposeMessage(models.TransientModel):
                                 {
                                     "name": report_name,
                                     "datas": report_content_encoded,
-                                    "res_model": "mail.message",
-                                    "res_id": 0,
+                                    "res_model": "l10n_ar.payment.withholding",
+                                    "res_id": withholding.id,
                                     "type": "binary",
                                 }
                             )

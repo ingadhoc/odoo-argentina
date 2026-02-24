@@ -8,8 +8,14 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
     def setUp(self):
         super().setUp()
         self.today = fields.Date.today()
-        self.company_bank_journal = self.env["account.journal"].search(
-            [("company_id", "=", self.company_ri.id), ("type", "=", "bank")], limit=1
+        self.company_bank_journal = self.env["account.journal"].create(
+            {
+                "name": "Bank Journal Test",
+                "code": "BNKT",
+                "type": "bank",
+                "bank_statements_source": "file_import",
+                "company_id": self.company_ri.id,
+            }
         )
 
     def test_create_vendor_payment_with_receiptbook_and_withholdings(self):

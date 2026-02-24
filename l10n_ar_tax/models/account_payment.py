@@ -135,6 +135,9 @@ class AccountPayment(models.Model):
 
     def _prepare_move_withholding_lines(self, default_values):
         res = super()._prepare_move_withholding_lines(default_values)
+        if self.is_internal_transfer:
+            return res
+
         self.ensure_one()
         sign = 1
         if self.payment_type == "outbound":

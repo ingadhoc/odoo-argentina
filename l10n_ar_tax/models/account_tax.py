@@ -100,3 +100,60 @@ class AccountTax(models.Model):
             raise UserError(
                 "Error se esta usando en ws de estas cias %s" % ws.mapped("fiscal_position_id.company_id.name")
             )
+
+
+    def _get_tax_details(
+        self,
+        price_unit,
+        quantity,
+        precision_rounding=0.01,
+        rounding_method="round_per_line",
+        product=None,
+        product_uom=None,
+        special_mode=False,
+        manual_tax_amounts=None,
+        filter_tax_function=None,
+    ):
+        """ Hacer cálculo de percepciones de venta teniendo en cuenta el monto mínimo no imponible establecido en el impuesto."""
+        res = super()._get_tax_details(
+            price_unit,
+            quantity,
+            precision_rounding=precision_rounding,
+            rounding_method=rounding_method,
+            product=product,
+            product_uom=product_uom,
+            special_mode=special_mode,
+            manual_tax_amounts=manual_tax_amounts,
+            filter_tax_function=filter_tax_function,
+        )
+        if not self._context.get("l10n_ar_perception_invoice"):
+            return res
+
+        if not res.get("taxes_data"):
+            return res
+
+        updated = False
+        for tax_data in res["taxes_data"]:
+            tax = tax_data["tax"]
+            if tax.country_code == "AR" and tax.type_tax_use == "sale" and tax.l10n_ar_non_taxable_amount:
+                base_amount = tax_data["base_amount"]
+                net_base = max(0, base_amount - tax.l10n_ar_non_taxable_amount)
+                if not net_base:
+                    if tax_data["tax_amount"] or tax_data["base_amount"]:
+                        tax_data["tax_amount"] = 0.0
+                        tax_data["base_amount"] = 0.0
+                        updated = True
+                else:
+                    if base_amount:
+                        tax_data["tax_amount"] = tax_data["tax_amount"] * (net_base / base_amount)
+                    else:
+                        tax_data["tax_amount"] = 0.0
+                    tax_data["base_amount"] = net_base
+                    updated = True
+
+        if updated:
+            res["total_included"] = res["total_excluded"] + sum(
+                tax_line["tax_amount"] for tax_line in res["taxes_data"]
+            )
+
+        return res

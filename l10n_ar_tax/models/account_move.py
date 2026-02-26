@@ -65,3 +65,10 @@ class AccountMove(models.Model):
         recs = super().copy(default=default)
         recs._l10n_ar_recompute_fiscal_position_taxes()
         return recs
+
+    def _prepare_product_base_line_for_taxes_computation(self, product_line):
+        """ Si es factura de venta argentina mandamos l10n_ar_perception_invoice por contexto. Dicho contexto se usa en l10n_ar_tax/models/account_tax.py por el método _get_tax_details para el cálculo de percepciones de venta teniendo en cuenta el monto mínimo no imponible establecido en el impuesto. """
+        base_line = super()._prepare_product_base_line_for_taxes_computation(product_line)
+        if self.move_type in ("out_invoice", "out_refund") and self.company_id.country_id.code == "AR":
+            base_line["tax_ids"] = base_line["tax_ids"].with_context(l10n_ar_perception_invoice=True)
+        return base_line

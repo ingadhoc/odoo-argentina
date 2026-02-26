@@ -46,6 +46,10 @@
             <field name="l10n_ar_code" position="attributes">
                 <attribute name="invisible">country_code != 'AR'</attribute>
             </field>
+            <!-- Necesitamos que sea visible en percepciones porque Santa Fe requiere el mínimo no imponible -->
+            <field name="l10n_ar_non_taxable_amount" position="attributes">
+                <attribute name="invisible">country_code != 'AR' or l10n_ar_type_tax_use not in ['sale', 'supplier'] or amount_type != 'percent'</attribute>
+            </field>
         </field>
     </record>
 

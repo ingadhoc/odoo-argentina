@@ -20,7 +20,12 @@
                     </div>
                 </setting>
             </xpath>
-
+        <setting id="sepa_payments" position="after">
+                    <setting id="show_reversal_moves_in_receipts" string="Show reversal moves in receipts"
+                        help="Muestra las ND y NC en los recibos de pago, como movimientos a parte.">
+                        <field name="show_reversal_moves_in_receipts"/>
+                    </setting>
+                </setting>
         </field>
     </record>
 

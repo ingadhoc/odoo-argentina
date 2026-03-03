@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-11 19:52+0000\n"
-"PO-Revision-Date: 2026-02-11 19:52+0000\n"
+"POT-Creation-Date: 2026-03-03 21:27+0000\n"
+"PO-Revision-Date: 2026-03-03 21:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -527,7 +527,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_form
 msgid ""
 "ARBA: por lo general no es necesario cargarlo aquí ya que las alícuotas se obtienen automáticamente mediante webservice.\n"
-"                                Si igualmente desea cargarlo, debe subir el archivo zip que descarga de arba y que tiene nombre de forma \"PadronRGSMMAAAA.zip"
+"                                Si igualmente desea cargarlo, debe subir el archivo zip que descarga de arba y que tiene nombre de forma \"PadronRGSMMAAAA.zip\""
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -549,6 +549,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__amount
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__amount
 msgid "Amount"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__webservice__padron
+msgid "Archivo de padrón"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -927,6 +932,15 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
 msgid ""
+"No hay padrón subido para la fecha indicada %s a %s. Debe subirlo en "
+"'Contabilidad / Configuración / AFIP / Padrón de Alícuotas por compañía' o "
+"cargar la alícuota manualmente en el contacto para el período en curso."
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid ""
 "No pudimos obtener la alicuota del webservice de rentascordoba.\n"
 "\n"
 "Para asignar la alícuota de Córdoba a un contacto, siga estos pasos:\n"
@@ -1129,6 +1143,14 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_partner_form
 msgid "Sale Perceptions"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_form
+msgid ""
+"Santa Fe: debe subir el archivo con formato csv que descarga del padrón PARP"
+" (Padrón de Alícuotas de Retención/Percepción) de la oficina virtual de API "
+"y que tiene nombre de forma \"PARP_999999.csv\""
 msgstr ""
 
 #. module: l10n_ar_tax

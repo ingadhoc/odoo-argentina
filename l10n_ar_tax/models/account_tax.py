@@ -92,6 +92,9 @@ class AccountTax(models.Model):
     l10n_ar_withholding_sequence_id = fields.Many2one(
         copy=True,
     )
+    l10n_ar_base_minimum_threshold = fields.Float(
+        string="Minimum withholding base", digits="Account", help="Until this base amount, the tax is not applied."
+    )
 
     @api.ondelete(at_uninstall=False)
     def _check_tax_used_on_company_tax_fp(self):

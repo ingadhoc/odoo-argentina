@@ -46,6 +46,12 @@
             <field name="l10n_ar_code" position="attributes">
                 <attribute name="invisible">country_code != 'AR'</attribute>
             </field>
+            <field name="l10n_ar_non_taxable_amount" position="attributes">
+                <attribute name="invisible" separator=" or " add="l10n_ar_state_id or l10n_ar_tax_type not in ['earnings', 'earnings_scale']"/>
+            </field>
+            <field name="l10n_ar_minimum_threshold" position="after">
+                <field name="l10n_ar_base_minimum_threshold" invisible="country_code != 'AR' or l10n_ar_type_tax_use != 'supplier' or not l10n_ar_state_id or l10n_ar_tax_type in ['earnings', 'earnings_scale']"/>
+            </field>
         </field>
     </record>
 

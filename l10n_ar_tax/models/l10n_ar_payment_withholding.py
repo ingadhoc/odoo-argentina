@@ -84,10 +84,9 @@ class l10nArPaymentWithholding(models.Model):
         if tax.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
             same_period_withholdings = self._get_same_period_withholdings_amount()
             same_period_base = self._get_same_period_base_amount()
-            net_amount = self.base_amount + same_period_base
+            net_amount = max(0, self.base_amount + same_period_base - tax.l10n_ar_non_taxable_amount)
         else:
             net_amount = self.base_amount
-        net_amount = max(0, net_amount - tax.l10n_ar_non_taxable_amount)
         taxes_res = tax.compute_all(
             net_amount,
             currency=self.payment_id.currency_id,

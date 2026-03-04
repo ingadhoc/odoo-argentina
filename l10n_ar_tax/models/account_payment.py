@@ -308,9 +308,11 @@ class AccountPayment(models.Model):
         ya que todavía no tenemos implementado cálculos de retenciones ajustados por diferencia de cambio"""
         self.withholding_warning = False
         for rec in self.filtered(
-            lambda x: x.state == "draft"
-            and x.l10n_ar_withholding_line_ids
-            and (x.currency_id != x.company_id.currency_id or x._use_counterpart_currency())
+            lambda x: (
+                x.state == "draft"
+                and x.l10n_ar_withholding_line_ids
+                and (x.currency_id != x.company_id.currency_id or x._use_counterpart_currency())
+            )
         ):
             # Verificar si la deuda está gestionada en moneda extranjera
             dest_currency = rec.destination_account_id.currency_id
@@ -376,9 +378,23 @@ class AccountPayment(models.Model):
         for rec in self:
             rec.withholdable_advanced_amount = rec.unreconciled_amount
 
-    @api.depends("l10n_ar_fiscal_position_id", "partner_id", "company_id", "date")
+    @api.depends(
+        "l10n_ar_fiscal_position_id",
+        "partner_id",
+        "company_id",
+        "date",
+        "selected_debt",
+        "unreconciled_amount",
+    )
     def _compute_l10n_ar_withholding_line_ids(self):
         # metodo completamente analogo a payment.register._compute_l10n_ar_withholding_ids
+        if self.env.context.get("is_check_computation_active"):
+            # Durante el cálculo del importe a pagar en cheques, evitamos
+            # recalcular las retenciones. Ese recálculo debe ejecutarse solo
+            # al finalizar dicho proceso
+            for rec in self:
+                rec.l10n_ar_withholding_line_ids = rec.l10n_ar_withholding_line_ids
+            return
         for rec in self.filtered(lambda x: x.partner_type == "supplier"):
             date = rec.date or fields.Date.today()
             withholdings = [Command.clear()]
@@ -390,8 +406,14 @@ class AccountPayment(models.Model):
             rec.l10n_ar_withholding_line_ids = withholdings
             # Si hay retenciones que no son de ganancias y el importe a retener es 0 las quitamos
             # Ejemplo: retenciones en pagos de notas de crédito (el monto base es negativo)
+            # Si hay retenciones cuyo l10n_ar_base_minimum_threshold es mayor al importe total a pagar
+            # entonces también las quitamos
             to_remove = rec.l10n_ar_withholding_line_ids.filtered(
-                lambda wth: wth.amount == 0 and wth.tax_id.l10n_ar_tax_type not in ["earnings", "earnings_scale"]
+                lambda wth: (
+                    wth.amount == 0
+                    and wth.tax_id.l10n_ar_tax_type not in ["earnings", "earnings_scale"]
+                    or rec.to_pay_amount < wth.tax_id.l10n_ar_base_minimum_threshold
+                )
             )
             rec.l10n_ar_withholding_line_ids -= to_remove
 
@@ -399,7 +421,9 @@ class AccountPayment(models.Model):
         checks_payments = self.filtered(
             lambda x: x.payment_method_code in ["in_third_party_checks", "out_third_party_checks"]
         )
-        for rec in checks_payments.with_context(skip_account_move_synchronization=True):
+        for rec in checks_payments.with_context(
+            skip_account_move_synchronization=True, is_check_computation_active=True
+        ):
             # dejamos 230 porque el hecho de estar usando valor de "$2" abajo y subir de a un centavo hace podamos necesitar
             # 200 intento solo en esa seccion
             # deberiamos ver de ir aproximando de otra manera
@@ -433,6 +457,9 @@ class AccountPayment(models.Model):
                         "* payment_difference: %s\n"
                         "* amount: %s" % (rec.to_pay_amount, rec.payment_difference, rec.amount)
                     )
+            # Recomputamos explícitamente retenciones al finalizar el cálculo iterativo
+            # para evitar depender de side-effects sobre to_pay_amount.
+            rec.with_context(is_check_computation_active=False)._compute_l10n_ar_withholding_line_ids()
             rec.with_context(skip_account_move_synchronization=False)._synchronize_to_moves(
                 {"l10n_ar_withholding_line_ids"}
             )

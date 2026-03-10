@@ -144,13 +144,24 @@ class AccountPayment(models.Model):
             sign = -1
 
         conversion_rate = self.exchange_rate or 1.0
+        # Cuando el pago es en moneda extranjera, las retenciones se calculan en moneda de la compañía (ARS).
+        # Usamos moneda de la compañía en las move lines de retención para evitar que _inverse_amount_currency
+        # recalcule el balance a partir de un amount_currency redondeado en moneda extranjera, lo que produce
+        # diferencias de redondeo (ej: 84,894.75 ARS -> 60 USD -> 84,900 ARS en el roundtrip).
+        use_company_currency = self.currency_id != self.company_id.currency_id
+
         for line in self.l10n_ar_withholding_line_ids:
             # nuestro approach esta quedando distinto al del wizard. En nuestras lineas tenemos los importes en moneda
             # de la cia, por lo cual el line.amount aca representa eso y tenemos que convertirlo para el amount_currency
 
             __, account_id, tax_repartition_line_id, __ = line._tax_compute_all_helper()
             balance = self.company_id.currency_id.round(sign * line.amount)
-            amount_currency = self.currency_id.round(balance / conversion_rate)
+            if use_company_currency:
+                amount_currency = balance
+                currency_id = self.company_id.currency_id.id
+            else:
+                amount_currency = self.currency_id.round(balance / conversion_rate)
+                currency_id = self.currency_id.id
             res.append(
                 {
                     **self._get_withholding_move_line_default_values(),
@@ -158,7 +169,7 @@ class AccountPayment(models.Model):
                     "account_id": account_id,
                     "balance": balance,
                     "amount_currency": amount_currency,
-                    "currency_id": self.currency_id.id,
+                    "currency_id": currency_id,
                     "tax_base_amount": sign * line.base_amount,
                     "tax_repartition_line_id": tax_repartition_line_id,
                 }
@@ -169,8 +180,13 @@ class AccountPayment(models.Model):
             nice_base_label = ",".join(withholding_lines.filtered("name").mapped("name"))
             account_id = self.company_id.l10n_ar_tax_base_account_id.id
             balance = self.company_id.currency_id.round(sign * base_amount)
-            # informamos el amount_currency para que Odoo no resetee el balance a 0.0 por inconsistencia de moneda
-            amount_currency = self.currency_id.round(balance / conversion_rate)
+            if use_company_currency:
+                amount_currency = balance
+                currency_id = self.company_id.currency_id.id
+            else:
+                # informamos el amount_currency para que Odoo no resetee el balance a 0.0 por inconsistencia de moneda
+                amount_currency = self.currency_id.round(balance / conversion_rate)
+                currency_id = self.currency_id.id
             res.append(
                 {
                     **self._get_withholding_move_line_default_values(),
@@ -179,7 +195,7 @@ class AccountPayment(models.Model):
                     "account_id": account_id,
                     "balance": balance,
                     "amount_currency": amount_currency,
-                    "currency_id": self.currency_id.id,
+                    "currency_id": currency_id,
                 }
             )
             res.append(
@@ -189,7 +205,7 @@ class AccountPayment(models.Model):
                     "account_id": account_id,
                     "balance": -balance,
                     "amount_currency": -amount_currency,
-                    "currency_id": self.currency_id.id,
+                    "currency_id": currency_id,
                 }
             )
 
@@ -204,12 +220,33 @@ class AccountPayment(models.Model):
 
         if wth_lines:
             wth_balance = sum(line["balance"] for line in wth_lines)
-            wth_amount_currency = sum(line["amount_currency"] for line in wth_lines)
+            # Suma directa de amount_currency de las líneas de retención. Cuando el pago es en moneda
+            # extranjera, las withholding lines usan moneda de compañía (ARS) y por lo tanto este valor
+            # está en ARS. Lo usamos para revertir el ajuste que hizo base Odoo sobre la liquidez.
+            raw_wth_amount_currency = sum(line["amount_currency"] for line in wth_lines)
+
+            # Para ajustar la contrapartida necesitamos el equivalente en moneda del pago.
+            # Cuando el pago es en moneda extranjera, lo convertimos; si no, es el mismo valor.
+            if self.currency_id != self.company_id.currency_id:
+                conversion_rate = self.exchange_rate or 1.0
+                wth_amount_currency_pay = self.currency_id.round(wth_balance / conversion_rate)
+            else:
+                wth_amount_currency_pay = raw_wth_amount_currency
+
+            # Cuando force_amount_company_currency está activo, account_payment_pro ya estableció el balance
+            # correcto en la línea de liquidez (monto neto de retenciones) y ajustó la contrapartida para que
+            # el asiento cuadre. Si aquí volvemos a sumar/restar wth_balance sobre los balances, se produce un
+            # doble ajuste que rompe los importes en moneda de compañía. Por eso, solo ajustamos los balances
+            # cuando NO hay monto forzado.
+            has_forced_amount = bool(self.force_amount_company_currency)
 
             liquidity_lines = res.get("liquidity_lines", [])
             if liquidity_lines:
-                liquidity_lines[0]["balance"] += wth_balance
-                liquidity_lines[0]["amount_currency"] += wth_amount_currency
+                if not has_forced_amount:
+                    liquidity_lines[0]["balance"] += wth_balance
+                # Revertimos el ajuste de amount_currency que hizo base Odoo (usó raw_wth_amount_currency
+                # para restarlo de la liquidez).
+                liquidity_lines[0]["amount_currency"] += raw_wth_amount_currency
                 # if after adjustment the liquidity line is 0, we remove it
                 # esto podria ir a payment_pro y que cualquier liquidity line en zero no se cree (Es para caso de
                 # puro write off y/o solo retenciones)
@@ -219,12 +256,15 @@ class AccountPayment(models.Model):
             counterpart_lines = res.get("counterpart_lines", [])
             if counterpart_lines:
                 # the counterpart line (debt) should be the gross amount (net + withholdings)
-                counterpart_lines[0]["balance"] -= wth_balance
+                if not has_forced_amount:
+                    counterpart_lines[0]["balance"] -= wth_balance
                 # Solo sumo el valor de la retencion si no uso moneda de contrpartida
                 # porque sino ya esta incluido el total en el campo amount_currency
                 # Porque lo cambio Payment pro
                 if not self._use_counterpart_currency():
-                    counterpart_lines[0]["amount_currency"] -= wth_amount_currency
+                    # Usamos el equivalente en moneda del pago (no la suma raw) para que el
+                    # amount_currency de la contrapartida quede correctamente en la moneda del pago.
+                    counterpart_lines[0]["amount_currency"] -= wth_amount_currency_pay
 
         return res
 

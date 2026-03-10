@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-11 14:03+0000\n"
+"POT-Creation-Date: 2026-03-10 19:52+0000\n"
 "PO-Revision-Date: 2025-10-28 14:06+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -32,11 +32,7 @@ msgstr "<br/><strong>Nro. de OC:</strong>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
-msgid ""
-"<span class=\"o_form_label\">Firma en reportes</span>\n"
-"                        <span class=\"fa fa-lg fa-building-o\" "
-"title=\"Values set here are company-specific.\" aria-label=\"Values set here "
-"are company-specific.\" groups=\"base.group_multi_company\" role=\"img\"/>"
+msgid "<span class=\"o_form_label\">Firma en reportes</span>"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -570,6 +566,11 @@ msgstr "Esta opción permite abrir documentos en el reporte de pago."
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
 msgid "Vaciar contenido"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
+msgid "Values set here are company-specific."
 msgstr ""
 
 #. module: l10n_ar_ux

@@ -5,7 +5,7 @@
 from odoo import _, api, models
 from odoo.exceptions import UserError
 
-
+# Esta es la mejora del otro repo del ejercicio 3
 class AccountMove(models.Model):
     _inherit = "account.move"
 

@@ -18,6 +18,7 @@ class AccountJournal(models.Model):
         [("yes", "Yes"), ("no", "No"), ("according_to_partner", "According to partner VAT responsibility")],
         string="Discriminate taxes?",
         default="no",
+        default="no",
         required=True,
     )
     l10n_ar_afip_pos_partner_id = fields.Many2one(string="Dirección Punto de venta")

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-10 19:52+0000\n"
+"POT-Creation-Date: 2026-03-11 14:47+0000\n"
 "PO-Revision-Date: 2025-10-28 14:06+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -26,6 +26,21 @@ msgid "'Reporte de transferencia'"
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "27.00"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "31.05"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "4.05"
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_invoice_document
 msgid "<br/><strong>PO Number:</strong>"
 msgstr "<br/><strong>Nro. de OC:</strong>"
@@ -33,6 +48,16 @@ msgstr "<br/><strong>Nro. de OC:</strong>"
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
 msgid "<span class=\"o_form_label\">Firma en reportes</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "<span> on </span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "<strong>Total</strong>"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -533,7 +558,13 @@ msgid "Tax"
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "Tax 15%"
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model:ir.ui.menu,name:l10n_ar_ux.menu_action_afip_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
 msgid "Taxes"
 msgstr "Impuestos"
 
@@ -562,6 +593,11 @@ msgstr "Esta dirección se utiliza para los informes de facturación de este PdV
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
 msgid "This option enables open documents in the payment report."
 msgstr "Esta opción permite abrir documentos en el reporte de pago."
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "Untaxed amount"
+msgstr ""
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form

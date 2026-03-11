@@ -18,6 +18,7 @@ class AccountMove(models.Model):
             and x.company_id.country_id == self.env.ref("base.ar")
             and x.currency_id != x.company_id.currency_id
             and x.reversed_entry_id.currency_id == x.currency_id
+            and x.reversed_entry_id.currency_id == x.currency_id
         )
         for rec in ar_reversed_other_currency:
             rec.invoice_currency_rate = rec.reversed_entry_id.invoice_currency_rate

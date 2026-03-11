@@ -10,7 +10,6 @@ class AccountPayment(models.Model):
         """Method similar to the '_get_name_invoice_report' of l10n_latam_invoice_document
         Basically it allows different localizations to define it's own report
         This method should actually go in a sale_ux module that later can be extended by different localizations
-        Another option would be to use report_substitute module and setup a subsitution with a domain
         """
         self.ensure_one()
         if self.company_id.country_id.code == "AR" and self.is_internal_transfer:

@@ -56,7 +56,8 @@ class AccountPayment(models.Model):
             rec.l10n_ar_fiscal_position_id = (
                 self.env["account.fiscal.position"]
                 .with_company(rec.company_id)
-                .with_context(l10n_ar_withholding=True)
+                # TODO revisar porque llega active_test=False acá
+                .with_context(l10n_ar_withholding=True, active_test=True)
                 ._get_fiscal_position(address)
             )
 

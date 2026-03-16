@@ -43,9 +43,14 @@ class l10nArPaymentWithholding(models.Model):
                 sorted_to_pay_lines = sorted(
                     wth.payment_id.to_pay_move_line_ids, key=lambda a: a.date_maturity or a.date
                 )
+
                 # last line to be reconciled
                 partial_line = sorted_to_pay_lines[-1]
-                if -partial_line.amount_residual < -wth.payment_id.withholdable_advanced_amount:
+
+                if (
+                    -partial_line.amount_residual < -wth.payment_id.withholdable_advanced_amount
+                    and not wth.payment_id.withholding_warning
+                ):
                     raise UserError(
                         _(
                             "Seleccionó deuda por %s pero aparentente desea pagar %s. En la deuda seleccionada hay algunos comprobantes de mas que no van a poder ser pagados (%s). Deberá quitar dichos comprobantes de la deuda seleccionada para poder hacer el correcto cálculo de las retenciones."

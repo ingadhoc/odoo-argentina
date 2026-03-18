@@ -9,11 +9,7 @@ class l10nArPaymentWithholding(models.Model):
 
     payment_id = fields.Many2one("account.payment", required=True, ondelete="cascade")
     company_id = fields.Many2one(related="payment_id.company_id")
-    currency_id = fields.Many2one(related="payment_id.company_currency_id")  # C (ARS) — para amount
-    base_currency_id = fields.Many2one(
-        "res.currency",
-        related="payment_id.destination_currency_id",
-    )  # B — para base_amount
+    currency_id = fields.Many2one(related="payment_id.company_currency_id")  # C (ARS) — para amount y base_amount
     l10n_ar_tax_type = fields.Selection(related="tax_id.l10n_ar_tax_type")
     name = fields.Char(string="Number")
     ref = fields.Text(compute="_compute_amount", store=True, readonly=False)
@@ -21,7 +17,7 @@ class l10nArPaymentWithholding(models.Model):
     withholding_sequence_id = fields.Many2one(related="tax_id.l10n_ar_withholding_sequence_id")
     base_amount = fields.Monetary(
         compute="_compute_base_amount",
-        currency_field="base_currency_id",
+        currency_field="currency_id",  # C (ARS)
         store=True,
         readonly=False,
     )
@@ -45,48 +41,47 @@ class l10nArPaymentWithholding(models.Model):
         """practicamente mismo codigo que en l10n_ar.payment.register.withholding pero usamos campos "selected_debt_"""
         self.payment_id._compute_to_pay_amount()
         for wth in self.filtered(lambda x: x.payment_id.partner_type == "supplier"):
+            pay = wth.payment_id
             # calculamos advance_amount
             # si el adelanto es negativo estamos pagando parcialmente una
             # factura y ocultamos el campo sin impuesto y el metodo _get_withholdable_advanced_amount nos devuelve
             # el proporcional descontando de el iva a lo que se esta pagando
-            advance_amount = wth.payment_id.withholdable_advanced_amount
+            advance_amount = pay.withholdable_advanced_amount
             tax = wth._get_withholding_tax()
-            if advance_amount < 0.0 and wth.payment_id.to_pay_move_line_ids:
-                sorted_to_pay_lines = sorted(
-                    wth.payment_id.to_pay_move_line_ids, key=lambda a: a.date_maturity or a.date
-                )
+            if advance_amount < 0.0 and pay.to_pay_move_line_ids:
+                sorted_to_pay_lines = sorted(pay.to_pay_move_line_ids, key=lambda a: a.date_maturity or a.date)
 
                 # last line to be reconciled
                 partial_line = sorted_to_pay_lines[-1]
 
                 # Comparar en moneda B (ambos lados)
-                pay = wth.payment_id
                 if pay.destination_currency_id and pay.destination_currency_id != pay.company_currency_id:
                     line_residual = abs(partial_line.amount_residual_currency)
                 else:
                     line_residual = abs(partial_line.amount_residual)
 
-                if line_residual < abs(wth.payment_id.withholdable_advanced_amount):
+                if line_residual < abs(pay.withholdable_advanced_amount):
                     raise UserError(
                         _(
                             "Seleccionó deuda por %s pero aparentente desea pagar %s. En la deuda seleccionada hay algunos comprobantes de mas que no van a poder ser pagados (%s). Deberá quitar dichos comprobantes de la deuda seleccionada para poder hacer el correcto cálculo de las retenciones."
                         )
                         % (
-                            wth.payment_id.selected_debt,
-                            wth.payment_id.to_pay_amount,
+                            pay.selected_debt,
+                            pay.to_pay_amount,
                             partial_line.move_id.display_name,
                         )
                     )
-                advance_amount = wth.payment_id.unreconciled_amount
+                advance_amount = pay.unreconciled_amount
                 if tax.l10n_ar_tax_type != "iibb_total":
-                    advance_amount = advance_amount * (
-                        wth.payment_id.selected_debt_untaxed / wth.payment_id.selected_debt
-                    )
+                    advance_amount = advance_amount * (pay.selected_debt_untaxed / pay.selected_debt)
 
             if tax.l10n_ar_tax_type == "iibb_total":
-                wth.base_amount = wth.payment_id.selected_debt + advance_amount
+                base_in_b = pay.selected_debt + advance_amount
             else:
-                wth.base_amount = wth.payment_id.selected_debt_untaxed + advance_amount
+                base_in_b = pay.selected_debt_untaxed + advance_amount
+
+            # base_amount siempre en C (ARS): convertir de B a C usando la tasa del pago
+            wth.base_amount = pay.company_currency_id.round(base_in_b * pay._get_withholding_rate())
 
         # esto lo hicimos así para soportar el caso de una posición fiscal que tenga más de un impuesto con ratio,
         # pero actualmente una misma posicion fiscal no puedo agregar 2 impuestos del mismo grupo (ej VAT Withholding)
@@ -111,21 +106,18 @@ class l10nArPaymentWithholding(models.Model):
         pay = self.payment_id
         company_currency = pay.company_currency_id
 
-        # 1. Convertir base de B a C usando rate del pago
-        withholding_rate = pay._get_withholding_rate()
-        base_in_c = company_currency.round(self.base_amount * withholding_rate)
-
-        # 2. Para ganancias: sumar acumulados del período (ya en C)
+        # base_amount ya está en C (ARS) — no se necesita conversión
+        # Para ganancias: sumar acumulados del período (ya en C)
         if tax.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
             same_period_withholdings = self._get_same_period_withholdings_amount()
             same_period_base = self._get_same_period_base_amount()
-            net_amount = base_in_c + same_period_base  # C + C = C
+            net_amount = self.base_amount + same_period_base  # C + C = C
         else:
-            net_amount = base_in_c
+            net_amount = self.base_amount
 
         net_amount = max(0, net_amount - tax.l10n_ar_non_taxable_amount)
 
-        # 3. compute_all SIEMPRE en ARS (C)
+        # compute_all SIEMPRE en ARS (C)
         taxes_res = tax.compute_all(
             net_amount,
             currency=company_currency,
@@ -141,12 +133,12 @@ class l10nArPaymentWithholding(models.Model):
         tax_account_id = taxes_res["taxes"][0]["account_id"]
         tax_repartition_line_id = taxes_res["taxes"][0]["tax_repartition_line_id"]
 
-        # 4. Ref: usar company_currency para formatear (montos en ARS)
+        # Ref: usar company_currency para formatear (montos en ARS)
         ref = False
         if tax.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
             f = company_currency.format
             if net_amount <= 0:
-                ref = f"{f(base_in_c)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)} = {f(base_in_c + same_period_base - tax.l10n_ar_non_taxable_amount)} (no corresponde aplicar)"
+                ref = f"{f(self.base_amount)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)} = {f(self.base_amount + same_period_base - tax.l10n_ar_non_taxable_amount)} (no corresponde aplicar)"
             # if it is earnings scale we calculate according to the scale.
             if tax.l10n_ar_tax_type == "earnings_scale":
                 if not tax.l10n_ar_scale_id:
@@ -175,10 +167,10 @@ class l10nArPaymentWithholding(models.Model):
                 tax_amount = ((net_amount - escala.excess_amount) * escala.percentage / 100) + escala.fixed_amount
                 ref = (
                     ref
-                    or f"({f(base_in_c)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)} - {f(escala.excess_amount)}) * {escala.percentage}% + {f(escala.fixed_amount)} - {f(same_period_withholdings)}"
+                    or f"({f(self.base_amount)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)} - {f(escala.excess_amount)}) * {escala.percentage}% + {f(escala.fixed_amount)} - {f(same_period_withholdings)}"
                 )
             else:
-                ref = f"({f(base_in_c)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)}) * {tax.amount}% - {f(same_period_withholdings)}"
+                ref = f"({f(self.base_amount)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)}) * {tax.amount}% - {f(same_period_withholdings)}"
             # deduct withholdings from the same period
             tax_amount -= same_period_withholdings
 

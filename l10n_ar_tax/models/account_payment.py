@@ -91,7 +91,16 @@ class AccountPayment(models.Model):
     @api.onchange("withholdings_amount")
     def _onchange_withholdings(self):
         # solo queremos re-computar en pagos de proveedor
-        for rec in self.filtered(lambda x: x.partner_type == "supplier" and not x._is_latam_check_payment()):
+        for rec in self.filtered(
+            lambda x: x.partner_type == "supplier"
+            and x.payment_method_code
+            not in [
+                "in_third_party_checks",
+                "out_third_party_checks",
+                "return_third_party_checks",
+                "new_third_party_checks",
+            ]
+        ):
             # el compute_withholdings o el _compute_withholdings?
             amount = rec.amount + rec.payment_difference
             # no pasamos a importes negativos (por ej. si se ponene retenciones grandes) porque es molesto

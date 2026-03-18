@@ -5,15 +5,15 @@ from odoo.tests import tagged
 
 @tagged("-at_install", "post_install")
 class TestPaymentWithholdingValidation(TestArWithholdingArRi):
-    def setUp(self):
-        super().setUp()
-        self.today = fields.Date.today()
-        self.caba_tax_perception = self.env.ref("account.%i_ri_tax_percepcion_iibb_caba_aplicada" % self.env.company.id)
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.caba_tax_perception = cls.env.ref("account.%i_ri_tax_percepcion_iibb_caba_aplicada" % cls.env.company.id)
         # Create caba perception tax with amounts 1% and 2%
-        self.caba_tax_perception_with_amount_1 = self.caba_tax_perception.copy(
+        cls.caba_tax_perception_with_amount_1 = cls.caba_tax_perception.copy(
             default={"amount_type": "percent", "amount": 1}
         )
-        self.caba_tax_perception_with_amount_2 = self.caba_tax_perception.copy(
+        cls.caba_tax_perception_with_amount_2 = cls.caba_tax_perception.copy(
             default={"amount_type": "percent", "amount": 2}
         )
 

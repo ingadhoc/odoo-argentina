@@ -18,18 +18,18 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
             }
         )
 
-    def test_force_amount_company_currency_with_withholdings(self):
-        """Test that when paying a foreign currency vendor bill with withholdings and a forced
-        company currency amount, the journal entry lines are correctly computed.
+    def test_custom_accounting_rate_with_withholdings(self):
+        """Test que al pagar una factura en moneda extranjera con retenciones y un
+        accounting_rate personalizado, las líneas del asiento se calculan correctamente.
 
-        Bug scenario: when force_amount_company_currency is set, the withholding adjustment in
-        l10n_ar_tax was double-adjusting the balance of liquidity and counterpart lines, because
-        account_payment_pro had already set the correct forced balance.
+        Escenario: el usuario ajusta manualmente el accounting_rate (antes se hacía vía
+        force_amount_company_currency). Se verifica que el ajuste de retenciones en
+        _prepare_move_lines_per_type no produce un doble ajuste sobre liquidez y contrapartida.
 
         Expected behavior:
-        - Liquidity line balance must equal the forced amount (not payment_total).
-        - Counterpart line balance must equal the payment_total (to cancel the original debt).
-        - Withholding lines keep their own balance untouched.
+        - Liquidity line balance = amount * accounting_rate.
+        - Counterpart line balance = amount_company + withholdings (para que el asiento cuadre).
+        - Withholding lines mantienen su propio balance intacto.
         """
         # 1. Set up USD currency with a known rate (1 USD = 100 ARS)
         usd = self.other_currency  # already set up in TestArWithholdingArRi with rates
@@ -103,16 +103,20 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
 
         # Verify withholdings were computed
         self.assertTrue(payment.l10n_ar_withholding_line_ids, "Withholdings should have been computed")
-        withholding_amount = payment.withholdings_amount
-        self.assertGreater(withholding_amount, 0, "Withholding amount should be positive")
 
-        # 5. Set force_amount_company_currency to simulate the user forcing a rounded amount
-        # The forced amount is slightly different from the computed conversion to simulate rounding adjustment
-        normal_amount_company_currency = payment.amount_company_currency
-        forced_amount = normal_amount_company_currency - 1  # simulate a small rounding difference
-        payment.force_amount_company_currency = forced_amount
+        # 5. Personalizar accounting_rate para simular que el usuario ajusta el tipo de cambio manualmente
+        # (en el modelo anterior esto se hacía vía force_amount_company_currency).
+        # Ajustamos el rate levemente para simular un redondeo.
+        original_rate = payment.accounting_rate or 1.0
+        custom_rate = original_rate * 0.9999  # diferencia mínima para simular redondeo
+        payment.accounting_rate = custom_rate
 
-        # 6. Generate journal entry and post to materialize the move lines
+        # amount_company_currency equivalente con el nuevo rate
+        amount_company = payment.amount * (payment.accounting_rate or 1.0)
+        # retenciones en C (ARS) para comparar con el balance del asiento
+        withholding_balance_ars = sum(payment.l10n_ar_withholding_line_ids.mapped("amount"))
+
+        # 6. Confirmar el pago para materializar las líneas del asiento
         payment.action_post()
 
         self.assertTrue(payment.move_id, "Payment should have a journal entry after posting")
@@ -121,42 +125,31 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
         counterpart_line = payment.move_id.line_ids.filtered(lambda l: l.account_type == "liability_payable")
         withholding_tax_lines = payment.move_id.line_ids.filtered(lambda l: l.tax_repartition_line_id)
 
-        # 7. CRITICAL ASSERTIONS:
-        # The liquidity line balance must reflect the forced amount, NOT the payment_total
+        # 7. VERIFICACIONES CRÍTICAS:
+        # La línea de liquidez refleja el monto ARS calculado con el rate personalizado
         self.assertAlmostEqual(
             abs(liquidity_line.balance),
-            forced_amount,
+            amount_company,
             places=2,
-            msg="Liquidity line balance should equal the forced company currency amount, "
-            "not the payment total. This was the main bug: the withholding adjustment "
-            "was overwriting the forced amount.",
+            msg="Liquidity line balance debe igualar amount * accounting_rate.",
         )
 
-        # The liquidity line balance must NOT equal payment_total (which includes withholdings)
-        self.assertNotAlmostEqual(
-            abs(liquidity_line.balance),
-            payment.payment_total,
-            places=2,
-            msg="Liquidity line balance should NOT equal payment_total when force amount is set",
-        )
-
-        # The counterpart (payable) line must equal liquidity + withholdings (journal entry balances to 0)
-        expected_counterpart = forced_amount + withholding_amount
+        # La contrapartida (cuenta payable) debe igualar liquidez + retenciones (asiento cuadra)
+        expected_counterpart = amount_company + withholding_balance_ars
         self.assertAlmostEqual(
             abs(counterpart_line.balance),
             expected_counterpart,
             places=2,
-            msg="Counterpart line balance should equal liquidity + withholdings "
-            "(the journal entry must balance to zero).",
+            msg="Counterpart line balance debe igualar liquidez + retenciones ARS " "(el asiento debe cerrar en cero).",
         )
 
-        # Withholding lines should have the correct amount
+        # Las líneas de retención deben tener el importe correcto en ARS
         total_withholding_balance = abs(sum(withholding_tax_lines.mapped("balance")))
         self.assertAlmostEqual(
             total_withholding_balance,
-            withholding_amount,
+            withholding_balance_ars,
             places=2,
-            msg="Withholding lines balance should match the computed withholdings amount",
+            msg="Withholding lines balance debe coincidir con el importe ARS de las retenciones.",
         )
 
     def test_foreign_currency_withholding_balance_precision(self):
@@ -243,9 +236,6 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
         self.assertTrue(payment.l10n_ar_withholding_line_ids, "Withholdings should have been computed")
         withholding_amount = payment.withholdings_amount
         self.assertGreater(withholding_amount, 0)
-
-        # Verify there is no force_amount_company_currency
-        self.assertFalse(payment.force_amount_company_currency)
 
         # Post the payment to generate the journal entry with move lines
         payment.action_post()

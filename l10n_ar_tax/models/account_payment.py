@@ -451,7 +451,7 @@ class AccountPayment(models.Model):
 
     def _get_payment_bundle_key(self):
         if self.company_id.country_id.code == "AR" and self.env.context.get("print_in_bundles"):
-            return f"{self.company_id.id}-{self.partner_id.id}-{self.payment_type}-{self.currency_id.id if self.other_currency else self.counterpart_currency_id.id}"
+            return f"{self.company_id.id}-{self.partner_id.id}-{self.payment_type}-{self.currency_id.id if self.currency_id != self.company_currency_id else self.counterpart_currency_id.id}"
         return self.id
 
     def _get_payment_bundles(self):

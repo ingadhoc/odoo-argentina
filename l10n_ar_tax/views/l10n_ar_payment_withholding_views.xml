@@ -27,7 +27,6 @@
                 <field name="payment_id"/>
                 <field name="withholding_sequence_id"/>
                 <field name="currency_id" column_invisible="True"/>
-                <field name="base_currency_id" column_invisible="True"/>
                 <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', '=', parent.company_id)]" options="{'no_create': True}"/>
                 <field name="name"/>
                 <field name="base_amount"/>

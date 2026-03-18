@@ -9,16 +9,25 @@ class l10nArPaymentWithholding(models.Model):
 
     payment_id = fields.Many2one("account.payment", required=True, ondelete="cascade")
     company_id = fields.Many2one(related="payment_id.company_id")
-    currency_id = fields.Many2one(related="payment_id.company_currency_id")
+    currency_id = fields.Many2one(related="payment_id.company_currency_id")  # C (ARS) — para amount
+    base_currency_id = fields.Many2one(
+        "res.currency",
+        related="payment_id.destination_currency_id",
+    )  # B — para base_amount
     l10n_ar_tax_type = fields.Selection(related="tax_id.l10n_ar_tax_type")
     name = fields.Char(string="Number")
     ref = fields.Text(compute="_compute_amount", store=True, readonly=False)
     tax_id = fields.Many2one("account.tax", check_company=True, required=True)
     withholding_sequence_id = fields.Many2one(related="tax_id.l10n_ar_withholding_sequence_id")
-    base_amount = fields.Monetary(compute="_compute_base_amount", store=True, readonly=False)
+    base_amount = fields.Monetary(
+        compute="_compute_base_amount",
+        currency_field="base_currency_id",
+        store=True,
+        readonly=False,
+    )
     # por ahora dejamos amount a mano como era antes y que solo se compute con el compute withholdings desde arriba
     # luego vemos de hacer que toda la logica este acá
-    amount = fields.Monetary(compute="_compute_amount", store=True, readonly=False)
+    amount = fields.Monetary(compute="_compute_amount", store=True, readonly=False)  # C (ARS)
 
     _uniq_line = models.Constraint(
         "unique(tax_id, payment_id)",
@@ -50,10 +59,14 @@ class l10nArPaymentWithholding(models.Model):
                 # last line to be reconciled
                 partial_line = sorted_to_pay_lines[-1]
 
-                if (
-                    -partial_line.amount_residual < -wth.payment_id.withholdable_advanced_amount
-                    and not wth.payment_id.withholding_warning
-                ):
+                # Comparar en moneda B (ambos lados)
+                pay = wth.payment_id
+                if pay.destination_currency_id and pay.destination_currency_id != pay.company_currency_id:
+                    line_residual = abs(partial_line.amount_residual_currency)
+                else:
+                    line_residual = abs(partial_line.amount_residual)
+
+                if line_residual < abs(wth.payment_id.withholdable_advanced_amount):
                     raise UserError(
                         _(
                             "Seleccionó deuda por %s pero aparentente desea pagar %s. En la deuda seleccionada hay algunos comprobantes de mas que no van a poder ser pagados (%s). Deberá quitar dichos comprobantes de la deuda seleccionada para poder hacer el correcto cálculo de las retenciones."
@@ -94,34 +107,46 @@ class l10nArPaymentWithholding(models.Model):
                 )
                 % tax.name
             )
-        # if it is earnings withholding, then we accumulate the tax base for the period
+
+        pay = self.payment_id
+        company_currency = pay.company_currency_id
+
+        # 1. Convertir base de B a C usando rate del pago
+        withholding_rate = pay._get_withholding_rate()
+        base_in_c = company_currency.round(self.base_amount * withholding_rate)
+
+        # 2. Para ganancias: sumar acumulados del período (ya en C)
         if tax.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
             same_period_withholdings = self._get_same_period_withholdings_amount()
             same_period_base = self._get_same_period_base_amount()
-            net_amount = self.base_amount + same_period_base
+            net_amount = base_in_c + same_period_base  # C + C = C
         else:
-            net_amount = self.base_amount
+            net_amount = base_in_c
+
         net_amount = max(0, net_amount - tax.l10n_ar_non_taxable_amount)
+
+        # 3. compute_all SIEMPRE en ARS (C)
         taxes_res = tax.compute_all(
             net_amount,
-            currency=self.payment_id.currency_id,
+            currency=company_currency,
             quantity=1.0,
             product=False,
             partner=False,
             is_refund=False,
         )
-        tax_amount = self.currency_id.round(taxes_res["total_included"] - taxes_res["total_excluded"])
+        tax_amount = company_currency.round(taxes_res["total_included"] - taxes_res["total_excluded"])
         # TODO: When Odoo fixes the compute_all method of account_tax, uncomment the line below and
         # remove the line above. See Adhoc ticket 101778 for more information.
         # tax_amount = taxes_res["taxes"][0]["amount"]
         tax_account_id = taxes_res["taxes"][0]["account_id"]
         tax_repartition_line_id = taxes_res["taxes"][0]["tax_repartition_line_id"]
 
+        # 4. Ref: usar company_currency para formatear (montos en ARS)
         ref = False
         if tax.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
-            f = self.currency_id.format
+            f = company_currency.format
             if net_amount <= 0:
-                ref = f"{f(self.base_amount)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)} = {f(self.base_amount + same_period_base - tax.l10n_ar_non_taxable_amount)} (no corresponde aplicar)"
+                ref = f"{f(base_in_c)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)} = {f(base_in_c + same_period_base - tax.l10n_ar_non_taxable_amount)} (no corresponde aplicar)"
             # if it is earnings scale we calculate according to the scale.
             if tax.l10n_ar_tax_type == "earnings_scale":
                 if not tax.l10n_ar_scale_id:
@@ -148,14 +173,12 @@ class l10nArPaymentWithholding(models.Model):
                     limit=1,
                 )
                 tax_amount = ((net_amount - escala.excess_amount) * escala.percentage / 100) + escala.fixed_amount
-                # for eg. (1000000.0 + 0.0 - 7870.0 - 1231231) * 7.0 % + 1231231 - 0.0
                 ref = (
                     ref
-                    or f"({f(self.base_amount)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)} - {f(escala.excess_amount)}) * {escala.percentage}% + {f(escala.fixed_amount)} - {f(same_period_withholdings)}"
+                    or f"({f(base_in_c)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)} - {f(escala.excess_amount)}) * {escala.percentage}% + {f(escala.fixed_amount)} - {f(same_period_withholdings)}"
                 )
             else:
-                # for eg. (1000000.0 + 0.0 - 7870.0) * 7.0% - 0.0
-                ref = f"({f(self.base_amount)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)}) * {tax.amount}% - {f(same_period_withholdings)}"
+                ref = f"({f(base_in_c)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)}) * {tax.amount}% - {f(same_period_withholdings)}"
             # deduct withholdings from the same period
             tax_amount -= same_period_withholdings
 

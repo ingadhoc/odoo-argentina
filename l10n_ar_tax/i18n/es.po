@@ -1225,7 +1225,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
 msgid ""
-"Seleccionó deuda por %s pero aparentente desea pagar %s. En la deuda "
+"Seleccionó deuda por %s pero aparentemente desea pagar %s. En la deuda "
 "seleccionada hay algunos comprobantes de mas que no van a poder ser pagados "
 "(%s). Deberá quitar dichos comprobantes de la deuda seleccionada para poder "
 "hacer el correcto cálculo de las retenciones."

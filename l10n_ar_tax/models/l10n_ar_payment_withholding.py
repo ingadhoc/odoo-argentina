@@ -41,6 +41,8 @@ class l10nArPaymentWithholding(models.Model):
         "payment_id.selected_debt_untaxed",
         "payment_id.withholdable_advanced_amount",
         "payment_id.unreconciled_amount",  # esta dependencia ya está a través de withholdable_advanced_amount
+        "payment_id.counterpart_rate",
+        "payment_id.accounting_rate",
     )
     def _compute_base_amount(self):
         """practicamente mismo codigo que en l10n_ar.payment.register.withholding pero usamos campos "selected_debt_"""

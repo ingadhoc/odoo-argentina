@@ -65,17 +65,17 @@ class AccountPayment(models.Model):
         Devuelve multiplicador directo: base_in_B * rate = base_in_C.
         Ejemplo: B=USD, C=ARS, rate=1200 -> 100 USD * 1200 = 120.000 ARS.
 
-        Fórmula general: accounting_rate / counterpart_rate
-        Esto funciona para todos los casos:
-          B==C: accounting/counterpart = X/X = 1.0
-          B==A: accounting/1.0 = accounting_rate (A->C)
-          A==C: 1.0/counterpart = 1/counterpart_rate (invierte A->B para obtener B->C)
-          Arbitraje: accounting/counterpart (transitividad)
+        Usa conversión directa B->C para evitar acumulación de errores de redondeo.
         """
         self.ensure_one()
-        counterpart = self.counterpart_rate or 1.0
-        accounting = self.accounting_rate or 1.0
-        return accounting / counterpart if counterpart else 1.0
+        if not self.destination_currency_id or self.destination_currency_id == self.company_currency_id:
+            return 1.0
+        return self.env["res.currency"]._get_conversion_rate(
+            from_currency=self.destination_currency_id,  # B
+            to_currency=self.company_currency_id,  # C
+            company=self.company_id,
+            date=self.date or fields.Date.context_today(self),
+        )
 
     @api.depends("l10n_ar_withholding_line_ids.amount")
     def _compute_withholdings_amount(self):
@@ -111,7 +111,7 @@ class AccountPayment(models.Model):
         # solo queremos re-computar en pagos de proveedor
         for rec in self.filtered(lambda x: x.partner_type == "supplier" and not x._is_latam_check_payment()):
             # el compute_withholdings o el _compute_withholdings?
-            amount = rec.amount + rec.payment_difference
+            amount = rec.amount + rec.payment_difference * self._get_withholding_rate()
             # no pasamos a importes negativos (por ej. si se ponene retenciones grandes) porque es molesto
             # empieza a salir un raise que no deja editar cosas
             rec.amount = amount if amount > 0 else 0

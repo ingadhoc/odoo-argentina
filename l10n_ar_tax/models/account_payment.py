@@ -151,7 +151,13 @@ class AccountPayment(models.Model):
         # diferencias de redondeo (ej: 84,894.75 ARS -> 60 USD -> 84,900 ARS en el roundtrip).
         use_company_currency = self.currency_id != self.company_id.currency_id
 
-        for line in self.l10n_ar_withholding_line_ids:
+        # Omitimos apuntes contables para líneas que no sean de ganancias y tengan importe cero;
+        # el resto (ganancias, o no-ganancias con importe > 0) sí genera apunte.
+        lines_with_accounting_entry = self.l10n_ar_withholding_line_ids.filtered(
+            lambda l: l.tax_id.l10n_ar_tax_type in ["earnings", "earnings_scale"] or l.amount
+        )
+
+        for line in lines_with_accounting_entry:
             # nuestro approach esta quedando distinto al del wizard. En nuestras lineas tenemos los importes en moneda
             # de la cia, por lo cual el line.amount aca representa eso y tenemos que convertirlo para el amount_currency
 
@@ -176,8 +182,8 @@ class AccountPayment(models.Model):
                 }
             )
 
-        for base_amount in list(set(self.l10n_ar_withholding_line_ids.mapped("base_amount"))):
-            withholding_lines = self.l10n_ar_withholding_line_ids.filtered(lambda x: x.base_amount == base_amount)
+        for base_amount in list(set(lines_with_accounting_entry.mapped("base_amount"))):
+            withholding_lines = lines_with_accounting_entry.filtered(lambda x: x.base_amount == base_amount)
             nice_base_label = ",".join(withholding_lines.filtered("name").mapped("name"))
             account_id = self.company_id.l10n_ar_tax_base_account_id.id
             balance = self.company_id.currency_id.round(sign * base_amount)
@@ -390,10 +396,10 @@ class AccountPayment(models.Model):
             rec.l10n_ar_withholding_line_ids = withholdings
             # Si hay retenciones que no son de ganancias y el importe a retener es 0 las quitamos
             # Ejemplo: retenciones en pagos de notas de crédito (el monto base es negativo)
-            to_remove = rec.l10n_ar_withholding_line_ids.filtered(
-                lambda wth: wth.amount == 0 and wth.tax_id.l10n_ar_tax_type not in ["earnings", "earnings_scale"]
-            )
-            rec.l10n_ar_withholding_line_ids -= to_remove
+            # to_remove = rec.l10n_ar_withholding_line_ids.filtered(
+            #     lambda wth: wth.amount == 0 and wth.tax_id.l10n_ar_tax_type not in ["earnings", "earnings_scale"]
+            # )
+            # rec.l10n_ar_withholding_line_ids -= to_remove
 
     def compute_to_pay_amount_for_check(self):
         checks_payments = self.filtered(

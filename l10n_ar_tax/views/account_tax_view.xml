@@ -46,6 +46,22 @@
             <field name="l10n_ar_code" position="attributes">
                 <attribute name="invisible">country_code != 'AR'</attribute>
             </field>
+            <!-- l10n_ar_non_taxable_amount: solo Ganancias (ret. proveedor) -->
+            <field name="l10n_ar_non_taxable_amount" position="attributes">
+                <attribute name="invisible">country_code != 'AR' or l10n_ar_type_tax_use != 'supplier' or l10n_ar_tax_type not in ['earnings', 'earnings_scale']</attribute>
+            </field>
+            <!-- l10n_ar_minimum_threshold: Ganancias + IIBB retención proveedor -->
+            <field name="l10n_ar_minimum_threshold" position="attributes">
+                <attribute name="invisible">country_code != 'AR' or l10n_ar_type_tax_use != 'supplier' or l10n_ar_tax_type not in ['earnings', 'earnings_scale', 'iibb_untaxed', 'iibb_total']</attribute>
+            </field>
+            <!-- Nuevos campos: solo IIBB retención proveedor -->
+            <field name="l10n_ar_minimum_threshold" position="after">
+                <field name="company_currency_id" invisible="1"/>
+                <field name="l10n_ar_payment_minimum_threshold"
+                    invisible="country_code != 'AR' or l10n_ar_type_tax_use != 'supplier' or l10n_ar_tax_type not in ['iibb_untaxed', 'iibb_total']"/>
+                <field name="l10n_ar_base_minimum_threshold"
+                    invisible="country_code != 'AR' or l10n_ar_type_tax_use != 'supplier' or l10n_ar_tax_type not in ['iibb_untaxed', 'iibb_total']"/>
+            </field>
         </field>
     </record>
 

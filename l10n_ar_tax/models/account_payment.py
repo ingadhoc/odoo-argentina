@@ -163,7 +163,7 @@ class AccountPayment(models.Model):
             sign = -1
 
         conversion_rate = self.accounting_rate or 1.0
-        # Cuando el pago es en moneda extranjera, las retenciones se calculan en moneda de la compañía (ARS).
+        # Cuando el pago es en moneda extranjera (A≠C), las retenciones se calculan en moneda de la compañía (ARS).
         # Usamos moneda de la compañía en las move lines de retención para evitar que _inverse_amount_currency
         # recalcule el balance a partir de un amount_currency redondeado en moneda extranjera, lo que produce
         # diferencias de redondeo (ej: 84,894.75 ARS -> 60 USD -> 84,900 ARS en el roundtrip).
@@ -175,6 +175,13 @@ class AccountPayment(models.Model):
             lambda l: l.tax_id.l10n_ar_tax_type in ["earnings", "earnings_scale"] or l.amount
         )
 
+        # Caso A=C (ej: pago en ARS) pero B≠C (ej: deuda en USD).
+        # Las withholding lines SIEMPRE van en ARS (currency_id=C) con balance y amount_currency en ARS.
+        # Odoo base resta withholding_amount_currency de la liquidez; si la línea fuera en USD haría
+        # -1.707.676 - (-25 USD) en ARS → desbalance. Al mantener currency_id=ARS el resta es en ARS:
+        # -1.707.676 - (-50.000) = -1.657.676, que es correcto.
+        # El ajuste en USD para la contrapartida (AP) se hace en _prepare_move_lines_per_type.
+
         for line in lines_with_accounting_entry:
             # nuestro approach esta quedando distinto al del wizard. En nuestras lineas tenemos los importes en moneda
             # de la cia, por lo cual el line.amount aca representa eso y tenemos que convertirlo para el amount_currency
@@ -182,9 +189,12 @@ class AccountPayment(models.Model):
             __, account_id, tax_repartition_line_id, __ = line._tax_compute_all_helper()
             balance = self.company_id.currency_id.round(sign * line.amount)
             if use_company_currency:
+                # A≠C: usar ARS directo para evitar rounding en moneda extranjera
                 amount_currency = balance
                 currency_id = self.company_id.currency_id.id
             else:
+                # A=C (ARS) o A=B=C: currency_id=ARS, amount_currency=balance
+                # (en el caso A=B=C=ARS conversion_rate=1 y el resultado es idéntico)
                 amount_currency = self.currency_id.round(balance / conversion_rate)
                 currency_id = self.currency_id.id
             res.append(
@@ -244,10 +254,19 @@ class AccountPayment(models.Model):
         wth_lines = res.get("withholding_lines", [])
         if wth_lines:
             wth_balance = sum(line["balance"] for line in wth_lines)
-            # Suma directa de amount_currency de las líneas de retención. Cuando el pago es en moneda
-            # extranjera, las withholding lines usan moneda de compañía (ARS) y por lo tanto este valor
-            # está en ARS. Lo usamos para revertir el ajuste que hizo base Odoo sobre la liquidez.
+            # Suma directa de amount_currency de las líneas de retención.
+            # Todas las withholding lines están en ARS (currency_id=C), así que este valor
+            # está siempre en ARS independientemente del caso (A=C o A≠C).
             raw_wth_amount_currency = sum(line["amount_currency"] for line in wth_lines)
+
+            # Caso A=C (ej: ARS) pero B≠C (ej: USD): las withholding lines están en ARS.
+            # La contrapartida AP está en USD (payment_pro la puso en counterpart_currency_id).
+            # Necesitamos restar el equivalente USD de las retenciones del amount_currency de la AP.
+            counterpart_is_foreign = (
+                self.currency_id == self.company_id.currency_id
+                and self.counterpart_currency_id
+                and self.counterpart_currency_id != self.company_currency_id
+            )
 
             # Para ajustar la contrapartida necesitamos el equivalente en moneda del pago.
             # Cuando el pago es en moneda extranjera, lo convertimos; si no, es el mismo valor.
@@ -262,7 +281,8 @@ class AccountPayment(models.Model):
             if not has_checks and liquidity_lines:
                 liquidity_lines[0]["balance"] += wth_balance
                 # Revertimos el ajuste de amount_currency que hizo base Odoo (usó raw_wth_amount_currency
-                # para restarlo de la liquidez).
+                # para restarlo de la liquidez). Las wth lines siempre están en ARS, así que
+                # raw_wth_amount_currency está en ARS y puede sumarse directamente.
                 liquidity_lines[0]["amount_currency"] += raw_wth_amount_currency
                 # if after adjustment the liquidity line is 0, we remove it
                 # esto podria ir a payment_pro y que cualquier liquidity line en zero no se cree (Es para caso de
@@ -274,10 +294,17 @@ class AccountPayment(models.Model):
             if counterpart_lines:
                 # the counterpart line (debt) should be the gross amount (net + withholdings)
                 counterpart_lines[0]["balance"] -= wth_balance
-                # Solo ajustamos amount_currency de la contrapartida si B1 == A (misma moneda).
-                # Cuando B1 != A, el amount_currency ya refleja el total en B1 y no hay que restarle
-                # el equivalente en A de las retenciones.
-                if not (self.counterpart_currency_id and self.counterpart_currency_id != self.currency_id):
+                if counterpart_is_foreign:
+                    # A=C=ARS, B=USD: la AP está en USD. Restarle el equivalente USD de las retenciones.
+                    # withholding_rate = accounting_rate / counterpart_rate = 1.0 / counterpart_rate
+                    withholding_rate = self._get_withholding_rate()
+                    if withholding_rate:
+                        wth_amount_in_b = self.counterpart_currency_id.round(wth_balance / withholding_rate)
+                        counterpart_lines[0]["amount_currency"] -= wth_amount_in_b
+                elif not (self.counterpart_currency_id and self.counterpart_currency_id != self.currency_id):
+                    # Solo ajustamos amount_currency de la contrapartida si B1 == A (misma moneda).
+                    # Cuando B1 != A (y no es el caso counterpart_is_foreign), el amount_currency ya
+                    # refleja el total en B1 y no hay que restarle el equivalente en A de las retenciones.
                     # Usamos el equivalente en moneda del pago (no la suma raw) para que el
                     # amount_currency de la contrapartida quede correctamente en la moneda del pago.
                     counterpart_lines[0]["amount_currency"] -= wth_amount_currency_pay

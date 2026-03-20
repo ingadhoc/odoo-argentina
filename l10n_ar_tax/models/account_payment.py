@@ -142,25 +142,6 @@ class AccountPayment(models.Model):
     #         # rec.force_amount_company_currency += rec.payment_difference
     #         # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
 
-    def action_confirm(self):
-        checks_payments = self.filtered(
-            lambda x: x.payment_method_code in ["in_third_party_checks", "out_third_party_checks"]
-        )
-        for rec in checks_payments:
-            previous_to_pay = rec.to_pay_amount
-            rec._compute_withholdings_amount()
-            if not rec.currency_id.is_zero(previous_to_pay - rec.to_pay_amount):
-                raise UserError(
-                    "Está pagando con un cheque y las retenciones que se aplicarán cambiarán el importe a pagar de %s a %s.\n"
-                    "Por favor, compute las retenciones para que el importe a pagar se actualice y luego confirme el pago."
-                    % (previous_to_pay, rec.to_pay_amount)
-                )
-        self._compute_withholdings_amount()
-        res = super().action_confirm()
-        # por ahora primero computamos retenciones y luego conifmamos porque si no en caso de cheques siempre da error
-        # TODO tal vez mejorar y advertir de que se va a computar el importe?
-        return res
-
     def _prepare_move_withholding_lines(self, default_values):
         res = super()._prepare_move_withholding_lines(default_values)
         if self.is_internal_transfer:

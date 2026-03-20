@@ -607,7 +607,6 @@ class TestPaymentWithholdingMultimoneda(common.TransactionCase):
 
         # Usuario ajusta rate a 1.500
         payment.user_counterpart_rate = 1500.0
-        payment.compute_withholdings()
 
         # === VALIDACIONES ===
         # selected_debt_untaxed: (1.210 + 1.210) / 1.21 = 2.000 USD
@@ -684,7 +683,6 @@ class TestPaymentWithholdingMultimoneda(common.TransactionCase):
 
         # Usuario ajusta rate a 1.500
         payment.user_counterpart_rate = 1500.0
-        payment.compute_withholdings()
 
         # === VALIDACIONES ===
         # selected_debt: 2.420 USD
@@ -894,7 +892,6 @@ class TestPaymentWithholdingMultimoneda(common.TransactionCase):
         # Crear pago
         payment = self._create_payment_with_withholding(self.bank_journal_ars, invoice, fiscal_pos_ganancias)
         payment.user_counterpart_rate = 1500.0
-        payment.compute_withholdings()
 
         # === VALIDACIONES ===
         # _get_withholding_rate = 1500

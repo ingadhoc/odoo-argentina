@@ -65,17 +65,17 @@ class AccountPayment(models.Model):
         Devuelve multiplicador directo: base_in_B * rate = base_in_C.
         Ejemplo: B=USD, C=ARS, rate=1200 -> 100 USD * 1200 = 120.000 ARS.
 
-        Usa conversión directa B->C para evitar acumulación de errores de redondeo.
+        Usa las tasas configuradas en el pago (no la tasa spot) para respetar
+        ediciones manuales del usuario. Fórmula: C/B = (C/A) * (A/B)
+        = (1/accounting_rate) / counterpart_rate.
         """
         self.ensure_one()
         if not self.destination_currency_id or self.destination_currency_id == self.company_currency_id:
             return 1.0
-        return self.env["res.currency"]._get_conversion_rate(
-            from_currency=self.destination_currency_id,  # B
-            to_currency=self.company_currency_id,  # C
-            company=self.company_id,
-            date=self.date or fields.Date.context_today(self),
-        )
+        accounting = self.accounting_rate or 1.0  # A/C
+        counterpart = self.counterpart_rate or 1.0  # B1/A (B1 ≈ B en casos típicos)
+        # C/B = (C/A) * (A/B) = (1/accounting_rate) * (1/counterpart_rate)
+        return (1.0 / accounting) / counterpart
 
     @api.depends("l10n_ar_withholding_line_ids.amount")
     def _compute_withholdings_amount(self):
@@ -110,9 +110,12 @@ class AccountPayment(models.Model):
     def _onchange_withholdings(self):
         # solo queremos re-computar en pagos de proveedor
         for rec in self.filtered(lambda x: x.partner_type == "supplier" and not x._is_latam_check_payment()):
-            # el compute_withholdings o el _compute_withholdings?
-            amount = rec.amount + rec.payment_difference * rec._get_withholding_rate()
-            # no pasamos a importes negativos (por ej. si se ponene retenciones grandes) porque es molesto
+            # payment_difference está en B (destination_currency), amount está en A (journal currency).
+            # Convertir de B a A dividiendo por counterpart_rate (= B/A).
+            counterpart = rec.counterpart_rate
+            diff_in_a = rec.payment_difference / counterpart if counterpart else rec.payment_difference
+            amount = rec.amount + diff_in_a
+            # no pasamos a importes negativos (por ej. si se ponen retenciones grandes) porque es molesto
             # empieza a salir un raise que no deja editar cosas
             rec.amount = amount if amount > 0 else 0
             # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
@@ -175,8 +178,8 @@ class AccountPayment(models.Model):
                 currency_id = self.company_id.currency_id.id
             else:
                 # A=C (ARS) o A=B=C: currency_id=ARS, amount_currency=balance
-                # (en el caso A=B=C=ARS conversion_rate=1 y el resultado es idéntico)
-                amount_currency = self.currency_id.round(balance / conversion_rate)
+                # Multiplicar C→A: amount_A = amount_C * (A/C) = amount_C * accounting_rate
+                amount_currency = self.currency_id.round(balance * conversion_rate)
                 currency_id = self.currency_id.id
             res.append(
                 {
@@ -201,7 +204,8 @@ class AccountPayment(models.Model):
                 currency_id = self.company_id.currency_id.id
             else:
                 # informamos el amount_currency para que Odoo no resetee el balance a 0.0 por inconsistencia de moneda
-                amount_currency = self.currency_id.round(balance / conversion_rate)
+                # Multiplicar C→A: amount_A = amount_C * (A/C) = amount_C * accounting_rate
+                amount_currency = self.currency_id.round(balance * conversion_rate)
                 currency_id = self.currency_id.id
             res.append(
                 {
@@ -313,8 +317,8 @@ class AccountPayment(models.Model):
                             _("Please enter withholding number for tax %s or configure a sequence on that tax")
                             % line.tax_id.name
                         )
-                if commands:
-                    rec.l10n_ar_withholding_line_ids = commands
+            if commands:
+                rec.l10n_ar_withholding_line_ids = commands
 
         return super().action_post()
 

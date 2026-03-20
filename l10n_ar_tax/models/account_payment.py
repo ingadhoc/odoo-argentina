@@ -111,7 +111,7 @@ class AccountPayment(models.Model):
         # solo queremos re-computar en pagos de proveedor
         for rec in self.filtered(lambda x: x.partner_type == "supplier" and not x._is_latam_check_payment()):
             # el compute_withholdings o el _compute_withholdings?
-            amount = rec.amount + rec.payment_difference * self._get_withholding_rate()
+            amount = rec.amount + rec.payment_difference * rec._get_withholding_rate()
             # no pasamos a importes negativos (por ej. si se ponene retenciones grandes) porque es molesto
             # empieza a salir un raise que no deja editar cosas
             rec.amount = amount if amount > 0 else 0
@@ -139,14 +139,14 @@ class AccountPayment(models.Model):
         )
         for rec in checks_payments:
             previous_to_pay = rec.to_pay_amount
-            rec.compute_withholdings()
+            rec._compute_withholdings_amount()
             if not rec.currency_id.is_zero(previous_to_pay - rec.to_pay_amount):
                 raise UserError(
                     "Está pagando con un cheque y las retenciones que se aplicarán cambiarán el importe a pagar de %s a %s.\n"
                     "Por favor, compute las retenciones para que el importe a pagar se actualice y luego confirme el pago."
                     % (previous_to_pay, rec.to_pay_amount)
                 )
-        self.compute_withholdings()
+        self._compute_withholdings_amount()
         res = super().action_confirm()
         # por ahora primero computamos retenciones y luego conifmamos porque si no en caso de cheques siempre da error
         # TODO tal vez mejorar y advertir de que se va a computar el importe?

@@ -77,7 +77,13 @@ class AccountPayment(models.Model):
         # C/B = (C/A) * (A/B) = (1/accounting_rate) * (1/counterpart_rate)
         return (1.0 / accounting) / counterpart
 
-    @api.depends("l10n_ar_withholding_line_ids.amount")
+    @api.depends(
+        "l10n_ar_withholding_line_ids.amount",
+        "accounting_rate",
+        "counterpart_rate",
+        "destination_currency_id",
+        "company_currency_id",
+    )
     def _compute_withholdings_amount(self):
         for rec in self:
             total_ars = sum(rec.l10n_ar_withholding_line_ids.mapped("amount"))
@@ -87,7 +93,7 @@ class AccountPayment(models.Model):
     def _get_withholding_move_line_default_values(self):
         return {}
 
-    @api.depends("l10n_ar_withholding_line_ids.amount")
+    @api.depends("withholdings_amount")
     def _compute_payment_total(self):
         super()._compute_payment_total()
         for rec in self.filtered("l10n_ar_withholding_line_ids"):

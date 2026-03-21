@@ -262,22 +262,35 @@ class AccountPayment(models.Model):
                 and self.counterpart_currency_id != self.company_currency_id
             )
 
-            # Para ajustar la contrapartida necesitamos el equivalente en moneda del pago.
-            # Cuando el pago es en moneda extranjera, lo convertimos; si no, es el mismo valor.
+            # Para ajustar la liquidez y la contrapartida necesitamos el equivalente en moneda del pago (A).
+            # Cuando A≠C (journal en divisa, ej: USD), las wth lines están en ARS (C); convertir C→A
+            # multiplicando por accounting_rate (= A/C): amount_A = amount_C * (A/C).
+            # Cuando A=C (journal en ARS), raw_wth_amount_currency ya está en A → mismo valor.
             if self.currency_id != self.company_id.currency_id:
                 conversion_rate = self.accounting_rate or 1.0
-                wth_amount_currency_pay = self.currency_id.round(wth_balance / conversion_rate)
+                wth_amount_currency_pay = self.currency_id.round(wth_balance * conversion_rate)
             else:
                 wth_amount_currency_pay = raw_wth_amount_currency
+
+            foreign_journal = self.currency_id != self.company_id.currency_id
 
             liquidity_lines = res.get("liquidity_lines", [])
             has_checks = self.l10n_latam_new_check_ids | self.l10n_latam_move_check_ids
             if not has_checks and liquidity_lines:
-                liquidity_lines[0]["balance"] += wth_balance
-                # Revertimos el ajuste de amount_currency que hizo base Odoo (usó raw_wth_amount_currency
-                # para restarlo de la liquidez). Las wth lines siempre están en ARS, así que
-                # raw_wth_amount_currency está en ARS y puede sumarse directamente.
-                liquidity_lines[0]["amount_currency"] += raw_wth_amount_currency
+                if foreign_journal:
+                    # A≠C: base Odoo sumó withholding amount_currency (ARS) dentro de la
+                    # liquidez en USD, mezclando monedas.  payment_pro luego recalculó el
+                    # balance a partir del amount_currency corrupto, amplificando el error.
+                    # Reconstruimos la liquidez desde self.amount (neto en moneda A).
+                    sign = -1 if self.payment_type == "outbound" else 1
+                    liquidity_lines[0]["amount_currency"] = sign * self.amount
+                    liquidity_lines[0]["balance"] = liquidity_lines[0]["amount_currency"] / conversion_rate
+                else:
+                    liquidity_lines[0]["balance"] += wth_balance
+                    # Revertimos el ajuste de amount_currency que hizo base Odoo.
+                    # Usamos wth_amount_currency_pay (en moneda A) para que el ajuste sea en la
+                    # moneda correcta del journal. Cuando A=C coincide con raw_wth_amount_currency.
+                    liquidity_lines[0]["amount_currency"] += wth_amount_currency_pay
                 # if after adjustment the liquidity line is 0, we remove it
                 # esto podria ir a payment_pro y que cualquier liquidity line en zero no se cree (Es para caso de
                 # puro write off y/o solo retenciones)
@@ -285,8 +298,15 @@ class AccountPayment(models.Model):
                     res["liquidity_lines"] = []
             counterpart_lines = res.get("counterpart_lines", [])
             if counterpart_lines:
-                # the counterpart line (debt) should be the gross amount (net + withholdings)
-                counterpart_lines[0]["balance"] -= wth_balance
+                if foreign_journal:
+                    # Recalcular balance de la contrapartida para cerrar el asiento:  el que
+                    # vino de payment_pro se derivó del amount_currency corrupto de la liquidez.
+                    wo_balance = sum(line["balance"] for line in res.get("write_off_lines", []))
+                    liq_balance = liquidity_lines[0]["balance"] if liquidity_lines else 0
+                    counterpart_lines[0]["balance"] = -liq_balance - wo_balance - wth_balance
+                else:
+                    # the counterpart line (debt) should be the gross amount (net + withholdings)
+                    counterpart_lines[0]["balance"] -= wth_balance
                 if counterpart_is_foreign:
                     # A=C=ARS, B=USD: la AP está en USD. Restarle el equivalente USD de las retenciones.
                     # withholding_rate = accounting_rate / counterpart_rate = 1.0 / counterpart_rate

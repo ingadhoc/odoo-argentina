@@ -227,7 +227,11 @@ class TestPaymentWithholdingMultimoneda(TestArCommon):
             "to_pay_move_line_ids": [Command.set(debt.ids)],
         }
         vals.update(kw)
-        return self.env["account.payment"].create(vals)
+        payment = self.env["account.payment"].create(vals)
+        # En la UI, _onchange_withholdings ajusta payment.amount restando las
+        # retenciones (amount = to_pay - withholdings).  En tests debemos invocarlo.
+        payment._onchange_withholdings()
+        return payment
 
     def _get_rate(self, from_currency, to_currency):
         return self.env["res.currency"]._get_conversion_rate(

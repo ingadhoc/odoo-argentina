@@ -310,7 +310,7 @@ class AccountPayment(models.Model):
                     wo_balance = sum(line["balance"] for line in res.get("write_off_lines", []))
                     liq_balance = liquidity_lines[0]["balance"] if liquidity_lines else 0
                     counterpart_lines[0]["balance"] = -liq_balance - wo_balance - wth_balance
-                else:
+                elif not has_checks:
                     # the counterpart line (debt) should be the gross amount (net + withholdings)
                     counterpart_lines[0]["balance"] -= wth_balance
                 if counterpart_is_foreign:
@@ -320,12 +320,16 @@ class AccountPayment(models.Model):
                     if withholding_rate:
                         wth_amount_in_b = self.counterpart_currency_id.round(wth_balance / withholding_rate)
                         counterpart_lines[0]["amount_currency"] -= wth_amount_in_b
-                elif not (self.counterpart_currency_id and self.counterpart_currency_id != self.currency_id):
+                elif not has_checks and not (
+                    self.counterpart_currency_id and self.counterpart_currency_id != self.currency_id
+                ):
                     # Solo ajustamos amount_currency de la contrapartida si B1 == A (misma moneda).
                     # Cuando B1 != A (y no es el caso counterpart_is_foreign), el amount_currency ya
                     # refleja el total en B1 y no hay que restarle el equivalente en A de las retenciones.
                     # Usamos el equivalente en moneda del pago (no la suma raw) para que el
                     # amount_currency de la contrapartida quede correctamente en la moneda del pago.
+                    # Mismo razonamiento que para balance: has_checks implica que account_payment_pro
+                    # ya computó amount_currency correctamente.
                     counterpart_lines[0]["amount_currency"] -= wth_amount_currency_pay
 
         return res

@@ -304,15 +304,21 @@ class AccountPayment(models.Model):
                     res["liquidity_lines"] = []
             counterpart_lines = res.get("counterpart_lines", [])
             if counterpart_lines:
-                if foreign_journal:
-                    # Recalcular balance de la contrapartida para cerrar el asiento:  el que
-                    # vino de payment_pro se derivó del amount_currency corrupto de la liquidez.
-                    wo_balance = sum(line["balance"] for line in res.get("write_off_lines", []))
-                    liq_balance = liquidity_lines[0]["balance"] if liquidity_lines else 0
-                    counterpart_lines[0]["balance"] = -liq_balance - wo_balance - wth_balance
-                elif not has_checks:
-                    # the counterpart line (debt) should be the gross amount (net + withholdings)
-                    counterpart_lines[0]["balance"] -= wth_balance
+                if not has_checks:
+                    # When has_checks, account_payment_pro already computed counterpart correctly
+                    # using the sum of ALL liq lines (one per check) plus wth total. Touching it
+                    # here would either double-count wth (non-foreign case) or overwrite the correct
+                    # multi-check sum with a single-line value (foreign case). Both produce an
+                    # "Automatic Balancing Line" equal to wth_balance or the missing checks' balance.
+                    if foreign_journal:
+                        # Recalcular balance de la contrapartida para cerrar el asiento:  el que
+                        # vino de payment_pro se derivó del amount_currency corrupto de la liquidez.
+                        wo_balance = sum(line["balance"] for line in res.get("write_off_lines", []))
+                        liq_balance = sum(line["balance"] for line in liquidity_lines) if liquidity_lines else 0
+                        counterpart_lines[0]["balance"] = -liq_balance - wo_balance - wth_balance
+                    else:
+                        # the counterpart line (debt) should be the gross amount (net + withholdings)
+                        counterpart_lines[0]["balance"] -= wth_balance
                 if counterpart_is_foreign:
                     # A=C=ARS, B=USD: la AP está en USD. Restarle el equivalente USD de las retenciones.
                     # withholding_rate = accounting_rate / counterpart_rate = 1.0 / counterpart_rate
@@ -331,6 +337,15 @@ class AccountPayment(models.Model):
                     # Mismo razonamiento que para balance: has_checks implica que account_payment_pro
                     # ya computó amount_currency correctamente.
                     counterpart_lines[0]["amount_currency"] -= wth_amount_currency_pay
+
+                # Cuando cp.currency_id == company_currency_id (caso A=C=ARS), balance y
+                # amount_currency deben ser idénticos. Si payment_pro corrigió el balance pero
+                # amount_currency quedó en el valor corrupto de base Odoo (p.ej. 980 vs 1010),
+                # Odoo puede usar amount_currency como autoridad y reescribir el balance, dejando
+                # el asiento desbalanceado en la diferencia → "Automatic Balancing Line".
+                # Esto ocurre con has_checks porque l10n_ar_tax no ajusta amount_currency en ese caso.
+                if counterpart_lines[0].get("currency_id") == self.company_currency_id.id:
+                    counterpart_lines[0]["amount_currency"] = counterpart_lines[0]["balance"]
 
         return res
 

@@ -86,9 +86,12 @@ class AccountPayment(models.Model):
     )
     def _compute_withholdings_amount(self):
         for rec in self:
-            total_ars = sum(rec.l10n_ar_withholding_line_ids.mapped("amount"))
-            rate = rec._get_withholding_rate()
-            rec.withholdings_amount = rec.destination_currency_id.round(total_ars / rate) if rate else 0.0
+            if rec.l10n_ar_withholding_line_ids:
+                total_ars = sum(rec.l10n_ar_withholding_line_ids.mapped("amount"))
+                rate = rec._get_withholding_rate()
+                rec.withholdings_amount = rec.destination_currency_id.round(total_ars / rate) if rate else 0.0
+            else:
+                rec.withholdings_amount = 0.0
 
     def _get_withholding_move_line_default_values(self):
         return {}
@@ -96,14 +99,8 @@ class AccountPayment(models.Model):
     @api.depends("withholdings_amount")
     def _compute_payment_total(self):
         super()._compute_payment_total()
-        for rec in self.filtered("l10n_ar_withholding_line_ids"):
-            if (rec.payment_type == "outbound" and rec.partner_type == "customer") or (
-                rec.payment_type == "inbound" and rec.partner_type == "supplier"
-            ):
-                sign = -1
-            else:
-                sign = 1
-            rec.payment_total += sign * rec.withholdings_amount
+        for rec in self:
+            rec.payment_total += rec.withholdings_amount
 
     # por ahora no nos funciona computarlas, se duplica el importe. Igual conceptualemnte el onchange acá por ahí
     # está bien porque en realidad es una "sugerencia" actualizar el amount al usuario

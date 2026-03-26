@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-03 21:27+0000\n"
+"POT-Creation-Date: 2026-03-26 15:21+0000\n"
 "PO-Revision-Date: 2025-11-05 21:15+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -695,6 +695,11 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__company_currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "Customer:"
 msgstr "Cliente:"
@@ -868,6 +873,27 @@ msgstr ""
 "retención al registrar una."
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_payment_minimum_threshold
+msgid ""
+"If the amount of each payment does not exceed this value, the withholding/"
+"perception is not applied."
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_minimum_threshold
+msgid ""
+"If the calculated withholding/perception amount is lower than this "
+"threshold, it is 0.0."
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_base_minimum_threshold
+msgid ""
+"If the computed base for the regime does not exceed this value, the "
+"withholding/perception is not applied."
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
 msgid "Importe de la retención:"
 msgstr ""
@@ -933,6 +959,21 @@ msgid "Matched Amount Untaxed"
 msgstr "Importe Conciliado No Gravado"
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_base_minimum_threshold
+msgid "Minimum Base"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_payment_minimum_threshold
+msgid "Minimum Payment"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_minimum_threshold
+msgid "Minimum Threshold"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__res_partner__drei__no_activo
 msgid "No Activo"
 msgstr ""
@@ -982,6 +1023,11 @@ msgstr ""
 msgid ""
 "Nombre y Apellido Firmante:\n"
 "                                <br/>Cargo:"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_non_taxable_amount
+msgid "Non Taxable Amount"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1245,6 +1291,11 @@ msgstr "Hasta"
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax_group__l10n_ar_tribute_afip_code
 msgid "Tribute ARCA Code"
 msgstr "Código tributo AFIP"
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_non_taxable_amount
+msgid "Until this base amount, the tax is not applied."
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_account_payment__withholdable_advanced_amount

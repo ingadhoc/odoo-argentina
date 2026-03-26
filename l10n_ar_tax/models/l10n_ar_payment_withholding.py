@@ -119,10 +119,11 @@ class l10nArPaymentWithholding(models.Model):
             same_period_withholdings = self._get_same_period_withholdings_amount()
             same_period_base = self._get_same_period_base_amount()
             net_amount = self.base_amount + same_period_base  # C + C = C
+            # por ahora l10n_ar_non_taxable_amount lo estamos usando solo en ganancias (ligado al acumulado)
+            # si llega a ser necesario para otros taxes, ademas de mostrarlo en UI tenemos que mover este código
+            net_amount = max(0, net_amount - tax.l10n_ar_non_taxable_amount)
         else:
             net_amount = self.base_amount
-
-        net_amount = max(0, net_amount - tax.l10n_ar_non_taxable_amount)
 
         # compute_all SIEMPRE en ARS (C)
         taxes_res = tax.compute_all(

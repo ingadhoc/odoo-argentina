@@ -86,7 +86,7 @@ class AccountPayment(models.Model):
     )
     def _compute_withholdings_amount(self):
         for rec in self:
-            if rec.l10n_ar_withholding_line_ids:
+            if rec.l10n_ar_withholding_line_ids and rec.destination_currency_id:
                 total_ars = sum(rec.l10n_ar_withholding_line_ids.mapped("amount"))
                 rate = rec._get_withholding_rate()
                 rec.withholdings_amount = rec.destination_currency_id.round(total_ars / rate) if rate else 0.0

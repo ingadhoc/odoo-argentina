@@ -84,11 +84,11 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
     def test_tc6_cheque_ars_con_iibb(self):
         """TC.6 · 1 cheque propio en ARS + retención IIBB 3% (A=B=C=ARS).
 
-        Factura 1 210 ARS (1 000 neto + 210 IVA). 1 cheque de 980 ARS.
+        Factura 1 210 ARS (1 000 neto + 210 IVA). 1 cheque de 1 180 ARS.
 
         Verifica:
         - Retención 30 ARS (= 1 000 * 3%)
-        - payment.amount = 980 ARS (neto pagado)
+        - payment.amount = 1 180 ARS (neto pagado)
         - 3 líneas en el asiento: 1 liquidez + 1 retención + 1 contrapartida
         - sum(balances) == 0
         """
@@ -96,14 +96,14 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
         payment = self._create_check_payment_with_wth(
             self.bank_ars,
             invoice,
-            [{"name": "00000100", "amount": 980}],
+            [{"name": "00000100", "amount": 1180}],
         )
 
         wth = self._wth_line(payment)
         self.assertAlmostEqual(wth.base_amount, 1_000, places=2)
         self.assertAlmostEqual(wth.amount, 30, places=2)
         self.assertAlmostEqual(payment.withholdings_amount, 30, places=2)
-        self.assertAlmostEqual(payment.amount, 980, places=2)
+        self.assertAlmostEqual(payment.amount, 1_180, places=2)
 
         payment.action_post()
 
@@ -118,9 +118,9 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
         # 1 liq + 1 wth_tax + 2 base_ret (Base Ret + Base Ret Cont) + 1 cp
         self.assertEqual(len(lines), 5)
 
-        self.assertAlmostEqual(liq_lines.balance, -980, places=2)
+        self.assertAlmostEqual(liq_lines.balance, -1_180, places=2)
         self.assertAlmostEqual(abs(wth_ml.balance), 30, places=2)
-        self.assertAlmostEqual(cp.balance, 1_010, places=2, msg="AP = cheque + retención")
+        self.assertAlmostEqual(cp.balance, 1_210, places=2, msg="AP = cheque + retención")
         self.assertAlmostEqual(sum(lines.mapped("balance")), 0, places=2)
 
     # ------------------------------------------------------------------

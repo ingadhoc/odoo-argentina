@@ -5,16 +5,17 @@ from odoo.tests import tagged
 
 @tagged("post_install", "-at_install")
 class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
-    def setUp(self):
-        super().setUp()
-        self.today = fields.Date.today()
-        self.company_bank_journal = self.env["account.journal"].create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.today = fields.Date.today()
+        cls.company_bank_journal = cls.env["account.journal"].create(
             {
                 "name": "Bank Journal Test",
                 "code": "BNKT",
                 "type": "bank",
                 "bank_statements_source": "file_import",
-                "company_id": self.company_ri.id,
+                "company_id": cls.company_ri.id,
             }
         )
 

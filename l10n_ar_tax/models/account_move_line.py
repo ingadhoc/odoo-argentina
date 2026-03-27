@@ -1,11 +1,12 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    withholding_id = fields.Many2one("l10n_ar.payment.withholding", compute="_compute_withholding")
+    withholding_id = fields.Many2one("l10n_ar.payment.withholding", compute="_compute_withholding", store=True)
 
+    @api.depends("tax_line_id", "payment_id.l10n_ar_withholding_line_ids.tax_id")
     def _compute_withholding(self):
         for rec in self:
             if rec.tax_line_id and rec.payment_id:

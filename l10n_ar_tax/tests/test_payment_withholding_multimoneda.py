@@ -613,3 +613,155 @@ class TestPaymentWithholdingMultimoneda(TestArCommon):
             expected_amount / 1_500,
             places=2,
         )
+
+    # ==================================================================
+    # T.8 — Reconcile modo (A=C=ARS, B1=USD, B2=ARS) + IIBB
+    # ==================================================================
+
+    def test_t8_reconcile_ars_journal_usd_invoice(self):
+        """caso 8: A=C=ARS, B1=USD, B2=ARS (reconcile_on_company_currency=True).
+
+        Factura 1000 USD neto (1210 USD total), rate 1200 ARS/USD.
+        Deuda en ARS (B2=C): 1 452 000 ARS total, 1 200 000 ARS neto.
+
+        _get_withholding_rate() = C/B2 = ARS/ARS = 1.0
+        base_amount             = 1 200 000 ARS
+        wth                     =    36 000 ARS
+        withholdings_amount     =    36 000 ARS (en B2=ARS)
+
+        _onchange_withholdings: B1≠B2 → diff_in_a = payment_diff * accounting_rate(1.0)
+        amount esperado         = 1 452 000 − 36 000 = 1 416 000 ARS
+
+        Valida el fix de la rama B1≠B2 en _onchange_withholdings y el cálculo
+        correcto del amount_currency de la AP en el bloque counterpart_is_foreign.
+        """
+        self.company.reconcile_on_company_currency = True
+        self.addCleanup(setattr, self.company, "reconcile_on_company_currency", False)
+
+        invoice = self._create_invoice(1_000, self.usd)
+        self.assertAlmostEqual(invoice.amount_total, 1_210, places=2)
+
+        # Crear pago; payment_pro pondrá counterpart_currency_id=USD desde to_pay_move_line_ids
+        payment = self._create_payment_with_wth(self.bank_ars, invoice)
+
+        # Aseguramos que B1=USD (el usuario puede elegirlo en modo reconcile)
+        payment.counterpart_currency_id = self.usd
+
+        # _onchange_withholdings debe re-ejecutarse tras el cambio de moneda
+        payment._onchange_withholdings()
+
+        # --- Currencies ---
+        self.assertEqual(payment.currency_id, self.ars)
+        self.assertEqual(payment.destination_currency_id, self.ars, "B2=ARS en reconcile mode")
+        self.assertEqual(payment.counterpart_currency_id, self.usd, "B1=USD (moneda de la deuda)")
+
+        # --- Rates ---
+        self.assertAlmostEqual(payment.accounting_rate, 1.0, places=6, msg="A=C → A/C=1.0")
+        expected_cp = self._get_rate(self.ars, self.usd)  # USD/ARS ≈ 1/1200
+        self.assertAlmostEqual(payment.counterpart_rate, expected_cp, places=6)
+
+        # --- Withholding rate ---
+        self.assertAlmostEqual(payment._get_withholding_rate(), 1.0, places=6, msg="B2=C=ARS → rate=1.0")
+
+        # --- Base y retención ---
+        # selected_debt_untaxed en ARS (B2=C → usa amount_residual)
+        self.assertAlmostEqual(payment.selected_debt_untaxed, 1_200_000, places=0)
+        wth = self._wth_line(payment)
+        self.assertAlmostEqual(wth.base_amount, 1_200_000, places=0)
+        self.assertAlmostEqual(wth.amount, 36_000, places=0)
+        self.assertAlmostEqual(payment.withholdings_amount, 36_000, places=0, msg="withholdings en ARS (B2=C)")
+
+        # --- amount después de _onchange_withholdings ---
+        # payment_total = 0 (super) + 36 000 (wth) = 36 000 ARS
+        # payment_difference = 1 452 000 − 36 000 = 1 416 000 ARS
+        # B1≠B2 → diff_in_a = 1 416 000 × accounting_rate(1.0) = 1 416 000
+        # amount = 0 + 1 416 000 = 1 416 000 ARS
+        self.assertAlmostEqual(
+            payment.amount, 1_416_000, places=0, msg="B1≠B2: diff_in_a = payment_diff × accounting_rate(1.0)"
+        )
+
+        # --- Asiento ---
+        payment.action_post()
+        ml = self._wth_move_lines(payment)
+        self.assertEqual(len(ml), 1)
+        self.assertAlmostEqual(abs(ml.balance), 36_000, places=0)
+        self.assertEqual(ml.currency_id, self.ars, "retención siempre en C=ARS")
+
+        # El asiento debe estar balanceado (valida fix counterpart_is_foreign)
+        total = sum(payment.move_id.line_ids.mapped("balance"))
+        self.assertAlmostEqual(total, 0, places=2, msg="El asiento debe estar balanceado")
+
+    # ==================================================================
+    # T.9 — Reconcile modo (A=USD, B1=B2=ARS) + IIBB
+    # ==================================================================
+
+    def test_t9_reconcile_usd_journal_ars_invoice(self):
+        """caso 9: A=USD, B1=B2=ARS (reconcile_on_company_currency=True).
+
+        Factura 1000 ARS neto (1210 ARS total), journal en USD.
+        Rate: 1 USD = 1200 ARS.
+
+        _get_withholding_rate() = C/B2 = ARS/ARS = 1.0
+        base_amount             = 1 000 ARS
+        wth                     =    30 ARS
+        withholdings_amount     =    30 ARS (en B2=ARS)
+
+        _onchange_withholdings: B1=B2=ARS → diff_in_a = payment_diff_ARS / counterpart_rate(1200)
+        amount esperado         = (1210 − 30) / 1200 = 1180/1200 ≈ 0.9833 USD
+
+        Valida la rama B1=B2 en modo reconcile (counterpart_rate=1200, wth_rate=1.0).
+        """
+        self.company.reconcile_on_company_currency = True
+        self.addCleanup(setattr, self.company, "reconcile_on_company_currency", False)
+
+        invoice = self._create_invoice(1_000, self.ars)
+        self.assertAlmostEqual(invoice.amount_total, 1_210, places=2)
+
+        payment = self._create_payment_with_wth(self.bank_usd, invoice)
+
+        # --- Currencies ---
+        self.assertEqual(payment.currency_id, self.usd)
+        self.assertEqual(payment.destination_currency_id, self.ars, "B2=ARS en reconcile mode")
+        self.assertEqual(payment.counterpart_currency_id, self.ars, "B1=ARS (moneda de la deuda)")
+
+        # --- Rates ---
+        expected_acc = self._get_rate(self.ars, self.usd)  # USD/ARS ≈ 1/1200
+        self.assertAlmostEqual(payment.accounting_rate, expected_acc, places=6)
+        # B1=C=ARS → counterpart_rate = 1/accounting_rate = 1200
+        self.assertAlmostEqual(payment.counterpart_rate, 1.0 / expected_acc, places=2)
+
+        # --- Withholding rate ---
+        self.assertAlmostEqual(payment._get_withholding_rate(), 1.0, places=6, msg="B2=C=ARS → rate=1.0")
+
+        # --- selected_debt_untaxed en ARS (B2=C → usa amount_residual) ---
+        self.assertAlmostEqual(payment.selected_debt_untaxed, 1_000, places=2)
+
+        # --- Base y retención ---
+        wth = self._wth_line(payment)
+        self.assertAlmostEqual(wth.base_amount, 1_000, places=2)
+        self.assertAlmostEqual(wth.amount, 30, places=2)
+        self.assertAlmostEqual(payment.withholdings_amount, 30, places=2, msg="withholdings en ARS (B2=C)")
+
+        # --- amount después de _onchange_withholdings ---
+        # payment_total = cca(0) + withholdings(30) = 30 ARS
+        # payment_difference = 1210 − 30 = 1180 ARS (en B2=ARS)
+        # B1=B2 → diff_in_a = 1180 / counterpart_rate(1200) = 1180/1200 ≈ 0.9833 USD
+        # amount se almacena en USD (2 decimales) → queda redondeado a 0.98 USD
+        expected_amount = self.usd.round((1_210 - 30) * expected_acc)  # round(1180/1200, 2) = 0.98
+        self.assertAlmostEqual(
+            payment.amount,
+            expected_amount,
+            places=2,
+            msg="B1=B2=ARS: diff_in_a = payment_diff_ARS / counterpart_rate(1200)",
+        )
+
+        # --- Asiento ---
+        payment.action_post()
+        ml = self._wth_move_lines(payment)
+        self.assertEqual(len(ml), 1)
+        self.assertAlmostEqual(abs(ml.balance), 30, places=2)
+        self.assertEqual(ml.currency_id, self.ars, "retención siempre en C=ARS")
+
+        # El asiento debe estar balanceado
+        total = sum(payment.move_id.line_ids.mapped("balance"))
+        self.assertAlmostEqual(total, 0, places=2, msg="El asiento debe estar balanceado")

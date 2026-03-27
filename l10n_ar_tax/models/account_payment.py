@@ -122,10 +122,16 @@ class AccountPayment(models.Model):
                 "new_third_party_checks",
             ]
         ):
-            # payment_difference está en B (destination_currency), amount está en A (journal currency).
-            # Convertir de B a A dividiendo por counterpart_rate (= B/A).
-            counterpart = rec.counterpart_rate
-            diff_in_a = rec.payment_difference / counterpart if counterpart else rec.payment_difference
+            # payment_difference está en B2 (destination_currency_id).
+            # Necesitamos convertirlo a A (moneda del journal) para ajustar rec.amount.
+            if rec.counterpart_currency_id != rec.destination_currency_id:
+                # B1 ≠ B2 (reconcile cases 8, 10): B2=C siempre.
+                # Convertir C→A: amount_A = amount_C * accounting_rate (= A/C).
+                diff_in_a = rec.payment_difference * (rec.accounting_rate or 1.0)
+            else:
+                # B1 = B2 (caso normal): payment_difference en B1/B2, counterpart_rate = B1/A.
+                counterpart = rec.counterpart_rate
+                diff_in_a = rec.payment_difference / counterpart if counterpart else rec.payment_difference
             amount = rec.amount + diff_in_a
             # no pasamos a importes negativos (por ej. si se ponen retenciones grandes) porque es molesto
             # empieza a salir un raise que no deja editar cosas
@@ -317,12 +323,13 @@ class AccountPayment(models.Model):
                         # the counterpart line (debt) should be the gross amount (net + withholdings)
                         counterpart_lines[0]["balance"] -= wth_balance
                 if counterpart_is_foreign:
-                    # A=C=ARS, B=USD: la AP está en USD. Restarle el equivalente USD de las retenciones.
-                    # withholding_rate = accounting_rate / counterpart_rate = 1.0 / counterpart_rate
-                    withholding_rate = self._get_withholding_rate()
-                    if withholding_rate:
-                        wth_amount_in_b = self.counterpart_currency_id.round(wth_balance / withholding_rate)
-                        counterpart_lines[0]["amount_currency"] -= wth_amount_in_b
+                    # A=C=ARS, B1=USD: la AP está en USD. Restarle el equivalente B1 de las retenciones.
+                    # Las withholding lines están en ARS (C=A aquí), así que convertimos C→B1
+                    # multiplicando por counterpart_rate (= B1/A = B1/C).
+                    # Nota: no usamos _get_withholding_rate() porque cuando B2=C devuelve 1.0 (caso 8),
+                    # lo que produciría sumar ARS a un amount_currency en USD.
+                    wth_amount_in_b = self.counterpart_currency_id.round(wth_balance * (self.counterpart_rate or 1.0))
+                    counterpart_lines[0]["amount_currency"] -= wth_amount_in_b
                 elif not has_checks and not (
                     self.counterpart_currency_id and self.counterpart_currency_id != self.currency_id
                 ):

@@ -9,6 +9,7 @@ class l10nArPaymentWithholding(models.Model):
 
     payment_id = fields.Many2one("account.payment", required=True, ondelete="cascade")
     company_id = fields.Many2one(related="payment_id.company_id")
+    partner_type = fields.Selection(related="payment_id.partner_type")
     currency_id = fields.Many2one(related="payment_id.company_currency_id")
     l10n_ar_tax_type = fields.Selection(related="tax_id.l10n_ar_tax_type")
     name = fields.Char(string="Number")
@@ -35,7 +36,7 @@ class l10nArPaymentWithholding(models.Model):
     def _compute_base_amount(self):
         """practicamente mismo codigo que en l10n_ar.payment.register.withholding pero usamos campos "selected_debt_"""
         self.payment_id._compute_to_pay_amount()
-        for wth in self.filtered(lambda x: x.payment_id.partner_type == "supplier"):
+        for wth in self.filtered(lambda x: x.partner_type == "supplier"):
             # calculamos advance_amount
             # si el adelanto es negativo estamos pagando parcialmente una
             # factura y ocultamos el campo sin impuesto y el metodo _get_withholdable_advanced_amount nos devuelve
@@ -180,7 +181,7 @@ class l10nArPaymentWithholding(models.Model):
 
     @api.depends("base_amount", "tax_id")
     def _compute_amount(self):
-        for line in self.filtered(lambda r: r.payment_id.partner_type == "supplier"):
+        for line in self.filtered(lambda r: r.partner_type == "supplier"):
             # TODO: usar _get_withholding_tax no deberia ser necesario
             # si al pasar a draft modificamos la linea
             tax_id = line._get_withholding_tax()

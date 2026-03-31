@@ -40,7 +40,7 @@
                             <li>ARBA: por lo general no es necesario cargarlo aquí ya que las alícuotas se obtienen automáticamente mediante webservice.
                                 Si igualmente desea cargarlo, debe subir el archivo zip que descarga de arba y que tiene nombre de forma "PadronRGSMMAAAA.zip"
                             </li>
-                            <li>Santa Fe: debe subir el archivo con formato csv que descarga del padrón PARP (Padrón de Alícuotas de Retención/Percepción) de la oficina virtual de API y que tiene nombre de forma "PARP_999999.csv"
+                            <li>Santa Fe: debe subir el archivo con formato zip que descarga del padrón PARP (Padrón de Alícuotas de Retención/Percepción) de la oficina virtual de API y que tiene nombre de forma "PARP_999999.zip"
                             </li>
                         </ul>
                     </p>

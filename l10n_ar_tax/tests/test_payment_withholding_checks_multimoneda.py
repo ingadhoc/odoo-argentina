@@ -131,7 +131,8 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
         """TC.7 · 2 cheques ARS + IIBB 3% para deuda USD (A=C=ARS, B=USD,
         1 USD = 1200 ARS).
 
-        Factura 1 210 USD (1 000 neto). 2 cheques de 680 000 y 500 000 ARS.
+        Factura 1 210 USD (1 000 neto). 2 cheques de 716 000 y 700 000 ARS
+        (total 1 416 000 = (1 210 - 30) × 1 200).
 
         Verifica (base en C=ARS, UX en B=USD):
         - base_amount = 1 000 * 1200 = 1 200 000 ARS
@@ -145,8 +146,8 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
             self.bank_ars,
             invoice,
             [
-                {"name": "00000110", "amount": 680_000},
-                {"name": "00000111", "amount": 500_000},
+                {"name": "00000110", "amount": 716_000},
+                {"name": "00000111", "amount": 700_000},
             ],
         )
 
@@ -189,8 +190,8 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
         """TC.8 · 2 cheques ARS + IIBB + write-off para deuda USD
         (A=C=ARS, B=USD, 1 USD = 1200 ARS).
 
-        Factura 1 210 USD (1 000 neto). 2 cheques de 500 000 y 500 000 ARS
-        + write-off 50 USD.
+        Factura 1 210 USD (1 000 neto). 2 cheques de 678 000 y 678 000 ARS
+        (total 1 356 000 = (1 210 - 30 - 50) × 1 200) + write-off 50 USD.
 
         Verifica:
         - 5 líneas: 2 liquidez + 1 retención + 1 write-off + 1 contrapartida
@@ -211,8 +212,8 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
                 "write_off_type_id": self.write_off_type.id,
                 "write_off_amount": 50,
                 "l10n_latam_new_check_ids": [
-                    Command.create({"name": "00000120", "payment_date": self.today, "amount": 500_000}),
-                    Command.create({"name": "00000121", "payment_date": self.today, "amount": 500_000}),
+                    Command.create({"name": "00000120", "payment_date": self.today, "amount": 678_000}),
+                    Command.create({"name": "00000121", "payment_date": self.today, "amount": 678_000}),
                 ],
             }
         )

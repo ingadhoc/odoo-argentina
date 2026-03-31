@@ -1,4 +1,5 @@
 import base64
+import io
 import logging
 import os
 import re
@@ -85,23 +86,16 @@ class ResCompanyJurisdictionPadron(models.Model):
         self.ensure_one()
         return self.state_id and self.state_id.jurisdiction_code == "921"
 
-    def _read_parp_from_binary(self, cuit):
-        """Read PARP (padrón Santa Fe) CSV directly from file_padron binary field
-        PARP format: F.PUBLIC;F.VIGEN.DESDE;F.VIGEN.HASTA;NRO.CUIT   ;TIPO CONTRIB;MARCA ALTA;MARCA ALICUOTA;ALIC.PERCEP;ALICUOTA RETENC;GRUPO PER.;GRUPO RETEN;RAZON SOCIAL
-        Returns: (is_in_padron, aliquot_ret, aliquot_per)
-        """
+    def _read_parp_lines(self, lines, cuit):
         aliquot_ret = False
         aliquot_per = False
         is_in_padron = False
-        # Decode binary field to bytes
-        file_content = base64.b64decode(self.file_padron)
-        # Convert bytes to string
-        csv_text = file_content.decode("latin-1")
-        # Split by lines and process
-        for line in csv_text.split("\n"):
+        for line in lines:
             if not line:
                 continue
-            values = line.split(";")
+            values = [value.strip() for value in line.split(";")]
+            if len(values) <= 8:
+                continue
             # CUIT is at index 3, compare as strings
             if values[3] == cuit:
                 # Percepción at index 7, Retención at index 8
@@ -111,6 +105,38 @@ class ResCompanyJurisdictionPadron(models.Model):
                 is_in_padron = True
                 break
         return is_in_padron, aliquot_ret, aliquot_per
+
+    def _find_parp_file(self, rootdir):
+        fallback_match = False
+        for subdir, dirs, files in os.walk(rootdir):
+            for filename in files:
+                lower_filename = filename.lower()
+                if lower_filename.endswith((".csv", ".txt")):
+                    if "parp" in lower_filename:
+                        return os.path.join(subdir, filename)
+                    if not fallback_match:
+                        fallback_match = os.path.join(subdir, filename)
+        return fallback_match
+
+    def _read_parp_from_binary(self, cuit):
+        """Read PARP (padrón Santa Fe) CSV directly from file_padron binary field
+        or from ZIP if the binary is a ZIP file.
+        PARP format: F.PUBLIC;F.VIGEN.DESDE;F.VIGEN.HASTA;NRO.CUIT   ;TIPO CONTRIB;MARCA ALTA;MARCA ALICUOTA;ALIC.PERCEP;ALICUOTA RETENC;GRUPO PER.;GRUPO RETEN;RAZON SOCIAL
+        Returns: (aliquot_ret, aliquot_per)
+        """
+        file_content = base64.b64decode(self.file_padron)
+        # is a ZIP file
+        if zipfile.is_zipfile(io.BytesIO(file_content)):
+            self.descompress_file(self.file_padron)
+            path_file = self._find_parp_file("/tmp/")
+            if not path_file:
+                raise ValidationError("El archivo ZIP no contiene un padrón PARP en formato CSV o TXT.")
+            with open(path_file, encoding="latin-1") as fp:
+                return self._read_parp_lines(fp.readlines(), cuit)
+
+        # is a CSV file directly
+        csv_text = file_content.decode("latin-1")
+        return self._read_parp_lines(csv_text.split("\n"), cuit)
 
     def find_file(self, rootdir, type_code):
         res = False

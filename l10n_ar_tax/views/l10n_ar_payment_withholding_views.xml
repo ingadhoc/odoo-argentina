@@ -9,7 +9,7 @@
                     <group>
                         <group>
                             <field name="currency_id" invisible="True"/>
-                            <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', partner_type), ('company_id', 'parent_of', company_id)]" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="tax_id" ptions="{'no_open': True, 'no_create': True}"/>
                             <field name="name" readonly="withholding_sequence_id"/>
                             <field name="base_amount"/>
                             <field name="amount"/>

@@ -14,7 +14,12 @@ class l10nArPaymentWithholding(models.Model):
     l10n_ar_tax_type = fields.Selection(related="tax_id.l10n_ar_tax_type")
     name = fields.Char(string="Number")
     ref = fields.Text(compute="_compute_amount", store=True, readonly=False)
-    tax_id = fields.Many2one("account.tax", check_company=True, required=True)
+    tax_id = fields.Many2one(
+        "account.tax",
+        check_company=True,
+        required=True,
+        domain="[('l10n_ar_withholding_payment_type', '=', partner_type)]",
+    )
     withholding_sequence_id = fields.Many2one(related="tax_id.l10n_ar_withholding_sequence_id")
     base_amount = fields.Monetary(
         compute="_compute_base_amount",

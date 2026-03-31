@@ -10,11 +10,7 @@ class l10nArPaymentWithholding(models.Model):
     payment_id = fields.Many2one("account.payment", required=True, ondelete="cascade")
     company_id = fields.Many2one(related="payment_id.company_id")
     partner_type = fields.Selection(related="payment_id.partner_type")
-    currency_id = fields.Many2one(related="payment_id.company_currency_id")  # C (ARS) — para amount
-    base_currency_id = fields.Many2one(
-        "res.currency",
-        related="payment_id.destination_currency_id",
-    )  # B — para base_amount
+    currency_id = fields.Many2one(related="payment_id.company_currency_id")  # C (ARS) — para amount y base_amount
     l10n_ar_tax_type = fields.Selection(related="tax_id.l10n_ar_tax_type")
     name = fields.Char(string="Number")
     ref = fields.Text(compute="_compute_amount", store=True, readonly=False)

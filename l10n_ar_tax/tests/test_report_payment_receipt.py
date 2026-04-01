@@ -7,6 +7,7 @@ Validan los 3 escenarios de columnas del recibo multimoneda:
   Caso 1 — Arbitraje, pago único:  A=EUR, B=USD, C=ARS
   Caso 2 — Bundle EUR + USD:       A1=EUR / A2=USD, B=USD, C=ARS
   Caso 3 — Reconcile on company:   A=EUR / A=USD, B=ARS, C=ARS
+  Caso 3b— Reconcile + deuda USD:  A=ARS, B1=USD, B2=ARS, C=ARS (B1!=B2)
 
 Template usa:
   show_amount_col = any(doc.currency_id != o.destination_currency_id for doc in bundle)
@@ -19,8 +20,10 @@ Template usa:
     · Write-off:  doc.write_off_amount      (en B)
 
   Columna "Importe B":
-    · Pagos:      doc.counterpart_currency_amount
-    · Cheques:    check.amount * doc.counterpart_rate
+    · Pagos:      counterpart_currency_amount      si B1==B2
+                  amount / accounting_rate          si B1!=B2
+    · Cheques:    check.amount * counterpart_rate   si B1==B2
+                  check.amount / accounting_rate    si B1!=B2
     · Retención:  line.amount / line.payment_id._get_withholding_rate()
     · Write-off:  doc.write_off_amount
 
@@ -294,4 +297,101 @@ class TestReportPaymentReceipt(TestPaymentWithholdingMultimoneda):
         self.assertTrue(
             self._show_amount_col(p),
             "show_amount_col debe ser True: retenciones en ARS != USD",
+        )
+
+    # ------------------------------------------------------------------
+    # Caso 3b: reconcile_on_company_currency + deuda USD → B1!=B2
+    # ------------------------------------------------------------------
+
+    def test_case3b_reconcile_with_usd_debt(self):
+        """reconcile_on_company_currency=True, factura en USD, pago en ARS.
+        El usuario fuerza counterpart_currency_id=USD.
+        B1=USD, B2=ARS → B1!=B2.
+
+        La columna "Amount" del recibo debe mostrar tanto cheques como pagos
+        regulares en ARS (destination_currency_id), NO en USD.
+        Fórmula correcta: amount / accounting_rate (cuando B1!=B2).
+        Fórmula incorrecta (bug): amount * counterpart_rate → da USD.
+        """
+        if not hasattr(self.company, "reconcile_on_company_currency"):
+            self.skipTest("account_ux no instalado; reconcile_on_company_currency no disponible")
+
+        self.company.reconcile_on_company_currency = True
+        self.addCleanup(lambda: self.company.write({"reconcile_on_company_currency": False}))
+
+        # Factura 1000 USD (neto, sin IVA para simplificar)
+        inv = self._create_invoice(1_000, self.usd)
+
+        # Pago desde banco ARS
+        debt = inv.line_ids.filtered(lambda l: l.account_id.account_type == "liability_payable")
+        payment = self.env["account.payment"].create(
+            {
+                "journal_id": self.bank_ars.id,
+                "partner_id": self.partner.id,
+                "partner_type": "supplier",
+                "payment_type": "outbound",
+                "date": self.today,
+                "to_pay_move_line_ids": [Command.set(debt.ids)],
+                # Forzar counterpart a USD (usuario elige ver cotización en USD)
+                "counterpart_currency_id": self.usd.id,
+            }
+        )
+
+        # --- Precondiciones ---
+        self.assertEqual(payment.currency_id, self.ars, "A = ARS")
+        self.assertEqual(payment.counterpart_currency_id, self.usd, "B1 = USD")
+        self.assertEqual(payment.destination_currency_id, self.ars, "B2 = ARS")
+        self.assertNotEqual(
+            payment.counterpart_currency_id,
+            payment.destination_currency_id,
+            "B1 != B2: este es el caso del bug",
+        )
+
+        # --- Monto del cheque en destination_currency_id (ARS) ---
+        # check.amount está en ARS (= currency_id del pago)
+        check_amount = payment.amount  # 1,200,000 ARS (o similar)
+        self.assertGreater(check_amount, 0)
+
+        # Fórmula INCORRECTA (bug): da el monto en USD, no en ARS
+        wrong_amount = payment.destination_currency_id.round(check_amount * (payment.counterpart_rate or 1.0))
+        # wrong_amount ≈ 1000 USD mostrado como ARS → claramente wrong
+        self.assertNotEqual(
+            wrong_amount,
+            check_amount,
+            "check.amount * counterpart_rate != check.amount: confirma el bug (convierte a B1, no a B2)",
+        )
+
+        # Fórmula CORRECTA: cuando B1!=B2, usar amount / accounting_rate
+        correct_amount = payment.destination_currency_id.round(
+            check_amount / payment.accounting_rate if payment.accounting_rate else check_amount
+        )
+        # Con A=C=ARS, accounting_rate=1 → correct_amount = check_amount
+        self.assertEqual(
+            correct_amount,
+            check_amount,
+            "Fórmula correcta: check.amount / accounting_rate debe dar el monto en ARS",
+        )
+
+        # --- payment_total: ya usa la lógica correcta en _compute_payment_total ---
+        self.assertAlmostEqual(
+            payment.payment_total,
+            check_amount,
+            places=2,
+            msg="payment_total ya maneja B1!=B2 correctamente",
+        )
+
+        # --- Pagos regulares (no cheques): display_amount_b ---
+        # counterpart_currency_amount está en B1 (USD), pero debe mostrarse en B2 (ARS)
+        wrong_regular = payment.counterpart_currency_amount  # en USD
+        correct_regular = payment.amount / payment.accounting_rate if payment.accounting_rate else payment.amount
+        self.assertNotEqual(
+            payment.destination_currency_id.round(wrong_regular),
+            payment.destination_currency_id.round(correct_regular),
+            "counterpart_currency_amount (B1) != amount/accounting_rate (B2): confirma el bug en pagos regulares",
+        )
+        self.assertAlmostEqual(
+            correct_regular,
+            payment.amount,
+            places=2,
+            msg="Con A=C=ARS, amount/accounting_rate = amount (en ARS)",
         )

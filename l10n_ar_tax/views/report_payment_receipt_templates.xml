@@ -98,8 +98,8 @@
                                     <span class="text-nowrap" t-out="check.amount" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                 </td>
                                 <td class="text-right o_price_total">
-                                    <!-- B = A * counterpart_rate -->
-                                    <span class="text-nowrap" t-out="doc.destination_currency_id.round(check.amount * (doc.counterpart_rate or 1.0))" t-options='{"widget": "monetary", "display_currency": doc.destination_currency_id}'/>
+                                    <!-- B2 = A * counterpart_rate cuando B1==B2; si no, A / accounting_rate -->
+                                    <span class="text-nowrap" t-out="doc.destination_currency_id.round(check.amount * (doc.counterpart_rate or 1.0) if doc.counterpart_currency_id == doc.destination_currency_id else (check.amount / doc.accounting_rate if doc.accounting_rate else check.amount))" t-options='{"widget": "monetary", "display_currency": doc.destination_currency_id}'/>
                                 </td>
                             </tr>
                         </t>
@@ -154,8 +154,9 @@
                     <t t-foreach="payment_bundle.filtered(lambda x: not x._is_latam_check_payment() and x.amount != 0.0)" t-as="doc" id="payment_bundle_doc">
                         <!-- display_amount_a: importe en A (moneda del diario); amount_signed lleva el signo -->
                         <t t-set="display_amount_a" t-value="abs(doc.amount_signed) if all_same_type else doc.amount_signed"/>
-                        <!-- display_amount_b: importe en B (destination_currency_id); counterpart_currency_amount es siempre positivo -->
-                        <t t-set="display_amount_b" t-value="abs(doc.counterpart_currency_amount) if all_same_type else (doc.counterpart_currency_amount if doc.payment_type == 'inbound' else -doc.counterpart_currency_amount)"/>
+                        <!-- display_amount_b: importe en B2 (destination_currency_id); si B1!=B2 convertir A→B2 -->
+                        <t t-set="display_amount_b_raw" t-value="doc.counterpart_currency_amount if doc.counterpart_currency_id == doc.destination_currency_id else (doc.amount / doc.accounting_rate if doc.accounting_rate else doc.amount)"/>
+                        <t t-set="display_amount_b" t-value="abs(display_amount_b_raw) if all_same_type else (display_amount_b_raw if doc.payment_type == 'inbound' else -display_amount_b_raw)"/>
                         <tr>
                             <td>
                                 <span t-field="doc.journal_id.name"/>

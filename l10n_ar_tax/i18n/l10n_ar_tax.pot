@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 14:54+0000\n"
-"PO-Revision-Date: 2026-04-01 14:54+0000\n"
+"POT-Creation-Date: 2026-04-01 20:27+0000\n"
+"PO-Revision-Date: 2026-04-01 20:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -409,11 +409,6 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<span>Amount currency</span>"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Amount</span>"
 msgstr ""
 
@@ -425,6 +420,11 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Exp. Date</span>"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
+msgid "<span>Importe</span>"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -581,15 +581,6 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__api_articulo_inciso_calculo_retencion
 msgid "Artículo/Inciso para el cálculo retención"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
-msgid ""
-"Atención: La deuda se está cancelando en moneda extranjera. Podría ser "
-"necesario actualizar las bases de las retenciones teniendo en cuenta la "
-"diferencia de cambio, puede ajustar la base imponible de las mismas antes de"
-" validar."
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1275,6 +1266,11 @@ msgid "To Date"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
+msgid "Total"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_tribute_afip_code
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax_group__l10n_ar_tribute_afip_code
 msgid "Tribute ARCA Code"
@@ -1315,11 +1311,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move_line__withholding_id
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__tax_type__withholding
 msgid "Withholding"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__withholding_warning
-msgid "Withholding Warning"
 msgstr ""
 
 #. module: l10n_ar_tax

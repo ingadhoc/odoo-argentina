@@ -419,7 +419,7 @@ class AccountPayment(models.Model):
             if rec.state != "posted":
                 continue
             matched_amount_untaxed = 0.0
-            sign = rec.partner_type == "supplier" and -1.0 or 1.0
+            sign = rec.payment_type == "outbound" and -1.0 or 1.0
             for line in rec.matched_move_line_ids.with_context(matched_payment_ids=rec.ids):
                 invoice = line.move_id
                 factor = invoice and invoice._get_tax_factor() or 1.0
@@ -427,7 +427,7 @@ class AccountPayment(models.Model):
                 matched_amount_untaxed += line.payment_matched_amount * factor
             rec.matched_amount_untaxed = sign * matched_amount_untaxed
 
-    @api.depends("to_pay_move_line_ids", "destination_currency_id", "company_currency_id")
+    @api.depends("to_pay_move_line_ids", "destination_currency_id", "company_currency_id", "payment_type")
     def _compute_selected_debt_untaxed(self):
         for rec in self:
             selected_debt_untaxed = 0.0
@@ -437,7 +437,7 @@ class AccountPayment(models.Model):
                     selected_debt_untaxed += line.amount_residual_currency * factor
                 else:
                     selected_debt_untaxed += line.amount_residual * factor
-            rec.selected_debt_untaxed = selected_debt_untaxed * (-1.0 if rec.partner_type == "supplier" else 1.0)
+            rec.selected_debt_untaxed = selected_debt_untaxed * (-1.0 if rec.payment_type == "outbound" else 1.0)
 
     @api.depends("unreconciled_amount")
     def _compute_withholdable_advanced_amount(self):

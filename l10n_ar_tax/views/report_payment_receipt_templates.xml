@@ -208,11 +208,11 @@
                             </td>
                             <td class="text-right o_price_total">
                                 <!-- Original amount in the line's currency (= B for invoice lines) -->
-                                <span class="text-nowrap" t-out="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.amount_currency" t-options='{"widget": "monetary", "display_currency": line.currency_id}'/>
+                                <span class="text-nowrap" t-out="(o.payment_type == 'outbound' and -1.0 or 1.0) * line.amount_currency" t-options='{"widget": "monetary", "display_currency": line.currency_id}'/>
                             </td>
                             <td class="text-right o_price_total">
                                 <!-- payment_matched_amount is already expressed in B (destination_currency_id) -->
-                                <span class="text-nowrap" t-out="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.payment_matched_amount" t-options='{"widget": "monetary", "display_currency": line.payment_matched_currency_id}'/>
+                                <span class="text-nowrap" t-out="(o.payment_type == 'outbound' and -1.0 or 1.0) * line.payment_matched_amount" t-options='{"widget": "monetary", "display_currency": line.payment_matched_currency_id}'/>
                             </td>
                         </tr>
                     </t>

@@ -20,7 +20,19 @@
             <t t-set="document_letter" t-value="'X'"/>
             <t t-set="document_legend" t-value="'Doc. no válido como factura'"/>
             <t t-set="report_number" t-value="o.name"/>
-            <t t-set="report_name" t-value="o.partner_type == 'supplier' and 'Orden de pago' or 'Recibo'"/>
+            <!--
+                Títulos del reporte según partner_type + payment_type:
+                EN (si se implementa traducción):
+                  customer + inbound  → Payment Receipt
+                  customer + outbound → Refund Voucher
+                  supplier + outbound → Payment Order
+                  supplier + inbound  → Vendor Refund Voucher
+            -->
+            <t t-if="o.partner_type == 'customer' and o.payment_type == 'inbound'" t-set="report_name" t-value="'Recibo de Pago'"/>
+            <t t-elif="o.partner_type == 'customer' and o.payment_type == 'outbound'" t-set="report_name" t-value="'Comprobante de Reembolso'"/>
+            <t t-elif="o.partner_type == 'supplier' and o.payment_type == 'outbound'" t-set="report_name" t-value="'Orden de Pago'"/>
+            <t t-elif="o.partner_type == 'supplier' and o.payment_type == 'inbound'" t-set="report_name" t-value="'Nota de Reembolso a Proveedor'"/>
+            <t t-else="" t-set="report_name" t-value="'Comprobante de Pago'"/>
             <t t-set="header_address" t-value="o.receiptbook_id and o.receiptbook_id._fields.get('report_partner_id') and o.receiptbook_id.report_partner_id or o.company_id.partner_id"/>
 
             <t t-set="custom_footer">
@@ -217,7 +229,7 @@
                         </tr>
                     </t>
                     <tr t-if="sum(payment_bundle.mapped('unmatched_amount'))">
-                        <td>On account</td>
+                        <td>Open Balance</td>
                         <td class="text-center"/>
                         <td class="text-right o_price_total"/>
                         <td class="text-right o_price_total">

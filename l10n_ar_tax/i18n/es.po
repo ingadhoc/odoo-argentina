@@ -947,7 +947,7 @@ msgstr "Última Actualización el"
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__matched_amount_untaxed
 msgid "Matched Amount Untaxed"
-msgstr "Importe Conciliado No Gravado"
+msgstr "Importe Imputado No Gravado"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_base_minimum_threshold
@@ -1033,8 +1033,8 @@ msgstr "Observaciones:"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "On account"
-msgstr "A cuenta"
+msgid "Open Balance"
+msgstr "Saldo Abierto"
 
 #. module: l10n_ar_tax
 #: model:ir.actions.act_window,name:l10n_ar_tax.act_company_jurisdiction_padron
@@ -1225,7 +1225,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__selected_debt_untaxed
 msgid "Selected Debt Untaxed"
-msgstr "Deuda Seleccionada No Gravada"
+msgstr "Importe a Conciliar No Gravado"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_state_code

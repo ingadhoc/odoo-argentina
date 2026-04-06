@@ -33,10 +33,21 @@ class AccountJournal(models.Model):
         NOTE: This can be removed in version 18.0 since has been already included in Odoo"""
         tique_codes = ["81", "82", "83", "110", "112", "113", "115", "116", "118", "119", "120"]
         if afip_pos_system == "CF":
-            return tique_codes
+            return [("code", "in", tique_codes)]
         res = super()._get_codes_per_journal_type(afip_pos_system)
-        if res:
-            for to_remove in ["80", "83"]:
-                if to_remove in res:
-                    res.remove(to_remove)
+        if res and isinstance(res, list):
+            filtered_res = []
+            for term in res:
+                if (
+                    isinstance(term, tuple)
+                    and len(term) == 3
+                    and term[0] == "code"
+                    and term[1] == "in"
+                    and isinstance(term[2], (list, tuple, set))
+                ):
+                    codes = [code for code in term[2] if code not in {"80", "83"}]
+                    filtered_res.append(("code", "in", codes))
+                else:
+                    filtered_res.append(term)
+            res = filtered_res
         return res

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-21 20:00+0000\n"
-"PO-Revision-Date: 2026-01-21 20:00+0000\n"
+"POT-Creation-Date: 2026-03-11 14:47+0000\n"
+"PO-Revision-Date: 2026-03-11 14:47+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,15 +21,38 @@ msgid "'Reporte de transferencia'"
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "27.00"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "31.05"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "4.05"
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_invoice_document
 msgid "<br/><strong>PO Number:</strong>"
 msgstr ""
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
-msgid ""
-"<span class=\"o_form_label\">Firma en reportes</span>\n"
-"                        <span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" aria-label=\"Values set here are company-specific.\" groups=\"base.group_multi_company\" role=\"img\"/>"
+msgid "<span class=\"o_form_label\">Firma en reportes</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "<span> on </span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "<strong>Total</strong>"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -173,6 +196,17 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_res_currency
 msgid "Currency"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_move_filter_debit_ar
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_move_line_filter_debit_ar
+msgid "Debit Note"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_filter_debit_ar
+msgid "Debit Notes"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -512,7 +546,13 @@ msgid "Tax"
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "Tax 15%"
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model:ir.ui.menu,name:l10n_ar_ux.menu_action_afip_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
 msgid "Taxes"
 msgstr ""
 
@@ -542,8 +582,18 @@ msgid "This option enables open documents in the payment report."
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "Untaxed amount"
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
 msgid "Vaciar contenido"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
+msgid "Values set here are company-specific."
 msgstr ""
 
 #. module: l10n_ar_ux

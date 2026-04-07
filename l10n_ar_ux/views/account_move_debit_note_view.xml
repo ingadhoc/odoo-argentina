@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Override debit note filters to use l10n_latam_document_type_id.code instead of debit_origin_id -->
+
+    <record id="view_account_move_filter_debit_ar" model="ir.ui.view">
+        <field name="name">account.move.filter.debit.ar</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account_debit_note.view_account_move_filter_debit" />
+        <field name="arch" type="xml">
+            <filter name="debit_note_filter" position="replace">
+                <filter string="Debit Note" name="debit_note_filter"
+                    domain="['|', ('debit_origin_id', '!=', False), ('l10n_latam_document_type_id.code', 'in', ['2', '7', '20', '52', '45', '46', '115', '116', '120', '202', '207'])]" />
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_account_invoice_filter_debit_ar" model="ir.ui.view">
+        <field name="name">account.invoice.select.debit.ar</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account_debit_note.view_account_invoice_filter_debit" />
+        <field name="arch" type="xml">
+            <filter name="debit_note_filter" position="replace">
+                <filter string="Debit Notes" name="debit_note_filter"
+                    domain="['|', ('debit_origin_id', '!=', False), ('l10n_latam_document_type_id.code', 'in', ['2', '7', '20', '52', '45', '46', '115', '116', '120', '202', '207'])]" />
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_account_move_line_filter_debit_ar" model="ir.ui.view">
+        <field name="name">account.move.line.search.debit.ar</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account_debit_note.view_account_move_line_filter_debit" />
+        <field name="arch" type="xml">
+            <filter name="debit_note_filter" position="replace">
+                <filter string="Debit Note" name="debit_note_filter"
+                    domain="['|', ('move_id.debit_origin_id', '!=', False), ('move_id.l10n_latam_document_type_id.code', 'in', ['2', '7', '20', '52', '45', '46', '115', '116', '120', '202', '207'])]" />
+            </filter>
+        </field>
+    </record>
+</odoo>

@@ -6,14 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-20 19:04+0000\n"
-"PO-Revision-Date: 2026-01-20 19:04+0000\n"
+"POT-Creation-Date: 2026-04-01 20:27+0000\n"
+"PO-Revision-Date: 2026-04-01 20:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "%s | CUIT %s not present on padron ARBA"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.arba_alicout_query
@@ -403,11 +409,6 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
-msgid "<span>Amount currency</span>"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Amount</span>"
 msgstr ""
 
@@ -419,6 +420,11 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Exp. Date</span>"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
+msgid "<span>Importe</span>"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -521,7 +527,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_form
 msgid ""
 "ARBA: por lo general no es necesario cargarlo aquí ya que las alícuotas se obtienen automáticamente mediante webservice.\n"
-"                                Si igualmente desea cargarlo, debe subir el archivo zip que descarga de arba y que tiene nombre de forma \"PadronRGSMMAAAA.zip"
+"                                Si igualmente desea cargarlo, debe subir el archivo zip que descarga de arba y que tiene nombre de forma \"PadronRGSMMAAAA.zip\""
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -543,6 +549,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__amount
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__amount
 msgid "Amount"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__webservice__padron
+msgid "Archivo de padrón"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -570,15 +581,6 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__api_articulo_inciso_calculo_retencion
 msgid "Artículo/Inciso para el cálculo retención"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
-msgid ""
-"Atención: La deuda se está cancelando en moneda extranjera. Podría ser "
-"necesario actualizar las bases de las retenciones teniendo en cuenta la "
-"diferencia de cambio, puede ajustar la base imponible de las mismas antes de"
-" validar."
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -673,6 +675,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__create_date
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__company_currency_id
+msgid "Currency"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -848,6 +855,27 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_payment_minimum_threshold
+msgid ""
+"If the amount of each payment does not exceed this value, the "
+"withholding/perception is not applied."
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_minimum_threshold
+msgid ""
+"If the calculated withholding/perception amount is lower than this "
+"threshold, it is 0.0."
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_base_minimum_threshold
+msgid ""
+"If the computed base for the regime does not exceed this value, the "
+"withholding/perception is not applied."
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
 msgid "Importe de la retención:"
 msgstr ""
@@ -913,8 +941,32 @@ msgid "Matched Amount Untaxed"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_base_minimum_threshold
+msgid "Minimum Base"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_payment_minimum_threshold
+msgid "Minimum Payment"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_minimum_threshold
+msgid "Minimum Threshold"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__res_partner__drei__no_activo
 msgid "No Activo"
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid ""
+"No hay padrón subido para la fecha indicada %s a %s. Debe subirlo en "
+"'Contabilidad / Configuración / AFIP / Padrón de Alícuotas por compañía' o "
+"cargar la alícuota manualmente en el contacto para el período en curso."
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -950,6 +1002,11 @@ msgstr ""
 msgid ""
 "Nombre y Apellido Firmante:\n"
 "                                <br/>Cargo:"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_non_taxable_amount
+msgid "Non Taxable Amount"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -994,6 +1051,11 @@ msgstr ""
 msgid ""
 "Para TXT de SIRCAR debe completar el campo regímen con el que corresponda según tabla definida por la jurisdicción.<br/>\n"
 "                Puede consultar la tabla"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__partner_type
+msgid "Partner Type"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1126,10 +1188,18 @@ msgid "Sale Perceptions"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_form
+msgid ""
+"Santa Fe: debe subir el archivo con formato zip que descarga del padrón PARP"
+" (Padrón de Alícuotas de Retención/Percepción) de la oficina virtual de API "
+"y que tiene nombre de forma \"PARP_999999.zip\""
+msgstr ""
+
+#. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
 msgid ""
-"Seleccionó deuda por %s pero aparentente desea pagar %s. En la deuda "
+"Seleccionó deuda por %s pero aparentemente desea pagar %s. En la deuda "
 "seleccionada hay algunos comprobantes de mas que no van a poder ser pagados "
 "(%s). Deberá quitar dichos comprobantes de la deuda seleccionada para poder "
 "hacer el correcto cálculo de las retenciones."
@@ -1196,9 +1266,19 @@ msgid "To Date"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
+msgid "Total"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_tribute_afip_code
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax_group__l10n_ar_tribute_afip_code
 msgid "Tribute ARCA Code"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_non_taxable_amount
+msgid "Until this base amount, the tax is not applied."
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1231,11 +1311,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move_line__withholding_id
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__tax_type__withholding
 msgid "Withholding"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__withholding_warning
-msgid "Withholding Warning"
 msgstr ""
 
 #. module: l10n_ar_tax

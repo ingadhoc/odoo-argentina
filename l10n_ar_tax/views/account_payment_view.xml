@@ -7,11 +7,6 @@
         <field name="priority" eval="30"/>
         <field name="inherit_id" ref="account.view_account_payment_form" />
         <field name="arch" type="xml">
-            <sheet position="before">
-                <div class="alert alert-warning" role="alert" invisible="not withholding_warning">
-                    Atención: La deuda se está cancelando en moneda extranjera. Podría ser necesario actualizar las bases de las retenciones teniendo en cuenta la diferencia de cambio, puede ajustar la base imponible de las mismas antes de validar.
-                </div>
-            </sheet>
             <label for="payment_total" position="before">
                 <field name="withholdings_amount" string="Withholdings" invisible="is_internal_transfer or not use_payment_pro or country_code != 'AR'"/>
             </label>
@@ -39,11 +34,11 @@
                     <field name="l10n_ar_withholding_line_ids" nolabel="1" colspan="2" invisible="is_internal_transfer" readonly="state != 'draft'">
                         <list editable="bottom">
                             <field name="currency_id" column_invisible="True"/>
-                            <field name="tax_id" domain="[('l10n_ar_withholding_payment_type', '=', parent.partner_type), ('company_id', 'parent_of', parent.company_id)]" options="{'no_create': True}"/>
+                            <field name="tax_id" options="{'no_create': True}"/>
                             <field name="name" readonly="withholding_sequence_id"/>
                             <field name="base_amount" column_invisible="parent.partner_type == 'supplier'" optional="hide"/>
                             <field name="base_amount" column_invisible="parent.partner_type != 'supplier'"/>
-                            <field name="amount"/>
+                            <field name="amount" sum="Total"/>
                             <field name="ref" optional="hide" readonly="l10n_ar_tax_type in ['earnings', 'earnings_scale']" force_save="1"/>
                             <button name="%(action_report_withholding_certificate)d" icon="fa-print " title="Print withholding voucher" type="action" invisible="parent.partner_type != 'supplier' or parent.state == 'draft' or amount == 0"/>
                             <button name="action_l10n_ar_payment_withholding_tree" icon="fa-bars" title="Watch previous withholdings" type="object" invisible="parent.partner_type != 'supplier' or l10n_ar_tax_type not in ['earnings', 'earnings_scale']"/>

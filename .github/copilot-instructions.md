@@ -62,7 +62,6 @@
 * Confirmar que todos los archivos usados (vistas, seguridad, datos, reportes, wizards) estén referenciados en el manifest.
 * Verificar dependencias declaradas: que no falten módulos requeridos ni se declaren innecesarios.
 * **Regla de versión (obligatoria):**
-  Solo sugerir bump de versión si el `__manifest__.py` no incrementa `version` y se modificó la estructura de un modelo, una vista, o algún record .xml (ej. cambios en definición de campos, vistas XML, datos XML, seguridad).
 * Solo hacerlo una vez por revisión, aunque haya múltiples archivos afectados.
 
 ---
@@ -79,7 +78,6 @@
 
 * Verificar los archivos `ir.model.access.csv` para nuevos modelos: deben tener permisos mínimos necesarios.
 * No proponer abrir acceso global sin justificación.
-* Si se agregan nuevos modelos o campos de control de acceso, **recordar el bump de versión** (ver sección de manifest).
 * En Odoo 19, poner atención especial a cambios de seguridad ligados a:
 
   * integraciones de IA,
@@ -109,7 +107,7 @@
 
 ## Cambios estructurales y scripts de migración – **cuestiones generales**
 
-Cuando el diff sugiera **cambios de estructura de datos**, **siempre evaluar** si corresponde proponer un **script de migración** en `migrations/` (pre/post/end) **y recordar el bump de versión**.
+Cuando el diff sugiera **cambios de estructura de datos**, **siempre evaluar** si corresponde proponer un **script de migración** en `migrations/` (pre/post/end).
 
 ### Reglas generales de estructura de `migrations/`
 
@@ -276,20 +274,10 @@ En estos casos **normalmente corresponde** proponer migración (salvo notas en c
 | ------------------ | ------------------------------------------------------------------------------------------------------------ |
 | Modelos            | Relaciones válidas; constraints; uso de `@api.depends`; `super()` correcto                                   |
 | Vistas XML         | Herencias correctas; campos válidos; adaptación a componentes modernos (IA, secciones, etc.)                 |
-| Manifest           | **Bump de versión obligatorio** si hay cambios estructurales en modelos/vistas/records .xml; archivos referenciados     |
 | Seguridad          | Accesos mínimos necesarios; reglas revisadas, en especial para IA/VOIP/WhatsApp                              |
 | Migraciones        | **Si hay cambios estructurales (lista actualizada), sugerir scripts en `migrations/` y describir qué hacen** |
 | Rendimiento / ORM  | Evitar patrones anti-ORM; aprovechar las mejoras del ORM/registro en v19                                     |
 | Ortografía & typos | Errores evidentes corregibles sin cambiar estilo                                                             |
-
----
-
-## Heurística práctica para el bump de versión
-
-* **SI** el diff modifica la estructura de un modelo, una vista, o algún record .xml (ej. cambios en definición de campos, vistas XML, datos XML, seguridad)
-  **Y** `__manifest__.py` no cambia `version` → **Sugerir bump**.
-* **SI** hay scripts `migrations/pre_*.py` o `migrations/post_*.py` nuevos → **Sugerir al menos minor bump**.
-* **SI** hay cambios que rompen compatibilidad (renombres, tipos, limpieza agresiva de datos) → **Sugerir minor/major** según impacto.
 
 ---
 
@@ -301,16 +289,16 @@ En estos casos **normalmente corresponde** proponer migración (salvo notas en c
 
   * “La constraint nueva podría definirse como `models.Constraint` en lugar de `_sql_constraints`.”
   * “La vista de cotización no está aprovechando las secciones configurables introducidas en 19.”
-  * “Se renombra el campo `state` almacenado; falta bump de versión y script de migración para copiar valores antes del upgrade.”
+  * “Se renombra el campo `state` almacenado; falta script de migración para copiar valores antes del upgrade.”
 
 ---
 
 ## Resumen operativo para Copilot
 
-1. **Detecta cambios estructurales en modelos, vistas o records .xml → exige bump de `version` en `__manifest__.py` si no está incrementada.**
-2. **Si hay cambio estructural (según la lista actualizada) → propone y describe script(s) de migración en `migrations/` (pre/post/end)**, con enfoque idempotente y en lotes.
-3. Distingue entre:
+1. **Si hay cambio estructural (según la lista actualizada) → propone y describe script(s) de migración en `migrations/` (pre/post/end)**, con enfoque idempotente y en lotes.
+2. Distingue entre:
 
    * **cuestiones generales**,
    * y **matices específicos de Odoo 19**, por ej. preferir la nueva API de constraints/índices cuando corresponda.
-4. Mantén el feedback **concreto, breve y accionable**.
+
+3. Mantén el feedback **concreto, breve y accionable**.

@@ -21,7 +21,7 @@ class AccountPayment(models.Model):
     )
     withholdings_amount = fields.Monetary(
         compute="_compute_withholdings_amount",
-        currency_field="company_currency_id",
+        currency_field="destination_currency_id",
     )
     l10n_ar_fiscal_position_id = fields.Many2one(
         "account.fiscal.position",
@@ -32,7 +32,6 @@ class AccountPayment(models.Model):
         readonly=False,
         domain=[("l10n_ar_tax_ids.tax_type", "=", "withholding")],
     )
-    withholding_warning = fields.Boolean(compute="_compute_withholding_warning")
 
     @api.depends("to_pay_move_line_ids", "partner_id", "payment_method_line_id")
     def _compute_fiscal_position_id(self):
@@ -61,25 +60,47 @@ class AccountPayment(models.Model):
                 ._get_fiscal_position(address)
             )
 
-    @api.depends("l10n_ar_withholding_line_ids.amount")
+    def _get_withholding_rate(self):
+        """Tasa efectiva B->C para convertir base de retención a ARS.
+        Devuelve multiplicador directo: base_in_B * rate = base_in_C.
+        Ejemplo: B=USD, C=ARS, rate=1200 -> 100 USD * 1200 = 120.000 ARS.
+
+        Usa las tasas configuradas en el pago (no la tasa spot) para respetar
+        ediciones manuales del usuario. Fórmula: C/B = (C/A) * (A/B)
+        = (1/accounting_rate) / counterpart_rate.
+        """
+        self.ensure_one()
+        if not self.destination_currency_id or self.destination_currency_id == self.company_currency_id:
+            return 1.0
+        accounting = self.accounting_rate or 1.0  # A/C
+        counterpart = self.counterpart_rate or 1.0  # B1/A (B1 ≈ B en casos típicos)
+        # C/B = (C/A) * (A/B) = (1/accounting_rate) * (1/counterpart_rate)
+        return (1.0 / accounting) / counterpart
+
+    @api.depends(
+        "l10n_ar_withholding_line_ids.amount",
+        "accounting_rate",
+        "counterpart_rate",
+        "destination_currency_id",
+        "company_currency_id",
+    )
     def _compute_withholdings_amount(self):
         for rec in self:
-            rec.withholdings_amount = sum(rec.l10n_ar_withholding_line_ids.mapped("amount"))
+            if rec.l10n_ar_withholding_line_ids and rec.destination_currency_id:
+                total_ars = sum(rec.l10n_ar_withholding_line_ids.mapped("amount"))
+                rate = rec._get_withholding_rate()
+                rec.withholdings_amount = rec.destination_currency_id.round(total_ars / rate) if rate else 0.0
+            else:
+                rec.withholdings_amount = 0.0
 
     def _get_withholding_move_line_default_values(self):
         return {}
 
-    @api.depends("l10n_ar_withholding_line_ids.amount")
+    @api.depends("withholdings_amount")
     def _compute_payment_total(self):
         super()._compute_payment_total()
-        for rec in self.filtered("l10n_ar_withholding_line_ids"):
-            if (rec.payment_type == "outbound" and rec.partner_type == "customer") or (
-                rec.payment_type == "inbound" and rec.partner_type == "supplier"
-            ):
-                sign = -1
-            else:
-                sign = 1
-            rec.payment_total += sum(x * sign for x in rec.l10n_ar_withholding_line_ids.mapped("amount"))
+        for rec in self:
+            rec.payment_total += rec.withholdings_amount
 
     # por ahora no nos funciona computarlas, se duplica el importe. Igual conceptualemnte el onchange acá por ahí
     # está bien porque en realidad es una "sugerencia" actualizar el amount al usuario
@@ -91,10 +112,28 @@ class AccountPayment(models.Model):
     @api.onchange("withholdings_amount")
     def _onchange_withholdings(self):
         # solo queremos re-computar en pagos de proveedor
-        for rec in self.filtered(lambda x: x.partner_type == "supplier" and not x._is_latam_check_payment()):
-            # el compute_withholdings o el _compute_withholdings?
-            amount = rec.amount + rec.payment_difference
-            # no pasamos a importes negativos (por ej. si se ponene retenciones grandes) porque es molesto
+        for rec in self.filtered(
+            lambda x: x.partner_type == "supplier"
+            and x.payment_method_code
+            not in [
+                "in_third_party_checks",
+                "out_third_party_checks",
+                "return_third_party_checks",
+                "new_third_party_checks",
+            ]
+        ):
+            # payment_difference está en B2 (destination_currency_id).
+            # Necesitamos convertirlo a A (moneda del journal) para ajustar rec.amount.
+            if rec.counterpart_currency_id != rec.destination_currency_id:
+                # B1 ≠ B2 (reconcile cases 8, 10): B2=C siempre.
+                # Convertir C→A: amount_A = amount_C * accounting_rate (= A/C).
+                diff_in_a = rec.payment_difference * (rec.accounting_rate or 1.0)
+            else:
+                # B1 = B2 (caso normal): payment_difference en B1/B2, counterpart_rate = B1/A.
+                counterpart = rec.counterpart_rate
+                diff_in_a = rec.payment_difference / counterpart if counterpart else rec.payment_difference
+            amount = rec.amount + diff_in_a
+            # no pasamos a importes negativos (por ej. si se ponen retenciones grandes) porque es molesto
             # empieza a salir un raise que no deja editar cosas
             rec.amount = amount if amount > 0 else 0
             # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
@@ -115,72 +154,204 @@ class AccountPayment(models.Model):
     #         # rec.force_amount_company_currency += rec.payment_difference
     #         # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
 
-    def action_confirm(self):
-        checks_payments = self.filtered(
-            lambda x: x.payment_method_code in ["in_third_party_checks", "out_third_party_checks"]
-        )
-        for rec in checks_payments:
-            previous_to_pay = rec.to_pay_amount
-            rec.compute_withholdings()
-            if not rec.currency_id.is_zero(previous_to_pay - rec.to_pay_amount):
-                raise UserError(
-                    "Está pagando con un cheque y las retenciones que se aplicarán cambiarán el importe a pagar de %s a %s.\n"
-                    "Por favor, compute las retenciones para que el importe a pagar se actualice y luego confirme el pago."
-                    % (previous_to_pay, rec.to_pay_amount)
-                )
-        self.compute_withholdings()
-        res = super().action_confirm()
-        # por ahora primero computamos retenciones y luego conifmamos porque si no en caso de cheques siempre da error
-        # TODO tal vez mejorar y advertir de que se va a computar el importe?
-        return res
+    def _prepare_move_withholding_lines(self, default_values):
+        res = super()._prepare_move_withholding_lines(default_values)
+        if self.is_internal_transfer:
+            return res
 
-    def _prepare_witholding_write_off_vals(self):
-        """We don't send currency amounts because withholdings are always in company currency"""
         self.ensure_one()
-        write_off_line_vals = []
         sign = 1
         if self.payment_type == "outbound":
             sign = -1
-        for line in self.l10n_ar_withholding_line_ids:
+
+        conversion_rate = self.accounting_rate or 1.0
+        # Cuando el pago es en moneda extranjera (A≠C), las retenciones se calculan en moneda de la compañía (ARS).
+        # Usamos moneda de la compañía en las move lines de retención para evitar que _inverse_amount_currency
+        # recalcule el balance a partir de un amount_currency redondeado en moneda extranjera, lo que produce
+        # diferencias de redondeo (ej: 84,894.75 ARS -> 60 USD -> 84,900 ARS en el roundtrip).
+        use_company_currency = self.currency_id != self.company_id.currency_id
+
+        # Omitimos apuntes contables para líneas que no sean de ganancias y tengan importe cero;
+        # el resto (ganancias, o no-ganancias con importe > 0) sí genera apunte.
+        lines_with_accounting_entry = self.l10n_ar_withholding_line_ids.filtered(
+            lambda l: l.tax_id.l10n_ar_tax_type in ["earnings", "earnings_scale"] or l.amount
+        )
+
+        # Caso A=C (ej: pago en ARS) pero B≠C (ej: deuda en USD).
+        # Las withholding lines SIEMPRE van en ARS (currency_id=C) con balance y amount_currency en ARS.
+        # Odoo base resta withholding_amount_currency de la liquidez; si la línea fuera en USD haría
+        # -1.707.676 - (-25 USD) en ARS → desbalance. Al mantener currency_id=ARS el resta es en ARS:
+        # -1.707.676 - (-50.000) = -1.657.676, que es correcto.
+        # El ajuste en USD para la contrapartida (AP) se hace en _prepare_move_lines_per_type.
+
+        for line in lines_with_accounting_entry:
             # nuestro approach esta quedando distinto al del wizard. En nuestras lineas tenemos los importes en moneda
             # de la cia, por lo cual el line.amount aca representa eso y tenemos que convertirlo para el amount_currency
 
             __, account_id, tax_repartition_line_id, __ = line._tax_compute_all_helper()
-            write_off_line_vals.append(
+            balance = self.company_id.currency_id.round(sign * line.amount)
+            if use_company_currency:
+                # A≠C: usar ARS directo para evitar rounding en moneda extranjera
+                amount_currency = balance
+                currency_id = self.company_id.currency_id.id
+            else:
+                # A=C (ARS) o A=B=C: currency_id=ARS, amount_currency=balance
+                # Multiplicar C→A: amount_A = amount_C * (A/C) = amount_C * accounting_rate
+                amount_currency = self.currency_id.round(balance * conversion_rate)
+                currency_id = self.currency_id.id
+            res.append(
                 {
                     **self._get_withholding_move_line_default_values(),
                     "name": line.name,
                     "account_id": account_id,
-                    "balance": sign * line.amount,
+                    "balance": balance,
+                    "amount_currency": amount_currency,
+                    "currency_id": currency_id,
                     "tax_base_amount": sign * line.base_amount,
                     "tax_repartition_line_id": tax_repartition_line_id,
                 }
             )
 
-        for base_amount in list(set(self.l10n_ar_withholding_line_ids.mapped("base_amount"))):
-            withholding_lines = self.l10n_ar_withholding_line_ids.filtered(lambda x: x.base_amount == base_amount)
+        for base_amount in list(set(lines_with_accounting_entry.mapped("base_amount"))):
+            withholding_lines = lines_with_accounting_entry.filtered(lambda x: x.base_amount == base_amount)
             nice_base_label = ",".join(withholding_lines.filtered("name").mapped("name"))
             account_id = self.company_id.l10n_ar_tax_base_account_id.id
-            base_amount = sign * base_amount
-            write_off_line_vals.append(
+            balance = self.company_id.currency_id.round(sign * base_amount)
+            if use_company_currency:
+                amount_currency = balance
+                currency_id = self.company_id.currency_id.id
+            else:
+                # informamos el amount_currency para que Odoo no resetee el balance a 0.0 por inconsistencia de moneda
+                # Multiplicar C→A: amount_A = amount_C * (A/C) = amount_C * accounting_rate
+                amount_currency = self.currency_id.round(balance * conversion_rate)
+                currency_id = self.currency_id.id
+            res.append(
                 {
                     **self._get_withholding_move_line_default_values(),
                     "name": _("Base Ret: ") + nice_base_label,
                     "tax_ids": [Command.set(withholding_lines.mapped("tax_id").ids)],
                     "account_id": account_id,
-                    "balance": base_amount,
+                    "balance": balance,
+                    "amount_currency": amount_currency,
+                    "currency_id": currency_id,
                 }
             )
-            write_off_line_vals.append(
+            res.append(
                 {
                     **self._get_withholding_move_line_default_values(),  # Counterpart 0 operation
                     "name": _("Base Ret Cont: ") + nice_base_label,
                     "account_id": account_id,
-                    "balance": -base_amount,
+                    "balance": -balance,
+                    "amount_currency": -amount_currency,
+                    "currency_id": currency_id,
                 }
             )
 
-        return write_off_line_vals
+        return res
+
+    def _prepare_move_lines_per_type(self, write_off_line_vals=None, force_balance=None):
+        res = super()._prepare_move_lines_per_type(write_off_line_vals=write_off_line_vals, force_balance=force_balance)
+
+        # we adjust liquidity and counterpart lines because in ARG payment amount is already net of withholdings
+        # whereas odoo expects it to be gross and subtracts withholdings from it.
+        wth_lines = res.get("withholding_lines", [])
+        if wth_lines:
+            wth_balance = sum(line["balance"] for line in wth_lines)
+            # Suma directa de amount_currency de las líneas de retención.
+            # Todas las withholding lines están en ARS (currency_id=C), así que este valor
+            # está siempre en ARS independientemente del caso (A=C o A≠C).
+            raw_wth_amount_currency = sum(line["amount_currency"] for line in wth_lines)
+
+            # Caso A=C (ej: ARS) pero B≠C (ej: USD): las withholding lines están en ARS.
+            # La contrapartida AP está en USD (payment_pro la puso en counterpart_currency_id).
+            # Necesitamos restar el equivalente USD de las retenciones del amount_currency de la AP.
+            counterpart_is_foreign = (
+                self.currency_id == self.company_id.currency_id
+                and self.counterpart_currency_id
+                and self.counterpart_currency_id != self.company_currency_id
+            )
+
+            # Para ajustar la liquidez y la contrapartida necesitamos el equivalente en moneda del pago (A).
+            # Cuando A≠C (journal en divisa, ej: USD), las wth lines están en ARS (C); convertir C→A
+            # multiplicando por accounting_rate (= A/C): amount_A = amount_C * (A/C).
+            # Cuando A=C (journal en ARS), raw_wth_amount_currency ya está en A → mismo valor.
+            if self.currency_id != self.company_id.currency_id:
+                conversion_rate = self.accounting_rate or 1.0
+                wth_amount_currency_pay = self.currency_id.round(wth_balance * conversion_rate)
+            else:
+                wth_amount_currency_pay = raw_wth_amount_currency
+
+            foreign_journal = self.currency_id != self.company_id.currency_id
+
+            liquidity_lines = res.get("liquidity_lines", [])
+            has_checks = self.l10n_latam_new_check_ids | self.l10n_latam_move_check_ids
+            if not has_checks and liquidity_lines:
+                if foreign_journal:
+                    # A≠C: base Odoo sumó withholding amount_currency (ARS) dentro de la
+                    # liquidez en USD, mezclando monedas.  payment_pro luego recalculó el
+                    # balance a partir del amount_currency corrupto, amplificando el error.
+                    # Reconstruimos la liquidez desde self.amount (neto en moneda A).
+                    sign = -1 if self.payment_type == "outbound" else 1
+                    liquidity_lines[0]["amount_currency"] = sign * self.amount
+                    liquidity_lines[0]["balance"] = liquidity_lines[0]["amount_currency"] / conversion_rate
+                else:
+                    liquidity_lines[0]["balance"] += wth_balance
+                    # Revertimos el ajuste de amount_currency que hizo base Odoo.
+                    # Usamos wth_amount_currency_pay (en moneda A) para que el ajuste sea en la
+                    # moneda correcta del journal. Cuando A=C coincide con raw_wth_amount_currency.
+                    liquidity_lines[0]["amount_currency"] += wth_amount_currency_pay
+                # if after adjustment the liquidity line is 0, we remove it
+                # esto podria ir a payment_pro y que cualquier liquidity line en zero no se cree (Es para caso de
+                # puro write off y/o solo retenciones)
+                if self.company_currency_id.is_zero(liquidity_lines[0]["balance"]):
+                    res["liquidity_lines"] = []
+            counterpart_lines = res.get("counterpart_lines", [])
+            if counterpart_lines:
+                if not has_checks:
+                    # When has_checks, account_payment_pro already computed counterpart correctly
+                    # using the sum of ALL liq lines (one per check) plus wth total. Touching it
+                    # here would either double-count wth (non-foreign case) or overwrite the correct
+                    # multi-check sum with a single-line value (foreign case). Both produce an
+                    # "Automatic Balancing Line" equal to wth_balance or the missing checks' balance.
+                    if foreign_journal:
+                        # Recalcular balance de la contrapartida para cerrar el asiento:  el que
+                        # vino de payment_pro se derivó del amount_currency corrupto de la liquidez.
+                        wo_balance = sum(line["balance"] for line in res.get("write_off_lines", []))
+                        liq_balance = sum(line["balance"] for line in liquidity_lines) if liquidity_lines else 0
+                        counterpart_lines[0]["balance"] = -liq_balance - wo_balance - wth_balance
+                    else:
+                        # the counterpart line (debt) should be the gross amount (net + withholdings)
+                        counterpart_lines[0]["balance"] -= wth_balance
+                if counterpart_is_foreign:
+                    # A=C=ARS, B1=USD: la AP está en USD. Restarle el equivalente B1 de las retenciones.
+                    # Las withholding lines están en ARS (C=A aquí), así que convertimos C→B1
+                    # multiplicando por counterpart_rate (= B1/A = B1/C).
+                    # Nota: no usamos _get_withholding_rate() porque cuando B2=C devuelve 1.0 (caso 8),
+                    # lo que produciría sumar ARS a un amount_currency en USD.
+                    wth_amount_in_b = self.counterpart_currency_id.round(wth_balance * (self.counterpart_rate or 1.0))
+                    counterpart_lines[0]["amount_currency"] -= wth_amount_in_b
+                elif not has_checks and not (
+                    self.counterpart_currency_id and self.counterpart_currency_id != self.currency_id
+                ):
+                    # Solo ajustamos amount_currency de la contrapartida si B1 == A (misma moneda).
+                    # Cuando B1 != A (y no es el caso counterpart_is_foreign), el amount_currency ya
+                    # refleja el total en B1 y no hay que restarle el equivalente en A de las retenciones.
+                    # Usamos el equivalente en moneda del pago (no la suma raw) para que el
+                    # amount_currency de la contrapartida quede correctamente en la moneda del pago.
+                    # Mismo razonamiento que para balance: has_checks implica que account_payment_pro
+                    # ya computó amount_currency correctamente.
+                    counterpart_lines[0]["amount_currency"] -= wth_amount_currency_pay
+
+                # Cuando cp.currency_id == company_currency_id (caso A=C=ARS), balance y
+                # amount_currency deben ser idénticos. Si payment_pro corrigió el balance pero
+                # amount_currency quedó en el valor corrupto de base Odoo (p.ej. 980 vs 1010),
+                # Odoo puede usar amount_currency como autoridad y reescribir el balance, dejando
+                # el asiento desbalanceado en la diferencia → "Automatic Balancing Line".
+                # Esto ocurre con has_checks porque l10n_ar_tax no ajusta amount_currency en ese caso.
+                if counterpart_lines[0].get("currency_id") == self.company_currency_id.id:
+                    counterpart_lines[0]["amount_currency"] = counterpart_lines[0]["balance"]
+
+        return res
 
     def action_post(self):
         for rec in self:
@@ -203,8 +374,8 @@ class AccountPayment(models.Model):
                             _("Please enter withholding number for tax %s or configure a sequence on that tax")
                             % line.tax_id.name
                         )
-                if commands:
-                    rec.l10n_ar_withholding_line_ids = commands
+            if commands:
+                rec.l10n_ar_withholding_line_ids = commands
 
         return super().action_post()
 
@@ -212,49 +383,6 @@ class AccountPayment(models.Model):
     def _get_trigger_fields_to_synchronize(self):
         res = super()._get_trigger_fields_to_synchronize()
         return res + ("l10n_ar_withholding_line_ids",)
-
-    @api.depends(
-        "currency_id", "company_id", "l10n_ar_withholding_line_ids", "destination_account_id", "counterpart_currency_id"
-    )
-    def _compute_withholding_warning(self):
-        """Para todos los pagos con retenciones verificamos que la deuda se esté conciliando en moneda local
-        ya que todavía no tenemos implementado cálculos de retenciones ajustados por diferencia de cambio"""
-        self.withholding_warning = False
-        for rec in self.filtered(
-            lambda x: x.state == "draft"
-            and x.l10n_ar_withholding_line_ids
-            and (x.currency_id != x.company_id.currency_id or x._use_counterpart_currency())
-        ):
-            # Verificar si la deuda está gestionada en moneda extranjera
-            dest_currency = rec.destination_account_id.currency_id
-            debt_in_foreign_currency = dest_currency and dest_currency != rec.company_id.currency_id
-            if not rec.company_id.reconcile_on_company_currency or debt_in_foreign_currency:
-                rec.withholding_warning = True
-
-    def _prepare_move_line_default_vals(self, write_off_line_vals=None, force_balance=None):
-        res = super()._prepare_move_line_default_vals(write_off_line_vals, force_balance=force_balance)
-        res += self._prepare_witholding_write_off_vals()
-        wth_amount = sum(self.l10n_ar_withholding_line_ids.mapped("amount"))
-        conversion_rate = self.exchange_rate or 1.0
-        # TODO: EVALUAR
-        # si cambio el valor de la cuenta de liquides quitando las retenciones el campo amount representa el monto que cancelo de la deuda
-        # si cambio la cuenta de contraparte (agregando retenciones) el campo amount representa el monto neto que abono al partner
-        # Ambos caminos funcionan pero no se cual es mejor a nivel usabilidad. depende como realizemos el calculo automatico de la ret
-        # liquidity_accounts = [x.id for x in self._get_valid_liquidity_accounts() if x]
-        valid_account_types = self._get_valid_payment_account_types()
-        for line in res:
-            account_id = self.env["account.account"].browse(line["account_id"])
-            # if line['account_id'] in liquidity_accounts:
-            if account_id.account_type in valid_account_types:
-                if self.payment_type == "inbound" and "credit" in line:
-                    line["credit"] += wth_amount
-                    if not self._use_counterpart_currency():
-                        line["amount_currency"] -= wth_amount / conversion_rate
-                elif self.payment_type == "outbound" and "debit" in line:
-                    line["debit"] += wth_amount
-                    if not self._use_counterpart_currency():
-                        line["amount_currency"] += wth_amount / conversion_rate
-        return res
 
     ###################################################
     # desde account_withholding_automatic payment.group
@@ -266,7 +394,7 @@ class AccountPayment(models.Model):
     withholdable_advanced_amount = fields.Monetary(
         "Adjustment / Advance (untaxed)",
         help="Used for withholdings calculation",
-        currency_field="company_currency_id",
+        currency_field="destination_currency_id",
         compute="_compute_withholdable_advanced_amount",
         copy=False,
         store=True,
@@ -275,6 +403,7 @@ class AccountPayment(models.Model):
     selected_debt_untaxed = fields.Monetary(
         # string='To Pay lines Amount',
         compute="_compute_selected_debt_untaxed",
+        currency_field="destination_currency_id",
     )
     matched_amount_untaxed = fields.Monetary(
         compute="_compute_matched_amount_untaxed",
@@ -298,16 +427,17 @@ class AccountPayment(models.Model):
                 matched_amount_untaxed += line.payment_matched_amount * factor
             rec.matched_amount_untaxed = sign * matched_amount_untaxed
 
-    @api.depends("to_pay_move_line_ids")
+    @api.depends("to_pay_move_line_ids", "destination_currency_id", "company_currency_id")
     def _compute_selected_debt_untaxed(self):
         for rec in self:
             selected_debt_untaxed = 0.0
             for line in rec.to_pay_move_line_ids._origin:
-                # factor for total_untaxed
-                invoice = line.move_id
-                factor = invoice and invoice._get_tax_factor() or 1.0
-                selected_debt_untaxed += line.amount_residual * factor
-            rec.selected_debt_untaxed = selected_debt_untaxed * (rec.partner_type == "supplier" and -1.0 or 1.0)
+                factor = line.move_id._get_tax_factor() if line.move_id else 1.0
+                if rec.destination_currency_id and rec.destination_currency_id != rec.company_currency_id:
+                    selected_debt_untaxed += line.amount_residual_currency * factor
+                else:
+                    selected_debt_untaxed += line.amount_residual * factor
+            rec.selected_debt_untaxed = selected_debt_untaxed * (-1.0 if rec.partner_type == "supplier" else 1.0)
 
     @api.depends("unreconciled_amount")
     def _compute_withholdable_advanced_amount(self):
@@ -322,16 +452,10 @@ class AccountPayment(models.Model):
             withholdings = [Command.clear()]
             if rec.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:
                 taxes = rec.l10n_ar_fiscal_position_id._l10n_ar_add_taxes(
-                    rec.partner_id, rec.company_id, date, "withholding"
+                    rec.partner_id, rec.company_id, date, "withholding", rec
                 )
                 withholdings += [Command.create({"tax_id": x.id}) for x in taxes]
             rec.l10n_ar_withholding_line_ids = withholdings
-            # Si hay retenciones que no son de ganancias y el importe a retener es 0 las quitamos
-            # Ejemplo: retenciones en pagos de notas de crédito (el monto base es negativo)
-            to_remove = rec.l10n_ar_withholding_line_ids.filtered(
-                lambda wth: wth.amount == 0 and wth.tax_id.l10n_ar_tax_type not in ["earnings", "earnings_scale"]
-            )
-            rec.l10n_ar_withholding_line_ids -= to_remove
 
     def compute_to_pay_amount_for_check(self):
         checks_payments = self.filtered(
@@ -388,7 +512,7 @@ class AccountPayment(models.Model):
 
     def _get_payment_bundle_key(self):
         if self.company_id.country_id.code == "AR" and self.env.context.get("print_in_bundles"):
-            return f"{self.company_id.id}-{self.partner_id.id}-{self.payment_type}-{self.currency_id.id if self.other_currency else self.counterpart_currency_id.id}"
+            return f"{self.company_id.id}-{self.partner_id.id}-{self.payment_type}-{self.currency_id.id if self.currency_id != self.company_currency_id else self.counterpart_currency_id.id}"
         return self.id
 
     def _get_payment_bundles(self):

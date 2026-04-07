@@ -19,7 +19,7 @@ class ResConfigSettings(models.TransientModel):
         cuit = self.company_id.partner_id.ensure_vat()
         _logger.info("Getting ARBA data for cuit %s" % (cuit))
         try:
-            self.fiscal_position_id.company_id.arba_consultar_contribuyente(
+            self.company_id.arba_consultar_contribuyente(
                 cuit,
                 fields.Date.start_of(fields.Date.today(), "month"),
                 fields.Date.end_of(fields.Date.today(), "month"),

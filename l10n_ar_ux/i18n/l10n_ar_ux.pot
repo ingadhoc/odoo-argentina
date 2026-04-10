@@ -120,7 +120,7 @@ msgstr ""
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__l10n_ar_partner_vat
-msgid "CUIT del destinatario"
+msgid "CUIT"
 msgstr ""
 
 #. module: l10n_ar_ux

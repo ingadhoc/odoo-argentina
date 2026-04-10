@@ -32,7 +32,7 @@
 
     <function model="account.tax" name="copy" context="{'active_test': False}">
         <value model="account.tax" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_vat_incurred'))"/>
-        <value eval="{'name': 'Retención SUSS 0%', 'description': 'Retención SUSS', 'tax_group_id': ref('l10n_ar_tax_python.vat_tax_group_ri')}"/>
+        <value eval="{'name': 'Retención SUSS 0%', 'description': 'Retención SUSS', 'tax_group_id': ref('l10n_ar_tax_python.vat_tax_group_ri'), 'l10n_ar_withholding_payment_type': 'supplier'}"/>
     </function>
 
     <record id="fiscal_position_caba_and_proffits_suss" model="account.fiscal.position.l10n_ar_tax">

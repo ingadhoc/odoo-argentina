@@ -5,7 +5,7 @@
 from collections import defaultdict
 
 from odoo import Command, _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class AccountPayment(models.Model):
@@ -59,6 +59,12 @@ class AccountPayment(models.Model):
                 .with_context(l10n_ar_withholding=True, active_test=True)
                 ._get_fiscal_position(address)
             )
+
+    @api.constrains("l10n_ar_withholding_line_ids", "partner_id")
+    def _check_partner_for_withholdings(self):
+        for rec in self:
+            if rec.l10n_ar_withholding_line_ids and not rec.partner_id:
+                raise ValidationError(_("Partner must be set on the payment to compute withholdings"))
 
     def _get_withholding_rate(self):
         """Tasa efectiva B->C para convertir base de retención a ARS.

@@ -11,8 +11,16 @@
     </record>
 
     <function model="account.tax" name="copy" context="{'active_test': False}">
+<<<<<<< 6be280b60ac6f92c439353c6dc6b78ee7f0eb452
         <value model="account.tax" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ex_tax_withholding_vat_applied'))"/>
         <value eval="{'name': 'Retención SUSS 0%', 'description': 'Retención SUSS', 'tax_group_id': ref('l10n_ar_tax_python.suss_tax_group')}"/>
+||||||| c3551d2a4b9070c401ced1f127e84601c0c92244
+        <value model="account.tax" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_vat_incurred'))"/>
+        <value eval="{'name': 'Retención SUSS 0%', 'description': 'Retención SUSS', 'tax_group_id': ref('l10n_ar_tax_python.vat_tax_group_ri')}"/>
+=======
+        <value model="account.tax" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_withholding_vat_incurred'))"/>
+        <value eval="{'name': 'Retención SUSS 0%', 'description': 'Retención SUSS', 'tax_group_id': ref('l10n_ar_tax_python.vat_tax_group_ri'), 'l10n_ar_withholding_payment_type': 'supplier'}"/>
+>>>>>>> b668bb68b7ad524c69e63abecf5e58cd4dc4d84e
     </function>
 
     <record id="fiscal_position_caba_and_proffits_suss" model="account.fiscal.position.l10n_ar_tax">

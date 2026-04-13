@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 20:27+0000\n"
-"PO-Revision-Date: 2026-04-01 20:27+0000\n"
+"POT-Creation-Date: 2026-04-13 14:40+0000\n"
+"PO-Revision-Date: 2026-04-13 14:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1056,6 +1056,12 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__partner_type
 msgid "Partner Type"
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_payment.py:0
+msgid "Partner must be set on the payment to compute withholdings"
 msgstr ""
 
 #. module: l10n_ar_tax

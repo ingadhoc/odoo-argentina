@@ -10,30 +10,33 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-23 19:59+0000\n"
-"PO-Revision-Date: 2025-11-12 18:05+0000\n"
-"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
-"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"PO-Revision-Date: 2026-04-14 14:41+0000\n"
+"Last-Translator: julia elizondo <jue@adhoc.inc>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/"
+"odoo-argentina-19-0/odoo-argentina-19-0-l10n_ar_tax_backward_compatibility/"
+"es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model.fields,field_description:l10n_ar_tax_backward_compatibility.field_l10n_ar_payment_withholding__accumulated_amount
 msgid "Accumulated Amount"
-msgstr ""
+msgstr "Monto Acumulado"
 
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model.fields,field_description:l10n_ar_tax_backward_compatibility.field_l10n_ar_payment_withholding__automatic
 msgid "Automatic"
-msgstr ""
+msgstr "Automático"
 
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model.fields,field_description:l10n_ar_tax_backward_compatibility.field_l10n_ar_payment_withholding__computed_withholding_amount
 msgid "Computed Withholding Amount"
-msgstr ""
+msgstr "Importe de la retención calculada"
 
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model.fields,field_description:l10n_ar_tax_backward_compatibility.field_account_move__display_name
@@ -62,22 +65,22 @@ msgstr ""
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model.fields,field_description:l10n_ar_tax_backward_compatibility.field_account_payment__is_backward_withholding_payment
 msgid "Is Backward Withholding Payment"
-msgstr ""
+msgstr "Se está reteniendo el pago de forma retroactiva"
 
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model,name:l10n_ar_tax_backward_compatibility.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Asiento Contable"
 
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model.fields,field_description:l10n_ar_tax_backward_compatibility.field_l10n_ar_payment_withholding__withholding_non_taxable_amount
 msgid "Non-taxable Amount"
-msgstr ""
+msgstr "Monto No Gravado"
 
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model.fields,field_description:l10n_ar_tax_backward_compatibility.field_l10n_ar_payment_withholding__withholding_non_taxable_minimum
 msgid "Non-taxable Minimum"
-msgstr ""
+msgstr "Mínimo No Gravado"
 
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model,name:l10n_ar_tax_backward_compatibility.model_l10n_ar_payment_withholding
@@ -92,29 +95,29 @@ msgstr "Pagos"
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model.fields,field_description:l10n_ar_tax_backward_compatibility.field_l10n_ar_payment_withholding__period_withholding_amount
 msgid "Period Withholding Amount"
-msgstr ""
+msgstr "Monto de Retención del Período"
 
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model.fields,field_description:l10n_ar_tax_backward_compatibility.field_l10n_ar_payment_withholding__previous_withholding_amount
 msgid "Previous Withholding Amount"
-msgstr ""
+msgstr "Monto Retenido Previamente"
 
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model.fields,field_description:l10n_ar_tax_backward_compatibility.field_l10n_ar_payment_withholding__regime_code
 msgid "Regime Code"
-msgstr ""
+msgstr "Código de Régimen"
 
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model.fields,field_description:l10n_ar_tax_backward_compatibility.field_l10n_ar_payment_withholding__regime_tax_id
 msgid "Regime Tax"
-msgstr ""
+msgstr "Impuesto de Régimen"
 
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model.fields,field_description:l10n_ar_tax_backward_compatibility.field_l10n_ar_payment_withholding__total_amount
 msgid "Total Amount"
-msgstr ""
+msgstr "Monto Total"
 
 #. module: l10n_ar_tax_backward_compatibility
 #: model:ir.model.fields,field_description:l10n_ar_tax_backward_compatibility.field_l10n_ar_payment_withholding__withholdable_base_amount
 msgid "Withholdable Base Amount"
-msgstr ""
+msgstr "Importe Base Sujeto a Retención"

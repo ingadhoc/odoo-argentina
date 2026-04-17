@@ -21,8 +21,7 @@
             <t t-set="document_legend" t-value="'Doc. no válido como factura'"/>
             <t t-set="report_number" t-value="o.name"/>
             <t t-set="report_name" t-value="o.payment_type == 'outbound' and 'Orden de pago' or 'Recibo'"/>
-            <t t-set="header_address" t-value="o.receiptbook_id and o.receiptbook_id._fields.get('report_partner_id') and o.receiptbook_id.report_partner_id or o.company_id.partner_id"/>
-
+            <t t-set="header_address" t-value="(o._fields.get('receiptbook_id') and o.receiptbook_id and o.receiptbook_id.report_partner_id or o.company_id.partner_id or '')"/>
             <t t-set="custom_footer">
                 <div class="row">
                     <div name="footer_left_column" class="col-8">

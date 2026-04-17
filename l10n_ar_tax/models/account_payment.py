@@ -92,14 +92,16 @@ class AccountPayment(models.Model):
     def _onchange_withholdings(self):
         # solo queremos re-computar en pagos de proveedor
         for rec in self.filtered(
-            lambda x: x.partner_type == "supplier"
-            and x.payment_method_code
-            not in [
-                "in_third_party_checks",
-                "out_third_party_checks",
-                "return_third_party_checks",
-                "new_third_party_checks",
-            ]
+            lambda x: (
+                x.partner_type == "supplier"
+                and x.payment_method_code
+                not in [
+                    "in_third_party_checks",
+                    "out_third_party_checks",
+                    "return_third_party_checks",
+                    "new_third_party_checks",
+                ]
+            )
         ):
             # el compute_withholdings o el _compute_withholdings?
             amount = rec.amount + rec.payment_difference
@@ -229,11 +231,9 @@ class AccountPayment(models.Model):
 
     def _prepare_move_lines_per_type(self, write_off_line_vals=None, force_balance=None):
         res = super()._prepare_move_lines_per_type(write_off_line_vals=write_off_line_vals, force_balance=force_balance)
-
         # we adjust liquidity and counterpart lines because in ARG payment amount is already net of withholdings
         # whereas odoo expects it to be gross and subtracts withholdings from it.
         wth_lines = res.get("withholding_lines", [])
-
         if wth_lines:
             wth_balance = sum(line["balance"] for line in wth_lines)
             # Suma directa de amount_currency de las líneas de retención. Cuando el pago es en moneda
@@ -257,16 +257,23 @@ class AccountPayment(models.Model):
             has_forced_amount = bool(self.force_amount_company_currency)
 
             liquidity_lines = res.get("liquidity_lines", [])
+            own_checks_multiline = (
+                self.payment_type == "outbound"
+                and self.payment_method_code == "own_checks"
+                and len(liquidity_lines) > 1
+            )
             if liquidity_lines:
+                target_line = liquidity_lines[-1] if own_checks_multiline else liquidity_lines[0]
                 if not has_forced_amount:
-                    liquidity_lines[0]["balance"] += wth_balance
+                    target_line["balance"] += wth_balance
                 # Revertimos el ajuste de amount_currency que hizo base Odoo (usó raw_wth_amount_currency
                 # para restarlo de la liquidez).
-                liquidity_lines[0]["amount_currency"] += raw_wth_amount_currency
+                target_line["amount_currency"] += raw_wth_amount_currency
+
                 # if after adjustment the liquidity line is 0, we remove it
                 # esto podria ir a payment_pro y que cualquier liquidity line en zero no se cree (Es para caso de
                 # puro write off y/o solo retenciones)
-                if self.company_currency_id.is_zero(liquidity_lines[0]["balance"]):
+                if self.company_currency_id.is_zero(target_line["balance"]):
                     res["liquidity_lines"] = []
             counterpart_lines = res.get("counterpart_lines", [])
             if counterpart_lines:
@@ -324,9 +331,11 @@ class AccountPayment(models.Model):
         ya que todavía no tenemos implementado cálculos de retenciones ajustados por diferencia de cambio"""
         self.withholding_warning = False
         for rec in self.filtered(
-            lambda x: x.state == "draft"
-            and x.l10n_ar_withholding_line_ids
-            and (x.currency_id != x.company_id.currency_id or x._use_counterpart_currency())
+            lambda x: (
+                x.state == "draft"
+                and x.l10n_ar_withholding_line_ids
+                and (x.currency_id != x.company_id.currency_id or x._use_counterpart_currency())
+            )
         ):
             # Verificar si la deuda está gestionada en moneda extranjera
             dest_currency = rec.destination_account_id.currency_id

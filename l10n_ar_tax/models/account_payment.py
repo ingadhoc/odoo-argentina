@@ -92,14 +92,16 @@ class AccountPayment(models.Model):
     def _onchange_withholdings(self):
         # solo queremos re-computar en pagos de proveedor
         for rec in self.filtered(
-            lambda x: x.partner_type == "supplier"
-            and x.payment_method_code
-            not in [
-                "in_third_party_checks",
-                "out_third_party_checks",
-                "return_third_party_checks",
-                "new_third_party_checks",
-            ]
+            lambda x: (
+                x.partner_type == "supplier"
+                and x.payment_method_code
+                not in [
+                    "in_third_party_checks",
+                    "out_third_party_checks",
+                    "return_third_party_checks",
+                    "new_third_party_checks",
+                ]
+            )
         ):
             # el compute_withholdings o el _compute_withholdings?
             amount = rec.amount + rec.payment_difference
@@ -263,6 +265,9 @@ class AccountPayment(models.Model):
                 # Revertimos el ajuste de amount_currency que hizo base Odoo (usó raw_wth_amount_currency
                 # para restarlo de la liquidez).
                 liquidity_lines[0]["amount_currency"] += raw_wth_amount_currency
+                if liquidity_lines[0]["amount_currency"]:
+                    sign = 1 if liquidity_lines[0]["balance"] >= 0 else -1
+                    liquidity_lines[0]["amount_currency"] = sign * abs(liquidity_lines[0]["amount_currency"])
                 # if after adjustment the liquidity line is 0, we remove it
                 # esto podria ir a payment_pro y que cualquier liquidity line en zero no se cree (Es para caso de
                 # puro write off y/o solo retenciones)
@@ -282,6 +287,9 @@ class AccountPayment(models.Model):
                     # Usamos el equivalente en moneda del pago (no la suma raw) para que el
                     # amount_currency de la contrapartida quede correctamente en la moneda del pago.
                     counterpart_lines[0]["amount_currency"] -= wth_amount_currency_pay
+                if counterpart_lines[0]["amount_currency"]:
+                    sign = 1 if counterpart_lines[0]["balance"] >= 0 else -1
+                    counterpart_lines[0]["amount_currency"] = sign * abs(counterpart_lines[0]["amount_currency"])
 
         return res
 
@@ -324,9 +332,11 @@ class AccountPayment(models.Model):
         ya que todavía no tenemos implementado cálculos de retenciones ajustados por diferencia de cambio"""
         self.withholding_warning = False
         for rec in self.filtered(
-            lambda x: x.state == "draft"
-            and x.l10n_ar_withholding_line_ids
-            and (x.currency_id != x.company_id.currency_id or x._use_counterpart_currency())
+            lambda x: (
+                x.state == "draft"
+                and x.l10n_ar_withholding_line_ids
+                and (x.currency_id != x.company_id.currency_id or x._use_counterpart_currency())
+            )
         ):
             # Verificar si la deuda está gestionada en moneda extranjera
             dest_currency = rec.destination_account_id.currency_id

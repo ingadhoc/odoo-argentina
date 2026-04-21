@@ -20,7 +20,7 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
 
         Expected behavior:
         - Liquidity line balance must equal the forced amount (not payment_total).
-        - Counterpart line balance must equal the payment_total (to cancel the original debt).
+        - Counterpart line balance must equal forced amount minus withholdings.
         - Withholding lines keep their own balance untouched.
         """
         # 1. Set up USD currency with a known rate (1 USD = 100 ARS)
@@ -132,14 +132,13 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
             msg="Liquidity line balance should NOT equal payment_total when force amount is set",
         )
 
-        # The counterpart (payable) line must equal liquidity + withholdings (journal entry balances to 0)
-        expected_counterpart = forced_amount + withholding_amount
+        # For forced company currency amount, counterpart remains net of withholdings.
+        expected_counterpart = forced_amount - withholding_amount
         self.assertAlmostEqual(
             abs(counterpart_line.balance),
             expected_counterpart,
             places=2,
-            msg="Counterpart line balance should equal liquidity + withholdings "
-            "(the journal entry must balance to zero).",
+            msg="Counterpart line balance should equal forced amount minus withholdings.",
         )
 
         # Withholding lines should have the correct amount
@@ -360,7 +359,7 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
             payment.move_id.line_ids.sorted("balance"),
             [
                 # Liquidity line:
-                {"debit": 0.0, "credit": 605000.0, "amount_currency": -605000.0},
+                {"debit": 0.0, "credit": 555000.0, "amount_currency": -555000.0},
                 # base line:
                 {"debit": 0.0, "credit": 500000.0, "amount_currency": -500000.0},
                 # withholding line:
@@ -368,6 +367,6 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
                 # base line:
                 {"debit": 500000.0, "credit": 0.0, "amount_currency": 500000.0},
                 # Receivable line:
-                {"debit": 655000.0, "credit": 0.0, "amount_currency": 655000.0},
+                {"debit": 605000.0, "credit": 0.0, "amount_currency": 605000.0},
             ],
         )

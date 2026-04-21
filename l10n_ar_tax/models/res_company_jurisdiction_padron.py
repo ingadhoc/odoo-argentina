@@ -174,3 +174,19 @@ class ResCompanyJurisdictionPadron(models.Model):
                     else:
                         aliquot_ret = aliquot and aliquot.replace(",", ".")
         return nro, aliquot_ret, aliquot_per
+
+    @api.model
+    def _cron_clean_old_padron_files(self):
+        """Delete old padron files to reduce storage usage."""
+        last_year_date = fields.Date.subtract(fields.Date.start_of(fields.Date.context_today(self), "month"), years=1)
+        if old_padrons := self.search(
+            [
+                ("l10n_ar_padron_to_date", "<", last_year_date),
+            ]
+        ):
+            _logger.info(
+                "Padron cleanup: deleting %s old padrones older than %s",
+                len(old_padrons),
+                last_year_date,
+            )
+            old_padrons.unlink()

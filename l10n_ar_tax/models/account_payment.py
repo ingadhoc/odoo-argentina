@@ -412,6 +412,7 @@ class AccountPayment(models.Model):
                     rec.partner_id, rec.company_id, date, "withholding", rec
                 )
                 withholdings += [Command.create({"tax_id": x.id}) for x in taxes]
+            # commit de prueba
             rec.l10n_ar_withholding_line_ids = withholdings
 
     def compute_to_pay_amount_for_check(self):

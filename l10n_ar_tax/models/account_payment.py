@@ -92,20 +92,24 @@ class AccountPayment(models.Model):
     def _onchange_withholdings(self):
         # solo queremos re-computar en pagos de proveedor
         for rec in self.filtered(
-            lambda x: x.partner_type == "supplier"
-            and x.payment_method_code
-            not in [
-                "in_third_party_checks",
-                "out_third_party_checks",
-                "return_third_party_checks",
-                "new_third_party_checks",
-            ]
+            lambda x: (
+                x.partner_type == "supplier"
+                and x.payment_method_code
+                not in [
+                    "in_third_party_checks",
+                    "out_third_party_checks",
+                    "return_third_party_checks",
+                    "new_third_party_checks",
+                ]
+            )
         ):
             # el compute_withholdings o el _compute_withholdings?
             amount = rec.amount + rec.payment_difference
             # no pasamos a importes negativos (por ej. si se ponene retenciones grandes) porque es molesto
             # empieza a salir un raise que no deja editar cosas
             rec.amount = amount if amount > 0 else 0
+            # Sincronizar amount_exact con el nuevo amount para mantener consistencia
+            rec.amount_exact = rec.amount
             # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
 
     @api.onchange("partner_id")
@@ -324,9 +328,11 @@ class AccountPayment(models.Model):
         ya que todavía no tenemos implementado cálculos de retenciones ajustados por diferencia de cambio"""
         self.withholding_warning = False
         for rec in self.filtered(
-            lambda x: x.state == "draft"
-            and x.l10n_ar_withholding_line_ids
-            and (x.currency_id != x.company_id.currency_id or x._use_counterpart_currency())
+            lambda x: (
+                x.state == "draft"
+                and x.l10n_ar_withholding_line_ids
+                and (x.currency_id != x.company_id.currency_id or x._use_counterpart_currency())
+            )
         ):
             # Verificar si la deuda está gestionada en moneda extranjera
             dest_currency = rec.destination_account_id.currency_id

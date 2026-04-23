@@ -10,6 +10,9 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
+    # Override to add tracking
+    l10n_ar_afip_responsibility_type_id = fields.Many2one(tracking=True)
+
     gross_income_jurisdiction_ids = fields.Many2many(
         "res.country.state",
         string="Gross Income Jurisdictions",

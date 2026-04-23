@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-15 13:31+0000\n"
-"PO-Revision-Date: 2026-04-15 13:31+0000\n"
+"POT-Creation-Date: 2026-04-23 18:38+0000\n"
+"PO-Revision-Date: 2026-04-23 18:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1368,6 +1368,11 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_tax_form
 msgid "aquí"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.actions.server,name:l10n_ar_tax.cron_clean_old_padron_files_ir_actions_server
+msgid "l10n_ar_tax: Clean old padron files"
 msgstr ""
 
 #. module: l10n_ar_tax

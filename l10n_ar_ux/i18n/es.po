@@ -9,17 +9,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 01:37+0000\n"
+"POT-Creation-Date: 2026-04-24 16:48+0000\n"
 "PO-Revision-Date: 2026-04-14 14:41+0000\n"
 "Last-Translator: julia elizondo <jue@adhoc.inc>\n"
-"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/"
-"odoo-argentina-19-0/odoo-argentina-19-0-l10n_ar_ux/es/>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/odoo-"
+"argentina-19-0/odoo-argentina-19-0-l10n_ar_ux/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
-" ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: l10n_ar_ux
@@ -50,6 +50,12 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_partner_property_form
 msgid "ARCA"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__l10n_ar_afip_responsibility_type_id
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_users__l10n_ar_afip_responsibility_type_id
+msgid "ARCA Responsibility Type"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -202,6 +208,15 @@ msgstr "Nota de Débito"
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_filter_debit_ar
 msgid "Debit Notes"
 msgstr "Notas de Débito"
+
+#. module: l10n_ar_ux
+#: model:ir.model.fields,help:l10n_ar_ux.field_res_partner__l10n_ar_afip_responsibility_type_id
+#: model:ir.model.fields,help:l10n_ar_ux.field_res_users__l10n_ar_afip_responsibility_type_id
+msgid ""
+"Defined by ARCA to identify the type of responsibilities that a person or a "
+"legal entity could have and that impacts in the type of operations and "
+"requirements they need."
+msgstr ""
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__l10n_ar_afip_pos_partner_id

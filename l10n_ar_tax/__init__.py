@@ -4,6 +4,7 @@
 ##############################################################################
 from . import models
 from . import wizard
+from . import demo
 from odoo.addons.l10n_ar_withholding.models.account_payment import AccountPayment
 import logging
 

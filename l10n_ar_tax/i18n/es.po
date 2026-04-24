@@ -728,6 +728,16 @@ msgid "Fiscal Position"
 msgstr "Posición fiscal"
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position__l10n_ar_reversal_only
+msgid "No detect in returns from OV (AR)"
+msgstr "No detectar en Devoluciones desde OV (AR)"
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_fiscal_position__l10n_ar_reversal_only
+msgid "If enabled, this fiscal position is only selected automatically on credit notes when the 'Reversal of' field is set."
+msgstr "Si está activado, esta posición fiscal solo se selecciona automáticamente en notas de crédito cuando el campo 'Reversión de' está completo."
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__l10n_ar_padron_from_date
 msgid "From Date"
 msgstr "Desde"

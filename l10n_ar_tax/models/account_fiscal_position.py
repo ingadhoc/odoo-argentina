@@ -5,6 +5,10 @@ from odoo.exceptions import RedirectWarning, ValidationError
 class AccountFiscalPosition(models.Model):
     _inherit = "account.fiscal.position"
 
+    l10n_ar_reversal_only = fields.Boolean(
+        string="No detect in returns from OV (AR)",
+        help="If enabled, this fiscal position is only selected automatically on credit notes when the 'Reversal of' field is set.",
+    )
     l10n_ar_tax_ids = fields.One2many("account.fiscal.position.l10n_ar_tax", "fiscal_position_id")
 
     def _l10n_ar_add_taxes(self, partner, company, date, tax_type, payment=None):
@@ -63,10 +67,12 @@ class AccountFiscalPosition(models.Model):
         """Aquellas retenciones/percepciones en la posición fiscal que tengan un impuesto por defecto de retención
         entonces deberán tener tipo 'retención' y si son de percepción entonces deberán tener tipo 'percepcion'."""
         if wrong_tax_type_records := self.l10n_ar_tax_ids.filtered(
-            lambda x: x.tax_type == "withholding"
-            and x.default_tax_id.type_tax_use != "none"
-            or x.tax_type == "perception"
-            and x.default_tax_id.type_tax_use == "none"
+            lambda x: (
+                x.tax_type == "withholding"
+                and x.default_tax_id.type_tax_use != "none"
+                or x.tax_type == "perception"
+                and x.default_tax_id.type_tax_use == "none"
+            )
         ):
             raise ValidationError(
                 self.env._(
@@ -94,9 +100,13 @@ class AccountFiscalPosition(models.Model):
         """
         if self._context.get("l10n_ar_withholding") and self.env.company.country_id.code == "AR":
             return [
-                ("l10n_ar_tax_ids", lambda fpos: (any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids)))
+                ("l10n_ar_tax_ids", lambda fpos: any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids))
             ] + super()._get_fpos_ranking_functions(partner)
         elif not self._context.get("l10n_ar_withholding") and self.env.company.country_id.code == "AR":
+
+            def exclude_reversal_only_fpos(fpos):
+                """Skip reversal-only fiscal positions on manual customer credit notes."""
+                return 0 if self._context.get("l10n_ar_manual_refund") and fpos.l10n_ar_reversal_only else 1
 
             def exclude_withholding_only_fpos(fpos):
                 has_withholding = any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids)
@@ -106,8 +116,9 @@ class AccountFiscalPosition(models.Model):
                 )
                 return 0 if is_only_withholding else 1
 
-            return [("exclude_withholding_only", exclude_withholding_only_fpos)] + super()._get_fpos_ranking_functions(
-                partner
-            )
+            return [
+                ("exclude_reversal_only", exclude_reversal_only_fpos),
+                ("exclude_withholding_only", exclude_withholding_only_fpos),
+            ] + super()._get_fpos_ranking_functions(partner)
         else:
             return super()._get_fpos_ranking_functions(partner)

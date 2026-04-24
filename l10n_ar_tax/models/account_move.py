@@ -10,6 +10,37 @@ class AccountMove(models.Model):
         compute="_compute_perceptions_fiscal_position",
     )
 
+    @api.depends("partner_id", "partner_shipping_id", "company_id", "move_type", "reversed_entry_id")
+    def _compute_fiscal_position_id(self):
+        """Keep core fiscal position computation and override only AR manual refunds.
+
+        We first delegate to Odoo's native implementation. Then, for
+        Argentine customer credit notes created manually (without
+        ``reversed_entry_id``), we recompute with a context flag so the
+        ranking logic can exclude fiscal positions marked as reversal-only.
+        """
+        super()._compute_fiscal_position_id()
+
+        for move in self.filtered(
+            lambda m: (
+                m.company_id.account_fiscal_country_id.code == "AR"
+                and m.move_type == "out_refund"
+                and not m.reversed_entry_id
+            )
+        ):
+            delivery_partner = self.env["res.partner"].browse(
+                move.partner_shipping_id.id or move.partner_id.address_get(["delivery"])["delivery"]
+            )
+            # Let fiscal position ranking discard reversal-only options for manual AR credit notes.
+            fiscal_position_model = (
+                self.env["account.fiscal.position"]
+                .with_company(move.company_id)
+                .with_context(l10n_ar_manual_refund=True)
+            )
+            move.fiscal_position_id = fiscal_position_model._get_fiscal_position(
+                move.partner_id, delivery=delivery_partner
+            )
+
     def _compute_perceptions_fiscal_position(self):
         """
         Compute if the fiscal position has perceptions.

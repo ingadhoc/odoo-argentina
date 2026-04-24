@@ -6,8 +6,11 @@
         <field name="model">account.fiscal.position</field>
         <field name="inherit_id" ref="account.view_account_position_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//sheet/group/group[2]/field[@name='auto_apply']" position="after">
+                <field name="l10n_ar_require_related_invoice" invisible="'AR' not in fiscal_country_codes or not auto_apply"/>
+            </xpath>
             <notebook>
-                <page string="Perceptions and Withholdings" invisible="'AR'not in fiscal_country_codes">
+                <page string="Perceptions and Withholdings" invisible="'AR' not in fiscal_country_codes">
                     <field name="l10n_ar_tax_ids">
                         <list editable="bottom">
                             <field name="tax_type"/>

@@ -6,6 +6,14 @@ class AccountFiscalPosition(models.Model):
     _inherit = "account.fiscal.position"
 
     l10n_ar_tax_ids = fields.One2many("account.fiscal.position.l10n_ar_tax", "fiscal_position_id")
+    l10n_ar_require_related_invoice = fields.Boolean(
+        string="Only applies to NC with total refund (AR)",
+        help=(
+            "If enabled, the perception taxes of this fiscal position only apply "
+            "to credit notes when the amount is exactly equal to the related invoice "
+            "and both are in the same month."
+        ),
+    )
 
     def _l10n_ar_add_taxes(self, partner, company, date, tax_type, payment=None):
         # TODO deberiamos unificar mucho de este codigo con _get_tax_domain, _compute_withholdings y _check_tax_group_overlap
@@ -63,10 +71,12 @@ class AccountFiscalPosition(models.Model):
         """Aquellas retenciones/percepciones en la posición fiscal que tengan un impuesto por defecto de retención
         entonces deberán tener tipo 'retención' y si son de percepción entonces deberán tener tipo 'percepcion'."""
         if wrong_tax_type_records := self.l10n_ar_tax_ids.filtered(
-            lambda x: x.tax_type == "withholding"
-            and x.default_tax_id.type_tax_use != "none"
-            or x.tax_type == "perception"
-            and x.default_tax_id.type_tax_use == "none"
+            lambda x: (
+                x.tax_type == "withholding"
+                and x.default_tax_id.type_tax_use != "none"
+                or x.tax_type == "perception"
+                and x.default_tax_id.type_tax_use == "none"
+            )
         ):
             raise ValidationError(
                 self.env._(
@@ -94,7 +104,7 @@ class AccountFiscalPosition(models.Model):
         """
         if self._context.get("l10n_ar_withholding") and self.env.company.country_id.code == "AR":
             return [
-                ("l10n_ar_tax_ids", lambda fpos: (any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids)))
+                ("l10n_ar_tax_ids", lambda fpos: any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids))
             ] + super()._get_fpos_ranking_functions(partner)
         elif not self._context.get("l10n_ar_withholding") and self.env.company.country_id.code == "AR":
 

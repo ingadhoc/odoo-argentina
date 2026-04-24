@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <function model="account.chart.template" name="_install_l10n_ar_tax_demo">
+        <value model="res.company" eval="obj().env.ref('base.company_ri')"/>
+    </function>
+</odoo>

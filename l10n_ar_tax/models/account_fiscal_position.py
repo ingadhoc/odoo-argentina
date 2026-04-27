@@ -6,6 +6,32 @@ class AccountFiscalPosition(models.Model):
     _inherit = "account.fiscal.position"
 
     l10n_ar_tax_ids = fields.One2many("account.fiscal.position.l10n_ar_tax", "fiscal_position_id")
+    l10n_ar_tax_type = fields.Selection(
+        selection=[
+            ("perception", "Perception"),
+            ("withholding", "Withholding"),
+            ("none", "None"),
+        ],
+        string="AR Tax Type",
+        compute="_compute_l10n_ar_tax_type",
+        inverse="_inverse_l10n_ar_tax_type",
+    )
+
+    @api.depends("l10n_ar_tax_ids.tax_type")
+    def _compute_l10n_ar_tax_type(self):
+        for rec in self:
+            types = set(rec.l10n_ar_tax_ids.mapped("tax_type"))
+            if types == {"perception"}:
+                rec.l10n_ar_tax_type = "perception"
+            elif types == {"withholding"}:
+                rec.l10n_ar_tax_type = "withholding"
+            else:
+                rec.l10n_ar_tax_type = "none"
+
+    def _inverse_l10n_ar_tax_type(self):
+        for rec in self:
+            if rec.l10n_ar_tax_type in ("perception", "withholding"):
+                rec.l10n_ar_tax_ids.write({"tax_type": rec.l10n_ar_tax_type})
 
     def _l10n_ar_add_taxes(self, partner, company, date, tax_type, payment=None):
         # TODO deberiamos unificar mucho de este codigo con _get_tax_domain, _compute_withholdings y _check_tax_group_overlap

@@ -12,3 +12,4 @@ class AccountTaxGroup(models.Model):
             ("06", "06 - VAT perception or Withholding"),
         ]
     )
+    tax_ids = fields.One2many("account.tax", "tax_group_id", string="Taxes")

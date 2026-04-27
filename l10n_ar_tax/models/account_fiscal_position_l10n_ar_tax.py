@@ -9,6 +9,14 @@ from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
+# Mapa de código de jurisdicción → webservice disponible
+_JURISDICTION_WEBSERVICE = {
+    "901": "agip",  # CABA
+    "902": "arba",  # Buenos Aires provincia
+    "904": "rentas_cordoba",  # Córdoba
+    "921": "padron",  # Santa Fe
+}
+
 
 class AccountFiscalPositionL10nArTax(models.Model):
     _name = "account.fiscal.position.l10n_ar_tax"
@@ -30,6 +38,21 @@ class AccountFiscalPositionL10nArTax(models.Model):
     tax_type = fields.Selection(
         [("withholding", "Withholding"), ("perception", "Perception")], required=True, default="withholding"
     )
+    # POC: new UX fields
+    tax_group_id = fields.Many2one(
+        "account.tax.group",
+        string="Tax Group",
+        compute="_compute_tax_group_id",
+        inverse="_inverse_tax_group_aliquot",
+        check_company=True,
+    )
+    aliquot = fields.Float(
+        string="Aliquot (%)",
+        digits=(5, 2),
+        compute="_compute_aliquot",
+        inverse="_inverse_tax_group_aliquot",
+    )
+    tax_group_id_domain = fields.Char(compute="_compute_tax_group_id_domain")
 
     @api.constrains("fiscal_position_id", "default_tax_id")
     def _check_tax_group_overlap(self):
@@ -76,18 +99,74 @@ class AccountFiscalPositionL10nArTax(models.Model):
         for rec in self:
             rec.tax_template_domain = rec._get_tax_domain(filter_tax_group=False)
 
+    @api.depends("default_tax_id.tax_group_id")
+    def _compute_tax_group_id(self):
+        for rec in self:
+            rec.tax_group_id = rec.default_tax_id.tax_group_id
+
+    @api.depends("default_tax_id.amount")
+    def _compute_aliquot(self):
+        for rec in self:
+            rec.aliquot = rec.default_tax_id.amount
+
+    def _inverse_tax_group_aliquot(self):
+        for rec in self:
+            if rec.tax_group_id and rec.aliquot:
+                new_tax = rec._ensure_tax(rec.aliquot)
+                if new_tax and new_tax != rec.default_tax_id:
+                    rec.default_tax_id = new_tax
+                # Ajustar webservice según la provincia del impuesto resultante
+                if new_tax:
+                    jcode = new_tax.l10n_ar_state_id.jurisdiction_code
+                    rec.webservice = _JURISDICTION_WEBSERVICE.get(jcode, False)
+
+    @api.depends("fiscal_position_id.company_id", "tax_type")
+    def _compute_tax_group_id_domain(self):
+        for rec in self:
+            company_id = rec.fiscal_position_id.company_id.id or rec.env.company.id
+            domain = [
+                ("company_id", "=", company_id),
+                ("l10n_ar_vat_afip_code", "=", False),
+            ]
+            if rec.tax_type == "perception":
+                domain += [("tax_ids.type_tax_use", "=", "sale")]
+            elif rec.tax_type == "withholding":
+                domain += [("tax_ids.l10n_ar_withholding_payment_type", "=", "supplier")]
+            rec.tax_group_id_domain = json.dumps(domain)
+
     def _get_tax_domain(self, filter_tax_group=True):
         self.ensure_one()
         domain = self.env["account.tax"]._check_company_domain(self.fiscal_position_id.company_id)
         domain += [("amount_type", "in", ["percent", "division"])]
         if filter_tax_group:
-            domain += [("tax_group_id", "=", self.default_tax_id.tax_group_id.id)]
+            tax_group = self.tax_group_id or self.default_tax_id.tax_group_id
+            if tax_group:
+                domain += [("tax_group_id", "=", tax_group.id)]
             if self.tax_type == "withholding":
                 # TODO esto lo deberiamos borrar al ir a odoo 19 y solo usar los tax groups
                 # por ahora, para no renegar con scripts de migra que requieran crear tax groups para cada jurisdiccion y
                 # ademas luego tener que ajustar a lo que hagamos en 19, usamos la jursdiccion como elemento de agrupacion
-                # solo para retenciones
-                domain += [("l10n_ar_state_id", "=", self.default_tax_id.l10n_ar_state_id.id)]
+                # solo para retenciones.
+                # Derivamos el estado desde tax_group_id (cuando fue cambiado) para no filtrar
+                # por el estado del default_tax_id anterior (jurisdicción vieja).
+                state_id = False
+                if self.tax_group_id:
+                    ref_tax = (
+                        self.env["account.tax"]
+                        .with_context(active_test=False)
+                        .search(
+                            [
+                                ("tax_group_id", "=", self.tax_group_id.id),
+                                ("l10n_ar_withholding_payment_type", "=", "supplier"),
+                            ],
+                            limit=1,
+                        )
+                    )
+                    state_id = ref_tax.l10n_ar_state_id.id if ref_tax else False
+                if not state_id and self.default_tax_id:
+                    state_id = self.default_tax_id.l10n_ar_state_id.id
+                if state_id:
+                    domain += [("l10n_ar_state_id", "=", state_id)]
         if self.tax_type == "perception":
             domain += [("type_tax_use", "=", "sale")]
         elif self.tax_type == "withholding":
@@ -100,17 +179,25 @@ class AccountFiscalPositionL10nArTax(models.Model):
         self.ensure_one()
         domain = self._get_tax_domain()
         tax = self.env["account.tax"].with_context(active_test=False).search(domain + [("amount", "=", rate)], limit=1)
-        if not tax.active:
+        if tax and not tax.active:
             tax.active = True
         if not tax:
-            if "%" not in self.default_tax_id.name:
-                name = f"{self.default_tax_id.name} {rate}%"
+            # Buscar template desde el tax_group actual (puede ser un grupo nuevo/diferente).
+            # Esto garantiza que el impuesto copiado tenga el estado/jurisdicción correcta.
+            template_domain = self._get_tax_domain(filter_tax_group=True)
+            template_tax = self.env["account.tax"].with_context(active_test=False).search(template_domain, limit=1)
+            if not template_tax:
+                template_tax = self.default_tax_id
+            if not template_tax:
+                return self.env["account.tax"]
+            if "%" not in template_tax.name:
+                name = f"{template_tax.name} {rate}%"
             else:
                 # Usamos re.sub para reemplazar el patrón con el nuevo número seguido de '%'
                 # Si ya tiene un porcentaje, lo reemplazamos
-                name = re.sub(r"\b\d+(\.\d+)?\s*%", f"{rate}%", self.default_tax_id.name)
+                name = re.sub(r"\b\d+(\.\d+)?\s*%", f"{rate}%", template_tax.name)
 
-            tax = self.default_tax_id.copy(
+            tax = template_tax.copy(
                 default={
                     # dejamos sequencia mas baja para que siempre el que se duplica sea el que esta arriba
                     "sequence": 10,

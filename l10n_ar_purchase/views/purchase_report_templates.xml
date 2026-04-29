@@ -105,6 +105,12 @@
                         <br/>
                         <span t-field="o.dest_address_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true, &quot;no_tag_br&quot;: True}"/>
                     </t>
+                    <t t-elif="o.picking_type_id and o.picking_type_id.warehouse_id and o.picking_type_id.warehouse_id.partner_id">
+                        <br/><strong>Shipping address:</strong>
+                        <span t-field="o.picking_type_id.warehouse_id.name"/>
+                        <br/>
+                        <span t-field="o.picking_type_id.warehouse_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true, &quot;no_tag_br&quot;: True}"/>
+                    </t>
 
                 </div>
 
@@ -196,6 +202,12 @@
                         <span t-field="o.dest_address_id.name"/>
                         <br/>
                         <span t-field="o.dest_address_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true, &quot;no_tag_br&quot;: True}"/>
+                    </t>
+                    <t t-elif="o.picking_type_id and o.picking_type_id.warehouse_id and o.picking_type_id.warehouse_id.partner_id">
+                        <br/><strong>Shipping address:</strong>
+                        <span t-field="o.picking_type_id.warehouse_id.name"/>
+                        <br/>
+                        <span t-field="o.picking_type_id.warehouse_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true, &quot;no_tag_br&quot;: True}"/>
                     </t>
 
                 </div>

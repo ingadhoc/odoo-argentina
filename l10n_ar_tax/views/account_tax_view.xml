@@ -10,7 +10,7 @@
             <!-- solo visible si es de IIBB aplicado (ventas o retenciones de compras) -->
             <div class="alert alert-info" role="alert" invisible="(l10n_ar_tribute_afip_code != '07' and l10n_ar_tax_type not in ['iibb_untaxed', 'iibb_total']) or l10n_ar_type_tax_use not in ['sale', 'supplier']">
                 Para TXT de SIRCAR debe completar el campo regímen con el que corresponda según tabla definida por la jurisdicción.<br/>
-                Puede consultar la tabla <a target="_blank" href="https://www.ca.gov.ar/sircar2">aquí</a>, sección "Instructivos y tablas" item "Tabla con la Tipificación de Regímenes..."
+                Puede consultar la tabla <a target="_blank" href="https://www.ca.gov.ar/sircar">aquí</a>, sección "Instructivos y tablas" item "Tabla con la Tipificación de Regímenes..."
             </div>
         </sheet>
             <!-- limpiamos esta seccion que para retenciones no tiene sentido -->

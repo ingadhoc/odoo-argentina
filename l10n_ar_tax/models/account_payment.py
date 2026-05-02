@@ -458,7 +458,7 @@ class AccountPayment(models.Model):
     def _compute_l10n_ar_withholding_line_ids(self):
         # metodo completamente analogo a payment.register._compute_l10n_ar_withholding_ids
         for rec in self.filtered(lambda x: x.partner_type == "supplier"):
-            date = rec.date or fields.Date.today()
+            date = rec.date or fields.Date.context_today(rec)
             withholdings = [Command.clear()]
             if rec.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:
                 taxes = rec.l10n_ar_fiscal_position_id._l10n_ar_add_taxes(

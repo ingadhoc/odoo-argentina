@@ -1,6 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
-from datetime import datetime
 
 from odoo import Command, api, fields, models
 
@@ -52,7 +51,7 @@ class AccountPaymentRegister(models.TransientModel):
         # super()._compute_l10n_ar_withholding_ids()
         # taxes = self.l10n_ar_withholding_ids.mapped('tax_id')
         for rec in self:
-            date = fields.Date.from_string(rec.payment_date) or datetime.date.today()
+            date = rec.payment_date or fields.Date.context_today(rec)
 
             withholdings = [Command.clear()]
             if rec.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:

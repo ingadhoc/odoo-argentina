@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 16:48+0000\n"
+"POT-Creation-Date: 2026-05-04 13:23+0000\n"
 "PO-Revision-Date: 2026-04-14 14:41+0000\n"
 "Last-Translator: julia elizondo <jue@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/odoo-"
@@ -80,6 +80,11 @@ msgstr "Impuesto AFIP"
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__account_journal__discriminate_taxes__according_to_partner
 msgid "According to partner VAT responsibility"
 msgstr "De acuerdo a la responsabilidad de IVA"
+
+#. module: l10n_ar_ux
+#: model:ir.model,name:l10n_ar_ux.model_account_chart_template
+msgid "Account Chart Template"
+msgstr ""
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__l10n_ar_report_signed_by
@@ -229,6 +234,7 @@ msgid "Discriminate taxes?"
 msgstr "¿Discriminar impuestos?"
 
 #. module: l10n_ar_ux
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_chart_template__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__display_name
@@ -324,6 +330,7 @@ msgid "Gross Income Jurisdictions"
 msgstr "Jurisdicciones de Ingresos Brutos"
 
 #. module: l10n_ar_ux
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_chart_template__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__id

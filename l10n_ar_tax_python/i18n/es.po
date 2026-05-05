@@ -10,20 +10,22 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-15 18:13+0000\n"
-"PO-Revision-Date: 2025-11-06 16:44+0000\n"
-"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
-"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"PO-Revision-Date: 2026-04-14 14:41+0000\n"
+"Last-Translator: julia elizondo <jue@adhoc.inc>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/"
+"odoo-argentina-19-0/odoo-argentina-19-0-l10n_ar_tax_python/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: l10n_ar_tax_python
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax_python.view_l10n_ar_tax_python_formula_form
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: l10n_ar_tax_python
 #: model:ir.model.fields,field_description:l10n_ar_tax_python.field_account_fiscal_position_l10n_ar_tax__display_name
@@ -36,7 +38,7 @@ msgstr "Nombre para mostrar"
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax_python.view_account_position_form
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax_python.view_l10n_ar_tax_python_formula_form
 msgid "Edit Python Formula"
-msgstr ""
+msgstr "Editar Fórmula Python"
 
 #. module: l10n_ar_tax_python
 #: model:ir.model.fields,field_description:l10n_ar_tax_python.field_account_fiscal_position_l10n_ar_tax__id
@@ -55,7 +57,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax_python.field_account_fiscal_position_l10n_ar_tax__python_formula
 #: model:ir.model.fields.selection,name:l10n_ar_tax_python.selection__account_fiscal_position_l10n_ar_tax__webservice__python_formula
 msgid "Python Formula"
-msgstr ""
+msgstr "Fórmula Python"
 
 #. module: l10n_ar_tax_python
 #: model:ir.model.fields,help:l10n_ar_tax_python.field_account_fiscal_position_l10n_ar_tax__python_formula
@@ -65,6 +67,10 @@ msgid ""
 "The code should return a variable named 'aliquot' Example: aliquot = 0.21 "
 "(for a tax of 21%)\n"
 msgstr ""
+"Código en Python para calcular el importe del impuesto.\n"
+"Variables disponibles: partner, to_date, from_date, default_tax\n"
+"El código debe devolver una variable llamada «aliquot». Ejemplo: aliquot = "
+"0.21 (para un impuesto del 21 %)\n"
 
 #. module: l10n_ar_tax_python
 #: model:account.tax.group,name:l10n_ar_tax_python.suss_tax_group
@@ -74,12 +80,13 @@ msgstr ""
 #. module: l10n_ar_tax_python
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax_python.view_l10n_ar_tax_python_formula_form
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #. module: l10n_ar_tax_python
 #: model:ir.model.fields,field_description:l10n_ar_tax_python.field_account_fiscal_position_l10n_ar_tax__webservice
+#, fuzzy
 msgid "Webservice"
-msgstr ""
+msgstr "Webservice"
 
 #. module: l10n_ar_tax_python
 #: model:ir.model,name:l10n_ar_tax_python.model_account_fiscal_position_l10n_ar_tax

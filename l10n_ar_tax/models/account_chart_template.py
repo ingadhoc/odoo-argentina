@@ -87,7 +87,7 @@ class AccountChartTemplate(models.AbstractModel):
         for tax in self.env["account.tax"].with_context(active_test=False).search(non_profits_domain):
             sequence = self.env["ir.sequence"].create(
                 {
-                    "name": tax.invoice_label or tax.name,
+                    "name": (lambda n: n.rsplit(" ", 1)[0] if n.endswith("%") else n)(tax.invoice_label or tax.name),
                     "prefix": "%(year)s-",
                     "padding": 8,
                     "number_increment": 1,

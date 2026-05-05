@@ -110,11 +110,21 @@ class AccountFiscalPosition(models.Model):
             return functions
 
     def map_tax(self, taxes):
-        """For argentinean fiscal positions without tax mapping we add domestic taxes because taxes are always required
-        on argentinean invoices so there is no use case for not having them.
-        The other alternative would be to add the new fiscal positions on every VAT tax but that would be a lot of work
-        for the user.
+        """Map taxes for Argentine fiscal positions that only configure perceptions/withholdings (l10n_ar_tax_ids)
+        without any explicit VAT tax mapping (tax_ids).
+
+        In v19 all standard Argentine VAT taxes have fiscal_position_ids pointing to the domestic FP (e.g. "Compras / Ventas al exterior").
+        Because of this, taxes.fiscal_position_ids is always truthy for any IVA tax, which causes the
+        base map_tax() to remove all taxes when the fiscal position has no tax_ids.
+
+        For perception/withholding-only fiscal positions we return taxes unchanged instead of delegating to
+        domestic_FP.map_tax(). Delegating is unsafe because any tax replacement configured on the domestic FP
+        (e.g. IVA 0% replacing IVA 21%) would be incorrectly applied to every perc/with-only FP, regardless
+        of which one is actually active on the document.
+
+        FPs that do have explicit tax_ids (e.g. foreign or exempt positions with VAT mapping) are
+        not affected and always fall through to super().
         """
         if not self.tax_ids and self.l10n_ar_tax_ids and self != self.company_id.domestic_fiscal_position_id:
-            return self.company_id.domestic_fiscal_position_id.map_tax(taxes)
+            return taxes
         return super().map_tax(taxes)

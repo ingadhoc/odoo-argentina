@@ -9,16 +9,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 01:37+0000\n"
-"PO-Revision-Date: 2025-10-28 14:06+0000\n"
-"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
-"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"POT-Creation-Date: 2026-05-04 13:23+0000\n"
+"PO-Revision-Date: 2026-04-14 14:41+0000\n"
+"Last-Translator: julia elizondo <jue@adhoc.inc>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/odoo-"
+"argentina-19-0/odoo-argentina-19-0-l10n_ar_ux/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: l10n_ar_ux
 #: model:ir.actions.report,print_report_name:l10n_ar_ux.action_report_account_transfer
@@ -38,7 +40,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
 msgid "<span> on </span>"
-msgstr ""
+msgstr "<span> en </span>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
@@ -51,6 +53,12 @@ msgid "ARCA"
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__l10n_ar_afip_responsibility_type_id
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_users__l10n_ar_afip_responsibility_type_id
+msgid "ARCA Responsibility Type"
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model:ir.actions.act_window,name:l10n_ar_ux.act_afip_concept
 msgid "ARCA concept"
 msgstr "Concepto AFIP"
@@ -59,7 +67,7 @@ msgstr "Concepto AFIP"
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_concept_form
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_concept_tree
 msgid "ARCA concepts"
-msgstr ""
+msgstr "Conceptos ARCA"
 
 #. module: l10n_ar_ux
 #: model:ir.actions.act_window,name:l10n_ar_ux.act_afip_tax
@@ -72,6 +80,11 @@ msgstr "Impuesto AFIP"
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__account_journal__discriminate_taxes__according_to_partner
 msgid "According to partner VAT responsibility"
 msgstr "De acuerdo a la responsabilidad de IVA"
+
+#. module: l10n_ar_ux
+#: model:ir.model,name:l10n_ar_ux.model_account_chart_template
+msgid "Account Chart Template"
+msgstr ""
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__l10n_ar_report_signed_by
@@ -125,7 +138,7 @@ msgstr ""
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__l10n_ar_partner_vat
-msgid "CUIT del destinatario"
+msgid "CUIT"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -194,11 +207,20 @@ msgstr "Moneda"
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_move_filter_debit_ar
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_move_line_filter_debit_ar
 msgid "Debit Note"
-msgstr ""
+msgstr "Nota de Débito"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_filter_debit_ar
 msgid "Debit Notes"
+msgstr "Notas de Débito"
+
+#. module: l10n_ar_ux
+#: model:ir.model.fields,help:l10n_ar_ux.field_res_partner__l10n_ar_afip_responsibility_type_id
+#: model:ir.model.fields,help:l10n_ar_ux.field_res_users__l10n_ar_afip_responsibility_type_id
+msgid ""
+"Defined by ARCA to identify the type of responsibilities that a person or a "
+"legal entity could have and that impacts in the type of operations and "
+"requirements they need."
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -212,6 +234,7 @@ msgid "Discriminate taxes?"
 msgstr "¿Discriminar impuestos?"
 
 #. module: l10n_ar_ux
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_chart_template__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__display_name
@@ -271,7 +294,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_ux/models/account_journal.py:0
 msgid "External Fiscal Controller"
-msgstr ""
+msgstr "Controlador Fiscal Externo"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__l10n_ar_report_signature
@@ -307,6 +330,7 @@ msgid "Gross Income Jurisdictions"
 msgstr "Jurisdicciones de Ingresos Brutos"
 
 #. module: l10n_ar_ux
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_chart_template__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__id
@@ -348,7 +372,7 @@ msgstr "Diario"
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_move
 msgid "Journal Entry"
-msgstr "Asiento contable"
+msgstr "Asiento Contable"
 
 #. module: l10n_ar_ux
 #. odoo-python
@@ -453,7 +477,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:account.account.tag,name:l10n_ar_ux.no_monetaria_tag
 msgid "Non Monetary"
-msgstr ""
+msgstr "No Monetario"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_partner_property_form
@@ -540,12 +564,12 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_tax
 msgid "Tax"
-msgstr ""
+msgstr "Impuesto"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
 msgid "Tax 15%"
-msgstr ""
+msgstr "Impuesto 15%"
 
 #. module: l10n_ar_ux
 #: model:ir.ui.menu,name:l10n_ar_ux.menu_action_afip_tax
@@ -560,6 +584,7 @@ msgid ""
 "The associated document number does not appear to be in the Argentine "
 "format: %s"
 msgstr ""
+"El número de documento asociado no parece seguir el formato argentino: %s"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_company__gross_income_jurisdiction_ids
@@ -582,7 +607,7 @@ msgstr "Esta opción permite abrir documentos en el reporte de pago."
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
 msgid "Untaxed amount"
-msgstr ""
+msgstr "Monto no sujeto a impuestos"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
@@ -592,7 +617,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
 msgid "Values set here are company-specific."
-msgstr ""
+msgstr "Los valores que se establecen aquí son específicos de la empresa."
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__account_journal__discriminate_taxes__yes
@@ -604,6 +629,8 @@ msgstr "Si"
 #: code:addons/l10n_ar_ux/models/account_move.py:0
 msgid "You cannot cancel documents already posted in ARCA (%s)."
 msgstr ""
+"No se pueden cancelar los documentos que ya se han contabilizado en ARCA "
+"(%s)."
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_afip_concept

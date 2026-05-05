@@ -13,6 +13,21 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.arba_cit",
         readonly=False,
     )
+    show_reversal_moves_in_receipts = fields.Boolean(
+        compute="_compute_show_reversal_moves_in_receipts",
+        inverse="_inverse_show_reversal_moves_in_receipts",
+    )
+
+    def _compute_show_reversal_moves_in_receipts(self):
+        for record in self:
+            report = self.env.ref("l10n_ar_tax.report_payment_receipt_reversal_moves", raise_if_not_found=False)
+            record.show_reversal_moves_in_receipts = report and report.sudo().active
+
+    def _inverse_show_reversal_moves_in_receipts(self):
+        report = self.env.ref("l10n_ar_tax.report_payment_receipt_reversal_moves", raise_if_not_found=False)
+        if not report:
+            return
+        report.sudo().active = self.show_reversal_moves_in_receipts
 
     def l10n_ar_arba_cit_test(self):
         self.ensure_one()

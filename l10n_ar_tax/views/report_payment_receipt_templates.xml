@@ -21,8 +21,7 @@
             <t t-set="document_legend" t-value="'Doc. no válido como factura'"/>
             <t t-set="report_number" t-value="o.name"/>
             <t t-set="report_name" t-value="o.payment_type == 'outbound' and 'Orden de pago' or 'Recibo'"/>
-            <t t-set="header_address" t-value="o.receiptbook_id and o.receiptbook_id._fields.get('report_partner_id') and o.receiptbook_id.report_partner_id or o.company_id.partner_id"/>
-
+            <t t-set="header_address" t-value="(o._fields.get('receiptbook_id') and o.receiptbook_id and o.receiptbook_id.report_partner_id or o.company_id.partner_id or '')"/>
             <t t-set="custom_footer">
                 <div class="row">
                     <div name="footer_left_column" class="col-8">
@@ -90,7 +89,7 @@
                                 <td>
                                     <span t-out="'Cheque nro %s' % (check.name)">Check nro 123456</span>
                                     <span t-if="check.bank_id" t-out="' - %s' % (check.bank_id.name)"> - Santander Rio</span>
-                                    <span t-if="doc.payment_method_code == 'own_checks'" t-out="' (%s)' % (check.payment_method_line_id.name)"> (Electronic checkbook)</span>
+                                    <span t-out="' (%s)' % (check.payment_method_line_id.name)"> (Electronic checkbook)</span>
                                     <span t-if="check.payment_date"> - Exp. <span t-field="check.payment_date"/></span>
                                 </td>
                                 <td class="text-right" t-if="show_amount_col">
@@ -190,6 +189,7 @@
                 </tfoot>
             </table>
             <br/>
+            <t t-set="matched_lines" t-value="payment_bundle.with_context(matched_payment_ids=payment_bundle.ids).mapped('matched_move_line_ids')"/>
             <table class="table table-sm o_main_table" name="matching_table">
                 <thead>
                     <tr>
@@ -200,7 +200,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <t t-foreach="payment_bundle.with_context(matched_payment_ids=payment_bundle.ids).mapped('matched_move_line_ids')" t-as="line">
+                    <t t-foreach="matched_lines" t-as="line">
                         <tr>
                             <td><span t-field='line.move_id.display_name'/></td>
                             <td class="text-center">
@@ -214,7 +214,9 @@
                                 <!-- payment_matched_amount is already expressed in B (destination_currency_id) -->
                                 <span class="text-nowrap" t-out="(o.payment_type == 'outbound' and -1.0 or 1.0) * line.payment_matched_amount" t-options='{"widget": "monetary", "display_currency": line.payment_matched_currency_id}'/>
                             </td>
+
                         </tr>
+                        <span class="reversal_move_lines"/>
                     </t>
                     <tr t-if="sum(payment_bundle.mapped('unmatched_amount'))">
                         <td>On account</td>
@@ -285,6 +287,28 @@
             </table>
         </div>
     </template>
+
+    <template id="report_payment_receipt_reversal_moves" active="False" inherit_id="l10n_ar_tax.report_payment_receipt_document">
+       <xpath expr="//span[hasclass('reversal_move_lines')]" position="replace">
+            <t t-foreach="line.move_id.reversal_move_ids" t-as="reversal_move_id">
+                <t t-set="imputed_amount" t-value="[item['amount'] for item in reversal_move_id.sudo()._get_all_reconciled_invoice_partials() if item['aml_id'] == line.id]"/>
+                <tr>
+                    <td><span style="padding-left: 20px;">└</span> <span t-field='reversal_move_id.display_name'/></td>
+                    <td class="text-center">
+                        <span class="text-nowrap" t-field="reversal_move_id.invoice_date"/>
+                    </td>
+                    <td class="text-right o_price_total" >
+                        <span class="text-nowrap" t-out="(o.partner_type == 'supplier' and 1.0 or -1.0) * sum(imputed_amount)" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                    </td>
+                    <td class="text-right o_price_total" >
+                    </td>
+                </tr>
+
+            </t>
+
+        </xpath>
+    </template>
+
   <template id="report_payment_receipt_bundle">
         <t t-call="web.html_container">
             <t t-foreach="docs.with_context(print_in_bundles=True)._get_payment_bundles().values()" t-as="payment_bundle">

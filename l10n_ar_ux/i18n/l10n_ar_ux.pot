@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 01:37+0000\n"
-"PO-Revision-Date: 2026-04-08 01:37+0000\n"
+"POT-Creation-Date: 2026-05-04 13:23+0000\n"
+"PO-Revision-Date: 2026-05-04 13:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -46,6 +46,12 @@ msgid "ARCA"
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__l10n_ar_afip_responsibility_type_id
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_users__l10n_ar_afip_responsibility_type_id
+msgid "ARCA Responsibility Type"
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model:ir.actions.act_window,name:l10n_ar_ux.act_afip_concept
 msgid "ARCA concept"
 msgstr ""
@@ -66,6 +72,11 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__account_journal__discriminate_taxes__according_to_partner
 msgid "According to partner VAT responsibility"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model:ir.model,name:l10n_ar_ux.model_account_chart_template
+msgid "Account Chart Template"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -120,7 +131,7 @@ msgstr ""
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__l10n_ar_partner_vat
-msgid "CUIT del destinatario"
+msgid "CUIT"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -195,6 +206,15 @@ msgid "Debit Notes"
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model:ir.model.fields,help:l10n_ar_ux.field_res_partner__l10n_ar_afip_responsibility_type_id
+#: model:ir.model.fields,help:l10n_ar_ux.field_res_users__l10n_ar_afip_responsibility_type_id
+msgid ""
+"Defined by ARCA to identify the type of responsibilities that a person or a "
+"legal entity could have and that impacts in the type of operations and "
+"requirements they need."
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__l10n_ar_afip_pos_partner_id
 msgid "Dirección Punto de venta"
 msgstr ""
@@ -205,6 +225,7 @@ msgid "Discriminate taxes?"
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_chart_template__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__display_name
@@ -300,6 +321,7 @@ msgid "Gross Income Jurisdictions"
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_chart_template__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__id

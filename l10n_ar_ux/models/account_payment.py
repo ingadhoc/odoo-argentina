@@ -4,7 +4,7 @@ from odoo import fields, models
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
-    l10n_ar_partner_vat = fields.Char(related="partner_id.l10n_ar_vat", string="CUIT del destinatario")
+    l10n_ar_partner_vat = fields.Char(related="partner_id.l10n_ar_vat", string="CUIT")
 
     def _get_name_receipt_report(self, report_xml_id):
         """Method similar to the '_get_name_invoice_report' of l10n_latam_invoice_document

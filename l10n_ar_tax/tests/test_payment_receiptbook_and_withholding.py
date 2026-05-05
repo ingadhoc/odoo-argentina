@@ -355,3 +355,79 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
                 {"debit": 655000.0, "credit": 0.0, "amount_currency": 655000.0},
             ],
         )
+
+    def test_withholding_amounts(self):
+        """Verify withholding amount precision under 'round_globally' rounding method.
+
+        With price_unit=391683 and a 4.5% withholding tax, the exact amount is
+        391683 * 0.045 = 17625.735. Under 'round_globally', this rounds to 17625.74.
+        The test ensures the rounding method is respected and the resulting
+        withholding line carries the correctly rounded amount.
+        """
+        company = self.company_ri
+        previous_rounding_method = company.tax_calculation_rounding_method
+        company.tax_calculation_rounding_method = "round_globally"
+        try:
+            # Create a vendor bill with a single line subject to 21% VAT
+            in_invoice_wht = self.env["account.move"].create(
+                {
+                    "move_type": "in_invoice",
+                    "company_id": company.id,
+                    "invoice_date": self.today,
+                    "partner_id": self.env.ref("l10n_ar_tax.res_partner_adhoc_caba").id,
+                    "invoice_line_ids": [
+                        Command.create(
+                            {
+                                "product_id": self.product_a.id,
+                                "price_unit": 391683,
+                                "tax_ids": [Command.set(self.tax_21.ids)],
+                            }
+                        )
+                    ],
+                    "l10n_latam_document_number": "2-5",
+                }
+            )
+            in_invoice_wht.action_post()
+
+            # Set withholding tax rate to 4.5% (produces a non-trivial rounding case)
+            self.tax_wth_test_1.write({"amount": 4.5})
+
+            # Create fiscal position with withholding for CABA partner
+            fiscal_pos = self.env["account.fiscal.position"].create(
+                {
+                    "name": "IIBB CABA Rounding",
+                    "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
+                    "sequence": 10,
+                    "auto_apply": True,
+                    "country_id": self.env.ref("base.ar").id,
+                    "company_id": company.id,
+                    "state_ids": [(6, 0, [self.env.ref("base.state_ar_c").id])],
+                }
+            )
+            self.env["account.fiscal.position.l10n_ar_tax"].create(
+                {
+                    "fiscal_position_id": fiscal_pos.id,
+                    "default_tax_id": self.tax_wth_test_1.id,
+                    "tax_type": "withholding",
+                }
+            )
+
+            # Create payment using register payment context
+            action_context = in_invoice_wht.action_register_payment()["context"]
+            vals = {
+                "journal_id": self.company_bank_journal.id,
+                "amount": in_invoice_wht.amount_total,
+                "date": self.today,
+            }
+            payment = self.env["account.payment"].with_context(**action_context).create(vals)
+
+            # In direct payment creation flow, amount must be net of withholdings to fully reconcile the invoice.
+            payment.action_post()
+
+            self.assertEqual(payment.company_id.tax_calculation_rounding_method, "round_globally")
+            # 391683 * 21% = 82253.43 (VAT) -> total invoice: 473936.43
+            # 391683 * 4.5% = 17625.735 -> rounded globally to 17625.74 (withholding)
+            # net payment (liquidity): 473936.43 - 17625.74 = 456310.69
+            self.assertEqual(payment.l10n_ar_withholding_line_ids.amount, 17625.74)
+        finally:
+            company.tax_calculation_rounding_method = previous_rounding_method

@@ -10,4 +10,19 @@
             </group>
         </field>
     </record>
+
+    <record id="view_account_payment_register_form2" model="ir.ui.view">
+        <field name="name">account.payment.register.form</field>
+        <field name="model">account.payment.register</field>
+        <field name="inherit_id" ref="l10n_ar_withholding.view_account_payment_register_form"/>
+        <field name="arch" type="xml">
+
+            <div role="alert"
+                invisible="country_code != 'AR' or can_edit_wizard and (not can_group_payments or can_group_payments and group_payment)" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </div>
+
+        </field>
+    </record>
+
 </odoo>

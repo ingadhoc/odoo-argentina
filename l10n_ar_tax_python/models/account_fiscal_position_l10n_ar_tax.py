@@ -45,12 +45,11 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 "default_tax": rec.default_tax_id,
                 "payment": payment,
             }
-            safe_eval(
+            aliquot = safe_eval(
                 rec.python_formula,
                 local_dict,
-                mode="exec",
+                mode="eval",
             )
-            aliquot = local_dict.get("aliquot", None)
             if aliquot:
                 taxes |= self._ensure_tax(aliquot * 100)
         return taxes

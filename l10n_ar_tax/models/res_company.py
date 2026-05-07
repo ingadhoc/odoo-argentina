@@ -41,7 +41,7 @@ class ResCompany(models.Model):
             arba_login_url = "https://dfe.test.arba.gov.ar/DomicilioElectronico/SeguridadCliente/dfeServicioConsulta.do"
         return arba_login_url
 
-    def arba_connect(self):
+    def arba_connect(self, environment_type=None):
         """
         Method to be called
         """
@@ -53,7 +53,8 @@ class ResCompany(models.Model):
 
         try:
             ws = IIBB()
-            environment_type = self._get_arba_environment_type()
+            if environment_type is None:
+                environment_type = self._get_arba_environment_type()
             _logger.info("Getting connection to ARBA on %s mode" % environment_type)
 
             # argumentos de conectar: self, url=None, proxy="",

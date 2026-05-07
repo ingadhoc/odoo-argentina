@@ -1419,6 +1419,12 @@ msgid "res.company.jurisdiction.padron"
 msgstr ""
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid "Verifies the CIT key against the ARBA production server."
+msgstr "Verifica la clave CIT contra el servidor de producción de ARBA."
+
+#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
-msgid "⇒ Verificar Clave ARBA"
-msgstr ""
+msgid "⇒ Verify ARBA Key"
+msgstr "⇒ Verificar Clave ARBA"

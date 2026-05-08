@@ -2,25 +2,18 @@
 # This file contains the translation of the following modules:
 # 	* l10n_ar_ux
 #
-# Translators:
-# ADHOC - Bot <transbot@adhoc.com.ar>, 2025
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-04 13:23+0000\n"
-"PO-Revision-Date: 2026-04-14 14:41+0000\n"
-"Last-Translator: julia elizondo <jue@adhoc.inc>\n"
-"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/odoo-"
-"argentina-19-0/odoo-argentina-19-0-l10n_ar_ux/es/>\n"
-"Language: es\n"
+"POT-Creation-Date: 2026-05-13 14:49+0000\n"
+"PO-Revision-Date: 2026-05-13 14:49+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
-"0) ? 1 : 2);\n"
-"X-Generator: Weblate 5.10.4\n"
+"Plural-Forms: \n"
 
 #. module: l10n_ar_ux
 #: model:ir.actions.report,print_report_name:l10n_ar_ux.action_report_account_transfer
@@ -84,7 +77,7 @@ msgstr "De acuerdo a la responsabilidad de IVA"
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_chart_template
 msgid "Account Chart Template"
-msgstr ""
+msgstr "Plantilla de plan contable"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__l10n_ar_report_signed_by
@@ -130,6 +123,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_ir_actions_report__l10n_ar_copies
 msgid "Agregar Duplicado/Triplicado"
 msgstr ""
+
+#. module: l10n_ar_ux
+#. odoo-python
+#: code:addons/l10n_ar_ux/models/res_country.py:0
+msgid "Argentina country code must always be 'AR'."
+msgstr "El código del país Argentina debe ser siempre 'AR'."
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__arba_cit
@@ -180,6 +179,11 @@ msgstr "Ajustes de configuración"
 #: model:ir.model,name:l10n_ar_ux.model_res_partner
 msgid "Contact"
 msgstr "Contacto"
+
+#. module: l10n_ar_ux
+#: model:ir.model,name:l10n_ar_ux.model_res_country
+msgid "Country"
+msgstr "País"
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_res_country_state
@@ -244,6 +248,7 @@ msgstr "¿Discriminar impuestos?"
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_ir_actions_report__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_country__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_country_state__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_currency__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__display_name
@@ -340,6 +345,7 @@ msgstr "Jurisdicciones de Ingresos Brutos"
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_ir_actions_report__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_config_settings__id
+#: model:ir.model.fields,field_description:l10n_ar_ux.field_res_country__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_country_state__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_currency__id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__id
@@ -372,7 +378,7 @@ msgstr "Diario"
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_move
 msgid "Journal Entry"
-msgstr "Asiento Contable"
+msgstr "Asiento contable"
 
 #. module: l10n_ar_ux
 #. odoo-python
@@ -597,7 +603,8 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_account_journal__l10n_ar_afip_pos_partner_id
 msgid "This is the address used for invoice reports of this POS"
-msgstr "Esta dirección se utiliza para los informes de facturación de este PdV"
+msgstr ""
+"Esta dirección se utiliza para los informes de facturación de este PdV"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form

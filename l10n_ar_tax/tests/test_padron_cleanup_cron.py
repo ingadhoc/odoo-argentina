@@ -1,4 +1,6 @@
 import base64
+import io
+import zipfile
 
 from dateutil.relativedelta import relativedelta
 from odoo import fields
@@ -16,12 +18,21 @@ class TestPadronCleanupCron(common.TransactionCase):
         cls.dummy_file = base64.b64encode(b"dummy padron").decode()
 
     def _create_padron(self, state, to_date):
+        file_padron = self.dummy_file
+        filename = "padron.txt"
+        if state.jurisdiction_code == "921":
+            zip_buffer = io.BytesIO()
+            with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
+                zip_file.writestr("padron.txt", b"dummy padron")
+            file_padron = base64.b64encode(zip_buffer.getvalue()).decode()
+            filename = "padron.zip"
+
         return self.padron_model.create(
             {
                 "company_id": self.company.id,
                 "state_id": state.id,
-                "file_padron": self.dummy_file,
-                "filename": "padron.txt",
+                "file_padron": file_padron,
+                "filename": filename,
                 "l10n_ar_padron_from_date": to_date + relativedelta(days=-30),
                 "l10n_ar_padron_to_date": to_date,
             }

@@ -6,7 +6,7 @@ import re
 import tempfile
 import zipfile
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -42,6 +42,17 @@ class ResCompanyJurisdictionPadron(models.Model):
         for rec in self:
             if rec.state_id.jurisdiction_code not in ["902", "921"]:
                 raise ValidationError("El padron para (%s) no está implementado." % rec.state_id.name)
+
+    @api.constrains("state_id", "file_padron")
+    def _check_santa_fe_file_padron_format(self):
+        """Validar que para Santa Fe solo se permiten archivos ZIP comprimidos."""
+        for rec in self:
+            if not rec._is_santa_fe_jurisdiction() or not rec.file_padron:
+                continue
+
+            file_content = base64.b64decode(rec.file_padron)
+            if not rec._has_zip_filename() or not rec._is_zip_content(file_content):
+                raise ValidationError(_("Only compressed ZIP files are allowed for Santa Fe."))
 
     @api.depends("company_id", "state_id")
     def name_get(self):
@@ -86,6 +97,13 @@ class ResCompanyJurisdictionPadron(models.Model):
         self.ensure_one()
         return self.state_id and self.state_id.jurisdiction_code == "921"
 
+    def _is_zip_content(self, file_content):
+        return zipfile.is_zipfile(io.BytesIO(file_content))
+
+    def _has_zip_filename(self):
+        self.ensure_one()
+        return bool(self.filename and self.filename.lower().endswith(".zip"))
+
     def _read_parp_lines(self, lines, cuit):
         aliquot_ret = False
         aliquot_per = False
@@ -126,7 +144,7 @@ class ResCompanyJurisdictionPadron(models.Model):
         """
         file_content = base64.b64decode(self.file_padron)
         # is a ZIP file
-        if zipfile.is_zipfile(io.BytesIO(file_content)):
+        if self._is_zip_content(file_content):
             self.descompress_file(self.file_padron)
             path_file = self._find_parp_file("/tmp/")
             if not path_file:

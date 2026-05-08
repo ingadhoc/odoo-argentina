@@ -1158,3 +1158,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
 msgid "⇒ Verificar Clave ARBA"
 msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid "Only compressed ZIP files are allowed for Santa Fe."
+msgstr "Solo se permiten archivos ZIP comprimidos para Santa Fe."

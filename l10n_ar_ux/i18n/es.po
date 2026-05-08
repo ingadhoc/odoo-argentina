@@ -1,26 +1,19 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* l10n_ar_ux
-# 
-# Translators:
-# Mariana Torres <mt@adhoc.com.ar>, 2025
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
-# jueadhoc, 2025
-# Julian Gôttig, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-24 20:06+0000\n"
-"PO-Revision-Date: 2024-11-14 20:20+0000\n"
-"Last-Translator: Julian Gôttig, 2025\n"
-"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"POT-Creation-Date: 2026-05-12 15:34+0000\n"
+"PO-Revision-Date: 2026-05-12 15:34+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: \n"
 
 #. module: l10n_ar_ux
 #: model:ir.actions.report,print_report_name:l10n_ar_ux.action_report_account_transfer
@@ -34,9 +27,17 @@ msgstr "<br/><strong>Nro. de OC:</strong>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
-msgid ""
-"<span class=\"o_form_label\">Firma en reportes</span>\n"
-"                        <span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" aria-label=\"Values set here are company-specific.\" groups=\"base.group_multi_company\" role=\"img\"/>"
+msgid "<span class=\"o_form_label\">Firma en reportes</span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "<span> on </span>"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "<strong>Total</strong>"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -159,6 +160,12 @@ msgid "Agregar Duplicado/Triplicado"
 msgstr ""
 
 #. module: l10n_ar_ux
+#. odoo-python
+#: code:addons/l10n_ar_ux/models/res_country.py:0
+msgid "Argentina country code must always be 'AR'."
+msgstr "El código del país Argentina debe ser siempre 'AR'."
+
+#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_account__l10n_ar_afip_activity_id
 msgid "Associated Activity"
 msgstr "Actividad ARCA asociada"
@@ -215,6 +222,11 @@ msgid "Contact"
 msgstr "Contacto"
 
 #. module: l10n_ar_ux
+#: model:ir.model,name:l10n_ar_ux.model_res_country
+msgid "Country"
+msgstr "País"
+
+#. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_res_country_state
 msgid "Country state"
 msgstr "Provincia del país"
@@ -237,6 +249,17 @@ msgstr "Creado el"
 #: model:ir.model,name:l10n_ar_ux.model_res_currency
 msgid "Currency"
 msgstr "Moneda"
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_move_filter_debit_ar
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_move_line_filter_debit_ar
+msgid "Debit Note"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_filter_debit_ar
+msgid "Debit Notes"
+msgstr ""
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__l10n_ar_afip_pos_partner_id
@@ -263,11 +286,6 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__ir_actions_report__l10n_ar_copies__triplicado
 msgid "Duplicado y Triplicado"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_invoice_document
-msgid "El total de este comprobante equivale a un total de"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -615,7 +633,7 @@ msgstr "Código QR"
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_ir_actions_report
 msgid "Report Action"
-msgstr "Acción de informe"
+msgstr "Informar Acción"
 
 #. module: l10n_ar_ux
 #: model:ir.actions.report,name:l10n_ar_ux.action_report_account_transfer
@@ -675,7 +693,13 @@ msgstr ""
 "factura."
 
 #. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "Tax 15%"
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model:ir.ui.menu,name:l10n_ar_ux.menu_action_afip_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
 msgid "Taxes"
 msgstr "Impuestos"
 
@@ -699,8 +723,18 @@ msgid "This option enables open documents in the payment report."
 msgstr "Esta opción permite abrir documentos en el reporte de pago."
 
 #. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
+msgid "Untaxed amount"
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
 msgid "Vaciar contenido"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
+msgid "Values set here are company-specific."
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -713,11 +747,6 @@ msgstr "Si"
 #: code:addons/l10n_ar_ux/models/account_move.py:0
 msgid "You cannot cancel documents already posted in AFIP (%s)."
 msgstr "No pueden cancelarse documentos ya validados en ARCA (%s)."
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.report_invoice_document
-msgid "a un tipo de cambio consignado de"
-msgstr ""
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_afip_activity

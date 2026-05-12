@@ -1,5 +1,7 @@
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.fields import Domain
+from odoo.tools import SQL
 
 
 class AccountTax(models.Model):
@@ -9,6 +11,64 @@ class AccountTax(models.Model):
     l10n_ar_withholding_sequence_id = fields.Many2one(
         copy=True,
     )
+
+    @api.model
+    @api.readonly
+    def name_search(self, name="", domain=None, operator="ilike", limit=100):
+        """En localización AR, cuando la Posición Fiscal activa **es de
+        complemento** (tiene `l10n_ar_tax_ids` — percepciones, retenciones), el
+        IVA doméstico debe seguir siendo elegible en el dropdown. Sumamos al
+        dominio los taxes `is_domestic=True`.
+
+        Acotado a PFs con `l10n_ar_tax_ids` porque otras PFs AR pueden ser de
+        **reemplazo** puro (e.g. mapeo IVA 21% → IVA 10.5% vía `tax_ids` +
+        `original_tax_ids`); en esos casos el comportamiento de core Odoo es el
+        correcto (excluir el tax doméstico reemplazado) y no debemos
+        contaminarlo. `country_id == AR` queda implícito porque
+        `l10n_ar_tax_ids` solo existe en contexto AR.
+
+        El widget `many2many_tax_tags` invoca este método (vía `web_name_search`)
+        con `dynamic_fiscal_position_id` Y `hide_original_tax_ids` en el context.
+        El override aplica también con `hide_original_tax_ids` set — en ese caso
+        replicamos la rama `replacing_tax_ids` del core (`addons/account/models/
+        account_tax.py:264-275`) sobre el dominio extendido, y sacamos
+        `dynamic_fiscal_position_id` para que el super no AND-ee con la condición
+        restrictiva `fiscal_position_ids in (False, fp_id)` que excluye el IVA
+        doméstico.
+        """
+        fp_id = self.env.context.get("dynamic_fiscal_position_id")
+        if fp_id:
+            fp = self.env["account.fiscal.position"].browse(int(fp_id))
+            if fp.l10n_ar_tax_ids and fp != fp.company_id.domestic_fiscal_position_id:
+                # is_domestic=True ya cubre los taxes sin fiscal_position_ids
+                # (is_domestic computa `not tax.fiscal_position_ids → True`).
+                # El segundo OR captura taxes que pertenecen explícitamente a
+                # la PF activa.
+                domain = Domain(domain or Domain.TRUE) & (
+                    Domain("is_domestic", "=", True) | Domain("fiscal_position_ids", "=", int(fp_id))
+                )
+                # Replicamos la rama `hide_original_tax_ids` del core sobre el
+                # dominio extendido. Sin esto, los taxes que fueron reemplazados
+                # por otro (`replacing_tax_ids`) aparecerían en el dropdown.
+                if self.env.context.get("hide_original_tax_ids"):
+                    domain &= Domain("replacing_tax_ids", "not any", domain) | Domain.custom(
+                        to_sql=lambda model, alias, query: SQL(
+                            "EXISTS (SELECT 1 FROM %s WHERE %s = %s AND %s = %s)",
+                            SQL.identifier("account_tax_alternatives"),
+                            SQL.identifier("src_tax_id"),
+                            SQL.identifier(alias, "id"),
+                            SQL.identifier("dest_tax_id"),
+                            SQL.identifier(alias, "id"),
+                        ),
+                    )
+                # Saltear ambas keys en super para no re-aplicar el filtro
+                # restrictivo del core.
+                return super(
+                    AccountTax,
+                    self.with_context(dynamic_fiscal_position_id=None, hide_original_tax_ids=False),
+                ).name_search(name, domain, operator, limit)
+        return super().name_search(name, domain, operator, limit)
+
     company_currency_id = fields.Many2one(related="company_id.currency_id")
 
     # Override Float → Monetary para expresar umbrales en moneda de la compañía

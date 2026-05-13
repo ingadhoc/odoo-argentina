@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-13 14:49+0000\n"
+"POT-Creation-Date: 2026-05-13 14:48+0000\n"
 "PO-Revision-Date: 2026-05-13 14:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -603,8 +604,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_account_journal__l10n_ar_afip_pos_partner_id
 msgid "This is the address used for invoice reports of this POS"
-msgstr ""
-"Esta dirección se utiliza para los informes de facturación de este PdV"
+msgstr "Esta dirección se utiliza para los informes de facturación de este PdV"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form

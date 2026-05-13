@@ -35,9 +35,10 @@
                 </group>
             </xpath>
 
-            <group name="others_col_1">
-                <field name="drei"/>
-            </group>
+            <!-- Odoo 19: others_col_1 está en la rama l10n_ar_ux; esta vista hereda l10n_ar_withholding (rama account) -->
+            <xpath expr="//page[@name='accounting']//group[@name='general']" position="inside">
+                <field name="drei" invisible="'AR' not in fiscal_country_codes"/>
+            </xpath>
         </field>
     </record>
 

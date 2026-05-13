@@ -34,7 +34,6 @@ class AccountTax(models.Model):
         string="Minimum Base",
         help="If the computed base for the regime does not exceed this value, the withholding/perception is not applied.",
     )
-
     l10n_ar_tribute_afip_code = fields.Selection(related="tax_group_id.l10n_ar_tribute_afip_code")
     l10n_ar_state_code = fields.Char(related="l10n_ar_state_id.code")
     api_codigo_articulo_retencion = fields.Selection(
@@ -119,6 +118,7 @@ class AccountTax(models.Model):
         string="Artículo/Inciso para el cálculo retención",
     )
     ratio = fields.Float(default=100.00, help="Ratio to apply to tax base amount.")
+    l10n_ar_code = fields.Char(string="Código")
 
     @api.ondelete(at_uninstall=False)
     def _check_tax_used_on_company_tax_fp(self):

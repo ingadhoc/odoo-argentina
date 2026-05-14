@@ -112,6 +112,22 @@ class AccountPayment(models.Model):
             rec.amount_exact = rec.amount
             # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
 
+    @api.onchange("withholdings_amount")
+    def _onchange_amount(self):
+        by_pass_withholding = self.filtered(
+            lambda x: (
+                x.partner_type == "supplier"
+                and x.payment_method_code
+                not in [
+                    "in_third_party_checks",
+                    "out_third_party_checks",
+                    "return_third_party_checks",
+                    "new_third_party_checks",
+                ]
+            )
+        )
+        super(AccountPayment, self - by_pass_withholding)._onchange_amount()
+
     @api.onchange("partner_id")
     def _onchange_partner_id(self):
         for rec in self:

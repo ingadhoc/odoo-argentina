@@ -9,21 +9,14 @@ from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
-# Mapa de código de jurisdicción → webservice disponible
-_JURISDICTION_WEBSERVICE = {
-    "901": "agip",  # CABA
-    "902": "arba",  # Buenos Aires provincia
-    "904": "rentas_cordoba",  # Córdoba
-    "921": "padron",  # Santa Fe
-}
-
 
 class AccountFiscalPositionL10nArTax(models.Model):
     _name = "account.fiscal.position.l10n_ar_tax"
     _description = "account.fiscal.position.l10n_ar_tax"
 
     fiscal_position_id = fields.Many2one("account.fiscal.position", required=True, ondelete="cascade")
-    # ponemos default a los selectio porque al ser requeridos si no se comporta raro y parece que elige uno por defecto
+    company_id = fields.Many2one("res.company", related="fiscal_position_id.company_id", store=True)
+    # ponemos default a los selection porque al ser requeridos si no se comporta raro y parece que elige uno por defecto
     # pero que no esta seleccionado
     webservice = fields.Selection(
         [
@@ -36,9 +29,10 @@ class AccountFiscalPositionL10nArTax(models.Model):
     tax_template_domain = fields.Char(compute="_compute_tax_template_domain")
     default_tax_id = fields.Many2one("account.tax", required=True)
     tax_type = fields.Selection(
-        [("withholding", "Withholding"), ("perception", "Perception")], required=True, default="withholding"
+        [("withholding", "Withholding"), ("perception", "Perception")],
+        required=True,
+        default=lambda self: self.env.context.get("default_tax_type", "withholding"),
     )
-    # POC: new UX fields
     tax_group_id = fields.Many2one(
         "account.tax.group",
         string="Tax Group",
@@ -99,26 +93,67 @@ class AccountFiscalPositionL10nArTax(models.Model):
         for rec in self:
             rec.tax_template_domain = rec._get_tax_domain(filter_tax_group=False)
 
-    @api.depends("default_tax_id.tax_group_id")
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Resolve default_tax_id from tax_group_id + aliquot before INSERT so that
+        the required=True constraint on default_tax_id is satisfied."""
+        for vals in vals_list:
+            if not vals.get("default_tax_id") and vals.get("tax_group_id") and "aliquot" in vals:
+                stub = self.new(vals)
+                stub._sync_default_tax_from_ux_fields()
+                if stub.default_tax_id:
+                    vals["default_tax_id"] = stub.default_tax_id.id
+                    if stub.webservice and "webservice" not in vals:
+                        vals["webservice"] = stub.webservice
+        return super().create(vals_list)
+
+    @api.depends("default_tax_id")
     def _compute_tax_group_id(self):
         for rec in self:
             rec.tax_group_id = rec.default_tax_id.tax_group_id
 
-    @api.depends("default_tax_id.amount")
+    @api.depends("default_tax_id")
     def _compute_aliquot(self):
         for rec in self:
             rec.aliquot = rec.default_tax_id.amount
 
     def _inverse_tax_group_aliquot(self):
+        self._sync_default_tax_from_ux_fields()
+
+    @api.onchange("tax_group_id")
+    def _onchange_tax_group_id(self):
+        """When group changes, sync only if aliquot is already filled."""
+        if self.tax_group_id and self.aliquot:
+            self._sync_default_tax_from_ux_fields()
+
+    @api.onchange("aliquot")
+    def _onchange_aliquot(self):
+        """When aliquot changes (including to 0), sync if group is set."""
+        if self.tax_group_id:
+            self._sync_default_tax_from_ux_fields()
+
+    def _get_webservice_for_state(self, state):
+        """Returns the webservice selection value for a given state (res.country.state).
+        Override in downstream modules to add support for additional jurisdictions."""
+        mapping = {
+            "901": "agip",  # CABA
+            "902": "arba",  # Buenos Aires provincia
+            "904": "rentas_cordoba",  # Córdoba
+            "921": "padron",  # Santa Fe
+        }
+        return mapping.get(state.jurisdiction_code if state else "", False)
+
+    def _sync_default_tax_from_ux_fields(self):
+        """Derives default_tax_id (and webservice) from tax_group_id + aliquot.
+        Safe to call on in-memory (new()) records as well as persisted ones."""
         for rec in self:
-            if rec.tax_group_id and rec.aliquot:
-                new_tax = rec._ensure_tax(rec.aliquot)
-                if new_tax and new_tax != rec.default_tax_id:
-                    rec.default_tax_id = new_tax
-                # Ajustar webservice según la provincia del impuesto resultante
-                if new_tax:
-                    jcode = new_tax.l10n_ar_state_id.jurisdiction_code
-                    rec.webservice = _JURISDICTION_WEBSERVICE.get(jcode, False)
+            if not rec.tax_group_id:
+                continue
+            new_tax = rec._ensure_tax(rec.aliquot)
+            if new_tax and new_tax != rec.default_tax_id:
+                rec.default_tax_id = new_tax
+            if new_tax:
+                rec.webservice = rec._get_webservice_for_state(new_tax.l10n_ar_state_id)
 
     @api.depends("fiscal_position_id.company_id", "tax_type")
     def _compute_tax_group_id_domain(self):

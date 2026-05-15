@@ -56,6 +56,13 @@ class ResCompany(models.Model):
             error_type = root.find(".//tipoError").text
             error_code = root.find(".//codigoError").text
             error_msg = root.find(".//mensajeError").text.replace("<![CDATA[", "").replace("]]/>", "")
+            if error_code == "11":
+                # ARBA code 11 means CUIT not present in padron: do not block flow.
+                return {
+                    "CodigoError": error_code,
+                    "CodigoHash": root.find(".//codigoHash").text if root.find(".//codigoHash") is not None else "",
+                    "MensajeError": error_msg,
+                }
             raise UserError(_("ARBA Error %s(%s): %s") % (error_type, error_code, error_msg))
         if root.tag == "COMPROBANTE":
             try:

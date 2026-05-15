@@ -19,7 +19,7 @@
                     string="Perceptions and Withholdings"
                     invisible="'AR' not in fiscal_country_codes or not l10n_ar_tax_type or l10n_ar_tax_type == 'none'"
                 >
-                    <field name="l10n_ar_tax_ids">
+                    <field name="l10n_ar_tax_ids" context="{'default_tax_type': l10n_ar_tax_type}">
                         <list editable="bottom">
                             <field name="tax_type" column_invisible="1"/>
                             <field

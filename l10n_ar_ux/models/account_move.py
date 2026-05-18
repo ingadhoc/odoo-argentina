@@ -90,3 +90,8 @@ class AccountMove(models.Model):
             line.balance = balance
         res = super()._post(soft=soft)
         return res
+
+    @api.model
+    def _get_l10n_ar_codes_used_for_inv_and_ref(self):
+        res = super()._get_l10n_ar_codes_used_for_inv_and_ref()
+        return res + ["33", "331"]

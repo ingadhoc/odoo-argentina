@@ -4,10 +4,46 @@
         <field name="name">account.payment.register.form</field>
         <field name="model">account.payment.register</field>
         <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+        <field name="priority">100</field>
         <field name="arch" type="xml">
-            <group name="group2">
-                <field name="l10n_ar_fiscal_position_id" options="{'no_create': True}" invisible="partner_type != 'supplier' or country_code != 'AR' or not can_edit_wizard or (can_group_payments and not group_payment)"/>
+            <group name="group2" position="inside">
+                <field name="is_payment_pro" invisible="1" force_save="1"/>
+                <field name="payment_type" invisible="1"/>
+                <field name="country_code" invisible="1"/>
+                <!-- Modo automático/manual de posición fiscal (solo cuando payment_pro) -->
+                <label for="fiscal_position_mode" invisible="not is_payment_pro"/>
+                <field name="fiscal_position_mode" widget="radio" nolabel="1" invisible="not is_payment_pro"/>
+                <!-- FP editable:
+                     - payment_pro: visible solo cuando modo manual
+                     - normal: visible con las condiciones originales (supplier AR, etc.) -->
+                <field name="l10n_ar_fiscal_position_id"
+                    options="{'no_create': True}"
+                    invisible="(is_payment_pro and fiscal_position_mode != 'manual') or (not is_payment_pro and (partner_type != 'supplier' or country_code != 'AR' or not can_edit_wizard or (can_group_payments and not group_payment)))"/>
             </group>
+            <!-- Footer personalizado para modo payment_pro -->
+            <footer position="replace">
+                <footer>
+                    <!-- Botones estándar (solo cuando NO es payment_pro) -->
+                    <button string="Create Payments" name="action_create_payments" type="object"
+                            class="oe_highlight" data-hotkey="q"
+                            invisible="is_payment_pro or total_payments_amount == 1"/>
+                    <button string="Create Payment" name="action_create_payments" type="object"
+                            class="oe_highlight" data-hotkey="q"
+                            invisible="is_payment_pro or total_payments_amount != 1"/>
+                    <!-- Botones payment_pro -->
+                    <button name="action_create_and_confirm"
+                            string="Create and Confirm"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="not is_payment_pro"/>
+                    <button name="action_create_draft"
+                            string="Create as Draft"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="not is_payment_pro"/>
+                    <button string="Discard" class="btn btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </footer>
         </field>
     </record>
 

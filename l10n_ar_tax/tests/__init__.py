@@ -4,3 +4,4 @@ from . import test_withholding_thresholds
 from . import test_payment_withholding_multimoneda
 from . import test_payment_withholding_checks_multimoneda
 from . import test_padron_cleanup_cron
+from . import test_payment_register_pro_wizard

@@ -1,6 +1,7 @@
 from collections import defaultdict
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class AccountMoveLine(models.Model):
@@ -43,3 +44,31 @@ class AccountMoveLine(models.Model):
                     vals["display_type"] = "product"
 
         return super().create(vals_list)
+
+    def action_register_payment(self, ctx=None):
+        to_pay_partners = self.mapped("move_id.commercial_partner_id") or self.mapped("partner_id")
+        company_pay_pro = len(self.mapped("company_id").ids) == 1 and self.mapped("company_id").use_payment_pro
+        payment_pro = self.env.context.get("force_payment_pro")
+
+        # Payment pro con múltiples partners → wizard account.payment.register con retenciones
+        if payment_pro is not False and (payment_pro or company_pay_pro) and len(to_pay_partners) > 1:
+            to_pay_move_lines = self.filtered(
+                lambda r: not r.reconciled and r.account_id.account_type in ["asset_receivable", "liability_payable"]
+            )
+            if not to_pay_move_lines:
+                raise UserError(_("Nothing to be paid on selected entries"))
+            return {
+                "name": _("Register Payment"),
+                "type": "ir.actions.act_window",
+                "res_model": "account.payment.register",
+                "view_mode": "form",
+                "views": [[False, "form"]],
+                "target": "new",
+                "context": {
+                    "active_model": "account.move.line",
+                    "active_ids": to_pay_move_lines.ids,
+                    "default_company_id": self.company_id.id,
+                    "payment_pro": True,
+                },
+            }
+        return super().action_register_payment(ctx=ctx)

@@ -541,3 +541,11 @@ class AccountPayment(models.Model):
         currency_id."""
         self.ensure_one()
         return bundles.get(self._get_payment_bundle_key())
+
+    def _compute_to_pay_move_lines(self):
+        # When creating payments from the bulk payment wizard, we explicitly set
+        # to_pay_move_line_ids to the selected lines only, so we skip auto-computation
+        # to avoid _add_all() adding unrelated lines of different currencies.
+        if self.env.context.get("skip_to_pay_compute"):
+            return
+        return super()._compute_to_pay_move_lines()

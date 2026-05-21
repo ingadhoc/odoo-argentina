@@ -74,8 +74,356 @@
             </t>
         </xpath>
 
+<<<<<<< ce23266e708f91ffa3a9c5f1cf5de47691d401c8
         <!-- ── Pending receivables table (customers, controlled by group) ─────── -->
         <xpath expr="//span[@name='pending_table']" position="replace">
+||||||| d3b0126391291e3d9fc62f4c2d99f78a3b5ce778
+                        <!-- (16) Responsabilidad AFIP -->
+                        <strong>VAT Cond: </strong><span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
+
+                        <!-- (17) CUIT -->
+                        <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
+                            <br/><strong><t t-out="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+                        </t>
+
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <table class="table table-sm o_main_table" name="payments_table">
+                <t t-set="secondary_currency" t-value="o.currency_id if o.other_currency else o.counterpart_currency_id"/>
+                <t t-set="secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else o.counterpart_exchange_rate"/>
+                <thead>
+                    <tr>
+                        <th><span>Payments</span></th>
+                        <th class="text-right" t-if="secondary_currency"><span>Amount currency</span></th>
+                        <th class="text-right"><span>Amount</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="payment_bundle" t-as="doc">
+                        <t t-foreach="doc._get_latam_checks()" t-as="check">
+                            <t t-set="doc_secondary_currency_rate" t-value="doc.exchange_rate if doc.other_currency else doc.counterpart_exchange_rate"/>
+                            <tr>
+                                <td>
+                                    <span t-out="'Cheque nro %s' % (check.name)">Check nro 123456</span>
+                                    <span t-if="check.bank_id" t-out="' - %s' % (check.bank_id.name)"> - Santander Rio</span>
+                                    <span t-out="' (%s)' % (check.payment_method_line_id.name)"> (Electronic checkbook)</span>
+                                    <span t-if="check.payment_date"> - Exp. <span t-field="check.payment_date"/></span>
+                                </td>
+                                <td class="text-right" t-if="secondary_currency">
+                                    <span class="text-nowrap" t-out="check.amount if o.other_currency else secondary_currency.round(check.amount / doc_secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>
+                                </td>
+                                <td class="text-right o_price_total">
+                                    <span class="text-nowrap" t-out="doc.company_currency_id.round(check.amount * doc_secondary_currency_rate) if doc.other_currency else check.amount" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                    <t t-foreach="payment_bundle.l10n_ar_withholding_line_ids.filtered('amount')" t-as="line">
+                        <tr>
+                            <td>
+                                <span t-if="line.tax_id.l10n_ar_tax_type in ['earnings', 'earnings_scale']" t-out="line.tax_id.invoice_label or 'Retención Ganancias'"/>
+                                <span t-else="" t-out="line.tax_id.invoice_label or line.tax_id.name"/>
+                            </td>
+                            <td class="text-right" t-if="secondary_currency">
+                                <!-- TODO t t-set="line_secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else o.counterpart_exchange_rate"/-->
+
+                                <span class="text-nowrap" t-out="secondary_currency.round(line.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>                                                           </td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-field="line.amount"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <!-- si queremos imprimir solo cuando tenemos apuntes tal vez este approach puede ser mas consistente -->
+                    <!-- <t t-foreach="o.l10n_ar_withholding_ids" t-as="line">
+                        <t t-set='sign' t-value="o.payment_type == 'outbound' and -1 or 1"/>
+                        <tr>
+                            <td>
+                                <span t-field='line.tax_line_id.name'/>
+                            </td>
+                            <td class="text-right" t-if="o.other_currency">
+                                <span t-out="line.amount_currency * sign" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                            <td class="text-right o_price_total">
+                                <span t-out="line.balance * sign" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </tr>
+                    </t> -->
+                    <t t-foreach="payment_bundle.filtered('write_off_amount')" t-as="doc">
+                        <t t-set="doc_secondary_currency_rate" t-value="doc.exchange_rate if doc.other_currency else doc.counterpart_exchange_rate"/>
+                        <tr>
+                            <td>
+                                <span t-out="doc.write_off_type_id.label or doc.write_off_type_id.name"/>
+                            </td>
+                            <td class="text-right" t-if="secondary_currency">
+                                <span class="text-nowrap" t-out="secondary_currency.round(doc.write_off_amount / doc_secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>                        </td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-field="doc.write_off_amount"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <t t-set="all_same_type" t-value="len(set(payment_bundle.mapped('payment_type'))) == 1"/>
+
+                    <t t-foreach="payment_bundle.filtered(lambda x: not x._is_latam_check_payment() and x.amount != 0.0)" t-as="doc" id="payment_bundle_doc">
+                        <t t-set="doc_secondary_currency_rate" t-value="doc.exchange_rate if doc.other_currency else doc.counterpart_exchange_rate"/>
+
+                        <!-- Precompute display amounts -->
+                        <t t-set="display_amount" t-value="abs(doc.amount_signed) if all_same_type else doc.amount_signed"/>
+                        <t t-set="display_amount_secondary" t-value="secondary_currency.round((abs(doc.amount_company_currency_signed) if all_same_type else doc.amount_signed) / doc_secondary_currency_rate) if secondary_currency else display_amount"/>
+                        <t t-set="display_amount_company" t-value="doc.company_currency_id.round(display_amount_secondary * doc_secondary_currency_rate) if doc.other_currency else display_amount"/>
+                        <tr>
+                            <td>
+                                <span t-field="doc.journal_id.name"/>
+                                <span t-field="doc.payment_method_line_id.name"/>
+                            </td>
+
+                            <td class="text-right" t-if="secondary_currency">
+                                <span class="text-nowrap"
+                                    t-out="secondary_currency.round(display_amount_secondary)"
+                                    t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>
+                            </td>
+
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap"
+                                    t-out="display_amount_company"
+                                    t-options='{"widget": "monetary", "display_currency": doc.company_currency_id}'/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><strong><span>Total Paid</span></strong></td>
+                        <td class="text-right" t-if="secondary_currency">
+                            <strong><span class="text-nowrap" t-out="secondary_currency.round(sum(payment_bundle.mapped('payment_total')) / secondary_currency_rate)" t-options="{'widget': 'monetary', 'display_currency': secondary_currency}"/></strong>
+                        </td>
+                        <td class="text-right">
+                            <strong><span class="text-nowrap" t-out="sum(payment_bundle.mapped('payment_total'))" t-options="{'widget': 'monetary', 'display_currency': o.company_currency_id}"/></strong>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <br/>
+            <table class="table table-sm o_main_table" name="matching_table">
+                <thead>
+                    <tr>
+                        <th><span>Imputed Vouchers</span></th>
+                        <th class="text-center"><span>Exp. Date</span></th>
+                        <th class="text-right"><span>Original Amount</span></th>
+                        <th class="text-right"><span>Imputed Amount</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="payment_bundle.with_context(matched_payment_ids=payment_bundle.ids).mapped('matched_move_line_ids')" t-as="line">
+                        <tr>
+                            <td><span t-field='line.move_id.display_name'/></td>
+                            <td class="text-center">
+                                <span class="text-nowrap" t-field="line.date_maturity"/>
+                            </td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-out="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.balance" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                            </td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-out="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.payment_matched_amount" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                            </td>
+                        </tr>
+                    </t>
+                    <tr t-if="sum(payment_bundle.mapped('unmatched_amount'))">
+                        <td>On account</td>
+                        <td class="text-center"/>
+                        <td class="text-right o_price_total"/>
+                        <td class="text-right o_price_total">
+                            <span class="text-nowrap" t-out="sum(payment_bundle.mapped('unmatched_amount'))" t-options="{'widget': 'monetary', 'display_currency': o.company_currency_id}" />
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3"><strong><span>Total Imputed</span></strong></td>
+                        <td class="text-right">
+                            <strong><span class="text-nowrap" t-out="sum(payment_bundle.mapped('matched_amount')) + sum(payment_bundle.mapped('unmatched_amount'))" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/></strong>
+                            <!-- <strong><span class="text-nowrap" t-out="o.matched_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong> -->
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <br/>
+=======
+                        <!-- (16) Responsabilidad AFIP -->
+                        <strong>VAT Cond: </strong><span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
+
+                        <!-- (17) CUIT -->
+                        <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
+                            <br/><strong><t t-out="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+                        </t>
+
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <table class="table table-sm o_main_table" name="payments_table">
+                <t t-set="secondary_currency" t-value="o.currency_id if o.other_currency else o.counterpart_currency_id"/>
+                <t t-set="secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else o.counterpart_exchange_rate"/>
+                <thead>
+                    <tr>
+                        <th><span>Payments</span></th>
+                        <th class="text-right" t-if="secondary_currency"><span>Amount currency</span></th>
+                        <th class="text-right"><span>Amount</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="payment_bundle" t-as="doc">
+                        <t t-foreach="doc._get_latam_checks()" t-as="check">
+                            <t t-set="doc_secondary_currency_rate" t-value="doc.exchange_rate if doc.other_currency else doc.counterpart_exchange_rate"/>
+                            <tr>
+                                <td>
+                                    <span t-out="'Cheque nro %s' % (check.name)">Check nro 123456</span>
+                                    <span t-if="check.bank_id" t-out="' - %s' % (check.bank_id.name)"> - Santander Rio</span>
+                                    <span t-out="' (%s)' % (check.payment_method_line_id.name)"> (Electronic checkbook)</span>
+                                    <span t-if="check.payment_date"> - Exp. <span t-field="check.payment_date"/></span>
+                                </td>
+                                <td class="text-right" t-if="secondary_currency">
+                                    <span class="text-nowrap" t-out="check.amount if o.other_currency else secondary_currency.round(check.amount / doc_secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>
+                                </td>
+                                <td class="text-right o_price_total">
+                                    <span class="text-nowrap" t-out="doc.company_currency_id.round(check.amount * doc_secondary_currency_rate) if doc.other_currency else check.amount" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                    <t t-foreach="payment_bundle.l10n_ar_withholding_line_ids.filtered('amount')" t-as="line">
+                        <tr>
+                            <td>
+                                <span t-if="line.tax_id.l10n_ar_tax_type in ['earnings', 'earnings_scale']" t-out="line.tax_id.invoice_label or 'Retención Ganancias'"/>
+                                <span t-else="" t-out="line.tax_id.invoice_label or line.tax_id.name"/>
+                            </td>
+                            <td class="text-right" t-if="secondary_currency">
+                                <!-- TODO t t-set="line_secondary_currency_rate" t-value="o.exchange_rate if o.other_currency else o.counterpart_exchange_rate"/-->
+
+                                <span class="text-nowrap" t-out="secondary_currency.round(line.amount / secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>                                                           </td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-field="line.amount"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <!-- si queremos imprimir solo cuando tenemos apuntes tal vez este approach puede ser mas consistente -->
+                    <!-- <t t-foreach="o.l10n_ar_withholding_ids" t-as="line">
+                        <t t-set='sign' t-value="o.payment_type == 'outbound' and -1 or 1"/>
+                        <tr>
+                            <td>
+                                <span t-field='line.tax_line_id.name'/>
+                            </td>
+                            <td class="text-right" t-if="o.other_currency">
+                                <span t-out="line.amount_currency * sign" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                            <td class="text-right o_price_total">
+                                <span t-out="line.balance * sign" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </tr>
+                    </t> -->
+                    <t t-foreach="payment_bundle.filtered('write_off_amount')" t-as="doc">
+                        <t t-set="doc_secondary_currency_rate" t-value="doc.exchange_rate if doc.other_currency else doc.counterpart_exchange_rate"/>
+                        <tr>
+                            <td>
+                                <span t-out="doc.write_off_type_id.label or doc.write_off_type_id.name"/>
+                            </td>
+                            <td class="text-right" t-if="secondary_currency">
+                                <span class="text-nowrap" t-out="secondary_currency.round(doc.write_off_amount / doc_secondary_currency_rate)" t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>                        </td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-field="doc.write_off_amount"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <t t-set="all_same_type" t-value="len(set(payment_bundle.mapped('payment_type'))) == 1"/>
+
+                    <t t-foreach="payment_bundle.filtered(lambda x: not x._is_latam_check_payment() and x.amount != 0.0)" t-as="doc" id="payment_bundle_doc">
+                        <t t-set="doc_secondary_currency_rate" t-value="doc.exchange_rate if doc.other_currency else doc.counterpart_exchange_rate"/>
+
+                        <!-- Precompute display amounts -->
+                        <t t-set="display_amount" t-value="abs(doc.amount_signed) if all_same_type else doc.amount_signed"/>
+                        <t t-set="display_amount_secondary" t-value="secondary_currency.round((abs(doc.amount_company_currency_signed) if all_same_type else doc.amount_signed) / doc_secondary_currency_rate) if secondary_currency else display_amount"/>
+                        <t t-set="display_amount_company" t-value="doc.company_currency_id.round(display_amount_secondary * doc_secondary_currency_rate) if doc.other_currency else display_amount"/>
+                        <tr>
+                            <td>
+                                <span t-field="doc.journal_id.name"/>
+                                <span t-field="doc.payment_method_line_id.name"/>
+                            </td>
+
+                            <td class="text-right" t-if="secondary_currency">
+                                <span class="text-nowrap"
+                                    t-out="secondary_currency.round(display_amount_secondary)"
+                                    t-options='{"widget": "monetary", "display_currency": secondary_currency}'/>
+                            </td>
+
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap"
+                                    t-out="display_amount_company"
+                                    t-options='{"widget": "monetary", "display_currency": doc.company_currency_id}'/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><strong><span>Total Paid</span></strong></td>
+                        <td class="text-right" t-if="secondary_currency">
+                            <strong><span class="text-nowrap" t-out="secondary_currency.round(sum(payment_bundle.mapped('payment_total')) / secondary_currency_rate)" t-options="{'widget': 'monetary', 'display_currency': secondary_currency}"/></strong>
+                        </td>
+                        <td class="text-right">
+                            <strong><span class="text-nowrap" t-out="sum(payment_bundle.mapped('payment_total'))" t-options="{'widget': 'monetary', 'display_currency': o.company_currency_id}"/></strong>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <br/>
+            <t t-set="matched_lines" t-value="payment_bundle.with_context(matched_payment_ids=payment_bundle.ids).mapped('matched_move_line_ids')"/>
+            <table class="table table-sm o_main_table" name="matching_table">
+                <thead>
+                    <tr>
+                        <th><span>Imputed Vouchers</span></th>
+                        <th class="text-center"><span>Exp. Date</span></th>
+                        <th class="text-right"><span>Original Amount</span></th>
+                        <th class="text-right"><span>Imputed Amount</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="matched_lines" t-as="line">
+                        <tr>
+                            <td><span t-field='line.move_id.display_name'/></td>
+                            <td class="text-center">
+                                <span class="text-nowrap" t-field="line.date_maturity"/>
+                            </td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-out="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.balance" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                            </td>
+                            <td class="text-right o_price_total">
+                                <span class="text-nowrap" t-out="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.payment_matched_amount" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                            </td>
+                        </tr>
+                        <span class="reversal_move_lines"/>
+                    </t>
+                    <tr t-if="sum(payment_bundle.mapped('unmatched_amount'))">
+                        <td>On account</td>
+                        <td class="text-center"/>
+                        <td class="text-right o_price_total"/>
+                        <td class="text-right o_price_total">
+                            <span class="text-nowrap" t-out="sum(payment_bundle.mapped('unmatched_amount'))" t-options="{'widget': 'monetary', 'display_currency': o.company_currency_id}" />
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3"><strong><span>Total Imputed</span></strong></td>
+                        <td class="text-right">
+                            <strong><span class="text-nowrap" t-out="sum(payment_bundle.mapped('matched_amount')) + sum(payment_bundle.mapped('unmatched_amount'))" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/></strong>
+                            <!-- <strong><span class="text-nowrap" t-out="o.matched_amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong> -->
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <br/>
+>>>>>>> 2fc4a063389ae797c8b850b0eb15951b45b06abf
             <table class="table table-sm o_main_table" name="open_table" t-if="o.partner_type=='customer'" groups="l10n_ar_ux.group_include_pending_receivable_documents">
                 <thead>
                     <tr>
@@ -137,6 +485,7 @@
         </xpath>
 
     </template>
+<<<<<<< ce23266e708f91ffa3a9c5f1cf5de47691d401c8
 
     <!-- Optional: show reversal moves as sub-rows under their matched line.
          Inactive by default; activate via Settings > Technical. -->
@@ -154,6 +503,41 @@
                     </td>
                     <td class="text-right o_price_total"/>
                 </tr>
+||||||| d3b0126391291e3d9fc62f4c2d99f78a3b5ce778
+  <template id="report_payment_receipt_bundle">
+        <t t-call="web.html_container">
+            <t t-foreach="docs.with_context(print_in_bundles=True)._get_payment_bundles().values()" t-as="payment_bundle">
+                <t t-set="o" t-value="payment_bundle[0]"/>
+                <t t-set="lang" t-value="o.partner_id.lang or o.company_id.partner_id.lang"/>
+                <t t-call="#{o._get_name_receipt_report('account.report_payment_receipt_document')}" t-lang="lang"/>
+=======
+    <template id="report_payment_receipt_reversal_moves" active="False" inherit_id="l10n_ar_tax.report_payment_receipt_document">
+       <xpath expr="//span[hasclass('reversal_move_lines')]" position="replace">
+            <t t-foreach="line.move_id.reversal_move_ids" t-as="reversal_move_id">
+                <t t-set="imputed_amount" t-value="[item['amount'] for item in reversal_move_id.sudo()._get_all_reconciled_invoice_partials() if item['aml_id'] == line.id]"/>
+                <tr>
+                    <td><span style="padding-left: 20px;">└</span> <span t-field='reversal_move_id.display_name'/></td>
+                    <td class="text-center">
+                        <span class="text-nowrap" t-field="reversal_move_id.invoice_date"/>
+                    </td>
+                    <td class="text-right o_price_total" >
+                        <span class="text-nowrap" t-out="(o.partner_type == 'supplier' and 1.0 or -1.0) * sum(imputed_amount)" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                    </td>
+                    <td class="text-right o_price_total" >
+                    </td>
+                </tr>
+
+            </t>
+
+        </xpath>
+    </template>
+  <template id="report_payment_receipt_bundle">
+        <t t-call="web.html_container">
+            <t t-foreach="docs.with_context(print_in_bundles=True)._get_payment_bundles().values()" t-as="payment_bundle">
+                <t t-set="o" t-value="payment_bundle[0]"/>
+                <t t-set="lang" t-value="o.partner_id.lang or o.company_id.partner_id.lang"/>
+                <t t-call="#{o._get_name_receipt_report('account.report_payment_receipt_document')}" t-lang="lang"/>
+>>>>>>> 2fc4a063389ae797c8b850b0eb15951b45b06abf
             </t>
         </xpath>
     </template>

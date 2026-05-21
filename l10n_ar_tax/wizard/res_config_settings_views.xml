@@ -20,12 +20,23 @@
                     </div>
                 </setting>
             </xpath>
+<<<<<<< ce23266e708f91ffa3a9c5f1cf5de47691d401c8
         <setting id="sepa_payments" position="after">
                     <setting id="show_reversal_moves_in_receipts" string="Show reversal moves in receipts"
                         help="Shows debit and credit notes in payment receipts as separate moves.">
                         <field name="show_reversal_moves_in_receipts"/>
                     </setting>
                 </setting>
+||||||| d3b0126391291e3d9fc62f4c2d99f78a3b5ce778
+
+=======
+            <setting id="sepa_payments" position="after">
+                    <setting id="show_reversal_moves_in_receipts" string="Show reversal moves in receipts"
+                        help="Muestra las ND y NC en los recibos de pago, como movimientos a parte.">
+                        <field name="show_reversal_moves_in_receipts"/>
+                    </setting>
+            </setting>
+>>>>>>> 2fc4a063389ae797c8b850b0eb15951b45b06abf
         </field>
     </record>
 

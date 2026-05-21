@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-12 14:51+0000\n"
+"POT-Creation-Date: 2026-05-21 19:31+0000\n"
 "PO-Revision-Date: 2026-04-14 14:41+0000\n"
 "Last-Translator: julia elizondo <jue@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/odoo-"
@@ -1342,6 +1342,11 @@ msgid "Used for withholdings calculation"
 msgstr "Utilizado para el cálculo de retenciones"
 
 #. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
+msgid "Verifies the CIT key against the ARBA production server."
+msgstr "Verifica la clave CIT contra el servidor de producción de ARBA."
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_withholding_sequence_id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__withholding_sequence_id
 msgid "WTH Sequence"
@@ -1417,12 +1422,6 @@ msgstr ""
 #: model:ir.model,name:l10n_ar_tax.model_res_company_jurisdiction_padron
 msgid "res.company.jurisdiction.padron"
 msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
-msgid "Verifies the CIT key against the ARBA production server."
-msgstr "Verifica la clave CIT contra el servidor de producción de ARBA."
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form

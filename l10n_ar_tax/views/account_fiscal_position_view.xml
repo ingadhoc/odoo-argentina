@@ -6,7 +6,7 @@
         <field name="model">account.fiscal.position</field>
         <field name="inherit_id" ref="account.view_account_position_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='name']" position="after">
+            <xpath expr="//field[@name='company_id'][@groups='base.group_multi_company']" position="before">
                 <field
                     name="l10n_ar_tax_type"
                     invisible="'AR' not in fiscal_country_codes"

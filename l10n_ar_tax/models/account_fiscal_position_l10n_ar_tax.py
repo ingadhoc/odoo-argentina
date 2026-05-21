@@ -96,7 +96,8 @@ class AccountFiscalPositionL10nArTax(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         """Resolve default_tax_id from tax_group_id + aliquot before INSERT so that
-        the required=True constraint on default_tax_id is satisfied."""
+        the required=True constraint on default_tax_id is satisfied.
+        Also derives webservice from default_tax_id when not explicitly provided."""
         for vals in vals_list:
             if not vals.get("default_tax_id") and vals.get("tax_group_id") and "aliquot" in vals:
                 stub = self.new(vals)
@@ -105,6 +106,9 @@ class AccountFiscalPositionL10nArTax(models.Model):
                     vals["default_tax_id"] = stub.default_tax_id.id
                     if stub.webservice and "webservice" not in vals:
                         vals["webservice"] = stub.webservice
+            if vals.get("default_tax_id") and "webservice" not in vals:
+                stub = self.new(vals)
+                vals["webservice"] = stub._get_webservice_for_state(stub.default_tax_id.l10n_ar_state_id)
         return super().create(vals_list)
 
     @api.depends("default_tax_id")
@@ -228,8 +232,6 @@ class AccountFiscalPositionL10nArTax(models.Model):
             if "%" not in template_tax.name:
                 name = f"{template_tax.name} {rate}%"
             else:
-                # Usamos re.sub para reemplazar el patrón con el nuevo número seguido de '%'
-                # Si ya tiene un porcentaje, lo reemplazamos
                 name = re.sub(r"\b\d+(\.\d+)?\s*%", f"{rate}%", template_tax.name)
 
             tax = template_tax.copy(
@@ -327,6 +329,10 @@ class AccountFiscalPositionL10nArTax(models.Model):
         para obtener la alícuota, sino consultamos el webservice de ARBA
         """
         self.ensure_one()
+
+        # si es una base demo devolvemos una alicuota dummy para que no falle la demo data
+        if self.env.ref("base.user_demo", raise_if_not_found=False):
+            return (2.5 if self.tax_type == "withholding" else 3.0, "VALOR DUMMY | dummy")
 
         cuit = partner.ensure_vat()
         _logger.info("Getting ARBA data for cuit %s from date %s to date %s" % (date, to_date, cuit))
@@ -458,6 +464,8 @@ class AccountFiscalPositionL10nArTax(models.Model):
         return: alicuot, ref
         """
         self.ensure_one()
+        if self.env.ref("base.user_demo", raise_if_not_found=False):
+            return (2.5 / 3.0, "VALOR DUMMY | dummy")
         state = self.default_tax_id.l10n_ar_state_id
         padron_file = self._search_padron_file(state, date)
         if not padron_file:

@@ -183,6 +183,7 @@
                 </tfoot>
             </table>
             <br/>
+            <t t-set="matched_lines" t-value="payment_bundle.with_context(matched_payment_ids=payment_bundle.ids).mapped('matched_move_line_ids')"/>
             <table class="table table-sm o_main_table" name="matching_table">
                 <thead>
                     <tr>
@@ -193,7 +194,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <t t-foreach="payment_bundle.with_context(matched_payment_ids=payment_bundle.ids).mapped('matched_move_line_ids')" t-as="line">
+                    <t t-foreach="matched_lines" t-as="line">
                         <tr>
                             <td><span t-field='line.move_id.display_name'/></td>
                             <td class="text-center">
@@ -206,6 +207,7 @@
                                 <span class="text-nowrap" t-out="(o.partner_type == 'supplier' and -1.0 or 1.0) * line.payment_matched_amount" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
                             </td>
                         </tr>
+                        <span class="reversal_move_lines"/>
                     </t>
                     <tr t-if="sum(payment_bundle.mapped('unmatched_amount'))">
                         <td>On account</td>
@@ -273,6 +275,26 @@
                 </div>
             </table>
         </div>
+    </template>
+    <template id="report_payment_receipt_reversal_moves" active="False" inherit_id="l10n_ar_tax.report_payment_receipt_document">
+       <xpath expr="//span[hasclass('reversal_move_lines')]" position="replace">
+            <t t-foreach="line.move_id.reversal_move_ids" t-as="reversal_move_id">
+                <t t-set="imputed_amount" t-value="[item['amount'] for item in reversal_move_id.sudo()._get_all_reconciled_invoice_partials() if item['aml_id'] == line.id]"/>
+                <tr>
+                    <td><span style="padding-left: 20px;">└</span> <span t-field='reversal_move_id.display_name'/></td>
+                    <td class="text-center">
+                        <span class="text-nowrap" t-field="reversal_move_id.invoice_date"/>
+                    </td>
+                    <td class="text-right o_price_total" >
+                        <span class="text-nowrap" t-out="(o.partner_type == 'supplier' and 1.0 or -1.0) * sum(imputed_amount)" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                    </td>
+                    <td class="text-right o_price_total" >
+                    </td>
+                </tr>
+
+            </t>
+
+        </xpath>
     </template>
   <template id="report_payment_receipt_bundle">
         <t t-call="web.html_container">

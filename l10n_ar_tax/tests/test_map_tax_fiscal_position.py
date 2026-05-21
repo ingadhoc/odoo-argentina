@@ -181,10 +181,9 @@ class TestMapTaxFiscalPosition(TestArCommon):
     def test_payment_for_invoice_with_perception_only_fp_uses_correct_tax_amount(self):
         """
         Al registrar el pago de una factura de cliente con FP percepción-only,
-        el monto del pago debe reflejar IVA 21% (base 1000 → total 1210), no IVA 0% (1000).
-        Si map_tax() hubiera aplicado la sustitución del domestic FP, el total de la
-        factura sería 1000 y el pago por 1210 dejaría un residual, o el pago se
-        registraría por 1000 y el total sería incorrecto.
+        el monto del pago debe reflejar IVA 21% + percepción CABA (base 1000 → total 1240),
+        no IVA 0% (1000). Si map_tax() hubiera aplicado la sustitución del domestic FP, el total
+        de la factura sería 1000 y el pago por 1240 dejaría un residual.
         """
         domestic_fp = self.company_ri.domestic_fiscal_position_id
         if not domestic_fp:
@@ -220,9 +219,9 @@ class TestMapTaxFiscalPosition(TestArCommon):
 
         self.assertAlmostEqual(
             invoice.amount_total,
-            1210.0,
+            1240.0,
             places=2,
-            msg="El total de la factura debe incluir IVA 21% (1000 + 210 = 1210).",
+            msg="El total de la factura debe incluir IVA 21% (210) + percepción CABA (30) = 1240.",
         )
 
         (

@@ -30,7 +30,17 @@ class AccountFiscalPosition(models.Model):
 
     def _inverse_l10n_ar_tax_type(self):
         for rec in self:
-            if rec.l10n_ar_tax_type in ("perception", "withholding"):
+            if rec.l10n_ar_tax_type != "none":
+                conflicting = rec.l10n_ar_tax_ids.filtered(lambda x: x.tax_type != rec.l10n_ar_tax_type)
+                if conflicting:
+                    raise ValidationError(
+                        _(
+                            "Cannot set AR tax type to '%(new_type)s': the fiscal position already has "
+                            "taxes of a different type configured (%(taxes)s). Remove them first.",
+                            new_type=rec.l10n_ar_tax_type,
+                            taxes=", ".join(conflicting.mapped("default_tax_id.name")),
+                        )
+                    )
                 rec.l10n_ar_tax_ids.write({"tax_type": rec.l10n_ar_tax_type})
 
     def _l10n_ar_add_taxes(self, partner, company, date, tax_type, payment=None):

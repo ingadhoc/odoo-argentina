@@ -1427,3 +1427,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
 msgid "⇒ Verify ARBA Key"
 msgstr "⇒ Verificar Clave ARBA"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position.py:0
+msgid ""
+"Cannot set AR tax type to '%(new_type)s': the fiscal position already has "
+"taxes of a different type configured (%(taxes)s). Remove them first."
+msgstr ""
+"No se puede cambiar el tipo AR a '%(new_type)s': la posición fiscal ya tiene "
+"impuestos de otro tipo configurados (%(taxes)s). Elimínelos primero."

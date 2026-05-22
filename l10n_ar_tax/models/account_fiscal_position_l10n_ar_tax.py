@@ -47,6 +47,12 @@ class AccountFiscalPositionL10nArTax(models.Model):
         inverse="_inverse_tax_group_aliquot",
     )
     tax_group_id_domain = fields.Char(compute="_compute_tax_group_id_domain")
+    l10n_ar_is_iibb = fields.Boolean(compute="_compute_l10n_ar_is_iibb")
+
+    @api.depends("tax_group_id")
+    def _compute_l10n_ar_is_iibb(self):
+        for rec in self:
+            rec.l10n_ar_is_iibb = bool(rec.tax_group_id.tax_ids.filtered(lambda t: t.l10n_ar_state_id))
 
     @api.constrains("fiscal_position_id", "default_tax_id")
     def _check_tax_group_overlap(self):
@@ -88,10 +94,13 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 taxes += rec.default_tax_id
         return taxes
 
-    @api.depends("fiscal_position_id", "tax_type")
+    @api.depends("fiscal_position_id", "tax_type", "l10n_ar_is_iibb")
     def _compute_tax_template_domain(self):
         for rec in self:
-            rec.tax_template_domain = rec._get_tax_domain(filter_tax_group=False)
+            domain = rec._get_tax_domain(filter_tax_group=False)
+            if not rec.l10n_ar_is_iibb:
+                domain += [("l10n_ar_tax_type", "not in", ["iibb_untaxed", "iibb_total"])]
+            rec.tax_template_domain = domain
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -149,9 +158,12 @@ class AccountFiscalPositionL10nArTax(models.Model):
 
     def _sync_default_tax_from_ux_fields(self):
         """Derives default_tax_id (and webservice) from tax_group_id + aliquot.
-        Safe to call on in-memory (new()) records as well as persisted ones."""
+        Only runs for IIBB groups; non-IIBB taxes (Ganancias, IVA, etc.) are
+        selected directly by the user via default_tax_id."""
         for rec in self:
             if not rec.tax_group_id:
+                continue
+            if not rec.tax_group_id.tax_ids.filtered(lambda t: t.l10n_ar_state_id):
                 continue
             new_tax = rec._ensure_tax(rec.aliquot)
             if new_tax and new_tax != rec.default_tax_id:

@@ -4,7 +4,7 @@ from odoo.tests import tagged
 
 
 @tagged("-at_install", "post_install")
-class TestFiscalPositionValidation(TestArWithholdingArRi):
+class TestPaymentWithholdingValidation(TestArWithholdingArRi):
     def setUp(self):
         super().setUp()
         self.today = fields.Date.today()
@@ -17,8 +17,8 @@ class TestFiscalPositionValidation(TestArWithholdingArRi):
             default={"amount_type": "percent", "amount": 2}
         )
 
-    def _create_caba_customer_hierarchy(self):
-        """Create a company/contact hierarchy that matches the CABA fiscal position."""
+    def _create_invoice_with_caba_perception(self):
+        # Create commercial partner company with CABA state
         commercial_partner = self.env["res.partner"].create(
             {
                 "name": "Commercial Partner CABA",
@@ -39,40 +39,6 @@ class TestFiscalPositionValidation(TestArWithholdingArRi):
                 "state_id": self.env.ref("base.state_ar_c").id,  # CABA state
             }
         )
-        return commercial_partner, child_partner
-
-    def _create_fiscal_positions(self):
-        """Create the generic and CABA fiscal positions used by the regression test."""
-        fiscal_position_generic = self.env["account.fiscal.position"].create(
-            {
-                "name": "Responsable Inscripto Test",
-                "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
-                "auto_apply": True,
-                "country_id": self.env.ref("base.ar").id,
-            }
-        )
-        fiscal_position_caba = self.env["account.fiscal.position"].create(
-            {
-                "name": "Percepciones CABA Reversion Test",
-                "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
-                "auto_apply": True,
-                "country_id": self.env.ref("base.ar").id,
-                "state_ids": [(6, 0, [self.env.ref("base.state_ar_c").id])],
-            }
-        )
-        self.env["account.fiscal.position.l10n_ar_tax"].create(
-            {
-                "fiscal_position_id": fiscal_position_caba.id,
-                "default_tax_id": self.caba_tax_perception.id,
-                "tax_type": "perception",
-                "webservice": "agip",
-            }
-        )
-        return fiscal_position_generic, fiscal_position_caba
-
-    def _create_invoice_with_caba_perception(self):
-        # Create commercial partner company with CABA state
-        commercial_partner, child_partner = self._create_caba_customer_hierarchy()
 
         # Add perception tax to commercial partner's l10n_ar_partner_tax_ids
         self.env["l10n_ar.partner.tax"].create(
@@ -105,7 +71,24 @@ class TestFiscalPositionValidation(TestArWithholdingArRi):
         )
 
         # Create fiscal position for CABA with perception tax
-        _fiscal_position_generic, fiscal_position_caba = self._create_fiscal_positions()
+        fiscal_position_caba = self.env["account.fiscal.position"].create(
+            {
+                "name": "Percepciones CABA Test",
+                "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
+                "auto_apply": True,
+                "country_id": self.env.ref("base.ar").id,
+                "state_ids": [(6, 0, [self.env.ref("base.state_ar_c").id])],
+            }
+        )
+
+        self.env["account.fiscal.position.l10n_ar_tax"].create(
+            {
+                "fiscal_position_id": fiscal_position_caba.id,
+                "default_tax_id": self.caba_tax_perception.id,
+                "tax_type": "perception",
+                "webservice": "agip",
+            }
+        )
 
         # Forzar cómputo de la posición fiscal
         invoice._compute_fiscal_position_id()
@@ -164,67 +147,3 @@ class TestFiscalPositionValidation(TestArWithholdingArRi):
             invoice.invoice_line_ids.tax_ids,
         )
         self.assertNotIn(invoice.partner_id.l10n_ar_partner_perception_ids.tax_id, invoice.invoice_line_ids.tax_ids)
-
-    def test_reversal_only_fiscal_position_is_ignored_on_manual_credit_note(self):
-        """Validate the three expected flows for AR reversal-only fiscal positions.
-
-        1. A regular customer invoice still picks the CABA fiscal position.
-        2. A credit note created through the reversal wizard keeps that same
-           fiscal position because it carries ``reversed_entry_id``.
-        3. A manual credit note ignores the reversal-only fiscal position and
-           falls back to the generic auto-apply fiscal position.
-        """
-        _, child_partner = self._create_caba_customer_hierarchy()
-        generic_fiscal_position, caba_fiscal_position = self._create_fiscal_positions()
-        # Set reversal-only on CABA fiscal position
-        caba_fiscal_position.l10n_ar_reversal_only = True
-
-        invoice = self.env["account.move"].create(
-            {
-                "move_type": "out_invoice",
-                "partner_id": child_partner.id,
-                "company_id": self.company_ri.id,
-                "invoice_date": fields.Date.from_string("2025-11-11"),
-                "date": fields.Date.from_string("2025-11-11"),
-                "invoice_line_ids": [
-                    Command.create(
-                        {
-                            "name": "Test Product",
-                            "quantity": 1,
-                            "price_unit": 1000.0,
-                            "product_id": self.product_a.id,
-                        }
-                    )
-                ],
-            }
-        )
-        invoice._compute_fiscal_position_id()
-        self.assertEqual(invoice.fiscal_position_id, caba_fiscal_position)
-
-        invoice.action_post()
-        refund_wizard = (
-            self.env["account.move.reversal"]
-            .with_context(**{"active_ids": [invoice.id], "active_model": "account.move"})
-            .create(
-                {
-                    "reason": "Mercadería defectuosa",
-                    "journal_id": invoice.journal_id.id,
-                    "date": fields.Date.from_string("2025-11-15"),
-                }
-            )
-        )
-        refund = self.env["account.move"].browse(refund_wizard.refund_moves()["res_id"])
-        refund._compute_fiscal_position_id()
-        self.assertEqual(refund.fiscal_position_id, caba_fiscal_position)
-
-        manual_refund = self.env["account.move"].create(
-            {
-                "move_type": "out_refund",
-                "partner_id": child_partner.id,
-                "company_id": self.company_ri.id,
-                "invoice_date": fields.Date.from_string("2025-11-16"),
-                "date": fields.Date.from_string("2025-11-16"),
-            }
-        )
-        manual_refund._compute_fiscal_position_id()
-        self.assertEqual(manual_refund.fiscal_position_id, generic_fiscal_position)

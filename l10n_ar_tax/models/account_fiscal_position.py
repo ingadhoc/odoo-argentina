@@ -5,11 +5,15 @@ from odoo.exceptions import RedirectWarning, ValidationError
 class AccountFiscalPosition(models.Model):
     _inherit = "account.fiscal.position"
 
-    l10n_ar_reversal_only = fields.Boolean(
-        string="No detect in returns from OV (AR)",
-        help="If enabled, this fiscal position is only selected automatically on credit notes when the 'Reversal of' field is set.",
-    )
     l10n_ar_tax_ids = fields.One2many("account.fiscal.position.l10n_ar_tax", "fiscal_position_id")
+    l10n_ar_require_related_invoice = fields.Boolean(
+        string="Only applies to NC with total refund (AR)",
+        help=(
+            "If enabled, the perception taxes of this fiscal position only apply "
+            "to credit notes when the amount is exactly equal to the related invoice "
+            "and both are in the same month."
+        ),
+    )
 
     def _l10n_ar_add_taxes(self, partner, company, date, tax_type, payment=None):
         # TODO deberiamos unificar mucho de este codigo con _get_tax_domain, _compute_withholdings y _check_tax_group_overlap
@@ -104,10 +108,6 @@ class AccountFiscalPosition(models.Model):
             ] + super()._get_fpos_ranking_functions(partner)
         elif not self._context.get("l10n_ar_withholding") and self.env.company.country_id.code == "AR":
 
-            def exclude_reversal_only_fpos(fpos):
-                """Skip reversal-only fiscal positions on manual customer credit notes."""
-                return 0 if self._context.get("l10n_ar_manual_refund") and fpos.l10n_ar_reversal_only else 1
-
             def exclude_withholding_only_fpos(fpos):
                 has_withholding = any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids)
                 has_perception = any(tax.tax_type == "perception" for tax in fpos.l10n_ar_tax_ids)
@@ -116,9 +116,8 @@ class AccountFiscalPosition(models.Model):
                 )
                 return 0 if is_only_withholding else 1
 
-            return [
-                ("exclude_reversal_only", exclude_reversal_only_fpos),
-                ("exclude_withholding_only", exclude_withholding_only_fpos),
-            ] + super()._get_fpos_ranking_functions(partner)
+            return [("exclude_withholding_only", exclude_withholding_only_fpos)] + super()._get_fpos_ranking_functions(
+                partner
+            )
         else:
             return super()._get_fpos_ranking_functions(partner)

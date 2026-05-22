@@ -10,37 +10,6 @@ class AccountMove(models.Model):
         compute="_compute_perceptions_fiscal_position",
     )
 
-    @api.depends("partner_id", "partner_shipping_id", "company_id", "move_type", "reversed_entry_id")
-    def _compute_fiscal_position_id(self):
-        """Keep core fiscal position computation and override only AR manual refunds.
-
-        We first delegate to Odoo's native implementation. Then, for
-        Argentine customer credit notes created manually (without
-        ``reversed_entry_id``), we recompute with a context flag so the
-        ranking logic can exclude fiscal positions marked as reversal-only.
-        """
-        super()._compute_fiscal_position_id()
-
-        for move in self.filtered(
-            lambda m: (
-                m.company_id.account_fiscal_country_id.code == "AR"
-                and m.move_type == "out_refund"
-                and not m.reversed_entry_id
-            )
-        ):
-            delivery_partner = self.env["res.partner"].browse(
-                move.partner_shipping_id.id or move.partner_id.address_get(["delivery"])["delivery"]
-            )
-            # Let fiscal position ranking discard reversal-only options for manual AR credit notes.
-            fiscal_position_model = (
-                self.env["account.fiscal.position"]
-                .with_company(move.company_id)
-                .with_context(l10n_ar_manual_refund=True)
-            )
-            move.fiscal_position_id = fiscal_position_model._get_fiscal_position(
-                move.partner_id, delivery=delivery_partner
-            )
-
     def _compute_perceptions_fiscal_position(self):
         """
         Compute if the fiscal position has perceptions.
@@ -76,7 +45,11 @@ class AccountMove(models.Model):
         IMPORTANTE: este metodo solo esta pensado para cambiar alicuota de MISMA fiscal position (por cambio en fecha o partner) pero no para cambiar los impuestos.
         Para ello nos basamos en los impuestos de la posicion fiscal, buscamos si hay impuestos existentes para los tax groups involucrados y los
         reemplazamos por los nuevos impuestos.
-        NO lo hacemos para el cambio de fiscal_position_id porque el onchange de fiscal_position_id implementado en sale_ux ya recomputa todos los taxes
+        NO lo hacemos para el cambio de fiscal_position_id porque el onchange de fiscal_position_id implementado en sale_ux ya recomputa todos los taxes.
+
+        Para posiciones fiscales con l10n_ar_require_related_invoice=True:
+        - En NC: solo aplica si es devolución total (mismo monto) en el mismo mes que la factura relacionada.
+        - Si no cumple → elimina los impuestos de percepción de las líneas.
         """
         for move in self.filtered(
             lambda x: x.is_sale_document(include_receipts=True) and x.perceptions_fiscal_positon and x.state == "draft"
@@ -84,14 +57,37 @@ class AccountMove(models.Model):
             fp_tax_groups = move.fiscal_position_id.l10n_ar_tax_ids.filtered(
                 lambda x: x.tax_type == "perception"
             ).mapped("default_tax_id.tax_group_id")
-            new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(
-                move.partner_id, move.company_id, move.date, "perception"
-            )
-            # Solo queremos que se recomputen los impuestos en facturas de cliente/proveedor
-            for line in move.filtered(lambda x: not x.reversed_entry_id).invoice_line_ids:
-                to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
-                if to_unlink._origin != new_taxes:
-                    line.tax_ids = (line.tax_ids - to_unlink) | new_taxes
+
+            if move.move_type == "out_refund" and move.fiscal_position_id.l10n_ar_require_related_invoice:
+                related = move._found_related_invoice()
+                if (
+                    related
+                    and move.invoice_date
+                    and related.invoice_date
+                    and move.invoice_date.year == related.invoice_date.year
+                    and move.invoice_date.month == related.invoice_date.month
+                    and move.currency_id.is_zero(related.amount_total - move.amount_total)
+                ):
+                    new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(
+                        move.partner_id, move.company_id, related.date, "perception"
+                    )
+                    for line in move.invoice_line_ids:
+                        to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
+                        if to_unlink._origin != new_taxes:
+                            line.tax_ids = (line.tax_ids - to_unlink) | new_taxes
+                else:
+                    for line in move.invoice_line_ids:
+                        to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
+                        if to_unlink:
+                            line.tax_ids = line.tax_ids - to_unlink
+            else:
+                new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(
+                    move.partner_id, move.company_id, move.date, "perception"
+                )
+                for line in move.invoice_line_ids:
+                    to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
+                    if to_unlink._origin != new_taxes:
+                        line.tax_ids = (line.tax_ids - to_unlink) | new_taxes
 
     def copy(self, default=None):
         """Re computamos las percepciones al duplicar una factura porque puede ser que la factura venga de otro periodo

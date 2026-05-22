@@ -44,7 +44,7 @@ class AccountMove(models.Model):
         """Recalculamos las percepciones si cambiamos la fecha de la orden de venta o el commercial partner.
         IMPORTANTE: este metodo solo esta pensado para cambiar alicuota de MISMA fiscal position (por cambio en fecha o partner) pero no para cambiar los impuestos.
         Para ello nos basamos en los impuestos de la posicion fiscal, buscamos si hay impuestos existentes para los tax groups involucrados y los
-        reemplazamos por los nuevos impuestos.
+        reemplazamos por los nuevos impuestos..
         NO lo hacemos para el cambio de fiscal_position_id porque el onchange de fiscal_position_id implementado en sale_ux ya recomputa todos los taxes
         """
         for move in self.filtered(

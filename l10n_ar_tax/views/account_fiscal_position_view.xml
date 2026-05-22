@@ -22,17 +22,18 @@
                     <field name="l10n_ar_tax_ids" context="{'default_tax_type': l10n_ar_tax_type}">
                         <list editable="bottom">
                             <field name="tax_type" column_invisible="1"/>
+                            <field name="l10n_ar_is_iibb" column_invisible="1"/>
                             <field
                                 name="tax_group_id"
                                 domain="tax_group_id_domain"
                                 options="{'no_create': True}"
                             />
-                            <field name="aliquot" string="Aliquot (%)"/>
+                            <field name="aliquot" string="Default Aliquot (%)" readonly="not l10n_ar_is_iibb"/>
                             <field
                                 name="default_tax_id"
                                 domain="tax_template_domain"
                                 options="{'no_create': True}"
-                                readonly="1"
+                                readonly="l10n_ar_is_iibb"
                             />
                             <field name="webservice"/>
                             <field name="tax_template_domain" column_invisible="1"/>

@@ -1152,6 +1152,7 @@ msgid "Percepciones Córdoba + CABA"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position__l10n_ar_tax_type__perception
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__tax_type__perception
 msgid "Perception"
 msgstr "Percepción"
@@ -1288,6 +1289,7 @@ msgstr "Impuesto"
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_tax_group
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__tax_group_id
 msgid "Tax Group"
 msgstr "Grupo de impuestos"
 
@@ -1300,6 +1302,16 @@ msgstr "Dominio de la Plantilla de Impuestos"
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__tax_type
 msgid "Tax Type"
 msgstr "Tipo de Impuesto"
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position__l10n_ar_tax_type
+msgid "AR Tax Type"
+msgstr "Tipo de Impuesto AR"
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position__l10n_ar_tax_type__none
+msgid "None"
+msgstr "Ninguno"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_state_code
@@ -1375,6 +1387,7 @@ msgstr "Webservice"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move_line__withholding_id
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position__l10n_ar_tax_type__withholding
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__tax_type__withholding
 msgid "Withholding"
 msgstr "Retención"
@@ -1432,6 +1445,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
 msgid "⇒ Verify ARBA Key"
 msgstr "⇒ Verificar Clave ARBA"
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_position_form
+msgid "Default Aliquot (%)"
+msgstr "Alícuota por defecto (%)"
 
 #. module: l10n_ar_tax
 #. odoo-python

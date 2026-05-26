@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_purchasequotation_document" inherit_id="l10n_ar_purchase.report_purchasequotation_document">
+        <!-- purchase_stock adds <div id="informations"> (incoterm + incoterm_location) after
+             layout_document_title. l10n_ar_purchase replaces layout_document_title but leaves
+             informations intact, causing incoterm to appear twice. Remove it here. -->
+        <div id="informations" position="replace"/>
+
         <t t-if="o.partner_ref" position="before">
             <t t-if="o.incoterm_id">
                 <br/><strong>Incoterm:</strong>

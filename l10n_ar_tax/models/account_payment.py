@@ -2,8 +2,6 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from collections import defaultdict
-
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
@@ -533,23 +531,7 @@ class AccountPayment(models.Model):
     def _get_payment_bundle_key(self):
         if self.company_id.country_id.code == "AR" and self.env.context.get("print_in_bundles"):
             return f"{self.company_id.id}-{self.partner_id.id}-{self.payment_type}-{self.currency_id.id if self.currency_id != self.company_currency_id else self.counterpart_currency_id.id}"
-        return self.id
-
-    def _get_payment_bundles(self):
-        """Returns a dictionary of payment bundles, where the key is a tuple
-        of (company_id, partner_id, payment_type, currency_id) and the value
-        is a recordset of account.payment."""
-        bundles = defaultdict(lambda: self.env["account.payment"])
-        for rec in self:
-            bundles[rec._get_payment_bundle_key()] += rec
-        return bundles
-
-    def _select_bundle(self, bundles):
-        """Selects a bundle from the dictionary of payment bundles based on
-        the current record's company_id, partner_id, payment_type, and
-        currency_id."""
-        self.ensure_one()
-        return bundles.get(self._get_payment_bundle_key())
+        return super()._get_payment_bundle_key()
 
     def _compute_to_pay_move_lines(self):
         # When creating payments from the bulk payment wizard, we explicitly set

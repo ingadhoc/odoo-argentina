@@ -33,7 +33,7 @@ class l10nArPaymentWithholding(models.Model):
 
     _uniq_line = models.Constraint(
         "unique(tax_id, payment_id)",
-        "El impuesto de retención debe ser único por pago",
+        "Withholding tax must be unique per payment",
     )
 
     @api.depends(
@@ -71,7 +71,7 @@ class l10nArPaymentWithholding(models.Model):
                 if line_residual < abs(pay.withholdable_advanced_amount):
                     raise UserError(
                         _(
-                            "Seleccionó deuda por %s pero aparentemente desea pagar %s. En la deuda seleccionada hay algunos comprobantes de mas que no van a poder ser pagados (%s). Deberá quitar dichos comprobantes de la deuda seleccionada para poder hacer el correcto cálculo de las retenciones."
+                            "You selected a debt of %s but apparently want to pay %s. The selected debt includes some documents that cannot be paid (%s). You must remove those documents from the selected debt to correctly calculate withholdings."
                         )
                         % (
                             pay.selected_debt,
@@ -106,7 +106,7 @@ class l10nArPaymentWithholding(models.Model):
         if not tax.amount_type:
             raise UserError(
                 _(
-                    "El impuesto de retención %s no tiene un tipo de cálculo definido. Por favor, defina el tipo de cálculo en la configuración del impuesto."
+                    "Withholding tax %s does not have a calculation type defined. Please define the calculation type in the tax configuration."
                 )
                 % tax.name
             )
@@ -151,7 +151,7 @@ class l10nArPaymentWithholding(models.Model):
                 if not tax.l10n_ar_scale_id:
                     raise RedirectWarning(
                         _(
-                            "El impuesto de retención '%s' (id: %s) es de tipo escala de ganancias y no tiene definida una escala (campo l10n_ar_scale_id). Por favor, defina una escala en la configuración del impuesto."
+                            "Withholding tax '%s' (id: %s) is of type earnings scale but has no scale defined (field l10n_ar_scale_id). Please define a scale in the tax configuration."
                         )
                         % (tax.name, tax.id),
                         {
@@ -161,7 +161,7 @@ class l10nArPaymentWithholding(models.Model):
                             "res_id": tax.id,
                             "views": [[False, "form"]],
                         },
-                        _("Configurar impuesto"),
+                        _("Configure tax"),
                     )
                 escala = self.env["l10n_ar.earnings.scale.line"].search(
                     [

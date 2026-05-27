@@ -40,6 +40,6 @@ class ResConfigSettings(models.TransientModel):
                 fields.Date.end_of(fields.Date.today(), "month"),
             )
         except Exception as exp:
-            raise UserError(_("No se pudo conectar a ARBA: %s") % str(exp))
+            raise UserError(_("Could not connect to ARBA: %s") % str(exp))
 
-        raise UserError(_("La conexión ha sido exitosa"))
+        raise UserError(_("Connection was successful"))

@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
 
             <xpath expr="//block[@id='argentina_localization']" position="inside">
-                <setting id="arba_cit" string="ARBA" company_dependent="1" title="Indique la clave CIT si utiliza padrón de ARBA de ret/perc de iibb.">
+                <setting id="arba_cit" string="ARBA" company_dependent="1" title="Enter the CIT key if you use the ARBA padron for IIBB withholding/perception.">
                     <div class="content-group" invisible="country_code != 'AR'">
                         <div class="row mt16">
                             <label for="arba_cit" class="col-lg-3 o_light_label"/>
@@ -22,7 +22,7 @@
             </xpath>
         <setting id="sepa_payments" position="after">
                     <setting id="show_reversal_moves_in_receipts" string="Show reversal moves in receipts"
-                        help="Muestra las ND y NC en los recibos de pago, como movimientos a parte.">
+                        help="Shows debit and credit notes in payment receipts as separate moves.">
                         <field name="show_reversal_moves_in_receipts"/>
                     </setting>
                 </setting>

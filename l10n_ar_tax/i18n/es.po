@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 18:48+0000\n"
+"POT-Creation-Date: 2026-05-27 14:00+0000\n"
 "PO-Revision-Date: 2026-04-14 14:41+0000\n"
 "Last-Translator: julia elizondo <jue@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/odoo-"
@@ -609,6 +609,11 @@ msgid "Artículo/Inciso para el cálculo retención"
 msgstr "Artículo/Inciso para el cálculo retención"
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_payment_register__fiscal_position_mode__automatic
+msgid "Automatic"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__base_amount
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__base_amount
 msgid "Base Amount"
@@ -700,6 +705,26 @@ msgid "Contact"
 msgstr "Contacto"
 
 #. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_register_form
+msgid "Create Payment"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_register_form
+msgid "Create Payments"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_register_form
+msgid "Create and Confirm"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_register_form
+msgid "Create as Draft"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__create_uid
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__create_uid
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__create_uid
@@ -753,6 +778,11 @@ msgstr "Alícuota por defecto (%)"
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__default_tax_id
 msgid "Default Tax"
 msgstr "Impuesto por Defecto"
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_register_form
+msgid "Discard"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_chart_template__display_name
@@ -866,6 +896,11 @@ msgid "Fiscal Position"
 msgstr "Posición fiscal"
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_register__fiscal_position_mode
+msgid "Fiscal Position Mode"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__l10n_ar_padron_from_date
 msgid "From Date"
 msgstr "Desde"
@@ -948,6 +983,11 @@ msgid "Indique la clave CIT si utiliza padrón de ARBA de ret/perc de iibb."
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_register__is_payment_pro
+msgid "Is Payment Pro"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_move
 msgid "Journal Entry"
 msgstr "Asiento Contable"
@@ -991,6 +1031,11 @@ msgstr "Última actualización realizada por"
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__write_date
 msgid "Last Updated on"
 msgstr "Última Actualización el"
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_payment_register__fiscal_position_mode__manual
+msgid "Manual"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__matched_amount_untaxed
@@ -1078,6 +1123,12 @@ msgstr "Monto no imponible"
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position__l10n_ar_tax_type__none
 msgid "None"
 msgstr "Ninguno"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_move_line.py:0
+msgid "Nothing to be paid on selected entries"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__name
@@ -1168,6 +1219,8 @@ msgid "Payment withholding lines"
 msgstr "Líneas de pago de retención"
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/wizard/account_payment_register.py:0
 #: model:ir.model,name:l10n_ar_tax.model_account_payment
 msgid "Payments"
 msgstr "Pagos"
@@ -1243,6 +1296,12 @@ msgstr "Ratio a aplicar sobre el importe base del impuesto."
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__ref
 msgid "Ref"
 msgstr "Referencia"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_move_line.py:0
+msgid "Register Payment"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__webservice__rentas_cordoba
@@ -1457,6 +1516,12 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_tax_form
 msgid "aquí"
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/wizard/account_payment_register.py:0
+msgid "id"
 msgstr ""
 
 #. module: l10n_ar_tax

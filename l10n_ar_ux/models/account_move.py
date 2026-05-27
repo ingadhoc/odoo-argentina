@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import _, api, models
 from odoo.exceptions import UserError
+from odoo.osv import expression
 
 
 class AccountMove(models.Model):
@@ -13,11 +14,13 @@ class AccountMove(models.Model):
     def _compute_invoice_currency_rate(self):
         super()._compute_invoice_currency_rate()
         ar_reversed_other_currency = self.filtered(
-            lambda x: x.is_invoice()
-            and x.reversed_entry_id
-            and x.company_id.country_id == self.env.ref("base.ar")
-            and x.currency_id != x.company_id.currency_id
-            and x.reversed_entry_id.currency_id == x.currency_id
+            lambda x: (
+                x.is_invoice()
+                and x.reversed_entry_id
+                and x.company_id.country_id == self.env.ref("base.ar")
+                and x.currency_id != x.company_id.currency_id
+                and x.reversed_entry_id.currency_id == x.currency_id
+            )
         )
         for rec in ar_reversed_other_currency:
             rec.invoice_currency_rate = rec.reversed_entry_id.invoice_currency_rate
@@ -66,10 +69,12 @@ class AccountMove(models.Model):
         y el otro, sin refrescar, cancela.
         """
         if posted_in_afip := self.filtered(
-            lambda x: x.state == "posted"
-            and x.invoice_filter_type_domain == "sale"
-            and x.l10n_ar_afip_auth_mode == "CAE"
-            and x.l10n_ar_afip_auth_code
+            lambda x: (
+                x.state == "posted"
+                and x.invoice_filter_type_domain == "sale"
+                and x.l10n_ar_afip_auth_mode == "CAE"
+                and x.l10n_ar_afip_auth_code
+            )
         ):
             raise UserError(
                 _("You cannot cancel documents already posted in ARCA (%s).", ",".join(posted_in_afip.mapped("name")))
@@ -82,16 +87,20 @@ class AccountMove(models.Model):
         the applied rate (currency is not company currency).This is only applied
         on invoice move types."""
         ar_invoices = self.filtered(
-            lambda x: x.company_id.account_fiscal_country_id.code == "AR"
-            and x.currency_id != x.company_currency_id
-            and x.is_invoice()
+            lambda x: (
+                x.company_id.account_fiscal_country_id.code == "AR"
+                and x.currency_id != x.company_currency_id
+                and x.is_invoice()
+            )
         )
         ar_invoice_line_ids = ar_invoices.mapped("invoice_line_ids").ids
 
         for line in ar_invoices.mapped("line_ids").filtered(
-            lambda x: (x.tax_line_id or x.id in ar_invoice_line_ids)
-            and x.currency_rate
-            and not x.currency_id.is_zero(abs(x.amount_currency) / x.currency_rate - abs(x.balance))
+            lambda x: (
+                (x.tax_line_id or x.id in ar_invoice_line_ids)
+                and x.currency_rate
+                and not x.currency_id.is_zero(abs(x.amount_currency) / x.currency_rate - abs(x.balance))
+            )
         ):
             balance = line.company_id.currency_id.round(line.amount_currency / line.currency_rate)
             line.balance = balance
@@ -100,5 +109,20 @@ class AccountMove(models.Model):
 
     @api.model
     def _get_l10n_ar_codes_used_for_inv_and_ref(self):
-        res = super()._get_l10n_ar_codes_used_for_inv_and_ref()
-        return res + ["33", "331"]
+        return super()._get_l10n_ar_codes_used_for_inv_and_ref() + ["33", "331"]
+
+    def _get_l10n_latam_documents_domain(self):
+        self.ensure_one()
+        domain = super()._get_l10n_latam_documents_domain()
+        if self.journal_id.company_id.account_fiscal_country_id.code == "AR" and self.move_type in [
+            "out_refund",
+            "in_refund",
+        ]:
+            # The parent builds: ['|', ('code', 'in', codes)] + ar_domain.
+            # In Odoo's prefix notation this parses as (code in codes) OR (first_ar_condition),
+            # leaving country_id outside the OR. This lets document types from other LatAm
+            # countries that share the same codes (e.g. Chilean doc 33) slip through.
+            # AND-ing country_id here ensures only AR document types are returned.
+            ar_country_id = self.journal_id.company_id.account_fiscal_country_id.id
+            domain = expression.AND([domain, [("country_id", "=", ar_country_id)]])
+        return domain

@@ -237,7 +237,7 @@ class AccountPayment(models.Model):
             res.append(
                 {
                     **self._get_withholding_move_line_default_values(),
-                    "name": _("Base Ret: ") + nice_base_label,
+                    "name": _("Withholding Base: ") + nice_base_label,
                     "tax_ids": [Command.set(withholding_lines.mapped("tax_id").ids)],
                     "account_id": account_id,
                     "balance": balance,
@@ -248,7 +248,7 @@ class AccountPayment(models.Model):
             res.append(
                 {
                     **self._get_withholding_move_line_default_values(),  # Counterpart 0 operation
-                    "name": _("Base Ret Cont: ") + nice_base_label,
+                    "name": _("Withholding Base Cont: ") + nice_base_label,
                     "account_id": account_id,
                     "balance": -balance,
                     "amount_currency": -amount_currency,
@@ -480,8 +480,10 @@ class AccountPayment(models.Model):
             while not rec.currency_id.is_zero(rec.payment_difference):
                 if remining_attemps == 0:
                     raise UserError(
-                        "Máximo de intentos alcanzado. No pudimos computar el importe a pagar. El último importe a pagar"
-                        'al que llegamos fue "%s"' % rec.to_pay_amount
+                        _(
+                            'Maximum attempts reached. Could not compute the amount to pay. The last amount we reached was "%s"'
+                        )
+                        % rec.to_pay_amount
                     )
                 remining_attemps -= 1
                 # el payment difference es negativo, para entenderlo mejor lo pasamos a postivo

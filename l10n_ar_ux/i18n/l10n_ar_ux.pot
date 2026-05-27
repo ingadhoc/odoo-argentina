@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-13 14:48+0000\n"
-"PO-Revision-Date: 2026-05-13 14:48+0000\n"
+"POT-Creation-Date: 2026-05-27 19:28+0000\n"
+"PO-Revision-Date: 2026-05-27 19:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr ""
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
-msgid "<span class=\"o_form_label\">Firma en reportes</span>"
+msgid "<span class=\"o_form_label\">Signature in reports</span>"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -143,6 +143,11 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_company__arba_cit
 msgid "Clave de Identificación Tributaria de ARBA"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
+msgid "Clear content"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -357,6 +362,20 @@ msgid "IVA"
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
+msgid ""
+"If you check this option, when a Customer Receipt is printed or sent, a "
+"section with all open documents (with a pending balance) will be included."
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
+msgid ""
+"If you enable this option, the PDFs of invoices in foreign currency will "
+"include a legend showing the equivalent amount in ARS."
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__impuestos_padron
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_users__impuestos_padron
 msgid "Impuestos"
@@ -389,13 +408,6 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_country_state__jurisdiction_code
 msgid "Jurisdiction Code"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
-msgid ""
-"La firma y aclaracion que se agreguen aqui sera incluida en los Recibos de "
-"Clientes, Pagos de Proveedor y Comprobantes de Retencion."
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -527,26 +539,11 @@ msgid "Si"
 msgstr ""
 
 #. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
-msgid ""
-"Si activa esta opción, en los pdfs de las facturas en divisa extranjera, se "
-"incluirá una leyenda indicando a cuanto equivale el comprobante en ARS"
-msgstr ""
-
-#. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_config_settings__group_include_pending_receivable_documents
 msgid ""
 "Si marca esta opción, cuando se imprima o envíe un Recibo de Clientes, se "
 "incluirá una sección con todos los Comprobantes abiertos, es decir, que "
 "tengan algún saldo pendiente"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
-msgid ""
-"Si marca esta opción, cuando se imprima o envíe un Recibo de Clientes, se "
-"incluirá una sección con todos los Comprobantes abiertos, es decir, que "
-"tengan algún saldo pendiente."
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -585,6 +582,13 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
+msgid ""
+"The signature and name entered here will be included in Customer Receipts, "
+"Supplier Payments and Withholding Certificates."
+msgstr ""
+
+#. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_company__gross_income_jurisdiction_ids
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_partner__gross_income_jurisdiction_ids
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_users__gross_income_jurisdiction_ids
@@ -604,11 +608,6 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
 msgid "Untaxed amount"
-msgstr ""
-
-#. module: l10n_ar_ux
-#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form
-msgid "Vaciar contenido"
 msgstr ""
 
 #. module: l10n_ar_ux

@@ -2,25 +2,18 @@
 # This file contains the translation of the following modules:
 # 	* l10n_ar_tax
 #
-# Translators:
-# ADHOC - Bot <transbot@adhoc.com.ar>, 2025
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-27 14:00+0000\n"
-"PO-Revision-Date: 2026-04-14 14:41+0000\n"
-"Last-Translator: julia elizondo <jue@adhoc.inc>\n"
-"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/odoo-"
-"argentina-19-0/odoo-argentina-19-0-l10n_ar_tax/es/>\n"
-"Language: es\n"
+"POT-Creation-Date: 2026-05-27 19:27+0000\n"
+"PO-Revision-Date: 2026-05-27 19:27+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
-"0) ? 1 : 2);\n"
-"X-Generator: Weblate 5.10.4\n"
+"Plural-Forms: \n"
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -31,7 +24,7 @@ msgstr "%s | CUIT %s no presente en el padrón ARBA"
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.arba_alicout_query
 msgid "&lt;?xml version = \"1.0\" encoding = \"utf-8\"?&gt;"
-msgstr "&lt;?xml version = \"1.0\" encoding = \"utf-8\"?&gt;"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.actions.report,print_report_name:l10n_ar_tax.action_report_withholding_certificate
@@ -46,7 +39,7 @@ msgstr "(Chequera electrónica)"
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
 msgid "(del excedente"
-msgstr "(del excedente"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_tax_form
@@ -69,7 +62,7 @@ msgstr "- Santander Río"
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__001
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__001
 msgid "001: Art. 5º 1er. párrafo (Res. Gral. 15/97 y Modif.)"
-msgstr "001: Art. 5º 1er. párrafo (Res. Gral. 15/97 y Modif.)"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_retencion__001
@@ -80,7 +73,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__002
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__002
 msgid "002: Art. 5º inciso 1)(Res. Gral. 15/97 y Modif.)"
-msgstr "002: Art. 5º inciso 1)(Res. Gral. 15/97 y Modif.)"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_retencion__002
@@ -91,7 +84,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__003
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__003
 msgid "003: Art. 5° inciso 2)(Res. Gral. 15/97 y Modif.)"
-msgstr "003: Art. 5° inciso 2)(Res. Gral. 15/97 y Modif.)"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_retencion__003
@@ -102,7 +95,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__004
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__004
 msgid "004: Art. 5º inciso 4)(Res. Gral. 15/97 y Modif.)"
-msgstr "004: Art. 5º inciso 4)(Res. Gral. 15/97 y Modif.)"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_retencion__004
@@ -113,7 +106,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__005
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__005
 msgid "005: Art. 5° inciso 5)(Res. Gral. 15/97 y Modif.)"
-msgstr "005: Art. 5° inciso 5)(Res. Gral. 15/97 y Modif.)"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_retencion__005
@@ -124,7 +117,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__006
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__006
 msgid "006: Art. 6º inciso a)(Res. Gral. 15/97 y Modif.)"
-msgstr "006: Art. 6º inciso a)(Res. Gral. 15/97 y Modif.)"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_retencion__006
@@ -135,7 +128,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__007
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__007
 msgid "007: Art. 6º inciso b)(Res. Gral. 15/97 y Modif.)"
-msgstr "007: Art. 6º inciso b)(Res. Gral. 15/97 y Modif.)"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_retencion__007
@@ -146,7 +139,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__008
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__008
 msgid "008: Art. 6º inciso c)(Res. Gral. 15/97 y Modif.)"
-msgstr "008: Art. 6º inciso c)(Res. Gral. 15/97 y Modif.)"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_retencion__008
@@ -157,7 +150,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_percepcion__009
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_articulo_inciso_calculo_retencion__009
 msgid "009: Art. 12º)(Res. Gral. 15/97 y Modif.)"
-msgstr "009: Art. 12º)(Res. Gral. 15/97 y Modif.)"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__api_codigo_articulo_retencion__009
@@ -437,7 +430,7 @@ msgstr "<span>Fecha Venc.</span>"
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Importe</span>"
-msgstr "<span>Importe</span>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
@@ -487,7 +480,7 @@ msgstr "<strong>Cliente: </strong>"
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
 msgid "<strong>Datos de la retención practicada</strong>"
-msgstr "<strong>Datos de la retención practicada</strong>"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
@@ -511,7 +504,7 @@ msgstr "AGIP (Régimen General)"
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_tax_form
 msgid "API"
-msgstr "API"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_tax_search
@@ -532,7 +525,7 @@ msgstr "Tipo de Impuesto AR"
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__webservice__arba
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
 msgid "ARBA"
-msgstr "ARBA"
+msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -541,24 +534,33 @@ msgid "ARBA Error %s(%s): %s"
 msgstr "Error ARBA %s(%s): %s"
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "ARBA padron aliquot (imported file)"
+msgstr "Alícuota padrón ARBA (archivo importado)"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "ARBA unregistered aliquot (imported file)"
+msgstr "Alícuota no inscripto ARBA (archivo importado)"
+
+#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_form
 msgid ""
-"ARBA: por lo general no es necesario cargarlo aquí ya que las alícuotas se "
-"obtienen automáticamente mediante webservice.\n"
-"                                Si igualmente desea cargarlo, debe subir el "
-"archivo zip que descarga de arba y que tiene nombre de forma "
-"\"PadronRGSMMAAAA.zip\""
+"ARBA: por lo general no es necesario cargarlo aquí ya que las alícuotas se obtienen automáticamente mediante webservice.\n"
+"                                Si igualmente desea cargarlo, debe subir el archivo zip que descarga de arba y que tiene nombre de forma \"PadronRGSMMAAAA.zip\""
 msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_chart_template
 msgid "Account Chart Template"
-msgstr "Plantilla de plan de cuentas"
+msgstr "Plantilla de plan contable"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__res_partner__drei__activo
 msgid "Activo"
-msgstr "Activo"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__withholdable_advanced_amount
@@ -579,7 +581,7 @@ msgstr "Cantidad"
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__webservice__padron
 msgid "Archivo de padrón"
-msgstr "Archivo de padrón"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_l10n_ar_partner_tax
@@ -601,12 +603,12 @@ msgstr "Impuestos de retención de Argentina"
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__api_articulo_inciso_calculo_percepcion
 msgid "Artículo/Inciso para el cálculo percepción"
-msgstr "Artículo/Inciso para el cálculo percepción"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__api_articulo_inciso_calculo_retencion
 msgid "Artículo/Inciso para el cálculo retención"
-msgstr "Artículo/Inciso para el cálculo retención"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_payment_register__fiscal_position_mode__automatic
@@ -620,26 +622,19 @@ msgid "Base Amount"
 msgstr "Cantidad base"
 
 #. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_payment.py:0
-msgid "Base Ret Cont: "
-msgstr "Base Ret Cont: "
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_payment.py:0
-msgid "Base Ret: "
-msgstr "Base Ret: "
-
-#. module: l10n_ar_tax
-#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
-msgid "Base imponible del pago excedente"
-msgstr "Base imponible del pago excedente"
-
-#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_config_settings__arba_cit
 msgid "CIT ARBA"
 msgstr "Clave CIT ARBA"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid ""
+"Cannot automatically get the tax rate for date %s. Please enter it manually "
+"on the contact."
+msgstr ""
+"No se puede obtener automáticamente la alicuota para la fecha %s. Por favor, "
+"ingrese la misma manualmente en el partner."
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -648,8 +643,8 @@ msgid ""
 "Cannot set AR tax type to '%(new_type)s': the fiscal position already has "
 "taxes of a different type configured (%(taxes)s). Remove them first."
 msgstr ""
-"No se puede cambiar el tipo AR a '%(new_type)s': la posición fiscal ya tiene "
-"impuestos de otro tipo configurados (%(taxes)s). Elimínelos primero."
+"No se puede cambiar el tipo AR a '%(new_type)s': la posición fiscal ya tiene"
+" impuestos de otro tipo configurados (%(taxes)s). Elimínelos primero."
 
 #. module: l10n_ar_tax
 #: model:ir.actions.report,name:l10n_ar_tax.action_report_withholding_certificate
@@ -669,7 +664,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_res_company
 msgid "Companies"
-msgstr "Empresas"
+msgstr "Compañías"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__company_id
@@ -696,13 +691,62 @@ msgstr "Ajustes de configuración"
 #. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
-msgid "Configurar impuesto"
-msgstr ""
+msgid "Configure tax"
+msgstr "Configurar impuesto"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/wizard/res_config_settings.py:0
+msgid "Connection was successful"
+msgstr "La conexión ha sido exitosa"
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_res_partner
 msgid "Contact"
 msgstr "Contacto"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position.py:0
+msgid ""
+"Contact '%(name)s' (id: %(id)s) has multiple active taxes for the tax group "
+"'%(tax_group)s' on date '%(date)s' and company '%(company)s'. See the "
+"'Accounting' tab on the contact form view."
+msgstr ""
+"El contacto '%(name)s' (id: %(id)s) tiene múltiples impuestos vigentes para "
+"el grupo de impuestos '%(tax_group)s' en la fecha '%(date)s' y compañía "
+"'%(company)s'. Ver solapa 'Contabilidad' de la vista formulario del contacto."
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/wizard/res_config_settings.py:0
+msgid "Could not connect to ARBA: %s"
+msgstr "No se pudo conectar a ARBA: %s"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid ""
+"Could not get the tax rate from the rentascordoba webservice.\n"
+"\n"
+"To assign the Córdoba tax rate to a contact, follow these steps:\n"
+"1) Check the contact's tax rate at: https://www.rentascordoba.gob.ar/gestiones/consulta-alicuota\n"
+"2) Manually create the tax rate in the Contact form view (tab 'Accounting').\n"
+"\n"
+"If you have questions or the problem persists, please contact our Support team.\n"
+"Error detail:\n"
+msgstr ""
+"No pudimos obtener la alicuota del webservice de rentascordoba.\n"
+"\n"
+"Para asignar la alícuota de Córdoba a un contacto, siga estos pasos:\n"
+"1) Consulte la alícuota del contacto en: https://www.rentascordoba.gob.ar/"
+"gestiones/consulta-alicuota\n"
+"2) Cree manualmente la alícuota en la vista formulario del Contacto (solapa "
+"'Contabilidad').\n"
+"\n"
+"En caso de dudas o si el problema persiste, comuníquese con nuestro equipo "
+"de Servicio de Asistencia.\n"
+"Detalle del error:\n"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_register_form
@@ -808,44 +852,20 @@ msgstr "Nombre para mostrar"
 #. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_fiscal_position.py:0
-msgid "Editar contacto"
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position.py:0
-msgid ""
-"El contacto '%(name)s' (id: %(id)s) tiene múltiples impuestos vigentes para "
-"el grupo de impuestos '%(tax_group)s' en la fecha '%(date)s' y compañía "
-"'%(company)s'. Ver solapa 'Contabilidad' de la vista formulario del contacto."
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
-msgid ""
-"El impuesto de retención %s no tiene un tipo de cálculo definido. Por favor, "
-"defina el tipo de cálculo en la configuración del impuesto."
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
-msgid ""
-"El impuesto de retención '%s' (id: %s) es de tipo escala de ganancias y no "
-"tiene definida una escala (campo l10n_ar_scale_id). Por favor, defina una "
-"escala en la configuración del impuesto."
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model:ir.model.constraint,message:l10n_ar_tax.constraint_l10n_ar_payment_withholding_uniq_line
-msgid "El impuesto de retención debe ser único por pago"
-msgstr ""
+msgid "Edit contact"
+msgstr "Editar contacto"
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_mail_compose_message
 msgid "Email composition wizard"
 msgstr "Asistente de redacción de correo electrónico"
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
+msgid ""
+"Enter the CIT key if you use the ARBA padron for IIBB "
+"withholding/perception."
+msgstr "Indique la clave CIT si utiliza padrón de ARBA de ret/perc de iibb."
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -862,14 +882,6 @@ msgstr "Error obteniendo respuesta de ARBA: %s"
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_move_form
 msgid "Esta utilizando la posición fiscal"
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-msgid ""
-"Falta configuración de credenciales de ADHOC para consulta de Alícuotas de "
-"AGIP"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -939,8 +951,8 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_payment_minimum_threshold
 msgid ""
-"If the amount of each payment does not exceed this value, the withholding/"
-"perception is not applied."
+"If the amount of each payment does not exceed this value, the "
+"withholding/perception is not applied."
 msgstr ""
 "Si el importe de cada pago no supera este valor, no se aplica la retención."
 
@@ -978,11 +990,6 @@ msgid "Impuesto:"
 msgstr ""
 
 #. module: l10n_ar_tax
-#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
-msgid "Indique la clave CIT si utiliza padrón de ARBA de ret/perc de iibb."
-msgstr ""
-
-#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_register__is_payment_pro
 msgid "Is Payment Pro"
 msgstr ""
@@ -990,7 +997,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_move
 msgid "Journal Entry"
-msgstr "Asiento Contable"
+msgstr "Asiento contable"
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_move_line
@@ -1011,12 +1018,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position__l10n_ar_tax_ids
 msgid "L10N Ar Tax"
 msgstr "Impuestos Argentina"
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/wizard/res_config_settings.py:0
-msgid "La conexión ha sido exitosa"
-msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__write_uid
@@ -1043,6 +1044,14 @@ msgid "Matched Amount Untaxed"
 msgstr "Importe Conciliado No Gravado"
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_payment.py:0
+msgid ""
+"Maximum attempts reached. Could not compute the amount to pay. The last "
+"amount we reached was \"%s\""
+msgstr "Máximo de intentos alcanzado. No pudimos computar el importe a pagar. El último importe a pagar al que llegamos fue \"%s\""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_base_minimum_threshold
 msgid "Minimum Base"
 msgstr "Base Mínima"
@@ -1058,9 +1067,12 @@ msgid "Minimum Threshold"
 msgstr "Retención mínima"
 
 #. module: l10n_ar_tax
-#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
-msgid "Muestra las ND y NC en los recibos de pago, como movimientos a parte."
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "Missing ADHOC credential configuration for AGIP tax rate queries"
 msgstr ""
+"Falta configuración de credenciales de ADHOC para consulta de Alícuotas de "
+"AGIP"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__res_partner__drei__no_activo
@@ -1071,41 +1083,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
 msgid ""
+"No padron uploaded for the indicated date %s to %s. You must upload it in "
+"'Accounting / Configuration / AFIP / Tax Rate Padron by Company' or manually"
+" enter the tax rate on the contact for the current period."
+msgstr ""
 "No hay padrón subido para la fecha indicada %s a %s. Debe subirlo en "
 "'Contabilidad / Configuración / AFIP / Padrón de Alícuotas por compañía' o "
 "cargar la alícuota manualmente en el contacto para el período en curso."
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-msgid ""
-"No pudimos obtener la alicuota del webservice de rentascordoba.\n"
-"\n"
-"Para asignar la alícuota de Córdoba a un contacto, siga estos pasos:\n"
-"1) Consulte la alícuota del contacto en: https://www.rentascordoba.gob.ar/"
-"gestiones/consulta-alicuota\n"
-"2) Cree manualmente la alícuota en la vista formulario del Contacto (solapa "
-"'Contabilidad').\n"
-"\n"
-"En caso de dudas o si el problema persiste, comuníquese con nuestro equipo "
-"de Servicio de Asistencia.\n"
-"Detalle del error:\n"
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/wizard/res_config_settings.py:0
-msgid "No se pudo conectar a ARBA: %s"
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-msgid ""
-"No se puede obtener automáticamente la alicuota para la fecha %s. Por favor, "
-"ingrese la misma manualmente en el partner."
-msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
@@ -1176,8 +1160,7 @@ msgstr "Página: <span class=\"page\"/> / <span class=\"topage\"/>"
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_tax_form
 msgid ""
-"Para TXT de SIRCAR debe completar el campo <strong>'Código'</strong> con el "
-"que corresponda según tabla definida por la jurisdicción.<br/>\n"
+"Para TXT de SIRCAR debe completar el campo <strong>'Código'</strong> con el que corresponda según tabla definida por la jurisdicción.<br/>\n"
 "                Puede consultar la tabla"
 msgstr ""
 
@@ -1226,6 +1209,12 @@ msgid "Payments"
 msgstr "Pagos"
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "Penalty aliquot. Not found in Santa Fe padron"
+msgstr "Alícuota castigo. No figura en padrón Santa Fe"
+
+#. module: l10n_ar_tax
 #: model:account.fiscal.position,name:l10n_ar_tax.fiscal_position_caba
 msgid "Percepciones CABA"
 msgstr ""
@@ -1264,8 +1253,8 @@ msgid ""
 "Please enter withholding number for tax %s or configure a sequence on that "
 "tax"
 msgstr ""
-"Por favor ingrese un número de retención para el impuesto %s o configure una "
-"secuencia en ese impuesto"
+"Por favor ingrese un número de retención para el impuesto %s o configure una"
+" secuencia en ese impuesto"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
@@ -1334,21 +1323,17 @@ msgid "Sale Perceptions"
 msgstr "Percepciones de Venta"
 
 #. module: l10n_ar_tax
-#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_form
-msgid ""
-"Santa Fe: debe subir el archivo con formato zip que descarga del padrón PARP "
-"(Padrón de Alícuotas de Retención/Percepción) de la oficina virtual de API y "
-"que tiene nombre de forma \"PARP_999999.zip\""
-msgstr ""
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "Santa Fe padron aliquot"
+msgstr "Alícuota padrón Santa Fe"
 
 #. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_form
 msgid ""
-"Seleccionó deuda por %s pero aparentemente desea pagar %s. En la deuda "
-"seleccionada hay algunos comprobantes de mas que no van a poder ser pagados "
-"(%s). Deberá quitar dichos comprobantes de la deuda seleccionada para poder "
-"hacer el correcto cálculo de las retenciones."
+"Santa Fe: debe subir el archivo con formato zip que descarga del padrón PARP"
+" (Padrón de Alícuotas de Retención/Percepción) de la oficina virtual de API "
+"y que tiene nombre de forma \"PARP_999999.zip\""
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1365,6 +1350,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
 msgid "Show reversal moves in receipts"
 msgstr ""
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
+msgid "Shows debit and credit notes in payment receipts as separate moves."
+msgstr "Muestra las ND y NC en los recibos de pago, como movimientos a parte."
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_state_code
@@ -1404,6 +1394,11 @@ msgid "Tax Type"
 msgstr "Tipo de Impuesto"
 
 #. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
+msgid "Taxable base for excess payment"
+msgstr "Base imponible del pago excedente"
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax_group__tax_ids
 msgid "Taxes"
 msgstr ""
@@ -1417,15 +1412,16 @@ msgstr "El código del estado."
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_tax.py:0
 msgid ""
-"The total percentage (%s) should be greater than 0 and less than or equal to "
-"100."
-msgstr "El porcentaje total (%s) debe ser mayor que 0 y menor o igual que 100."
+"The total percentage (%s) should be greater than 0 and less than or equal to"
+" 100."
+msgstr ""
+"El porcentaje total (%s) debe ser mayor que 0 y menor o igual que 100."
 
 #. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
 msgid "Timeout error when getting data."
-msgstr "Error de tiempo de espera al recuperar datos."
+msgstr "Error de tiempo de espera al obtener los datos."
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__l10n_ar_padron_to_date
@@ -1476,9 +1472,8 @@ msgstr "Ver retenciones anteriores"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__webservice
-#, fuzzy
 msgid "Webservice"
-msgstr "Webservice"
+msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move_line__withholding_id
@@ -1486,6 +1481,45 @@ msgstr "Webservice"
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__tax_type__withholding
 msgid "Withholding"
 msgstr "Retención"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_payment.py:0
+msgid "Withholding Base Cont: "
+msgstr "Base Ret Cont: "
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_payment.py:0
+msgid "Withholding Base: "
+msgstr "Base Ret: "
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
+msgid ""
+"Withholding tax %s does not have a calculation type defined. Please define "
+"the calculation type in the tax configuration."
+msgstr ""
+"El impuesto de retención %s no tiene un tipo de cálculo definido. Por favor, "
+"defina el tipo de cálculo en la configuración del impuesto."
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
+msgid ""
+"Withholding tax '%s' (id: %s) is of type earnings scale but has no scale "
+"defined (field l10n_ar_scale_id). Please define a scale in the tax "
+"configuration."
+msgstr ""
+"El impuesto de retención '%s' (id: %s) es de tipo escala de ganancias y no "
+"tiene definida una escala (campo l10n_ar_scale_id). Por favor, defina una "
+"escala en la configuración del impuesto."
+
+#. module: l10n_ar_tax
+#: model:ir.model.constraint,message:l10n_ar_tax.constraint_l10n_ar_payment_withholding_uniq_line
+msgid "Withholding tax must be unique per payment"
+msgstr "El impuesto de retención debe ser único por pago"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
@@ -1507,6 +1541,19 @@ msgstr "Líneas de Retenciones"
 #: code:addons/l10n_ar_tax/models/res_company.py:0
 msgid "You must configure CIT password on company %s"
 msgstr "Debe configurar la contraseña de CIT en la empresa %s"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
+msgid ""
+"You selected a debt of %s but apparently want to pay %s. The selected debt "
+"includes some documents that cannot be paid (%s). You must remove those "
+"documents from the selected debt to correctly calculate withholdings."
+msgstr ""
+"Seleccionó deuda por %s pero aparentemente desea pagar %s. En la deuda "
+"seleccionada hay algunos comprobantes de mas que no van a poder ser pagados "
+"(%s). Deberá quitar dichos comprobantes de la deuda seleccionada para poder "
+"hacer el correcto cálculo de las retenciones."
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_fiscal_position_l10n_ar_tax
@@ -1532,9 +1579,9 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_move_form
 msgid ""
-"que tiene impuestos de percepciones. Como las alicuotas podrían variar según "
-"la fecha del comprobante, cambiar la fecha o validar la factura re-computará "
-"los impuestos."
+"que tiene impuestos de percepciones. Como las alicuotas podrían variar según"
+" la fecha del comprobante, cambiar la fecha o validar la factura re-"
+"computará los impuestos."
 msgstr ""
 
 #. module: l10n_ar_tax

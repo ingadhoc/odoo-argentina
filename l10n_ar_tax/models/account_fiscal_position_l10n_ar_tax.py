@@ -326,7 +326,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
         # si es base en data demo devolvemos una alicuota demo para que no falle la demo data
         if self.env.ref("base.user_demo", raise_if_not_found=False):
             return (2.5 if self.tax_type == "withholding" else 3.0, "VALOR DUMMY | dummy")
-        raise UserError(_("Falta configuración de credenciales de ADHOC para consulta de Alícuotas de AGIP"))
+        raise UserError(_("Missing ADHOC credential configuration for AGIP tax rate queries"))
 
     def _get_arba_data(self, partner, date, to_date):
         """Metodo que obtiene la alicuota de ARBA de un partner y fecha dado
@@ -402,28 +402,26 @@ class AccountFiscalPositionL10nArTax(models.Model):
         payload = {"body": partner.vat}
         headers = {"content-type": "application/json"}
 
-        error_msg = self.env._(
-            "No pudimos obtener la alicuota del webservice de rentascordoba.\n\n"
-            "Para asignar la alícuota de Córdoba a un contacto, siga estos pasos:\n"
-            "1) Consulte la alícuota del contacto en: https://www.rentascordoba.gob.ar/gestiones/consulta-alicuota\n"
-            "2) Cree manualmente la alícuota en la vista formulario del Contacto (solapa 'Contabilidad').\n\n"
-            "En caso de dudas o si el problema persiste, comuníquese con nuestro equipo de Servicio de Asistencia.\n"
-            "Detalle del error:\n"
+        error_msg = _(
+            "Could not get the tax rate from the rentascordoba webservice.\n\n"
+            "To assign the Córdoba tax rate to a contact, follow these steps:\n"
+            "1) Check the contact's tax rate at: https://www.rentascordoba.gob.ar/gestiones/consulta-alicuota\n"
+            "2) Manually create the tax rate in the Contact form view (tab 'Accounting').\n\n"
+            "If you have questions or the problem persists, please contact our Support team.\n"
+            "Error detail:\n"
         )
 
         # Realizar solicitud
         try:
             r = requests.post(url, data=json.dumps(payload), headers=headers, timeout=10)
         except requests.exceptions.Timeout as e:
-            msg = self.env._(error_msg + "Timeout error when getting data.")
             _logger.warning("%s" % str(e))
-            raise UserError("%s" % msg)
+            raise UserError(error_msg + _("Timeout error when getting data."))
         except requests.exceptions.RequestException as e:
             _logger.warning("%s" % str(e))
-            raise UserError("%s" % error_msg)
+            raise UserError(error_msg)
         if r.status_code == 404:
-            msg = _(error_msg + "404 Not Found error.")
-            raise UserError("%s" % msg)
+            raise UserError(error_msg + _("404 Not Found error."))
         json_body = r.json()
         code = json_body.get("errorCod")
         ref = json_body.get("message")
@@ -451,9 +449,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 to_date_date = fields.Date.from_string(dict_alic.get("CRD_FECHA_FIN"))
                 if not (from_date_date <= date <= to_date_date):
                     raise UserError(
-                        self.env._(
-                            "No se puede obtener automáticamente la alicuota para la fecha %s. Por favor, ingrese la misma manualmente en el partner."
-                        )
+                        _("Cannot automatically get the tax rate for date %s. Please enter it manually on the contact.")
                         % date
                     )
 
@@ -487,7 +483,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
             # Si se está consultando alícuota con tipo "padron" y no hay, entonces damos error.
             raise UserError(
                 _(
-                    "No hay padrón subido para la fecha indicada %s a %s. Debe subirlo en 'Contabilidad / Configuración / AFIP / Padrón de Alícuotas por compañía' o cargar la alícuota manualmente en el contacto para el período en curso."
+                    "No padron uploaded for the indicated date %s to %s. You must upload it in 'Accounting / Configuration / AFIP / Tax Rate Padron by Company' or manually enter the tax rate on the contact for the current period."
                 )
                 % (date, to_date)
             )
@@ -497,17 +493,17 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 # en santa fe en realidad no hay nro, viene True/False (Segun si lo encontramos), por eso no devolvemos string genérica
                 return (
                     alicuot_ret if self.tax_type == "withholding" else alicuot_per,
-                    "Alícuota padrón Santa Fe",
+                    _("Santa Fe padron aliquot"),
                 )
             else:
-                return None, "Alícuota castigo. No figura en padrón Santa Fe"
+                return None, _("Penalty aliquot. Not found in Santa Fe padron")
         if state.jurisdiction_code == "902":
             if nro:
                 return (
                     float(alicuot_ret.replace(",", "."))
                     if self.tax_type == "withholding"
                     else float(alicuot_per.replace(",", ".")),
-                    "Alícuota padrón ARBA (archivo importado)",
+                    _("ARBA padron aliquot (imported file)"),
                 )
             else:
-                return None, "Alícuota no inscripto ARBA (archivo importado)"
+                return None, _("ARBA unregistered aliquot (imported file)")

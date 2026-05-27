@@ -26,7 +26,7 @@
                         <group>
                             <label for="withholdable_advanced_amount" invisible="state not in ['draft'] or partner_type != 'supplier' or unreconciled_amount &lt;= 0.0"/>
                             <div name="withholdable_advanced_amount" invisible="state not in ['draft'] or partner_type != 'supplier' or unreconciled_amount &lt;= 0.0">
-                                <field name="withholdable_advanced_amount" readonly="state not in ['draft']" string="Base imponible del pago excedente" class="oe_inline"/>
+                                <field name="withholdable_advanced_amount" readonly="state not in ['draft']" string="Taxable base for excess payment" class="oe_inline"/>
                                 <span invisible="state != 'draft'" class="text-muted"> (del excedente <field name="unreconciled_amount" force_save="True" readonly="True" class="oe_inline"/>)</span>
                             </div>
                         </group>

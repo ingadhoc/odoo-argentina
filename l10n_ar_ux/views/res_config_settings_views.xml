@@ -7,12 +7,12 @@
         <field name="inherit_id" ref="account.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <block id="pay_invoice_online_setting_container">
-                <setting title="This option enables open documents in the payment report." help="Si marca esta opción, cuando se imprima o envíe un Recibo de Clientes, se incluirá una sección con todos los Comprobantes abiertos, es decir, que tengan algún saldo pendiente.">
+                <setting title="This option enables open documents in the payment report." help="If you check this option, when a Customer Receipt is printed or sent, a section with all open documents (with a pending balance) will be included.">
                     <field name="group_include_pending_receivable_documents"/>
                 </setting>
             </block>
             <xpath expr="//app[@name='account']//field[@name='module_snailmail_account']/.." position="after">
-                <setting invisible="not group_multi_currency or country_code != 'AR'" company_dependent="1" help="Si activa esta opción, en los pdfs de las facturas en divisa extranjera, se incluirá una leyenda indicando a cuanto equivale el comprobante en ARS">
+                <setting invisible="not group_multi_currency or country_code != 'AR'" company_dependent="1" help="If you enable this option, the PDFs of invoices in foreign currency will include a legend showing the equivalent amount in ARS.">
                     <field name="l10n_ar_invoice_report_ars_amount"/>
                 </setting>
             </xpath>
@@ -20,7 +20,7 @@
                 <div class="col-12 col-lg-6 o_setting_box">
                     <div class="o_setting_left_pane"/>
                     <div class="o_setting_right_pane">
-                        <span class="o_form_label">Firma en reportes</span>
+                        <span class="o_form_label">Signature in reports</span>
                         <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
                         <div class="content-group mt16">
                             <label for="l10n_ar_report_signature" class="o_light_label"/>
@@ -31,10 +31,10 @@
                             <field name="l10n_ar_report_signed_by"/>
                         </div>
                         <div class="text-muted">
-                            La firma y aclaracion que se agreguen aqui sera incluida en los Recibos de Clientes, Pagos de Proveedor y Comprobantes de Retencion.
+                            The signature and name entered here will be included in Customer Receipts, Supplier Payments and Withholding Certificates.
                         </div>
                         <div>
-                            <button name="clean_signature" class="oe_link" type="object" string="Vaciar contenido"/>
+                            <button name="clean_signature" class="oe_link" type="object" string="Clear content"/>
                         </div>
                     </div>
                 </div>

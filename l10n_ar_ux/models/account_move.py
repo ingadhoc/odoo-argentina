@@ -4,7 +4,7 @@
 ##############################################################################
 from odoo import _, api, models
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class AccountMove(models.Model):
@@ -124,5 +124,5 @@ class AccountMove(models.Model):
             # countries that share the same codes (e.g. Chilean doc 33) slip through.
             # AND-ing country_id here ensures only AR document types are returned.
             ar_country_id = self.journal_id.company_id.account_fiscal_country_id.id
-            domain = expression.AND([domain, [("country_id", "=", ar_country_id)]])
+            domain = Domain(domain) & Domain([("country_id", "=", ar_country_id)])
         return domain

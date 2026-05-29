@@ -29,11 +29,56 @@ class AccountJournal(models.Model):
         return res
 
     def _get_codes_per_journal_type(self, afip_pos_system):
-        """Add filter for External Fiscal Controller
-        NOTE: This can be removed in version 18.0 since has been already included in Odoo"""
+        """Add support for External Fiscal Controller (CF) and fix document availability
+        for manual journals without AFIP POS system."""
         tique_codes = ["81", "82", "83", "110", "112", "113", "115", "116", "118", "119", "120"]
         if afip_pos_system == "CF":
             return [("code", "in", tique_codes)]
+        # Diarios de venta que usan documentos pero no tienen sistema AFIP POS configurado
+        # (ej: cuenta y orden). El _compute_l10n_ar_is_pos los marca como is_pos=True,
+        # lo cual vacía la lista de códigos. Los tratamos como no-POS para que accedan
+        # a los mismos comprobantes que un diario de venta manual.
+        if self.type == "sale" and self.l10n_ar_is_pos and not afip_pos_system:
+            no_pos_docs = [
+                "23",
+                "24",
+                "25",
+                "26",
+                "27",
+                "28",
+                "33",
+                "43",
+                "45",
+                "46",
+                "48",
+                "58",
+                "60",
+                "61",
+                "150",
+                "151",
+                "157",
+                "158",
+                "161",
+                "162",
+                "164",
+                "166",
+                "167",
+                "171",
+                "172",
+                "180",
+                "182",
+                "186",
+                "188",
+                "332",
+            ]
+            lsg_codes = ["331"]
+            return [("code", "in", no_pos_docs + lsg_codes)]
+        # Diarios de compra sin sistema AFIP POS. Odoo aplica [('code', 'not in', no_pos_docs)]
+        # que excluye el código 60 y similares.
+        # Antes de que se agregara _get_journal_codes_domain no había restricción por código,
+        # por lo que todos los tipos de comprobante eran accesibles. Restauramos ese comportamiento.
+        if self.type == "purchase" and not afip_pos_system:
+            return []
         res = super()._get_codes_per_journal_type(afip_pos_system)
         if res and isinstance(res, list):
             filtered_res = []

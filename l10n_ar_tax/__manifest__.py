@@ -36,6 +36,7 @@
         "views/report_payment_receipt_templates.xml",
         "views/l10n_ar_payment_withholding_views.xml",
         "views/arba_request.xml",
+        "views/l10n_ar_partner_tax_views.xml",
         "views/account_fiscal_position_view.xml",
         "wizard/account_payment_register_views.xml",
         "wizard/res_config_settings_views.xml",

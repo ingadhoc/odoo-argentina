@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="l10n_ar_partner_tax_list_view">
+        <field name="name">l10n_ar.partner.tax.list</field>
+        <field name="model">l10n_ar.partner.tax</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="partner_id"/>
+                <field name="tax_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="from_date"/>
+                <field name="to_date"/>
+                <field name="ref"/>
+            </list>
+        </field>
+    </record>
+</odoo>

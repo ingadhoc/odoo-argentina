@@ -69,3 +69,28 @@ class AccountMove(models.Model):
         recs = super().copy(default=default)
         recs._l10n_ar_recompute_fiscal_position_taxes()
         return recs
+
+    def _get_rounded_base_and_tax_lines(self, round_from_tax_lines=True):
+        base_lines, tax_lines = super()._get_rounded_base_and_tax_lines(round_from_tax_lines)
+        # Cuando un pago en moneda extranjera actualiza invoice_currency_rate (ej. via
+        # account_ux.action_post → refresh_invoice_currency_rate), _sync_tax_lines se dispara
+        # con round_from_tax_lines='reapply_currency_rate'.
+        # Las líneas de retención se crean en ARS (moneda de la compañía) aunque el pago sea en
+        # moneda extranjera (use_company_currency=True), por lo que su clave de agrupamiento
+        # calculada desde las base_lines no coincide con la clave almacenada en las tax_lines
+        # (diferencia en currency_id, tax_tag_ids, etc.).
+        # Esto haría que las retenciones vayan a tax_lines_to_delete y Odoo las elimine,
+        # agregando una línea de "Balance automático" en la cuenta del diario (ej. Caja USD).
+        # Solución: excluir del sync las líneas de retención (base "Base Ret" y tax lines en ARS)
+        # para que no sean eliminadas. Las demás líneas (impuestos normales en USD) sí se
+        # actualizan con el nuevo tipo de cambio.
+        if (
+            round_from_tax_lines == "reapply_currency_rate"
+            and self.origin_payment_id
+            and self.currency_id != self.company_id.currency_id
+        ):
+            base_account = self.company_id.l10n_ar_tax_base_account_id
+            company_currency = self.company_id.currency_id
+            base_lines = [bl for bl in base_lines if bl["record"].account_id != base_account]
+            tax_lines = [tl for tl in tax_lines if tl["record"].currency_id != company_currency]
+        return base_lines, tax_lines

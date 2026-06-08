@@ -9,7 +9,7 @@
         <field name="arch" type="xml">
             <filter name="debit_note_filter" position="replace">
                 <filter string="Debit Note" name="debit_note_filter"
-                    domain="['|', ('debit_origin_id', '!=', False), ('l10n_latam_document_type_id.code', 'in', ['2', '7', '20', '52', '45', '46', '115', '116', '120', '202', '207'])]" />
+                    domain="['|', '|', ('debit_origin_id', '!=', False), ('l10n_latam_document_type_id.code', 'in', ['2', '7', '20', '52', '45', '46', '115', '116', '120', '202', '207']), ('l10n_latam_document_type_id.internal_type', '=', 'debit_note')]" />
             </filter>
         </field>
     </record>
@@ -21,7 +21,7 @@
         <field name="arch" type="xml">
             <filter name="debit_note_filter" position="replace">
                 <filter string="Debit Notes" name="debit_note_filter"
-                    domain="['|', ('debit_origin_id', '!=', False), ('l10n_latam_document_type_id.code', 'in', ['2', '7', '20', '52', '45', '46', '115', '116', '120', '202', '207'])]" />
+                    domain="['|', '|', ('debit_origin_id', '!=', False), ('l10n_latam_document_type_id.code', 'in', ['2', '7', '20', '52', '45', '46', '115', '116', '120', '202', '207']), ('l10n_latam_document_type_id.internal_type', '=', 'debit_note')]" />
             </filter>
         </field>
     </record>
@@ -33,7 +33,7 @@
         <field name="arch" type="xml">
             <filter name="debit_note_filter" position="replace">
                 <filter string="Debit Note" name="debit_note_filter"
-                    domain="['|', ('move_id.debit_origin_id', '!=', False), ('move_id.l10n_latam_document_type_id.code', 'in', ['2', '7', '20', '52', '45', '46', '115', '116', '120', '202', '207'])]" />
+                    domain="['|', '|', ('move_id.debit_origin_id', '!=', False), ('move_id.l10n_latam_document_type_id.code', 'in', ['2', '7', '20', '52', '45', '46', '115', '116', '120', '202', '207']), ('move_id.l10n_latam_document_type_id.internal_type', '=', 'debit_note')]" />
             </filter>
         </field>
     </record>

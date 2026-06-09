@@ -12,7 +12,12 @@ _logger = logging.getLogger(__name__)
 
 def monkey_patch_synchronize_to_moves():
     def _synchronize_to_moves(self, changed_fields):
-        return super(AccountPayment, self)._synchronize_to_moves(changed_fields)
+        # dynamic_unlink=True allows deletion of withholding move lines with display_type='tax'
+        # that are classified as write-off lines by _seek_for_lines. Without it,
+        # _prevent_automatic_line_deletion raises a ValidationError even in draft state.
+        # This is safe: _synchronize_to_moves only runs on draft moves (posted are skipped),
+        # and this is a programmatic sync, not a user UI deletion.
+        return super(AccountPayment, self.with_context(dynamic_unlink=True))._synchronize_to_moves(changed_fields)
 
     AccountPayment._synchronize_to_moves = _synchronize_to_moves
 

@@ -316,7 +316,12 @@ class AccountPayment(models.Model):
                             % line.tax_id.name
                         )
                 if commands:
-                    rec.l10n_ar_withholding_line_ids = commands
+                    # Use skip_account_move_synchronization so the sequence
+                    # names are written before super() without triggering
+                    # _synchronize_to_moves() on the still-draft move.
+                    # _prepare_move_withholding_lines() reads line.name, so
+                    # the names must be set before the base action_post() runs.
+                    rec.with_context(skip_account_move_synchronization=True).l10n_ar_withholding_line_ids = commands
 
         return super().action_post()
 

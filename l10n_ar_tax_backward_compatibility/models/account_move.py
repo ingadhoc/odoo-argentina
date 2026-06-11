@@ -44,13 +44,24 @@ class AccountMove(models.Model):
         if not amounts_by_group:
             return tax_totals
 
+        # Overrides manuales (account_invoice_tax.tax_override_data). Si el módulo
+        # no está instalado el campo no existe, así que accedemos de forma segura.
+        overrides = move.tax_override_data if "tax_override_data" in move._fields else False
+        overrides = overrides or {}
+
         # 2.Reemplazar valores en los tax_groups
         for g in tax_groups:
             group_id = g["id"]
-            if group_id in amounts_by_group:
-                vals = amounts_by_group[group_id]
-                g["tax_amount_currency"] = abs(vals["amount_currency"])
-                g["tax_amount"] = abs(vals["amount"])
+            if group_id not in amounts_by_group:
+                continue
+            # Si algún impuesto del grupo tiene un override manual, lo respetamos:
+            # super()._compute_tax_totals() ya dejó ese valor en el grupo, no lo
+            # pisamos con el monto de las (solo) líneas inactivas.
+            if any(str(tax_id) in overrides for tax_id in g.get("involved_tax_ids", [])):
+                continue
+            vals = amounts_by_group[group_id]
+            g["tax_amount_currency"] = abs(vals["amount_currency"])
+            g["tax_amount"] = abs(vals["amount"])
 
         # 3. Recalcular subtotales
         subtotal["tax_amount_currency"] = sum(g["tax_amount_currency"] for g in tax_groups)

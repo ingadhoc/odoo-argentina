@@ -296,29 +296,28 @@ class AccountPayment(models.Model):
 
     def action_post(self):
         for rec in self:
-            commands = []
             for line in rec.l10n_ar_withholding_line_ids:
                 if not line.name or line.name == "/":
                     if line.tax_id.l10n_ar_withholding_sequence_id:
-                        commands.append(
-                            Command.update(
-                                line.id,
-                                {
-                                    "name": line.tax_id.l10n_ar_withholding_sequence_id.next_by_id()
-                                    if line.amount
-                                    else "/"
-                                },
-                            )
-                        )
+                        line.write({
+                            "name": line.tax_id.l10n_ar_withholding_sequence_id.next_by_id()
+                            if line.amount else "/"
+                        })
                     else:
                         raise UserError(
                             _("Please enter withholding number for tax %s or configure a sequence on that tax")
                             % line.tax_id.name
                         )
-                if commands:
-                    rec.l10n_ar_withholding_line_ids = commands
-
-        return super().action_post()
+        res = super().action_post()
+        for rec in self.filtered(lambda p: p.move_id.state == "posted"):
+            for line in rec.l10n_ar_withholding_line_ids.filtered(lambda l: l.name and l.name != "/"):
+                __, __, tax_repartition_line_id, __ = line._tax_compute_all_helper()
+                ml = rec.move_id.line_ids.filtered(
+                    lambda ml: ml.tax_repartition_line_id.id == tax_repartition_line_id
+                )
+                if ml:
+                    ml.with_context(check_move_validity=False).write({"name": line.name})
+        return res
 
     @api.model
     def _get_trigger_fields_to_synchronize(self):

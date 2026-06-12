@@ -5,7 +5,7 @@
 import logging
 import re
 
-from odoo import Command, api, models
+from odoo import api, models
 
 _logger = logging.getLogger(__name__)
 
@@ -15,7 +15,7 @@ class AccountChartTemplate(models.AbstractModel):
 
     @api.model
     def _add_wh_taxes(self, company):
-        """Agregamos etiquetas en repartition lines de impuestos de percepciones de iva, ganancias e ingresos brutos."""
+        """Agregamos secuencia en impuestos de retención aplicadas."""
         # TODO deberia ir en odoo nativo
         company.ensure_one()
 
@@ -110,7 +110,7 @@ class AccountChartTemplate(models.AbstractModel):
                 if not tax.l10n_ar_state_id:
                     tax.l10n_ar_state_id = self.env.ref(state_ref).id
 
-        # creacion de secuencias y agregado de etiquetas para liquidación de impuestos
+        # creacion de secuencias
         withholdings_domain = [
             ("company_id", "=", company.id),
             ("type_tax_use", "=", "none"),
@@ -152,43 +152,8 @@ class AccountChartTemplate(models.AbstractModel):
                 lambda tax: not tax.l10n_ar_withholding_sequence_id
             ).l10n_ar_withholding_sequence_id = sequence.id
 
-        # agregado de etiquetas para liquidacion de impuestos sicore
-        sicore_taxes = profits_taxes
-        tag = self.env.ref("l10n_ar_ux.tag_ret_perc_sicore_aplicada", raise_if_not_found=False)
-        if tag:
-            for xml_id in ["ri_tax_percepcion_iva_aplicada", "ri_tax_percepcion_ganancias_aplicada"]:
-                xml_id_percep = "account.%s_%s" % (company.id, xml_id)
-                # en profits_taxes tenemos todas las retenciones, agregamos el impuesto de percepcion de ganancias y de iva
-                tax = self.env.ref(xml_id_percep, raise_if_not_found=False)
-                if tax:
-                    sicore_taxes += tax
-            sicore_tags = self.env["account.tax.repartition.line"].search(
-                [("tax_id", "in", sicore_taxes.ids), ("repartition_type", "=", "tax")]
-            )
-            sicore_tags_to_update = sicore_tags.filtered(lambda line: tag not in line.tag_ids)
-            sicore_tags_to_update.tag_ids = [Command.link(tag.id)]
-
-        # agregado de etiquetas para liquidacion de impuestos pago IIBB a cuenta (sifere web)
-        # consideramos de IIBB a todo lo que tiene 10n_ar_state_id
-        tag = self.env.ref("l10n_ar_ux.tax_tag_a_cuenta_iibb", raise_if_not_found=False)
-        if tag:
-            domain = [
-                ("repartition_type", "=", "tax"),
-                ("tax_id.company_id", "=", company.id),
-                ("tax_id.l10n_ar_state_id", "!=", False),
-                ("tax_id.country_code", "=", "AR"),
-                "|",
-                ("tax_id.type_tax_use", "=", "purchase"),
-                "&",
-                ("tax_id.type_tax_use", "=", "none"),
-                ("tax_id.l10n_ar_withholding_payment_type", "=", "customer"),
-            ]
-            repartition_lines = self.env["account.tax.repartition.line"].search(domain)
-            if repartition_lines_without_tag := repartition_lines.filtered(lambda line: tag not in line.tag_ids):
-                repartition_lines_without_tag.tag_ids = [Command.link(tag.id)]
-
     def _load(self, template_code, company, install_demo, force_create=True):
-        """Luego de que creen los impuestos del archivo account.tax-ar_ri.csv de l10n_ar al instalar el plan de cuentas en la nueva compañìa argentina agregamos en este método las etiquetas que correspondan en los repartition lines."""
+        """Luego de que creen los impuestos del archivo account.tax-ar_ri.csv de l10n_ar al instalar el plan de cuentas en la nueva compañìa argentina agregamos en este método las secuencias a impuestos."""
         # Llamamos a super para que se creen los impuestos
         res = super()._load(template_code, company, install_demo, force_create)
         company = company or self.env.company

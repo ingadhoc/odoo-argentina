@@ -517,6 +517,17 @@ class AccountPayment(models.Model):
                 {"l10n_ar_withholding_line_ids"}
             )
 
+    def _get_bundle_payment_total(self, payment_bundle):
+        """Total to display in the bundled receipt 'Total Paid' footer.
+        Sums payment_total across all payments in the bundle.
+        Override in modules where the first payment already aggregates the rest (e.g. l10n_ar_payment_bundle).
+        """
+        return sum(payment_bundle.mapped("payment_total"))
+
+    def _get_bundle_imputed_total(self, payment_bundle):
+        """Total to display in the bundled receipt 'Total Imputed' footer."""
+        return sum(payment_bundle.mapped("matched_amount")) + sum(payment_bundle.mapped("unmatched_amount"))
+
     def _get_name_receipt_report(self, report_xml_id):
         """Method similar to the '_get_name_invoice_report' of l10n_latam_invoice_document
         Basically it allows different localizations to define it's own report

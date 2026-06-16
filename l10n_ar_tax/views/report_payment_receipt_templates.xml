@@ -112,6 +112,15 @@
             </table>
         </xpath>
 
+        <!-- ── Bundle receipt totals: sum all payments in the bundle ───────────── -->
+        <xpath expr="//span[@t-field='o.payment_total']" position="replace">
+            <span class="text-nowrap" t-out="o._get_bundle_payment_total(payment_bundle)" t-options='{"widget": "monetary", "display_currency": o.destination_currency_id}'/>
+        </xpath>
+
+        <xpath expr="//table[@name='matching_table']//tfoot//span[hasclass('text-nowrap')]" position="replace">
+            <span class="text-nowrap" t-out="o._get_bundle_imputed_total(payment_bundle)" t-options='{"widget": "monetary", "display_currency": o.destination_currency_id}'/>
+        </xpath>
+
         <!-- ── Signature / memo footer ─────────────────────────────────────────── -->
         <xpath expr="//span[@name='payment_footer']" position="replace">
             <table>

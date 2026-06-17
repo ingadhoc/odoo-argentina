@@ -431,3 +431,135 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
             self.assertEqual(payment.l10n_ar_withholding_line_ids.amount, 17625.74)
         finally:
             company.tax_calculation_rounding_method = previous_rounding_method
+
+    def test_reset_to_draft_keeps_manual_withholding_line(self):
+        """Regression for ticket 119846 (reset to draft drops a manual-amount withholding line).
+
+        Faithful reproduction of the sinax case: a supplier payment with a withholding whose tax
+        is ``fixed`` with ``amount = 0`` (e.g. "Retención IVA"), where the withheld amount is
+        entered manually by the operator. ``account.tax.compute_all`` returns 0 for such a tax,
+        so when the payment is reset to draft the standard dynamic tax sync recomputes the
+        withholding tax line to 0, drops it via the zero-amount filter, leaves the entry
+        unbalanced and inserts an "Automatic Balancing Line".
+
+        Posting works (both dynamic-sync managers skip posted moves); only reset to draft was
+        affected. The fix forces ``round_from_tax_lines=True`` for payment moves with
+        withholdings so the manually entered amount on the existing tax line is preserved instead
+        of recomputed from the base.
+        """
+        manual_wth_amount = 50000.0
+        manual_tax = self.tax_wth_test_1
+
+        # 1. Vendor bill in ARS (company currency) for a CABA partner
+        invoice = self.env["account.move"].create(
+            {
+                "partner_id": self.env.ref("l10n_ar_tax.res_partner_adhoc_caba").id,
+                "move_type": "in_invoice",
+                "company_id": self.company_ri.id,
+                "invoice_line_ids": [
+                    Command.create(
+                        {
+                            "product_id": self.env.ref("product.product_product_16").id,
+                            "quantity": 1,
+                            "price_unit": 500000,
+                        }
+                    ),
+                ],
+                "invoice_date": self.today,
+                "l10n_latam_document_number": "1-1198461",
+            }
+        )
+        invoice.action_post()
+
+        # 2. Fiscal position with the manual (fixed/0) withholding for this partner
+        fiscal_pos = self.env["account.fiscal.position"].create(
+            {
+                "name": "Ret IVA manual 119846",
+                "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
+                "sequence": 10,
+                "auto_apply": True,
+                "country_id": self.env.ref("base.ar").id,
+                "company_id": self.company_ri.id,
+                "state_ids": [(6, 0, [self.env.ref("base.state_ar_c").id])],
+            }
+        )
+        self.env["account.fiscal.position.l10n_ar_tax"].create(
+            {
+                "fiscal_position_id": fiscal_pos.id,
+                "default_tax_id": manual_tax.id,
+                "tax_type": "withholding",
+            }
+        )
+
+        # 3. Register the payment and enter the withholding amount manually
+        action_context = invoice.action_register_payment()["context"]
+        payment = (
+            self.env["account.payment"]
+            .with_context(**action_context)
+            .create(
+                {
+                    "journal_id": self.company_bank_journal.id,
+                    "amount": invoice.amount_total,
+                    "date": self.today,
+                }
+            )
+        )
+        wth_line = payment.l10n_ar_withholding_line_ids.filtered(lambda l: l.tax_id == manual_tax)
+        self.assertTrue(wth_line, "The withholding line should have been created")
+
+        # Turn the resolved withholding into a manual one (fixed/0, like the real "Retención IVA"
+        # tax 301): the standard engine now computes 0 for it, and the operator enters the amount.
+        manual_tax.write({"amount_type": "fixed", "amount": 0.0})
+        wth_line.amount = manual_wth_amount
+
+        # 4. Post and confirm the manual amount materialised on the journal entry
+        payment.action_post()
+        self.assertEqual(payment.move_id.state, "posted")
+        posted_wth_lines = payment.move_id.line_ids.filtered(lambda l: l.tax_repartition_line_id)
+        self.assertTrue(posted_wth_lines, "Posted move must have a withholding tax line")
+        self.assertAlmostEqual(
+            abs(sum(posted_wth_lines.mapped("balance"))),
+            manual_wth_amount,
+            places=2,
+            msg="The manually entered withholding amount must be on the posted journal entry",
+        )
+        posted_wth_count = len(posted_wth_lines)
+        posted_wth_balance = sum(posted_wth_lines.mapped("balance"))
+        self.assertTrue(
+            payment.company_currency_id.is_zero(sum(payment.move_id.line_ids.mapped("balance"))),
+            "Posted journal entry must balance to zero",
+        )
+
+        # 5. Reset the payment to draft
+        payment.action_draft()
+        self.assertEqual(payment.move_id.state, "draft")
+
+        # 6a. No automatic balancing line should have been inserted
+        auto_balance_lines = payment.move_id.line_ids.filtered(
+            lambda l: "automatic balancing" in (l.name or "").lower() or "balance automático" in (l.name or "").lower()
+        )
+        self.assertFalse(
+            auto_balance_lines,
+            "Resetting to draft must NOT insert an automatic balancing line: the manual "
+            "withholding line must be preserved, not recomputed to 0 and dropped.",
+        )
+
+        # 6b. The journal entry must still balance to zero
+        self.assertTrue(
+            payment.company_currency_id.is_zero(sum(payment.move_id.line_ids.mapped("balance"))),
+            "Journal entry must still balance to zero after reset to draft",
+        )
+
+        # 6c. The manual withholding line must survive with its amount intact
+        draft_wth_lines = payment.move_id.line_ids.filtered(lambda l: l.tax_repartition_line_id)
+        self.assertEqual(
+            len(draft_wth_lines),
+            posted_wth_count,
+            "The manual withholding line must survive the reset to draft (none dropped).",
+        )
+        self.assertAlmostEqual(
+            sum(draft_wth_lines.mapped("balance")),
+            posted_wth_balance,
+            places=2,
+            msg="The withholding line must keep its manual amount after reset to draft.",
+        )

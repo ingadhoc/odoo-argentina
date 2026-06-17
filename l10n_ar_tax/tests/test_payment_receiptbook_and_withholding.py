@@ -151,6 +151,130 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
             msg="Withholding lines balance should match the computed withholdings amount",
         )
 
+    def test_force_amount_company_currency_withholdings_no_autobalance(self):
+        """Regression for ticket 119846.
+
+        A supplier payment in COMPANY currency (ARS) with withholdings and
+        force_amount_company_currency set (the flow used by the "Multiple payments" payment
+        group / account_payment_pro) must NOT produce an "Automatic Balancing Line".
+
+        Bug scenario: _prepare_move_lines_per_type skipped the *balance* adjustment when the
+        amount was forced, but still re-adjusted *amount_currency* of the liquidity and
+        counterpart lines. In company currency amount_currency must equal balance, so the
+        re-adjustment desynced both, leaving the journal entry unbalanced. Odoo then inserted an
+        automatic balancing line into the journal's default account instead of keeping the real
+        liquidity line (exactly what happened on payment OP-X 0001-00003040 / move 30114).
+
+        Expected behavior:
+        - No automatic balancing line in the move.
+        - The journal entry balances to zero.
+        - Being in company currency, every line keeps amount_currency == balance.
+        - A real liquidity line exists (it was not dropped/replaced by the plug).
+        """
+        # 1. Vendor bill in ARS (company currency) for a CABA partner
+        invoice = self.env["account.move"].create(
+            {
+                "partner_id": self.env.ref("l10n_ar_tax.res_partner_adhoc_caba").id,
+                "move_type": "in_invoice",
+                "company_id": self.company_ri.id,
+                "invoice_line_ids": [
+                    Command.create(
+                        {
+                            "product_id": self.env.ref("product.product_product_16").id,
+                            "quantity": 1,
+                            "price_unit": 500000,
+                        }
+                    ),
+                ],
+                "invoice_date": self.today,
+                "l10n_latam_document_number": "1-119846",
+            }
+        )
+        invoice.action_post()
+
+        # 2. Fiscal position with IIBB CABA withholding for this partner
+        fiscal_pos = self.env["account.fiscal.position"].create(
+            {
+                "name": "IIBB CABA 119846",
+                "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
+                "sequence": 10,
+                "auto_apply": True,
+                "country_id": self.env.ref("base.ar").id,
+                "company_id": self.company_ri.id,
+                "state_ids": [(6, 0, [self.env.ref("base.state_ar_c").id])],
+            }
+        )
+        self.env["account.fiscal.position.l10n_ar_tax"].create(
+            {
+                "fiscal_position_id": fiscal_pos.id,
+                "default_tax_id": self.tax_wth_test_1.id,
+                "tax_type": "withholding",
+            }
+        )
+
+        # 3. Register a payment for the bill (ARS bank journal)
+        action_context = invoice.action_register_payment()["context"]
+        payment = (
+            self.env["account.payment"]
+            .with_context(**action_context)
+            .create(
+                {
+                    "journal_id": self.company_bank_journal.id,
+                    "amount": invoice.amount_total,
+                    "date": self.today,
+                }
+            )
+        )
+        self.assertTrue(payment.l10n_ar_withholding_line_ids, "Withholdings should have been computed")
+        self.assertGreater(payment.withholdings_amount, 0, "Withholding amount should be positive")
+        self.assertEqual(
+            payment.currency_id,
+            payment.company_id.currency_id,
+            "This regression test must run on a company-currency (ARS) payment",
+        )
+
+        # 4. Force the company-currency amount (what the multiple-payments / group flow does)
+        payment.force_amount_company_currency = payment.amount_company_currency
+        self.assertTrue(payment.force_amount_company_currency)
+
+        # 5. Post the payment to materialize the journal entry
+        payment.action_post()
+        self.assertTrue(payment.move_id, "Payment should have a journal entry after posting")
+
+        # 6a. No automatic balancing line should have been inserted
+        auto_balance_lines = payment.move_id.line_ids.filtered(
+            lambda l: "automatic balancing" in (l.name or "").lower() or "balance automático" in (l.name or "").lower()
+        )
+        self.assertFalse(
+            auto_balance_lines,
+            "No automatic balancing line should be needed: when the amount is forced in company "
+            "currency, amount_currency must stay equal to balance so the entry already balances.",
+        )
+
+        # 6b. The journal entry must balance to zero
+        self.assertTrue(
+            payment.company_currency_id.is_zero(sum(payment.move_id.line_ids.mapped("balance"))),
+            "The journal entry must balance to zero.",
+        )
+
+        # 6c. Being in company currency, every line must keep amount_currency == balance
+        for line in payment.move_id.line_ids:
+            self.assertAlmostEqual(
+                line.amount_currency,
+                line.balance,
+                places=2,
+                msg="In a company-currency payment every move line must keep amount_currency == balance "
+                "(account %s)." % line.account_id.code,
+            )
+
+        # 6d. A real liquidity line to the outstanding account must exist (not dropped/replaced by the plug)
+        liquidity_line = payment.move_id.line_ids.filtered(lambda l: l.account_id == payment.outstanding_account_id)
+        self.assertTrue(
+            liquidity_line,
+            "The real liquidity line must be present (it was being removed and replaced by an "
+            "automatic balancing line in the journal default account).",
+        )
+
     def test_foreign_currency_withholding_balance_precision(self):
         """Test that withholding lines in a foreign currency payment preserve the exact ARS balance
         without rounding errors caused by the USD → ARS roundtrip.

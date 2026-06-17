@@ -258,6 +258,15 @@ class AccountPayment(models.Model):
             # cuando NO hay monto forzado.
             has_forced_amount = bool(self.force_amount_company_currency)
 
+            # Cuando hay monto forzado Y el pago es en moneda de la compañía, account_payment_pro ya dejó
+            # balance y amount_currency correctos (y en moneda local deben permanecer iguales). Reajustar acá
+            # amount_currency lo desincroniza de balance y deja el asiento descuadrado, lo que hace que Odoo
+            # agregue una "Automatic Balancing Line" en la cuenta del diario en lugar de la línea de pago real.
+            # Caso real: ticket 119846 (pago grupal "Multiple payments" en ARS con retenciones). En ese caso
+            # tampoco debemos reajustar amount_currency. En moneda extranjera sí lo seguimos revirtiendo.
+            is_company_currency = self.currency_id == self.company_id.currency_id
+            skip_amount_currency_adjust = has_forced_amount and is_company_currency
+
             liquidity_lines = res.get("liquidity_lines", [])
             own_checks_multiline = (
                 self.payment_type == "outbound"
@@ -269,8 +278,10 @@ class AccountPayment(models.Model):
                 if not has_forced_amount:
                     target_line["balance"] += wth_balance
                 # Revertimos el ajuste de amount_currency que hizo base Odoo (usó raw_wth_amount_currency
-                # para restarlo de la liquidez).
-                target_line["amount_currency"] += raw_wth_amount_currency
+                # para restarlo de la liquidez). No lo hacemos cuando hay monto forzado en moneda de compañía
+                # (ver comentario arriba): rompería la igualdad balance == amount_currency.
+                if not skip_amount_currency_adjust:
+                    target_line["amount_currency"] += raw_wth_amount_currency
 
                 # if after adjustment the liquidity line is 0, we remove it
                 # esto podria ir a payment_pro y que cualquier liquidity line en zero no se cree (Es para caso de
@@ -287,9 +298,10 @@ class AccountPayment(models.Model):
                 # Solo sumo el valor de la retencion si no uso moneda de contrpartida
                 # porque sino ya esta incluido el total en el campo amount_currency
                 # Porque lo cambio Payment pro
-                if not self._use_counterpart_currency():
+                if not self._use_counterpart_currency() and not skip_amount_currency_adjust:
                     # Usamos el equivalente en moneda del pago (no la suma raw) para que el
                     # amount_currency de la contrapartida quede correctamente en la moneda del pago.
+                    # Igual que en la liquidez, no reajustamos con monto forzado en moneda de compañía.
                     counterpart_lines[0]["amount_currency"] -= wth_amount_currency_pay
 
         return res

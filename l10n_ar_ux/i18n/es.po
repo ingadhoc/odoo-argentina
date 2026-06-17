@@ -417,6 +417,26 @@ msgstr ""
 "jurisdicciones. "
 
 #. module: l10n_ar_ux
+#. odoo-python
+#: code:addons/l10n_ar_ux/models/res_partner.py:0
+msgid ""
+"The identification number entered (%(vat)s) contains invalid characters or "
+"additional symbols.\n"
+"\n"
+"How to fix it:\n"
+"- Make sure the number contains only digits.\n"
+"- Remove any spaces, hyphens, dots or extra symbols at the start or end.\n"
+"- Correct format example: 20251984825"
+msgstr ""
+"El número de identificación introducido (%(vat)s) contiene caracteres no "
+"permitidos o símbolos adicionales.\n"
+"\n"
+"Cómo solucionarlo:\n"
+"- Asegurate de que el número solo contenga dígitos.\n"
+"- Borrá cualquier espacio, guión, punto u otro símbolo al inicio o final.\n"
+"- Ejemplo de formato correcto: 20251984825"
+
+#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_country_state__jurisdiction_code
 msgid "Jurisdiction Code"
 msgstr "Código de jurisdicción"

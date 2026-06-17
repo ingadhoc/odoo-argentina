@@ -127,3 +127,18 @@ class ResPartner(models.Model):
         for partner in l10n_ar_partners:
             if id_number := partner._get_id_number_sanitize():
                 partner.vat = str(id_number)
+
+    def _get_id_number_sanitize(self):
+        try:
+            return super()._get_id_number_sanitize()
+        except ValueError:
+            raise ValidationError(
+                _(
+                    "The identification number entered (%(vat)s) contains invalid characters or additional symbols.\n\n"
+                    "How to fix it:\n"
+                    "- Make sure the number contains only digits.\n"
+                    "- Remove any spaces, hyphens, dots or extra symbols at the start or end.\n"
+                    "- Correct format example: 20251984825",
+                    vat=self.vat,
+                )
+            )

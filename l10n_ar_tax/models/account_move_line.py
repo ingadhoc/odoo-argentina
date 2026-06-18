@@ -8,6 +8,7 @@ class AccountMoveLine(models.Model):
     withholding_id = fields.Many2one("l10n_ar.payment.withholding", compute="_compute_withholding")
 
     def _compute_withholding(self):
+        # comentario de prueba
         for rec in self:
             if rec.tax_line_id and rec.payment_id:
                 rec.withholding_id = rec.payment_id.l10n_ar_withholding_line_ids.filtered(

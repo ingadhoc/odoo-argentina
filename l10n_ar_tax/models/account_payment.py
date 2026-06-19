@@ -315,8 +315,8 @@ class AccountPayment(models.Model):
                             _("Please enter withholding number for tax %s or configure a sequence on that tax")
                             % line.tax_id.name
                         )
-                if commands:
-                    rec.l10n_ar_withholding_line_ids = commands
+            if commands:
+                rec.l10n_ar_withholding_line_ids = commands
 
         return super().action_post()
 

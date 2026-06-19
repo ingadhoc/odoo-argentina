@@ -12,12 +12,38 @@ _logger = logging.getLogger(__name__)
 
 def monkey_patch_synchronize_to_moves():
     def _synchronize_to_moves(self, changed_fields):
-        # dynamic_unlink=True allows deletion of withholding move lines with display_type='tax'
-        # that are classified as write-off lines by _seek_for_lines. Without it,
-        # _prevent_automatic_line_deletion raises a ValidationError even in draft state.
-        # This is safe: _synchronize_to_moves only runs on draft moves (posted are skipped),
-        # and this is a programmatic sync, not a user UI deletion.
-        return super(AccountPayment, self.with_context(dynamic_unlink=True))._synchronize_to_moves(changed_fields)
+        # When l10n_ar_withholding_line_ids triggers the sync, distinguish structural
+        # changes (withholding taxes added or removed) from non-structural ones (e.g.
+        # sequence name assignment in action_post via Command.update).
+        #
+        # Non-structural (tax sets on payment and move already match) → skip the sync
+        # entirely; the core would try to delete withholding lines that already have
+        # display_type='tax' (set by _recompute_tax_lines), causing
+        # _prevent_automatic_line_deletion to raise even without dynamic_unlink.
+        #
+        # Structural (tax sets differ: line added or deleted) → apply dynamic_unlink=True
+        # so withholding move lines with display_type='tax' can be safely replaced.
+        ctx_self = self
+        if "l10n_ar_withholding_line_ids" in changed_fields:
+            needs_structural_sync = False
+            for payment in self:
+                active_wth_tax_ids = set(
+                    t.id
+                    for t in payment.l10n_ar_withholding_line_ids.mapped("tax_id")
+                    if t.l10n_ar_withholding_sequence_id
+                )
+                existing_wth_move_tax_ids = set(
+                    l.tax_line_id.id
+                    for l in payment.move_id.line_ids
+                    if l.tax_line_id and l.tax_line_id.l10n_ar_withholding_sequence_id
+                )
+                if active_wth_tax_ids != existing_wth_move_tax_ids:
+                    needs_structural_sync = True
+                    break
+            if not needs_structural_sync:
+                return
+            ctx_self = self.with_context(dynamic_unlink=True)
+        return super(AccountPayment, ctx_self)._synchronize_to_moves(changed_fields)
 
     AccountPayment._synchronize_to_moves = _synchronize_to_moves
 

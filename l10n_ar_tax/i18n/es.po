@@ -399,9 +399,34 @@ msgid "<span class=\"text-center\">Signature and Clarification</span>"
 msgstr "<span class=\"text-center\">Firma y Aclaración</span>"
 
 #. module: l10n_ar_tax
+<<<<<<< 93cfec6e9a44b50e2e45d12f41c0099f1e7e1538
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_reversal_moves
 msgid "<span style=\"padding-left: 20px;\">└</span>"
 msgstr ""
+||||||| 559f4db7053e4408e69b3ee8ebc4d326e2ca33c6
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
+msgid "<span>Amount currency</span>"
+msgstr "<span>Importe divisa</span>"
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
+msgid "<span>Amount</span>"
+msgstr "<span>Importe</span>"
+=======
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_reversal_moves
+msgid "<span style=\"padding-left: 20px;\">└</span>"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
+msgid "<span>Amount currency</span>"
+msgstr "<span>Importe divisa</span>"
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
+msgid "<span>Amount</span>"
+msgstr "<span>Importe</span>"
+>>>>>>> e3c118d55e30e49ac423ee61ea784cbbbb98f47b
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
@@ -994,6 +1019,7 @@ msgid "Matched Amount Untaxed"
 msgstr "Importe Conciliado No Gravado"
 
 #. module: l10n_ar_tax
+<<<<<<< 93cfec6e9a44b50e2e45d12f41c0099f1e7e1538
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_payment.py:0
 msgid ""
@@ -1027,6 +1053,14 @@ msgstr ""
 "AGIP"
 
 #. module: l10n_ar_tax
+||||||| 559f4db7053e4408e69b3ee8ebc4d326e2ca33c6
+=======
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
+msgid "Muestra las ND y NC en los recibos de pago, como movimientos a parte."
+msgstr ""
+
+#. module: l10n_ar_tax
+>>>>>>> e3c118d55e30e49ac423ee61ea784cbbbb98f47b
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__res_partner__drei__no_activo
 msgid "No Activo"
 msgstr ""
@@ -1285,6 +1319,7 @@ msgid "Selected Debt Untaxed"
 msgstr "Deuda Seleccionada No Gravada"
 
 #. module: l10n_ar_tax
+<<<<<<< 93cfec6e9a44b50e2e45d12f41c0099f1e7e1538
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_config_settings__show_reversal_moves_in_receipts
 msgid "Show Reversal Moves In Receipts"
 msgstr ""
@@ -1300,6 +1335,19 @@ msgid "Shows debit and credit notes in payment receipts as separate moves."
 msgstr "Muestra las ND y NC en los recibos de pago, como movimientos a parte."
 
 #. module: l10n_ar_tax
+||||||| 559f4db7053e4408e69b3ee8ebc4d326e2ca33c6
+=======
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_res_config_settings__show_reversal_moves_in_receipts
+msgid "Show Reversal Moves In Receipts"
+msgstr "Mostrar movimientos de reversión en los recibos"
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
+msgid "Show reversal moves in receipts"
+msgstr "Mostrar movimientos de reversión en los recibos"
+
+#. module: l10n_ar_tax
+>>>>>>> e3c118d55e30e49ac423ee61ea784cbbbb98f47b
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_state_code
 msgid "State Code"
 msgstr "Código de Estado"

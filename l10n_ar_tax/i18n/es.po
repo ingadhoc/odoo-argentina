@@ -392,6 +392,11 @@ msgid "<span class=\"text-center\">Signature and Clarification</span>"
 msgstr "<span class=\"text-center\">Firma y Aclaración</span>"
 
 #. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_reversal_moves
+msgid "<span style=\"padding-left: 20px;\">└</span>"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<span>Amount currency</span>"
 msgstr "<span>Importe divisa</span>"
@@ -852,6 +857,11 @@ msgid "Matched Amount Untaxed"
 msgstr "Importe Conciliado No Gravado"
 
 #. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
+msgid "Muestra las ND y NC en los recibos de pago, como movimientos a parte."
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__res_partner__drei__no_activo
 msgid "No Activo"
 msgstr ""
@@ -1033,6 +1043,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__selected_debt_untaxed
 msgid "Selected Debt Untaxed"
 msgstr "Deuda Seleccionada No Gravada"
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_res_config_settings__show_reversal_moves_in_receipts
+msgid "Show Reversal Moves In Receipts"
+msgstr "Mostrar movimientos de reversión en los recibos"
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
+msgid "Show reversal moves in receipts"
+msgstr "Mostrar movimientos de reversión en los recibos"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_state_code

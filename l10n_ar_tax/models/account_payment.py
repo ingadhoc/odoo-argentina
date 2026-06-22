@@ -467,13 +467,6 @@ class AccountPayment(models.Model):
                 withholdings += [Command.create({"tax_id": x.id}) for x in taxes]
             rec.l10n_ar_withholding_line_ids = withholdings
 
-    def _synchronize_to_moves(self, changed_fields):
-        # _recompute_tax_lines runs after _synchronize_to_moves rebuilds the payment lines
-        # and explicitly sets display_type='tax' on withholding lines (they have
-        # tax_repartition_line_id).
-        self = self.with_context(dynamic_unlink=True)
-        return super()._synchronize_to_moves(changed_fields)
-
     def compute_to_pay_amount_for_check(self):
         checks_payments = self.filtered(
             lambda x: x.payment_method_code in ["in_third_party_checks", "out_third_party_checks"]

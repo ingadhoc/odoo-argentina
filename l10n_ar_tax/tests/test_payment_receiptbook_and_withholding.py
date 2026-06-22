@@ -563,3 +563,119 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
             places=2,
             msg="The withholding line must keep its manual amount after reset to draft.",
         )
+
+    def test_reset_to_draft_change_withholding_amount_and_repost(self):
+        """Regression for ticket #118586 (PR #1464): a payment with automatic withholdings must
+        allow reset to draft, editing the withholding amount, and re-confirming.
+
+        Reproduces feg's video step-by-step: register a supplier payment that auto-computes a
+        withholding, override its amount with our own value, post it, then reset to draft, change
+        the withholding amount, and post again.
+
+        The bug: withholding move lines carried ``tax_repartition_line_id`` and were classified as
+        ``display_type='tax'``, so on the next ``_synchronize_to_moves`` rebuild (triggered by
+        reset to draft) ``_prevent_automatic_line_deletion`` raised a ``ValidationError`` and the
+        cycle blew up. We assert the functional outcome instead of internal flags: the whole
+        post → draft → edit amount → post cycle succeeds and the journal entry reflects the edited
+        amount while staying balanced.
+        """
+        first_amount = 30000.0
+        second_amount = 45000.0
+
+        # 1. Vendor bill for a CABA partner and post.
+        invoice = self.env["account.move"].create(
+            {
+                "partner_id": self.env.ref("l10n_ar_tax.res_partner_adhoc_caba").id,
+                "move_type": "in_invoice",
+                "company_id": self.company_ri.id,
+                "invoice_line_ids": [
+                    Command.create(
+                        {
+                            "product_id": self.env.ref("product.product_product_16").id,
+                            "quantity": 1,
+                            "price_unit": 500000,
+                        }
+                    ),
+                ],
+                "invoice_date": self.today,
+                "l10n_latam_document_number": "1-1464",
+            }
+        )
+        invoice.action_post()
+
+        # 2. Fiscal position with the CABA withholding for this partner (auto-applied).
+        fiscal_pos = self.env["account.fiscal.position"].create(
+            {
+                "name": "IIBB CABA 1464",
+                "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
+                "sequence": 10,
+                "auto_apply": True,
+                "country_id": self.env.ref("base.ar").id,
+                "company_id": self.company_ri.id,
+                "state_ids": [(6, 0, [self.env.ref("base.state_ar_c").id])],
+            }
+        )
+        self.env["account.fiscal.position.l10n_ar_tax"].create(
+            {
+                "fiscal_position_id": fiscal_pos.id,
+                "default_tax_id": self.tax_wth_test_1.id,
+                "tax_type": "withholding",
+            }
+        )
+
+        # 3. Register the payment: the withholding is computed automatically from the tax.
+        action_context = invoice.action_register_payment()["context"]
+        payment = (
+            self.env["account.payment"]
+            .with_context(**action_context)
+            .create(
+                {
+                    "journal_id": self.company_bank_journal.id,
+                    "amount": invoice.amount_total,
+                    "date": self.today,
+                }
+            )
+        )
+        wth_line = payment.l10n_ar_withholding_line_ids.filtered(lambda l: l.tax_id == self.tax_wth_test_1)
+        self.assertTrue(wth_line, "The automatic withholding line should have been created")
+
+        def posted_withholding_balance():
+            move_lines = payment.move_id.line_ids.filtered(lambda l: l.tax_repartition_line_id)
+            return abs(sum(move_lines.mapped("balance")))
+
+        def assert_balanced():
+            self.assertTrue(
+                payment.company_currency_id.is_zero(sum(payment.move_id.line_ids.mapped("balance"))),
+                "The journal entry must balance to zero",
+            )
+
+        # 4. Override the withholding amount with our own value and post. We write through the
+        # parent One2many (like the form does) so the change marks the payment dirty and
+        # _synchronize_to_moves rebuilds the journal entry from the edited amount.
+        payment.l10n_ar_withholding_line_ids = [Command.update(wth_line.id, {"amount": first_amount})]
+        payment.action_post()
+        self.assertEqual(payment.move_id.state, "posted")
+        assert_balanced()
+        self.assertAlmostEqual(
+            posted_withholding_balance(),
+            first_amount,
+            places=2,
+            msg="The posted withholding line must reflect the amount we entered",
+        )
+
+        # 5. Reset to draft: this rebuilds the payment lines via _synchronize_to_moves. Before the
+        # fix it raised a ValidationError trying to delete the 'tax' withholding lines.
+        payment.action_draft()
+        self.assertEqual(payment.move_id.state, "draft")
+
+        # 6. Change the withholding amount and confirm again.
+        payment.l10n_ar_withholding_line_ids = [Command.update(wth_line.id, {"amount": second_amount})]
+        payment.action_post()
+        self.assertEqual(payment.move_id.state, "posted")
+        assert_balanced()
+        self.assertAlmostEqual(
+            posted_withholding_balance(),
+            second_amount,
+            places=2,
+            msg="After reset to draft and editing, the journal entry must reflect the new " "withholding amount",
+        )

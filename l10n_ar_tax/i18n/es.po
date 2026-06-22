@@ -1287,12 +1287,12 @@ msgstr "Deuda Seleccionada No Gravada"
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_config_settings__show_reversal_moves_in_receipts
 msgid "Show Reversal Moves In Receipts"
-msgstr ""
+msgstr "Mostrar movimientos de reversión en los recibos"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
 msgid "Show reversal moves in receipts"
-msgstr ""
+msgstr "Mostrar movimientos de reversión en los recibos"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form

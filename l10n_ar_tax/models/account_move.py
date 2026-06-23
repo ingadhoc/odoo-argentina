@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.tools import formatLang
 
 
 class AccountMove(models.Model):
@@ -99,3 +100,79 @@ class AccountMove(models.Model):
         if wth_moves:
             super(AccountMove, wth_moves.with_context(skip_invoice_sync=True)).button_draft()
         return super(AccountMove, self - wth_moves).button_draft()
+
+    # -------------------------------------------------------------------------
+    # Régimen de Transparencia Fiscal (Ley 27.743) — Percepciones de IIBB
+    # -------------------------------------------------------------------------
+    # Reutilizamos el cuadro de transparencia fiscal nacional ya existente en
+    # l10n_ar (`_l10n_ar_get_invoice_custom_tax_summary_for_report`, que arma las
+    # líneas de IVA Contenido / Otros Impuestos Nacionales) y le agregamos, a
+    # continuación, una línea por cada percepción de Ingresos Brutos discriminada
+    # por jurisdicción, según las resoluciones provinciales de transparencia
+    # fiscal a consumidor final (ATER 128/2026 ER, AGIP 169/2026 CABA,
+    # ARECH 468/2026 Chubut). La leyenda se deriva de la jurisdicción del impuesto
+    # y se puede ajustar por provincia desde `_L10N_AR_IIBB_TRANSPARENCY_LEGENDS`.
+
+    # Leyendas exactas exigidas por la norma de cada provincia.
+    # Clave: código de provincia (res.country.state.code).
+    # Valor: (leyenda, mostrar_alicuota).
+    _L10N_AR_IIBB_TRANSPARENCY_LEGENDS = {
+        "C": ("ALÍCUOTA ISIB CABA", True),  # AGIP 169/2026 (texto exacto exigido)
+        "U": ("VALOR APROXIMADO DEL ISIB CHUBUT", False),  # ARECH 468/2026 (solo importe)
+    }
+
+    def _l10n_ar_iibb_transparency_legend(self, tax):
+        """Devuelve (leyenda, mostrar_alicuota) para la línea de IIBB de la
+        jurisdicción del impuesto. Por defecto usa el nombre de la provincia y
+        muestra la alícuota; las provincias con texto legal exacto se
+        sobreescriben en `_L10N_AR_IIBB_TRANSPARENCY_LEGENDS`."""
+        self.ensure_one()
+        state = tax.l10n_ar_state_id
+        return self._L10N_AR_IIBB_TRANSPARENCY_LEGENDS.get(
+            state.code,
+            (state.name or tax.tax_group_id.name, True),
+        )
+
+    def _l10n_ar_get_invoice_custom_tax_summary_for_report(self):
+        """Extiende el cuadro de Transparencia Fiscal agregando una línea por cada
+        percepción de Ingresos Brutos (tributo ARCA 07), a continuación del IVA.
+        La alícuota se toma del impuesto configurado (`tax.amount`), igual que la
+        localización deriva la alícuota de las percepciones."""
+        results = super()._l10n_ar_get_invoice_custom_tax_summary_for_report()
+        # Mismo alcance que el régimen nacional: solo Facturas B (códigos 6/7/8).
+        if self.l10n_latam_document_type_id.code not in ("6", "7", "8"):
+            return results
+
+        base_lines, _tax_lines = self._get_rounded_base_and_tax_lines()
+        AccountTax = self.env["account.tax"]
+
+        def grouping_function(_base_line, tax_data):
+            if not tax_data:
+                return None
+            tax = tax_data["tax"]
+            if tax.tax_group_id.l10n_ar_tribute_afip_code != "07":
+                return None
+            return {"tax_id": tax.id}
+
+        base_lines_aggregated_values = AccountTax._aggregate_base_lines_tax_details(base_lines, grouping_function)
+        values_per_grouping_key = AccountTax._aggregate_base_lines_aggregated_values(base_lines_aggregated_values)
+        for grouping_key, values in values_per_grouping_key.items():
+            if not grouping_key:
+                continue
+            # No informamos percepciones sin importe
+            if self.currency_id.is_zero(values["tax_amount_currency"]):
+                continue
+            tax = AccountTax.browse(grouping_key["tax_id"])
+            legend, show_aliquot = self._l10n_ar_iibb_transparency_legend(tax)
+            if show_aliquot:
+                name = "%s %s%%" % (legend, formatLang(self.env, tax.amount))
+            else:
+                name = legend
+            results.append(
+                {
+                    "name": name,
+                    "tax_amount_currency": values["tax_amount_currency"],
+                    "formatted_tax_amount_currency": formatLang(self.env, values["tax_amount_currency"]),
+                }
+            )
+        return results

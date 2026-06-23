@@ -111,6 +111,22 @@ class AccountMove(models.Model):
     def _get_l10n_ar_codes_used_for_inv_and_ref(self):
         return super()._get_l10n_ar_codes_used_for_inv_and_ref() + ["33", "331"]
 
+    def _update_sequence_made_gap(self, invalidate_current=False):
+        """Las facturas que usan documentos (p. ej. facturas de proveedor argentinas) toman su
+        numeración del documento del proveedor, no de una secuencia administrada por el diario,
+        por lo que los "saltos de secuencia" son normales y no deben marcar el comprobante en rojo.
+
+        En v18 el flag lo computaba `_compute_made_sequence_gap` y `l10n_latam_invoice_document`
+        ya excluía estos comprobantes. En v19 el cálculo se movió a `_update_sequence_made_gap`,
+        pero el override de upstream quedó sobre los métodos deprecados (`_compute_made_sequence_gap`
+        y `_set_next_made_sequence_gap`), que ya no se ejecutan, dejando el guard sin efecto.
+        Reaplicamos acá la exclusión hasta que Odoo lo corrija upstream.
+        """
+        use_documents_moves = self.filtered(lambda m: m.l10n_latam_use_documents)
+        use_documents_moves.made_sequence_gap = False
+        if other_moves := self - use_documents_moves:
+            super(AccountMove, other_moves)._update_sequence_made_gap(invalidate_current=invalidate_current)
+
     def _get_l10n_latam_documents_domain(self):
         self.ensure_one()
         domain = super()._get_l10n_latam_documents_domain()

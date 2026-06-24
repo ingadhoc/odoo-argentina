@@ -316,8 +316,8 @@ class AccountPayment(models.Model):
                             _("Please enter withholding number for tax %s or configure a sequence on that tax")
                             % line.tax_id.name
                         )
-                if commands:
-                    rec.l10n_ar_withholding_line_ids = commands
+            if commands:
+                rec.l10n_ar_withholding_line_ids = commands
 
         return super().action_post()
 
@@ -416,13 +416,6 @@ class AccountPayment(models.Model):
                 )
                 withholdings += [Command.create({"tax_id": x.id}) for x in taxes]
             rec.l10n_ar_withholding_line_ids = withholdings
-
-    def _synchronize_to_moves(self, changed_fields):
-        # _recompute_tax_lines runs after _synchronize_to_moves rebuilds the payment lines
-        # and explicitly sets display_type='tax' on withholding lines (they have
-        # tax_repartition_line_id).
-        self = self.with_context(dynamic_unlink=True)
-        return super()._synchronize_to_moves(changed_fields)
 
     def compute_to_pay_amount_for_check(self):
         checks_payments = self.filtered(

@@ -109,7 +109,8 @@ class AccountPayment(models.Model):
             # empieza a salir un raise que no deja editar cosas
             rec.amount = amount if amount > 0 else 0
             # Sincronizar amount_exact con el nuevo amount para mantener consistencia
-            rec.amount_exact = rec.amount
+            if not rec.currency_id.is_zero(rec.amount - rec.amount_exact):
+                rec.amount_exact = rec.amount
             # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
 
     @api.onchange("partner_id")

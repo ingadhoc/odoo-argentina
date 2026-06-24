@@ -79,7 +79,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
     def _get_tax_domain(self, filter_tax_group=True):
         self.ensure_one()
         domain = self.env["account.tax"]._check_company_domain(self.fiscal_position_id.company_id)
-        domain += [("amount_type", "in", ["percent", "division"])]
+        domain += [("amount_type", "=", "percent")]
         if filter_tax_group:
             domain += [("tax_group_id", "=", self.default_tax_id.tax_group_id.id)]
             if self.tax_type == "withholding":

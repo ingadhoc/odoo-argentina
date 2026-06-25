@@ -198,3 +198,16 @@ class AccountTax(models.Model):
                         "The total percentage (%s) should be greater than 0 and less than or equal to 100.", tax.ratio
                     )
                 )
+
+    @api.constrains("l10n_ar_tax_type", "l10n_ar_state_id")
+    def _check_earnings_no_jurisdiction(self):
+        """Earnings withholdings are not provincial, so they cannot have a
+        jurisdiction assigned (unlike IIBB, which is per-province)."""
+        for tax in self:
+            if tax.l10n_ar_tax_type in ["earnings", "earnings_scale"] and tax.l10n_ar_state_id:
+                raise ValidationError(
+                    self.env._(
+                        "The earnings withholding tax '%s' cannot have a jurisdiction assigned.",
+                        tax.name,
+                    )
+                )

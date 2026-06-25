@@ -1307,6 +1307,12 @@ msgstr ""
 #. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_tax.py:0
+msgid "The earnings withholding tax '%s' cannot have a jurisdiction assigned."
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_tax.py:0
 msgid ""
 "The total percentage (%s) should be greater than 0 and less than or equal to"
 " 100."

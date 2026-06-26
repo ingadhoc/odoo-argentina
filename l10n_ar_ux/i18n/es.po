@@ -81,6 +81,11 @@ msgid "Account Chart Template"
 msgstr "Plantilla de plan contable"
 
 #. module: l10n_ar_ux
+#: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_report_search
+msgid "Accounting Date: Last Month"
+msgstr "Fecha contable: Mes anterior"
+
+#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__l10n_ar_report_signed_by
 msgid "Aclaracion"
 msgstr ""

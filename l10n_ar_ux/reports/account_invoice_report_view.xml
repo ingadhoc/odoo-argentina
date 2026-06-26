@@ -11,4 +11,33 @@
         </field>
     </record>
 
+    <!-- Insertamos un separador para que los filtros "with_document" y "filter_accounting_date_this_year"
+    pasen a grupos distintos y se combinen con AND. -->
+    <record id="view_account_invoice_report_search" model="ir.ui.view">
+        <field name="name">account.invoice.report.search.l10n_ar_ux</field>
+        <field name="model">account.invoice.report</field>
+        <field name="inherit_id" ref="l10n_ar.view_account_invoice_report_search_inherit"/>
+        <field name="arch" type="xml">
+            <filter name="filter_accounting_date_this_year" position="before">
+                <separator/>
+            </filter>
+            <!-- Filtro "mes anterior" para el default de IIBB Ventas (se declara el mes calendario
+            cerrado anterior). Queda en el mismo grupo que filter_accounting_date_this_year, separado de
+            with_document, así combina con AND. -->
+            <filter name="filter_accounting_date_this_year" position="after">
+                <filter name="filter_accounting_date_last_month" invisible="1" string="Accounting Date: Last Month" domain="[('date', '&gt;=', (context_today() + relativedelta(months=-1, day=1)).strftime('%Y-%m-%d')), ('date', '&lt;', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
+            </filter>
+        </field>
+    </record>
+
+    <!-- Sacamos el agrupamiento por compañía de los reportes de IIBB ya que con branches no aporta valor
+    y suma un nivel de agrupación que afecta a la performance. -->
+    <record id="l10n_ar.action_iibb_sales_by_state_and_account_pivot" model="ir.actions.act_window">
+        <field name="context">{'search_default_current': 1, 'search_default_customer': 1, 'search_default_with_document': 1, 'search_default_groupby_l10n_ar_state_id': 1, 'search_default_groupby_account_id': 2, 'search_default_filter_accounting_date_last_month': 1}</field>
+    </record>
+
+    <record id="l10n_ar.action_iibb_purchases_by_state_and_account_pivot" model="ir.actions.act_window">
+        <field name="context">{'search_default_current': 1, 'search_default_supplier': 1, 'search_default_with_document': 1, 'search_default_groupby_l10n_ar_state_id': 1, 'search_default_groupby_account_id': 2, 'search_default_filter_accounting_date_this_year': 1}</field>
+    </record>
+
 </odoo>

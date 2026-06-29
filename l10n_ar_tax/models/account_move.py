@@ -116,13 +116,28 @@ class AccountMove(models.Model):
     # columna del cuadro. La leyenda se toma de la ETIQUETA del impuesto
     # (`invoice_label`), por lo que el texto se puede ajustar por jurisdicción
     # simplemente editando la etiqueta del impuesto (se refleja directo en la
-    # factura). Las provincias con reglamentación propia (CABA, Chubut) se crean
-    # con su etiqueta normada por defecto y también pueden modificarse igual.
+    # factura).
+    #
+    # Excepción: CABA y Chubut tienen reglamentación propia y, por ahora, su
+    # leyenda se hardcodea acá para el reporte (no tocamos la etiqueta del
+    # impuesto por defecto). Clave: código de provincia (res.country.state.code);
+    # valor: {"legend": <texto fijo>, "show_aliquot": <bool>}.
+    _L10N_AR_IIBB_TRANSPARENCY_SPECIAL = {
+        "C": {"legend": "ALÍCUOTA ISIB CABA", "show_aliquot": True},  # AGIP 169/2026 (texto exacto exigido)
+        "U": {"legend": "VALOR APROXIMADO DEL ISIB CHUBUT", "show_aliquot": False},  # ARECH 468/2026 (solo importe)
+    }
 
     def _l10n_ar_iibb_transparency_legend(self, tax):
-        """Leyenda de la línea de IIBB: la etiqueta del impuesto (editable)."""
+        """Devuelve (leyenda, mostrar_alicuota) para la línea de IIBB.
+
+        Regla general: la leyenda es la etiqueta del impuesto (`invoice_label`),
+        editable; se muestra la alícuota. CABA/Chubut se hardcodean por norma en
+        `_L10N_AR_IIBB_TRANSPARENCY_SPECIAL`."""
         self.ensure_one()
-        return tax.invoice_label or tax.name
+        special = self._L10N_AR_IIBB_TRANSPARENCY_SPECIAL.get(tax.l10n_ar_state_code)
+        if special:
+            return special["legend"], special["show_aliquot"]
+        return (tax.invoice_label or tax.name), True
 
     def _l10n_ar_get_invoice_custom_tax_summary_for_report(self):
         """Extiende el cuadro de Transparencia Fiscal agregando una línea por cada
@@ -156,10 +171,14 @@ class AccountMove(models.Model):
             if self.currency_id.is_zero(values["tax_amount_currency"]):
                 continue
             tax = AccountTax.browse(grouping_key["tax_id"])
-            legend = self._l10n_ar_iibb_transparency_legend(tax)
+            legend, show_aliquot = self._l10n_ar_iibb_transparency_legend(tax)
+            if show_aliquot:
+                name = "%s %s%%" % (legend, formatLang(self.env, tax.amount))
+            else:
+                name = legend
             results.append(
                 {
-                    "name": "%s %s%%" % (legend, formatLang(self.env, tax.amount)),
+                    "name": name,
                     "tax_amount_currency": values["tax_amount_currency"],
                     "formatted_tax_amount_currency": formatLang(self.env, values["tax_amount_currency"]),
                 }

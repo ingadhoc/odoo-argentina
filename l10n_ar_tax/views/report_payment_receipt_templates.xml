@@ -315,4 +315,16 @@
         <field name="binding_type">report</field>
         <field name="binding_view_types">list</field>
     </record>
+
+    <!-- Cache the rendered receipt PDF (attachment_use) only for supplier
+         payments, whose receipt is immutable once the payment is processed.
+         Customer receipts embed a "pending vouchers as of today()" table
+         (report_payment_receipt_document > open_table, gated by
+         l10n_ar_ux.group_include_pending_receivable_documents), so caching
+         them would freeze that section: the attachment expression returns
+         False for customers, disabling the cache for them. -->
+    <record id="account.action_report_payment_receipt" model="ir.actions.report">
+        <field name="attachment_use" eval="True"/>
+        <field name="attachment">(object.partner_type == 'supplier' and object.state in ('in_process', 'paid')) and ((object.name or 'recibo').replace('/', '_') + '.pdf') or False</field>
+    </record>
 </odoo>

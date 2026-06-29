@@ -110,28 +110,19 @@ class AccountMove(models.Model):
     # continuación, una línea por cada percepción de Ingresos Brutos discriminada
     # por jurisdicción, según las resoluciones provinciales de transparencia
     # fiscal a consumidor final (ATER 128/2026 ER, AGIP 169/2026 CABA,
-    # ARECH 468/2026 Chubut). La leyenda se deriva de la jurisdicción del impuesto
-    # y se puede ajustar por provincia desde `_L10N_AR_IIBB_TRANSPARENCY_LEGENDS`.
-
-    # Leyendas exactas exigidas por la norma de cada provincia.
-    # Clave: código de provincia (res.country.state.code).
-    # Valor: (leyenda, mostrar_alicuota).
-    _L10N_AR_IIBB_TRANSPARENCY_LEGENDS = {
-        "C": ("ALÍCUOTA ISIB CABA", True),  # AGIP 169/2026 (texto exacto exigido)
-        "U": ("VALOR APROXIMADO DEL ISIB CHUBUT", False),  # ARECH 468/2026 (solo importe)
-    }
+    # ARECH 468/2026 Chubut).
+    #
+    # Regla general: "[NOMBRE PROVINCIA] [ALÍCUOTA %]" + el importe en la segunda
+    # columna del cuadro. La leyenda se toma de la ETIQUETA del impuesto
+    # (`invoice_label`), por lo que el texto se puede ajustar por jurisdicción
+    # simplemente editando la etiqueta del impuesto (se refleja directo en la
+    # factura). Las provincias con reglamentación propia (CABA, Chubut) se crean
+    # con su etiqueta normada por defecto y también pueden modificarse igual.
 
     def _l10n_ar_iibb_transparency_legend(self, tax):
-        """Devuelve (leyenda, mostrar_alicuota) para la línea de IIBB de la
-        jurisdicción del impuesto. Por defecto usa el nombre de la provincia y
-        muestra la alícuota; las provincias con texto legal exacto se
-        sobreescriben en `_L10N_AR_IIBB_TRANSPARENCY_LEGENDS`."""
+        """Leyenda de la línea de IIBB: la etiqueta del impuesto (editable)."""
         self.ensure_one()
-        state = tax.l10n_ar_state_id
-        return self._L10N_AR_IIBB_TRANSPARENCY_LEGENDS.get(
-            state.code,
-            (state.name or tax.tax_group_id.name, True),
-        )
+        return tax.invoice_label or tax.name
 
     def _l10n_ar_get_invoice_custom_tax_summary_for_report(self):
         """Extiende el cuadro de Transparencia Fiscal agregando una línea por cada
@@ -159,18 +150,16 @@ class AccountMove(models.Model):
         for grouping_key, values in values_per_grouping_key.items():
             if not grouping_key:
                 continue
-            # No informamos percepciones sin importe
+            # Por defecto no informamos percepciones sin importe.
+            # TODO: contemplar la exención de Chubut (ARECH 468/2026), que exige
+            # informar "EXENTO DE ISIB CHUBUT" aun cuando el importe sea cero.
             if self.currency_id.is_zero(values["tax_amount_currency"]):
                 continue
             tax = AccountTax.browse(grouping_key["tax_id"])
-            legend, show_aliquot = self._l10n_ar_iibb_transparency_legend(tax)
-            if show_aliquot:
-                name = "%s %s%%" % (legend, formatLang(self.env, tax.amount))
-            else:
-                name = legend
+            legend = self._l10n_ar_iibb_transparency_legend(tax)
             results.append(
                 {
-                    "name": name,
+                    "name": "%s %s%%" % (legend, formatLang(self.env, tax.amount)),
                     "tax_amount_currency": values["tax_amount_currency"],
                     "formatted_tax_amount_currency": formatLang(self.env, values["tax_amount_currency"]),
                 }

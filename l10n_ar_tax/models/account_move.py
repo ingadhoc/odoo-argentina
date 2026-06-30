@@ -44,11 +44,17 @@ class AccountMove(models.Model):
 
     def write(self, vals):
         res = super().write(vals)
+        # Disparamos el recompute en write y no en create: al momento del create todavía no se
+        # computaron todos los campos del account.move (líneas, importes, etc.), por lo que
+        # _l10n_ar_recompute_fiscal_position_taxes no se ejecutaría correctamente en el create.
         # Si el invoice_date cambia, recomputamos las percepciones.
         # En Odoo 18+, cuando el guardado viene de un formulario (UI), los 'tax_ids' de las líneas
         # suelen estar presentes en los 'vals' (dentro de 'invoice_line_ids').
         # Si el usuario editó las líneas, no queremos re-ejecutar nuestra lógica de refresco automático.
-        if "invoice_date" in vals and "invoice_line_ids" not in vals:
+        if ("invoice_date" in vals and "invoice_line_ids" not in vals) or (
+            "fiscal_position_id" in vals
+            and self.env["account.fiscal.position"].browse(vals["fiscal_position_id"]).l10n_ar_require_related_invoice
+        ):
             self._l10n_ar_recompute_fiscal_position_taxes()
         return res
 
@@ -58,7 +64,12 @@ class AccountMove(models.Model):
         IMPORTANTE: este metodo solo esta pensado para cambiar alicuota de MISMA fiscal position (por cambio en fecha o partner) pero no para cambiar los impuestos.
         Para ello nos basamos en los impuestos de la posicion fiscal, buscamos si hay impuestos existentes para los tax groups involucrados y los
         reemplazamos por los nuevos impuestos.
-        NO lo hacemos para el cambio de fiscal_position_id porque el onchange de fiscal_position_id implementado en sale_ux ya recomputa todos los taxes
+        Por regla general NO lo hacemos para el cambio de fiscal_position_id porque el onchange de fiscal_position_id implementado en sale_ux ya recomputa todos los taxes.
+        EXCEPCION: write() sí invoca este recompute cuando se cambia a una fiscal_position_id con l10n_ar_require_related_invoice=True, para reevaluar las percepciones según las reglas de NC con reversión que se describen abajo.
+
+        Para posiciones fiscales con l10n_ar_require_related_invoice=True:
+        - En NC: solo aplica si es devolución total (mismo monto) en el mismo mes que la factura relacionada.
+        - Si no cumple → elimina los impuestos de percepción de las líneas.
         """
         for move in self.filtered(
             lambda x: x.is_sale_document(include_receipts=True)
@@ -69,14 +80,65 @@ class AccountMove(models.Model):
             fp_tax_groups = move.fiscal_position_id.l10n_ar_tax_ids.filtered(
                 lambda x: x.tax_type == "perception"
             ).mapped("default_tax_id.tax_group_id")
-            new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(
-                move.partner_id, move.company_id, move.date, "perception"
+
+            if move.move_type == "out_refund" and move.fiscal_position_id.l10n_ar_require_related_invoice:
+                related = move._found_related_invoice()
+                if (
+                    related
+                    and move.invoice_date
+                    and related.invoice_date
+                    and move.invoice_date.year == related.invoice_date.year
+                    and move.invoice_date.month == related.invoice_date.month
+                    and move.currency_id.is_zero(abs(related.amount_untaxed) - abs(move.amount_untaxed))
+                ):
+                    new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(
+                        move.partner_id, move.company_id, related.date, "perception"
+                    )
+                    for line in move.invoice_line_ids:
+                        to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
+                        if to_unlink._origin != new_taxes:
+                            line.tax_ids = (line.tax_ids - to_unlink) | new_taxes
+                elif move._l10n_ar_so_invoice_same_untaxed():
+                    # Existe una factura vinculada en la orden de venta con el mismo importe sin
+                    # impuestos: calculamos las percepciones normalmente (como si la posición fiscal
+                    # no tuviera l10n_ar_require_related_invoice).
+                    new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(
+                        move.partner_id, move.company_id, move.date, "perception"
+                    )
+                    for line in move.invoice_line_ids:
+                        to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
+                        if to_unlink._origin != new_taxes:
+                            line.tax_ids = (line.tax_ids - to_unlink) | new_taxes
+                else:
+                    for line in move.invoice_line_ids:
+                        to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
+                        if to_unlink:
+                            line.tax_ids = line.tax_ids - to_unlink
+            else:
+                new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(
+                    move.partner_id, move.company_id, move.date, "perception"
+                )
+                # Solo queremos que se recomputen los impuestos en facturas de cliente/proveedor
+                for line in move.filtered(lambda x: not x.reversed_entry_id).invoice_line_ids:
+                    to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
+                    if to_unlink._origin != new_taxes:
+                        line.tax_ids = (line.tax_ids - to_unlink) | new_taxes
+
+    def _l10n_ar_so_invoice_same_untaxed(self):
+        """Factura(s) de cliente posteada(s) vinculada(s) a la(s) misma(s) orden(es) de venta de esta
+        NC, con el mismo importe sin impuestos. Se usa para decidir si, pese a no cumplirse la
+        condición de devolución total contra la factura original (reversed_entry_id), igual
+        corresponde calcular las percepciones. Vacío si el módulo sale no está instalado.
+        """
+        self.ensure_one()
+        if "sale_line_ids" not in self.env["account.move.line"]._fields:
+            return self.env["account.move"]
+        orders = self.invoice_line_ids.sale_line_ids.order_id
+        return orders.invoice_ids.filtered(
+            lambda m: (
+                m.move_type == "out_invoice" and m.state == "posted" and m.amount_untaxed == abs(self.amount_untaxed)
             )
-            # Solo queremos que se recomputen los impuestos en facturas de cliente/proveedor
-            for line in move.filtered(lambda x: not x.reversed_entry_id).invoice_line_ids:
-                to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
-                if to_unlink._origin != new_taxes:
-                    line.tax_ids = (line.tax_ids - to_unlink) | new_taxes
+        )[:1]
 
     def copy(self, default=None):
         """Re computamos las percepciones al duplicar una factura porque puede ser que la factura venga de otro periodo

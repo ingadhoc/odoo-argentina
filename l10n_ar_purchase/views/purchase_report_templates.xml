@@ -203,6 +203,22 @@
             </div>
         </div>
 
+        <!-- Re-add the expected arrival date per order line.
+             In v16 the AR purchase order report showed the expected arrival
+             ("Llegada prevista") per product line. In v18 the confirmed purchase
+             order report (both native and AR) dropped it, and the data
+             (purchase.order.line.date_planned) is only printed on the RFQ /
+             quotation report. We re-add it as a column on the AR purchase order
+             report so suppliers receive the expected delivery date per product. -->
+        <xpath expr="//th[@name='th_description']" position="after">
+            <th name="th_date_planned" class="text-center"><strong>Expected Arrival</strong></th>
+        </xpath>
+        <xpath expr="//td[@id='product']" position="after">
+            <td class="text-center">
+                <span t-field="line.date_planned" t-options="{'date_only': 'true'}"/>
+            </td>
+        </xpath>
+
     </template>
 
 </odoo>

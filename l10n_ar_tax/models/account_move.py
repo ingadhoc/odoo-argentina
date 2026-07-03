@@ -112,38 +112,17 @@ class AccountMove(models.Model):
     # fiscal a consumidor final (ATER 128/2026 ER, AGIP 169/2026 CABA,
     # ARECH 468/2026 Chubut).
     #
-    # Regla general: "[NOMBRE PROVINCIA] [ALÍCUOTA %]" + el importe en la segunda
-    # columna del cuadro. La leyenda se toma de la ETIQUETA del impuesto
-    # (`invoice_label`), por lo que el texto se puede ajustar por jurisdicción
-    # simplemente editando la etiqueta del impuesto (se refleja directo en la
-    # factura).
-    #
-    # Excepción: CABA y Chubut tienen reglamentación propia y, por ahora, su
-    # leyenda se hardcodea acá para el reporte (no tocamos la etiqueta del
-    # impuesto por defecto). Clave: código de provincia (res.country.state.code);
-    # valor: {"legend": <texto fijo>, "show_aliquot": <bool>}.
-    _L10N_AR_IIBB_TRANSPARENCY_SPECIAL = {
-        "C": {"legend": "ALÍCUOTA ISIB CABA", "show_aliquot": True},  # AGIP 169/2026 (texto exacto exigido)
-        "U": {"legend": "VALOR APROXIMADO DEL ISIB CHUBUT", "show_aliquot": False},  # ARECH 468/2026 (solo importe)
-    }
+    # La leyenda de cada percepción es la ETIQUETA del impuesto (`invoice_label`,
+    # editable; default por jurisdicción en `account_chart_template._add_wh_taxes`)
+    # más la alícuota, salvo Chubut que por norma informa solo la leyenda.
 
-    def _l10n_ar_iibb_transparency_legend(self, tax):
-        """Devuelve (leyenda, mostrar_alicuota) para la línea de IIBB.
-
-        Regla general: la leyenda es la etiqueta del impuesto (`invoice_label`),
-        editable; se muestra la alícuota. CABA/Chubut se hardcodean por norma en
-        `_L10N_AR_IIBB_TRANSPARENCY_SPECIAL`."""
-        self.ensure_one()
-        special = self._L10N_AR_IIBB_TRANSPARENCY_SPECIAL.get(tax.l10n_ar_state_code)
-        if special:
-            return special["legend"], special["show_aliquot"]
-        return (tax.invoice_label or tax.name), True
+    # Jurisdicciones que informan solo la leyenda, sin alícuota (por norma).
+    _L10N_AR_IIBB_TRANSPARENCY_NO_ALIQUOT = ("U",)
 
     def _l10n_ar_get_invoice_custom_tax_summary_for_report(self):
         """Extiende el cuadro de Transparencia Fiscal agregando una línea por cada
         percepción de Ingresos Brutos (tributo ARCA 07), a continuación del IVA.
-        La alícuota se toma del impuesto configurado (`tax.amount`), igual que la
-        localización deriva la alícuota de las percepciones."""
+        La leyenda es la etiqueta del impuesto (`invoice_label`) más la alícuota."""
         results = super()._l10n_ar_get_invoice_custom_tax_summary_for_report()
         # Mismo alcance que el régimen nacional: solo Facturas B (códigos 6/7/8).
         if self.l10n_latam_document_type_id.code not in ("6", "7", "8"):
@@ -171,11 +150,9 @@ class AccountMove(models.Model):
             if self.currency_id.is_zero(values["tax_amount_currency"]):
                 continue
             tax = AccountTax.browse(grouping_key["tax_id"])
-            legend, show_aliquot = self._l10n_ar_iibb_transparency_legend(tax)
-            if show_aliquot:
-                name = "%s %s%%" % (legend, formatLang(self.env, tax.amount))
-            else:
-                name = legend
+            name = tax.invoice_label or tax.name
+            if tax.l10n_ar_state_code not in self._L10N_AR_IIBB_TRANSPARENCY_NO_ALIQUOT:
+                name = "%s %g%%" % (name, tax.amount)
             results.append(
                 {
                     "name": name,
@@ -184,3 +161,39 @@ class AccountMove(models.Model):
                 }
             )
         return results
+
+    def _l10n_ar_get_invoice_totals_for_report(self):
+        """Las percepciones de IIBB ya se informan en el cuadro de Transparencia
+        Fiscal, así que las excluimos del cuadro de totales para no duplicar la
+        información (solo en Facturas B, donde se muestra dicho cuadro).
+
+        Excluir un grupo no altera el total del comprobante: el helper estándar
+        `_exclude_tax_groups_from_tax_totals_summary` funde el importe del impuesto
+        en la base y lo descuenta del tax, dejando el total igual.
+
+        Solo excluimos los grupos de IIBB que efectivamente se informan en el
+        cuadro de Transparencia Fiscal (importe != 0). Los de importe 0 no se
+        listan allí (ver `_l10n_ar_get_invoice_custom_tax_summary_for_report`),
+        así que se dejan en el cuadro de totales: no hay duplicación y se
+        mantiene el comportamiento estándar de Odoo."""
+        tax_totals = super()._l10n_ar_get_invoice_totals_for_report()
+        if self.l10n_latam_document_type_id.code not in ("6", "7", "8") or not tax_totals:
+            return tax_totals
+
+        amount_by_group = {}
+        for subtotal in tax_totals["subtotals"]:
+            for tax_group in subtotal["tax_groups"]:
+                amount_by_group[tax_group["id"]] = (
+                    amount_by_group.get(tax_group["id"], 0.0) + tax_group["tax_amount_currency"]
+                )
+        iibb_group_ids = (
+            self.env["account.tax.group"]
+            .browse(list(amount_by_group))
+            .filtered(
+                lambda g: g.l10n_ar_tribute_afip_code == "07" and not self.currency_id.is_zero(amount_by_group[g.id])
+            )
+            .ids
+        )
+        if iibb_group_ids:
+            tax_totals = self.env["account.tax"]._exclude_tax_groups_from_tax_totals_summary(tax_totals, iibb_group_ids)
+        return tax_totals

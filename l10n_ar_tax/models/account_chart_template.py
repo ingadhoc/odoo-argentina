@@ -9,6 +9,17 @@ from odoo import Command, api, models
 
 _logger = logging.getLogger(__name__)
 
+# Etiqueta por defecto (invoice_label) de las percepciones de IIBB de venta, que
+# es lo que se muestra en el cuadro de Transparencia Fiscal (Ley 27.743) de la
+# factura. Por jurisdicción con reglamentación propia usamos su leyenda exacta;
+# el resto usa "Perc IIBB <Provincia>". El usuario puede editar la etiqueta del
+# impuesto para cambiar el texto de cualquier provincia.
+IIBB_TRANSPARENCY_LABELS = {
+    "C": "ALÍCUOTA ISIB CABA",  # CABA — AGIP 169/2026
+    "U": "VALOR APROXIMADO DEL ISIB CHUBUT",  # Chubut — ARECH 468/2026
+    "E": "Imp. Pciales o IIBB o Profesiones Liberales Entre Ríos",  # ER — ATER 128/2026
+}
+
 
 class AccountChartTemplate(models.AbstractModel):
     _inherit = "account.chart.template"
@@ -73,8 +84,32 @@ class AccountChartTemplate(models.AbstractModel):
         for tax_ref, state_ref in tax_state_tupples:
             # Identificamos el impuesto al que se le va a agregar la/s etiqueta/s
             if tax := self.env.ref("account.%s_%s" % (company.id, tax_ref), raise_if_not_found=False):
+                state = self.env.ref(state_ref)
                 if not tax.l10n_ar_state_id:
-                    tax.l10n_ar_state_id = self.env.ref(state_ref).id
+                    tax.l10n_ar_state_id = state.id
+                # Etiqueta por defecto para el cuadro de Transparencia Fiscal. Solo
+                # percepciones de venta (las que se muestran en la factura) y a TODAS
+                # las alícuotas de la jurisdicción, no solo al impuesto base. Editable.
+                if tax.type_tax_use == "sale":
+                    label = IIBB_TRANSPARENCY_LABELS.get(state.code, "Perc IIBB %s" % state.name)
+                    group_sale_taxes = (
+                        self.env["account.tax"]
+                        .with_context(active_test=False)
+                        .search(
+                            [
+                                ("company_id", "=", company.id),
+                                ("type_tax_use", "=", "sale"),
+                                ("tax_group_id", "=", tax.tax_group_id.id),
+                            ]
+                        )
+                    )
+                    # invoice_label es traducible: lo escribimos en todos los idiomas
+                    # instalados (update_field_translations contempla las traducciones)
+                    # para que el reporte lo muestre sea cual sea el idioma de la factura.
+                    translations = {code: label for code, _name in self.env["res.lang"].get_installed()}
+                    for sale_tax in group_sale_taxes:
+                        sale_tax.update_field_translations("invoice_label", translations)
+                    group_sale_taxes.filtered(lambda t: not t.l10n_ar_state_id).write({"l10n_ar_state_id": state.id})
 
         # agregado de jurisdiccion a retenciones
         withholding_tax_state_tupples = [

@@ -22,11 +22,12 @@ class MailComposeMessage(models.TransientModel):
                 result, format = self.env['ir.actions.report']._render(report.report_name, payment.ids)
                 file = base64.b64encode(result)
                 data_attach = {
-                    'name': report_name,
+                    'name': "%s.%s" % (report_name, format),
                     'datas': file,
                     'res_model': 'mail.compose.message',
                     'res_id': 0,
                     'type': 'binary',
+                    'mimetype': 'application/pdf',
                 }
                 attachment_ids.append(self.env['ir.attachment'].create(data_attach).id)
             if values.get('value', False) and values['value'].get('attachment_ids', []) or attachment_ids:

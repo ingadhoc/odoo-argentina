@@ -24,6 +24,14 @@ class AccountMove(models.Model):
                 move.fiscal_position_id.l10n_ar_tax_ids.filtered(lambda x: x.tax_type == "perception")
             )
 
+    @api.depends("partner_id", "partner_shipping_id", "company_id")
+    def _compute_fiscal_position_id(self):
+        """Skip the fiscal position on journal entries (move_type='entry', e.g. payments): it is not
+        used there and, when it carries perceptions, it only adds a misleading warning banner."""
+        entries = self.filtered(lambda move: move.move_type == "entry")
+        entries.fiscal_position_id = False
+        super(AccountMove, self - entries)._compute_fiscal_position_id()
+
     def _get_tax_factor(self):
         self.ensure_one()
         tax_factor = self.amount_total and (self.amount_untaxed / self.amount_total) or 1.0

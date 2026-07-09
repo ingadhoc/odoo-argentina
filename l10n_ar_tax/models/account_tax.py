@@ -198,3 +198,10 @@ class AccountTax(models.Model):
                         "The total percentage (%s) should be greater than 0 and less than or equal to 100.", tax.ratio
                     )
                 )
+
+    @api.model
+    @api.readonly
+    def name_search(self, name="", domain=None, operator="ilike", limit=100):
+        ctx = dict(self.env.context)
+        ctx.pop("dynamic_fiscal_position_id", None)
+        return super(AccountTax, self.with_context(**ctx)).name_search(name, domain, operator, limit)

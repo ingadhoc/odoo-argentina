@@ -10,6 +10,11 @@ class AccountMove(models.Model):
         compute="_compute_perceptions_fiscal_position",
     )
 
+    @api.depends(
+        "fiscal_position_id",
+        "fiscal_position_id.l10n_ar_tax_ids",
+        "fiscal_position_id.l10n_ar_tax_ids.tax_type",
+    )
     def _compute_perceptions_fiscal_position(self):
         """
         Compute if the fiscal position has perceptions.
@@ -48,7 +53,10 @@ class AccountMove(models.Model):
         NO lo hacemos para el cambio de fiscal_position_id porque el onchange de fiscal_position_id implementado en sale_ux ya recomputa todos los taxes
         """
         for move in self.filtered(
-            lambda x: x.is_sale_document(include_receipts=True) and x.perceptions_fiscal_positon and x.state == "draft"
+            lambda x: x.is_sale_document(include_receipts=True)
+            and x.fiscal_position_id
+            and x.perceptions_fiscal_positon
+            and x.state == "draft"
         ):
             fp_tax_groups = move.fiscal_position_id.l10n_ar_tax_ids.filtered(
                 lambda x: x.tax_type == "perception"

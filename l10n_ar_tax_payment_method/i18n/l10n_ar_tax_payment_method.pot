@@ -1,0 +1,58 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_ar_tax_payment_method
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-14 15:38+0000\n"
+"PO-Revision-Date: 2026-07-14 15:38+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_ar_tax_payment_method
+#: model:ir.model.fields,field_description:l10n_ar_tax_payment_method.field_account_payment_method_line__l10n_ar_apply_withholding
+msgid "Apply Withholdings"
+msgstr ""
+
+#. module: l10n_ar_tax_payment_method
+#: model:ir.model.fields,field_description:l10n_ar_tax_payment_method.field_account_payment__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax_payment_method.field_account_payment_method_line__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax_payment_method.field_account_payment_register__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: l10n_ar_tax_payment_method
+#: model:ir.model.fields,field_description:l10n_ar_tax_payment_method.field_account_payment__id
+#: model:ir.model.fields,field_description:l10n_ar_tax_payment_method.field_account_payment_method_line__id
+#: model:ir.model.fields,field_description:l10n_ar_tax_payment_method.field_account_payment_register__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_ar_tax_payment_method
+#: model:ir.model.fields,help:l10n_ar_tax_payment_method.field_account_payment_method_line__l10n_ar_apply_withholding
+msgid ""
+"If enabled, payments made with this payment method compute withholdings "
+"automatically. If disabled, the fiscal position is forced to empty so that "
+"no withholdings are computed (e.g. credit card or petty cash payments)."
+msgstr ""
+
+#. module: l10n_ar_tax_payment_method
+#: model:ir.model,name:l10n_ar_tax_payment_method.model_account_payment_register
+msgid "Pay"
+msgstr ""
+
+#. module: l10n_ar_tax_payment_method
+#: model:ir.model,name:l10n_ar_tax_payment_method.model_account_payment_method_line
+msgid "Payment Methods"
+msgstr ""
+
+#. module: l10n_ar_tax_payment_method
+#: model:ir.model,name:l10n_ar_tax_payment_method.model_account_payment
+msgid "Payments"
+msgstr ""

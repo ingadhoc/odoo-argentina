@@ -1,0 +1,49 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_ar_tax_payment_method
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-14 15:38+0000\n"
+"PO-Revision-Date: 2026-07-14 15:38+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_ar_tax_payment_method
+#: model:ir.model.fields,field_description:l10n_ar_tax_payment_method.field_account_payment_method_line__l10n_ar_apply_withholding
+msgid "Apply Withholdings"
+msgstr "Aplicar retenciones"
+
+#. module: l10n_ar_tax_payment_method
+#: model:ir.model,name:l10n_ar_tax_payment_method.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: l10n_ar_tax_payment_method
+#: model:ir.model,name:l10n_ar_tax_payment_method.model_account_payment_method_line
+msgid "Payment Methods"
+msgstr "Métodos de pago"
+
+#. module: l10n_ar_tax_payment_method
+#: model:ir.model,name:l10n_ar_tax_payment_method.model_account_payment_register
+msgid "Pay"
+msgstr "Pagar"
+
+#. module: l10n_ar_tax_payment_method
+#: model:ir.model.fields,help:l10n_ar_tax_payment_method.field_account_payment_method_line__l10n_ar_apply_withholding
+msgid ""
+"If enabled, payments made with this payment method compute withholdings "
+"automatically. If disabled, the fiscal position is forced to empty so that "
+"no withholdings are computed (e.g. credit card or petty cash payments)."
+msgstr ""
+"Si está activo, los pagos generados con este método de pago calculan "
+"retenciones de forma automática. Si está desactivado, se fuerza la posición "
+"fiscal a vacío para que no se calculen retenciones (ej. pagos con tarjeta de "
+"crédito o de caja chica)."

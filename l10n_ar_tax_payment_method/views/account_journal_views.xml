@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_journal_form" model="ir.ui.view">
+        <field name="name">account.journal.form.l10n.ar.withholding.payment.method</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='outbound_payment_method_line_ids']/list/field[@name='name']" position="after">
+                <field name="l10n_ar_apply_withholding" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

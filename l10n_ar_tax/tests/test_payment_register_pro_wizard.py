@@ -14,6 +14,24 @@ class TestPaymentRegisterProWizard(common.TransactionCase):
         cls.today = fields.Date.today()
         cls.company = cls.env.company
         cls.company.use_payment_pro = True
+        # Pre-existing companies lack batch_payment_sequence_id (the field default
+        # only fires on company create), so multi-partner batch communication
+        # crashes on next_by_id() over an empty sequence. Ensure it here.
+        if not cls.company.batch_payment_sequence_id:
+            cls.company.batch_payment_sequence_id = (
+                cls.env["ir.sequence"]
+                .sudo()
+                .create(
+                    {
+                        "name": "Group Payments Number Sequence",
+                        "implementation": "no_gap",
+                        "padding": 5,
+                        "use_date_range": True,
+                        "company_id": cls.company.id,
+                        "prefix": "GROUP/%(year)s/",
+                    }
+                )
+            )
         cls.company_journal = cls.env["account.journal"].search(
             [("company_id", "=", cls.company.id), ("type", "=", "sale")], limit=1
         )

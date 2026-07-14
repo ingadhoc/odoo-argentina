@@ -3,7 +3,6 @@ import io
 import logging
 import os
 import re
-import tempfile
 import zipfile
 
 from odoo import _, api, fields, models
@@ -64,27 +63,19 @@ class ResCompanyJurisdictionPadron(models.Model):
 
     def descompress_file(self, file_padron):
         _logger.log(25, "Descompress zip file")
-        ruta_extraccion = "/tmp"
-        try:
-            file = base64.b64decode(file_padron)
-        except:
-            file = base64.decodestring(file_padron)
-        fobj = tempfile.NamedTemporaryFile(delete=False)
-        fname = fobj.name
-        fobj.write(file)
-        fobj.close()
-        f = open(fname, "r+b")
-        f.write(base64.b64decode(file_padron))
-        with zipfile.ZipFile(f, "r") as zip_file:
-            zip_file.extractall(path=ruta_extraccion)
-            zip_file.close()
+        # Decode once and extract in-memory: the previous version decoded the
+        # base64 twice and round-tripped through a temp file.
+        file = base64.b64decode(file_padron)
+        with zipfile.ZipFile(io.BytesIO(file), "r") as zip_file:
+            zip_file.extractall(path="/tmp")
 
     def find_aliquot(self, path, cuit):
         """We try to find aliqut and number for a partner given"""
         with open(path) as fp:
             aliq = False
             nro = False
-            for line in fp.readlines():
+            # Stream line by line instead of loading the whole padron into memory
+            for line in fp:
                 values = line.split(";")
                 if values[4] == cuit:
                     aliq = values[8]
@@ -150,7 +141,7 @@ class ResCompanyJurisdictionPadron(models.Model):
             if not path_file:
                 raise ValidationError("El archivo ZIP no contiene un padrón PARP en formato CSV o TXT.")
             with open(path_file, encoding="latin-1") as fp:
-                return self._read_parp_lines(fp.readlines(), cuit)
+                return self._read_parp_lines(fp, cuit)
 
         # is a CSV file directly
         csv_text = file_content.decode("latin-1")

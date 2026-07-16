@@ -63,6 +63,10 @@ class ResCompany(models.Model):
             ws.Usuario = cuit
             ws.Password = self.arba_cit
             ws.Conectar(url=arba_url)
+            # pyafipws arma el cliente httplib2 con un timeout de 30s hardcodeado; cuando el WS de ARBA
+            # se cae eso bloquea el worker ~30-50s por consulta. Fijamos un timeout corto para fallar rápido.
+            if getattr(ws, "client", None) is not None:
+                ws.client.http.timeout = 15
             _logger.info('Connection getted to ARBA with url "%s" and CUIT %s' % (arba_url, cuit))
         except ConnectionRefusedError:
             raise UserError(

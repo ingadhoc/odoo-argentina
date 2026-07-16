@@ -315,6 +315,7 @@ class AccountPayment(models.Model):
                     res["liquidity_lines"] = []
             counterpart_lines = res.get("counterpart_lines", [])
             if counterpart_lines:
+<<<<<<< bbc85dea7efda474e80b6d6d253256a6df77c245
                 if not has_checks:
                     # When has_checks, account_payment_pro already computed counterpart correctly
                     # using the sum of ALL liq lines (one per check) plus wth total. Touching it
@@ -344,6 +345,27 @@ class AccountPayment(models.Model):
                     # Solo ajustamos amount_currency de la contrapartida si B1 == A (misma moneda).
                     # Cuando B1 != A (y no es el caso counterpart_is_foreign), el amount_currency ya
                     # refleja el total en B1 y no hay que restarle el equivalente en A de las retenciones.
+||||||| 0317e6d5f92518183ece73662cbd3a36a6442104
+                # the counterpart line (debt) should be the gross amount (net + withholdings)
+                if not has_forced_amount:
+                    counterpart_lines[0]["balance"] -= wth_balance
+                    sign = 1 if counterpart_lines[0]["balance"] >= 0 else -1
+                    counterpart_lines[0]["amount_currency"] = sign * abs(counterpart_lines[0]["amount_currency"])
+                # Solo sumo el valor de la retencion si no uso moneda de contrpartida
+                # porque sino ya esta incluido el total en el campo amount_currency
+                # Porque lo cambio Payment pro
+                if not self._use_counterpart_currency():
+=======
+                # the counterpart line (debt) should be the gross amount (net + withholdings)
+                if not has_forced_amount:
+                    sign = 1 if counterpart_lines[0]["balance"] >= 0 else -1
+                    counterpart_lines[0]["amount_currency"] = sign * abs(counterpart_lines[0]["amount_currency"])
+                    counterpart_lines[0]["balance"] -= wth_balance
+                # Solo sumo el valor de la retencion si no uso moneda de contrpartida
+                # porque sino ya esta incluido el total en el campo amount_currency
+                # Porque lo cambio Payment pro
+                if not self._use_counterpart_currency():
+>>>>>>> 26935dcb19654225f8798ac5420df06a5d7b2f3d
                     # Usamos el equivalente en moneda del pago (no la suma raw) para que el
                     # amount_currency de la contrapartida quede correctamente en la moneda del pago.
                     # Mismo razonamiento que para balance: has_checks implica que account_payment_pro

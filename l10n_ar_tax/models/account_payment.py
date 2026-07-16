@@ -282,9 +282,9 @@ class AccountPayment(models.Model):
             if counterpart_lines:
                 # the counterpart line (debt) should be the gross amount (net + withholdings)
                 if not has_forced_amount:
-                    counterpart_lines[0]["balance"] -= wth_balance
                     sign = 1 if counterpart_lines[0]["balance"] >= 0 else -1
                     counterpart_lines[0]["amount_currency"] = sign * abs(counterpart_lines[0]["amount_currency"])
+                    counterpart_lines[0]["balance"] -= wth_balance
                 # Solo sumo el valor de la retencion si no uso moneda de contrpartida
                 # porque sino ya esta incluido el total en el campo amount_currency
                 # Porque lo cambio Payment pro

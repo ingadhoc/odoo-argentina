@@ -349,6 +349,9 @@ class AccountPayment(models.Model):
                     # Mismo razonamiento que para balance: has_checks implica que account_payment_pro
                     # ya computó amount_currency correctamente.
                     counterpart_lines[0]["amount_currency"] -= wth_amount_currency_pay
+                else:
+                    sign = 1 if counterpart_lines[0]["balance"] >= 0 else -1
+                    counterpart_lines[0]["amount_currency"] = sign * abs(counterpart_lines[0]["amount_currency"])
 
                 # Cuando cp.currency_id == company_currency_id (caso A=C=ARS), balance y
                 # amount_currency deben ser idénticos. Si payment_pro corrigió el balance pero

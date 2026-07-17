@@ -292,6 +292,9 @@ class AccountPayment(models.Model):
                     # Usamos el equivalente en moneda del pago (no la suma raw) para que el
                     # amount_currency de la contrapartida quede correctamente en la moneda del pago.
                     counterpart_lines[0]["amount_currency"] -= wth_amount_currency_pay
+                else:
+                    sign = 1 if counterpart_lines[0]["balance"] >= 0 else -1
+                    counterpart_lines[0]["amount_currency"] = sign * abs(counterpart_lines[0]["amount_currency"])
 
         return res
 

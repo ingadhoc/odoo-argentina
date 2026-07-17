@@ -10,6 +10,297 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
             [("company_id", "=", self.company_ri.id), ("type", "=", "bank")], limit=1
         )
 
+    # ------------------------------------------------------------------
+    # Helpers for withholding + write off scenarios (ticket 123082)
+    # ------------------------------------------------------------------
+    def _write_off_type(self):
+        """A write off type pointing to an expense account of company_ri."""
+        account = self.env["account.account"].search(
+            [("company_ids", "=", self.company_ri.id), ("account_type", "=", "expense")],
+            limit=1,
+        )
+        return self.env["account.write_off.type"].create(
+            {
+                "name": "Write Off Test 123082",
+                "account_id": account.id,
+            }
+        )
+
+    def _caba_withholding_fiscal_position(self, name):
+        """CABA IIBB withholding auto-applied fiscal position for the RI company."""
+        fiscal_pos = self.env["account.fiscal.position"].create(
+            {
+                "name": name,
+                "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
+                "sequence": 10,
+                "auto_apply": True,
+                "country_id": self.env.ref("base.ar").id,
+                "company_id": self.company_ri.id,
+                "state_ids": [(6, 0, [self.env.ref("base.state_ar_c").id])],
+            }
+        )
+        self.env["account.fiscal.position.l10n_ar_tax"].create(
+            {
+                "fiscal_position_id": fiscal_pos.id,
+                "default_tax_id": self.tax_wth_test_1.id,
+                "tax_type": "withholding",
+            }
+        )
+        return fiscal_pos
+
+    def _assert_signs_consistent(self, payment):
+        """Every payable/liquidity move line must have amount_currency and balance with the
+        same sign. This is exactly what the ticket 123082 fix guarantees for the counterpart
+        line when combining withholdings with a write off (the bug produced a counterpart line
+        whose amount_currency sign did not match its balance)."""
+        for line in payment.move_id.line_ids:
+            if line.company_currency_id.is_zero(line.balance) or not line.amount_currency:
+                continue
+            self.assertEqual(
+                line.balance > 0,
+                line.amount_currency > 0,
+                "Move line '%s' has balance %s but amount_currency %s (sign mismatch)"
+                % (line.name, line.balance, line.amount_currency),
+            )
+
+    def _assert_balanced(self, payment):
+        self.assertEqual(payment.move_id.state, "posted")
+        self.assertTrue(
+            payment.company_currency_id.is_zero(sum(payment.move_id.line_ids.mapped("balance"))),
+            "The journal entry must balance to zero",
+        )
+
+    def test_withholding_and_negative_write_off_company_currency(self):
+        """Ticket 123082: supplier payment with a withholding AND a negative write off, in the
+        company currency (ARS).
+
+        Combining withholdings with a write off recomputes the counterpart line balance in
+        l10n_ar_tax. Regression guard: the journal entry must stay balanced and the counterpart
+        line's amount_currency sign must match its balance sign.
+        """
+        write_off_type = self._write_off_type()
+        self._caba_withholding_fiscal_position("IIBB CABA 123082 ARS")
+
+        invoice = self.env["account.move"].create(
+            {
+                "partner_id": self.env.ref("l10n_ar_tax.res_partner_adhoc_caba").id,
+                "move_type": "in_invoice",
+                "company_id": self.company_ri.id,
+                "invoice_line_ids": [
+                    Command.create(
+                        {
+                            "product_id": self.env.ref("product.product_product_16").id,
+                            "quantity": 1,
+                            "price_unit": 500000,
+                        }
+                    ),
+                ],
+                "invoice_date": self.today,
+                "l10n_latam_document_number": "1-1230821",
+            }
+        )
+        invoice.action_post()
+
+        action_context = invoice.action_register_payment()["context"]
+        payment = (
+            self.env["account.payment"]
+            .with_context(**action_context)
+            .create(
+                {
+                    "journal_id": self.company_bank_journal.id,
+                    "amount": invoice.amount_total,
+                    "date": self.today,
+                }
+            )
+        )
+        self.assertTrue(payment.l10n_ar_withholding_line_ids, "Withholdings should have been computed")
+        withholding_amount = payment.withholdings_amount
+        self.assertGreater(withholding_amount, 0)
+
+        # Negative write off (e.g. a rounding/discount adjustment against the debt).
+        payment.write_off_type_id = write_off_type
+        payment.write_off_amount = -1500.0
+
+        payment.action_post()
+
+        self._assert_balanced(payment)
+        self._assert_signs_consistent(payment)
+
+        # Withholding line materialised with the computed amount.
+        withholding_tax_lines = payment.move_id.line_ids.filtered(lambda l: l.tax_repartition_line_id)
+        self.assertAlmostEqual(
+            abs(sum(withholding_tax_lines.mapped("balance"))),
+            withholding_amount,
+            places=2,
+            msg="Withholding lines must carry the computed amount",
+        )
+        # Write off line materialised on the journal entry.
+        write_off_line = payment.move_id.line_ids.filtered(lambda l: l.account_id == write_off_type.account_id)
+        self.assertTrue(write_off_line, "The write off line must exist on the journal entry")
+
+    def test_withholding_and_negative_write_off_counterpart_currency(self):
+        """Ticket 123082 (the specific fix): supplier payment in the company currency (ARS) that
+        pays a foreign-currency (USD) bill keeping the debt tracked in USD via the counterpart
+        currency, combined with a withholding AND a negative write off.
+
+        This exercises the ``_use_counterpart_currency()`` branch of
+        ``_prepare_move_lines_per_type``. The counterpart line's amount_currency (USD) is set from
+        the sign of the balance BEFORE the withholding adjustment (``balance -= wth_balance``).
+        When the negative write off leaves that pre-adjustment balance in the ``(-wth_balance, 0)``
+        window, the withholding adjustment flips the balance sign, so without the fix the
+        amount_currency keeps the opposite sign and posting fails with the database check
+        constraint ``account_move_line_check_amount_currency_balance_sign``. The fix re-syncs the
+        amount_currency sign to the final balance.
+
+        The write off amount (-252000) is chosen so the counterpart balance lands in that window
+        (net payment ~ +10000 ARS against a ~ -20000 ARS withholding adjustment).
+        """
+        usd = self.other_currency
+        write_off_type = self._write_off_type()
+        self._caba_withholding_fiscal_position("IIBB CABA 123082 Counterpart")
+
+        invoice = self.env["account.move"].create(
+            {
+                "partner_id": self.env.ref("l10n_ar_tax.res_partner_adhoc_caba").id,
+                "move_type": "in_invoice",
+                "company_id": self.company_ri.id,
+                "currency_id": usd.id,
+                "invoice_line_ids": [
+                    Command.create(
+                        {
+                            "product_id": self.env.ref("product.product_product_16").id,
+                            "quantity": 1,
+                            "price_unit": 1000,
+                        }
+                    ),
+                ],
+                "invoice_date": self.today,
+                "l10n_latam_document_number": "1-1230823",
+            }
+        )
+        invoice.action_post()
+
+        # Pay in company currency (ARS) but keep the counterpart tracked in the bill currency (USD).
+        action_context = invoice.action_register_payment()["context"]
+        payment = (
+            self.env["account.payment"]
+            .with_context(**action_context)
+            .create(
+                {
+                    "journal_id": self.company_bank_journal.id,
+                    "currency_id": self.company_ri.currency_id.id,
+                    "date": self.today,
+                }
+            )
+        )
+        payment.counterpart_currency_id = usd
+        self.assertTrue(payment._use_counterpart_currency(), "Test must exercise the counterpart currency branch")
+        self.assertTrue(payment.l10n_ar_withholding_line_ids, "Withholdings should have been computed")
+        withholding_amount = payment.withholdings_amount
+        self.assertGreater(withholding_amount, 0)
+
+        payment.write_off_type_id = write_off_type
+        payment.write_off_amount = -252000.0
+
+        # Without the fix this raises the amount_currency/balance sign check constraint.
+        payment.action_post()
+
+        self._assert_balanced(payment)
+        self._assert_signs_consistent(payment)
+
+        # The counterpart (payable) line must be expressed in the counterpart currency (USD) and
+        # its amount_currency sign must match its balance sign.
+        counterpart_line = payment.move_id.line_ids.filtered(lambda l: l.account_type == "liability_payable")
+        self.assertTrue(counterpart_line, "There must be a counterpart payable line")
+        self.assertEqual(
+            counterpart_line.currency_id,
+            usd,
+            "The counterpart line must be tracked in the counterpart currency (USD)",
+        )
+        self.assertEqual(
+            counterpart_line.balance > 0,
+            counterpart_line.amount_currency > 0,
+            "Counterpart line balance and amount_currency must share sign (ticket 123082 fix)",
+        )
+        write_off_line = payment.move_id.line_ids.filtered(lambda l: l.account_id == write_off_type.account_id)
+        self.assertTrue(write_off_line, "The write off line must exist on the journal entry")
+
+    def test_withholding_and_negative_write_off_foreign_currency(self):
+        """Ticket 123082: supplier payment with a withholding AND a negative write off, in a
+        foreign currency (USD).
+
+        Same as the company-currency case but the payment (and bill) are in USD, so the amount
+        currency values differ from the company-currency balances. The entry must stay balanced
+        and every line's amount_currency sign must match its balance sign.
+        """
+        usd = self.other_currency
+        write_off_type = self._write_off_type()
+        usd_bank_journal = self.env["account.journal"].create(
+            {
+                "name": "Bank USD 123082",
+                "type": "bank",
+                "code": "BU308",
+                "company_id": self.company_ri.id,
+                "currency_id": usd.id,
+            }
+        )
+        self._caba_withholding_fiscal_position("IIBB CABA 123082 USD")
+
+        invoice = self.env["account.move"].create(
+            {
+                "partner_id": self.env.ref("l10n_ar_tax.res_partner_adhoc_caba").id,
+                "move_type": "in_invoice",
+                "company_id": self.company_ri.id,
+                "currency_id": usd.id,
+                "invoice_line_ids": [
+                    Command.create(
+                        {
+                            "product_id": self.env.ref("product.product_product_16").id,
+                            "quantity": 1,
+                            "price_unit": 1000,
+                        }
+                    ),
+                ],
+                "invoice_date": self.today,
+                "l10n_latam_document_number": "1-1230822",
+            }
+        )
+        invoice.action_post()
+
+        action_context = invoice.action_register_payment()["context"]
+        payment = (
+            self.env["account.payment"]
+            .with_context(**action_context)
+            .create(
+                {
+                    "journal_id": usd_bank_journal.id,
+                    "amount": invoice.amount_total,
+                    "date": self.today,
+                }
+            )
+        )
+        self.assertTrue(payment.l10n_ar_withholding_line_ids, "Withholdings should have been computed")
+        withholding_amount = payment.withholdings_amount
+        self.assertGreater(withholding_amount, 0)
+
+        payment.write_off_type_id = write_off_type
+        payment.write_off_amount = -1500.0  # write_off_amount is in company currency (ARS)
+
+        payment.action_post()
+
+        self._assert_balanced(payment)
+        self._assert_signs_consistent(payment)
+
+        withholding_tax_lines = payment.move_id.line_ids.filtered(lambda l: l.tax_repartition_line_id)
+        self.assertAlmostEqual(
+            abs(sum(withholding_tax_lines.mapped("balance"))),
+            withholding_amount,
+            places=2,
+            msg="Withholding lines must carry the computed ARS amount",
+        )
+        write_off_line = payment.move_id.line_ids.filtered(lambda l: l.account_id == write_off_type.account_id)
+        self.assertTrue(write_off_line, "The write off line must exist on the journal entry")
+
     def test_reset_to_draft_keeps_manual_withholding_line(self):
         """Regression for ticket 119846 (reset to draft drops a manual-amount withholding line).
 

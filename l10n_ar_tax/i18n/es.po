@@ -678,6 +678,33 @@ msgstr "No se pudo conectar a ARBA: %s"
 
 #. module: l10n_ar_tax
 #. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company.py:0
+msgid ""
+"Could not get the tax rate from the ARBA webservice, probably due to a "
+"service outage or intermittency.\n"
+"\n"
+"To keep operating you can:\n"
+"1) Check the taxpayer's tax rate manually (for example at "
+"https://padron.devos.com.ar/ or on the ARBA website).\n"
+"2) Manually set the tax rate on the contact's 'Accounting' tab, to "
+"exceptionally register the payment/document.\n"
+"\n"
+"If the problem persists, please contact our Support team.\n"
+msgstr ""
+"No se pudo obtener la alícuota desde el webservice de ARBA, probablemente "
+"por una intermitencia o caída del servicio.\n"
+"\n"
+"Para poder seguir operando podés:\n"
+"1) Consultar la alícuota del contribuyente manualmente (por ejemplo en "
+"https://padron.devos.com.ar/ o en la página de ARBA).\n"
+"2) Cargar la alícuota a mano en la solapa 'Contabilidad' del contacto, para "
+"registrar el pago/comprobante de forma excepcional.\n"
+"\n"
+"Si el problema persiste, comuníquese con nuestro equipo de Servicio de "
+"Asistencia.\n"
+
+#. module: l10n_ar_tax
+#. odoo-python
 #: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
 msgid ""
 "Could not get the tax rate from the rentascordoba webservice.\n"
@@ -773,6 +800,18 @@ msgstr "Alícuota por defecto (%)"
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__default_tax_id
 msgid "Default Tax"
 msgstr "Impuesto por Defecto"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company.py:0
+msgid "Detail: %s"
+msgstr "Detalle: %s"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company.py:0
+msgid "Detail: read operation timed out."
+msgstr "Detalle: se agotó el tiempo de espera de lectura."
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_register_form

@@ -1,5 +1,4 @@
 import logging
-import re
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
@@ -114,33 +113,17 @@ class ResPartner(models.Model):
                     values.pop(r_field, False)
         return values
 
-    def _get_id_number_sanitize(self):
-        """Devuelve los dígitos del número de identificación (0 si no hay VAT).
-
-        Sobreescribimos el método del base ``l10n_ar`` por dos motivos:
-
-        1. Usamos una regex en lugar de ``int(stdnum.ar.cuit.compact(vat))``:
-           ``compact`` no limpia caracteres ocultos (p. ej. un word joiner
-           pegado desde Excel/PDF), así que el ``int()`` reventaba al guardar un
-           CUIL —que no es ``is_vat`` y por eso pasa por
-           ``_run_check_identification`` (el método que invoca esto)—.
-
-        2. Sólo sanitizamos documentos numéricos argentinos —CUIT/CUIL/DNI, los
-           únicos para los que ``_get_validation_module`` devuelve un módulo—.
-           El base sanitiza el VAT de *cualquier* partner argentino, borrándole
-           las letras a documentos que sí pueden tenerlas (pasaporte AFIP 94,
-           SIGD 99, documentos extranjeros, etc.) y corrompiendo el dato. Para
-           esos devolvemos 0 (falsy) y el caller ``_run_check_identification`` no
-           reescribe el VAT.
-
-        TODO: eliminar este override cuando Odoo resuelva el bug del base
-        (regresión 18.0 -> 19.0): https://github.com/odoo/odoo/issues/272173
-
-        Mantenemos el comportamiento del base: con VAT sin dígitos devuelve un
-        string vacío (los callers ya lo tratan como falsy).
+    @api.onchange("vat", "country_id", "l10n_latam_identification_type_id")
+    def _onchange_ar_identification_fields(self):
         """
-        self.ensure_one()
-        if not self.vat or not self._get_validation_module():
-            return 0
-        id_number = re.sub("[^0-9]", "", self.vat)
-        return id_number and int(id_number)
+        Agregamos este onchange para que cuando el usuario modifique el VAT o el tipo de documento
+        se formatee el VAT automaticamente si es un CUIT o un DNI.
+        En v19 esto ya está hecho en este commit https://github.com/odoo/odoo/commit/ac95d2d6d80a368dfb190d0ac21da2af479a8488.
+        Traemos sólo lo necesario acá para tenerlo disponible en esta versión.
+        """
+        l10n_ar_partners = self.filtered(
+            lambda p: p.vat and (p.l10n_latam_identification_type_id.l10n_ar_afip_code or p.country_code == "AR")
+        )
+        for partner in l10n_ar_partners:
+            if id_number := partner._get_id_number_sanitize():
+                partner.vat = str(id_number)

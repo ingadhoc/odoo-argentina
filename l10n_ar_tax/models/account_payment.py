@@ -119,6 +119,13 @@ class AccountPayment(models.Model):
             if rec.partner_id != rec._origin.partner_id:
                 rec._onchange_withholdings()
 
+    def remove_all(self):
+        # server method: form onchanges don't run, so re-sync `amount` with the
+        # (now empty) debt, otherwise it stays stuck at its last value.
+        res = super().remove_all()
+        self._onchange_withholdings()
+        return res
+
     # # ver mensaje en commit
     # @api.onchange('to_pay_amount', 'withholdable_advanced_amount', 'partner_id')
     # def _onchange_to_pay_amount(self):

@@ -3,15 +3,12 @@ import io
 import logging
 import os
 import re
-import subprocess
 import zipfile
 
-from odoo import _, api, fields, models, tools
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
-
-AWK_TIMEOUT = 30
 
 
 class ResCompanyJurisdictionPadron(models.Model):
@@ -64,31 +61,27 @@ class ResCompanyJurisdictionPadron(models.Model):
             res += [(padron.id, name)]
         return res
 
-    def descompress_file(self, file_padron, dest_dir="/tmp"):
+    def descompress_file(self, file_padron):
         _logger.log(25, "Descompress zip file")
         # Decode once and extract in-memory: the previous version decoded the
         # base64 twice and round-tripped through a temp file.
         file = base64.b64decode(file_padron)
         with zipfile.ZipFile(io.BytesIO(file), "r") as zip_file:
-            zip_file.extractall(path=dest_dir)
-
-    def _lookup_aliquot_awk(self, path, cuit, cuit_col, nro_col, aliq_col):
-        # Columna exacta (no substring): evita falsos positivos tipo grep.
-        program = '$%d==c {print $%d";"$%d; exit}' % (cuit_col, nro_col, aliq_col)
-        out = subprocess.run(
-            ["awk", "-F", ";", "-v", "c=" + cuit, program, path],
-            capture_output=True,
-            text=True,
-            timeout=AWK_TIMEOUT,
-        ).stdout.strip()
-        if not out:
-            return False, False
-        nro, aliq = out.split(";", 1)
-        return nro, aliq
+            zip_file.extractall(path="/tmp")
 
     def find_aliquot(self, path, cuit):
-        # ARBA: cuit col 5, nro col 4, alícuota col 9 (1-based).
-        return self._lookup_aliquot_awk(path, cuit, cuit_col=5, nro_col=4, aliq_col=9)
+        """We try to find aliqut and number for a partner given"""
+        with open(path) as fp:
+            aliq = False
+            nro = False
+            # Stream line by line instead of loading the whole padron into memory
+            for line in fp:
+                values = line.split(";")
+                if values[4] == cuit:
+                    aliq = values[8]
+                    nro = values[3]
+                    break
+            return nro, aliq
 
     def _is_santa_fe_jurisdiction(self):
         """Check if jurisdiction is Santa Fe (PARP format)"""
@@ -102,19 +95,25 @@ class ResCompanyJurisdictionPadron(models.Model):
         self.ensure_one()
         return bool(self.filename and self.filename.lower().endswith(".zip"))
 
-    def _lookup_parp_aliquot_awk(self, path, cuit):
-        # PARP: cuit col 4, percepción col 8, retención col 9 (1-based); gsub recorta padding.
-        program = '{f=$4; gsub(/^[ \\t]+|[ \\t]+$/,"",f); if (f==c) {print $4";"$8";"$9; exit}}'
-        out = subprocess.run(
-            ["awk", "-F", ";", "-v", "c=" + cuit, program, path],
-            capture_output=True,
-            text=True,
-            timeout=AWK_TIMEOUT,
-        ).stdout.strip()
-        if not out:
-            return False, False, False
-        _nro, per, ret = (value.strip() for value in out.split(";"))
-        return True, float(ret.replace(",", ".")), float(per.replace(",", "."))
+    def _read_parp_lines(self, lines, cuit):
+        aliquot_ret = False
+        aliquot_per = False
+        is_in_padron = False
+        for line in lines:
+            if not line:
+                continue
+            values = [value.strip() for value in line.split(";")]
+            if len(values) <= 8:
+                continue
+            # CUIT is at index 3, compare as strings
+            if values[3] == cuit:
+                # Percepción at index 7, Retención at index 8
+                # Convert to float, handling comma as decimal separator
+                aliquot_per = float(values[7].replace(",", "."))
+                aliquot_ret = float(values[8].replace(",", "."))
+                is_in_padron = True
+                break
+        return is_in_padron, aliquot_ret, aliquot_per
 
     def _find_parp_file(self, rootdir):
         fallback_match = False
@@ -128,42 +127,25 @@ class ResCompanyJurisdictionPadron(models.Model):
                         fallback_match = os.path.join(subdir, filename)
         return fallback_match
 
-    def _get_parp_tmp_dir(self):
-        # Directorio por-padrón: evita mezclar archivos extraídos de distintos registros.
-        self.ensure_one()
-        return "/tmp/l10n_ar_padron_santafe_%s" % self.id
-
-    def _ensure_parp_file_extracted(self):
-        # Extrae una sola vez y reutiliza (antes se re-decodificaba/re-unzipeaba por CUIT).
-        self.ensure_one()
-        tmp_dir = self._get_parp_tmp_dir()
-        path_file = self._find_parp_file(tmp_dir)
-        if path_file:
-            return path_file
-
-        file_content = base64.b64decode(self.file_padron)
-        if self._is_zip_content(file_content):
-            self.descompress_file(self.file_padron, dest_dir=tmp_dir)
-            path_file = self._find_parp_file(tmp_dir)
-            if not path_file:
-                raise ValidationError("El archivo ZIP no contiene un padrón PARP en formato CSV o TXT.")
-            return path_file
-
-        # CSV directo (no ZIP): lo persistimos para no re-decodificar cada vez.
-        os.makedirs(tmp_dir, exist_ok=True)
-        path_file = os.path.join(tmp_dir, "padron.csv")
-        with open(path_file, "w", encoding="latin-1") as fp:
-            fp.write(file_content.decode("latin-1"))
-        return path_file
-
     def _read_parp_from_binary(self, cuit):
         """Read PARP (padrón Santa Fe) CSV directly from file_padron binary field
         or from ZIP if the binary is a ZIP file.
         PARP format: F.PUBLIC;F.VIGEN.DESDE;F.VIGEN.HASTA;NRO.CUIT   ;TIPO CONTRIB;MARCA ALTA;MARCA ALICUOTA;ALIC.PERCEP;ALICUOTA RETENC;GRUPO PER.;GRUPO RETEN;RAZON SOCIAL
-        Returns: (is_in_padron, aliquot_ret, aliquot_per)
+        Returns: (aliquot_ret, aliquot_per)
         """
-        path_file = self._ensure_parp_file_extracted()
-        return self._lookup_parp_aliquot_awk(path_file, cuit)
+        file_content = base64.b64decode(self.file_padron)
+        # is a ZIP file
+        if self._is_zip_content(file_content):
+            self.descompress_file(self.file_padron)
+            path_file = self._find_parp_file("/tmp/")
+            if not path_file:
+                raise ValidationError("El archivo ZIP no contiene un padrón PARP en formato CSV o TXT.")
+            with open(path_file, encoding="latin-1") as fp:
+                return self._read_parp_lines(fp, cuit)
+
+        # is a CSV file directly
+        csv_text = file_content.decode("latin-1")
+        return self._read_parp_lines(csv_text.split("\n"), cuit)
 
     def find_file(self, rootdir, type_code):
         res = False
@@ -177,31 +159,29 @@ class ResCompanyJurisdictionPadron(models.Model):
         return res
 
     def _get_aliquot(self, partner):
-        self.ensure_one()
-        return self._get_aliquot_cached(partner.vat)
-
-    @tools.ormcache("self.id", "self.write_date", "cuit")
-    def _get_aliquot_cached(self, cuit):
-        # Caché por-CUIT; write_date invalida sola al recargar el padrón.
-        if self._is_santa_fe_jurisdiction():
-            # Read PARP directly from binary field
-            return self._read_parp_from_binary(cuit)
-
-        # Original logic for other padron types (ARBA, etc)
         nro = False
         aliquot_ret = 0.0
         aliquot_per = 0.0
-        for padron_type in ("Per", "Ret"):
-            path_file = self.find_file("/tmp/", padron_type)
-            if not path_file:
-                self.descompress_file(self.file_padron)
+
+        # Check if this is Santa Fe PARP format
+        if self._is_santa_fe_jurisdiction():
+            # Read PARP directly from binary field
+            is_in_padron, aliquot_ret, aliquot_per = self._read_parp_from_binary(partner.vat)
+            return is_in_padron, aliquot_ret, aliquot_per
+        else:
+            # Original logic for other padron types (ARBA, etc)
+            padron_types = ["Per", "Ret"]
+            for padron_type in padron_types:
                 path_file = self.find_file("/tmp/", padron_type)
-            if path_file:
-                nro, aliquot = self.find_aliquot("/tmp/" + path_file, cuit)
-                if padron_type == "Per":
-                    aliquot_per = aliquot and aliquot.replace(",", ".")
-                else:
-                    aliquot_ret = aliquot and aliquot.replace(",", ".")
+                if not path_file:
+                    self.descompress_file(self.file_padron)
+                    path_file = self.find_file("/tmp/", padron_type)
+                if path_file:
+                    nro, aliquot = self.find_aliquot("/tmp/" + path_file, partner.vat)
+                    if padron_type == "Per":
+                        aliquot_per = aliquot and aliquot.replace(",", ".")
+                    else:
+                        aliquot_ret = aliquot and aliquot.replace(",", ".")
         return nro, aliquot_ret, aliquot_per
 
     @api.model

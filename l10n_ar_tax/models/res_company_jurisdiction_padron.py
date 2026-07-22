@@ -117,7 +117,7 @@ class ResCompanyJurisdictionPadron(models.Model):
             with zipfile.ZipFile(io.BytesIO(file_content)) as zip_file:
                 member = self._find_parp_member(zip_file.namelist())
                 if not member:
-                    raise ValidationError("El archivo ZIP no contiene un padrón PARP en formato CSV o TXT.")
+                    raise ValidationError(_("El archivo ZIP no contiene un padrón PARP en formato CSV o TXT."))
                 with zip_file.open(member) as parp_file:
                     lines = io.TextIOWrapper(parp_file, encoding="latin-1").readlines()
             return self._read_parp_lines(lines, cuit)

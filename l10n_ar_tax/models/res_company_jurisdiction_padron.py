@@ -62,9 +62,8 @@ class ResCompanyJurisdictionPadron(models.Model):
             res += [(padron.id, name)]
         return res
 
-    def descompress_file(self, file_padron):
+    def descompress_file(self, file_padron, dest_dir="/tmp"):
         _logger.log(25, "Descompress zip file")
-        ruta_extraccion = "/tmp"
         try:
             file = base64.b64decode(file_padron)
         except:
@@ -76,7 +75,7 @@ class ResCompanyJurisdictionPadron(models.Model):
         f = open(fname, "r+b")
         f.write(base64.b64decode(file_padron))
         with zipfile.ZipFile(f, "r") as zip_file:
-            zip_file.extractall(path=ruta_extraccion)
+            zip_file.extractall(path=dest_dir)
             zip_file.close()
 
     def find_aliquot(self, path, cuit):
@@ -136,6 +135,15 @@ class ResCompanyJurisdictionPadron(models.Model):
                         fallback_match = os.path.join(subdir, filename)
         return fallback_match
 
+    def _get_parp_tmp_dir(self):
+        # Dir por padron+periodo: no mezcla archivos de otro mes.
+        self.ensure_one()
+        return "/tmp/l10n_ar_padron_%s_%s_%s" % (
+            self.id,
+            self.l10n_ar_padron_from_date,
+            self.l10n_ar_padron_to_date,
+        )
+
     def _read_parp_from_binary(self, cuit):
         """Read PARP (padrón Santa Fe) CSV directly from file_padron binary field
         or from ZIP if the binary is a ZIP file.
@@ -179,14 +187,15 @@ class ResCompanyJurisdictionPadron(models.Model):
             return is_in_padron, aliquot_ret, aliquot_per
         else:
             # Original logic for other padron types (ARBA, etc)
+            tmp_dir = self._get_parp_tmp_dir()
             padron_types = ["Per", "Ret"]
             for padron_type in padron_types:
-                path_file = self.find_file("/tmp/", padron_type)
+                path_file = self.find_file(tmp_dir, padron_type)
                 if not path_file:
-                    self.descompress_file(self.file_padron)
-                    path_file = self.find_file("/tmp/", padron_type)
+                    self.descompress_file(self.file_padron, dest_dir=tmp_dir)
+                    path_file = self.find_file(tmp_dir, padron_type)
                 if path_file:
-                    nro, aliquot = self.find_aliquot("/tmp/" + path_file, partner.vat)
+                    nro, aliquot = self.find_aliquot(os.path.join(tmp_dir, path_file), partner.vat)
                     if padron_type == "Per":
                         aliquot_per = aliquot and aliquot.replace(",", ".")
                     else:

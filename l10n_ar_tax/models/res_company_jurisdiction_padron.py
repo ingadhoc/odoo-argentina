@@ -129,9 +129,13 @@ class ResCompanyJurisdictionPadron(models.Model):
         return fallback_match
 
     def _get_parp_tmp_dir(self):
-        # Directorio por-padrón: evita mezclar archivos extraídos de distintos registros.
+        # Dir por padron+periodo: no mezcla archivos de otro mes.
         self.ensure_one()
-        return "/tmp/l10n_ar_padron_santafe_%s" % self.id
+        return "/tmp/l10n_ar_padron_%s_%s_%s" % (
+            self.id,
+            self.l10n_ar_padron_from_date,
+            self.l10n_ar_padron_to_date,
+        )
 
     def _ensure_parp_file_extracted(self):
         # Extrae una sola vez y reutiliza (antes se re-decodificaba/re-unzipeaba por CUIT).
@@ -188,16 +192,17 @@ class ResCompanyJurisdictionPadron(models.Model):
             return self._read_parp_from_binary(cuit)
 
         # Original logic for other padron types (ARBA, etc)
+        tmp_dir = self._get_parp_tmp_dir()
         nro = False
         aliquot_ret = 0.0
         aliquot_per = 0.0
         for padron_type in ("Per", "Ret"):
-            path_file = self.find_file("/tmp/", padron_type)
+            path_file = self.find_file(tmp_dir, padron_type)
             if not path_file:
-                self.descompress_file(self.file_padron)
-                path_file = self.find_file("/tmp/", padron_type)
+                self.descompress_file(self.file_padron, dest_dir=tmp_dir)
+                path_file = self.find_file(tmp_dir, padron_type)
             if path_file:
-                nro, aliquot = self.find_aliquot("/tmp/" + path_file, cuit)
+                nro, aliquot = self.find_aliquot(os.path.join(tmp_dir, path_file), cuit)
                 if padron_type == "Per":
                     aliquot_per = aliquot and aliquot.replace(",", ".")
                 else:

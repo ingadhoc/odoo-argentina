@@ -1,6 +1,5 @@
 import base64
 import io
-import os
 import shutil
 import zipfile
 from datetime import timedelta
@@ -31,7 +30,7 @@ class TestPadronAliquot(common.TransactionCase):
             }
         )
 
-    def _create_arba_padron(self, per_lines, ret_lines):
+    def _create_arba_padron(self, per_lines, ret_lines, from_date=None, to_date=None):
         buffer = io.BytesIO()
         with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
             zip_file.writestr("Per.TXT", "\n".join(per_lines) + "\n")
@@ -42,12 +41,11 @@ class TestPadronAliquot(common.TransactionCase):
                 "state_id": self.state_arba.id,
                 "file_padron": base64.b64encode(buffer.getvalue()).decode(),
                 "filename": "padron_arba.zip",
-                "l10n_ar_padron_from_date": self.today + relativedelta(days=-1),
-                "l10n_ar_padron_to_date": self.today + relativedelta(days=30),
+                "l10n_ar_padron_from_date": from_date or self.today + relativedelta(days=-1),
+                "l10n_ar_padron_to_date": to_date or self.today + relativedelta(days=30),
             }
         )
-        for name in ("/tmp/Per.TXT", "/tmp/Ret.TXT"):
-            self.addCleanup(lambda p=name: os.path.exists(p) and os.remove(p))
+        self.addCleanup(shutil.rmtree, padron._get_parp_tmp_dir(), ignore_errors=True)
         return padron
 
     def _create_santa_fe_padron(self, parp_lines):
@@ -82,6 +80,26 @@ class TestPadronAliquot(common.TransactionCase):
         self.assertEqual(nro, "NRO789")
         self.assertEqual(aliquot_per, "12.50")
         self.assertEqual(aliquot_ret, "7.00")
+
+    def test_arba_different_months_do_not_share_extracted_files(self):
+        """Dos padrones de distinto mes no deben devolver la alícuota del otro."""
+        cuit = "30112223351"
+        padron_1 = self._create_arba_padron(
+            ["f0;f1;f2;NRO-1;%s;f5;f6;f7;11,00" % cuit],
+            ["f0;f1;f2;NRO-1;%s;f5;f6;f7;1,00" % cuit],
+            from_date=self.today,
+            to_date=self.today + relativedelta(days=30),
+        )
+        padron_2 = self._create_arba_padron(
+            ["f0;f1;f2;NRO-2;%s;f5;f6;f7;22,00" % cuit],
+            ["f0;f1;f2;NRO-2;%s;f5;f6;f7;2,00" % cuit],
+            from_date=self.today + relativedelta(months=1),
+            to_date=self.today + relativedelta(months=1, days=30),
+        )
+        partner = self._create_partner(cuit)
+
+        self.assertEqual(padron_1._get_aliquot(partner), ("NRO-1", "1.00", "11.00"))
+        self.assertEqual(padron_2._get_aliquot(partner), ("NRO-2", "2.00", "22.00"))
 
     def test_get_aliquot_caches_by_cuit_and_invalidates_on_write_date(self):
         """Cache hit en la 2da consulta; write_date nuevo invalida la caché."""

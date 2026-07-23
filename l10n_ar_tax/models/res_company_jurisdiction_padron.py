@@ -3,6 +3,7 @@ import io
 import logging
 import os
 import re
+import subprocess
 import tempfile
 import zipfile
 
@@ -10,6 +11,8 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
+
+GREP_TIMEOUT = 30
 
 
 class ResCompanyJurisdictionPadron(models.Model):
@@ -80,16 +83,19 @@ class ResCompanyJurisdictionPadron(models.Model):
 
     def find_aliquot(self, path, cuit):
         """We try to find aliqut and number for a partner given"""
-        with open(path) as fp:
-            aliq = False
-            nro = False
-            for line in fp.readlines():
-                values = line.split(";")
-                if values[4] == cuit:
-                    aliq = values[8]
-                    nro = values[3]
-                    break
-            return nro, aliq
+        # grep -F filtra candidatos en C; el split+comparación exacta abajo
+        # descarta falsos positivos (CUIT como substring de otro campo).
+        result = subprocess.run(
+            ["grep", "-F", cuit, path],
+            capture_output=True,
+            text=True,
+            timeout=GREP_TIMEOUT,
+        )
+        for line in result.stdout.splitlines():
+            values = line.split(";")
+            if len(values) > 8 and values[4] == cuit:
+                return values[3], values[8]
+        return False, False
 
     def _is_santa_fe_jurisdiction(self):
         """Check if jurisdiction is Santa Fe (PARP format)"""
@@ -144,25 +150,38 @@ class ResCompanyJurisdictionPadron(models.Model):
             self.l10n_ar_padron_to_date,
         )
 
+    def _ensure_parp_file_extracted(self):
+        # Extrae/persiste una sola vez y reutiliza (antes se re-decodificaba/re-unzipeaba por CUIT).
+        self.ensure_one()
+        tmp_dir = self._get_parp_tmp_dir()
+        path_file = self._find_parp_file(tmp_dir)
+        if path_file:
+            return path_file
+
+        file_content = base64.b64decode(self.file_padron)
+        if self._is_zip_content(file_content):
+            self.descompress_file(self.file_padron, dest_dir=tmp_dir)
+            path_file = self._find_parp_file(tmp_dir)
+            if not path_file:
+                raise ValidationError("El archivo ZIP no contiene un padrón PARP en formato CSV o TXT.")
+            return path_file
+
+        # CSV directo (no ZIP): lo persistimos para no re-decodificar cada vez.
+        os.makedirs(tmp_dir, exist_ok=True)
+        path_file = os.path.join(tmp_dir, "padron.csv")
+        with open(path_file, "w", encoding="latin-1") as fp:
+            fp.write(file_content.decode("latin-1"))
+        return path_file
+
     def _read_parp_from_binary(self, cuit):
         """Read PARP (padrón Santa Fe) CSV directly from file_padron binary field
         or from ZIP if the binary is a ZIP file.
         PARP format: F.PUBLIC;F.VIGEN.DESDE;F.VIGEN.HASTA;NRO.CUIT   ;TIPO CONTRIB;MARCA ALTA;MARCA ALICUOTA;ALIC.PERCEP;ALICUOTA RETENC;GRUPO PER.;GRUPO RETEN;RAZON SOCIAL
         Returns: (aliquot_ret, aliquot_per)
         """
-        file_content = base64.b64decode(self.file_padron)
-        # is a ZIP file
-        if self._is_zip_content(file_content):
-            self.descompress_file(self.file_padron)
-            path_file = self._find_parp_file("/tmp/")
-            if not path_file:
-                raise ValidationError("El archivo ZIP no contiene un padrón PARP en formato CSV o TXT.")
-            with open(path_file, encoding="latin-1") as fp:
-                return self._read_parp_lines(fp.readlines(), cuit)
-
-        # is a CSV file directly
-        csv_text = file_content.decode("latin-1")
-        return self._read_parp_lines(csv_text.split("\n"), cuit)
+        path_file = self._ensure_parp_file_extracted()
+        with open(path_file, encoding="latin-1") as fp:
+            return self._read_parp_lines(fp.readlines(), cuit)
 
     def find_file(self, rootdir, type_code):
         res = False

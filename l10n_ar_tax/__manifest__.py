@@ -56,6 +56,7 @@
     ],
     "external_dependencies": {
         "python": ["pyafipws"],
+        "bin": ["awk"],
     },
     "installable": True,
     "auto_install": ["l10n_ar"],

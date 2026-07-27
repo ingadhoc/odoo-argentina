@@ -157,10 +157,25 @@ class AccountPayment(models.Model):
                     % (previous_to_pay, rec.to_pay_amount)
                 )
         self.compute_withholdings()
+        self._l10n_ar_remove_zero_withholding_lines()
         res = super().action_confirm()
         # por ahora primero computamos retenciones y luego conifmamos porque si no en caso de cheques siempre da error
         # TODO tal vez mejorar y advertir de que se va a computar el importe?
         return res
+
+    def _l10n_ar_remove_zero_withholding_lines(self):
+        """Elimina las líneas de retención que no arrojan retención (importe 0) antes de
+        confirmar el pago, para que no queden en el pago ni ensucien la vista/reportes.
+        Ganancias se conserva siempre: su base acumulada puede requerir el apunte contable
+        aunque el importe sea 0. Usamos ``currency_id.is_zero`` (mismo criterio que
+        account_tax_settlement al saltear líneas en cero) para contemplar el redondeo."""
+        for rec in self:
+            is_zero = rec.company_id.currency_id.is_zero
+            zero_lines = rec.l10n_ar_withholding_line_ids.filtered(
+                lambda line: line.tax_id.l10n_ar_tax_type not in ["earnings", "earnings_scale"] and is_zero(line.amount)
+            )
+            if zero_lines:
+                rec.l10n_ar_withholding_line_ids = [Command.unlink(line.id) for line in zero_lines]
 
     def _prepare_move_withholding_lines(self, default_values):
         res = super()._prepare_move_withholding_lines(default_values)

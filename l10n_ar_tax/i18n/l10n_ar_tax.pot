@@ -890,6 +890,11 @@ msgid "ID"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_tax__l10n_ar_tax_type__iva
+msgid "IVA"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_withholding_sequence_id
 #: model:ir.model.fields,help:l10n_ar_tax.field_l10n_ar_payment_withholding__withholding_sequence_id
 msgid ""
@@ -1381,6 +1386,7 @@ msgid "WTH Sequence"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_tax_type
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__l10n_ar_tax_type
 msgid "WTH Tax"
 msgstr ""

@@ -7,6 +7,16 @@ from odoo.tools import SQL
 class AccountTax(models.Model):
     _inherit = "account.tax"
 
+    # Sumamos el tipo "IVA" para identificar las retenciones de IVA (aplicadas y
+    # sufridas) sin depender del nombre del impuesto ni del grupo. Se usa en los
+    # reportes de l10n_ar_account_reports (SICORE, IVA sufridas). No lleva cálculo
+    # propio: el impuesto se configura como cualquier otra retención, y la alícuota
+    # importa porque de ella depende el código de condición del régimen 602.
+    l10n_ar_tax_type = fields.Selection(
+        selection_add=[("iva", "IVA")],
+        ondelete={"iva": "set null"},
+    )
+
     # mejora de usabilidad, duplicar un impuesto mantiene la secuencia
     l10n_ar_withholding_sequence_id = fields.Many2one(
         copy=True,

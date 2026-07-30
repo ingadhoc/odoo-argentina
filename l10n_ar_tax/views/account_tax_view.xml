@@ -58,13 +58,16 @@
             <field name="l10n_ar_minimum_threshold" position="attributes">
                 <attribute name="invisible">country_code != 'AR' or l10n_ar_type_tax_use != 'supplier' or l10n_ar_tax_type not in ['earnings', 'earnings_scale', 'iibb_untaxed', 'iibb_total']</attribute>
             </field>
-            <!-- Nuevos campos: solo IIBB retención proveedor -->
+            <!-- Nuevos campos: IIBB retención proveedor y, para la base mínima, percepción de ventas (IIBB, IVA) -->
             <field name="l10n_ar_minimum_threshold" position="after">
                 <field name="company_currency_id" invisible="1"/>
+                <field name="l10n_ar_tribute_afip_code" invisible="1"/>
                 <field name="l10n_ar_payment_minimum_threshold"
                     invisible="country_code != 'AR' or l10n_ar_type_tax_use != 'supplier' or l10n_ar_tax_type not in ['iibb_untaxed', 'iibb_total']"/>
+                <!-- Se muestra donde el campo tiene efecto: retención de IIBB a proveedor y las percepciones
+                     de venta que evalúa account.tax._l10n_ar_is_perception_with_base_threshold. -->
                 <field name="l10n_ar_base_minimum_threshold"
-                    invisible="country_code != 'AR' or l10n_ar_type_tax_use != 'supplier' or l10n_ar_tax_type not in ['iibb_untaxed', 'iibb_total']"/>
+                    invisible="country_code != 'AR' or not ((l10n_ar_type_tax_use == 'supplier' and l10n_ar_tax_type in ['iibb_untaxed', 'iibb_total']) or (l10n_ar_type_tax_use == 'sale' and amount_type == 'percent' and not price_include and not include_base_amount and (l10n_ar_state_id or l10n_ar_tribute_afip_code == '06')))"/>
             </field>
         </field>
     </record>

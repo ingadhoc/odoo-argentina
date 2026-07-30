@@ -198,3 +198,95 @@ class AccountTax(models.Model):
                         "The total percentage (%s) should be greater than 0 and less than or equal to 100.", tax.ratio
                     )
                 )
+
+    def _l10n_ar_is_perception_with_base_threshold(self):
+        """Percepción de venta argentina con umbral de base mínima configurado.
+
+        Se identifica la percepción de IVA por el código de tributo ARCA del
+        grupo de impuestos (06 IVA). Para cubrir las percepciones que
+        son provinciales debe tener establecido l10n_ar_state_id.
+
+        Solo se contempla el cálculo por porcentaje (`percent`), que es como se definen
+        las percepciones argentinas. Quedan afuera los impuestos incluidos en el precio
+        (`price_include`) y los que afectan la base de los impuestos siguientes
+        (`include_base_amount`): en ambos casos anular el importe después de que el core
+        calculó el resto dejaría inconsistentes el neto o las bases posteriores.
+        """
+        self.ensure_one()
+        return bool(
+            self.country_code == "AR"
+            and self.type_tax_use == "sale"
+            and self.l10n_ar_base_minimum_threshold
+            and self.amount_type == "percent"
+            and not self.price_include
+            and not self.include_base_amount
+            and (self.l10n_ar_state_id or self.tax_group_id.l10n_ar_tribute_afip_code == "06")
+        )
+
+    @api.model
+    def _add_tax_details_in_base_lines(self, base_lines, company):
+        """Aplicar el umbral de base mínima de las percepciones de venta argentinas.
+
+        Se hace acá (y no en `_get_tax_details`, que trabaja de a una línea por vez) porque
+        el umbral se evalúa **por documento y por impuesto**: se suman las bases de todas
+        las líneas que llevan la percepción y recién ahí se compara contra el umbral.
+        """
+        res = super()._add_tax_details_in_base_lines(base_lines, company)
+        self._l10n_ar_apply_perception_base_threshold(base_lines, company)
+        return res
+
+    @api.model
+    def _l10n_ar_apply_perception_base_threshold(self, base_lines, company):
+        """Poner en 0 las percepciones de venta cuya base agregada no supera el umbral.
+
+        :param base_lines: líneas base de UN documento, ya con `tax_details` calculado.
+        :param company:    compañía dueña de las líneas base.
+        """
+        # `account_fiscal_country_id` es el campo canónico para impuestos; se contempla
+        # `country_id` por si la compañía todavía no tiene país fiscal configurado.
+        if "AR" not in (company.account_fiscal_country_id.code, company.country_id.code):
+            return
+
+        # Base acumulada por impuesto, en moneda de la compañía (`raw_base_amount`).
+        # `is_eligible` cachea la evaluación para no repetirla por cada línea del documento.
+        base_per_tax = {}
+        is_eligible = {}
+        for base_line in base_lines:
+            for tax_data in base_line["tax_details"]["taxes_data"]:
+                tax = tax_data["tax"]
+                if tax not in is_eligible:
+                    is_eligible[tax] = tax._l10n_ar_is_perception_with_base_threshold()
+                if is_eligible[tax]:
+                    base_per_tax[tax] = base_per_tax.get(tax, 0.0) + tax_data["raw_base_amount"]
+
+        # Solo se evalúa el umbral cuando la base agregada es positiva. Una base negativa
+        # significa que estas líneas no son un comprobante sino un fragmento aislado —
+        # típicamente las líneas de un descuento global, que el core calcula por separado
+        # (`_prepare_global_discount_lines`) antes de sumarlas al documento. Anular la
+        # percepción ahí aumentaría el impuesto en vez de reducirlo, y encima quedaría
+        # congelada en `manual_tax_amounts`.
+        excluded_taxes = {
+            tax
+            for tax, base_amount in base_per_tax.items()
+            if company.currency_id.compare_amounts(base_amount, 0.0) > 0
+            and company.currency_id.compare_amounts(base_amount, tax.l10n_ar_base_minimum_threshold) <= 0
+        }
+        if not excluded_taxes:
+            return
+
+        for base_line in base_lines:
+            tax_details = base_line["tax_details"]
+            for tax_data in tax_details["taxes_data"]:
+                if tax_data["tax"] not in excluded_taxes:
+                    continue
+                tax_details["raw_total_included_currency"] -= tax_data["raw_tax_amount_currency"]
+                tax_details["raw_total_included"] -= tax_data["raw_tax_amount"]
+                for key in (
+                    "base_amount",
+                    "tax_amount",
+                    "raw_base_amount",
+                    "raw_base_amount_currency",
+                    "raw_tax_amount",
+                    "raw_tax_amount_currency",
+                ):
+                    tax_data[key] = 0.0

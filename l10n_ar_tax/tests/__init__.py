@@ -1,5 +1,6 @@
 from . import test_arba
 from . import test_map_tax_fiscal_position
+from . import test_perception_base_minimum_threshold
 from . import test_vat_fiscal_position_eligibility
 from . import test_withholding_thresholds
 from . import test_payment_withholding_multimoneda

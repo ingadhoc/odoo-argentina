@@ -961,7 +961,7 @@ msgid ""
 "withholding/perception is not applied."
 msgstr ""
 "Si la base calculada para el régimen no supera este valor, no se aplica la "
-"retención."
+"retención/percepción."
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document

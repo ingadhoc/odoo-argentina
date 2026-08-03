@@ -457,6 +457,12 @@ msgid "AGIP (Regimen General)"
 msgstr "AGIP (Régimen General)"
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "AGIP padron aliquot (imported file)"
+msgstr "Alícuota padrón AGIP (archivo importado)"
+
+#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_tax_form
 msgid "API"
 msgstr ""
@@ -803,6 +809,12 @@ msgstr "Impuesto por Defecto"
 
 #. module: l10n_ar_tax
 #. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "Default aliquot. Not found in AGIP padron"
+msgstr "Alícuota por defecto. No figura en padrón AGIP"
+
+#. module: l10n_ar_tax
+#. odoo-python
 #: code:addons/l10n_ar_tax/models/res_company.py:0
 msgid "Detail: %s"
 msgstr "Detalle: %s"
@@ -1122,6 +1134,12 @@ msgid "Only compressed ZIP files are allowed for Santa Fe."
 msgstr "Solo se permiten archivos ZIP comprimidos para Santa Fe."
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid "Only compressed ZIP or RAR files are allowed for AGIP (CABA)."
+msgstr "Solo se permiten archivos ZIP o RAR comprimidos para AGIP (CABA)."
+
+#. module: l10n_ar_tax
 #: model:ir.actions.act_window,name:l10n_ar_tax.act_company_jurisdiction_padron
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_form
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_tree
@@ -1381,6 +1399,30 @@ msgid "Taxes"
 msgstr ""
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid ""
+"The aliquot padron could not be read: looking up CUIT %s took too long. "
+"Please try again in a few minutes or enter the tax rate manually on the "
+"contact."
+msgstr ""
+"No se pudo leer el padrón de alícuotas: la búsqueda del CUIT %s tardó "
+"demasiado. Vuelva a intentar en unos minutos o cargue la alícuota "
+"manualmente en el contacto."
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid "The compressed file does not contain the padron in CSV or TXT format."
+msgstr "El archivo comprimido no contiene el padrón en formato CSV o TXT."
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid "The padron for %s is not implemented."
+msgstr "El padrón para %s no está implementado."
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_state_code
 msgid "The state code."
 msgstr "El código del estado."
@@ -1392,6 +1434,22 @@ msgid ""
 "The total percentage (%s) should be greater than 0 and less than or equal to "
 "100."
 msgstr "El porcentaje total (%s) debe ser mayor que 0 y menor o igual que 100."
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "There was an error while getting the aliquot from the padron."
+msgstr "Hubo un error al momento de obtener la alícuota del padrón"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid ""
+"This database cannot read RAR files (the 'unrar' library is not "
+"installed). Please upload the AGIP padron as a ZIP file instead."
+msgstr ""
+"Esta base de datos no puede leer archivos RAR (la librería 'unrar' no está "
+"instalada). Suba el padrón de AGIP como archivo ZIP."
 
 #. module: l10n_ar_tax
 #. odoo-python

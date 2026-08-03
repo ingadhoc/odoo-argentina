@@ -20,7 +20,6 @@ class AccountFiscalPositionL10nArTax(models.Model):
     # pero que no esta seleccionado
     webservice = fields.Selection(
         [
-            ("agip", "AGIP (Regimen General)"),
             ("arba", "ARBA"),
             ("rentas_cordoba", "Rentas Cordoba"),
             ("padron", "Archivo de padrón"),
@@ -80,7 +79,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
                     raise ValidationError(
                         "Impuesto %s sin provincia establecida, no puede consultar padrón" % record.default_tax_id.name
                     )
-                if record.default_tax_id.l10n_ar_state_id.jurisdiction_code not in ["902", "921"]:
+                if record.default_tax_id.l10n_ar_state_id.jurisdiction_code not in ["901", "902", "921"]:
                     raise ValidationError(
                         "Padrón no implementado para la provincia de %s." % record.default_tax_id.l10n_ar_state_id.name
                     )
@@ -151,7 +150,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
         """Returns the webservice selection value for a given state (res.country.state).
         Override in downstream modules to add support for additional jurisdictions."""
         mapping = {
-            "901": "agip",  # CABA
+            "901": "padron",  # CABA
             "902": "arba",  # Buenos Aires provincia
             "904": "rentas_cordoba",  # Córdoba
             "921": "padron",  # Santa Fe
@@ -325,10 +324,31 @@ class AccountFiscalPositionL10nArTax(models.Model):
         return res
 
     def _get_agip_data(self, partner, date, to_date):
+        """Metodo que obtiene la alicuota de AGIP (CABA) del padron que Adhoc baja y procesa
+        en su propia base
+
+        :return: (float, string) alícuota y referencia
+
+        Se llama solo cuando el cliente no cargó el padron de AGIP en su base (ver
+        _get_padron_data). En las bases SaaS de Adhoc, saas_client_l10n_ar extiende este
+        método para consultar ese padron; sin esa integración no tenemos de dónde sacar la
+        alícuota y pedimos que carguen el padron.
+        """
+        self.ensure_one()
+
         # si es base en data demo devolvemos una alicuota demo para que no falle la demo data
         if self.env.ref("base.user_demo", raise_if_not_found=False):
             return (2.5 if self.tax_type == "withholding" else 3.0, "VALOR DUMMY | dummy")
-        raise UserError(_("Missing ADHOC credential configuration for AGIP tax rate queries"))
+
+        raise self._no_padron_uploaded_error(date, to_date)
+
+    def _no_padron_uploaded_error(self, date, to_date):
+        return UserError(
+            _(
+                "No padron uploaded for the indicated date %s to %s. You must upload it in 'Accounting / Configuration / AFIP / Tax Rate Padron by Company' or manually enter the tax rate on the contact for the current period."
+            )
+            % (date, to_date)
+        )
 
     def _get_arba_data(self, partner, date, to_date):
         """Metodo que obtiene la alicuota de ARBA de un partner y fecha dado
@@ -458,8 +478,8 @@ class AccountFiscalPositionL10nArTax(models.Model):
         return aliquot, ref
 
     def _get_padron_data(self, partner, date, to_date):
-        """Método implementado para obtener alícuota de padrón ARBA y Santa Fe:
-        jurisdiction_code de Santa Fe = 921, de ARBA = 902
+        """Método implementado para obtener alícuota de padrón ARBA, Santa Fe y AGIP:
+        jurisdiction_code de Santa Fe = 921, de ARBA = 902, de AGIP (CABA) = 901
         1) Santa Fe:
          * si no existe padrón para el período correspondiente entonces devuelve UserError para que lo cargue.
          * si existe padrón para el período correspondiente, busca el CUIT en el padrón y:
@@ -470,25 +490,45 @@ class AccountFiscalPositionL10nArTax(models.Model):
          * si existe padrón para el período correspondiente, busca el CUIT en el padrón y:
             a) si lo encuentra devuelve la tasa y "Alícuota padrón ARBA (archivo importado)",
             b) si no lo encuentra devuelve None, "Alícuota no inscripto ARBA (archivo importado)"
+        3) AGIP (CABA): el padrón de Regímenes Generales viene en un único archivo, con
+           las mismas columnas que el PARP de Santa Fe, por eso se lee igual (nro viene
+           True/False y las alícuotas como float):
+         * si no existe padrón para el período, la alícuota sale del padrón que Adhoc baja
+           y procesa en su propia base (_get_agip_data). El error para que carguen el
+           padrón queda para cuando allá tampoco esté.
+         * si existe padrón para el período correspondiente, busca el CUIT en el padrón y:
+            a) si lo encuentra devuelve la tasa y "Alícuota padrón AGIP (archivo importado)",
+            b) si no lo encuentra devuelve None, "Alícuota por defecto. No figura en padrón AGIP"
 
         return: alicuot, ref
         """
         self.ensure_one()
         if self.env.ref("base.user_demo", raise_if_not_found=False):
-            return (2.5 / 3.0, "VALOR DUMMY | dummy")
+            return (2.5 if self.tax_type == "withholding" else 3.0, "VALOR DUMMY | dummy")
         state = self.default_tax_id.l10n_ar_state_id
         padron_file = self._search_padron_file(state, date)
         if not padron_file:
-            # si la consulta de padron viene por "contingencia" (por ej. se usa ws de arba o agip) y no hay padron, no queremos raise
+            if state.jurisdiction_code == "901":
+                # AGIP: si el cliente no cargó el padron en su base, la alícuota sale del
+                # padron que Adhoc baja y procesa en la suya (lo resuelve saas_client_l10n_ar
+                # extendiendo _get_agip_data).
+                # Validamos el cuit acá para que un partner sin cuit de su propio error y no
+                # el de "cargá el padron".
+                partner.ensure_vat()
+                try:
+                    return self._get_agip_data(partner, date, to_date)
+                except UserError as error:
+                    # Error de negocio: el padron no está cargado en la base de Adhoc (o
+                    # Adhoc no lo pudo devolver). Pedimos que lo carguen y dejamos el
+                    # detalle en el log.
+                    _logger.info("No pudimos obtener el padron de AGIP desde Adhoc: %s", error)
+                    raise self._no_padron_uploaded_error(date, to_date) from error
+                except Exception as error:
+                    raise UserError(_("There was an error while getting the aliquot from the padron.")) from error
             if self.webservice != "padron":
                 return None, None
             # Si se está consultando alícuota con tipo "padron" y no hay, entonces damos error.
-            raise UserError(
-                _(
-                    "No padron uploaded for the indicated date %s to %s. You must upload it in 'Accounting / Configuration / AFIP / Tax Rate Padron by Company' or manually enter the tax rate on the contact for the current period."
-                )
-                % (date, to_date)
-            )
+            raise self._no_padron_uploaded_error(date, to_date)
         nro, alicuot_ret, alicuot_per = padron_file._get_aliquot(partner)
         if state.jurisdiction_code == "921":
             if nro:
@@ -499,6 +539,16 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 )
             else:
                 return None, _("Penalty aliquot. Not found in Santa Fe padron")
+        if state.jurisdiction_code == "901":
+            if nro:
+                # el padrón de AGIP tiene el mismo layout que el de Santa Fe: no hay nro,
+                # viene True/False (según si lo encontramos) y las alícuotas ya son float
+                return (
+                    alicuot_ret if self.tax_type == "withholding" else alicuot_per,
+                    _("AGIP padron aliquot (imported file)"),
+                )
+            else:
+                return None, _("Default aliquot. Not found in AGIP padron")
         if state.jurisdiction_code == "902":
             if nro:
                 return (

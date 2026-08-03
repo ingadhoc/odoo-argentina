@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- Las posiciones fiscales de CABA consultan el padrón, y para eso el impuesto necesita
+         tener la jurisdicción. El chart template la asigna en el post_init_hook, que corre
+         después de la data demo, así que la ponemos acá antes de usar esos impuestos. -->
+    <function model="account.tax" name="write" context="{'active_test': False}">
+        <value eval="[
+            ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_percepcion_iibb_caba_aplicada')),
+            ref('account.%s_%s' % (ref('base.company_ri'), 'ex_tax_withholding_iibb_caba_applied')),
+        ]"/>
+        <value eval="{'l10n_ar_state_id': ref('base.state_ar_c')}"/>
+    </function>
+
     <!-- Perc. Córdoba + CABA -->
     <record id="fiscal_position_caba_cordoba_perc" model="account.fiscal.position">
         <field name="name">Percepciones Córdoba + CABA</field>
@@ -16,13 +27,13 @@
         <field name="fiscal_position_id" ref="fiscal_position_caba_cordoba_perc"/>
         <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_percepcion_iibb_caba_aplicada'))"/>
         <field name="tax_type">perception</field>
-        <field name="webservice">agip</field>
+        <field name="webservice">padron</field>
     </record>
     <record id="fiscal_position_caba_cordoba_perc_line_cordoba" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="fiscal_position_caba_cordoba_perc"/>
         <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_percepcion_iibb_co_aplicada'))"/>
         <field name="tax_type">perception</field>
-        <field name="webservice">agip</field>
+        <field name="webservice">rentas_cordoba</field>
     </record>
 
     <!-- Perc. CABA -->
@@ -40,7 +51,7 @@
         <field name="fiscal_position_id" ref="fiscal_position_caba"/>
         <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_percepcion_iibb_caba_aplicada'))"/>
         <field name="tax_type">perception</field>
-        <field name="webservice">agip</field>
+        <field name="webservice">padron</field>
     </record>
 
     <!-- Córdoba -->
@@ -82,7 +93,7 @@
         <field name="fiscal_position_id" ref="fiscal_position_cordoba_caba_and_proffits"/>
         <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ex_tax_withholding_iibb_caba_applied'))"/>
         <field name="tax_type">withholding</field>
-        <field name="webservice">agip</field>
+        <field name="webservice">padron</field>
     </record>
     <record id="fiscal_position_cordoba_caba_and_proffits_prof_withholding" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="fiscal_position_cordoba_caba_and_proffits"/>
@@ -105,7 +116,7 @@
         <field name="fiscal_position_id" ref="fiscal_position_caba_and_proffits"/>
         <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ex_tax_withholding_iibb_caba_applied'))"/>
         <field name="tax_type">withholding</field>
-        <field name="webservice">agip</field>
+        <field name="webservice">padron</field>
     </record>
     <record id="fiscal_position_caba_and_proffits_prof_withholding" model="account.fiscal.position.l10n_ar_tax">
         <field name="fiscal_position_id" ref="fiscal_position_caba_and_proffits"/>

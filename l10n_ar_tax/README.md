@@ -11,7 +11,7 @@ Implements automatic calculation of Argentine withholdings (retenciones) and per
 - Fiscal position-based tax automation.
 - Withholding certificate generation.
 - Integration with ARCA web services.
-- ARBA and Santa Fe (PARP) padron importers.
+- ARBA, Santa Fe (PARP) and AGIP (CABA) padron readers.
 - Same-period base accumulation for taxes like Ganancias with minimum thresholds.
 - Integration with `account_payment_pro` tri-currency model.
 
@@ -31,7 +31,7 @@ Implements automatic calculation of Argentine withholdings (retenciones) and per
 2. **Fiscal positions:** Accounting → Configuration → Fiscal Positions — set up automatic tax assignment. In a multi-company setup with branches, a fiscal position of a branch can use the tax groups and taxes of its parent company (same behaviour as standard Odoo account mapping), so the chart of taxes only needs to be configured once on the parent.
 3. **Partner tax ID:** in Contacts, configure CUIT/CUIL/DNI.
 4. **Tax ratios:** set ratios (1–100) on percentage-based taxes to control the taxable base percentage.
-5. **Padron importers:** for Santa Fe (PARP) and ARBA, configure the corresponding fiscal position with the web service setting. See `doc/padron_santa_fe/` for specs and examples.
+5. **Padron files:** for Santa Fe (PARP), ARBA and AGIP (CABA), configure the corresponding fiscal position with the web service setting and upload the padron file in Accounting → Configuration → Padron Alicuotas. The aliquot is read from the uploaded file on demand (AGIP accepts the `.rar` published by AGIP, or a `.zip`; reading `.rar` requires the `unrar` python library). See `doc/padron_santa_fe/` for specs and examples.
 
 ## Usage
 

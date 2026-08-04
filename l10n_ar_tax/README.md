@@ -28,7 +28,7 @@ Implements automatic calculation of Argentine withholdings (retenciones) and per
 ## Configuration
 
 1. **Taxes:** Accounting → Configuration → Taxes — configure withholding and perception taxes.
-2. **Fiscal positions:** Accounting → Configuration → Fiscal Positions — set up automatic tax assignment.
+2. **Fiscal positions:** Accounting → Configuration → Fiscal Positions — set up automatic tax assignment. In a multi-company setup with branches, a fiscal position of a branch can use the tax groups and taxes of its parent company (same behaviour as standard Odoo account mapping), so the chart of taxes only needs to be configured once on the parent.
 3. **Partner tax ID:** in Contacts, configure CUIT/CUIL/DNI.
 4. **Tax ratios:** set ratios (1–100) on percentage-based taxes to control the taxable base percentage.
 5. **Padron importers:** for Santa Fe (PARP) and ARBA, configure the corresponding fiscal position with the web service setting. See `doc/padron_santa_fe/` for specs and examples.

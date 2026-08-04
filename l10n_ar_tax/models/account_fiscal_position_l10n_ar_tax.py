@@ -176,11 +176,11 @@ class AccountFiscalPositionL10nArTax(models.Model):
     @api.depends("fiscal_position_id.company_id", "tax_type")
     def _compute_tax_group_id_domain(self):
         for rec in self:
-            company_id = rec.fiscal_position_id.company_id.id or rec.env.company.id
-            domain = [
-                ("company_id", "=", company_id),
-                ("l10n_ar_vat_afip_code", "=", False),
-            ]
+            company = rec.fiscal_position_id.company_id or rec.env.company
+            # con _check_company_domain (parent_of) una sucursal puede elegir los grupos de impuestos
+            # de la compañía padre, igual que el dominio de default_tax_id (_get_tax_domain)
+            domain = self.env["account.tax.group"]._check_company_domain(company)
+            domain += [("l10n_ar_vat_afip_code", "=", False)]
             if rec.tax_type == "perception":
                 domain += [("tax_ids.type_tax_use", "=", "sale")]
             elif rec.tax_type == "withholding":

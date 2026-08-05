@@ -391,7 +391,7 @@ msgstr "Error 404: No encontrado."
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<br/><strong>VAT Cond: </strong>"
-msgstr ""
+msgstr "<br/><strong>Cond. IVA: </strong>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document

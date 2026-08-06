@@ -9,3 +9,4 @@ from . import test_padron_cleanup_cron
 from . import test_padron_tmp_dir
 from . import test_payment_register_pro_wizard
 from . import test_payment_withholding_kept_on_post
+from . import test_withholding_certificates_mail

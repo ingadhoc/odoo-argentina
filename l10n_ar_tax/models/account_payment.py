@@ -360,7 +360,28 @@ class AccountPayment(models.Model):
         # under the same name, which would otherwise serve the stale cached PDF.
         # Drop the cached receipt so it is regenerated on the next render.
         self._unlink_cached_payment_receipt()
+        self._unlink_cached_withholding_certificates()
         return super().action_draft()
+
+    def _l10n_ar_withholding_certificates_filename(self):
+        """Filename of the single PDF holding all the withholding certificates
+        of this payment (one page per withholding). Shared by the preview and
+        the sending path of mail.compose.message."""
+        self.ensure_one()
+        return "Certificados de Retención - %s.pdf" % (self.name or "").replace("/", "_")
+
+    def _unlink_cached_withholding_certificates(self):
+        # Same rationale as _unlink_cached_payment_receipt: the certificate of
+        # each withholding line is cached (attachment_use on
+        # l10n_ar_tax.action_report_withholding_certificate) and becomes stale
+        # if the payment is edited and reposted under the same name.
+        report = self.env.ref("l10n_ar_tax.action_report_withholding_certificate", raise_if_not_found=False)
+        if not report:
+            return
+        for withholding in self.l10n_ar_withholding_line_ids:
+            attachment = report.retrieve_attachment(withholding)
+            if attachment:
+                attachment.unlink()
 
     def _unlink_cached_payment_receipt(self):
         report = self.env.ref("account.action_report_payment_receipt", raise_if_not_found=False)

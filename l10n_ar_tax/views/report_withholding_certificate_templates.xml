@@ -131,6 +131,16 @@
         <field name="print_report_name">'Certificado de Retención Slip - %s' % (object.name or '')</field>
         <field name="report_name">l10n_ar_tax.report_withholding_certificate</field>
         <field name="report_file">l10n_ar_tax.report_withholding_certificate</field>
+        <!-- Cache the rendered certificate PDF per withholding (attachment_use),
+             same pattern as the supplier payment receipt: the certificate is
+             immutable once the payment is processed. On multi-record renders the
+             core reloads cached pages and only sends the missing ones to
+             wkhtmltopdf, merging everything into a single PDF. Withholdings at
+             $0 are excluded (their name is '/', which is not unique). The cache
+             is invalidated on payment reset to draft (see
+             account.payment._unlink_cached_withholding_certificates). -->
+        <field name="attachment_use" eval="True"/>
+        <field name="attachment">(object.amount and object.name and object.payment_id.partner_type == 'supplier' and object.payment_id.state in ('in_process', 'paid')) and ('Certificado de Retención Slip - %s.pdf' % object.name.replace('/', '_')) or False</field>
     </record>
 
 </odoo>

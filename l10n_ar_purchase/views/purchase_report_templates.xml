@@ -191,6 +191,14 @@
                         <span t-field="o.partner_ref"/>
                     </t>
 
+                    <!-- The native report shows the earliest expected arrival of the order
+                         in the "informations" block that we replace above. We keep it here
+                         so the supplier still gets that date on the AR report. -->
+                    <t t-if="o.date_planned">
+                        <strong>Expected Arrival:</strong>
+                        <span t-field="o.date_planned" t-options="{'date_only': 'true'}"/>
+                    </t>
+
                     <t t-if="o.dest_address_id">
                         <br/><strong>Shipping address:</strong>
                         <span t-field="o.dest_address_id.name"/>
@@ -202,22 +210,6 @@
 
             </div>
         </div>
-
-        <!-- Re-add the expected arrival date per order line.
-             In v16 the AR purchase order report showed the expected arrival
-             ("Llegada prevista") per product line. In v18 the confirmed purchase
-             order report (both native and AR) dropped it, and the data
-             (purchase.order.line.date_planned) is only printed on the RFQ /
-             quotation report. We re-add it as a column on the AR purchase order
-             report so suppliers receive the expected delivery date per product. -->
-        <xpath expr="//th[@name='th_description']" position="after">
-            <th name="th_date_planned" class="text-center"><strong>Expected Arrival</strong></th>
-        </xpath>
-        <xpath expr="//td[@id='product']" position="after">
-            <td class="text-center">
-                <span t-field="line.date_planned" t-options="{'date_only': 'true'}"/>
-            </td>
-        </xpath>
 
     </template>
 

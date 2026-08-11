@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+    <!--Edit 1-->
     <template id="partner_info" name="Argentinian partner">
         <div class="clearfix"/>
         <h3>Billing information</h3>

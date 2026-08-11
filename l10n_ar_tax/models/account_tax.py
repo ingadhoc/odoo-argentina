@@ -126,3 +126,26 @@ class AccountTax(models.Model):
             raise UserError(
                 "Error se esta usando en ws de estas cias %s" % ws.mapped("fiscal_position_id.company_id.name")
             )
+
+    def _get_tax_details(
+        self,
+        price_unit,
+        quantity,
+        precision_rounding=0.01,
+        rounding_method="round_per_line",
+        product=None,
+        special_mode=False,
+        manual_tax_amounts=None,
+        filter_tax_function=None,
+    ):
+        """Override to force rounding method to 'round_per_line' to avoid echange differences in AR."""
+        return super()._get_tax_details(
+            price_unit=price_unit,
+            quantity=quantity,
+            precision_rounding=precision_rounding,
+            rounding_method="round_per_line",
+            product=product,
+            special_mode=special_mode,
+            manual_tax_amounts=manual_tax_amounts,
+            filter_tax_function=filter_tax_function,
+        )

@@ -383,7 +383,12 @@ class AccountPayment(models.Model):
                             % line.tax_id.name
                         )
             if commands:
-                rec.l10n_ar_withholding_line_ids = commands
+                # Use skip_account_move_synchronization to prevent triggering
+                # _synchronize_to_moves() on a draft move. Names are already set
+                # on l10n_ar_withholding_line_ids before super(), so
+                # _prepare_move_withholding_lines() will pick them up correctly
+                # when the journal entry is built inside super().action_post().
+                rec.with_context(skip_account_move_synchronization=True).l10n_ar_withholding_line_ids = commands
 
         return super().action_post()
 

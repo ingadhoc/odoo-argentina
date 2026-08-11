@@ -88,24 +88,30 @@ class AccountPaymentRegister(models.TransientModel):
                 withholdings += [Command.create({"tax_id": x.id}) for x in taxes]
             rec.l10n_ar_withholding_ids = withholdings
 
-    @api.depends("is_payment_pro")
+    @api.depends("is_payment_pro", "payment_type")
     def _compute_available_journal_ids(self):
         super()._compute_available_journal_ids()
         for wizard in self:
-            if not wizard.is_payment_pro:
+            if not wizard.is_payment_pro or not wizard.payment_type:
+                # Skip filtering if payment_type is not yet resolved (e.g. during
+                # precompute of journal_id) to avoid resetting journal_id to False.
                 continue
-            # Exclude journals that have NO method outside check/bundle (purely check/bundle journals).
-            # Mixed journals (e.g. Bank with Manual + own_checks) are kept;
-            # the method filter below removes individual check/bundle lines.
+            direction = wizard.payment_type
             wizard.available_journal_ids = wizard.available_journal_ids.filtered(
                 lambda j: any(
-                    not wizard._is_check_or_bundle(code)
-                    for code in (
-                        j.inbound_payment_method_line_ids.payment_method_id.mapped("code")
-                        + j.outbound_payment_method_line_ids.payment_method_id.mapped("code")
-                    )
+                    not wizard._is_check_or_bundle(l.payment_method_id.code)
+                    for l in j._get_available_payment_method_lines(direction)
                 )
             )
+
+    @api.depends("is_payment_pro")
+    def _compute_journal_id(self):
+        super()._compute_journal_id()
+        for wizard in self:
+            if not wizard.is_payment_pro:
+                continue
+            if wizard.journal_id not in wizard.available_journal_ids:
+                wizard.journal_id = wizard.available_journal_ids[:1]
 
     @api.depends("is_payment_pro")
     def _compute_payment_method_line_fields(self):
@@ -116,6 +122,15 @@ class AccountPaymentRegister(models.TransientModel):
             wizard.available_payment_method_line_ids = wizard.available_payment_method_line_ids.filtered(
                 lambda l: not wizard._is_check_or_bundle(l.payment_method_id.code)
             )
+
+    @api.depends("is_payment_pro")
+    def _compute_payment_method_line_id(self):
+        super()._compute_payment_method_line_id()
+        for wizard in self:
+            if not wizard.is_payment_pro:
+                continue
+            if wizard.payment_method_line_id not in wizard.available_payment_method_line_ids:
+                wizard.payment_method_line_id = wizard.available_payment_method_line_ids[:1]
 
     def _get_debt_line_ids_cmd(self, batch_result):
         valid_types = {"asset_receivable", "liability_payable"}

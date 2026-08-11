@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import _, fields, models
 
+# Esto es la primera modificacion para el ejercicio
 
 class AccountJournal(models.Model):
     _inherit = "account.journal"

@@ -1,5 +1,7 @@
 from odoo import fields, models
 
+# Esto es la tercera modificacion para el ejercicio
+# Editando el commit 3
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"

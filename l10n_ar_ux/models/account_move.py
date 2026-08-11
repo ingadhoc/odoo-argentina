@@ -6,6 +6,7 @@ from odoo import _, api, models
 from odoo.exceptions import UserError
 from odoo.fields import Domain
 
+# Esta es la modificacion que proviene de un ticket distinto
 
 class AccountMove(models.Model):
     _inherit = "account.move"

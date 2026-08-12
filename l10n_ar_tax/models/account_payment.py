@@ -105,6 +105,28 @@ class AccountPayment(models.Model):
         for rec in self:
             rec.payment_total += rec.withholdings_amount
 
+    def _resync_new_check_amount(self):
+        """Absorber en el cheque nuevo la diferencia que dejó un cambio de retenciones.
+
+        El autollenado del importe del cheque (``_onchange_new_check_default_amount``) corre una
+        sola vez, mientras el cheque no tiene importe. Si las retenciones cambian después, el
+        cheque queda con el importe viejo y el pago se confirma con diferencia: la factura queda
+        con residual (o el partner con un crédito) por exactamente lo que cambió la retención.
+
+        Solo ajustamos si hay un único cheque, que es el caso donde no hay ambigüedad sobre cuál
+        de los cheques absorbe la diferencia.
+        """
+        self.ensure_one()
+        if not self.use_payment_pro or self.state != "draft":
+            return
+        if len(self.l10n_latam_new_check_ids) != 1 or not self.payment_difference:
+            return
+        amount = self.l10n_latam_new_check_ids.amount + self._get_payment_difference_in_currency_a()
+        # un cheque en cero o negativo no existe, asi que ahi dejamos el importe como estaba y la
+        # diferencia queda a la vista en el pago (el ajuste del amount, en cambio, lo lleva a cero)
+        if amount > 0:
+            self.l10n_latam_new_check_ids.amount = self.currency_id.round(amount)
+
     # por ahora no nos funciona computarlas, se duplica el importe. Igual conceptualemnte el onchange acá por ahí
     # está bien porque en realidad es una "sugerencia" actualizar el amount al usuario
     # @api.depends('withholdings_amount')
@@ -114,10 +136,18 @@ class AccountPayment(models.Model):
     #     for rec in (self - latam_checks):
     @api.onchange("withholdings_amount")
     def _onchange_withholdings(self):
+        # en los pagos con cheques nuevos el amount es computado a partir de los importes de los
+        # cheques, así que la diferencia no se puede absorber en el amount: hay que ajustar el cheque
+        for rec in self.filtered(lambda x: x._is_latam_check_payment(check_subtype="new_check")):
+            rec._resync_new_check_amount()
+        self._adjust_amount_for_withholdings()
+
+    def _adjust_amount_for_withholdings(self):
         # solo queremos re-computar en pagos de proveedor
         for rec in self.filtered(
             lambda x: (
                 x.partner_type == "supplier"
+                and not x._is_latam_check_payment(check_subtype="new_check")
                 and x.payment_method_code
                 not in [
                     "in_third_party_checks",
@@ -150,7 +180,9 @@ class AccountPayment(models.Model):
     def _onchange_partner_id(self):
         for rec in self:
             if rec.partner_id != rec._origin.partner_id:
-                rec._onchange_withholdings()
+                # solo el ajuste del amount: el importe del cheque lo escribe quien carga el pago y
+                # no lo tocamos por un cambio de partner, solo cuando cambian las retenciones
+                rec._adjust_amount_for_withholdings()
 
     # # ver mensaje en commit
     # @api.onchange('to_pay_amount', 'withholdable_advanced_amount', 'partner_id')

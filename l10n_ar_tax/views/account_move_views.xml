@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <header position="after">
                 <div class="alert alert-warning" role="alert" invisible="invoice_date or not perceptions_fiscal_positon">
-                    Esta utilizando la posición fiscal <strong>"<field name="fiscal_position_id" options="{'no_open': True}" readonly="1"/>"</strong> que tiene impuestos de percepciones. Como las alicuotas podrían variar según la fecha del comprobante, cambiar la fecha o validar la factura re-computará los impuestos.
+                    Esta utilizando la posición fiscal <field name="fiscal_position_id" widget="badge"/> que tiene impuestos de percepciones. Como las alicuotas podrían variar según la fecha del comprobante, cambiar la fecha o validar la factura re-computará los impuestos en todas las líneas de factura.
                 </div>
             </header>
         </field>

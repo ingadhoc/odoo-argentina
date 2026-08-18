@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-22 02:06+0000\n"
+"POT-Creation-Date: 2026-08-18 21:30+0000\n"
 "PO-Revision-Date: 2026-04-14 14:41+0000\n"
 "Last-Translator: julia elizondo <jue@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/odoo-"
@@ -21,11 +21,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
 "0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
-
-#. module: l10n_ar_purchase
-#: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchaseorder_document
-msgid "<strong>Expected Arrival:</strong>"
-msgstr "<strong>Entrega esperada:</strong>"
 
 #. module: l10n_ar_purchase
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchasequotation_document
@@ -48,6 +43,11 @@ msgstr "<br/><strong>Su referencia de pedido:</strong>"
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchaseorder_document
 msgid "<strong>% VAT</strong>"
 msgstr "% IVA"
+
+#. module: l10n_ar_purchase
+#: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchaseorder_document
+msgid "<strong>Expected Arrival:</strong>"
+msgstr "<strong>Entrega esperada:</strong>"
 
 #. module: l10n_ar_purchase
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchaseorder_document

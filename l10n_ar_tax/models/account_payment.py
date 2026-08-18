@@ -162,6 +162,20 @@ class AccountPayment(models.Model):
     #         # rec.force_amount_company_currency += rec.payment_difference
     #         # rec.unreconciled_amount = rec.to_pay_amount - rec.selected_debt
 
+    def _l10n_ar_remove_zero_withholding_lines(self):
+        """Elimina las líneas de retención que no arrojan retención (importe 0) al postear
+        el pago, para que no queden en el pago ni ensucien la vista/reportes.
+        Ganancias se conserva siempre: su base acumulada puede requerir el apunte contable
+        aunque el importe sea 0. Usamos ``currency_id.is_zero`` (mismo criterio que
+        account_tax_settlement al saltear líneas en cero) para contemplar el redondeo."""
+        for rec in self:
+            is_zero = rec.company_id.currency_id.is_zero
+            zero_lines = rec.l10n_ar_withholding_line_ids.filtered(
+                lambda line: line.tax_id.l10n_ar_tax_type not in ["earnings", "earnings_scale"] and is_zero(line.amount)
+            )
+            if zero_lines:
+                rec.l10n_ar_withholding_line_ids = [Command.unlink(line.id) for line in zero_lines]
+
     def _prepare_move_withholding_lines(self, default_values):
         res = super()._prepare_move_withholding_lines(default_values)
         if self.is_internal_transfer:
@@ -362,6 +376,7 @@ class AccountPayment(models.Model):
         return res
 
     def action_post(self):
+        self._l10n_ar_remove_zero_withholding_lines()
         for rec in self:
             commands = []
             for line in rec.l10n_ar_withholding_line_ids:

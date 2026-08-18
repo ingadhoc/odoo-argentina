@@ -242,3 +242,37 @@ class TestWithholdingThresholds(TestArWithholdingArRi):
         invoice2 = self._make_vendor_invoice(price_unit=80.0, doc_number="3-6")
         __, wth2 = self._make_withholding_line(self.tax_earnings_10pct, base_amount=80.0, invoice=invoice2)
         self.assertEqual(wth2.amount, 6.0, "Pago2: base acumulada 160 - no imponible 100 = 60 → 10% = 6")
+
+    # ─── Case 6: línea de retención en 0 se elimina al confirmar ─────────────
+
+    def test_06_zero_withholding_line_removed_on_confirm(self):
+        """Una línea de retención que no arroja retención (importe 0) se elimina
+        (_l10n_ar_remove_zero_withholding_lines). Aplica a cualquier régimen no-ganancias."""
+        self.tax_iibb_3pct.write(
+            {
+                "l10n_ar_payment_minimum_threshold": 0,
+                "l10n_ar_base_minimum_threshold": 105,
+                "l10n_ar_minimum_threshold": 0,
+            }
+        )
+        invoice = self._make_vendor_invoice(price_unit=100.0, doc_number="3-7")
+        payment, wth = self._make_withholding_line(self.tax_iibb_3pct, base_amount=100.0, invoice=invoice)
+        self.assertEqual(wth.amount, 0.0)
+        self.assertTrue(payment.l10n_ar_withholding_line_ids, "la línea existe antes de confirmar")
+        payment._l10n_ar_remove_zero_withholding_lines()
+        self.assertFalse(payment.l10n_ar_withholding_line_ids, "la línea en 0 se elimina")
+
+    def test_07_nonzero_withholding_line_kept(self):
+        """Una línea que sí retiene se conserva."""
+        self.tax_iibb_3pct.write(
+            {
+                "l10n_ar_payment_minimum_threshold": 0,
+                "l10n_ar_base_minimum_threshold": 0,
+                "l10n_ar_minimum_threshold": 0,
+            }
+        )
+        invoice = self._make_vendor_invoice(price_unit=100.0, doc_number="3-8")
+        payment, wth = self._make_withholding_line(self.tax_iibb_3pct, base_amount=100.0, invoice=invoice)
+        self.assertEqual(wth.amount, 3.0)
+        payment._l10n_ar_remove_zero_withholding_lines()
+        self.assertTrue(payment.l10n_ar_withholding_line_ids, "la línea con retención se conserva")

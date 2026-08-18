@@ -1,0 +1,16 @@
+{
+    "name": "Argentinean Withholding Minimum for Neuquén",
+    "version": "19.0.1.0.0",
+    "category": "Localization/Argentina",
+    "sequence": 14,
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "summary": "Evaluate the IIBB withholding base minimum per invoice (not on the summed base) for Neuquén",
+    "depends": ["l10n_ar_tax"],
+    "data": [],
+    "demo": [],
+    "installable": True,
+    "auto_install": False,
+    "application": False,
+}

@@ -56,7 +56,7 @@ score = false
 
 [tool.pylint.odoolint]
 manifest-required-authors = "ADHOC SA"
-manifest-required-keys = ["license"]
+manifest-required-keys = ["license", "installable"]
 manifest-deprecated-keys = ["description", "active"]
 license-allowed = [
     "AGPL-3",

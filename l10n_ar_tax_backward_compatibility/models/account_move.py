@@ -8,7 +8,7 @@ class AccountMove(models.Model):
     def _compute_tax_totals(self):
         super()._compute_tax_totals()
 
-        for move in self.filtered(lambda x: x.state == "posted"):
+        for move in self.filtered(lambda x: x.state == "posted" and x.is_invoice(include_receipts=True)):
             base_lines, _tax_lines = move._get_rounded_base_and_tax_lines()
 
             # Detectar si hay impuestos inactivos en las líneas de impuestos
@@ -24,6 +24,10 @@ class AccountMove(models.Model):
 
     def _replace_inactive_tax_amounts(self, move, _tax_lines, inactive_trl_ids):
         tax_totals = move.tax_totals
+        # Los asientos que no son facturas no tienen tax_totals (el compute nativo lo deja
+        # en None) y una factura sin lineas gravadas no tiene subtotals.
+        if not tax_totals or not tax_totals.get("subtotals"):
+            return tax_totals
         subtotal = tax_totals["subtotals"][0]
         tax_groups = subtotal["tax_groups"]
 

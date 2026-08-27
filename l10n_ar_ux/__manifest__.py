@@ -29,6 +29,8 @@
         "data/res_groups_data.xml",
         "views/account_fiscal_position_view.xml",
         "views/account_move_debit_note_view.xml",
+        "views/account_move_view.xml",
+        "wizard/l10n_ar_ux_partner_responsibility_views.xml",
     ],
     "demo": [
         "demo/res_partner_demo.xml",

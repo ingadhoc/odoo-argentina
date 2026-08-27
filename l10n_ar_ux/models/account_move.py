@@ -2,13 +2,48 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import _, api, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import Domain
 
 
 class AccountMove(models.Model):
     _inherit = "account.move"
+
+    # Solo para condicionar el aviso en la vista: si el contacto no tiene responsabilidad, no proponemos
+    # documentos y hay que ofrecer el link para ir a completarla.
+    l10n_ar_ux_partner_responsibility_id = fields.Many2one(
+        related="commercial_partner_id.l10n_ar_afip_responsibility_type_id",
+        string="ARCA Responsibility",
+    )
+
+    l10n_ar_ux_document_number_placeholder = fields.Char(
+        compute="_compute_l10n_ar_ux_document_number_placeholder",
+    )
+
+    @api.depends("l10n_latam_document_type_id")
+    def _compute_l10n_ar_ux_document_number_placeholder(self):
+        """El formato del número depende del tipo de documento: los despachos de importación son 16 caracteres
+        y el resto va punto de venta y número separados por guión (ver _format_document_number de l10n_ar)."""
+        for rec in self:
+            document_type = rec.l10n_latam_document_type_id
+            placeholder = False
+            if document_type.country_id.code == "AR" and document_type.code:
+                placeholder = "1234567890123456" if document_type.code in ["66", "67"] else "00001-00000001"
+            rec.l10n_ar_ux_document_number_placeholder = placeholder
+
+    def action_l10n_ar_ux_set_partner_responsibility(self):
+        """Abre un wizard para definir la responsabilidad del contacto sin salir de la factura: al aceptar se
+        guarda en el contacto, se refrescan los tipos de documento de esta factura y volvés al borrador."""
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": self.env._("Set the ARCA Responsibility"),
+            "res_model": "l10n_ar_ux.partner.responsibility",
+            "view_mode": "form",
+            "target": "new",
+            "context": {"default_move_id": self.id},
+        }
 
     @api.depends("reversed_entry_id")
     def _compute_invoice_currency_rate(self):
@@ -113,6 +148,15 @@ class AccountMove(models.Model):
 
     def _get_l10n_latam_documents_domain(self):
         self.ensure_one()
+        if (
+            self.company_id.account_fiscal_country_id.code == "AR"
+            and self.l10n_latam_use_documents
+            and not self.commercial_partner_id.l10n_ar_afip_responsibility_type_id
+        ):
+            # Sin la responsabilidad ARCA no sabemos qué letras corresponden: el dominio de l10n_ar deja pasar
+            # solo los documentos sin letra (exterior y excepcionales) y se autoselecciona el primero. Preferimos
+            # no proponer nada antes que autoseleccionar un Despacho de importación.
+            return Domain.FALSE
         domain = super()._get_l10n_latam_documents_domain()
         if self.journal_id.company_id.account_fiscal_country_id.code == "AR" and self.move_type in [
             "out_refund",

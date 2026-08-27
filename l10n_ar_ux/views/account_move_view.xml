@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">account.move.form.l10n.ar.ux</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <!-- Without the ARCA responsibility we do not propose any document type, so we point the user to a
+                 wizard that sets it on the contact and brings them back to the draft invoice. -->
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-warning" role="alert"
+                     invisible="country_code != 'AR' or not l10n_latam_use_documents or not partner_id
+                                or l10n_ar_ux_partner_responsibility_id or state != 'draft'">
+                    <span>Please configure the ARCA Responsibility of</span>
+                    <!-- show_address a False: el formulario de factura lo trae activado y el nombre saldría con
+                         la dirección en una segunda línea, partiendo la frase. -->
+                    <field name="commercial_partner_id" readonly="1" nolabel="1" class="oe_inline fw-bold mx-1"
+                           context="{'show_address': False}" options="{'no_open': True}"/>
+                    <span>in order to continue. It is saved on the contact, not on this invoice.</span>
+                    <button name="action_l10n_ar_ux_set_partner_responsibility" type="object" string="Set the responsibility"
+                            class="btn btn-link p-0 align-baseline ms-1"/>
+                    <field name="l10n_ar_ux_partner_responsibility_id" invisible="1"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_move_form_document_number" model="ir.ui.view">
+        <field name="name">account.move.form.document.number.l10n.ar.ux</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="l10n_latam_invoice_document.view_move_form"/>
+        <field name="arch" type="xml">
+            <!-- Helper con el formato esperado segun el tipo de documento elegido. -->
+            <field name="l10n_latam_document_number" position="before">
+                <field name="l10n_ar_ux_document_number_placeholder" invisible="1"/>
+            </field>
+            <field name="l10n_latam_document_number" position="attributes">
+                <attribute name="options">{'placeholder_field': 'l10n_ar_ux_document_number_placeholder'}</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

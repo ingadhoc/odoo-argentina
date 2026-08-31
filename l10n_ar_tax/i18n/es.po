@@ -907,8 +907,52 @@ msgid "From Date"
 msgstr "Desde"
 
 #. module: l10n_ar_tax
+<<<<<<< a7c128b96b63159b11ec4375da3a10d7ee9e3a32
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_chart_template__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position__id
+||||||| ba3371a4b4c0657a34a6cafde50b664d36582a87
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid ""
+"Hubo un error al consultar el Padron ARBA. Para solucionarlo puede seguir los siguientes pasos, los cuales explicamos con más detalle en este video:\n"
+" %s\n"
+"\n"
+"Tiene las siguientes opciones:\n"
+"  1) Intentar nuevamente más tarde\n"
+"  2) Cargar la alícuota manualmente en el partner en cuestión\n"
+"  3) Subir el archivo del padrón utilizando el Asistente de carga de padrones.\n"
+"\n"
+"Error obtenido:\n"
+"%s\n"
+"\n"
+msgstr ""
+
+#. module: l10n_ar_tax
+=======
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid ""
+"Hubo un error al consultar el Padron ARBA. Para solucionarlo puede seguir los siguientes pasos, los cuales explicamos con más detalle en este video:\n"
+" %s\n"
+"\n"
+"Tiene las siguientes opciones:\n"
+"  1) Intentar nuevamente más tarde\n"
+"  2) Cargar la alícuota manualmente en el partner en cuestión\n"
+"  3) Subir el archivo del padrón utilizando el Asistente de carga de padrones.\n"
+"\n"
+"Error obtenido:\n"
+"%s\n"
+"\n"
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "HTTP %s error."
+msgstr "Error HTTP %s."
+
+#. module: l10n_ar_tax
+>>>>>>> 613f235a4e881e28107c60be810178001e9cf979
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move_line__id
@@ -1396,8 +1440,22 @@ msgstr "El porcentaje total (%s) debe ser mayor que 0 y menor o igual que 100."
 #. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+<<<<<<< a7c128b96b63159b11ec4375da3a10d7ee9e3a32
 msgid "Timeout error when getting data."
 msgstr "Error de tiempo de espera al obtener los datos."
+||||||| ba3371a4b4c0657a34a6cafde50b664d36582a87
+msgid "Timeout error when getting data from rentascordoba.gob.ar"
+msgstr ""
+=======
+msgid "The webservice answered a non-JSON response."
+msgstr "El webservice respondió algo que no es JSON."
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "Timeout error when getting data."
+msgstr "Error de timeout al obtener los datos."
+>>>>>>> 613f235a4e881e28107c60be810178001e9cf979
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__l10n_ar_padron_to_date

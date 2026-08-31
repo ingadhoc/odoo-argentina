@@ -311,16 +311,22 @@ class AccountFiscalPositionL10nArTax(models.Model):
         try:
             r = requests.post(url, data=json.dumps(payload), headers=headers, timeout=10)
         except requests.exceptions.Timeout as e:
-            msg = self.env._(error_msg + "Timeout error when getting data.")
             _logger.warning("%s" % str(e))
-            raise UserError("%s" % msg)
+            raise UserError(error_msg + self.env._("Timeout error when getting data.")) from e
         except requests.exceptions.RequestException as e:
             _logger.warning("%s" % str(e))
-            raise UserError("%s" % error_msg)
-        if r.status_code == 404:
-            msg = _(error_msg + "404 Not Found error.")
-            raise UserError("%s" % msg)
-        json_body = r.json()
+            raise UserError(error_msg) from e
+        if not r.ok:
+            _logger.warning("rentascordoba answered HTTP %s: %s", r.status_code, r.text[:500])
+            raise UserError(error_msg + self.env._("HTTP %s error.") % r.status_code)
+        # el webservice contesta HTML (pagina de error, mantenimiento) o un body vacio cuando esta
+        # caido, y con un status que no siempre es de error: sin esta guarda el JSONDecodeError sale
+        # crudo al usuario en vez del instructivo de arriba (tickets 108553, 122532, 126698)
+        try:
+            json_body = r.json()
+        except requests.exceptions.JSONDecodeError as e:
+            _logger.warning("rentascordoba answered a non-JSON body: %s", r.text[:500])
+            raise UserError(error_msg + self.env._("The webservice answered a non-JSON response.")) from e
         code = json_body.get("errorCod")
         ref = json_body.get("message")
 

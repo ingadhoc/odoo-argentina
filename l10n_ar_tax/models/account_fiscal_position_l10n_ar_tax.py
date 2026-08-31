@@ -418,13 +418,40 @@ class AccountFiscalPositionL10nArTax(models.Model):
             r = requests.post(url, data=json.dumps(payload), headers=headers, timeout=10)
         except requests.exceptions.Timeout as e:
             _logger.warning("%s" % str(e))
+<<<<<<< a7c128b96b63159b11ec4375da3a10d7ee9e3a32
             raise UserError(error_msg + _("Timeout error when getting data."))
+||||||| ba3371a4b4c0657a34a6cafde50b664d36582a87
+            raise UserError("%s" % msg)
+=======
+            raise UserError(error_msg + self.env._("Timeout error when getting data.")) from e
+>>>>>>> 613f235a4e881e28107c60be810178001e9cf979
         except requests.exceptions.RequestException as e:
             _logger.warning("%s" % str(e))
+<<<<<<< a7c128b96b63159b11ec4375da3a10d7ee9e3a32
             raise UserError(error_msg)
         if r.status_code == 404:
             raise UserError(error_msg + _("404 Not Found error."))
         json_body = r.json()
+||||||| ba3371a4b4c0657a34a6cafde50b664d36582a87
+            raise UserError("%s" % error_msg)
+        if r.status_code == 404:
+            msg = _(error_msg + "404 Not Found error.")
+            raise UserError("%s" % msg)
+        json_body = r.json()
+=======
+            raise UserError(error_msg) from e
+        if not r.ok:
+            _logger.warning("rentascordoba answered HTTP %s: %s", r.status_code, r.text[:500])
+            raise UserError(error_msg + self.env._("HTTP %s error.") % r.status_code)
+        # el webservice contesta HTML (pagina de error, mantenimiento) o un body vacio cuando esta
+        # caido, y con un status que no siempre es de error: sin esta guarda el JSONDecodeError sale
+        # crudo al usuario en vez del instructivo de arriba (tickets 108553, 122532, 126698)
+        try:
+            json_body = r.json()
+        except requests.exceptions.JSONDecodeError as e:
+            _logger.warning("rentascordoba answered a non-JSON body: %s", r.text[:500])
+            raise UserError(error_msg + self.env._("The webservice answered a non-JSON response.")) from e
+>>>>>>> 613f235a4e881e28107c60be810178001e9cf979
         code = json_body.get("errorCod")
         ref = json_body.get("message")
 

@@ -13,4 +13,5 @@ from . import test_payment_register_pro_wizard
 from . import test_payment_withholding_kept_on_post
 from . import test_payment_form_withholding_net
 from . import test_withholding_suffered_ledger
+from . import test_rentas_cordoba_ws_errors
 from . import test_withholding_certificates_mail

@@ -383,12 +383,6 @@ msgid "06 - VAT perception or Withholding"
 msgstr "06 - Percepción de IVA"
 
 #. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-msgid "404 Not Found error."
-msgstr "Error 404: No encontrado."
-
-#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "<br/><strong>VAT Cond: </strong>"
 msgstr "<br/><strong>Cond. IVA: </strong>"
@@ -927,6 +921,12 @@ msgid "From Date"
 msgstr "Desde"
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "HTTP %s error."
+msgstr "Error HTTP %s."
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_chart_template__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__id
@@ -1452,6 +1452,12 @@ msgid ""
 msgstr ""
 "Esta base de datos no puede leer archivos RAR (la librería 'unrar' no está "
 "instalada). Suba el padrón de AGIP como archivo ZIP."
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "The webservice answered a non-JSON response."
+msgstr "El webservice respondió algo que no es JSON."
 
 #. module: l10n_ar_tax
 #. odoo-python

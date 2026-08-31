@@ -755,6 +755,12 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "HTTP %s error."
+msgstr "Error HTTP %s."
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__id
@@ -1088,8 +1094,14 @@ msgstr "El código del estado."
 #. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-msgid "Timeout error when getting data from rentascordoba.gob.ar"
-msgstr ""
+msgid "The webservice answered a non-JSON response."
+msgstr "El webservice respondió algo que no es JSON."
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "Timeout error when getting data."
+msgstr "Error de timeout al obtener los datos."
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__l10n_ar_padron_to_date

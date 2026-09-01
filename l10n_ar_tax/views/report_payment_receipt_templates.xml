@@ -31,7 +31,7 @@
                         <t t-if="not o.company_id.l10n_ar_report_signature">
                             <span class="text-center">Signature and Clarification</span>
                         </t>
-                        <div class="text-right" name="pager" t-if="report_type == 'pdf'">
+                        <div class="text-end" name="pager" t-if="report_type == 'pdf'">
                             Page: <span class="page"/> / <span class="topage"/>
                         </div>
                     </div>
@@ -62,11 +62,11 @@
                         <span t-if="line.tax_id.l10n_ar_tax_type in ['earnings', 'earnings_scale']" t-out="line.tax_id.invoice_label or 'Retención Ganancias'"/>
                         <span t-else="" t-out="line.tax_id.invoice_label or line.tax_id.name"/>
                     </td>
-                    <td class="text-right" t-if="show_amount_col">
+                    <td class="text-end" t-if="show_amount_col">
                         <!-- Withholding in ARS (company_currency) -->
                         <span class="text-nowrap" t-out="line.amount" t-options='{"widget": "monetary", "display_currency": line.currency_id}'/>
                     </td>
-                    <td class="text-right o_price_total">
+                    <td class="text-end pe-2 o_price_total">
                         <!-- Withholding converted to destination currency (B2) -->
                         <span class="text-nowrap" t-out="line.payment_id.destination_currency_id.round(line.amount / line.payment_id._get_withholding_rate())" t-options='{"widget": "monetary", "display_currency": line.payment_id.destination_currency_id}'/>
                     </td>
@@ -81,21 +81,21 @@
                     <tr>
                         <th><span>Pending Vouchers at </span><span t-out="datetime.datetime.today()" t-options='{"widget": "date"}'/></th>
                         <th class="text-center"><span>Exp. Date</span></th>
-                        <th class="text-right"><span>Original Amount</span></th>
-                        <th class="text-right"><span>Balance</span></th>
+                        <th class="text-end"><span>Original Amount</span></th>
+                        <th class="text-end pe-2"><span>Balance</span></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <t t-foreach="o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.account_type', '=', o.partner_type=='customer' and 'asset_receivable' or 'liability_payable'), ('reconciled', '=', False), ('account_id.active', '=', True), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)])" t-as="line">
+                    <t t-foreach="o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.account_type', '=', o.partner_type=='customer' and 'asset_receivable' or 'liability_payable'), ('reconciled', '=', False), ('account_id.active', '=', True), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)], order='date_maturity, id')" t-as="line">
                         <tr>
                             <td><span t-field='line.move_id.display_name'/></td>
                             <td class="text-center">
                                 <span class="text-nowrap" t-field="line.date_maturity"/>
                             </td>
-                            <td class="text-right o_price_total">
+                            <td class="text-end o_price_total">
                                 <span class="text-nowrap" t-field="line.balance"/>
                             </td>
-                            <td class="text-right o_price_total">
+                            <td class="text-end pe-2 o_price_total">
                                 <span class="text-nowrap" t-field="line.amount_residual"/>
                             </td>
                         </tr>
@@ -104,7 +104,7 @@
                 <tfoot>
                     <tr>
                         <td colspan="3"><strong><span>Total Pending</span></strong></td>
-                        <td class="text-right">
+                        <td class="text-end pe-2">
                             <strong><span class="text-nowrap" t-out="sum(o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.account_type', '=', o.partner_type=='customer' and 'asset_receivable' or 'liability_payable'), ('reconciled', '=', False), ('account_id.active', '=', True), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)]).mapped('amount_residual'))" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/></strong>
                         </td>
                     </tr>
@@ -149,10 +149,10 @@
                     <td class="text-center">
                         <span class="text-nowrap" t-field="reversal_move_id.invoice_date"/>
                     </td>
-                    <td class="text-right o_price_total">
+                    <td class="text-end o_price_total">
                         <span class="text-nowrap" t-out="(o.partner_type == 'supplier' and 1.0 or -1.0) * sum(imputed_amount)" t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
                     </td>
-                    <td class="text-right o_price_total"/>
+                    <td class="text-end pe-2 o_price_total"/>
                 </tr>
             </t>
         </xpath>

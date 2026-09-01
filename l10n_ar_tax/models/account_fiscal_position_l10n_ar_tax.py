@@ -80,7 +80,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
                     raise ValidationError(
                         "Impuesto %s sin provincia establecida, no puede consultar padrón" % record.default_tax_id.name
                     )
-                if record.default_tax_id.l10n_ar_state_id.jurisdiction_code not in ["902", "921"]:
+                if not record._get_padron_config(record.default_tax_id.l10n_ar_state_id):
                     raise ValidationError(
                         "Padrón no implementado para la provincia de %s." % record.default_tax_id.l10n_ar_state_id.name
                     )
@@ -263,7 +263,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
         self.ensure_one()
         from_date = date + relativedelta(day=1)
         to_date = from_date + relativedelta(days=-1, months=+1)
-        aliquot, ref = getattr(self, "_get_%s_data" % self.webservice)(partner, from_date, to_date)
+        aliquot, ref = self._get_aliquot(partner, from_date, to_date)
         # devolvemos None si es no inscripto
         if aliquot is None:
             tax = self.default_tax_id
@@ -324,11 +324,106 @@ class AccountFiscalPositionL10nArTax(models.Model):
         )
         return res
 
+    def _get_padron_config(self, state):
+        """Jurisdicciones que publican padrón de alícuotas en archivo, y cómo se lee ese
+        archivo: con qué referencia se registra la alícuota encontrada, con cuál la del
+        contribuyente ausente, y cómo se parsea el valor cuando no viene como float.
+
+        Sumar una jurisdicción es sumar una entrada acá, no un if en la lógica de
+        resolución. Devuelve False si la jurisdicción no tiene padrón implementado.
+        """
+        return {
+            "901": {  # CABA (AGIP, Regímenes Generales)
+                "found_ref": _("AGIP padron aliquot (imported file)"),
+                "missing_ref": _("Default aliquot. Not found in AGIP padron"),
+            },
+            "902": {  # Buenos Aires (ARBA)
+                "found_ref": _("ARBA padron aliquot (imported file)"),
+                "missing_ref": _("ARBA unregistered aliquot (imported file)"),
+                # ARBA publica las alícuotas como texto con coma decimal
+                "parse": lambda value: float(value.replace(",", ".")),
+            },
+            "921": {  # Santa Fe (PARP)
+                "found_ref": _("Santa Fe padron aliquot"),
+                "missing_ref": _("Penalty aliquot. Not found in Santa Fe padron"),
+            },
+        }.get(state.jurisdiction_code if state else "", False)
+
+    def _get_aliquot(self, partner, date, to_date):
+        """Orden de resolución de la alícuota, único para todas las jurisdicciones:
+
+        1) Padrón cargado en esta base y vigente para el período: manda siempre. Es la
+           contingencia para cuando el web service de la jurisdicción falla, así que gana
+           incluso si la línea está configurada para consultar web service.
+        2) Sin padrón cargado: se consulta el web service de la jurisdicción, salvo que la
+           línea esté configurada como "Archivo de padrón", que es la forma de decir "esta
+           jurisdicción no consulta web service nunca" y entonces pedimos que lo carguen.
+
+        La alícuota cargada en el contacto (l10n_ar.partner.tax) tiene prioridad sobre todo
+        esto y se resuelve antes, en account.fiscal.position._get_taxes, sin llegar acá.
+
+        :return: (float|None, string) alícuota y referencia. None = no inscripto, se usa el
+            impuesto por defecto de la línea.
+        """
+        self.ensure_one()
+        padron_file = self._search_padron_file(self.default_tax_id.l10n_ar_state_id, date)
+        if padron_file:
+            return self._get_aliquot_from_padron(padron_file, partner)
+        if self.webservice == "padron":
+            # Mientras se carga data demo no hay archivo de padrón que subir: la demo de
+            # l10n_ar_account_reports crea líneas de Santa Fe, que se derivan a "padron".
+            if self.env.ref("base.user_demo", raise_if_not_found=False):
+                return (2.5 if self.tax_type == "withholding" else 3.0, "VALOR DUMMY | dummy")
+            raise self._no_padron_uploaded_error(date, to_date)
+        return getattr(self, "_get_%s_data" % self.webservice)(partner, date, to_date)
+
+    def _get_aliquot_from_padron(self, padron_file, partner):
+        """Lee la alícuota del archivo de padrón cargado en la base. Mismo tratamiento para
+        todas las jurisdicciones: lo único propio de cada una está en _get_padron_config.
+        """
+        self.ensure_one()
+        # Sin CUIT no hay nada que buscar en el archivo: un vat vacío matchearía la línea de
+        # cualquier otro contribuyente. Va acá y no en _get_aliquot para no cambiarles el
+        # comportamiento a los web services, que resuelven el partner sin CUIT cada uno a su
+        # manera (rentas_cordoba lo trata como no inscripto y aplica el impuesto por defecto).
+        partner.ensure_vat()
+        # sin dummy de demo: si el padrón está cargado se lee, también en bases demo (el dummy
+        # de demo está donde no hay de dónde leer: el web service y el padrón sin archivo).
+        config = self._get_padron_config(self.default_tax_id.l10n_ar_state_id)
+        is_in_padron, aliquot_ret, aliquot_per = padron_file._get_aliquot(partner)
+        if not is_in_padron:
+            return None, config["missing_ref"]
+        aliquot = aliquot_ret if self.tax_type == "withholding" else aliquot_per
+        if config.get("parse"):
+            aliquot = config["parse"](aliquot)
+        return aliquot, config["found_ref"]
+
     def _get_agip_data(self, partner, date, to_date):
+        """Metodo que obtiene la alicuota de AGIP (CABA) del padron que Adhoc baja y procesa
+        en su propia base
+
+        :return: (float, string) alícuota y referencia
+
+        Se llama solo cuando el cliente no cargó el padron de AGIP en su base (ver
+        _get_aliquot). En las bases SaaS de Adhoc, saas_client_l10n_ar extiende este método
+        para consultar ese padron; sin esa integración no tenemos de dónde sacar la alícuota
+        y pedimos que carguen el padron.
+        """
+        self.ensure_one()
+
         # si es base en data demo devolvemos una alicuota demo para que no falle la demo data
         if self.env.ref("base.user_demo", raise_if_not_found=False):
             return (2.5 if self.tax_type == "withholding" else 3.0, "VALOR DUMMY | dummy")
-        raise UserError(_("Missing ADHOC credential configuration for AGIP tax rate queries"))
+
+        raise self._no_padron_uploaded_error(date, to_date)
+
+    def _no_padron_uploaded_error(self, date, to_date):
+        return UserError(
+            _(
+                "No padron uploaded for the indicated date %s to %s. You must upload it in 'Accounting / Configuration / AFIP / Tax Rate Padron by Company' or manually enter the tax rate on the contact for the current period."
+            )
+            % (date, to_date)
+        )
 
     def _get_arba_data(self, partner, date, to_date):
         """Metodo que obtiene la alicuota de ARBA de un partner y fecha dado
@@ -339,8 +434,8 @@ class AccountFiscalPositionL10nArTax(models.Model):
             float valor alicuota (retencion o percepcion depende del caso)
             string "numero comprobante codigohast GrupoRetencion/Percepcion"
 
-        Si hay un padron de alicuotas ya cargado en el sistema, lo usamos
-        para obtener la alícuota, sino consultamos el webservice de ARBA
+        Solo consulta el webservice: si hay padrón cargado en la base no se llega hasta acá
+        (ver _get_aliquot).
         """
         self.ensure_one()
 
@@ -350,11 +445,6 @@ class AccountFiscalPositionL10nArTax(models.Model):
 
         cuit = partner.ensure_vat()
         _logger.info("Getting ARBA data for cuit %s from date %s to date %s" % (date, to_date, cuit))
-
-        # Si no existe padron NO devolvemos ref y pasamos a consultar alícuota al webservice
-        alicuot, ref = self._get_padron_data(partner, date, to_date)
-        if ref:
-            return alicuot, ref
 
         arba_cit = self.fiscal_position_id.company_id.arba_consultar_contribuyente(cuit, date, to_date)
         if arba_cit.get("NumeroComprobante"):
@@ -458,54 +548,8 @@ class AccountFiscalPositionL10nArTax(models.Model):
         return aliquot, ref
 
     def _get_padron_data(self, partner, date, to_date):
-        """Método implementado para obtener alícuota de padrón ARBA y Santa Fe:
-        jurisdiction_code de Santa Fe = 921, de ARBA = 902
-        1) Santa Fe:
-         * si no existe padrón para el período correspondiente entonces devuelve UserError para que lo cargue.
-         * si existe padrón para el período correspondiente, busca el CUIT en el padrón y:
-            a) si lo encuentra devuelve la tasa y "Alícuota padrón Santa Fe",
-            b) si no lo encuentra devuelve None, "Alícuota castigo. No figura en padrón Santa Fe"
-        2) ARBA:
-         * si no existe padrón devuelve None, None
-         * si existe padrón para el período correspondiente, busca el CUIT en el padrón y:
-            a) si lo encuentra devuelve la tasa y "Alícuota padrón ARBA (archivo importado)",
-            b) si no lo encuentra devuelve None, "Alícuota no inscripto ARBA (archivo importado)"
-
-        return: alicuot, ref
+        """Alícuota de una línea configurada como "Archivo de padrón" (nunca consulta web
+        service). Es el método que despacha `webservice = padron`; la resolución en sí es la
+        misma para todas las jurisdicciones y vive en _get_aliquot.
         """
-        self.ensure_one()
-        if self.env.ref("base.user_demo", raise_if_not_found=False):
-            return (2.5 / 3.0, "VALOR DUMMY | dummy")
-        state = self.default_tax_id.l10n_ar_state_id
-        padron_file = self._search_padron_file(state, date)
-        if not padron_file:
-            # si la consulta de padron viene por "contingencia" (por ej. se usa ws de arba o agip) y no hay padron, no queremos raise
-            if self.webservice != "padron":
-                return None, None
-            # Si se está consultando alícuota con tipo "padron" y no hay, entonces damos error.
-            raise UserError(
-                _(
-                    "No padron uploaded for the indicated date %s to %s. You must upload it in 'Accounting / Configuration / AFIP / Tax Rate Padron by Company' or manually enter the tax rate on the contact for the current period."
-                )
-                % (date, to_date)
-            )
-        nro, alicuot_ret, alicuot_per = padron_file._get_aliquot(partner)
-        if state.jurisdiction_code == "921":
-            if nro:
-                # en santa fe en realidad no hay nro, viene True/False (Segun si lo encontramos), por eso no devolvemos string genérica
-                return (
-                    alicuot_ret if self.tax_type == "withholding" else alicuot_per,
-                    _("Santa Fe padron aliquot"),
-                )
-            else:
-                return None, _("Penalty aliquot. Not found in Santa Fe padron")
-        if state.jurisdiction_code == "902":
-            if nro:
-                return (
-                    float(alicuot_ret.replace(",", "."))
-                    if self.tax_type == "withholding"
-                    else float(alicuot_per.replace(",", ".")),
-                    _("ARBA padron aliquot (imported file)"),
-                )
-            else:
-                return None, _("ARBA unregistered aliquot (imported file)")
+        return self._get_aliquot(partner, date, to_date)

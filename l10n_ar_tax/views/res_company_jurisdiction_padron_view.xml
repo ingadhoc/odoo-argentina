@@ -42,6 +42,8 @@
                             </li>
                             <li>Santa Fe: debe subir el archivo con formato zip que descarga del padrón PARP (Padrón de Alícuotas de Retención/Percepción) de la oficina virtual de API y que tiene nombre de forma "PARP_999999.zip"
                             </li>
+                            <li>AGIP (CABA): debe subir el archivo comprimido (rar o zip) del padrón de Regímenes Generales que descarga de la web de AGIP. La alícuota se lee del archivo cuando se necesita, no hace falta procesarlo.
+                            </li>
                         </ul>
                     </p>
                 </sheet>

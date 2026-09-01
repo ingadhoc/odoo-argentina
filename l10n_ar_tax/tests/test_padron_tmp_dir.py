@@ -47,7 +47,7 @@ class TestPadronTmpDir(common.TransactionCase):
                 "l10n_ar_padron_to_date": to_date,
             }
         )
-        self.addCleanup(shutil.rmtree, padron._get_parp_tmp_dir(), ignore_errors=True)
+        self.addCleanup(shutil.rmtree, padron._get_padron_tmp_dir(), ignore_errors=True)
         return padron
 
     def _create_santa_fe_padron(self, lines):
@@ -64,7 +64,7 @@ class TestPadronTmpDir(common.TransactionCase):
                 "l10n_ar_padron_to_date": self.today + relativedelta(days=30),
             }
         )
-        self.addCleanup(shutil.rmtree, padron._get_parp_tmp_dir(), ignore_errors=True)
+        self.addCleanup(shutil.rmtree, padron._get_padron_tmp_dir(), ignore_errors=True)
         return padron
 
     def test_arba_different_months_do_not_share_extracted_files(self):

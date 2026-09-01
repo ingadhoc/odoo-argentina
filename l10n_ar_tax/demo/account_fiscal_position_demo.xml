@@ -22,7 +22,7 @@
         <field name="fiscal_position_id" ref="fiscal_position_caba_cordoba_perc"/>
         <field name="default_tax_id" eval="ref('account.%s_%s' % (ref('base.company_ri'), 'ri_tax_percepcion_iibb_co_aplicada'))"/>
         <field name="tax_type">perception</field>
-        <field name="webservice">agip</field>
+        <field name="webservice">rentas_cordoba</field>
     </record>
 
     <!-- Perc. CABA -->

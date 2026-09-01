@@ -1,3 +1,4 @@
+from . import test_aliquot_source_order
 from . import test_arba
 from . import test_map_tax_fiscal_position
 from . import test_perception_base_minimum_threshold

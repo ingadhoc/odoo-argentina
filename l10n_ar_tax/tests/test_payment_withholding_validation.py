@@ -87,7 +87,7 @@ class TestPaymentWithholdingValidation(TestArWithholdingArRi):
                 "fiscal_position_id": fiscal_position_caba.id,
                 "default_tax_id": self.caba_tax_perception.id,
                 "tax_type": "perception",
-                "webservice": "agip",
+                "webservice": "padron",
             }
         )
 

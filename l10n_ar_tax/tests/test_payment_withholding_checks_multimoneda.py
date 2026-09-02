@@ -10,6 +10,19 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
     Valida que la combinación de N líneas de liquidez (un cheque por línea, F.2)
     y el cálculo de retenciones argentinas funciona correctamente en los
     distintos escenarios de moneda.
+
+    Cubre FCP-R10-E1/E3/E5/E6 (ver TC.6/TC.7/TC.9/TC.8 respectivamente): que el
+    cheque quede cargado por el neto, con la retención separada en su propia
+    línea, en cada combinación de monedas. Lo que estos tests **no** verifican
+    es que el asiento del débito posterior excluya la retención (parte de
+    "qué tiene que dar" de R10 base): el botón de débito y su wizard viven en
+    ``l10n_latam_check_ux``, que este módulo no declara como dependencia —
+    combinarlo acá reproduciría el mismo bug de aislamiento de CI que
+    ``reference_runbot_modified_modules_dependency_scope`` documenta. Esa
+    verificación queda cubierta por composición: el débito mueve siempre el
+    importe propio de la línea de liquidez del cheque, sin mirar retenciones
+    (``l10n_latam_check_ux:test_debit_one_check_of_many``), y esa línea ya está
+    probada acá como el neto.
     """
 
     @classmethod
@@ -91,6 +104,8 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
         - payment.amount = 1 180 ARS (neto pagado)
         - 3 líneas en el asiento: 1 liquidez + 1 retención + 1 contrapartida
         - sum(balances) == 0
+
+        Cubre FCP-R10-E1 (base: un cheque por el neto).
         """
         invoice = self._create_invoice(1_000, self.ars)
         payment = self._create_check_payment_with_wth(
@@ -140,6 +155,8 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
         - withholdings_amount = 36 000 / 1200 = 30 USD
         - 4 líneas: 2 liquidez + 1 retención + 1 contrapartida
         - sum(balances) == 0
+
+        Cubre FCP-R10-E3 (dos cheques propios + retención: la suma es el neto).
         """
         invoice = self._create_invoice(1_000, self.usd)
         payment = self._create_check_payment_with_wth(
@@ -196,6 +213,9 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
         Verifica:
         - 5 líneas: 2 liquidez + 1 retención + 1 write-off + 1 contrapartida
         - sum(balances) == 0
+
+        Cubre FCP-R10-E6 (cheque propio + retención + write-off: cuatro líneas
+        separadas y correctas).
         """
         invoice = self._create_invoice(1_000, self.usd)
         debt = invoice.line_ids.filtered(lambda l: l.account_id.account_type == "liability_payable")
@@ -253,6 +273,9 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
         - 4 líneas: 2 liquidez + 1 retención + 1 contrapartida
         - balance de cada liquidez = amount_currency / accounting_rate
         - sum(balances) == 0
+
+        Cubre FCP-R10-E5 (cheque propio en USD con retención en ARS: el
+        asiento no cruza importe en moneda con importe en pesos).
         """
         invoice = self._create_invoice(1_000, self.usd)
         payment = self._create_check_payment_with_wth(

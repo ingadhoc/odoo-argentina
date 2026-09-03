@@ -1,4 +1,5 @@
-from odoo import api, fields, models
+from odoo import Command, _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class AccountMove(models.Model):
@@ -115,3 +116,103 @@ class AccountMove(models.Model):
         if wth_moves:
             super(AccountMove, wth_moves.with_context(skip_invoice_sync=True)).button_draft()
         return super(AccountMove, self - wth_moves).button_draft()
+
+    def _l10n_ar_manual_fixed_perception_lines(self):
+        """Líneas de impuesto AR ``fixed`` de este comprobante, con importe cargado.
+
+        Son las percepciones/otros impuestos AR (Perc IVA, Decreto 1008/2001) cuyo importe tipea a
+        mano el operador: el ``amount`` del impuesto es un placeholder y el motor de impuestos no
+        puede derivar el importe real. Ver ``action_l10n_ar_create_refund_with_perceptions``.
+        """
+        self.ensure_one()
+        return self.line_ids.filtered(
+            lambda line: line.tax_line_id.amount_type == "fixed"
+            and line.tax_line_id.country_id.code == "AR"
+            and line.balance
+        )
+
+    def action_l10n_ar_create_refund_with_perceptions(self):
+        """Crea la nota de crédito de una factura con percepciones de importe manual.
+
+        El problema que evita: al usar "Agregar nota de crédito", la percepción queda del mismo
+        lado que en la factura en vez de invertirse -su importe no es derivable del cómputo del
+        impuesto, así que la reversión lo copia tal cual-, y la NC le acredita al proveedor de más,
+        por el doble del importe.
+
+        Corregir eso después no funciona: en borrador cualquier guardado que incluya
+        ``invoice_line_ids`` -y el cliente web las manda al guardar antes de confirmar- hace que
+        ``_sync_tax_lines`` vuelva a derivar el signo desde la dirección del documento; y una vez
+        confirmada, la reversión ya concilió la NC contra la factura y
+        ``account.move.line._check_reconciliation`` bloquea modificar esas líneas.
+
+        Por eso acá no revertimos: creamos la NC como un ``in_refund`` nuevo, con las mismas líneas
+        y la percepción ya del lado que corresponde. Al no haber ``reversed_entry_id`` no hay copia
+        con el signo mal ni conciliación automática, el asiento coincide con lo que calcula el
+        motor de impuestos y la corrección se sostiene tanto en borrador como al confirmar.
+
+        Contrapartida de no revertir: la NC no queda vinculada a la factura, así que hay que
+        conciliarla a mano. Dejamos la referencia en ``ref`` para la trazabilidad.
+        """
+        self.ensure_one()
+        # in_invoice y no is_purchase_document(): ese ultimo tambien da True para una NC, y crear
+        # la NC de una NC no tiene sentido.
+        if self.state != "posted" or self.move_type != "in_invoice":
+            raise UserError(_("Esta acción solo aplica a facturas de proveedor confirmadas."))
+        if not self._l10n_ar_manual_fixed_perception_lines():
+            raise UserError(
+                _(
+                    "%s no tiene percepciones de importe manual, así que no hace falta esta acción: "
+                    "use “Agregar nota de crédito”.",
+                    self.display_name,
+                )
+            )
+
+        refund = self.env["account.move"].create(
+            {
+                "move_type": "in_refund",
+                "partner_id": self.partner_id.id,
+                "journal_id": self.journal_id.id,
+                "company_id": self.company_id.id,
+                "currency_id": self.currency_id.id,
+                "invoice_date": fields.Date.context_today(self),
+                "fiscal_position_id": self.fiscal_position_id.id,
+                "invoice_payment_term_id": self.invoice_payment_term_id.id,
+                "ref": _("NC de: %s", self.name),
+                "invoice_line_ids": [
+                    Command.create(
+                        {
+                            "product_id": line.product_id.id,
+                            "name": line.name,
+                            "quantity": line.quantity,
+                            "price_unit": line.price_unit,
+                            "discount": line.discount,
+                            "account_id": line.account_id.id,
+                            "tax_ids": [Command.set(line.tax_ids.ids)],
+                        }
+                    )
+                    for line in self.invoice_line_ids
+                ],
+            }
+        )
+
+        # La NC nace con la percepcion en el valor de la formula (un placeholder); la dejamos con
+        # el importe de la factura y el signo invertido, que es lo que el operador espera.
+        updates = {}
+        for original in self._l10n_ar_manual_fixed_perception_lines():
+            line = refund.line_ids.filtered(lambda l: l.tax_line_id == original.tax_line_id)[:1]
+            if line:
+                updates[line.id] = {
+                    "balance": -original.balance,
+                    "amount_currency": -original.amount_currency,
+                }
+        if updates:
+            refund.write({"line_ids": [Command.update(line_id, vals) for line_id, vals in updates.items()]})
+
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Nota de crédito"),
+            "res_model": "account.move",
+            "res_id": refund.id,
+            "view_mode": "form",
+            "context": dict(self.env.context, default_move_type="in_refund"),
+        }

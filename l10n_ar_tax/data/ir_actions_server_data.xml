@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Queda en el menú Acción (la "tuerquita") y no como botón en el formulario: es un camino
+         alternativo para un caso de borde, no algo que la mayoría necesite ver.
+
+         `base.group_no_one` la deja visible SOLO en modo debug: `ir.actions.actions.get_bindings`
+         filtra por `has_group`, y para ese grupo `has_group` devuelve True únicamente si la sesión
+         está en debug. Tiene que ser el único grupo del campo: `get_bindings` evalúa los grupos con
+         un `any`, así que sumar otro (por ejemplo Asesor contable) haría que ese rol la vea siempre
+         y anularía la restricción. -->
+    <record id="action_create_refund_with_perceptions" model="ir.actions.server">
+        <field name="name">NC con percepción negativa</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">action</field>
+        <field name="binding_view_types">form</field>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+        <field name="state">code</field>
+        <field name="code">
+if record:
+    action = record.action_l10n_ar_create_refund_with_perceptions()
+        </field>
+    </record>
+
+</odoo>

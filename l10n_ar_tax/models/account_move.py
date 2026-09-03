@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 
 
 class AccountMove(models.Model):
@@ -115,3 +115,50 @@ class AccountMove(models.Model):
         if wth_moves:
             super(AccountMove, wth_moves.with_context(skip_invoice_sync=True)).button_draft()
         return super(AccountMove, self - wth_moves).button_draft()
+
+    def action_post(self):
+        """Las percepciones/otros impuestos AR ``fixed`` (Perc IVA, Decreto 1008/2001) llevan el
+        importe tipeado a mano por el operador. Al generar una NC, ese importe a veces se copia tal
+        cual de la factura sin invertirle el signo (a diferencia de un impuesto ``percent``, que sí
+        se recalcula bien): la percepción queda del mismo lado (haber) en la factura y en la NC.
+
+        Corregir esto ANTES de terminar de postear no alcanza: hay una cadena larga de overrides de
+        ``_post`` (EDI, numeración de documento, etc. — más de 30 módulos instalados la tocan) y
+        cualquiera de ellos puede volver a escribir las líneas después de nuestra corrección,
+        pisándola. Además, mientras el documento sigue en borrador, el sync dinámico del asiento
+        (ver el docstring de ``button_draft`` arriba) puede recomponer la línea de nuevo. Por eso
+        corregimos DESPUÉS de que todo el posteo terminó: un move posteado ya no dispara ese sync
+        (solo corre sobre moves no posteados), así que esto es lo último que toca el asiento.
+        """
+        posted = super().action_post()
+        for move in self.filtered(lambda m: m.reversed_entry_id and m.state == "posted"):
+            original_lines = move.reversed_entry_id.line_ids
+            updates = {}
+            move_delta = move_delta_currency = 0.0
+            # Comparamos contra la linea original: si quedo el mismo signo es que no se invirtio.
+            # Evita un doble-flip sobre los casos que el core ya resuelve bien solo.
+            for line in move.line_ids.filtered(
+                lambda l: l.tax_line_id.amount_type == "fixed" and l.tax_line_id.country_id.code == "AR"
+            ):
+                orig_line = original_lines.filtered(lambda l: l.tax_line_id == line.tax_line_id)[:1]
+                if orig_line and orig_line.balance and line.balance and (orig_line.balance > 0) == (line.balance > 0):
+                    updates[line.id] = {"balance": -line.balance, "amount_currency": -line.amount_currency}
+                    move_delta += -2 * line.balance
+                    move_delta_currency += -2 * line.amount_currency
+            if not updates:
+                continue
+            # Compensamos la contrapartida (proveedores) para que el asiento siga balanceando.
+            # Solo con una unica linea de payment_term: es el caso comun de una NC de proveedor.
+            payment_term_line = move.line_ids.filtered(lambda l: l.display_type == "payment_term")
+            if len(payment_term_line) == 1:
+                updates[payment_term_line.id] = {
+                    "balance": payment_term_line.balance - move_delta,
+                    "amount_currency": payment_term_line.amount_currency - move_delta_currency,
+                }
+            # Todo en un unico write con skip_invoice_sync: account.move.line valida el balance
+            # en cada escritura (invertir la percepcion sin la compensacion en la misma llamada
+            # rompe el chequeo), y sin skip_invoice_sync el sync dinamico pisa la correccion.
+            move.with_context(skip_invoice_sync=True).write(
+                {"line_ids": [Command.update(line_id, vals) for line_id, vals in updates.items()]}
+            )
+        return posted

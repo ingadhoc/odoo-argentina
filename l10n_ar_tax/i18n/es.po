@@ -948,6 +948,17 @@ msgid "ID"
 msgstr "ID (identificación)"
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_fiscal_position__l10n_ar_require_related_invoice
+msgid ""
+"If enabled, the perception taxes of this fiscal position only apply to "
+"credit notes when the amount is exactly equal to the related invoice and "
+"both are in the same month."
+msgstr ""
+"Si está habilitado, las percepciones de esta posición fiscal solo se aplican "
+"a las notas de crédito cuando el importe es exactamente igual al de la "
+"factura relacionada y ambas están en el mismo mes."
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_withholding_sequence_id
 #: model:ir.model.fields,help:l10n_ar_tax.field_l10n_ar_payment_withholding__withholding_sequence_id
 msgid ""
@@ -1126,6 +1137,11 @@ msgstr "Número"
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_payment_receipt_document
 msgid "Observations:"
 msgstr "Observaciones:"
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position__l10n_ar_require_related_invoice
+msgid "Only applies to NC with total refund (AR)"
+msgstr "Solo aplica en NC con devolución total (AR)"
 
 #. module: l10n_ar_tax
 #. odoo-python

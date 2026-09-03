@@ -9,6 +9,7 @@ Implements automatic calculation of Argentine withholdings (retenciones) and per
 - Multi-currency withholdings: payments in USD, EUR, or any foreign currency produce correct ARS-denominated withholdings.
 - Configurable tax ratios for specific jurisdictions (e.g. Córdoba).
 - Fiscal position-based tax automation.
+- Argentine fiscal positions can be flagged to only auto-detect on credit notes created as a full-refund reversal, avoiding their application on manual credit notes.
 - Withholding certificate generation.
 - Integration with ARCA web services.
 - ARBA, Santa Fe (PARP) and AGIP (CABA) padron readers.

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-31 16:35+0000\n"
-"PO-Revision-Date: 2026-08-31 16:35+0000\n"
+"POT-Creation-Date: 2026-09-03 13:52+0000\n"
+"PO-Revision-Date: 2026-09-03 13:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -451,8 +451,22 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_form
+msgid ""
+"AGIP (CABA): debe subir el archivo comprimido (rar o zip) del padrón de "
+"Regímenes Generales que descarga de la web de AGIP. La alícuota se lee del "
+"archivo cuando se necesita, no hace falta procesarlo."
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__webservice__agip
 msgid "AGIP (Regimen General)"
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "AGIP padron aliquot (imported file)"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -764,6 +778,12 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "Default aliquot. Not found in AGIP padron"
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
 #: code:addons/l10n_ar_tax/models/res_company.py:0
 msgid "Detail: %s"
 msgstr ""
@@ -1011,12 +1031,6 @@ msgid "Minimum Threshold"
 msgstr ""
 
 #. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-msgid "Missing ADHOC credential configuration for AGIP tax rate queries"
-msgstr ""
-
-#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__res_partner__drei__no_activo
 msgid "No Activo"
 msgstr ""
@@ -1067,6 +1081,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
 msgid "Only compressed ZIP files are allowed for Santa Fe."
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid "Only compressed ZIP or RAR files are allowed for AGIP (CABA)."
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1325,6 +1345,35 @@ msgid "Taxes"
 msgstr ""
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid ""
+"The aliquot padron could not be read: looking up CUIT %s failed. Please try "
+"again in a few minutes or enter the tax rate manually on the contact."
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid ""
+"The aliquot padron could not be read: looking up CUIT %s took too long. "
+"Please try again in a few minutes or enter the tax rate manually on the "
+"contact."
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid "The compressed file does not contain the padron in CSV or TXT format."
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid "The padron for %s is not implemented."
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_state_code
 msgid "The state code."
 msgstr ""
@@ -1335,6 +1384,14 @@ msgstr ""
 msgid ""
 "The total percentage (%s) should be greater than 0 and less than or equal to"
 " 100."
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid ""
+"This database cannot read RAR files (the 'unrar' library is not installed). "
+"Please upload the AGIP padron as a ZIP file instead."
 msgstr ""
 
 #. module: l10n_ar_tax

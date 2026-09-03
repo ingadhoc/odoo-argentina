@@ -260,6 +260,13 @@ class AccountPayment(models.Model):
             )
 
         return res
+    
+    @api.onchange("l10n_ar_fiscal_position_id")
+    def _onchange_fiscal_position_id(self):
+        for rec in self:
+            # Forzamos el recálculo del monto a pagar si el usuario cambia la posición fiscal a mano
+            if rec.l10n_ar_fiscal_position_id != rec._origin.l10n_ar_fiscal_position_id:
+                rec._onchange_withholdings()
 
     def _prepare_move_lines_per_type(self, write_off_line_vals=None, force_balance=None):
         res = super()._prepare_move_lines_per_type(write_off_line_vals=write_off_line_vals, force_balance=force_balance)

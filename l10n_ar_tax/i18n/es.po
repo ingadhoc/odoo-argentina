@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-31 16:35+0000\n"
+"POT-Creation-Date: 2026-09-03 13:52+0000\n"
 "PO-Revision-Date: 2026-05-27 19:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -449,6 +449,14 @@ msgid ""
 "A partir del importe del pago (campo Importe) + ajuste, se calculan las "
 "retenciones y el importe a pagar. Útil por ejemplo para pagos con cheques "
 "donde el importe Importe no lo podemos cambiar"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_form
+msgid ""
+"AGIP (CABA): debe subir el archivo comprimido (rar o zip) del padrón de "
+"Regímenes Generales que descarga de la web de AGIP. La alícuota se lee del "
+"archivo cuando se necesita, no hace falta procesarlo."
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1070,14 +1078,6 @@ msgid "Minimum Threshold"
 msgstr "Retención mínima"
 
 #. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-msgid "Missing ADHOC credential configuration for AGIP tax rate queries"
-msgstr ""
-"Falta configuración de credenciales de ADHOC para consulta de Alícuotas de "
-"AGIP"
-
-#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__res_partner__drei__no_activo
 msgid "No Activo"
 msgstr ""
@@ -1402,6 +1402,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
 msgid ""
+"The aliquot padron could not be read: looking up CUIT %s failed. Please try "
+"again in a few minutes or enter the tax rate manually on the contact."
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid ""
 "The aliquot padron could not be read: looking up CUIT %s took too long. "
 "Please try again in a few minutes or enter the tax rate manually on the "
 "contact."
@@ -1439,8 +1447,8 @@ msgstr "El porcentaje total (%s) debe ser mayor que 0 y menor o igual que 100."
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
 msgid ""
-"This database cannot read RAR files (the 'unrar' library is not "
-"installed). Please upload the AGIP padron as a ZIP file instead."
+"This database cannot read RAR files (the 'unrar' library is not installed). "
+"Please upload the AGIP padron as a ZIP file instead."
 msgstr ""
 "Esta base de datos no puede leer archivos RAR (la librería 'unrar' no está "
 "instalada). Suba el padrón de AGIP como archivo ZIP."
@@ -1621,6 +1629,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
 msgid "⇒ Verify ARBA Key"
 msgstr "⇒ Verificar Clave ARBA"
+
+#~ msgid "Missing ADHOC credential configuration for AGIP tax rate queries"
+#~ msgstr ""
+#~ "Falta configuración de credenciales de ADHOC para consulta de Alícuotas "
+#~ "de AGIP"
 
 #~ msgid "(Electronic checkbook)"
 #~ msgstr "(Chequera electrónica)"

@@ -16,6 +16,15 @@ GREP_TIMEOUT = 30
 # Magic bytes de un ZIP: archivo con contenido, vacio y multi-volumen.
 ZIP_MAGIC_BYTES = (b"PK\x03\x04", b"PK\x05\x06", b"PK\x07\x08")
 
+# Posición 40 del diseño de registro del PARP (RG 37/2025 de API Santa Fe, Anexo I):
+# 'C' = Convenio Multilateral, 'D' = Local Santa Fe. Ese dato define la base de la
+# retención de IIBB: el contribuyente de Convenio Multilateral se retiene sobre el
+# total "sin deducción alguna" (art. 380 apartado 1, RG 36/2026) y el local sobre la
+# base neta, sin IVA (art. 380, primer párrafo), que es la base con la que ya están
+# configuradas las retenciones de IIBB de Santa Fe. Sólo el 'C' necesita desviar la
+# base, así que es el único valor que mapeamos (ver _get_parp_tax_type).
+PARP_CONTRIBUTOR_MULTILATERAL = "C"
+
 
 class ResCompanyJurisdictionPadron(models.Model):
     _name = "res.company.jurisdiction.padron"
@@ -178,11 +187,12 @@ class ResCompanyJurisdictionPadron(models.Model):
     def _read_padron_lines(self, lines, cuit):
         """Layout del padrón de archivo único, compartido por Santa Fe (PARP) y AGIP:
         F.PUBLIC;F.VIGEN.DESDE;F.VIGEN.HASTA;NRO.CUIT   ;TIPO CONTRIB;MARCA ALTA;MARCA ALICUOTA;ALIC.PERCEP;ALICUOTA RETENC;GRUPO PER.;GRUPO RETEN;RAZON SOCIAL
-        Returns: (is_in_padron, aliquot_ret, aliquot_per)
+        Returns: (is_in_padron, aliquot_ret, aliquot_per, contributor_type)
         """
         aliquot_ret = False
         aliquot_per = False
         is_in_padron = False
+        contributor_type = False
         for line in lines:
             if not line:
                 continue
@@ -196,13 +206,15 @@ class ResCompanyJurisdictionPadron(models.Model):
                 # Convert to float, handling comma as decimal separator
                 aliquot_per = float(values[7].replace(",", "."))
                 aliquot_ret = float(values[8].replace(",", "."))
+                # Tipo de contribuyente ('C'/'D') at index 4: define la base de la retención
+                contributor_type = values[4].upper()
                 is_in_padron = True
                 break
-        return is_in_padron, aliquot_ret, aliquot_per
+        return is_in_padron, aliquot_ret, aliquot_per, contributor_type
 
     def _find_padron_aliquot(self, path, cuit):
         """Busca el CUIT en un padrón de archivo único (ver _is_single_file_padron) y
-        devuelve (is_in_padron, aliquot_ret, aliquot_per).
+        devuelve (is_in_padron, aliquot_ret, aliquot_per, contributor_type).
 
         Filtra los candidatos con grep -F (en C) porque el padrón de AGIP tiene del
         orden de 1.5M de líneas; la comparación exacta por columna la hace
@@ -347,6 +359,12 @@ class ResCompanyJurisdictionPadron(models.Model):
         return res
 
     def _get_aliquot(self, partner):
+        """:return: (nro, aliquot_ret, aliquot_per, contributor_type)
+
+        ``contributor_type`` es el "TIPO CONTRIB" de los padrones de archivo único
+        (Santa Fe informa 'C'/'D'); en los que vienen en archivos separados (ARBA) viene
+        False porque el archivo no trae el dato.
+        """
         nro = False
         aliquot_ret = 0.0
         aliquot_per = 0.0
@@ -369,7 +387,7 @@ class ResCompanyJurisdictionPadron(models.Model):
                         aliquot_per = aliquot and aliquot.replace(",", ".")
                     else:
                         aliquot_ret = aliquot and aliquot.replace(",", ".")
-        return nro, aliquot_ret, aliquot_per
+        return nro, aliquot_ret, aliquot_per, False
 
     @api.model
     def _cron_clean_old_padron_files(self):

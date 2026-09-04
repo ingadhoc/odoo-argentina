@@ -91,7 +91,7 @@ class TestAliquotSourceOrder(common.TransactionCase):
         fp_line = self._create_fp_line("agip")
 
         with self._patch_agip_ws():
-            aliquot, ref = fp_line._get_aliquot(self.partner, self.date, self.to_date)
+            aliquot, ref, __ = fp_line._unpack_ws_data(fp_line._get_aliquot(self.partner, self.date, self.to_date))
 
         self.assertEqual(aliquot, 4.5, "la percepción tiene que salir del padrón, no del ws")
         self.assertIn("AGIP", ref)
@@ -101,7 +101,7 @@ class TestAliquotSourceOrder(common.TransactionCase):
         fp_line = self._create_fp_line("agip")
 
         with self._patch_agip_ws():
-            aliquot, ref = fp_line._get_aliquot(self.partner, self.date, self.to_date)
+            aliquot, ref, __ = fp_line._unpack_ws_data(fp_line._get_aliquot(self.partner, self.date, self.to_date))
 
         self.assertEqual((aliquot, ref), (9.99, "WS"))
 
@@ -117,7 +117,7 @@ class TestAliquotSourceOrder(common.TransactionCase):
             if self.env.ref("base.user_demo", raise_if_not_found=False):
                 # En base demo no hay padrón que cargar (la demo de l10n_ar_account_reports
                 # crea líneas de Santa Fe): se devuelve el dummy, tampoco el web service.
-                aliquot, ref = fp_line._get_aliquot(self.partner, self.date, self.to_date)
+                aliquot, ref, __ = fp_line._unpack_ws_data(fp_line._get_aliquot(self.partner, self.date, self.to_date))
                 self.assertIn("dummy", ref)
             else:
                 with self.assertRaisesRegex(UserError, "No padron uploaded"):
@@ -135,7 +135,7 @@ class TestAliquotSourceOrder(common.TransactionCase):
         fp_line = self._create_fp_line("agip")
 
         with self._patch_agip_ws():
-            aliquot, ref = fp_line._get_aliquot(self.partner, self.date, self.to_date)
+            aliquot, ref, __ = fp_line._unpack_ws_data(fp_line._get_aliquot(self.partner, self.date, self.to_date))
 
         self.assertEqual((aliquot, ref), (9.99, "WS"))
 
@@ -163,7 +163,7 @@ class TestAliquotSourceOrder(common.TransactionCase):
         fp_line = self._create_fp_line("agip")
 
         with self._patch_agip_ws():
-            aliquot, ref = fp_line._get_aliquot(other_partner, self.date, self.to_date)
+            aliquot, ref, __ = fp_line._unpack_ws_data(fp_line._get_aliquot(other_partner, self.date, self.to_date))
 
         self.assertIsNone(aliquot)
         self.assertIn("Not found in AGIP padron", ref)

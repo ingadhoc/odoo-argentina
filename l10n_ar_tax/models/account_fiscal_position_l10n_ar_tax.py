@@ -7,7 +7,13 @@ from dateutil.relativedelta import relativedelta
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+from .res_company_jurisdiction_padron import PARP_CONTRIBUTOR_MULTILATERAL
+
 _logger = logging.getLogger(__name__)
+
+# Sufijo para distinguir en la UI el impuesto que retiene sobre el total (Convenio
+# Multilateral) del que retiene sobre la base neta, cuando ambos comparten alícuota.
+IIBB_TOTAL_TAX_NAME_SUFFIX = "CM"
 
 
 class AccountFiscalPositionL10nArTax(models.Model):
@@ -98,7 +104,17 @@ class AccountFiscalPositionL10nArTax(models.Model):
     def _compute_tax_template_domain(self):
         for rec in self:
             domain = rec._get_tax_domain(filter_tax_group=False)
-            if not rec.l10n_ar_is_iibb:
+            if rec.l10n_ar_is_iibb:
+                # La variante de Convenio Multilateral la crea el padrón (ver _ensure_tax):
+                # elegirla a mano como impuesto por defecto haría que el flujo del padrón
+                # heredara esa base para cualquier contribuyente, incluido el local.
+                domain += [
+                    "!",
+                    "&",
+                    ("l10n_ar_tax_type", "=", "iibb_total"),
+                    ("l10n_ar_state_id.jurisdiction_code", "in", rec._get_base_defining_jurisdiction_codes()),
+                ]
+            else:
                 domain += [("l10n_ar_tax_type", "not in", ["iibb_untaxed", "iibb_total"])]
             rec.tax_template_domain = domain
 
@@ -187,7 +203,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 domain += [("tax_ids.l10n_ar_withholding_payment_type", "=", "supplier")]
             rec.tax_group_id_domain = json.dumps(domain)
 
-    def _get_tax_domain(self, filter_tax_group=True):
+    def _get_tax_domain(self, filter_tax_group=True, tax_type_domain=None):
         self.ensure_one()
         domain = self.env["account.tax"]._check_company_domain(self.fiscal_position_id.company_id)
         domain += [("amount_type", "=", "percent")]
@@ -223,52 +239,142 @@ class AccountFiscalPositionL10nArTax(models.Model):
         if self.tax_type == "perception":
             domain += [("type_tax_use", "=", "sale")]
         elif self.tax_type == "withholding":
-            # por ahora los 3 ws usan iibb_untaxed por eso esta hardcodeado
             domain += [("l10n_ar_withholding_payment_type", "=", "supplier")]
-            # domain += [WTH Tax = iibb untaxed, (Arg with type = supplier), (type = none)]
+        if tax_type_domain:
+            # La base es una dimensión más de búsqueda: un 0,6% iibb_untaxed y un 0,6%
+            # iibb_total son impuestos distintos y sin esto caen sobre el mismo account.tax.
+            # Recibe un dominio ya armado y no un valor porque no siempre se busca por
+            # igualdad: ver _get_tax_type_lookup.
+            domain += tax_type_domain
         return domain
 
-    def _ensure_tax(self, rate):
+    def _get_tax_type_lookup(self, l10n_ar_tax_type=None):
+        """Resuelve la base del impuesto para un lookup de _ensure_tax.
+
+        Separa dos cosas que no son la misma: con qué se *busca* (un dominio, porque no
+        siempre se busca por igualdad) y qué base se *escribe* en el impuesto que se crea
+        cuando no existe. Si el impuesto creado no matcheara la búsqueda que lo creó, cada
+        llamada crearía uno nuevo.
+
+        La base vacía cuenta como base neta: el campo no es required ni tiene default, en
+        las bases instaladas suele estar vacío, y así lo resuelve el cálculo de la retención
+        (sólo 'iibb_total' retiene sobre el total, ver l10n_ar.payment.withholding).
+
+        :param l10n_ar_tax_type: base pedida por el padrón ('iibb_total' es la única que
+            hoy se pide, ver _get_parp_tax_type). Sin pedido vale la del impuesto
+            configurado en la línea.
+        :return: (domain de la base, base a escribir en el impuesto nuevo)
+        """
         self.ensure_one()
-        domain = self._get_tax_domain()
+        base = l10n_ar_tax_type
+        if not base:
+            # Sin base pedida vale la del impuesto configurado, y sólo si es una base de
+            # IIBB: en ganancias (earnings, earnings_scale) la base no es una dimensión de
+            # búsqueda y filtrar por ella dejaría de reusar impuestos que hoy se reusan. Una
+            # base total configurada se respeta: es una decisión sobre los comprobantes del
+            # proveedor (IVA no discriminado), no sobre el régimen, y la variante CM ya no se
+            # puede elegir a mano (ver _compute_tax_template_domain). No heredamos si el
+            # usuario acaba de cambiar el grupo desde la UX (default_tax_id es todavía el del
+            # grupo anterior).
+            inherited = (
+                self.default_tax_id.l10n_ar_tax_type if self.tax_group_id == self.default_tax_id.tax_group_id else False
+            )
+            if inherited in ("iibb_untaxed", "iibb_total"):
+                base = inherited
+            elif self._padron_defines_base():
+                # Donde la variante CM existe hay que excluirla aunque no haya nada que
+                # heredar, y pedir la base neta es lo que la deja afuera. Fuera de esas
+                # jurisdicciones no filtramos: ahí iibb_total es una base configurada y
+                # excluirla crearía un duplicado sobre la base neta.
+                base = "iibb_untaxed"
+            else:
+                return None, False
+        if base == "iibb_untaxed":
+            # Los impuestos con la base vacía son de base neta: dejarlos afuera haría que se
+            # cree un duplicado con el mismo nombre en vez de reusarlos.
+            return [("l10n_ar_tax_type", "in", ["iibb_untaxed", False])], "iibb_untaxed"
+        return [("l10n_ar_tax_type", "=", base)], base
+
+    def _ensure_tax(self, rate, l10n_ar_tax_type=None):
+        """Devuelve (creando si no existe) el impuesto para la alícuota dada.
+
+        :param l10n_ar_tax_type: base del impuesto ('iibb_untaxed' / 'iibb_total'), porque
+            la misma alícuota puede aplicarse sobre base neta o sobre el total. Si no
+            viene, la resuelve _get_tax_type_lookup.
+        """
+        self.ensure_one()
+        tax_type_domain, tax_type_to_set = self._get_tax_type_lookup(l10n_ar_tax_type)
+        domain = self._get_tax_domain(tax_type_domain=tax_type_domain)
         tax = self.env["account.tax"].with_context(active_test=False).search(domain + [("amount", "=", rate)], limit=1)
         if tax and not tax.active:
             tax.active = True
         if not tax:
             # Buscar template desde el tax_group actual (puede ser un grupo nuevo/diferente).
             # Esto garantiza que el impuesto copiado tenga el estado/jurisdicción correcta.
-            template_domain = self._get_tax_domain(filter_tax_group=True)
+            # Si nos piden un iibb_total y sólo existe el iibb_untaxed, ese es el que queremos
+            # copiar cambiándole la base, así que no filtramos. Al revés no: la variante CM no
+            # puede ser template de un impuesto que retiene sobre la base neta, saldría con la
+            # base equivocada y con el sufijo CM en el nombre.
+            excludes_cm = tax_type_to_set != "iibb_total" and self._padron_defines_base()
+            template_domain = self._get_tax_domain(
+                filter_tax_group=True,
+                tax_type_domain=[("l10n_ar_tax_type", "!=", "iibb_total")] if excludes_cm else None,
+            )
             template_tax = self.env["account.tax"].with_context(active_test=False).search(template_domain, limit=1)
             if not template_tax:
                 template_tax = self.default_tax_id
             if not template_tax:
                 return self.env["account.tax"]
+            # El template puede ser el default_tax_id (fallback, sin pasar por el dominio) y
+            # ese sí puede ser la variante CM: no le propagamos esa base a un impuesto que no
+            # la pidió, o la búsqueda de arriba no volvería a encontrarlo nunca.
+            new_tax_type = tax_type_to_set or template_tax.l10n_ar_tax_type
+            if excludes_cm and new_tax_type == "iibb_total":
+                new_tax_type = "iibb_untaxed"
             if "%" not in template_tax.name:
                 name = f"{template_tax.name} {rate}%"
             else:
                 name = re.sub(r"\b\d+(\.\d+)?\s*%", f"{rate}%", template_tax.name)
 
+            if l10n_ar_tax_type == "iibb_total" and template_tax.l10n_ar_tax_type != "iibb_total":
+                # El sufijo distingue la variante que crea el padrón para el Convenio
+                # Multilateral, que si no quedaría con el mismo nombre que la de base neta.
+                # Cuelga de la base pedida y no de la del impuesto: una línea configurada
+                # sobre el total no crea variantes, crea su propio impuesto.
+                name = f"{name} {IIBB_TOTAL_TAX_NAME_SUFFIX}"
             tax = template_tax.copy(
                 default={
                     # dejamos sequencia mas baja para que siempre el que se duplica sea el que esta arriba
                     "sequence": 10,
                     "amount": rate,
                     "active": True,
+                    "l10n_ar_tax_type": new_tax_type,
                     "name": name,
                 }
             )
         return tax
 
+    @api.model
+    def _unpack_ws_data(self, ws_data):
+        """Desempaqueta lo que devuelve un método _get_<webservice>_data: (aliquot, ref)
+        más un tercer elemento opcional con el l10n_ar_tax_type de la base (hoy sólo lo
+        informa el padrón de Santa Fe). Lo usan todos los consumidores para que la
+        tolerancia a la tupla de 2 de los overrides no dependa del call-site.
+
+        :return: (aliquot, ref, l10n_ar_tax_type)
+        """
+        return ws_data[0], ws_data[1], (ws_data[2] if len(ws_data) > 2 else False)
+
     def _get_tax_from_ws(self, partner, date):
         self.ensure_one()
         from_date = date + relativedelta(day=1)
         to_date = from_date + relativedelta(days=-1, months=+1)
-        aliquot, ref = self._get_aliquot(partner, from_date, to_date)
+        aliquot, ref, l10n_ar_tax_type = self._unpack_ws_data(self._get_aliquot(partner, from_date, to_date))
         # devolvemos None si es no inscripto
         if aliquot is None:
             tax = self.default_tax_id
         else:
-            tax = self._ensure_tax(aliquot)
+            tax = self._ensure_tax(aliquot, l10n_ar_tax_type=l10n_ar_tax_type)
         # por mas que sea no inscripto creamos partner aliquot porque si no en cada
         # nueva linea o cambio se conecta a ws
         # TODO revisar porque necesitamos esto
@@ -324,13 +430,13 @@ class AccountFiscalPositionL10nArTax(models.Model):
         )
         return res
 
-    def _get_padron_config(self, state):
+    def _get_padron_configs(self):
         """Jurisdicciones que publican padrón de alícuotas en archivo, y cómo se lee ese
         archivo: con qué referencia se registra la alícuota encontrada, con cuál la del
         contribuyente ausente, y cómo se parsea el valor cuando no viene como float.
 
         Sumar una jurisdicción es sumar una entrada acá, no un if en la lógica de
-        resolución. Devuelve False si la jurisdicción no tiene padrón implementado.
+        resolución. Indexado por jurisdiction_code.
         """
         return {
             "901": {  # CABA (AGIP, Regímenes Generales)
@@ -346,8 +452,34 @@ class AccountFiscalPositionL10nArTax(models.Model):
             "921": {  # Santa Fe (PARP)
                 "found_ref": _("Santa Fe padron aliquot"),
                 "missing_ref": _("Penalty aliquot. Not found in Santa Fe padron"),
+                # Único padrón que informa el régimen del contribuyente, y en Santa Fe ese
+                # dato define la base de la retención (ver _get_parp_tax_type).
+                "contributor_type_defines_base": True,
             },
-        }.get(state.jurisdiction_code if state else "", False)
+        }
+
+    def _get_padron_config(self, state):
+        """Config del padrón de una jurisdicción. False si no tiene padrón implementado."""
+        return self._get_padron_configs().get(state.jurisdiction_code if state else "", False)
+
+    def _get_base_defining_jurisdiction_codes(self):
+        """Jurisdicciones cuyo padrón informa el régimen del contribuyente y por lo tanto
+        la base de la retención: son las únicas donde existe la variante de Convenio
+        Multilateral que crea _ensure_tax. En el resto, iibb_total es una base que se
+        configura como cualquier otra (ej. Neuquén, IVA no discriminado)."""
+        return [
+            code for code, config in self._get_padron_configs().items() if config.get("contributor_type_defines_base")
+        ]
+
+    def _padron_defines_base(self):
+        """True si la línea opera sobre una jurisdicción cuyo padrón define la base."""
+        self.ensure_one()
+        # El grupo puede tener impuestos sin jurisdicción: el estado lo da el primero que la
+        # tenga, igual que en _sync_default_tax_from_ux_fields.
+        group_taxes = self.tax_group_id.tax_ids.filtered("l10n_ar_state_id")
+        state = self.default_tax_id.l10n_ar_state_id or group_taxes[:1].l10n_ar_state_id
+        config = self._get_padron_config(state)
+        return bool(config and config.get("contributor_type_defines_base"))
 
     def _get_aliquot(self, partner, date, to_date):
         """Orden de resolución de la alícuota, único para todas las jurisdicciones:
@@ -362,8 +494,11 @@ class AccountFiscalPositionL10nArTax(models.Model):
         La alícuota cargada en el contacto (l10n_ar.partner.tax) tiene prioridad sobre todo
         esto y se resuelve antes, en account.fiscal.position._get_taxes, sin llegar acá.
 
-        :return: (float|None, string) alícuota y referencia. None = no inscripto, se usa el
-            impuesto por defecto de la línea.
+        :return: (float|None, string[, string]) alícuota y referencia, más la base a
+            aplicar cuando el padrón la informa (hoy sólo Santa Fe, ver
+            _get_aliquot_from_padron). None en la alícuota = no inscripto, se usa el
+            impuesto por defecto de la línea. Los consumidores desempaquetan con
+            _unpack_ws_data porque el tercer elemento es opcional.
         """
         self.ensure_one()
         padron_file = self._search_padron_file(self.default_tax_id.l10n_ar_state_id, date)
@@ -380,6 +515,10 @@ class AccountFiscalPositionL10nArTax(models.Model):
     def _get_aliquot_from_padron(self, padron_file, partner):
         """Lee la alícuota del archivo de padrón cargado en la base. Mismo tratamiento para
         todas las jurisdicciones: lo único propio de cada una está en _get_padron_config.
+
+        :return: (float|None, string, string|False) alícuota, referencia y base a aplicar.
+            La base sólo la informa el padrón que trae el régimen del contribuyente (Santa
+            Fe); en el resto viene False y se usa la del impuesto configurado.
         """
         self.ensure_one()
         # Sin CUIT no hay nada que buscar en el archivo: un vat vacío matchearía la línea de
@@ -390,13 +529,18 @@ class AccountFiscalPositionL10nArTax(models.Model):
         # sin dummy de demo: si el padrón está cargado se lee, también en bases demo (el dummy
         # de demo está donde no hay de dónde leer: el web service y el padrón sin archivo).
         config = self._get_padron_config(self.default_tax_id.l10n_ar_state_id)
-        is_in_padron, aliquot_ret, aliquot_per = padron_file._get_aliquot(partner)
+        is_in_padron, aliquot_ret, aliquot_per, contributor_type = padron_file._get_aliquot(partner)
         if not is_in_padron:
-            return None, config["missing_ref"]
+            # No figura en padrón: no sabemos su régimen, así que la alícuota de castigo (o
+            # la por defecto) se aplica con la base del impuesto configurado.
+            return None, config["missing_ref"], False
         aliquot = aliquot_ret if self.tax_type == "withholding" else aliquot_per
         if config.get("parse"):
             aliquot = config["parse"](aliquot)
-        return aliquot, config["found_ref"]
+        l10n_ar_tax_type = (
+            self._get_parp_tax_type(contributor_type) if config.get("contributor_type_defines_base") else False
+        )
+        return aliquot, config["found_ref"], l10n_ar_tax_type
 
     def _get_agip_data(self, partner, date, to_date):
         """Metodo que obtiene la alicuota de AGIP (CABA) del padron que Adhoc baja y procesa
@@ -553,3 +697,24 @@ class AccountFiscalPositionL10nArTax(models.Model):
         misma para todas las jurisdicciones y vive en _get_aliquot.
         """
         return self._get_aliquot(partner, date, to_date)
+
+    def _get_parp_tax_type(self, contributor_type):
+        """Traduce el tipo de contribuyente del PARP de Santa Fe ('C'/'D') al
+        l10n_ar_tax_type que define la base de la retención.
+
+        Sólo aplica a retenciones: en percepciones la base no cambia por el régimen de
+        convenio (lo que define si se detrae el IVA es la condición del adquirente
+        frente al IVA, art. 385 inc. j) pto. 2), y el 50% del art. 387 es otro
+        mecanismo que queda fuera de este alcance.
+
+        Sólo el Convenio Multilateral desvía la base. Al local le corresponde la base neta,
+        pero no la pedimos: esa es ya la base de las retenciones de Santa Fe, y forzarla
+        pisaría una base total configurada a propósito, que es una decisión sobre los
+        comprobantes del proveedor (IVA no discriminado) y no sobre el régimen. Sin base
+        pedida se resuelve la del impuesto configurado, y la variante CM queda excluida
+        igual (ver _get_tax_type_lookup).
+        """
+        self.ensure_one()
+        if self.tax_type != "withholding":
+            return False
+        return "iibb_total" if contributor_type == PARP_CONTRIBUTOR_MULTILATERAL else False

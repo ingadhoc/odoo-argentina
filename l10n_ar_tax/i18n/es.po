@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-03 13:52+0000\n"
+"POT-Creation-Date: 2026-09-07 19:26+0000\n"
 "PO-Revision-Date: 2026-05-27 19:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1445,6 +1445,12 @@ msgstr "El porcentaje total (%s) debe ser mayor que 0 y menor o igual que 100."
 
 #. module: l10n_ar_tax
 #. odoo-python
+#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
+msgid "The webservice answered a non-JSON response."
+msgstr "El webservice respondió algo que no es JSON."
+
+#. module: l10n_ar_tax
+#. odoo-python
 #: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
 msgid ""
 "This database cannot read RAR files (the 'unrar' library is not installed). "
@@ -1452,12 +1458,6 @@ msgid ""
 msgstr ""
 "Esta base de datos no puede leer archivos RAR (la librería 'unrar' no está "
 "instalada). Suba el padrón de AGIP como archivo ZIP."
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
-msgid "The webservice answered a non-JSON response."
-msgstr "El webservice respondió algo que no es JSON."
 
 #. module: l10n_ar_tax
 #. odoo-python

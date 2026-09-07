@@ -8,7 +8,10 @@ class AccountMove(models.Model):
     def _compute_tax_totals(self):
         super()._compute_tax_totals()
 
-        for move in self.filtered(lambda x: x.state == "posted"):
+        # tax_totals solo se llena en facturas: para el resto de los asientos el compute de
+        # account deja None (se lee como False), así que un asiento que no es factura -el
+        # asiento de un pago con retenciones, por ejemplo- no tiene nada que reemplazar.
+        for move in self.filtered(lambda x: x.state == "posted" and x.is_invoice(include_receipts=True)):
             base_lines, _tax_lines = move._get_rounded_base_and_tax_lines()
 
             # Detectar si hay impuestos inactivos en las líneas de impuestos

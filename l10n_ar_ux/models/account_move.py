@@ -2,6 +2,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+import copy
+
 from odoo import _, api, models
 from odoo.exceptions import UserError
 from odoo.fields import Domain
@@ -110,6 +112,78 @@ class AccountMove(models.Model):
     @api.model
     def _get_l10n_ar_codes_used_for_inv_and_ref(self):
         return super()._get_l10n_ar_codes_used_for_inv_and_ref() + ["33", "331"]
+
+    # NOTE: the following three methods port odoo/odoo#234040 (merged in Odoo master, not in 19.0).
+    # They must be dropped when migrating to a version that already includes it.
+
+    def _l10n_ar_is_refund_invoice(self):
+        """Check if the document type is in the list of document types that can be used as an invoice and
+        as a refund and the move type is 'in_refund' or 'out_refund'."""
+        return (
+            self.l10n_latam_document_type_id.code in self._get_l10n_ar_codes_used_for_inv_and_ref()
+            and self.move_type in ["in_refund", "out_refund"]
+        )
+
+    def _apply_refund_adjustments(self, tax_totals):
+        """Adjust tax totals for refund invoices that share the same ARCA codes as the invoice they reverse."""
+        for suffix in ("", "_currency"):
+            for prefix in ("base", "tax", "total"):
+                field = f"{prefix}_amount{suffix}"
+                if tax_totals[field]:
+                    tax_totals[field] *= -1
+            for subtotal in tax_totals["subtotals"]:
+                for prefix in ("base", "tax"):
+                    field = f"{prefix}_amount{suffix}"
+                    if subtotal[field]:
+                        subtotal[field] *= -1
+                for tax_group in subtotal["tax_groups"]:
+                    for prefix in ("display_base", "base", "tax"):
+                        field = f"{prefix}_amount{suffix}"
+                        if tax_group[field]:
+                            tax_group[field] *= -1
+
+    def _l10n_ar_get_invoice_totals_for_report(self):
+        """If the invoice document type indicates that vat should not be detailed in the printed report (result of
+        _l10n_ar_include_vat()) then we overwrite tax_totals field so that includes taxes in the total amount,
+        otherwise it would be showing amount_untaxed in the amount_total.
+        Also, if the invoice is a refund and shares the same ARCA code as the invoice it is reversing, we apply
+        adjustments to the tax totals to reflect the amounts in negative.
+
+        Full override of l10n_ar (no super call) mirroring odoo/odoo#234040. We deepcopy tax_totals so the
+        adjustments do not mutate the computed field cache."""
+        self.ensure_one()
+        tax_totals = copy.deepcopy(self.tax_totals)
+        if self._l10n_ar_is_refund_invoice():
+            self._apply_refund_adjustments(tax_totals)
+        include_vat = self._l10n_ar_include_vat()
+        if not include_vat:
+            return tax_totals
+
+        tax_group_ids = {
+            tax_group["id"] for subtotal in tax_totals["subtotals"] for tax_group in subtotal["tax_groups"]
+        }
+        tax_group_ids_to_exclude = (
+            self.env["account.tax.group"]
+            .browse(tax_group_ids)
+            .filtered(
+                lambda tax_group: (
+                    self._l10n_ar_is_tax_group_other_national_ind_tax(tax_group)
+                    or self._l10n_ar_is_tax_group_vat(tax_group)
+                    or (
+                        self._l10n_ar_is_transparency_document()
+                        and self._l10n_ar_is_tax_group_iibb_perception(tax_group)
+                    )
+                )
+            )
+            .ids
+        )
+        if tax_group_ids_to_exclude:
+            if self._l10n_ar_is_refund_invoice():
+                self._apply_refund_adjustments(tax_totals)
+            tax_totals = self.env["account.tax"]._exclude_tax_groups_from_tax_totals_summary(
+                tax_totals, tax_group_ids_to_exclude
+            )
+        return tax_totals
 
     def _get_l10n_latam_documents_domain(self):
         self.ensure_one()

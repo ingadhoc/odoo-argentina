@@ -11,10 +11,11 @@ class TestRefundReport(TestArCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.doc_60_lp_a = cls.env.ref("l10n_ar.dc_a_cvl")
+        cls.doc_188_lp_b = cls.env.ref("l10n_ar.dc_liq_cd_sp_b")
 
-    def _create_credit_note_60(self):
+    def _create_credit_note(self, document_type):
         credit_note = self._create_invoice_ar(
-            ref="Credit note with document type 60 for refund test",
+            ref="Credit note with a document type used both for invoices and refunds",
             move_type="out_refund",
             partner_id=self.res_partner_adhoc,
             company_id=self.company_ri,
@@ -25,11 +26,11 @@ class TestRefundReport(TestArCommon):
                 ),
             ],
         )
-        credit_note.l10n_latam_document_type_id = self.doc_60_lp_a
+        credit_note.l10n_latam_document_type_id = document_type
         return credit_note
 
     def test_get_invoice_totals_for_report_refund_with_same_code(self):
-        credit_note = self._create_credit_note_60()
+        credit_note = self._create_credit_note(self.doc_60_lp_a)
         self.assertTrue(credit_note._l10n_ar_is_refund_invoice())
 
         self._assert_tax_totals_summary(
@@ -60,8 +61,21 @@ class TestRefundReport(TestArCommon):
         # The computed field cache must not be altered by the report adjustments
         self.assertEqual(credit_note.tax_totals["total_amount_currency"], 121.0)
 
+    def test_get_invoice_totals_for_report_refund_with_same_code_vat_included(self):
+        """Document 188 is letter B: VAT is not detailed on the report and gets folded into the base amount.
+        The sign must be applied only once, so the totals stay negative on this path too."""
+        credit_note = self._create_credit_note(self.doc_188_lp_b)
+        self.assertTrue(credit_note._l10n_ar_is_refund_invoice())
+        self.assertTrue(credit_note._l10n_ar_include_vat())
+
+        tax_totals = credit_note._l10n_ar_get_invoice_totals_for_report()
+        self.assertEqual(tax_totals["base_amount_currency"], -121.0)
+        self.assertEqual(tax_totals["tax_amount_currency"], 0.0)
+        self.assertEqual(tax_totals["total_amount_currency"], -121.0)
+        self.assertEqual(credit_note.tax_totals["total_amount_currency"], 121.0)
+
     def test_prices_and_taxes_refund_with_same_code(self):
-        credit_note = self._create_credit_note_60()
+        credit_note = self._create_credit_note(self.doc_60_lp_a)
         values = credit_note.invoice_line_ids._l10n_ar_prices_and_taxes()
         self.assertEqual(values["price_unit"], -100.0)
         self.assertEqual(values["price_net"], -100.0)

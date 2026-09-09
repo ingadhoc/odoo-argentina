@@ -55,6 +55,7 @@ Reporting & Documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * **Invoice Reports**: Implements "duplicado/triplicado" functionality on invoices (extends to delivery slips with l10n_ar_stock)
+* **Negative amounts on special refunds**: Credit notes that share the ARCA document code with the invoice they reverse (codes 60, 99, 186, 188, 189, 33, 331) print their line amounts and totals in negative (port of odoo/odoo#234040, only needed on 19.0)
 * **Transfer Reports**: Enhanced account transfer reports with Argentinian formatting
 
 Installation

@@ -3,6 +3,7 @@
 # directory
 ##############################################################################
 from . import account_move
+from . import account_move_line
 from . import account_tax
 from . import res_country_state
 from . import afip_padron

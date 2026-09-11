@@ -306,8 +306,17 @@ class AccountPayment(models.Model):
             foreign_journal = self.currency_id != self.company_id.currency_id
 
             liquidity_lines = res.get("liquidity_lines", [])
-            has_checks = self.l10n_latam_new_check_ids | self.l10n_latam_move_check_ids
-            if not has_checks and liquidity_lines:
+            # ¿La liquidez ya viene dividida en una línea por cheque?  Con el PR odoo#248741
+            # (`l10n_latam_check._prepare_move_liquidity_lines`) sí, y ahí `l10n_latam_check_ux` ya
+            # dejó liquidez y contrapartida al bruto: los ajustes de abajo duplicarían la retención.
+            # Sin ese PR la liquidez llega en UNA línea y neta —el core le resta las retenciones en
+            # `account/models/account_payment.py`— y `l10n_latam_check_ux` se abstiene por falta de
+            # líneas por cheque, así que los ajustes son imprescindibles: si no, el asiento del pago
+            # cierra con liquidez y contrapartida netas y `_l10n_latam_check_split_move` revienta con
+            # "El asiento no está balanceado" por el importe de la retención.  Preguntar por los
+            # cheques del pago, en vez de por la forma de la liquidez, dejaba ese caso sin dueño.
+            liquidity_split_by_check = bool(liquidity_lines and liquidity_lines[0].get("l10n_latam_check_ids"))
+            if not liquidity_split_by_check and liquidity_lines:
                 if foreign_journal:
                     # A≠C: base Odoo sumó withholding amount_currency (ARS) dentro de la
                     # liquidez en USD, mezclando monedas.  payment_pro luego recalculó el
@@ -329,8 +338,8 @@ class AccountPayment(models.Model):
                     res["liquidity_lines"] = []
             counterpart_lines = res.get("counterpart_lines", [])
             if counterpart_lines:
-                if not has_checks:
-                    # When has_checks, account_payment_pro already computed counterpart correctly
+                if not liquidity_split_by_check:
+                    # When liquidity_split_by_check, account_payment_pro already computed counterpart correctly
                     # using the sum of ALL liq lines (one per check) plus wth total. Touching it
                     # here would either double-count wth (non-foreign case) or overwrite the correct
                     # multi-check sum with a single-line value (foreign case). Both produce an
@@ -352,7 +361,7 @@ class AccountPayment(models.Model):
                     # lo que produciría sumar ARS a un amount_currency en USD.
                     wth_amount_in_b = self.counterpart_currency_id.round(wth_balance * (self.counterpart_rate or 1.0))
                     counterpart_lines[0]["amount_currency"] -= wth_amount_in_b
-                elif not has_checks and not (
+                elif not liquidity_split_by_check and not (
                     self.counterpart_currency_id and self.counterpart_currency_id != self.currency_id
                 ):
                     # Solo ajustamos amount_currency de la contrapartida si B1 == A (misma moneda).
@@ -360,7 +369,7 @@ class AccountPayment(models.Model):
                     # refleja el total en B1 y no hay que restarle el equivalente en A de las retenciones.
                     # Usamos el equivalente en moneda del pago (no la suma raw) para que el
                     # amount_currency de la contrapartida quede correctamente en la moneda del pago.
-                    # Mismo razonamiento que para balance: has_checks implica que account_payment_pro
+                    # Mismo razonamiento que para balance: liquidity_split_by_check implica que account_payment_pro
                     # ya computó amount_currency correctamente.
                     counterpart_lines[0]["amount_currency"] -= wth_amount_currency_pay
 
@@ -369,7 +378,7 @@ class AccountPayment(models.Model):
                 # amount_currency quedó en el valor corrupto de base Odoo (p.ej. 980 vs 1010),
                 # Odoo puede usar amount_currency como autoridad y reescribir el balance, dejando
                 # el asiento desbalanceado en la diferencia → "Automatic Balancing Line".
-                # Esto ocurre con has_checks porque l10n_ar_tax no ajusta amount_currency en ese caso.
+                # Esto ocurre con liquidity_split_by_check porque l10n_ar_tax no ajusta amount_currency en ese caso.
                 if counterpart_lines[0].get("currency_id") == self.company_currency_id.id:
                     counterpart_lines[0]["amount_currency"] = counterpart_lines[0]["balance"]
 

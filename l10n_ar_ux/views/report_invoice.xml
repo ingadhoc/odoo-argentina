@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+    <!--Edit 2-->
     <template id="report_invoice" inherit_id="account.report_invoice">
         <t t-foreach="docs" position="replace">
             <t t-foreach="l10n_ar_copies_list" t-as="copy_type">

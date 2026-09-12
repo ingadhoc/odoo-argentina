@@ -5,7 +5,7 @@
         <div class="clearfix"/>
         <h3>Billing information</h3>
         <div class="row">
-
+            <!--Edit 1-->
             <!-- Add company name -->
             <t t-if="partner.commercial_partner_id.is_company and partner.commercial_partner_id != partner">
                 <div t-attf-class="form-group #{error.get('company_name') and 'has-error' or ''} col-xl-6">

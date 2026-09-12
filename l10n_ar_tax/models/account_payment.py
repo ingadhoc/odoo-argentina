@@ -348,8 +348,18 @@ class AccountPayment(models.Model):
                             _("Please enter withholding number for tax %s or configure a sequence on that tax")
                             % line.tax_id.name
                         )
-                if commands:
-                    rec.l10n_ar_withholding_line_ids = commands
+            if commands:
+                # Prevent premature synchronization while updating names
+                rec.with_context(skip_account_move_synchronization=True).l10n_ar_withholding_line_ids = commands
+                # Trigger synchronization now with updated names
+                if rec.move_id and rec.move_id.state == "draft":
+                    rec._synchronize_to_moves({"l10n_ar_withholding_line_ids"})
+                    # Actualizar explícitamente el name de las líneas del move que corresponden a retenciones
+                    # porque _synchronize_to_moves no actualiza líneas existentes, solo las recrea
+                    for wth_line in rec.l10n_ar_withholding_line_ids.filtered("name"):
+                        move_lines = rec.move_id.line_ids.filtered(lambda ml: ml.tax_line_id == wth_line.tax_id)
+                        if move_lines:
+                            move_lines.write({"name": wth_line.name})
 
         return super().action_post()
 

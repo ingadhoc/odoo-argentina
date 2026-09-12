@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.sql import column_exists, create_column
 
 
 class AccountPayment(models.Model):
@@ -30,6 +31,30 @@ class AccountPayment(models.Model):
         readonly=False,
         domain=[("l10n_ar_tax_ids.tax_type", "=", "withholding")],
     )
+
+    def _auto_init(self):
+        # create the columns by hand so that installing does not queue a recompute over the whole
+        # payment history: on a big database that sweep goes over the worker time limit and the
+        # install dies half way through
+        if not column_exists(self.env.cr, "account_payment", "l10n_ar_fiscal_position_id"):
+            # left empty on purpose: only draft supplier payments end up with one, and those are
+            # computed from _l10n_ar_update_taxes
+            create_column(self.env.cr, "account_payment", "l10n_ar_fiscal_position_id", "int4")
+        if not column_exists(self.env.cr, "account_payment", "withholdable_advanced_amount"):
+            # DEFAULT 0 fills the existing rows without rewriting the table (postgres keeps it as
+            # metadata), so they hold the same 0.0 the compute would have stored. Leaving them NULL
+            # reads as 0.0 too, but is not matched by a `= 0` domain. The default is dropped right
+            # away so the column ends up exactly as the ORM would have created it
+            self.env.cr.execute("ALTER TABLE account_payment ADD COLUMN withholdable_advanced_amount numeric DEFAULT 0")
+            self.env.cr.execute("ALTER TABLE account_payment ALTER COLUMN withholdable_advanced_amount DROP DEFAULT")
+            # only the payments carrying an advance need the backfill. It is not narrowed to the
+            # draft ones: unreconciled_amount does not change when a payment is reset to draft, so
+            # the compute would never fill them again
+            self.env.cr.execute(
+                "UPDATE account_payment SET withholdable_advanced_amount = unreconciled_amount"
+                " WHERE unreconciled_amount <> 0"
+            )
+        return super()._auto_init()
 
     @api.depends("to_pay_move_line_ids", "partner_id", "payment_method_line_id")
     def _compute_fiscal_position_id(self):

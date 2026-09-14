@@ -6,6 +6,20 @@ from odoo import _, api, models
 from odoo.exceptions import UserError
 from odoo.osv import expression
 
+# Los campos donde vive la autorización de AFIP, por variante de localización. Ninguna
+# es dependencia de este módulo y nada impide que estén las dos instaladas a la vez.
+AFIP_AUTH_FIELDS = (
+    # Enterprise (l10n_ar_edi)
+    ("l10n_ar_afip_auth_mode", "l10n_ar_afip_auth_code"),
+    # Community (l10n_ar_afipws_fe, de odoo-argentina-ce)
+    ("afip_auth_mode", "afip_auth_code"),
+)
+
+# Modos que significan "AFIP ya autorizó este comprobante". Mismo criterio que usa
+# l10n_ar_afipws_fe en _compute_qr_code: CAE y CAEA sí, CAI no (el CAI lo otorga AFIP
+# a la imprenta del talonario preimpreso, el comprobante nunca se envió al webservice).
+AFIP_AUTHORIZED_MODES = ("CAE", "CAEA")
+
 
 class AccountMove(models.Model):
     _inherit = "account.move"
@@ -56,26 +70,24 @@ class AccountMove(models.Model):
         return super()._l10n_ar_get_document_number_parts(document_number, document_type_code)
 
     def _l10n_ar_afip_authorized(self):
-        """Indica si AFIP ya autorizó el comprobante con un CAE.
+        """Indica si AFIP ya autorizó el comprobante (``AFIP_AUTHORIZED_MODES``).
 
         Los campos de autorización los declaran módulos distintos según la variante de
-        localización instalada, y este módulo no depende de ninguno de los dos:
+        localización instalada (ver ``AFIP_AUTH_FIELDS``) y este módulo no depende de
+        ninguno de los dos, así que leer un nombre que no está en el registry levanta
+        ``AttributeError``. Miramos todos los pares que existan, no el primero: nada
+        impide tener ``l10n_ar_edi`` y ``l10n_ar_afipws_fe`` instalados a la vez, y en
+        ese caso alcanza con que CUALQUIERA de los dos tenga la autorización cargada.
 
-        * Enterprise (``l10n_ar_edi``): ``l10n_ar_afip_auth_mode`` / ``l10n_ar_afip_auth_code``.
-        * Community (``l10n_ar_afipws_fe``, odoo-argentina-ce): ``afip_auth_mode`` / ``afip_auth_code``.
-
-        Leer un nombre que no está en el registry levanta ``AttributeError``, así que
-        usamos el par que exista y devolvemos ``False`` cuando no hay ninguno (por
-        ejemplo con ``l10n_ar`` solo, sin facturación electrónica).
+        Devuelve ``False`` cuando no hay ningún par (por ejemplo con ``l10n_ar`` solo,
+        sin facturación electrónica).
         """
         self.ensure_one()
-        for mode_field, code_field in (
-            ("l10n_ar_afip_auth_mode", "l10n_ar_afip_auth_code"),
-            ("afip_auth_mode", "afip_auth_code"),
-        ):
-            if mode_field in self._fields and code_field in self._fields:
-                return self[mode_field] == "CAE" and bool(self[code_field])
-        return False
+        return any(
+            self[mode_field] in AFIP_AUTHORIZED_MODES and self[code_field]
+            for mode_field, code_field in AFIP_AUTH_FIELDS
+            if mode_field in self._fields and code_field in self._fields
+        )
 
     def button_cancel(self):
         """

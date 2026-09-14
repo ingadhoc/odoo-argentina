@@ -4,12 +4,7 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.exceptions import UserError
 from odoo.tests import tagged
 
-AFIP_AUTH_FIELDS = (
-    # Enterprise (l10n_ar_edi)
-    ("l10n_ar_afip_auth_mode", "l10n_ar_afip_auth_code"),
-    # Community (l10n_ar_afipws_fe, odoo-argentina-ce)
-    ("afip_auth_mode", "afip_auth_code"),
-)
+from ..models.account_move import AFIP_AUTH_FIELDS
 
 
 @tagged("-at_install", "post_install")
@@ -84,7 +79,16 @@ class TestAccountMoveCancel(AccountTestInvoicingCommon):
         return invoice
 
     def _installed_auth_fields(self, invoice):
+        """Pares de campos de autorización que SÍ están en el registry de este entorno."""
         return [pair for pair in AFIP_AUTH_FIELDS if pair[0] in invoice._fields and pair[1] in invoice._fields]
+
+    def _authorize(self, invoice, mode, code="12345678901234"):
+        """Carga la autorización en el primer par de campos disponible."""
+        available = self._installed_auth_fields(invoice)
+        if not available:
+            self.skipTest("Neither l10n_ar_edi nor l10n_ar_afipws_fe is installed")
+        mode_field, code_field = available[0]
+        invoice.write({mode_field: mode, code_field: code})
 
     def test_cancel_invoice_not_authorized_by_afip(self):
         """Sin autorización de AFIP la factura se cancela, sin AttributeError."""
@@ -97,13 +101,40 @@ class TestAccountMoveCancel(AccountTestInvoicingCommon):
         invoice = self._create_posted_invoice()
         self.assertFalse(invoice._l10n_ar_afip_authorized())
 
-    def test_cancel_is_blocked_when_authorized_by_afip(self):
+    def test_cancel_is_blocked_with_cae(self):
         """Con CAE la cancelación sigue bloqueada, sea cual sea el par de campos."""
         invoice = self._create_posted_invoice()
+        self._authorize(invoice, "CAE")
+        self.assertTrue(invoice._l10n_ar_afip_authorized())
+        with self.assertRaises(UserError):
+            invoice.button_cancel()
+        self.assertEqual(invoice.state, "posted")
+
+    def test_cancel_is_blocked_with_caea(self):
+        """CAEA también es una autorización de AFIP, igual que en l10n_ar_afipws_fe."""
+        invoice = self._create_posted_invoice()
+        self._authorize(invoice, "CAEA")
+        self.assertTrue(invoice._l10n_ar_afip_authorized())
+        with self.assertRaises(UserError):
+            invoice.button_cancel()
+        self.assertEqual(invoice.state, "posted")
+
+    def test_cancel_is_allowed_with_cai(self):
+        """El CAI es del talonario preimpreso: nunca se envió a AFIP, se puede cancelar."""
+        invoice = self._create_posted_invoice()
+        self._authorize(invoice, "CAI")
+        self.assertFalse(invoice._l10n_ar_afip_authorized())
+        invoice.button_cancel()
+        self.assertEqual(invoice.state, "cancel")
+
+    def test_authorization_in_any_installed_pair_blocks(self):
+        """Con los dos pares instalados, alcanza con que CUALQUIERA tenga el código."""
+        invoice = self._create_posted_invoice()
         available = self._installed_auth_fields(invoice)
-        if not available:
-            self.skipTest("Neither l10n_ar_edi nor l10n_ar_afipws_fe is installed")
-        mode_field, code_field = available[0]
+        if len(available) < 2:
+            self.skipTest("Only one AFIP authorization field pair is installed")
+        # El último par autorizado, el primero vacío: el helper igual debe bloquear.
+        mode_field, code_field = available[-1]
         invoice.write({mode_field: "CAE", code_field: "12345678901234"})
         self.assertTrue(invoice._l10n_ar_afip_authorized())
         with self.assertRaises(UserError):

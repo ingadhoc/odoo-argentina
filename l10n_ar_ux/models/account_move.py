@@ -55,6 +55,28 @@ class AccountMove(models.Model):
         document_number = document_number.split("(")[0]
         return super()._l10n_ar_get_document_number_parts(document_number, document_type_code)
 
+    def _l10n_ar_afip_authorized(self):
+        """Indica si AFIP ya autorizó el comprobante con un CAE.
+
+        Los campos de autorización los declaran módulos distintos según la variante de
+        localización instalada, y este módulo no depende de ninguno de los dos:
+
+        * Enterprise (``l10n_ar_edi``): ``l10n_ar_afip_auth_mode`` / ``l10n_ar_afip_auth_code``.
+        * Community (``l10n_ar_afipws_fe``, odoo-argentina-ce): ``afip_auth_mode`` / ``afip_auth_code``.
+
+        Leer un nombre que no está en el registry levanta ``AttributeError``, así que
+        usamos el par que exista y devolvemos ``False`` cuando no hay ninguno (por
+        ejemplo con ``l10n_ar`` solo, sin facturación electrónica).
+        """
+        self.ensure_one()
+        for mode_field, code_field in (
+            ("l10n_ar_afip_auth_mode", "l10n_ar_afip_auth_code"),
+            ("afip_auth_mode", "afip_auth_code"),
+        ):
+            if mode_field in self._fields and code_field in self._fields:
+                return self[mode_field] == "CAE" and bool(self[code_field])
+        return False
+
     def button_cancel(self):
         """
         Evitamos que se pueda cancelar una factura que ya fue previamente confirmada y enviada a AFIP.
@@ -62,12 +84,7 @@ class AccountMove(models.Model):
         y el otro, sin refrescar, cancela.
         """
         if posted_in_afip := self.filtered(
-            lambda x: (
-                x.state == "posted"
-                and x.invoice_filter_type_domain == "sale"
-                and x.l10n_ar_afip_auth_mode == "CAE"
-                and x.l10n_ar_afip_auth_code
-            )
+            lambda x: (x.state == "posted" and x.invoice_filter_type_domain == "sale" and x._l10n_ar_afip_authorized())
         ):
             raise UserError(
                 _("You cannot cancel documents already posted in AFIP (%s).", ",".join(posted_in_afip.mapped("name")))

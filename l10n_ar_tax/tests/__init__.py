@@ -9,6 +9,7 @@ from . import test_payment_withholding_checks_multimoneda
 from . import test_own_check_net_amount
 from . import test_padron_cleanup_cron
 from . import test_padron_tmp_dir
+from . import test_padron_santa_fe_contributor_type
 from . import test_payment_register_pro_wizard
 from . import test_payment_withholding_kept_on_post
 from . import test_payment_form_withholding_net

@@ -435,7 +435,24 @@ class AccountPayment(models.Model):
         # Drop the cached receipt so it is regenerated on the next render.
         self._unlink_cached_payment_receipt()
         self._unlink_cached_withholding_certificates()
-        return super().action_draft()
+        res = super().action_draft()
+        # `state` is deliberately not a dependency of _compute_fiscal_position_id: recomputing on
+        # post would clear the fiscal position of the posted payment and, in cascade, wipe its
+        # withholding lines (the bug test_payment_withholding_kept_on_post covers). The price is
+        # that a payment that lost it while posted never gets it back, and gets posted again
+        # without any withholding suggested, so going back to draft has to recover it here.
+        # Only on the payments that actually lost it: recomputing one that still has a fiscal
+        # position would override a choice the user is allowed to make by hand.
+        to_recover = self.filtered(lambda payment: not payment.l10n_ar_fiscal_position_id)
+        if to_recover:
+            # belt and braces: the compute already runs with l10n_ar_fiscal_position_id protected,
+            # so assigning it does not cascade, but protecting the lines here states the invariant
+            # this has to keep -recovering the fiscal position never re-proposes withholdings the
+            # user may have edited before posting-, which is what the tests assert
+            with self.env.protecting([self._fields["l10n_ar_withholding_line_ids"]], to_recover):
+                self.env.add_to_compute(self._fields["l10n_ar_fiscal_position_id"], to_recover)
+                to_recover.flush_recordset(["l10n_ar_fiscal_position_id"])
+        return res
 
     def _l10n_ar_withholding_certificates_filename(self):
         """Filename of the single PDF holding all the withholding certificates

@@ -40,6 +40,8 @@ If the source installation is Odoo 17:
 
 * You only need to update the ``account.payment`` data by mapping the ``codigo_regimen`` to the new ``regime_code`` field, mark those payments as ``is_backward_withholding_payment``, and recalculate the ``regime_tax_id`` field.
 
+Additionally, on databases with branches the migration unified the taxes of the child companies into the parent one: for each regime one ``account.tax`` stays active and its duplicate ends up archived. The journal items of the withholdings point to the surviving tax, while the payment withholding lines (``l10n_ar_withholding_line_ids``) may still point to the archived duplicate, so the strict match of ``account.move.line.withholding_id`` (from ``l10n_ar_tax``) finds nothing and every report reading that field breaks (SIFERE, SICORE, SIRCAR, Misiones, Santa Fe and PBA TXT files). This module adds a fallback: when the strict match fails, the withholding line is looked up by the identity of the regime (withholding payment type, tax type, jurisdiction and code, within the same company tree). It only applies to migrated data -one of the two taxes archived- and when there is a single candidate, so that a wrongly built new payment keeps failing visibly instead of being silently guessed.
+
 -------------------------------------
 
 La manera en que Odoo calcula las retenciones de ganancias ha variado sustancialmente entre las versiones 16, 17 y 18. Este módulo es un módulo técnico. Su objetivo es permitir seguir calculando retenciones acumuladas en instalaciones que migran en medio de un período, o realizar el cálculo de acumulados en los meses anteriores a la migración cuando se agrega un pago en ese período.
@@ -69,6 +71,7 @@ Si la instalación de origen es de Odoo 17:
 
 *   Solo debe actualizar los datos de ``account.payment`` mapeando el ``codigo_regimen`` al nuevo campo ``regime_code``, marcar esos pagos como ``is_backward_withholding_payment`` y recalcular el campo ``regime_tax_id``.
 
+Adicionalmente, en bases con sucursales la migración unificó los impuestos de las compañías hijas en la compañía padre: de cada régimen queda un ``account.tax`` activo y su duplicado archivado. Los apuntes contables de las retenciones quedan apuntando al impuesto superviviente, mientras que las líneas de retención del pago (``l10n_ar_withholding_line_ids``) pueden seguir apuntando al duplicado archivado, con lo cual el match estricto de ``account.move.line.withholding_id`` (de ``l10n_ar_tax``) no encuentra nada y se rompen todos los reportes que leen ese campo (los TXT de SIFERE, SICORE, SIRCAR, Misiones, Santa Fe y PBA). Este módulo agrega un fallback: cuando el match estricto falla, la línea de retención se busca por la identidad del régimen (tipo de pago de la retención, tipo de impuesto, jurisdicción y código, dentro del mismo árbol de compañías). Solo aplica a data migrada -alguno de los dos impuestos archivado- y si hay una única candidata, para que un pago nuevo mal armado siga fallando de forma visible en vez de resolverse por adivinanza.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

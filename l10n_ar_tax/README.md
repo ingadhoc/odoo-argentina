@@ -12,6 +12,7 @@ Implements automatic calculation of Argentine withholdings (retenciones) and per
 - Withholding certificate generation.
 - Integration with ARCA web services.
 - ARBA, Santa Fe (PARP) and AGIP (CABA) padron readers.
+- Santa Fe withholding base per taxpayer regime: Multilateral Agreement withholds on the total.
 - Same-period base accumulation for taxes like Ganancias with minimum thresholds.
 - Integration with `account_payment_pro` tri-currency model.
 
@@ -40,6 +41,17 @@ The same order applies to every jurisdiction, so a padron file always works as t
 1. **Aliquot loaded on the contact** (Contacts → Accounting) for the period: it wins over everything else.
 2. **Padron file** uploaded for that jurisdiction and period: it wins over the web service, even when the fiscal position line is set to query one.
 3. **Web service** of the jurisdiction (ARBA, Rentas Córdoba, AGIP). Setting the line to *Archivo de padrón* means this jurisdiction never queries a web service: with no padron uploaded the user is asked to upload it instead.
+
+### Withholding base in Santa Fe
+
+The PARP padron reports the taxpayer regime, and in Santa Fe that regime sets the base of the withholding (art. 380, RG 36/2026 of API Santa Fe):
+
+- **Local (`D`):** net base, without VAT. It is the base the Santa Fe withholding taxes are already configured with, so the configured tax is used as is.
+- **Multilateral Agreement (`C`):** the total amount, with no deduction. If no tax on the total exists for that aliquot, one is created from the configured tax, with the same aliquot and a `CM` suffix in its name.
+
+Taxes with the `CM` suffix belong to this flow and are not offered in the default tax selector of the fiscal position line: choosing one by hand would apply the total base to every taxpayer, local ones included. A tax on the total configured on purpose (a supplier that does not itemize VAT) stays selectable and is never overwritten by the padron.
+
+Perceptions are not affected: the regime does not change their base.
 
 ## Usage
 

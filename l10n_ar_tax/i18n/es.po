@@ -542,7 +542,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__amount
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__amount
 msgid "Amount"
-msgstr "Cantidad"
+msgstr "Importe"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__webservice__padron
@@ -585,7 +585,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__base_amount
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__base_amount
 msgid "Base Amount"
-msgstr "Cantidad base"
+msgstr "Importe Base"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_config_settings__arba_cit

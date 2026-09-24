@@ -14,49 +14,54 @@ class AccountFiscalPosition(models.Model):
         # garantizamos de siempre evaluar segun commercial partner que es donde se guardan y ven los impuestos
         partner = partner.commercial_partner_id
         for fp_tax in self.l10n_ar_tax_ids.filtered(lambda x: x.tax_type == tax_type):
-            domain = self.env["l10n_ar.partner.tax"]._check_company_domain(company)
-            domain += [("tax_id.tax_group_id", "=", fp_tax.default_tax_id.tax_group_id.id)]
-            if tax_type == "withholding":
-                # TODO esto lo deberiamos borrar al ir a odoo 19 y solo usar los tax groups
-                # por ahora, para no renegar con scripts de migra que requieran crear tax groups para cada jurisdiccion y
-                # ademas luego tener que ajustar a lo que hagamos en 19, usamos la jursdiccion como elemento de agrupacion
-                # solo para retenciones
-                domain += [("tax_id.l10n_ar_state_id", "=", fp_tax.default_tax_id.l10n_ar_state_id.id)]
-            domain += [
-                "|",
-                ("from_date", "<=", date),
-                ("from_date", "=", False),
-                "|",
-                ("to_date", ">=", date),
-                ("to_date", "=", False),
-            ]
-            if tax_type == "perception":
-                partner_tax = partner.l10n_ar_partner_perception_ids.filtered_domain(domain).mapped("tax_id")
-            elif tax_type == "withholding":
-                partner_tax = partner.l10n_ar_partner_tax_ids.filtered_domain(domain).mapped("tax_id")
-            # agregamos taxes para grupos de impuestos que no estaban seteados en el partner
-            if not partner_tax:
-                partner_tax = fp_tax._get_missing_taxes(partner, date, payment)
-            if len(partner_tax) > 1:
-                raise RedirectWarning(
-                    message=_(
-                        "El contacto '%(name)s' (id: %(id)s) tiene múltiples impuestos vigentes para el grupo "
-                        "de impuestos '%(tax_group)s' en la fecha '%(date)s' y compañía '%(company)s'. Ver "
-                        "solapa 'Contabilidad' de la vista formulario del contacto.",
-                        name=partner.name,
-                        id=partner.id,
-                        tax_group=fp_tax.default_tax_id.tax_group_id.name,
-                        date=date,
-                        company=company.name,
-                    ),
-                    action=partner.get_formview_action(),
-                    button_text=_("Editar contacto"),
-                )
-            if partner_tax and partner_tax.l10n_ar_tax_type != "earnings_scale" and partner_tax.amount == 0:
-                # se eliminan todos los impuestos cuyo monto sea 0, excepto los de tipo "earnings_scale"
-                continue
-            taxes |= partner_tax
+            taxes |= self._l10n_ar_get_fp_tax_taxes(fp_tax, partner, company, date, tax_type, payment=payment)
         return taxes
+
+    def _l10n_ar_get_fp_tax_taxes(self, fp_tax, partner, company, date, tax_type, payment=None):
+        """Impuestos que aporta una línea de percepción/retención de la posición fiscal para el partner y la fecha.
+        Método aparte para que otros módulos (ej. l10n_ar_sircip) puedan calcular una línea a su manera."""
+        domain = self.env["l10n_ar.partner.tax"]._check_company_domain(company)
+        domain += [("tax_id.tax_group_id", "=", fp_tax.default_tax_id.tax_group_id.id)]
+        if tax_type == "withholding":
+            # TODO esto lo deberiamos borrar al ir a odoo 19 y solo usar los tax groups
+            # por ahora, para no renegar con scripts de migra que requieran crear tax groups para cada jurisdiccion y
+            # ademas luego tener que ajustar a lo que hagamos en 19, usamos la jursdiccion como elemento de agrupacion
+            # solo para retenciones
+            domain += [("tax_id.l10n_ar_state_id", "=", fp_tax.default_tax_id.l10n_ar_state_id.id)]
+        domain += [
+            "|",
+            ("from_date", "<=", date),
+            ("from_date", "=", False),
+            "|",
+            ("to_date", ">=", date),
+            ("to_date", "=", False),
+        ]
+        if tax_type == "perception":
+            partner_tax = partner.l10n_ar_partner_perception_ids.filtered_domain(domain).mapped("tax_id")
+        elif tax_type == "withholding":
+            partner_tax = partner.l10n_ar_partner_tax_ids.filtered_domain(domain).mapped("tax_id")
+        # agregamos taxes para grupos de impuestos que no estaban seteados en el partner
+        if not partner_tax:
+            partner_tax = fp_tax._get_missing_taxes(partner, date, payment)
+        if len(partner_tax) > 1:
+            raise RedirectWarning(
+                message=_(
+                    "El contacto '%(name)s' (id: %(id)s) tiene múltiples impuestos vigentes para el grupo "
+                    "de impuestos '%(tax_group)s' en la fecha '%(date)s' y compañía '%(company)s'. Ver "
+                    "solapa 'Contabilidad' de la vista formulario del contacto.",
+                    name=partner.name,
+                    id=partner.id,
+                    tax_group=fp_tax.default_tax_id.tax_group_id.name,
+                    date=date,
+                    company=company.name,
+                ),
+                action=partner.get_formview_action(),
+                button_text=_("Editar contacto"),
+            )
+        if partner_tax and partner_tax.l10n_ar_tax_type != "earnings_scale" and partner_tax.amount == 0:
+            # se eliminan todos los impuestos cuyo monto sea 0, excepto los de tipo "earnings_scale"
+            return self.env["account.tax"]
+        return partner_tax
 
     @api.constrains("l10n_ar_tax_ids")
     def _check_tax_type(self):

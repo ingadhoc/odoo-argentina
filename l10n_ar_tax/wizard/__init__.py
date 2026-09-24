@@ -4,3 +4,4 @@
 ##############################################################################
 from . import res_config_settings
 from . import account_payment_register
+from . import account_payment_invoice_wizard

@@ -7,6 +7,30 @@ class AccountFiscalPosition(models.Model):
 
     l10n_ar_tax_ids = fields.One2many("account.fiscal.position.l10n_ar_tax", "fiscal_position_id")
 
+    def _check_tax_group_overlap_fp(self, fp_tax, partner, partner_tax, company, date):
+        """Un contacto no puede tener más de un impuesto vigente por grupo. Método aparte para que otros
+        módulos (ej. l10n_ar_sircip) puedan permitir el solapamiento."""
+        if len(partner_tax) > 1:
+            raise RedirectWarning(
+                message=_(
+                    "El contacto '%(name)s' (id: %(id)s) tiene múltiples impuestos vigentes para el grupo "
+                    "de impuestos '%(tax_group)s' en la fecha '%(date)s' y compañía '%(company)s'. Ver "
+                    "solapa 'Contabilidad' de la vista formulario del contacto.",
+                    name=partner.name,
+                    id=partner.id,
+                    tax_group=fp_tax.default_tax_id.tax_group_id.name,
+                    date=date,
+                    company=company.name,
+                ),
+                action=partner.get_formview_action(),
+                button_text=_("Editar contacto"),
+            )
+
+    def _needs_clean_up_0_taxes(self, partner_tax):
+        """Se descartan los impuestos cuyo monto sea 0, excepto los de tipo "earnings_scale" (la escala define
+        el monto). Método aparte para que otros módulos (ej. l10n_ar_sircip) puedan conservar impuestos en 0."""
+        return bool(partner_tax and partner_tax.l10n_ar_tax_type != "earnings_scale" and partner_tax.amount == 0)
+
     def _l10n_ar_add_taxes(self, partner, company, date, tax_type, payment=None):
         # TODO deberiamos unificar mucho de este codigo con _get_tax_domain, _compute_withholdings y _check_tax_group_overlap
         self.ensure_one()
@@ -37,23 +61,8 @@ class AccountFiscalPosition(models.Model):
             # agregamos taxes para grupos de impuestos que no estaban seteados en el partner
             if not partner_tax:
                 partner_tax = fp_tax._get_missing_taxes(partner, date, payment)
-            if len(partner_tax) > 1:
-                raise RedirectWarning(
-                    message=_(
-                        "El contacto '%(name)s' (id: %(id)s) tiene múltiples impuestos vigentes para el grupo "
-                        "de impuestos '%(tax_group)s' en la fecha '%(date)s' y compañía '%(company)s'. Ver "
-                        "solapa 'Contabilidad' de la vista formulario del contacto.",
-                        name=partner.name,
-                        id=partner.id,
-                        tax_group=fp_tax.default_tax_id.tax_group_id.name,
-                        date=date,
-                        company=company.name,
-                    ),
-                    action=partner.get_formview_action(),
-                    button_text=_("Editar contacto"),
-                )
-            if partner_tax and partner_tax.l10n_ar_tax_type != "earnings_scale" and partner_tax.amount == 0:
-                # se eliminan todos los impuestos cuyo monto sea 0, excepto los de tipo "earnings_scale"
+            self._check_tax_group_overlap_fp(fp_tax, partner, partner_tax, company, date)
+            if self._needs_clean_up_0_taxes(partner_tax):
                 continue
             taxes |= partner_tax
         return taxes

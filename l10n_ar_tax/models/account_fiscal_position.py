@@ -7,9 +7,42 @@ class AccountFiscalPosition(models.Model):
 
     l10n_ar_tax_ids = fields.One2many("account.fiscal.position.l10n_ar_tax", "fiscal_position_id")
 
-    def _check_tax_group_overlap_fp(self, fp_tax, partner, partner_tax, company, date):
-        """Un contacto no puede tener más de un impuesto vigente por grupo. Método aparte para que otros
-        módulos (ej. l10n_ar_sircip) puedan permitir el solapamiento."""
+    def _l10n_ar_add_taxes(self, partner, company, date, tax_type, payment=None):
+        # TODO deberiamos unificar mucho de este codigo con _get_tax_domain, _compute_withholdings y _check_tax_group_overlap
+        self.ensure_one()
+        taxes = self.env["account.tax"]
+        # garantizamos de siempre evaluar segun commercial partner que es donde se guardan y ven los impuestos
+        partner = partner.commercial_partner_id
+        for fp_tax in self.l10n_ar_tax_ids.filtered(lambda x: x.tax_type == tax_type):
+            taxes |= self._l10n_ar_get_fp_tax_taxes(fp_tax, partner, company, date, tax_type, payment=payment)
+        return taxes
+
+    def _l10n_ar_get_fp_tax_taxes(self, fp_tax, partner, company, date, tax_type, payment=None):
+        """Impuestos que aporta una línea de percepción/retención de la posición fiscal para el partner y la fecha.
+        Método aparte para que otros módulos (ej. l10n_ar_sircip) puedan calcular una línea a su manera."""
+        domain = self.env["l10n_ar.partner.tax"]._check_company_domain(company)
+        domain += [("tax_id.tax_group_id", "=", fp_tax.default_tax_id.tax_group_id.id)]
+        if tax_type == "withholding":
+            # TODO esto lo deberiamos borrar al ir a odoo 19 y solo usar los tax groups
+            # por ahora, para no renegar con scripts de migra que requieran crear tax groups para cada jurisdiccion y
+            # ademas luego tener que ajustar a lo que hagamos en 19, usamos la jursdiccion como elemento de agrupacion
+            # solo para retenciones
+            domain += [("tax_id.l10n_ar_state_id", "=", fp_tax.default_tax_id.l10n_ar_state_id.id)]
+        domain += [
+            "|",
+            ("from_date", "<=", date),
+            ("from_date", "=", False),
+            "|",
+            ("to_date", ">=", date),
+            ("to_date", "=", False),
+        ]
+        if tax_type == "perception":
+            partner_tax = partner.l10n_ar_partner_perception_ids.filtered_domain(domain).mapped("tax_id")
+        elif tax_type == "withholding":
+            partner_tax = partner.l10n_ar_partner_tax_ids.filtered_domain(domain).mapped("tax_id")
+        # agregamos taxes para grupos de impuestos que no estaban seteados en el partner
+        if not partner_tax:
+            partner_tax = fp_tax._get_missing_taxes(partner, date, payment)
         if len(partner_tax) > 1:
             raise RedirectWarning(
                 message=_(
@@ -25,47 +58,10 @@ class AccountFiscalPosition(models.Model):
                 action=partner.get_formview_action(),
                 button_text=_("Editar contacto"),
             )
-
-    def _needs_clean_up_0_taxes(self, partner_tax):
-        """Se descartan los impuestos cuyo monto sea 0, excepto los de tipo "earnings_scale" (la escala define
-        el monto). Método aparte para que otros módulos (ej. l10n_ar_sircip) puedan conservar impuestos en 0."""
-        return bool(partner_tax and partner_tax.l10n_ar_tax_type != "earnings_scale" and partner_tax.amount == 0)
-
-    def _l10n_ar_add_taxes(self, partner, company, date, tax_type, payment=None):
-        # TODO deberiamos unificar mucho de este codigo con _get_tax_domain, _compute_withholdings y _check_tax_group_overlap
-        self.ensure_one()
-        taxes = self.env["account.tax"]
-        # garantizamos de siempre evaluar segun commercial partner que es donde se guardan y ven los impuestos
-        partner = partner.commercial_partner_id
-        for fp_tax in self.l10n_ar_tax_ids.filtered(lambda x: x.tax_type == tax_type):
-            domain = self.env["l10n_ar.partner.tax"]._check_company_domain(company)
-            domain += [("tax_id.tax_group_id", "=", fp_tax.default_tax_id.tax_group_id.id)]
-            if tax_type == "withholding":
-                # TODO esto lo deberiamos borrar al ir a odoo 19 y solo usar los tax groups
-                # por ahora, para no renegar con scripts de migra que requieran crear tax groups para cada jurisdiccion y
-                # ademas luego tener que ajustar a lo que hagamos en 19, usamos la jursdiccion como elemento de agrupacion
-                # solo para retenciones
-                domain += [("tax_id.l10n_ar_state_id", "=", fp_tax.default_tax_id.l10n_ar_state_id.id)]
-            domain += [
-                "|",
-                ("from_date", "<=", date),
-                ("from_date", "=", False),
-                "|",
-                ("to_date", ">=", date),
-                ("to_date", "=", False),
-            ]
-            if tax_type == "perception":
-                partner_tax = partner.l10n_ar_partner_perception_ids.filtered_domain(domain).mapped("tax_id")
-            elif tax_type == "withholding":
-                partner_tax = partner.l10n_ar_partner_tax_ids.filtered_domain(domain).mapped("tax_id")
-            # agregamos taxes para grupos de impuestos que no estaban seteados en el partner
-            if not partner_tax:
-                partner_tax = fp_tax._get_missing_taxes(partner, date, payment)
-            self._check_tax_group_overlap_fp(fp_tax, partner, partner_tax, company, date)
-            if self._needs_clean_up_0_taxes(partner_tax):
-                continue
-            taxes |= partner_tax
-        return taxes
+        if partner_tax and partner_tax.l10n_ar_tax_type != "earnings_scale" and partner_tax.amount == 0:
+            # se eliminan todos los impuestos cuyo monto sea 0, excepto los de tipo "earnings_scale"
+            return self.env["account.tax"]
+        return partner_tax
 
     @api.constrains("l10n_ar_tax_ids")
     def _check_tax_type(self):

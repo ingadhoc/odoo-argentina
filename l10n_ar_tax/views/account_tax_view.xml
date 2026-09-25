@@ -19,7 +19,7 @@
             </group>
 
             <xpath expr="//field[@name='tax_group_id']" position="after">
-                <field name="ratio" string="Ratio %" invisible="country_code != 'AR' or l10n_ar_type_tax_use not in ('customer', 'supplier')"/>
+                <field name="ratio" string="Ratio %" invisible="country_code != 'AR' or (l10n_ar_type_tax_use not in ('customer', 'supplier') and (l10n_ar_type_tax_use != 'sale' or l10n_ar_state_code != 'S'))"/>
             </xpath>
 
             <!-- TODO mejorar esto, por ahora solo lo hacemos visible con este grupo ya que este grupo solo lo estamos usando en realidad para API, deberiamos ver de hacerlo de otra manera -->

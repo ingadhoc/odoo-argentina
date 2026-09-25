@@ -3,6 +3,8 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.fields import Domain
 from odoo.tools import SQL
 
+from .account_fiscal_position_l10n_ar_tax import BASE_DEFINING_JURISDICTION_CODES
+
 
 class AccountTax(models.Model):
     _inherit = "account.tax"
@@ -198,6 +200,34 @@ class AccountTax(models.Model):
                         "The total percentage (%s) should be greater than 0 and less than or equal to 100.", tax.ratio
                     )
                 )
+
+    def _l10n_ar_get_perception_base_factor(self):
+        """Parte de la base sobre la que se calcula la percepción. Sólo aplica en Santa Fe,
+        donde el padrón define el ratio; en el resto el ratio de un impuesto de venta no
+        tiene efecto."""
+        self.ensure_one()
+        if (
+            self.ratio == 100.0
+            or self.type_tax_use != "sale"
+            or self.amount_type != "percent"
+            or self.price_include
+            or self.l10n_ar_state_id.jurisdiction_code not in BASE_DEFINING_JURISDICTION_CODES
+        ):
+            return 1.0
+        return self.ratio / 100.0
+
+    def _eval_tax_amount_price_excluded(self, batch, raw_base, evaluation_context):
+        tax_amount = super()._eval_tax_amount_price_excluded(batch, raw_base, evaluation_context)
+        if tax_amount is None:
+            return tax_amount
+        return tax_amount * self._l10n_ar_get_perception_base_factor()
+
+    def _get_tax_details(self, *args, **kwargs):
+        # La base informada de la percepción es la parte que se percibe (art. 394).
+        res = super()._get_tax_details(*args, **kwargs)
+        for tax_data in res["taxes_data"]:
+            tax_data["base_amount"] *= tax_data["tax"]._l10n_ar_get_perception_base_factor()
+        return res
 
     def _l10n_ar_is_perception_with_base_threshold(self):
         """Percepción de venta argentina con umbral de base mínima configurado.

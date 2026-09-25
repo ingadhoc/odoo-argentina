@@ -51,7 +51,7 @@ The PARP padron reports the taxpayer regime, and in Santa Fe that regime sets th
 
 Taxes with the `CM` suffix belong to this flow and are not offered in the default tax selector of the fiscal position line: choosing one by hand would apply the total base to every taxpayer, local ones included. A tax on the total configured on purpose (a supplier that does not itemize VAT) stays selectable and is never overwritten by the padron.
 
-Perceptions are not affected: the regime does not change their base.
+Perceptions follow the same regime (art. 387): a local (`D`) is perceived on the net base, a Multilateral Agreement taxpayer (`C`) on 50% of it. For the latter, a tax with a 50% *Ratio* is created from the configured one, with the same aliquot and a `CM` suffix in its name. The *Ratio* of a sale tax only applies to Santa Fe perceptions.
 
 ## Usage
 

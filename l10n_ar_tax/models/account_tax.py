@@ -199,6 +199,60 @@ class AccountTax(models.Model):
                     )
                 )
 
+    @api.constrains(
+        "active",
+        "company_id",
+        "tax_group_id",
+        "l10n_ar_state_id",
+        "amount",
+        "amount_type",
+        "type_tax_use",
+        "l10n_ar_withholding_payment_type",
+        "l10n_ar_tax_type",
+        "ratio",
+        "price_include_override",
+    )
+    def _check_tax_overlap(self):
+        """Un impuesto con jurisdicción no puede repetirse: dos impuestos activos de la
+        misma compañía, grupo, jurisdicción y alícuota que se aplican igual son el mismo
+        impuesto, y tenerlos por separado duplica las líneas de impuestos del contacto
+        (ver _check_tax_group_overlap de l10n_ar.partner.tax).
+
+        El tipo (l10n_ar_tax_type) y el ratio entran en la clave porque distinguen
+        impuestos legítimos con la misma alícuota: la variante de Convenio Multilateral
+        (base total o ratio parcial) convive con la de base neta."""
+        for tax in self.filtered(lambda t: t.active and t.l10n_ar_state_id):
+            domain = [
+                ("id", "!=", tax.id),
+                ("company_id", "=", tax.company_id.id),
+                ("tax_group_id", "=", tax.tax_group_id.id),
+                ("l10n_ar_state_id", "=", tax.l10n_ar_state_id.id),
+                ("amount", "=", tax.amount),
+                ("amount_type", "=", tax.amount_type),
+                ("type_tax_use", "=", tax.type_tax_use),
+                ("l10n_ar_withholding_payment_type", "=", tax.l10n_ar_withholding_payment_type),
+                ("l10n_ar_tax_type", "=", tax.l10n_ar_tax_type),
+                ("ratio", "=", tax.ratio),
+                ("price_include_override", "=", tax.price_include_override),
+            ]
+            if duplicated := self.search(domain, limit=1):
+                raise ValidationError(
+                    self.env._(
+                        "There can't be two active taxes with the same tax group, jurisdiction, aliquot and type "
+                        "on the same company. Archive one of them or merge them:\n"
+                        "* Tax: %(tax)s\n"
+                        "* Duplicated tax: %(duplicated)s\n"
+                        "* Tax group: %(group)s\n"
+                        "* Jurisdiction: %(state)s\n"
+                        "* Aliquot: %(amount)s",
+                        tax=tax.name,
+                        duplicated=duplicated.name,
+                        group=tax.tax_group_id.name,
+                        state=tax.l10n_ar_state_id.name,
+                        amount=tax.amount,
+                    )
+                )
+
     def _l10n_ar_is_perception_with_base_threshold(self):
         """Percepción de venta argentina con umbral de base mínima configurado.
 

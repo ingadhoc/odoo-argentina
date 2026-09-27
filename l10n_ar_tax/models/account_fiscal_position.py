@@ -18,10 +18,20 @@ class AccountFiscalPosition(models.Model):
         return taxes
 
     def _l10n_ar_check_perceptions(self, partner, date):
-        """Hook para frenar la validación de un documento de venta (factura, pedido) cuando sus percepciones quedarían
-        incompletas. La dirección de entrega viene en el contexto (``l10n_ar_delivery_partner_id``). No hace nada acá:
-        lo extienden otros módulos (ej. l10n_ar_sircip)."""
-        return True
+        """Hook para revisar las percepciones de un documento de venta (factura, pedido) antes de validarlo. La
+        dirección de entrega viene en el contexto (``l10n_ar_delivery_partner_id``).
+
+        Para frenar, levantar una excepción. Para pedir confirmación, devolver los mensajes: al validar desde el botón
+        se muestra el asistente "Confirmar igual". No hace nada acá: lo extienden otros módulos (ej. l10n_ar_sircip).
+
+        :return: lista de mensajes a confirmar
+        """
+        return []
+
+    def _l10n_ar_perception_tax_groups(self):
+        """Grupos de impuestos de percepción que se recalculan al cambiar fecha, partner o entrega. Por defecto los de
+        las líneas de percepción; otros módulos agregan los que calculan por su cuenta (ej. l10n_ar_sircip)."""
+        return self.l10n_ar_tax_ids.filtered(lambda x: x.tax_type == "perception").mapped("default_tax_id.tax_group_id")
 
     def _l10n_ar_get_fp_tax_taxes(self, fp_tax, partner, company, date, tax_type, payment=None):
         """Impuestos que aporta una línea de percepción/retención de la posición fiscal para el partner y la fecha.

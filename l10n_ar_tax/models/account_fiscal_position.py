@@ -17,6 +17,12 @@ class AccountFiscalPosition(models.Model):
             taxes |= self._l10n_ar_get_fp_tax_taxes(fp_tax, partner, company, date, tax_type, payment=payment)
         return taxes
 
+    def _l10n_ar_check_perceptions(self, partner, date):
+        """Hook para frenar la validación de un documento de venta (factura, pedido) cuando sus percepciones quedarían
+        incompletas. La dirección de entrega viene en el contexto (``l10n_ar_delivery_partner_id``). No hace nada acá:
+        lo extienden otros módulos (ej. l10n_ar_sircip)."""
+        return True
+
     def _l10n_ar_get_fp_tax_taxes(self, fp_tax, partner, company, date, tax_type, payment=None):
         """Impuestos que aporta una línea de percepción/retención de la posición fiscal para el partner y la fecha.
         Método aparte para que otros módulos (ej. l10n_ar_sircip) puedan calcular una línea a su manera."""

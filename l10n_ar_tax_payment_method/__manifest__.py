@@ -31,7 +31,7 @@
     "data": [
         "views/account_journal_views.xml",
     ],
-    "installable": True,
+    "installable": False,
     "application": False,
     "auto_install": False,
     "post_init_hook": "_l10n_ar_set_apply_withholding",

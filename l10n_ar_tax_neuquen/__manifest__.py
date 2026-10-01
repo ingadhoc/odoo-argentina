@@ -10,7 +10,7 @@
     "depends": ["l10n_ar_tax"],
     "data": [],
     "demo": [],
-    "installable": True,
+    "installable": False,
     "auto_install": False,
     "application": False,
 }

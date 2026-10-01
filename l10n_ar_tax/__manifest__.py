@@ -56,7 +56,7 @@
         "account_payment_pro",
         "l10n_latam_check",  # para reporte de pagos/recibos
     ],
-    "installable": True,
+    "installable": False,
     "auto_install": ["l10n_ar"],
     "post_load": "monkey_patch_synchronize_to_moves",
     "post_init_hook": "_l10n_ar_update_taxes",

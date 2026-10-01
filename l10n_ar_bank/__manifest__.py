@@ -11,7 +11,7 @@
         "l10n_ar",
     ],
     "data": ["data/res_bank.xml", "views/res_bank_view.xml"],
-    "installable": True,
+    "installable": False,
     "auto_install": True,
     "application": False,
 }

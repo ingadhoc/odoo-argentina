@@ -36,7 +36,7 @@
         "demo/res_partner_demo.xml",
         "demo/l10n_ar_ux_demo.xml",
     ],
-    "installable": True,
+    "installable": False,
     "auto_install": True,
     "application": False,
 }

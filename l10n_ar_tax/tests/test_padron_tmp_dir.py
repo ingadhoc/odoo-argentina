@@ -1,11 +1,14 @@
 import base64
 import io
+import os
 import shutil
 import tempfile
+import time
 import zipfile
 from unittest.mock import patch
 
 from dateutil.relativedelta import relativedelta
+from odoo.exceptions import UserError
 from odoo.tests import common
 
 
@@ -124,3 +127,90 @@ class TestPadronTmpDir(common.TransactionCase):
             nro, aliq = self.padron_model.find_aliquot(f.name, cuit)
 
         self.assertEqual((nro, aliq), ("NRO789", "7,00"))
+
+    def test_extraction_does_not_leave_zip_copy_in_tmp(self):
+        """Descomprimir no deja en /tmp la copia temporal del zip."""
+        cuit = "30112223351"
+        padron = self._create_arba_padron(
+            [self._line("NRO-1", cuit, "11,00")],
+            [self._line("NRO-1", cuit, "1,00")],
+            self.today,
+            self.today + relativedelta(days=30),
+        )
+        partner = self._create_partner(cuit)
+        tmp_root = tempfile.gettempdir()
+        before = set(os.listdir(tmp_root))
+
+        padron._get_aliquot(partner)
+
+        new_files = {f for f in set(os.listdir(tmp_root)) - before if os.path.isfile(os.path.join(tmp_root, f))}
+        self.assertFalse(new_files)
+
+    def _make_idle(self, path):
+        old = time.time() - 2 * 3600
+        os.utime(path, (old, old))
+
+    def test_gc_removes_only_idle_padrones(self):
+        """El recolector borra los padrones sin uso en la última hora y deja los usados."""
+        cuit = "30112223351"
+        idle = self._create_arba_padron(
+            [self._line("NRO-0", cuit, "10,00")],
+            [self._line("NRO-0", cuit, "0,50")],
+            self.today - relativedelta(months=2),
+            self.today - relativedelta(months=1, days=1),
+        )
+        used = self._create_arba_padron(
+            [self._line("NRO-1", cuit, "11,00")],
+            [self._line("NRO-1", cuit, "1,00")],
+            self.today,
+            self.today + relativedelta(days=30),
+        )
+        partner = self._create_partner(cuit)
+        idle._get_aliquot(partner)
+        used._get_aliquot(partner)
+        self._make_idle(idle._get_parp_tmp_dir())
+
+        self.padron_model._gc_padron_tmp_dirs(force=True)
+
+        self.assertFalse(os.path.isdir(idle._get_parp_tmp_dir()))
+        self.assertTrue(os.path.isdir(used._get_parp_tmp_dir()))
+
+    def test_lookup_marks_padron_as_used(self):
+        """Consultar el padrón renueva la marca de uso y el recolector no lo borra."""
+        cuit = "30112223351"
+        padron = self._create_arba_padron(
+            [self._line("NRO-1", cuit, "11,00")],
+            [self._line("NRO-1", cuit, "1,00")],
+            self.today,
+            self.today + relativedelta(days=30),
+        )
+        partner = self._create_partner(cuit)
+        padron._get_aliquot(partner)
+        self._make_idle(padron._get_parp_tmp_dir())
+
+        self.assertEqual(padron._get_aliquot(partner), ("NRO-1", "1.00", "11.00"))
+        self.padron_model._gc_padron_tmp_dirs(force=True)
+
+        self.assertTrue(os.path.isdir(padron._get_parp_tmp_dir()))
+
+    def test_gc_skipped_when_infra_handles_it(self):
+        """Con la variable de entorno, Odoo no borra nada: lo hace infra."""
+        cuit = "30112223351"
+        padron = self._create_arba_padron(
+            [self._line("NRO-1", cuit, "11,00")],
+            [self._line("NRO-1", cuit, "1,00")],
+            self.today,
+            self.today + relativedelta(days=30),
+        )
+        padron._get_aliquot(self._create_partner(cuit))
+        self._make_idle(padron._get_parp_tmp_dir())
+
+        with patch.dict(os.environ, {"L10N_AR_PADRON_GC_EXTERNAL": "1"}):
+            self.padron_model._gc_padron_tmp_dirs(force=True)
+
+        self.assertTrue(os.path.isdir(padron._get_parp_tmp_dir()))
+
+    def test_find_aliquot_raises_when_padron_cannot_be_read(self):
+        """Si grep no puede leer el archivo, da error en vez de devolver que el CUIT no figura."""
+        with self.assertRaises(UserError):
+            self.padron_model.find_aliquot("/nonexistent/l10n_ar_padron.txt", "30112223351")

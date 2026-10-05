@@ -3,16 +3,25 @@ import io
 import logging
 import os
 import re
+import shutil
 import subprocess
 import tempfile
+import time
 import zipfile
 
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
 GREP_TIMEOUT = 30
+PADRON_TMP_ROOT = os.path.join(tempfile.gettempdir(), "l10n_ar_padron")
+# Extracted padrones unused for this long are removed (by Odoo, or by infra if PADRON_GC_EXTERNAL_ENV is set).
+PADRON_GC_MAX_IDLE = 3600
+PADRON_GC_INTERVAL = 900
+PADRON_GC_EXTERNAL_ENV = "L10N_AR_PADRON_GC_EXTERNAL"
+# Per process: /tmp belongs to the pod, so each worker cleans what it can see.
+_padron_gc_state = {"last_run": 0.0}
 
 
 class ResCompanyJurisdictionPadron(models.Model):
@@ -67,19 +76,12 @@ class ResCompanyJurisdictionPadron(models.Model):
 
     def descompress_file(self, file_padron, dest_dir="/tmp"):
         _logger.log(25, "Descompress zip file")
-        try:
-            file = base64.b64decode(file_padron)
-        except:
-            file = base64.decodestring(file_padron)
-        fobj = tempfile.NamedTemporaryFile(delete=False)
-        fname = fobj.name
-        fobj.write(file)
-        fobj.close()
-        f = open(fname, "r+b")
-        f.write(base64.b64decode(file_padron))
-        with zipfile.ZipFile(f, "r") as zip_file:
-            zip_file.extractall(path=dest_dir)
-            zip_file.close()
+        # TemporaryFile is removed on close, so the zip copy does not stay in /tmp.
+        with tempfile.TemporaryFile() as fobj:
+            fobj.write(base64.b64decode(file_padron))
+            fobj.seek(0)
+            with zipfile.ZipFile(fobj, "r") as zip_file:
+                zip_file.extractall(path=dest_dir)
 
     def find_aliquot(self, path, cuit):
         """We try to find aliqut and number for a partner given"""
@@ -91,6 +93,22 @@ class ResCompanyJurisdictionPadron(models.Model):
             text=True,
             timeout=GREP_TIMEOUT,
         )
+        # grep returns 1 when there is no match and >= 2 on error (e.g. the file was removed).
+        if result.returncode >= 2:
+            _logger.warning(
+                "Padron: grep exited with code %s looking up CUIT %s in %s: %s",
+                result.returncode,
+                cuit,
+                path,
+                result.stderr,
+            )
+            raise UserError(
+                _(
+                    "The aliquot padron could not be read: looking up CUIT %s failed. Please try "
+                    "again in a few minutes or enter the tax rate manually on the contact."
+                )
+                % cuit
+            )
         for line in result.stdout.splitlines():
             values = line.split(";")
             if len(values) > 8 and values[4] == cuit:
@@ -144,11 +162,46 @@ class ResCompanyJurisdictionPadron(models.Model):
     def _get_parp_tmp_dir(self):
         # Dir por padron+periodo: no mezcla archivos de otro mes.
         self.ensure_one()
-        return "/tmp/l10n_ar_padron_%s_%s_%s" % (
-            self.id,
-            self.l10n_ar_padron_from_date,
-            self.l10n_ar_padron_to_date,
+        return os.path.join(
+            PADRON_TMP_ROOT,
+            self.env.cr.dbname,
+            "%s_%s_%s" % (self.id, self.l10n_ar_padron_from_date, self.l10n_ar_padron_to_date),
         )
+
+    def _touch_padron_tmp_dir(self):
+        # mtime of the dir is the "last used" mark that the GC (Odoo or infra) checks.
+        self.ensure_one()
+        try:
+            os.utime(self._get_parp_tmp_dir())
+        except FileNotFoundError:
+            pass
+
+    @api.model
+    def _gc_padron_tmp_dirs(self, force=False):
+        """Remove the extracted padrones of this pod not used in the last PADRON_GC_MAX_IDLE seconds.
+
+        Skipped when PADRON_GC_EXTERNAL_ENV is set: infra removes them, for example with
+        ``find /tmp/l10n_ar_padron -mindepth 2 -maxdepth 2 -type d -mmin +60 -exec rm -rf {} +``
+        """
+        if os.environ.get(PADRON_GC_EXTERNAL_ENV, "").lower() in ("1", "true", "yes"):
+            return
+        now = time.time()
+        if not force and now - _padron_gc_state["last_run"] < PADRON_GC_INTERVAL:
+            return
+        _padron_gc_state["last_run"] = now
+        if not os.path.isdir(PADRON_TMP_ROOT):
+            return
+        for db_dir in os.scandir(PADRON_TMP_ROOT):
+            if not db_dir.is_dir():
+                continue
+            for entry in os.scandir(db_dir.path):
+                try:
+                    idle = now - entry.stat().st_mtime
+                except FileNotFoundError:
+                    continue
+                if entry.is_dir() and idle > PADRON_GC_MAX_IDLE:
+                    _logger.info("Padron cleanup: removing %s, unused for %d seconds", entry.path, idle)
+                    shutil.rmtree(entry.path, ignore_errors=True)
 
     def _ensure_parp_file_extracted(self):
         # Extrae/persiste una sola vez y reutiliza (antes se re-decodificaba/re-unzipeaba por CUIT).
@@ -198,6 +251,8 @@ class ResCompanyJurisdictionPadron(models.Model):
         nro = False
         aliquot_ret = 0.0
         aliquot_per = 0.0
+        self._touch_padron_tmp_dir()
+        self._gc_padron_tmp_dirs()
 
         # Check if this is Santa Fe PARP format
         if self._is_santa_fe_jurisdiction():
@@ -236,3 +291,4 @@ class ResCompanyJurisdictionPadron(models.Model):
                 last_year_date,
             )
             old_padrons.unlink()
+        self._gc_padron_tmp_dirs(force=True)

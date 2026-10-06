@@ -56,6 +56,7 @@ Reporting & Documentation
 
 * **Invoice Reports**: Implements "duplicado/triplicado" functionality on invoices (extends to delivery slips with l10n_ar_stock)
 * **Negative amounts on special refunds**: Credit notes that share the ARCA document code with the invoice they reverse (codes 60, 99, 186, 188, 189, 33, 331) print their line amounts and totals in negative (port of odoo/odoo#234040, only needed on 19.0)
+* **Taxes in company currency disabled**: Disables "Taxes in company currency" on Argentinian companies, so the invoice report does not print the extra taxes box in ARS on foreign currency invoices. It is set on install, on update from previous versions and when loading an Argentinian chart of accounts; it can be enabled again from the settings
 * **Transfer Reports**: Enhanced account transfer reports with Argentinian formatting
 
 Installation

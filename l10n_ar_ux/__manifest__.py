@@ -1,6 +1,6 @@
 {
     "name": "Argentinian Accounting UX",
-    "version": "18.0.1.15.0",
+    "version": "18.0.1.16.0",
     "category": "Localization/Argentina",
     "sequence": 14,
     "author": "ADHOC SA",
@@ -38,4 +38,5 @@
     "installable": True,
     "auto_install": True,
     "application": False,
+    "post_init_hook": "post_init_hook",
 }

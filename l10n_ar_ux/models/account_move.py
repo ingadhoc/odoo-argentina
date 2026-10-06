@@ -6,6 +6,20 @@ from odoo import _, api, models
 from odoo.exceptions import UserError
 from odoo.osv import expression
 
+# Los campos donde vive la autorización de AFIP, por variante de localización. Ninguna
+# es dependencia de este módulo y nada impide que estén las dos instaladas a la vez.
+AFIP_AUTH_FIELDS = (
+    # Enterprise (l10n_ar_edi)
+    ("l10n_ar_afip_auth_mode", "l10n_ar_afip_auth_code"),
+    # Community (l10n_ar_afipws_fe, de odoo-argentina-ce)
+    ("afip_auth_mode", "afip_auth_code"),
+)
+
+# Modos que significan "AFIP ya autorizó este comprobante". Mismo criterio que usa
+# l10n_ar_afipws_fe en _compute_qr_code: CAE y CAEA sí, CAI no (el CAI lo otorga AFIP
+# a la imprenta del talonario preimpreso, el comprobante nunca se envió al webservice).
+AFIP_AUTHORIZED_MODES = ("CAE", "CAEA")
+
 
 class AccountMove(models.Model):
     _inherit = "account.move"
@@ -55,6 +69,26 @@ class AccountMove(models.Model):
         document_number = document_number.split("(")[0]
         return super()._l10n_ar_get_document_number_parts(document_number, document_type_code)
 
+    def _l10n_ar_afip_authorized(self):
+        """Indica si AFIP ya autorizó el comprobante (``AFIP_AUTHORIZED_MODES``).
+
+        Los campos de autorización los declaran módulos distintos según la variante de
+        localización instalada (ver ``AFIP_AUTH_FIELDS``) y este módulo no depende de
+        ninguno de los dos, así que leer un nombre que no está en el registry levanta
+        ``AttributeError``. Miramos todos los pares que existan, no el primero: nada
+        impide tener ``l10n_ar_edi`` y ``l10n_ar_afipws_fe`` instalados a la vez, y en
+        ese caso alcanza con que CUALQUIERA de los dos tenga la autorización cargada.
+
+        Devuelve ``False`` cuando no hay ningún par (por ejemplo con ``l10n_ar`` solo,
+        sin facturación electrónica).
+        """
+        self.ensure_one()
+        return any(
+            self[mode_field] in AFIP_AUTHORIZED_MODES and self[code_field]
+            for mode_field, code_field in AFIP_AUTH_FIELDS
+            if mode_field in self._fields and code_field in self._fields
+        )
+
     def button_cancel(self):
         """
         Evitamos que se pueda cancelar una factura que ya fue previamente confirmada y enviada a AFIP.
@@ -62,12 +96,7 @@ class AccountMove(models.Model):
         y el otro, sin refrescar, cancela.
         """
         if posted_in_afip := self.filtered(
-            lambda x: (
-                x.state == "posted"
-                and x.invoice_filter_type_domain == "sale"
-                and x.l10n_ar_afip_auth_mode == "CAE"
-                and x.l10n_ar_afip_auth_code
-            )
+            lambda x: (x.state == "posted" and x.invoice_filter_type_domain == "sale" and x._l10n_ar_afip_authorized())
         ):
             raise UserError(
                 _("You cannot cancel documents already posted in AFIP (%s).", ",".join(posted_in_afip.mapped("name")))

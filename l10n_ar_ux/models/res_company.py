@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class ResCompany(models.Model):
@@ -28,3 +28,14 @@ class ResCompany(models.Model):
         string="Principal Activity",
         help="Principal registered activity of the company. This is used to generate the IVA Simple CSV Tax Reports.",
     )
+
+    @api.model
+    def _l10n_ar_ux_hide_invoice_tax_company_currency(self):
+        """Disable "Taxes in company currency" on Argentinian companies.
+
+        Odoo adds this setting in 18.0 with default True, so every company gets it enabled on install or upgrade
+        and the AR legal invoice report prints an extra taxes box in ARS on foreign currency invoices.
+        """
+        self.search([("account_fiscal_country_id.code", "=", "AR")]).write(
+            {"display_invoice_tax_company_currency": False}
+        )

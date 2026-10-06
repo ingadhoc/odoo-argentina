@@ -31,6 +31,7 @@ This module extends the l10n_ar module to add some usability improvesment:
 #. Add CUIT when using checks or bank transfers
 #. Send due date to journal items for checks payments
 #. Move checks menu into bank and cash menu (this could be on a glue module between account_payment_group and l10n_latam_check)
+#. Disable "Taxes in company currency" on Argentinian companies, so the invoice report does not print the extra taxes box in ARS on foreign currency invoices. It is set on install, on update from previous versions and when loading an Argentinian chart of accounts; it can be enabled again from the settings.
 
 Installation
 ============

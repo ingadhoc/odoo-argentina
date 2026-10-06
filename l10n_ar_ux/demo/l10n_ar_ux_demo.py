@@ -1,6 +1,7 @@
 from odoo import Command, api, fields, models
 
 
+# pylint: disable=consider-merging-classes-inherited
 class AccountChartTemplate(models.AbstractModel):
     _inherit = "account.chart.template"
 

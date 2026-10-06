@@ -9,12 +9,12 @@ class TestPaymentWithholdingValidation(TestArWithholdingArRi):
     def setUpClass(cls):
         super().setUpClass()
         cls.caba_tax_perception = cls.env.ref("account.%i_ri_tax_percepcion_iibb_caba_aplicada" % cls.env.company.id)
-        # Create caba perception tax with amounts 1% and 2%
+        # Create caba perception tax with amounts 1% and 2% (active: account_ux drops inactive taxes on refunds)
         cls.caba_tax_perception_with_amount_1 = cls.caba_tax_perception.copy(
-            default={"amount_type": "percent", "amount": 1}
+            default={"name": "P. IIBB CABA 1% (test)", "amount_type": "percent", "amount": 1, "active": True}
         )
         cls.caba_tax_perception_with_amount_2 = cls.caba_tax_perception.copy(
-            default={"amount_type": "percent", "amount": 2}
+            default={"name": "P. IIBB CABA 2% (test)", "amount_type": "percent", "amount": 2, "active": True}
         )
 
     def _create_invoice_with_caba_perception(self):
@@ -36,6 +36,7 @@ class TestPaymentWithholdingValidation(TestArWithholdingArRi):
                 "name": "Contact Person",
                 "parent_id": commercial_partner.id,
                 "is_company": False,
+                "country_id": self.env.ref("base.ar").id,
                 "state_id": self.env.ref("base.state_ar_c").id,  # CABA state
             }
         )

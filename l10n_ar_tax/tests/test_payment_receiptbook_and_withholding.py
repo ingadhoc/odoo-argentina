@@ -28,7 +28,7 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
         _prepare_move_lines_per_type no produce un doble ajuste sobre liquidez y contrapartida.
 
         Expected behavior:
-        - Liquidity line balance = amount * accounting_rate.
+        - Liquidity line balance = amount / accounting_rate (accounting_rate is A/C, USD per ARS).
         - Counterpart line balance = amount_company + withholdings (para que el asiento cuadre).
         - Withholding lines mantienen su propio balance intacto.
         """
@@ -85,6 +85,7 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
                 "fiscal_position_id": fiscal_pos.id,
                 "default_tax_id": self.tax_wth_test_1.id,
                 "tax_type": "withholding",
+                "webservice": False,
             }
         )
 
@@ -112,8 +113,8 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
         custom_rate = original_rate * 0.9999  # diferencia mínima para simular redondeo
         payment.accounting_rate = custom_rate
 
-        # amount_company_currency equivalente con el nuevo rate
-        amount_company = payment.amount * (payment.accounting_rate or 1.0)
+        # amount_company_currency equivalente con el nuevo rate (accounting_rate = A/C, por eso dividimos)
+        amount_company = payment.amount / (payment.accounting_rate or 1.0)
         # retenciones en C (ARS) para comparar con el balance del asiento
         withholding_balance_ars = sum(payment.l10n_ar_withholding_line_ids.mapped("amount"))
 
@@ -132,7 +133,7 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
             abs(liquidity_line.balance),
             amount_company,
             places=2,
-            msg="Liquidity line balance debe igualar amount * accounting_rate.",
+            msg="Liquidity line balance debe igualar amount / accounting_rate.",
         )
 
         # La contrapartida (cuenta payable) debe igualar liquidez + retenciones (asiento cuadra)
@@ -217,6 +218,7 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
                 "fiscal_position_id": fiscal_pos.id,
                 "default_tax_id": self.tax_wth_test_1.id,
                 "tax_type": "withholding",
+                "webservice": False,
             }
         )
 
@@ -235,8 +237,9 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
         )
 
         self.assertTrue(payment.l10n_ar_withholding_line_ids, "Withholdings should have been computed")
-        withholding_amount = payment.withholdings_amount
-        self.assertGreater(withholding_amount, 0)
+        self.assertGreater(payment.withholdings_amount, 0)
+        # withholdings_amount is in the payment currency (USD); the withholding lines hold the ARS amount
+        withholding_amount = sum(payment.l10n_ar_withholding_line_ids.mapped("amount"))
 
         # Post the payment to generate the journal entry with move lines
         payment.action_post()
@@ -321,6 +324,7 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
                 "fiscal_position_id": fiscal_pos.id,
                 "default_tax_id": self.tax_wth_test_1.id,
                 "tax_type": "withholding",
+                "webservice": False,
             }
         )
 
@@ -409,6 +413,7 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
                     "fiscal_position_id": fiscal_pos.id,
                     "default_tax_id": self.tax_wth_test_1.id,
                     "tax_type": "withholding",
+                    "webservice": False,
                 }
             )
 
@@ -488,6 +493,7 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
                 "fiscal_position_id": fiscal_pos.id,
                 "default_tax_id": manual_tax.id,
                 "tax_type": "withholding",
+                "webservice": False,
             }
         )
 
@@ -620,6 +626,7 @@ class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
                 "fiscal_position_id": fiscal_pos.id,
                 "default_tax_id": self.tax_wth_test_1.id,
                 "tax_type": "withholding",
+                "webservice": False,
             }
         )
 

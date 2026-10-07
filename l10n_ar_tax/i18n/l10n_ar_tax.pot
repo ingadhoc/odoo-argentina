@@ -1434,7 +1434,9 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
-msgid "Verifies the CIT key against the ARBA production server."
+msgid ""
+"Verifies the CIT key with the ARBA taxpayer registry service (IIBB "
+"withholding and perception rates), always on the ARBA production server."
 msgstr ""
 
 #. module: l10n_ar_tax

@@ -1493,8 +1493,13 @@ msgstr "Utilizado para el cálculo de retenciones"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
-msgid "Verifies the CIT key against the ARBA production server."
-msgstr "Verifica la clave CIT contra el servidor de producción de ARBA."
+msgid ""
+"Verifies the CIT key with the ARBA taxpayer registry service (IIBB "
+"withholding and perception rates), always on the ARBA production server."
+msgstr ""
+"Verifica la clave CIT con el servicio de padrón de contribuyentes de ARBA "
+"(alícuotas de percepción y retención de IIBB), siempre en el servidor de "
+"producción de ARBA."
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_withholding_sequence_id

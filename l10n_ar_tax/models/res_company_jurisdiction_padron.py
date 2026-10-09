@@ -198,11 +198,13 @@ class ResCompanyJurisdictionPadron(models.Model):
         nro = False
         aliquot_ret = 0.0
         aliquot_per = 0.0
+        # ensure_vat returns the CUIT without separators, as it comes in the padron files
+        cuit = partner.ensure_vat()
 
         # Check if this is Santa Fe PARP format
         if self._is_santa_fe_jurisdiction():
             # Read PARP directly from binary field
-            is_in_padron, aliquot_ret, aliquot_per = self._read_parp_from_binary(partner.vat)
+            is_in_padron, aliquot_ret, aliquot_per = self._read_parp_from_binary(cuit)
             return is_in_padron, aliquot_ret, aliquot_per
         else:
             # Original logic for other padron types (ARBA, etc)
@@ -214,7 +216,7 @@ class ResCompanyJurisdictionPadron(models.Model):
                     self.descompress_file(self.file_padron, dest_dir=tmp_dir)
                     path_file = self.find_file(tmp_dir, padron_type)
                 if path_file:
-                    nro, aliquot = self.find_aliquot(os.path.join(tmp_dir, path_file), partner.vat)
+                    nro, aliquot = self.find_aliquot(os.path.join(tmp_dir, path_file), cuit)
                     if padron_type == "Per":
                         aliquot_per = aliquot and aliquot.replace(",", ".")
                     else:

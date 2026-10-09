@@ -1451,6 +1451,24 @@ msgstr "El webservice respondió algo que no es JSON."
 
 #. module: l10n_ar_tax
 #. odoo-python
+#: code:addons/l10n_ar_tax/models/account_tax.py:0
+msgid ""
+"There can't be two active taxes with the same tax group, jurisdiction, aliquot and type on the same company. Archive one of them or merge them:\n"
+"* Tax: %(tax)s\n"
+"* Duplicated tax: %(duplicated)s\n"
+"* Tax group: %(group)s\n"
+"* Jurisdiction: %(state)s\n"
+"* Aliquot: %(amount)s"
+msgstr ""
+"No puede haber dos impuestos activos con el mismo grupo de impuestos, jurisdicción, alícuota y tipo en la misma compañía. Archive uno de ellos o combínelos:\n"
+"* Impuesto: %(tax)s\n"
+"* Impuesto duplicado: %(duplicated)s\n"
+"* Grupo de impuestos: %(group)s\n"
+"* Jurisdicción: %(state)s\n"
+"* Alícuota: %(amount)s"
+
+#. module: l10n_ar_tax
+#. odoo-python
 #: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
 msgid ""
 "This database cannot read RAR files (the 'unrar' library is not installed). "

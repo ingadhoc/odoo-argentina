@@ -36,6 +36,15 @@ class l10nArPaymentWithholding(models.Model):
         "Withholding tax must be unique per payment",
     )
 
+    def _l10n_ar_get_computable_withholdings(self):
+        """Lines whose base and amount are computed: those of a draft payment.
+
+        The base comes from the current residual of the invoices, which keeps moving after posting, so a non draft
+        payment keeps the stored values of its journal entry. Overrides of the base and amount computes must use it.
+        ``payment_id.state`` is not in the depends on purpose: posting must not trigger a recompute.
+        """
+        return self.filtered(lambda x: x.payment_id.state == "draft")
+
     @api.depends(
         "tax_id",
         "payment_id.selected_debt",
@@ -47,8 +56,9 @@ class l10nArPaymentWithholding(models.Model):
     )
     def _compute_base_amount(self):
         """practicamente mismo codigo que en l10n_ar.payment.register.withholding pero usamos campos "selected_debt_"""
-        self.payment_id._compute_to_pay_amount()
-        for wth in self.filtered(lambda x: x.partner_type == "supplier"):
+        draft_wths = self._l10n_ar_get_computable_withholdings()
+        draft_wths.payment_id._compute_to_pay_amount()
+        for wth in draft_wths.filtered(lambda x: x.partner_type == "supplier"):
             pay = wth.payment_id
             # calculamos advance_amount
             # si el adelanto es negativo estamos pagando parcialmente una
@@ -94,7 +104,7 @@ class l10nArPaymentWithholding(models.Model):
         # esto lo hicimos así para soportar el caso de una posición fiscal que tenga más de un impuesto con ratio,
         # pero actualmente una misma posicion fiscal no puedo agregar 2 impuestos del mismo grupo (ej VAT Withholding)
         # Lo dejamos por el momento con la aclaración por si en un futuro sacamos la constraint de los grupos de impuestos.
-        for wth in self.filtered(lambda x: x.tax_id.amount_type == "percent" and x.tax_id.ratio != 100):
+        for wth in draft_wths.filtered(lambda x: x.tax_id.amount_type == "percent" and x.tax_id.ratio != 100):
             wth.base_amount *= wth.tax_id.ratio / 100
 
     def _tax_compute_all_helper(self):
@@ -200,7 +210,7 @@ class l10nArPaymentWithholding(models.Model):
 
     @api.depends("base_amount", "tax_id")
     def _compute_amount(self):
-        for line in self.filtered(lambda r: r.partner_type == "supplier"):
+        for line in self._l10n_ar_get_computable_withholdings().filtered(lambda r: r.partner_type == "supplier"):
             # TODO: usar _get_withholding_tax no deberia ser necesario
             # si al pasar a draft modificamos la linea
             tax_id = line._get_withholding_tax()

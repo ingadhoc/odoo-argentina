@@ -48,7 +48,10 @@ class l10nArPaymentWithholding(models.Model):
     def _compute_base_amount(self):
         """practicamente mismo codigo que en l10n_ar.payment.register.withholding pero usamos campos "selected_debt_"""
         self.payment_id._compute_to_pay_amount()
-        for wth in self.filtered(lambda x: x.partner_type == "supplier"):
+        # selected_debt is read from the current residual of the invoices, so on a non draft payment it no longer
+        # reflects the debt that was paid: keep the stored base instead of recomputing it
+        draft_wths = self.filtered(lambda x: x.payment_id.state == "draft")
+        for wth in draft_wths.filtered(lambda x: x.partner_type == "supplier"):
             pay = wth.payment_id
             # calculamos advance_amount
             # si el adelanto es negativo estamos pagando parcialmente una
@@ -94,7 +97,7 @@ class l10nArPaymentWithholding(models.Model):
         # esto lo hicimos así para soportar el caso de una posición fiscal que tenga más de un impuesto con ratio,
         # pero actualmente una misma posicion fiscal no puedo agregar 2 impuestos del mismo grupo (ej VAT Withholding)
         # Lo dejamos por el momento con la aclaración por si en un futuro sacamos la constraint de los grupos de impuestos.
-        for wth in self.filtered(lambda x: x.tax_id.amount_type == "percent" and x.tax_id.ratio != 100):
+        for wth in draft_wths.filtered(lambda x: x.tax_id.amount_type == "percent" and x.tax_id.ratio != 100):
             wth.base_amount *= wth.tax_id.ratio / 100
 
     def _tax_compute_all_helper(self):
@@ -200,7 +203,8 @@ class l10nArPaymentWithholding(models.Model):
 
     @api.depends("base_amount", "tax_id")
     def _compute_amount(self):
-        for line in self.filtered(lambda r: r.partner_type == "supplier"):
+        # same as the base: the amount of a non draft payment is already in its journal entry
+        for line in self.filtered(lambda r: r.partner_type == "supplier" and r.payment_id.state == "draft"):
             # TODO: usar _get_withholding_tax no deberia ser necesario
             # si al pasar a draft modificamos la linea
             tax_id = line._get_withholding_tax()

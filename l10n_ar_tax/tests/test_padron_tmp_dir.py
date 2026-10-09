@@ -88,6 +88,18 @@ class TestPadronTmpDir(common.TransactionCase):
         self.assertEqual(padron_1._get_aliquot(partner), ("NRO-1", "1.00", "11.00", False))
         self.assertEqual(padron_2._get_aliquot(partner), ("NRO-2", "2.00", "22.00", False))
 
+    def test_partner_without_cuit_is_not_in_padron(self):
+        """Un contacto sin CUIT (ej. consumidor final con DNI) no está en el padrón y no bloquea."""
+        padron = self._create_santa_fe_padron([self._parp_line("20222333440", "5,00", "3,00")])
+        partner = self.env["res.partner"].create(
+            {
+                "name": "partner dni",
+                "l10n_latam_identification_type_id": self.env.ref("l10n_ar.it_dni").id,
+                "vat": "22333444",
+            }
+        )
+        self.assertEqual(padron._get_aliquot(partner), (False, 0.0, 0.0))
+
     def test_santa_fe_does_not_redecode_binary_on_second_cuit(self):
         """El binario se extrae una sola vez, no por cada CUIT consultado."""
         cuit_a, cuit_b = "20222333440", "20222333459"

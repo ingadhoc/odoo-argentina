@@ -368,10 +368,28 @@ class ResCompanyJurisdictionPadron(models.Model):
         nro = False
         aliquot_ret = 0.0
         aliquot_per = 0.0
+        # compact CUIT, as it comes in the padron files; empty for partners without CUIT (e.g. DNI)
+        cuit = partner.l10n_ar_vat
+        if not cuit:
+            return nro, aliquot_ret, aliquot_per
 
+<<<<<<< 3c759f7302cc54fb2e7c18ea8512ce583d1c299f
         # Check if the whole padron comes in a single file (Santa Fe, AGIP)
         if self._is_single_file_padron():
             return self._find_padron_aliquot(self._ensure_padron_file_extracted(), partner.vat)
+||||||| 7ca2fa11ef89e5c1be3325bcfe024f1651d7f435
+        # Check if this is Santa Fe PARP format
+        if self._is_santa_fe_jurisdiction():
+            # Read PARP directly from binary field
+            is_in_padron, aliquot_ret, aliquot_per = self._read_parp_from_binary(partner.vat)
+            return is_in_padron, aliquot_ret, aliquot_per
+=======
+        # Check if this is Santa Fe PARP format
+        if self._is_santa_fe_jurisdiction():
+            # Read PARP directly from binary field
+            is_in_padron, aliquot_ret, aliquot_per = self._read_parp_from_binary(cuit)
+            return is_in_padron, aliquot_ret, aliquot_per
+>>>>>>> d23302587032ec704d7d5d6209827822cc14ead9
         else:
             # Original logic for other padron types (ARBA, etc)
             tmp_dir = self._get_padron_tmp_dir()
@@ -382,7 +400,7 @@ class ResCompanyJurisdictionPadron(models.Model):
                     self.descompress_file(self.file_padron, dest_dir=tmp_dir)
                     path_file = self.find_file(tmp_dir, padron_type)
                 if path_file:
-                    nro, aliquot = self.find_aliquot(os.path.join(tmp_dir, path_file), partner.vat)
+                    nro, aliquot = self.find_aliquot(os.path.join(tmp_dir, path_file), cuit)
                     if padron_type == "Per":
                         aliquot_per = aliquot and aliquot.replace(",", ".")
                     else:

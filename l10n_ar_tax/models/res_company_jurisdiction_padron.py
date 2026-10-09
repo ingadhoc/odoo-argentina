@@ -368,10 +368,12 @@ class ResCompanyJurisdictionPadron(models.Model):
         nro = False
         aliquot_ret = 0.0
         aliquot_per = 0.0
+        # ensure_vat returns the CUIT without separators, as it comes in the padron files
+        cuit = partner.ensure_vat()
 
         # Check if the whole padron comes in a single file (Santa Fe, AGIP)
         if self._is_single_file_padron():
-            return self._find_padron_aliquot(self._ensure_padron_file_extracted(), partner.vat)
+            return self._find_padron_aliquot(self._ensure_padron_file_extracted(), cuit)
         else:
             # Original logic for other padron types (ARBA, etc)
             tmp_dir = self._get_padron_tmp_dir()
@@ -382,7 +384,7 @@ class ResCompanyJurisdictionPadron(models.Model):
                     self.descompress_file(self.file_padron, dest_dir=tmp_dir)
                     path_file = self.find_file(tmp_dir, padron_type)
                 if path_file:
-                    nro, aliquot = self.find_aliquot(os.path.join(tmp_dir, path_file), partner.vat)
+                    nro, aliquot = self.find_aliquot(os.path.join(tmp_dir, path_file), cuit)
                     if padron_type == "Per":
                         aliquot_per = aliquot and aliquot.replace(",", ".")
                     else:

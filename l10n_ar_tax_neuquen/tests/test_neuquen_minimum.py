@@ -157,3 +157,27 @@ class TestNeuquenMinimum(TestArWithholdingArRi):
         wth.base_amount = 175000.0
         wth._compute_amount()
         self.assertEqual(wth.amount, 0.0)
+
+    # ─── Pago publicado: el recálculo no vuelve a restar las facturas bajo el mínimo ─
+
+    def test_09_neuquen_posted_payment_keeps_base_on_recompute(self):
+        """Pago publicado de A (250.000, < mínimo) + B (350.000) con base 350.000. Se desconcilia
+        A, que vuelve a tener residual, y se fuerza el recálculo (como un script de upgrade):
+        la base guardada no debe volver a descontar A (quedaría en 100.000)."""
+        inv_a = self._make_vendor_invoice(250000.0, "6-91")
+        inv_b = self._make_vendor_invoice(350000.0, "6-92")
+        wth = self._withholding_for(inv_a + inv_b, self.tax_iibb_nqn)
+        self.assertEqual(wth.base_amount, 350000.0)
+        payment = wth.payment_id
+        payment.amount = payment.to_pay_amount - payment.withholdings_amount
+        payment.action_post()
+        base_amount, amount = wth.base_amount, wth.amount
+
+        inv_a.line_ids.filtered(lambda l: l.account_type == "liability_payable").remove_move_reconcile()
+        self.assertFalse(inv_a.currency_id.is_zero(inv_a.amount_residual))
+        self.env.invalidate_all()
+        wth.modified(["tax_id"])
+        self.env.flush_all()
+
+        self.assertEqual(wth.base_amount, base_amount)
+        self.assertEqual(wth.amount, amount)

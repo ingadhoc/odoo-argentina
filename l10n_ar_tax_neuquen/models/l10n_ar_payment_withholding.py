@@ -24,7 +24,9 @@ class L10nArPaymentWithholding(models.Model):
         neuquen = self.env.ref("base.state_ar_q", raise_if_not_found=False)
         if not neuquen:
             return
-        for wth in self.filtered(lambda x: x.partner_type == "supplier" and x._l10n_ar_is_neuquen_iibb()):
+        for wth in self._l10n_ar_get_computable_withholdings().filtered(
+            lambda x: x.partner_type == "supplier" and x._l10n_ar_is_neuquen_iibb()
+        ):
             tax = wth._get_withholding_tax()
             threshold = tax.l10n_ar_base_minimum_threshold
             is_total = tax.l10n_ar_tax_type == "iibb_total"

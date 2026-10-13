@@ -3,6 +3,7 @@
 # directory
 ##############################################################################
 import copy
+import re
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
@@ -143,6 +144,20 @@ class AccountMove(models.Model):
             line.balance = balance
         res = super()._post(soft=soft)
         return res
+
+    def _get_next_sequence_format(self):
+        # Always take the POS from the journal: a name with a stale POS must not propagate to new documents
+        format_string, format_values = super()._get_next_sequence_format()
+        pos_number = self.journal_id.l10n_ar_afip_pos_number
+        if (
+            self.journal_id.l10n_ar_is_pos
+            and pos_number
+            and self.l10n_latam_use_documents
+            and self.l10n_latam_document_type_id
+            and self.company_id.account_fiscal_country_id.code == "AR"
+        ):
+            format_values["prefix1"] = re.sub(r"\d{5}-$", "%05d-" % pos_number, format_values["prefix1"])
+        return format_string, format_values
 
     @api.model
     def _get_l10n_ar_codes_used_for_inv_and_ref(self):

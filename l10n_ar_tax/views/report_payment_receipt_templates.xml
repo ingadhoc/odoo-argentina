@@ -57,7 +57,7 @@
         <!-- ── Withholding rows inside the payments table ───────────────────────── -->
         <xpath expr="//t[@name='withholding_rows']" position="replace">
             <t t-foreach="payment_bundle.l10n_ar_withholding_line_ids.filtered('amount')" t-as="line">
-                <tr>
+                <tr style="page-break-inside: avoid">
                     <td>
                         <span t-if="line.tax_id.l10n_ar_tax_type in ['earnings', 'earnings_scale']" t-out="line.tax_id.invoice_label or 'Retención Ganancias'"/>
                         <span t-else="" t-out="line.tax_id.invoice_label or line.tax_id.name"/>
@@ -76,8 +76,8 @@
 
         <!-- ── Pending receivables table (customers, controlled by group) ─────── -->
         <xpath expr="//span[@name='pending_table']" position="replace">
-            <table class="table table-sm o_main_table" name="open_table" t-if="o.partner_type=='customer'" groups="l10n_ar_ux.group_include_pending_receivable_documents">
-                <thead>
+            <table class="table table-sm o_main_table" name="open_table" style="page-break-inside: avoid" t-if="o.partner_type=='customer'" groups="l10n_ar_ux.group_include_pending_receivable_documents">
+                <thead style="display: table-row-group">
                     <tr>
                         <th><span>Pending Vouchers at </span><span t-out="datetime.datetime.today()" t-options='{"widget": "date"}'/></th>
                         <th class="text-center"><span>Exp. Date</span></th>
@@ -87,7 +87,7 @@
                 </thead>
                 <tbody>
                     <t t-foreach="o.env['account.move.line'].search([('partner_id', '=', o.partner_id.commercial_partner_id.id), ('account_id.account_type', '=', o.partner_type=='customer' and 'asset_receivable' or 'liability_payable'), ('reconciled', '=', False), ('account_id.active', '=', True), ('move_id.state', '=', 'posted'), ('company_id', '=', o.company_id.id)], order='date_maturity, id')" t-as="line">
-                        <tr>
+                        <tr style="page-break-inside: avoid">
                             <td><span t-field='line.move_id.display_name'/></td>
                             <td class="text-center">
                                 <span class="text-nowrap" t-field="line.date_maturity"/>
@@ -101,7 +101,7 @@
                         </tr>
                     </t>
                 </tbody>
-                <tfoot>
+                <tfoot style="display: table-row-group">
                     <tr>
                         <td colspan="3"><strong><span>Total Pending</span></strong></td>
                         <td class="text-end pe-2">
@@ -144,7 +144,7 @@
         <xpath expr="//t[hasclass('reversal_move_lines')]" position="replace">
             <t t-foreach="line.move_id.reversal_move_ids" t-as="reversal_move_id">
                 <t t-set="imputed_amount" t-value="[item['amount'] for item in reversal_move_id.sudo()._get_all_reconciled_invoice_partials() if item['aml_id'] == line.id]"/>
-                <tr>
+                <tr style="page-break-inside: avoid">
                     <td><span style="padding-left: 20px;">└</span> <span t-field='reversal_move_id.display_name'/></td>
                     <td class="text-center">
                         <span class="text-nowrap" t-field="reversal_move_id.invoice_date"/>

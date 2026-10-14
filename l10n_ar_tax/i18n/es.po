@@ -424,8 +424,8 @@ msgstr "<strong><span>Total Pendiente</span></strong>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
-msgid "<strong>Customer: </strong>"
-msgstr "<strong>Cliente: </strong>"
+msgid "<strong>Supplier: </strong>"
+msgstr "<strong>Proveedor: </strong>"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document

@@ -5,6 +5,21 @@ from odoo.tools import SQL
 
 from .account_fiscal_position_l10n_ar_tax import BASE_DEFINING_JURISDICTION_CODES
 
+# Fields that make two taxes with jurisdiction the same one (see _check_tax_overlap).
+TAX_OVERLAP_FIELDS = (
+    "active",
+    "company_id",
+    "tax_group_id",
+    "l10n_ar_state_id",
+    "amount",
+    "amount_type",
+    "type_tax_use",
+    "l10n_ar_withholding_payment_type",
+    "l10n_ar_tax_type",
+    "ratio",
+    "price_include_override",
+)
+
 
 class AccountTax(models.Model):
     _inherit = "account.tax"
@@ -228,6 +243,58 @@ class AccountTax(models.Model):
         for tax_data in res["taxes_data"]:
             tax_data["base_amount"] *= tax_data["tax"]._l10n_ar_get_perception_base_factor()
         return res
+
+    def copy_data(self, default=None):
+        vals_list = super().copy_data(default=default)
+        if set(default or {}) & set(TAX_OVERLAP_FIELDS):
+            return vals_list
+        for tax, vals in zip(self, vals_list):
+            # An active twin would be rejected by _check_tax_overlap before it can be edited.
+            if tax.active and tax.l10n_ar_state_id:
+                vals["active"] = False
+        return vals_list
+
+    @api.constrains(*TAX_OVERLAP_FIELDS)
+    def _check_tax_overlap(self):
+        """Two active taxes with jurisdiction that apply the same way are the same tax."""
+        for tax in self.filtered(lambda t: t.active and t.l10n_ar_state_id):
+            # An empty base is a net base, as _get_tax_type_lookup resolves it.
+            if tax.l10n_ar_tax_type in ("iibb_untaxed", False):
+                tax_type_domain = [("l10n_ar_tax_type", "in", ["iibb_untaxed", False])]
+            else:
+                tax_type_domain = [("l10n_ar_tax_type", "=", tax.l10n_ar_tax_type)]
+            domain = [
+                ("id", "!=", tax.id),
+                # Explicit: callers may run with active_test=False (e.g. _ensure_tax).
+                ("active", "=", True),
+                ("company_id", "=", tax.company_id.id),
+                ("tax_group_id", "=", tax.tax_group_id.id),
+                ("l10n_ar_state_id", "=", tax.l10n_ar_state_id.id),
+                ("amount", "=", tax.amount),
+                ("amount_type", "=", tax.amount_type),
+                ("type_tax_use", "=", tax.type_tax_use),
+                ("l10n_ar_withholding_payment_type", "=", tax.l10n_ar_withholding_payment_type),
+                ("ratio", "=", tax.ratio),
+                ("price_include_override", "=", tax.price_include_override),
+                *tax_type_domain,
+            ]
+            if duplicated := self.search(domain, limit=1):
+                raise ValidationError(
+                    self.env._(
+                        "There can't be two active taxes with the same tax group, jurisdiction, aliquot and type "
+                        "on the same company. Archive one of them or merge them:\n"
+                        "* Tax: %(tax)s\n"
+                        "* Duplicated tax: %(duplicated)s\n"
+                        "* Tax group: %(group)s\n"
+                        "* Jurisdiction: %(state)s\n"
+                        "* Aliquot: %(amount)s",
+                        tax=tax.name,
+                        duplicated=duplicated.name,
+                        group=tax.tax_group_id.name,
+                        state=tax.l10n_ar_state_id.name,
+                        amount=tax.amount,
+                    )
+                )
 
     def _l10n_ar_is_perception_with_base_threshold(self):
         """Percepción de venta argentina con umbral de base mínima configurado.

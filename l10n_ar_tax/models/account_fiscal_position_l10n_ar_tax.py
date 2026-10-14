@@ -327,7 +327,12 @@ class AccountFiscalPositionL10nArTax(models.Model):
             l10n_ar_tax_type, padron_defines_base=padron_defines_base
         )
         domain = self._get_tax_domain(tax_type_domain=tax_type_domain, ratio=ratio)
-        tax = self.env["account.tax"].with_context(active_test=False).search(domain + [("amount", "=", rate)], limit=1)
+        # Prefer an active tax: reactivating an archived twin breaks _check_tax_overlap.
+        tax = (
+            self.env["account.tax"]
+            .with_context(active_test=False)
+            .search(domain + [("amount", "=", rate)], order="active desc, sequence, id", limit=1)
+        )
         if tax and not tax.active:
             tax.active = True
         if not tax:

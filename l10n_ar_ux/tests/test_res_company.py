@@ -27,3 +27,19 @@ class TestInvoiceTaxCompanyCurrency(common.TransactionCase):
         self.env["res.company"]._l10n_ar_ux_hide_invoice_tax_company_currency()
         self.assertFalse(self.ar_company.display_invoice_tax_company_currency)
         self.assertTrue(self.us_company.display_invoice_tax_company_currency)
+
+    def test_branch_takes_setting_from_parent(self):
+        branch = self.env["res.company"].create({"name": "AR branch", "parent_id": self.ar_company.id})
+        self.assertFalse(branch.display_invoice_tax_company_currency)
+        self.ar_company.display_invoice_tax_company_currency = True
+        branch = self.env["res.company"].create({"name": "AR branch 2", "parent_id": self.ar_company.id})
+        self.assertTrue(branch.display_invoice_tax_company_currency)
+        branch = self.env["res.company"].create(
+            {"name": "AR branch 3", "parent_id": self.ar_company.id, "display_invoice_tax_company_currency": False}
+        )
+        self.assertFalse(branch.display_invoice_tax_company_currency)
+
+    def test_branch_of_non_ar_company_keeps_default(self):
+        self.us_company.display_invoice_tax_company_currency = False
+        branch = self.env["res.company"].create({"name": "US branch", "parent_id": self.us_company.id})
+        self.assertTrue(branch.display_invoice_tax_company_currency)

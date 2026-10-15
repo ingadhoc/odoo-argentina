@@ -29,6 +29,20 @@ class ResCompany(models.Model):
         help="Principal registered activity of the company. This is used to generate the IVA Simple CSV Tax Reports.",
     )
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        """New branches of an Argentinian company take "Taxes in company currency" from their parent.
+
+        Branches do not load a chart template, so without this they get the field default (True) and print the
+        extra taxes box in ARS even if the parent company has it disabled.
+        """
+        for vals in vals_list:
+            if vals.get("parent_id") and "display_invoice_tax_company_currency" not in vals:
+                parent = self.browse(vals["parent_id"])
+                if parent.account_fiscal_country_id.code == "AR":
+                    vals["display_invoice_tax_company_currency"] = parent.display_invoice_tax_company_currency
+        return super().create(vals_list)
+
     @api.model
     def _l10n_ar_ux_hide_invoice_tax_company_currency(self):
         """Disable "Taxes in company currency" on Argentinian companies.

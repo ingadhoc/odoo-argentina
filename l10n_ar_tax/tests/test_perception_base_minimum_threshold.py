@@ -17,6 +17,12 @@ Casos (alícuota 3%, umbral 300000):
     6. Factura en USD cuyo valor convertido no llega al umbral → no percibe.
     7. Dos líneas con percepción de 180000 con 5% de descuento y dos líneas sin
        percepción con 10% de descuento → percepción sobre 342000.
+
+En una factura validada o cancelada los totales (widget y PDF) muestran lo
+contabilizado aunque después cambie el umbral:
+    8. Validada con percepción, después se sube el umbral → sigue la percepción.
+    9. Validada sin percepción, después se saca el umbral → sigue sin percepción.
+   10. Igual que 8, con la factura cancelada.
 """
 
 from odoo import Command
@@ -52,13 +58,12 @@ class TestPerceptionBaseMinimumThreshold(TestArCommon):
         # 1 USD = 1000 ARS desde el 01/01/2025 (las facturas de los tests son del 15/01).
         cls.usd = cls.setup_other_currency("USD", rates=[("2025-01-01", 0.001)])
 
-    def _perception_amount(self, lines, currency=None):
-        """Crea y confirma una factura de cliente y devuelve la percepción.
+    def _post_invoice(self, lines, currency=None):
+        """Crea y confirma una factura de cliente.
 
         :param lines: lista de tuplas (price_unit, lleva_percepcion[, descuento_%]). La
                       línea siempre lleva IVA 21%; la base de la percepción es el neto.
         :param currency: moneda de la factura (default: la de la compañía).
-        :return: monto de percepción, en la moneda de la factura.
         """
         invoice = self.env["account.move"].create(
             {
@@ -90,6 +95,11 @@ class TestPerceptionBaseMinimumThreshold(TestArCommon):
             }
         )
         invoice.action_post()
+        return invoice
+
+    def _perception_amount(self, lines, currency=None):
+        """Monto de percepción de la factura confirmada, en la moneda de la factura."""
+        invoice = self._post_invoice(lines, currency=currency)
         perception_lines = invoice.line_ids.filtered(lambda line: line.tax_line_id == self.perception_tax)
         return abs(sum(perception_lines.mapped("amount_currency")))
 
@@ -137,3 +147,34 @@ class TestPerceptionBaseMinimumThreshold(TestArCommon):
             [(180000.0, True, 5.0), (180000.0, True, 5.0), (100000.0, False, 10.0), (100000.0, False, 10.0)]
         )
         self.assertAlmostEqual(amount, 10260.0, places=2)
+
+    def _assert_tax_totals_match_booked_total(self, invoice, expected_total):
+        # `tax_totals` no se guarda: se fuerza el recálculo con la configuración actual.
+        invoice.invalidate_recordset(["tax_totals"])
+        self.assertAlmostEqual(invoice.amount_total, expected_total, places=2)
+        self.assertAlmostEqual(invoice.tax_totals["total_amount_currency"], expected_total, places=2)
+
+    def test_08_posted_keeps_booked_perception_when_threshold_raised(self):
+        """Validada con percepción (301000 > 300000); se sube el umbral a 400000 → los
+        totales siguen mostrando la percepción contabilizada: 301000 * 1.24 = 373240."""
+        self.perception_tax.l10n_ar_base_minimum_threshold = 300000
+        invoice = self._post_invoice([(301000.0, True)])
+        self.perception_tax.l10n_ar_base_minimum_threshold = 400000
+        self._assert_tax_totals_match_booked_total(invoice, 373240.0)
+
+    def test_09_posted_keeps_no_perception_when_threshold_removed(self):
+        """Validada sin percepción (299000 < 300000); se saca el umbral → los totales
+        siguen sin percepción: 299000 * 1.21 = 361790."""
+        self.perception_tax.l10n_ar_base_minimum_threshold = 300000
+        invoice = self._post_invoice([(299000.0, True)])
+        self.perception_tax.l10n_ar_base_minimum_threshold = 0
+        self._assert_tax_totals_match_booked_total(invoice, 361790.0)
+
+    def test_10_cancelled_keeps_booked_perception_when_threshold_raised(self):
+        """Como el 8, con la factura cancelada: los apuntes de impuesto se conservan."""
+        self.perception_tax.l10n_ar_base_minimum_threshold = 300000
+        invoice = self._post_invoice([(301000.0, True)])
+        invoice.button_cancel()
+        self.assertEqual(invoice.state, "cancel")
+        self.perception_tax.l10n_ar_base_minimum_threshold = 400000
+        self._assert_tax_totals_match_booked_total(invoice, 373240.0)

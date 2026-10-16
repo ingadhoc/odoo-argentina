@@ -1,4 +1,5 @@
 from . import test_arba
+from . import test_credit_note_perception_rules
 from . import test_padron_cleanup_cron
 from . import test_padron_tmp_dir
 from . import test_payment_receiptbook_and_withholding

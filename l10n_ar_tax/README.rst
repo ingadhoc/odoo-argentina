@@ -18,7 +18,7 @@ Este módulo imlementa:
 
 * Add tags on ar taxes repartition lines.
 * Add fiscal position demo records.
-* Permite marcar posiciones fiscales argentinas para que solo se auto-detecten en notas de crédito creadas como reversión, evitando aplicarlas en notas de crédito manuales.
+* Reglas de percepciones en notas de crédito por jurisdicción (AGIP y ARBA: solo en anulaciones totales; AGIP además hasta 2 períodos mensuales siguientes a la factura). En las anulaciones totales, la NC lleva las percepciones de AGIP y ARBA de la factura que anula; el resto de las jurisdicciones no cambia. Se activan con el parámetro de sistema ``l10n_ar_tax.credit_note_perception_rules`` en ``True``, que aplica a todas las compañías de la base.
 * Importador de Padrón PARP ret y perc SF - Santa Fe y ARBA. Especificación: "Api - Rg 37 2025 Anexo I.pdf" y archivo de ejemplo de padrón "PARP_999999_ejemplo_padron_santa_fe.csv" para el mes de marzo 2026. Ambos archivos se encuentran en la carpeta "doc/padron_santa_fe" de este módulo. Configuraciones manuales: duplicar impuesto de retención y percepción aplicada de Santa Fe y colocarle alícuota 5% al de retención y 6% al de percepción; dichos impuestos tienen alícuota 'castigo', es decir, si el contribuyente no se encuentra en el padrón y no está exento entonces se le aplicará dicha alícuota. Dichos impuestos con alícuota castigo deben ser asignados como impuesto por defecto en la posición fiscal correspondiente y en dicha posición fiscal elegir webservice: padron.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

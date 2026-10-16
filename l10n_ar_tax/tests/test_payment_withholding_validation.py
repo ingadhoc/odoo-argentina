@@ -147,3 +147,33 @@ class TestPaymentWithholdingValidation(TestArWithholdingArRi):
             invoice.invoice_line_ids.tax_ids,
         )
         self.assertNotIn(invoice.partner_id.l10n_ar_partner_perception_ids.tax_id, invoice.invoice_line_ids.tax_ids)
+
+    def _assert_perception_only_on_product_lines(self, invoice):
+        perception = self.caba_tax_perception_with_amount_1
+        product_lines = invoice.invoice_line_ids.filtered(lambda x: x.display_type == "product")
+        other_lines = invoice.invoice_line_ids - product_lines
+        self.assertTrue(product_lines)
+        self.assertEqual({"line_section", "line_note"}, set(other_lines.mapped("display_type")))
+        for line in product_lines:
+            self.assertIn(perception, line.tax_ids)
+        for line in other_lines:
+            self.assertFalse(line.tax_ids)
+
+    def test_perception_not_added_to_section_and_note_lines(self):
+        """Recomputing perceptions keeps them on product lines and never adds them to sections or notes."""
+        invoice = self._create_invoice_with_caba_perception()
+        invoice.invoice_line_ids = [
+            Command.create({"display_type": "line_section", "name": "Section"}),
+            Command.create({"display_type": "line_note", "name": "Note"}),
+        ]
+        invoice._l10n_ar_recompute_fiscal_position_taxes()
+        self._assert_perception_only_on_product_lines(invoice)
+
+    def test_duplicate_invoice_keeps_perception_only_on_product_lines(self):
+        invoice = self._create_invoice_with_caba_perception()
+        invoice.invoice_line_ids = [
+            Command.create({"display_type": "line_section", "name": "Section"}),
+            Command.create({"display_type": "line_note", "name": "Note"}),
+        ]
+        copy = invoice.copy({"invoice_date": invoice.invoice_date, "date": invoice.date})
+        self._assert_perception_only_on_product_lines(copy)

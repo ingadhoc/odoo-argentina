@@ -6,6 +6,14 @@ class AccountFiscalPosition(models.Model):
     _inherit = "account.fiscal.position"
 
     l10n_ar_tax_ids = fields.One2many("account.fiscal.position.l10n_ar_tax", "fiscal_position_id")
+    l10n_ar_require_related_invoice = fields.Boolean(
+        string="Only applies to NC with total refund (AR)",
+        help=(
+            "If enabled, the perception taxes of this fiscal position only apply "
+            "to credit notes when the amount is exactly equal to the related invoice "
+            "and both are in the same month."
+        ),
+    )
     l10n_ar_tax_type = fields.Selection(
         selection=[
             ("perception", "Perception"),

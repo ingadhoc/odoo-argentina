@@ -61,6 +61,7 @@ Additional Features
 * **Payment Terms**: Displays payment terms information
 * **Order References**: Shows supplier's order reference
 * **Shipping Address**: Includes delivery address when specified
+* **Incoterm**: Shows the incoterm and its location when the order has one
 * **Approval Dates**: Shows approval date for confirmed orders
 * **Page Numbering**: Professional footer with page numbers
 

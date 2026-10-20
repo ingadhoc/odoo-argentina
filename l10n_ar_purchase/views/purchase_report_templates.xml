@@ -30,10 +30,10 @@
         </xpath>
     </template>
 
-    <!-- we force priority greater than 16 so that it dont break inheritance of report_saleorder_document_inherit_sale_stock. with this we are loosing the incoterm field added but that sale_stock view -->
+    <!-- we force priority greater than 16 so that it dont break inheritance of report_saleorder_document_inherit_sale_stock -->
     <template id="report_purchasequotation_document" priority="20" inherit_id="purchase.report_purchasequotation_document" primary="True">
         <!-- custom header and footer -->
-        <t t-set="o" position="after">
+        <t t-call="web.external_layout" position="before">
             <t t-set="custom_header" t-value="'l10n_ar_purchase.custom_header_purchasequotation'"/>
             <t t-set="report_date" t-value="o.date_order"/>
             <t t-set="report_number" t-value="o.name"/>
@@ -61,8 +61,17 @@
         <t t-set="address" position="replace"/>
 
         <!-- remove default document title -->
-        <t t-set='layout_document_title' position="replace">
-            <div id="l10n_ar_informations" class="row mt8 mb8">
+        <t t-set="layout_document_title" position="replace"/>
+
+        <!-- the native Incoterm node is parked outside the row so the replace below does
+             not delete it; it is moved into the right column right after -->
+        <xpath expr="//div[@id='informations']" position="after">
+            <xpath expr="//div[@id='informations']/div[@t-if='o.incoterm_id']" position="move"/>
+        </xpath>
+
+        <!-- Only the content of the native informations row is replaced, so it keeps
+             its id for the modules that inherit it. -->
+        <xpath expr="//div[@id='informations']" position="replace" mode="inner">
                 <div class="col-6">
 
                     <!-- IDENTIFICACION (ADQUIRIENTE-LOCATARIO-PRESTARIO) -->
@@ -78,12 +87,14 @@
                     <strong>VAT Cond: </strong><span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
 
                     <!-- (17) CUIT -->
-                    <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
-                        <br/><strong><t t-out="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+                    <t t-if="o.partner_id.l10n_ar_afip_code and o.partner_id.l10n_ar_afip_code != '99'">
+                        <t t-set="ar_doc_vals" t-value="o.partner_id._get_preferred_legal_entity_identifier_vals()"/>
+                        <t t-set="ar_doc_label" t-value="ar_doc_vals.get('label') or o.company_id.account_fiscal_country_id.vat_label"/>
+                        <br/><strong><t t-out="ar_doc_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or ar_doc_vals.get('value', '')"/>
                     </t>
 
                 </div>
-                <div class="col-6">
+                <div class="col-6" name="ar_right_column">
 
                     <t t-if="o.user_id">
                         <strong>Purchase Representative:</strong>
@@ -108,15 +119,23 @@
 
                 </div>
 
-            </div>
-        </t>
+        </xpath>
+
+        <!-- the parked Incoterm node goes into the right column: the PDF renderer does not
+             wrap flex columns, so a third column would run past the page margin -->
+        <xpath expr="//div[@name='ar_right_column']" position="inside">
+            <xpath expr="//div[@id='informations']/following-sibling::div[@t-if='o.incoterm_id'][1]" position="move"/>
+        </xpath>
+        <xpath expr="//div[@name='ar_right_column']/div[@t-if='o.incoterm_id']" position="attributes">
+            <attribute name="class">mt-2</attribute>
+        </xpath>
 
     </template>
 
-    <!-- we force priority greater than 16 so that it dont break inheritance of report_saleorder_document_inherit_sale_stock. with this we are loosing the incoterm field added but that sale_stock view -->
+    <!-- we force priority greater than 16 so that it dont break inheritance of report_saleorder_document_inherit_sale_stock -->
     <template id="report_purchaseorder_document" priority="20" inherit_id="purchase.report_purchaseorder_document" primary="True">
         <!-- custom header and footer -->
-        <t t-set="o" position="after">
+        <t t-call="web.external_layout" position="before">
             <t t-set="custom_header" t-value="'l10n_ar_purchase.custom_header_purchaseorder'"/>
             <t t-set="report_date" t-value="o.date_approve if o.date_approve else o.date_order"/>
             <t t-set="report_number" t-value="o.name"/>
@@ -146,8 +165,7 @@
         <t t-set="address" position="replace"/>
 
         <!-- remove default document title -->
-        <t t-set='layout_document_title' position="replace">
-        </t>
+        <t t-set="layout_document_title" position="replace"/>
 
         <!-- use column vat instead of taxes and only if vat discriminated -->
         <xpath expr="//th[@name='th_taxes']/strong" position="replace">
@@ -157,8 +175,15 @@
             <span t-out="', '.join([tax.tax_label for tax in line.tax_ids.filtered(lambda x: x.tax_group_id.l10n_ar_vat_afip_code) if tax.tax_label])"/>
         </xpath>
 
-        <div id="informations" position="replace">
-            <div id="l10n_ar_informations" class="row mt8 mb8">
+        <!-- the native Incoterm node is parked outside the row so the replace below does
+             not delete it; it is moved into the right column right after -->
+        <xpath expr="//div[@id='informations']" position="after">
+            <xpath expr="//div[@id='informations']/div[@t-if='o.incoterm_id']" position="move"/>
+        </xpath>
+
+        <!-- Same as the quotation: only the content of the native informations row
+             is replaced, so it keeps its id. -->
+        <xpath expr="//div[@id='informations']" position="replace" mode="inner">
                 <div class="col-6">
 
                     <!-- IDENTIFICACION (ADQUIRIENTE-LOCATARIO-PRESTARIO) -->
@@ -174,12 +199,14 @@
                     <strong>VAT Cond: </strong><span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
 
                     <!-- (17) CUIT -->
-                    <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
-                        <br/><strong><t t-out="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+                    <t t-if="o.partner_id.l10n_ar_afip_code and o.partner_id.l10n_ar_afip_code != '99'">
+                        <t t-set="ar_doc_vals" t-value="o.partner_id._get_preferred_legal_entity_identifier_vals()"/>
+                        <t t-set="ar_doc_label" t-value="ar_doc_vals.get('label') or o.company_id.account_fiscal_country_id.vat_label"/>
+                        <br/><strong><t t-out="ar_doc_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or ar_doc_vals.get('value', '')"/>
                     </t>
 
                 </div>
-                <div class="col-6">
+                <div class="col-6" name="ar_right_column">
 
                     <t t-if="o.user_id">
                         <strong>Purchase Representative:</strong>
@@ -208,8 +235,16 @@
 
                 </div>
 
-            </div>
-        </div>
+        </xpath>
+
+        <!-- the parked Incoterm node goes into the right column: the PDF renderer does not
+             wrap flex columns, so a third column would run past the page margin -->
+        <xpath expr="//div[@name='ar_right_column']" position="inside">
+            <xpath expr="//div[@id='informations']/following-sibling::div[@t-if='o.incoterm_id'][1]" position="move"/>
+        </xpath>
+        <xpath expr="//div[@name='ar_right_column']/div[@t-if='o.incoterm_id']" position="attributes">
+            <attribute name="class">mt-2</attribute>
+        </xpath>
 
     </template>
 

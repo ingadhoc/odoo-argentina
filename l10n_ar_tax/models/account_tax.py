@@ -230,7 +230,12 @@ class AccountTax(models.Model):
         return res
 
     def _l10n_ar_is_perception_with_base_threshold(self):
-        """Percepción de venta argentina con umbral de base mínima configurado.
+        """Percepción de venta argentina con umbral de base mínima configurado."""
+        self.ensure_one()
+        return bool(self.l10n_ar_base_minimum_threshold and self._l10n_ar_is_perception())
+
+    def _l10n_ar_is_perception(self):
+        """Percepción de venta argentina a la que se le puede aplicar el umbral de base mínima.
 
         Se identifica la percepción de IVA por el código de tributo ARCA del
         grupo de impuestos (06 IVA). Para cubrir las percepciones que
@@ -246,7 +251,6 @@ class AccountTax(models.Model):
         return bool(
             self.country_code == "AR"
             and self.type_tax_use == "sale"
-            and self.l10n_ar_base_minimum_threshold
             and self.amount_type == "percent"
             and not self.price_include
             and not self.include_base_amount
@@ -269,6 +273,9 @@ class AccountTax(models.Model):
     def _l10n_ar_apply_perception_base_threshold(self, base_lines, company):
         """Poner en 0 las percepciones de venta cuya base agregada no supera el umbral.
 
+        En un asiento validado o cancelado no se evalúa el umbral vigente: se ponen en 0
+        las percepciones que no se contabilizaron.
+
         :param base_lines: líneas base de UN documento, ya con `tax_details` calculado.
         :param company:    compañía dueña de las líneas base.
         """
@@ -277,34 +284,11 @@ class AccountTax(models.Model):
         if "AR" not in (company.account_fiscal_country_id.code, company.country_id.code):
             return
 
-        # Base acumulada por impuesto, en moneda de la compañía (`raw_base_amount`).
-        # `is_eligible` cachea la evaluación para no repetirla por cada línea del documento.
-        base_per_tax = {}
-        is_eligible = {}
-        for base_line in base_lines:
-            for tax_data in base_line["tax_details"]["taxes_data"]:
-                tax = tax_data["tax"]
-                if tax not in is_eligible:
-                    is_eligible[tax] = tax._l10n_ar_is_perception_with_base_threshold()
-                if is_eligible[tax]:
-                    base_per_tax[tax] = base_per_tax.get(tax, 0.0) + tax_data["raw_base_amount"]
-
-        # Solo se evalúa el umbral cuando la base agregada es positiva. Una base negativa
-        # significa que estas líneas no son un comprobante sino un fragmento aislado —
-        # típicamente las líneas de un descuento global, que el core calcula por separado
-        # (`_prepare_global_discount_lines`) antes de sumarlas al documento. Anular la
-        # percepción ahí aumentaría el impuesto en vez de reducirlo, y encima quedaría
-        # congelada en `manual_tax_amounts`.
-        excluded_taxes = {
-            tax
-            for tax, base_amount in base_per_tax.items()
-            if company.currency_id.compare_amounts(base_amount, 0.0) > 0
-            # En Santa Fe la base ya viene reducida por el ratio; el umbral aplica a la base completa.
-            and company.currency_id.compare_amounts(
-                base_amount, tax.l10n_ar_base_minimum_threshold * tax._l10n_ar_get_perception_base_factor()
-            )
-            <= 0
-        }
+        booked_move = self._l10n_ar_get_booked_move(base_lines)
+        if booked_move:
+            excluded_taxes = self._l10n_ar_get_unbooked_perceptions(base_lines, booked_move)
+        else:
+            excluded_taxes = self._l10n_ar_get_perceptions_below_base_threshold(base_lines, company)
         if not excluded_taxes:
             return
 
@@ -324,3 +308,68 @@ class AccountTax(models.Model):
                     "raw_tax_amount_currency",
                 ):
                     tax_data[key] = 0.0
+
+    @api.model
+    def _l10n_ar_get_booked_move(self, base_lines):
+        """Asiento validado o cancelado al que pertenecen todas las líneas base, si lo hay.
+
+        En ese caso las percepciones ya están contabilizadas y lo que se muestra (widget de
+        totales, PDF) tiene que coincidir con lo contabilizado, no con el umbral vigente hoy.
+        """
+        records = [base_line.get("record") for base_line in base_lines]
+        if not records or not all(
+            isinstance(record, models.BaseModel) and record._name == "account.move.line" for record in records
+        ):
+            return None
+        move = self.env["account.move.line"].union(*records).move_id
+        if len(move) != 1 or move.state not in ("posted", "cancel"):
+            return None
+        return move
+
+    @api.model
+    def _l10n_ar_get_unbooked_perceptions(self, base_lines, move):
+        """Percepciones de las líneas base que no tienen apunte de impuesto en `move`.
+
+        Cubre los dos sentidos de un cambio de umbral posterior a la validación: si se
+        subió, la percepción contabilizada se sigue viendo; si se bajó o se sacó, la que
+        no se contabilizó se sigue viendo en 0.
+        """
+        booked_taxes = move.line_ids.tax_line_id
+        return {
+            tax_data["tax"]
+            for base_line in base_lines
+            for tax_data in base_line["tax_details"]["taxes_data"]
+            if tax_data["tax"] not in booked_taxes and tax_data["tax"]._l10n_ar_is_perception()
+        }
+
+    @api.model
+    def _l10n_ar_get_perceptions_below_base_threshold(self, base_lines, company):
+        """Percepciones de las líneas base cuya base agregada no supera el umbral."""
+        # Base acumulada por impuesto, en moneda de la compañía (`raw_base_amount`).
+        # `is_eligible` cachea la evaluación para no repetirla por cada línea del documento.
+        base_per_tax = {}
+        is_eligible = {}
+        for base_line in base_lines:
+            for tax_data in base_line["tax_details"]["taxes_data"]:
+                tax = tax_data["tax"]
+                if tax not in is_eligible:
+                    is_eligible[tax] = tax._l10n_ar_is_perception_with_base_threshold()
+                if is_eligible[tax]:
+                    base_per_tax[tax] = base_per_tax.get(tax, 0.0) + tax_data["raw_base_amount"]
+
+        # Solo se evalúa el umbral cuando la base agregada es positiva. Una base negativa
+        # significa que estas líneas no son un comprobante sino un fragmento aislado —
+        # típicamente las líneas de un descuento global, que el core calcula por separado
+        # (`_prepare_global_discount_lines`) antes de sumarlas al documento. Anular la
+        # percepción ahí aumentaría el impuesto en vez de reducirlo, y encima quedaría
+        # congelada en `manual_tax_amounts`.
+        return {
+            tax
+            for tax, base_amount in base_per_tax.items()
+            if company.currency_id.compare_amounts(base_amount, 0.0) > 0
+            # En Santa Fe la base ya viene reducida por el ratio; el umbral aplica a la base completa.
+            and company.currency_id.compare_amounts(
+                base_amount, tax.l10n_ar_base_minimum_threshold * tax._l10n_ar_get_perception_base_factor()
+            )
+            <= 0
+        }

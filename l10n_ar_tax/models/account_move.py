@@ -61,10 +61,12 @@ class AccountMove(models.Model):
         NO lo hacemos para el cambio de fiscal_position_id porque el onchange de fiscal_position_id implementado en sale_ux ya recomputa todos los taxes
         """
         for move in self.filtered(
-            lambda x: x.is_sale_document(include_receipts=True)
-            and x.fiscal_position_id
-            and x.perceptions_fiscal_positon
-            and x.state == "draft"
+            lambda x: (
+                x.is_sale_document(include_receipts=True)
+                and x.fiscal_position_id
+                and x.perceptions_fiscal_positon
+                and x.state == "draft"
+            )
         ):
             fp_tax_groups = move.fiscal_position_id.l10n_ar_tax_ids.filtered(
                 lambda x: x.tax_type == "perception"
@@ -75,9 +77,7 @@ class AccountMove(models.Model):
             # Solo queremos que se recomputen los impuestos en facturas de cliente/proveedor
             for line in move.filtered(lambda x: not x.reversed_entry_id).invoice_line_ids:
                 to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
-                target_taxes = (
-                    self.env["account.tax"] if line.display_type in ("line_section", "line_note") else new_taxes
-                )
+                target_taxes = self.env["account.tax"] if line.display_type != "product" else new_taxes
                 if to_unlink._origin != target_taxes:
                     line.tax_ids = (line.tax_ids - to_unlink) | target_taxes
 

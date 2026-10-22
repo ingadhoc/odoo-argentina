@@ -30,7 +30,6 @@ class TestPurchaseReportIncoterm(TestArCommon):
                 "is_company": True,
                 "supplier_rank": 1,
                 "country_id": cls.env.ref("base.ar").id,
-                "l10n_latam_identification_type_id": cls.env.ref("l10n_ar.it_cuit").id,
                 "vat": "30500010912",
                 "l10n_ar_afip_responsibility_type_id": cls.env.ref("l10n_ar.res_IVARI").id,
             }

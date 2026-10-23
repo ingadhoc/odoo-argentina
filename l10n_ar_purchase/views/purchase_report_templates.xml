@@ -30,7 +30,7 @@
         </xpath>
     </template>
 
-    <!-- we force priority greater than 16 so that it dont break inheritance of report_saleorder_document_inherit_sale_stock -->
+    <!-- we force priority greater than 16 so that it dont break inheritance of report_saleorder_document_inherit_sale_stock. with this we are loosing the incoterm field, which l10n_ar_purchase_stock prints again -->
     <template id="report_purchasequotation_document" priority="20" inherit_id="purchase.report_purchasequotation_document" primary="True">
         <!-- custom header and footer -->
         <t t-call="web.external_layout" position="before">
@@ -59,9 +59,6 @@
 
         <!-- remove default partner address -->
         <t t-set="address" position="replace"/>
-
-        <!-- remove default document title -->
-        <t t-set="layout_document_title" position="replace"/>
 
         <!-- the center and compact layouts print information_block in the report body,
              outside the address block, so removing address is not enough to hide it -->
@@ -123,7 +120,7 @@
 
     </template>
 
-    <!-- we force priority greater than 16 so that it dont break inheritance of report_saleorder_document_inherit_sale_stock -->
+    <!-- we force priority greater than 16 so that it dont break inheritance of report_saleorder_document_inherit_sale_stock. with this we are loosing the incoterm field, which l10n_ar_purchase_stock prints again -->
     <template id="report_purchaseorder_document" priority="20" inherit_id="purchase.report_purchaseorder_document" primary="True">
         <!-- custom header and footer -->
         <t t-call="web.external_layout" position="before">
@@ -154,9 +151,6 @@
 
         <!-- remove default partner address -->
         <t t-set="address" position="replace"/>
-
-        <!-- remove default document title -->
-        <t t-set="layout_document_title" position="replace"/>
 
         <!-- the center and compact layouts print information_block in the report body,
              outside the address block, so removing address is not enough to hide it -->

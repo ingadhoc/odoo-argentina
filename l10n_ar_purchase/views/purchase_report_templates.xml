@@ -195,7 +195,7 @@
                          in the "informations" block that we replace above. We keep it here
                          so the supplier still gets that date on the AR report. -->
                     <t t-if="o.date_planned">
-                        <strong>Expected Arrival:</strong>
+                        <br/><strong>Expected Arrival:</strong>
                         <span t-field="o.date_planned" t-options="{'date_only': 'true'}"/>
                     </t>
 

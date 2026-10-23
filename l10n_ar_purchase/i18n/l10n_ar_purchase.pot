@@ -16,6 +16,20 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_ar_purchase
+<<<<<<< b5387a33ba9a6fb68212973526eccbd232b8c4ec
+||||||| a6e9e00046e5e18080ffa459c4d50e29922a2a0f
+#: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchaseorder_document
+msgid "<strong>Expected Arrival:</strong>"
+msgstr ""
+
+#. module: l10n_ar_purchase
+=======
+#: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchaseorder_document
+msgid "<br/><strong>Expected Arrival:</strong>"
+msgstr ""
+
+#. module: l10n_ar_purchase
+>>>>>>> 4ed1e8fee50a6df11780164d3b692faf4f81f945
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchasequotation_document
 msgid "<br/><strong>Payment Terms: </strong>"
 msgstr ""

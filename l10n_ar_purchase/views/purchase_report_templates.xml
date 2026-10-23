@@ -117,11 +117,6 @@
                         <span t-field="o.dest_address_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true, &quot;no_tag_br&quot;: True}"/>
                     </t>
 
-                    <t t-if="o.incoterm_id">
-                        <br/><strong>Incoterm:</strong>
-                        <span t-field="o.incoterm_id.code"/>
-                    </t>
-
                 </div>
 
         </xpath>
@@ -227,11 +222,6 @@
                         <span t-field="o.dest_address_id.name"/>
                         <br/>
                         <span t-field="o.dest_address_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true, &quot;no_tag_br&quot;: True}"/>
-                    </t>
-
-                    <t t-if="o.incoterm_id">
-                        <br/><strong>Incoterm:</strong>
-                        <span t-field="o.incoterm_id.code"/>
                     </t>
 
                 </div>

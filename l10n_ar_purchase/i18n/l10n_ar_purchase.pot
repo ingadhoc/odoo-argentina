@@ -39,7 +39,7 @@ msgstr ""
 
 #. module: l10n_ar_purchase
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchaseorder_document
-msgid "<strong>Expected Arrival:</strong>"
+msgid "<br/><strong>Expected Arrival:</strong>"
 msgstr ""
 
 #. module: l10n_ar_purchase

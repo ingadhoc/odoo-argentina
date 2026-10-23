@@ -21,7 +21,7 @@
                     <div class="o_setting_left_pane"/>
                     <div class="o_setting_right_pane">
                         <span class="o_form_label">Signature in reports</span>
-                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                        <span class="oi oi-lg" data-icon="business" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
                         <div class="content-group mt16">
                             <label for="l10n_ar_report_signature" class="o_light_label"/>
                             <field name="l10n_ar_report_signature" widget="signature" options="{'size': [200,'']}"/>

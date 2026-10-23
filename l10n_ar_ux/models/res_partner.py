@@ -1,10 +1,5 @@
-import logging
-
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.http import request
-
-_logger = logging.getLogger(__name__)
 
 
 class ResPartner(models.Model):
@@ -57,73 +52,3 @@ class ResPartner(models.Model):
                     )
                     % rec.state_id.name
                 )
-
-    @api.model
-    def try_write_commercial(self, data):
-        """User for website. capture the validation errors and return them.
-        return (error, error_message) = (dict[fields], list(str()))"""
-        error = dict()
-        error_message = []
-        vat = data.get("vat")
-        l10n_latam_identification_type_id = data.get("l10n_latam_identification_type_id")
-        l10n_ar_afip_responsibility_type_id = data.get("l10n_ar_afip_responsibility_type_id", False)
-
-        if vat and l10n_latam_identification_type_id:
-            commercial_partner = request.env.user.partner_id.commercial_partner_id
-            try:
-                values = {
-                    "vat": vat,
-                    "l10n_latam_identification_type_id": int(l10n_latam_identification_type_id),
-                    "l10n_ar_afip_responsibility_type_id": int(l10n_ar_afip_responsibility_type_id)
-                    if l10n_ar_afip_responsibility_type_id
-                    else False,
-                }
-                commercial_fields = ["vat", "l10n_latam_identification_type_id", "l10n_ar_afip_responsibility_type_id"]
-                values = commercial_partner.remove_readonly_required_fields(commercial_fields, values)
-                with self.env.cr.savepoint():
-                    commercial_partner.write(values)
-            except Exception as exception_error:
-                _logger.error(exception_error)
-                error["vat"] = "error"
-                error["l10n_latam_identification_type_id"] = "error"
-                error_message.append(_(exception_error))
-        return error, error_message
-
-    def remove_readonly_required_fields(self, required_fields, values):
-        """In some cases we have information showed to the user in the for that is required but that is already set
-        and readonly. We do not really update this fields and then here we are trying to write them: the problem is
-        that this fields has a constraint if we are trying to re-write them (even when is the same value).
-
-        This method remove this (field, values) for the values to write in order to do avoid the constraint and not
-        re-writted again when they has been already writted.
-
-        param: @required_fields: (list) fields of the fields that we want to check
-        param: @values (dict) the values of the web form
-
-        return: the same values to write and they do not include required/readonly fields.
-        """
-        self.ensure_one()
-        for r_field in required_fields:
-            value = values.get(r_field)
-            if r_field.endswith("_id"):
-                if self[r_field].id == value:
-                    values.pop(r_field, False)
-            else:
-                if self[r_field] == value:
-                    values.pop(r_field, False)
-        return values
-
-    @api.onchange("vat", "country_id", "l10n_latam_identification_type_id")
-    def _onchange_ar_identification_fields(self):
-        """
-        Agregamos este onchange para que cuando el usuario modifique el VAT o el tipo de documento
-        se formatee el VAT automaticamente si es un CUIT o un DNI.
-        En v19 esto ya está hecho en este commit https://github.com/odoo/odoo/commit/ac95d2d6d80a368dfb190d0ac21da2af479a8488.
-        Traemos sólo lo necesario acá para tenerlo disponible en esta versión.
-        """
-        l10n_ar_partners = self.filtered(
-            lambda p: p.vat and (p.l10n_latam_identification_type_id.l10n_ar_afip_code or p.country_code == "AR")
-        )
-        for partner in l10n_ar_partners:
-            if id_number := partner._get_id_number_sanitize():
-                partner.vat = str(id_number)

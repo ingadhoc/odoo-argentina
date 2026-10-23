@@ -4,14 +4,16 @@ from odoo.tests import tagged
 
 @tagged("post_install", "-at_install")
 class TestRefundReport(TestArCommon):
-    """Refunds that share the ARCA document code with the invoice they reverse (e.g. code 60) must show
-    their amounts in negative on the printed report (port of odoo/odoo#234040)."""
+    """Refunds that share the ARCA document code with the invoice they reverse must show their amounts in
+    negative on the printed report. l10n_ar handles codes like 60 and 188; this module adds 33 and 331."""
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.doc_60_lp_a = cls.env.ref("l10n_ar.dc_a_cvl")
         cls.doc_188_lp_b = cls.env.ref("l10n_ar.dc_liq_cd_sp_b")
+        cls.doc_33_lpg = cls.env.ref("l10n_ar.dc_liq_prim_gr")
+        cls.doc_331_lsg = cls.env.ref("l10n_ar.dc_liq_sec_gr")
 
     def _create_credit_note(self, document_type):
         credit_note = self._create_invoice_ar(
@@ -80,6 +82,18 @@ class TestRefundReport(TestArCommon):
         self.assertEqual(values["price_unit"], -100.0)
         self.assertEqual(values["price_net"], -100.0)
         self.assertEqual(values["price_subtotal"], -100.0)
+
+    def test_refund_with_grain_settlement_codes(self):
+        for document_type in self.doc_33_lpg | self.doc_331_lsg:
+            with self.subTest(code=document_type.code):
+                credit_note = self._create_credit_note(document_type)
+                self.assertTrue(credit_note._l10n_ar_is_refund_invoice())
+                tax_totals = credit_note._l10n_ar_get_invoice_totals_for_report()
+                self.assertEqual(tax_totals["base_amount_currency"], -100.0)
+                self.assertEqual(tax_totals["tax_amount_currency"], -21.0)
+                self.assertEqual(tax_totals["total_amount_currency"], -121.0)
+                values = credit_note.invoice_line_ids._l10n_ar_prices_and_taxes()
+                self.assertEqual(values["price_subtotal"], -100.0)
 
     def test_regular_refund_keeps_positive_amounts(self):
         """A regular credit note (its own document code) keeps positive amounts on the report."""

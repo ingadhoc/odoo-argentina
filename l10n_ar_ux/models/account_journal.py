@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class AccountJournal(models.Model):
@@ -21,12 +21,6 @@ class AccountJournal(models.Model):
         required=True,
     )
     l10n_ar_afip_pos_partner_id = fields.Many2one(string="Dirección Punto de venta")
-
-    def _get_l10n_ar_afip_pos_types_selection(self):
-        """Add new ARCA Pos type"""
-        res = super()._get_l10n_ar_afip_pos_types_selection()
-        res.append(("CF", _("External Fiscal Controller")))
-        return res
 
     def _get_codes_per_journal_type(self, afip_pos_system):
         """Add support for External Fiscal Controller (CF) and fix document availability

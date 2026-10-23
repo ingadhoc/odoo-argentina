@@ -2,7 +2,6 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-import copy
 import re
 
 from odoo import _, api, fields, models
@@ -162,49 +161,6 @@ class AccountMove(models.Model):
     @api.model
     def _get_l10n_ar_codes_used_for_inv_and_ref(self):
         return super()._get_l10n_ar_codes_used_for_inv_and_ref() + ["33", "331"]
-
-    # NOTE: the following three methods port odoo/odoo#234040 (merged in Odoo master, not in 19.0).
-    # They must be dropped when migrating to a version that already includes it (see also odoo/odoo#212153).
-
-    def _l10n_ar_is_refund_invoice(self):
-        """Check if the document type is in the list of document types that can be used as an invoice and
-        as a refund and the move type is 'in_refund' or 'out_refund'."""
-        return (
-            self.l10n_latam_document_type_id.code in self._get_l10n_ar_codes_used_for_inv_and_ref()
-            and self.move_type in ["in_refund", "out_refund"]
-        )
-
-    def _apply_refund_adjustments(self, tax_totals):
-        """Adjust tax totals for refund invoices that share the same ARCA codes as the invoice they reverse."""
-        for suffix in ("", "_currency"):
-            for prefix in ("base", "tax", "total"):
-                field = f"{prefix}_amount{suffix}"
-                if tax_totals[field]:
-                    tax_totals[field] *= -1
-            for subtotal in tax_totals["subtotals"]:
-                for prefix in ("base", "tax"):
-                    field = f"{prefix}_amount{suffix}"
-                    if subtotal[field]:
-                        subtotal[field] *= -1
-                for tax_group in subtotal["tax_groups"]:
-                    for prefix in ("display_base", "base", "tax"):
-                        field = f"{prefix}_amount{suffix}"
-                        if tax_group[field]:
-                            tax_group[field] *= -1
-
-    def _l10n_ar_get_invoice_totals_for_report(self):
-        """Show the totals in negative for refunds that share the ARCA document code with the invoice they
-        reverse (port of odoo/odoo#234040).
-
-        The sign is applied once on the result of super(): `_exclude_tax_groups_from_tax_totals_summary` only
-        adds and subtracts amounts, so flipping the sign after it is equivalent to flipping it before, and the
-        core logic is kept untouched."""
-        tax_totals = super()._l10n_ar_get_invoice_totals_for_report()
-        if self._l10n_ar_is_refund_invoice():
-            # super() may return the cached dict of the computed field: never mutate it in place
-            tax_totals = copy.deepcopy(tax_totals)
-            self._apply_refund_adjustments(tax_totals)
-        return tax_totals
 
     def _get_l10n_latam_documents_domain(self):
         self.ensure_one()

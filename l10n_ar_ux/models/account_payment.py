@@ -1,10 +1,20 @@
-from odoo import fields, models
+from odoo import api, fields, models
+from odoo.addons.l10n_ar.tools.partner_identifiers import AR_CUIT_AFIP_CODE
+from stdnum.ar import cuit
 
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
-    l10n_ar_partner_vat = fields.Char(related="partner_id.l10n_ar_vat", string="CUIT")
+    l10n_ar_partner_vat = fields.Char(compute="_compute_l10n_ar_partner_vat", string="CUIT")
+
+    @api.depends("partner_id.vat", "partner_id.l10n_ar_afip_code")
+    def _compute_l10n_ar_partner_vat(self):
+        # Same value as the removed res.partner.l10n_ar_vat: the compact CUIT, only when the partner is identified by it
+        for rec in self:
+            partner = rec.partner_id
+            is_cuit = partner.vat and partner.l10n_ar_afip_code == AR_CUIT_AFIP_CODE
+            rec.l10n_ar_partner_vat = cuit.compact(partner.vat) if is_cuit else False
 
     def _get_name_receipt_report(self, report_xml_id):
         """Method similar to the '_get_name_invoice_report' of l10n_latam_invoice_document

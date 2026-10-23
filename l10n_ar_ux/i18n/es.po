@@ -4,13 +4,13 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-15 16:09+0000\n"
-"PO-Revision-Date: 2026-05-27 19:29+0000\n"
+"POT-Creation-Date: 2026-10-20 18:56+0000\n"
+"PO-Revision-Date: 2026-10-20 18:56+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -19,6 +19,176 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.actions.report,print_report_name:l10n_ar_ux.action_report_account_transfer
 msgid "'Reporte de transferencia'"
+msgstr ""
+
+#. module: l10n_ar_ux
+#: model:ir.module.module,description:base.module_l10n_ar_ux
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"=========================\n"
+"Argentinian Accounting UX\n"
+"=========================\n"
+"\n"
+"This module extends the l10n_ar module to add usability improvements and user experience enhancements specifically designed for Argentinian accounting practices.\n"
+"\n"
+"**Table of contents**\n"
+"\n"
+".. contents::\n"
+"   :local:\n"
+"\n"
+"Features\n"
+"========\n"
+"\n"
+"Currency & Multi-Company Enhancements\n"
+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+"\n"
+"* **USD Symbol Enhancement**: Changes USD symbol from \"$\" to \"USD\" to avoid confusion in multi-company environments using both ARS and USD currencies\n"
+"* **EUR Symbol Position**: Repositions EUR symbol before amounts to match ARS and USD currency formats\n"
+"* **Currency Rate Display**: Shows currency rate preview on invoices before posting and final rate after posting\n"
+"\n"
+"Tax & VAT Management\n"
+"~~~~~~~~~~~~~~~~~~~~\n"
+"\n"
+"* **Default Tax Inclusion**: Sets taxes as included by default (useful for e-commerce)\n"
+"* **VAT Discrimination Option**: Adds option to discriminate or not VAT taxes on journals without documents\n"
+"* **Tax Groups for Withholding**: Includes specialized tax groups for Argentinian withholding taxes\n"
+"* **Account Tags**: Comprehensive account tag data for Argentina including jurisdictional ones\n"
+"\n"
+"Partner & AFIP Integration\n"
+"~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+"\n"
+"* **CUIT Display**: Shows CUIT when using checks or bank transfers for easy reference during bank transactions\n"
+"* **Gross Income Jurisdiction**: Displays gross income jurisdiction information on partner records\n"
+"\n"
+"Account Management\n"
+"~~~~~~~~~~~~~~~~~~\n"
+"\n"
+"* **Non-Monetary Tags**: Automatically sets non-monetary tags to accounts based on account type\n"
+"* **Check Payment Enhancement**: Sends due dates to journal items for check payments\n"
+"\n"
+"Reporting & Documentation\n"
+"~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+"\n"
+"* **Invoice Reports**: Implements \"duplicado/triplicado\" functionality on invoices (extends to delivery slips with l10n_ar_stock)\n"
+"* **Negative amounts on special refunds**: Adds the document codes 33 and 331 to the ones Odoo prints in negative on credit notes that share the ARCA document code with the invoice they reverse\n"
+"* **Taxes in company currency disabled**: Disables \"Taxes in company currency\" on Argentinian companies, so the invoice report does not print the extra taxes box in ARS on foreign currency invoices. It is set on install and when loading an Argentinian chart of accounts; it can be enabled again from the settings\n"
+"* **Transfer Reports**: Enhanced account transfer reports with Argentinian formatting\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"This module has **auto_install** enabled, which means it will be automatically installed when its dependencies are met:\n"
+"\n"
+"* ``l10n_ar`` - Argentinian Localization\n"
+"* ``account_internal_transfer`` - Internal Transfer functionality\n"
+"\n"
+"To manually install this module:\n"
+"\n"
+"#. Go to Apps menu\n"
+"#. Search for \"Argentinian Accounting UX\"\n"
+"#. Click Install\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"Journal Configuration\n"
+"~~~~~~~~~~~~~~~~~~~~~\n"
+"\n"
+"#. Go to **Accounting ‣ Configuration ‣ Journals**\n"
+"#. For journals without documents, you can now configure VAT tax discrimination options\n"
+"#. The VAT discrimination setting will be available in the journal configuration form\n"
+"\n"
+"Company Configuration\n"
+"~~~~~~~~~~~~~~~~~~~~~\n"
+"\n"
+"#. Go to **Settings ‣ Companies ‣ Update Info**\n"
+"#. Currency symbols and positions are automatically configured for Argentinian companies\n"
+"#. Tax inclusion defaults are automatically set for e-commerce scenarios\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"Currency Rate Management\n"
+"~~~~~~~~~~~~~~~~~~~~~~~~\n"
+"\n"
+"When creating invoices with foreign currencies:\n"
+"\n"
+"#. Create a new invoice\n"
+"#. Select a foreign currency (USD/EUR)\n"
+"#. Before posting: A currency rate preview will be displayed\n"
+"#. After posting: The final currency rate will be shown on the invoice\n"
+"\n"
+"Check and Bank Transfer Payments\n"
+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+"\n"
+"When processing payments:\n"
+"\n"
+"#. Go to **Accounting ‣ Vendors ‣ Payments** or **Accounting ‣ Customers ‣ Payments**\n"
+"#. Create a new payment using checks or bank transfers\n"
+"#. Partner's CUIT will be automatically displayed for easy reference during bank transactions\n"
+"#. Due dates are automatically sent to journal items for check payments\n"
+"\n"
+"VAT Tax Discrimination\n"
+"~~~~~~~~~~~~~~~~~~~~~~\n"
+"\n"
+"For journals without electronic documents:\n"
+"\n"
+"#. Go to journal configuration\n"
+"#. Enable/disable VAT tax discrimination as needed\n"
+"#. This affects how taxes are displayed and calculated on documents\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/odoo-argentina/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Authors\n"
+"~~~~~~~\n"
+"\n"
+"* ADHOC SA\n"
+"\n"
+"Contributors\n"
+"~~~~~~~~~~~~\n"
+"\n"
+"* ADHOC SA <info@adhoc.com.ar>\n"
+"\n"
+"Other credits\n"
+"~~~~~~~~~~~~~\n"
+"\n"
+"* This module integrates seamlessly with other Argentinian localization modules\n"
+"* Special thanks to the Argentinian Odoo community for feedback and testing\n"
+"\n"
+"Maintainer\n"
+"~~~~~~~~~~\n"
+"\n"
+".. |maintainer-adhoc| image:: https://github.com/adhoc-dev.png?size=40px\n"
+"    :target: https://github.com/adhoc-dev\n"
+"    :alt: adhoc-dev\n"
+"\n"
+"This module is maintained by |maintainer-adhoc|.\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
 msgstr ""
 
 #. module: l10n_ar_ux
@@ -39,7 +209,7 @@ msgstr "<span> en </span>"
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
 msgid "<span>Please configure the ARCA Responsibility of</span>"
-msgstr ""
+msgstr "<span>Configure la responsabilidad de ARCA de</span>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
@@ -47,11 +217,12 @@ msgid ""
 "<span>in order to continue. It is saved on the contact, not on this invoice."
 "</span>"
 msgstr ""
+"<span>para continuar. Se guarda en el contacto, no en esta factura.</span>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
 msgid "<strong>Total</strong>"
-msgstr ""
+msgstr "<strong>Total</strong>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_partner_property_form
@@ -63,13 +234,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__l10n_ar_ux_partner_responsibility_id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_l10n_ar_ux_partner_responsibility__responsibility_id
 msgid "ARCA Responsibility"
-msgstr ""
+msgstr "Responsabilidad de ARCA"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__l10n_ar_afip_responsibility_type_id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_users__l10n_ar_afip_responsibility_type_id
 msgid "ARCA Responsibility Type"
-msgstr ""
+msgstr "Tipo de responsabilidad de ARCA"
 
 #. module: l10n_ar_ux
 #: model:ir.actions.act_window,name:l10n_ar_ux.act_afip_concept
@@ -97,7 +268,7 @@ msgstr "De acuerdo a la responsabilidad de IVA"
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_chart_template
 msgid "Account Chart Template"
-msgstr "Plantilla de plan contable"
+msgstr "Plantilla de plan de cuentas"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_account_invoice_report_search
@@ -156,6 +327,11 @@ msgid "Argentina country code must always be 'AR'."
 msgstr "El código del país Argentina debe ser siempre 'AR'."
 
 #. module: l10n_ar_ux
+#: model:ir.module.module,shortdesc:base.module_l10n_ar_ux
+msgid "Argentinian Accounting UX"
+msgstr "Contabilidad argentina UX"
+
+#. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__arba_cit
 msgid "CIT ARBA"
 msgstr ""
@@ -183,17 +359,8 @@ msgstr "Código"
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_res_company
-msgid "Companies"
-msgstr "Compañías"
-
-#. module: l10n_ar_ux
-#: model:ir.model.fields,help:l10n_ar_ux.field_account_payment__l10n_ar_partner_vat
-msgid ""
-"Computed field that returns VAT or nothing if this one is not set for the "
-"partner"
-msgstr ""
-"Campo computado que devueve el VAT o vacío si este no está seteado para el "
-"socio"
+msgid "Company"
+msgstr "Empresa"
 
 #. module: l10n_ar_ux
 #: model:ir.ui.menu,name:l10n_ar_ux.menu_action_afip_concept
@@ -261,6 +428,9 @@ msgid ""
 "legal entity could have and that impacts in the type of operations and "
 "requirements they need."
 msgstr ""
+"Definida por ARCA para identificar los tipos de responsabilidades que puede "
+"tener una persona humana o una persona jurídica, lo cual impacta en el tipo "
+"de operaciones y requisitos que debe cumplir."
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__l10n_ar_afip_pos_partner_id
@@ -270,7 +440,7 @@ msgstr "Dirección PdV AFIP"
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.l10n_ar_ux_partner_responsibility_form
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__discriminate_taxes
@@ -281,7 +451,6 @@ msgstr "¿Discriminar impuestos?"
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_chart_template__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__display_name
-#: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_payment__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_tax__display_name
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__display_name
@@ -336,12 +505,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__res_partner__imp_iva_padron__xn
 msgid "Exento no alcanzado"
 msgstr ""
-
-#. module: l10n_ar_ux
-#. odoo-python
-#: code:addons/l10n_ar_ux/models/account_journal.py:0
-msgid "External Fiscal Controller"
-msgstr "Controlador Fiscal Externo"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_company__l10n_ar_report_signature
@@ -436,7 +599,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.l10n_ar_ux_partner_responsibility_form
 msgid "It is saved on the contact, not on this invoice."
-msgstr ""
+msgstr "Se guarda en el contacto, no en esta factura."
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_journal
@@ -447,11 +610,6 @@ msgstr "Diario"
 #: model:ir.model,name:l10n_ar_ux.model_account_move
 msgid "Journal Entry"
 msgstr "Asiento contable"
-
-#. module: l10n_ar_ux
-#: model:ir.model,name:l10n_ar_ux.model_account_move_line
-msgid "Journal Item"
-msgstr ""
 
 #. module: l10n_ar_ux
 #. odoo-python
@@ -473,7 +631,7 @@ msgstr "Código de jurisdicción"
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_bank_statement_line__l10n_ar_ux_document_number_placeholder
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__l10n_ar_ux_document_number_placeholder
 msgid "L10N Ar Ux Document Number Placeholder"
-msgstr ""
+msgstr "Ejemplo de número de documento"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__last_update_padron
@@ -498,7 +656,7 @@ msgstr "Última actualización en"
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.custom_header
 msgid "Logo"
-msgstr ""
+msgstr "Logo"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__monotributo_padron
@@ -521,7 +679,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_l10n_ar_ux_partner_responsibility__move_id
 msgid "Move"
-msgstr ""
+msgstr "Movimiento"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_afip_concept__name
@@ -534,7 +692,7 @@ msgstr "Nombre"
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__res_partner__integrante_soc_padron__n
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__res_partner__monotributo_padron__n
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__res_partner__imp_ganancias_padron__ni
@@ -576,8 +734,8 @@ msgstr "Otros"
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_payment
-msgid "Payments"
-msgstr "Pagos"
+msgid "Payment"
+msgstr "Pago"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__qr_code
@@ -597,7 +755,7 @@ msgstr "Código QR"
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_ir_actions_report
 msgid "Report Action"
-msgstr "Acción de informe"
+msgstr "Acción de reporte"
 
 #. module: l10n_ar_ux
 #: model:ir.actions.report,name:l10n_ar_ux.action_report_account_transfer
@@ -607,23 +765,23 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.l10n_ar_ux_partner_responsibility_form
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #. module: l10n_ar_ux
 #. odoo-python
 #: code:addons/l10n_ar_ux/models/account_move.py:0
 msgid "Set the ARCA Responsibility"
-msgstr ""
+msgstr "Definir la responsabilidad de ARCA"
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_l10n_ar_ux_partner_responsibility
 msgid "Set the ARCA Responsibility of a contact from an invoice"
-msgstr ""
+msgstr "Definir la responsabilidad de ARCA de un contacto desde una factura"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
 msgid "Set the responsibility"
-msgstr ""
+msgstr "Definir la responsabilidad"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__res_partner__integrante_soc_padron__s

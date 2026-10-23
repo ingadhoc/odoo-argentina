@@ -18,7 +18,6 @@ This module enhances Argentinian purchase order and quotation reports by integra
 
 **Key Features:**
 
-* Adds Incoterm information to purchase documents
 * Displays warehouse shipping address when applicable
 * Integrates with Argentinian purchase localization (`l10n_ar_purchase`)
 * Automatically shows warehouse details for non-dropshipping orders
@@ -27,11 +26,10 @@ This module enhances Argentinian purchase order and quotation reports by integra
 
 When printing purchase orders or quotations, the following information is automatically added to the supplier section:
 
-#. **Incoterm Code**: Displays the selected incoterm for international trade terms
-#. **Shipping Address**: Shows warehouse name and address when:
+* **Shipping Address**: Shows warehouse name and address when:
 
-   * No dropshipping address is configured (`dest_address_id` is not set)
-   * The purchase order has a picking type with an associated warehouse
+  * No dropshipping address is configured (`dest_address_id` is not set)
+  * The purchase order has a picking type with an associated warehouse
 
 Installation
 ============
@@ -48,7 +46,6 @@ No additional configuration is required. The module works automatically once ins
 
 **Optional Configuration:**
 
-* **Incoterms**: Configure incoterms in **Settings > Configuration > Incoterms** if you need specific international trade terms
 * **Warehouses**: Ensure your warehouses have proper addresses configured in **Inventory > Configuration > Warehouses**
 
 Usage
@@ -60,7 +57,6 @@ The module enhances purchase reports automatically:
 
    * Go to **Purchase > Orders > Purchase Orders**
    * Create or edit a purchase order
-   * Select an **Incoterm** if applicable
    * Choose a **Deliver To** location (picking type with warehouse)
 
 #. **Printing Reports:**
@@ -68,12 +64,10 @@ The module enhances purchase reports automatically:
    * Print the purchase order or quotation
    * The report will automatically include:
 
-     * Incoterm code (if configured)
      * Warehouse shipping address (if no dropshipping address is set)
 
 #. **Report Enhancement Details:**
 
-   * **Incoterm Display**: Shows the incoterm code in the supplier information section
    * **Warehouse Address**: Displays warehouse name and full address when conditions are met
    * **Conditional Logic**: Only shows warehouse address when no specific dropshipping address is configured
 

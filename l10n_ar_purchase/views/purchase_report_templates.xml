@@ -69,12 +69,6 @@
             <t t-set="information_block" t-value="False"/>
         </xpath>
 
-        <!-- the native Incoterm node is parked outside the row so the replace below does
-             not delete it; it is moved into the right column right after -->
-        <xpath expr="//div[@id='informations']" position="after">
-            <xpath expr="//div[@id='informations']/div[@t-if='o.incoterm_id']" position="move"/>
-        </xpath>
-
         <!-- Only the content of the native informations row is replaced, so it keeps
              its id for the modules that inherit it. -->
         <xpath expr="//div[@id='informations']" position="replace" mode="inner">
@@ -123,17 +117,13 @@
                         <span t-field="o.dest_address_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true, &quot;no_tag_br&quot;: True}"/>
                     </t>
 
+                    <t t-if="o.incoterm_id">
+                        <br/><strong>Incoterm:</strong>
+                        <span t-field="o.incoterm_id.code"/>
+                    </t>
+
                 </div>
 
-        </xpath>
-
-        <!-- the parked Incoterm node goes into the right column: the PDF renderer does not
-             wrap flex columns, so a third column would run past the page margin -->
-        <xpath expr="//div[@name='ar_right_column']" position="inside">
-            <xpath expr="//div[@id='informations']/following-sibling::div[@t-if='o.incoterm_id'][1]" position="move"/>
-        </xpath>
-        <xpath expr="//div[@name='ar_right_column']/div[@t-if='o.incoterm_id']" position="attributes">
-            <attribute name="class">mt-2</attribute>
         </xpath>
 
     </template>
@@ -185,12 +175,6 @@
         </xpath>
         <xpath expr="//span[contains(@t-out, 'tax.tax_label for tax in line.tax_ids if tax.tax_label')]" position="replace">
             <span t-out="', '.join([tax.tax_label for tax in line.tax_ids.filtered(lambda x: x.tax_group_id.l10n_ar_vat_afip_code) if tax.tax_label])"/>
-        </xpath>
-
-        <!-- the native Incoterm node is parked outside the row so the replace below does
-             not delete it; it is moved into the right column right after -->
-        <xpath expr="//div[@id='informations']" position="after">
-            <xpath expr="//div[@id='informations']/div[@t-if='o.incoterm_id']" position="move"/>
         </xpath>
 
         <!-- Same as the quotation: only the content of the native informations row
@@ -245,17 +229,13 @@
                         <span t-field="o.dest_address_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true, &quot;no_tag_br&quot;: True}"/>
                     </t>
 
+                    <t t-if="o.incoterm_id">
+                        <br/><strong>Incoterm:</strong>
+                        <span t-field="o.incoterm_id.code"/>
+                    </t>
+
                 </div>
 
-        </xpath>
-
-        <!-- the parked Incoterm node goes into the right column: the PDF renderer does not
-             wrap flex columns, so a third column would run past the page margin -->
-        <xpath expr="//div[@name='ar_right_column']" position="inside">
-            <xpath expr="//div[@id='informations']/following-sibling::div[@t-if='o.incoterm_id'][1]" position="move"/>
-        </xpath>
-        <xpath expr="//div[@name='ar_right_column']/div[@t-if='o.incoterm_id']" position="attributes">
-            <attribute name="class">mt-2</attribute>
         </xpath>
 
     </template>

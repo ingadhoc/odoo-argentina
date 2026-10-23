@@ -60,6 +60,9 @@
         <!-- remove default partner address -->
         <t t-set="address" position="replace"/>
 
+        <!-- remove default document title: the argentinian custom_header prints it -->
+        <t t-set="layout_document_title" position="replace"/>
+
         <!-- the center and compact layouts print information_block in the report body,
              outside the address block, so removing address is not enough to hide it -->
         <xpath expr="//t[@t-call='web.external_layout']" position="before">
@@ -86,7 +89,7 @@
                     <!-- (17) CUIT -->
                     <t t-if="o.partner_id.l10n_ar_afip_code and o.partner_id.l10n_ar_afip_code != '99'">
                         <t t-set="ar_doc_vals" t-value="o.partner_id._get_preferred_legal_entity_identifier_vals()"/>
-                        <t t-set="ar_doc_label" t-value="ar_doc_vals.get('label') or o.company_id.account_fiscal_country_id.vat_label"/>
+                        <t t-set="ar_doc_label" t-value="o.partner_id._get_identifier_label(ar_doc_vals.get('key')) or o.company_id.account_fiscal_country_id.vat_label"/>
                         <br/><strong><t t-out="ar_doc_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or ar_doc_vals.get('value', '')"/>
                     </t>
 
@@ -152,6 +155,9 @@
         <!-- remove default partner address -->
         <t t-set="address" position="replace"/>
 
+        <!-- remove default document title: the argentinian custom_header prints it -->
+        <t t-set="layout_document_title" position="replace"/>
+
         <!-- the center and compact layouts print information_block in the report body,
              outside the address block, so removing address is not enough to hide it -->
         <xpath expr="//t[@t-call='web.external_layout']" position="before">
@@ -186,7 +192,7 @@
                     <!-- (17) CUIT -->
                     <t t-if="o.partner_id.l10n_ar_afip_code and o.partner_id.l10n_ar_afip_code != '99'">
                         <t t-set="ar_doc_vals" t-value="o.partner_id._get_preferred_legal_entity_identifier_vals()"/>
-                        <t t-set="ar_doc_label" t-value="ar_doc_vals.get('label') or o.company_id.account_fiscal_country_id.vat_label"/>
+                        <t t-set="ar_doc_label" t-value="o.partner_id._get_identifier_label(ar_doc_vals.get('key')) or o.company_id.account_fiscal_country_id.vat_label"/>
                         <br/><strong><t t-out="ar_doc_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or ar_doc_vals.get('value', '')"/>
                     </t>
 
@@ -207,7 +213,7 @@
                          in the "informations" block that we replace above. We keep it here
                          so the supplier still gets that date on the AR report. -->
                     <t t-if="o.date_planned">
-                        <strong>Expected Arrival:</strong>
+                        <br/><strong>Expected Arrival:</strong>
                         <span t-field="o.date_planned" t-options="{'date_only': 'true'}"/>
                     </t>
 

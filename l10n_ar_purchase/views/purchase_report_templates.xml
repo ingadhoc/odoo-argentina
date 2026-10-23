@@ -63,6 +63,12 @@
         <!-- remove default document title -->
         <t t-set="layout_document_title" position="replace"/>
 
+        <!-- the center and compact layouts print information_block in the report body,
+             outside the address block, so removing address is not enough to hide it -->
+        <xpath expr="//t[@t-call='web.external_layout']" position="before">
+            <t t-set="information_block" t-value="False"/>
+        </xpath>
+
         <!-- the native Incoterm node is parked outside the row so the replace below does
              not delete it; it is moved into the right column right after -->
         <xpath expr="//div[@id='informations']" position="after">
@@ -166,6 +172,12 @@
 
         <!-- remove default document title -->
         <t t-set="layout_document_title" position="replace"/>
+
+        <!-- the center and compact layouts print information_block in the report body,
+             outside the address block, so removing address is not enough to hide it -->
+        <xpath expr="//t[@t-call='web.external_layout']" position="before">
+            <t t-set="information_block" t-value="False"/>
+        </xpath>
 
         <!-- use column vat instead of taxes and only if vat discriminated -->
         <xpath expr="//th[@name='th_taxes']/strong" position="replace">

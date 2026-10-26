@@ -210,6 +210,40 @@ class TestOwnCheckNetAmount(AccountInvariantsMixin, TransactionCase):
         with self.subTest("batería de invariantes"):
             self.assert_payment_invariants(payment, "cheque propio editado tras calcular la retención")
 
+    def test_own_check_below_the_withholding_posts_the_check_amount(self):
+        """Dado un pago con cheque propio y su retención de $60 ya calculada,
+        cuando se edita el cheque a $40 (menos que la retención) y se postea,
+        entonces la línea del cheque va por $40, la deuda por $100 (cheque +
+        retención) y el asiento cierra sin línea de balance automático.
+
+        Con la retención mayor que el cheque, la liquidez neta que arma el core
+        queda del lado contrario al pago. En 18 eso inflaba la línea del cheque
+        y la diferencia la tapaba una "Automatic Balancing Line".
+
+        Se demuestra en rojo: sacando el ``abs()`` del cálculo de la cotización
+        en ``l10n_latam_check_ux._prepare_move_liquidity_lines``.
+
+        Ticket 130812.
+        """
+        bill = self._make_bill(1000.0, "1-2403")
+        debt = bill.line_ids.filtered(lambda line: line.account_id.account_type == "liability_payable")
+        payment = self._make_check_payment(debt, 940.0, "00000312")
+        wth_amount = payment.l10n_ar_withholding_line_ids[0].amount
+
+        payment.l10n_latam_new_check_ids.amount = 40.0
+        payment.action_post()
+
+        with self.subTest("la retención sigue siendo mayor que el cheque"):
+            self.assertAlmostEqual(wth_amount, 60.0, places=2)
+        liq_line = payment.move_id.line_ids.filtered(lambda line: line.account_id == payment.outstanding_account_id)
+        with self.subTest("la línea del cheque va por el importe del cheque"):
+            self.assertAlmostEqual(liq_line.balance, -40.0, places=2)
+        counterpart = payment.move_id.line_ids.filtered(lambda line: line.account_id == debt.account_id)
+        with self.subTest("la deuda se cancela por cheque más retención"):
+            self.assertAlmostEqual(counterpart.balance, 100.0, places=2)
+        with self.subTest("batería de invariantes"):
+            self.assert_payment_invariants(payment, "cheque propio menor que la retención")
+
     def test_own_check_with_withholding_settles_the_invoice_in_a_single_declared_state(self):
         """Dado un pago de factura con cheque propio cargado por el **neto**
         (con su retención ya calculada), cuando se postea, entonces la

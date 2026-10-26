@@ -23,9 +23,9 @@ class TestWithholdingSufferedLedger(TransactionCase):
     mano quien cobra — el campo admite escritura directa aunque sea un
     compute (``readonly=False``). Tampoco corre ``_onchange_withholdings``
     (excluido por diseño para pagos de cliente): el neto lo ajusta
-    ``_onchange_to_pay_lines_adjust_amount``, que sí aplica a los dos
-    tipos de partner y hay que invocar a mano en los tests, igual que su
-    par de ``FCP-R01``.
+    ``action_adjust_amount_for_difference`` (el link de la diferencia),
+    que aplica a los dos tipos de partner y hay que invocar a mano en los
+    tests, igual que su par de ``FCP-R01``.
 
     No cubre ``FCP-R05-E3`` (retención sufrida + cheque de terceros como
     medio de cobro): ese mecanismo es del ciclo de vida del cheque
@@ -182,9 +182,9 @@ class TestWithholdingSufferedLedger(TransactionCase):
         las retenciones sufridas (``tax``, ``base_amount``, ``amount``) —
         acá no hay compute que las adivine, a diferencia de ``FCP-R01``.
 
-        ``_onchange_to_pay_lines_adjust_amount`` (el que ajusta ``amount``
-        contra ``to_pay_amount``) es un ``@api.onchange``: en la UI dispara
-        solo, y en test hay que invocarlo a mano.
+        ``action_adjust_amount_for_difference`` (el que ajusta ``amount``
+        contra ``to_pay_amount``) es el link de la diferencia: en la UI lo
+        toca el usuario, y en test hay que invocarlo a mano.
         """
         debt = bill.line_ids.filtered(lambda line: line.account_id.account_type == "asset_receivable")
         payment = self.env["account.payment"].create(
@@ -207,7 +207,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
                     ]
                 }
             )
-        payment._onchange_to_pay_lines_adjust_amount()
+        payment.action_adjust_amount_for_difference()
         return payment
 
     def test_withholding_suffered_lands_in_its_own_ledger_account(self):
@@ -305,7 +305,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
 
         line = payment.l10n_ar_withholding_line_ids
         payment.write({"l10n_ar_withholding_line_ids": [Command.unlink(line.id)]})
-        payment._onchange_to_pay_lines_adjust_amount()
+        payment.action_adjust_amount_for_difference()
         with self.subTest("sin retención, el importe a cobrar vuelve al total"):
             self.assertFalse(payment.l10n_ar_withholding_line_ids)
             self.assertEqual(payment.amount, 100000.0)
@@ -408,7 +408,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
                 ]
             }
         )
-        payment._onchange_to_pay_lines_adjust_amount()
+        payment.action_adjust_amount_for_difference()
 
         with self.subTest("el importe a cobrar es el neto, en la moneda de la deuda"):
             self.assertEqual(payment.amount, 940.0)
@@ -446,7 +446,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
 
         payment.action_draft()
         payment.l10n_ar_withholding_line_ids.amount = 8000.0
-        payment._onchange_to_pay_lines_adjust_amount()
+        payment.action_adjust_amount_for_difference()
         payment.action_post()
 
         with self.subTest("una sola línea de retención, por el monto corregido"):

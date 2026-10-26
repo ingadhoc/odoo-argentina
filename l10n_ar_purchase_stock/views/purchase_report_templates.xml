@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_purchasequotation_document" inherit_id="l10n_ar_purchase.report_purchasequotation_document">
-        <!-- purchase_stock adds <div id="informations"> (incoterm + incoterm_location) after
-             layout_document_title. l10n_ar_purchase replaces layout_document_title but leaves
-             informations intact, causing incoterm to appear twice. Remove it here. -->
-        <div id="informations" position="replace"/>
+        <!-- the Center and Compact layouts print information_block in the body; the AR block already shows the shipping address -->
+        <t t-call="web.external_layout" position="before">
+            <t t-set="information_block" t-value="False"/>
+        </t>
 
         <t t-if="o.partner_ref" position="before">
             <t t-if="o.incoterm_id">
@@ -25,6 +25,11 @@
     </template>
 
     <template id="report_purchaseorder_document" inherit_id="l10n_ar_purchase.report_purchaseorder_document">
+        <!-- the Center and Compact layouts print information_block in the body; the AR block already shows the shipping address -->
+        <t t-call="web.external_layout" position="before">
+            <t t-set="information_block" t-value="False"/>
+        </t>
+
         <t t-if="o.partner_ref" position="before">
             <t t-if="o.incoterm_id">
                 <br/><strong>Incoterm:</strong>

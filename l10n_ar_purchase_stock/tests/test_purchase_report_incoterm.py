@@ -7,10 +7,11 @@ class TestPurchaseReportIncoterm(TestArCommon):
     """Verifica que el Incoterm aparezca una sola vez en los reportes de compra
     argentinos y que la ubicación del incoterm no sea mostrada.
 
-    Casos cubiertos (ref. tarea #68236):
+    Casos cubiertos:
     1. Solicitud de Compra con Incoterm → aparece una vez, sin ubicación
     2. Pedido de Compra con Incoterm → aparece una vez, sin ubicación
     3. Sin Incoterm → el campo no aparece en ninguno de los dos reportes
+    4. Sin dirección de entrega → sale la dirección del depósito
     """
 
     @classmethod
@@ -30,7 +31,6 @@ class TestPurchaseReportIncoterm(TestArCommon):
                 "is_company": True,
                 "supplier_rank": 1,
                 "country_id": cls.env.ref("base.ar").id,
-                "l10n_latam_identification_type_id": cls.env.ref("l10n_ar.it_cuit").id,
                 "vat": "30500010912",
                 "l10n_ar_afip_responsibility_type_id": cls.env.ref("l10n_ar.res_IVARI").id,
             }
@@ -129,3 +129,17 @@ class TestPurchaseReportIncoterm(TestArCommon):
         po = self._make_po(confirm=True)
         html = self._render_html("purchase.report_purchaseorder", po)
         self.assertNotIn("Incoterm:", html)
+
+    # ------------------------------------------------------------------
+    # Caso 4: Dirección del depósito
+    # ------------------------------------------------------------------
+
+    def test_warehouse_address_without_dest_address(self):
+        """Sin dirección de entrega: los dos reportes muestran el depósito."""
+        po = self._make_po()
+        warehouse = po.picking_type_id.warehouse_id
+        self.assertTrue(warehouse)
+        for report_name in ("purchase.report_purchasequotation", "purchase.report_purchaseorder"):
+            html = self._render_html(report_name, po)
+            self.assertIn("Shipping address:", html, report_name)
+            self.assertIn(warehouse.name, html, report_name)

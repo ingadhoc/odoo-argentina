@@ -619,8 +619,10 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_res_config_settings__arba_cit
-msgid "Clave de Identificación Tributaria de ARBA"
+msgid ""
+"ARBA Tax Identification Key. A branch with the same CUIT that leaves it empty uses the one of its parent company."
 msgstr ""
+"Clave de Identificación Tributaria de ARBA. Una sucursal con el mismo CUIT que la deja vacía usa la de su empresa padre."
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_res_company
@@ -630,7 +632,6 @@ msgstr "Compañías"
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__company_id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__company_id
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__company_id
 msgid "Company"
 msgstr "Empresa"
 
@@ -660,6 +661,12 @@ msgstr "Configurar impuesto"
 #: code:addons/l10n_ar_tax/wizard/res_config_settings.py:0
 msgid "Connection was successful"
 msgstr "La conexión ha sido exitosa"
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/wizard/res_config_settings.py:0
+msgid "Connection was successful with the CIT of company %s"
+msgstr "La conexión ha sido exitosa con el CIT de la empresa %s"
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_res_partner
@@ -1148,7 +1155,7 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.ui.menu,name:l10n_ar_tax.menu_action_company_jurisdiction_padron
-msgid "Padron de Alicuotas por compania"
+msgid "Padron de Alicuotas"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1431,6 +1438,16 @@ msgid "The padron for %s is not implemented."
 msgstr "El padrón para %s no está implementado."
 
 #. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
+msgid ""
+"There is already a padron for %(state)s in that period. The padron is "
+"shared by every company."
+msgstr ""
+"Ya hay un padrón de %(state)s para ese período. El padrón se comparte entre "
+"todas las empresas."
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_state_code
 msgid "The state code."
 msgstr "El código del estado."
@@ -1581,8 +1598,9 @@ msgstr "Líneas de Retenciones"
 #. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/res_company.py:0
-msgid "You must configure CIT password on company %s"
-msgstr "Debe configurar la contraseña de CIT en la empresa %s"
+msgid "You must configure CIT password on company %s or on a parent company with the same CUIT"
+msgstr ""
+"Debe configurar la contraseña de CIT en la empresa %s o en una empresa padre con el mismo CUIT"
 
 #. module: l10n_ar_tax
 #. odoo-python

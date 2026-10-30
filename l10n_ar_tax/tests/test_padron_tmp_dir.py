@@ -39,7 +39,6 @@ class TestPadronTmpDir(common.TransactionCase):
             zip_file.writestr("Ret.TXT", "\n".join(ret_lines) + "\n")
         padron = self.padron_model.create(
             {
-                "company_id": self.env.company.id,
                 "state_id": self.state_arba.id,
                 "file_padron": base64.b64encode(buffer.getvalue()).decode(),
                 "filename": "padron_arba.zip",
@@ -56,7 +55,6 @@ class TestPadronTmpDir(common.TransactionCase):
             zip_file.writestr("PARP.TXT", "\n".join(lines) + "\n")
         padron = self.padron_model.create(
             {
-                "company_id": self.env.company.id,
                 "state_id": self.state_santa_fe.id,
                 "file_padron": base64.b64encode(buffer.getvalue()).decode(),
                 "filename": "padron_santafe.zip",

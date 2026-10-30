@@ -4,3 +4,95 @@ msgstr ""
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: l10n_ar_bank
+#: model:ir.module.module,description:base.module_l10n_ar_bank
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"===============================================\n"
+"CBU Addition to Banks and Argentine Bank List\n"
+"===============================================\n"
+"\n"
+"* Complete list of financial entities authorized by the BCRA in the Argentine Republic.\n"
+"* Includes contact information, addresses, and BIC/SWIFT codes of banks.\n"
+"* Compatible with Argentine localization (l10n_ar) to facilitate banking operations.\n"
+"\n"
+"Main Features\n"
+"=============\n"
+"\n"
+"* **83+ preloaded Argentine banks**: Includes both national and international banks operating in Argentina\n"
+"* **Information**: Name, BIC/SWIFT code, address, phone, email, city and province\n"
+"* **BCRA codes**: Uses official codes from the Central Bank of the Argentine Republic\n"
+"* **Bank catalog**: Keeps the Banks model (res.bank), that Odoo no longer provides, with the BCRA code of each bank\n"
+"* **Bank accounts**: Adds the Bank field to bank accounts, bank journals and the bank account setup wizard; choosing a bank fills the bank name, BIC and clearing number, that can still be edited and follow the changes of the bank\n"
+"* **BCRA Code label**: Clearing number label for Argentine bank accounts\n"
+"\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"#. This module is automatically installed when l10n_ar is installed (auto_install: True)\n"
+"#. If you need to install it manually: go to Apps > search \"l10n_ar_bank\" > Install\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"#. No additional configuration required\n"
+"#. Banks are automatically loaded when installing the module\n"
+"#. Data is immediately available in Accounting > Configuration > Banks\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you can:\n"
+"\n"
+"#. **Manage banks**: Go to Accounting > Configuration > Banks to see, search by name or BCRA code, and edit the banks\n"
+"#. **Configure bank accounts**: When creating a bank account, select the desired bank from the list; its name, BIC and BCRA code are filled in the account\n"
+"#. **Create contacts with banking information**: In contacts (customers/suppliers), you can select banks from the preloaded list\n"
+"#. **Invoicing**: Banking data is automatically used in reports and invoices\n"
+"#. **Transfers**: Facilitates the configuration of bank transfers with correct data\n"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,help:l10n_ar_bank.field_account_setup_bank_manual_config__clearing_number
+#: model:ir.model.fields,help:l10n_ar_bank.field_res_partner_bank__clearing_number
+msgid ""
+"A clearing number (or routing number) refers to a bank, branch, or location "
+"and is used by domestic money transfer protocols (from/to bank accounts in "
+"the same country)."
+msgstr ""
+"Un número de compensación (o número de ruta) identifica un banco, sucursal o"
+" ubicación y se usa en los protocolos de transferencia nacional (desde o "
+"hacia cuentas bancarias del mismo país)."
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__bank_number
+msgid "Bank Number"
+msgstr "Número de banco"
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_account_setup_bank_manual_config__clearing_number
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_partner_bank__clearing_number
+msgid "Clearing Number"
+msgstr "Número de compensación"
+
+#. module: l10n_ar_bank
+#: model:ir.module.module,shortdesc:base.module_l10n_ar_bank
+msgid "Listado de Bancos Argentinos"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,help:l10n_ar_bank.field_res_bank__bank_number
+msgid "The bank number as per the Argentine banking system."
+msgstr "Número de banco según el sistema bancario argentino."

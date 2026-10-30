@@ -3,7 +3,7 @@
     <record model='res.bank' id='00005'>
         <field name='name'>Abn  Amro Bank N. V.</field>
         <field name='bic'>ABNAMRO</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Victoria Ocampo 360</field>
         <field name='street2'>piso pb</field>
         <field name='city'>Buenos Aires</field>
@@ -16,7 +16,7 @@
     <record model='res.bank' id='00295'>
         <field name='name'>American Express Bank Ltd. Sociedad Anon</field>
         <field name='bic'>AEXP</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Arenales 707</field>
         <field name='street2'></field>
         <field name='zip'>C1061AAA</field>
@@ -42,7 +42,7 @@
         <field name='bank_number'>340</field>
     </record>
     <record model='res.bank' id='00147'>
-        <field name='name'>Banco B.I. Creditanstalt Sociedad Anonim</field>
+        <field name='name'>BIBANK S.A.</field>
         <field name='bic'>BICREDITANSTALT</field>
         <field name='active'>1</field>
         <field name='street'>Bouchard 547</field>
@@ -58,7 +58,7 @@
     <record model='res.bank' id='00336'>
         <field name='name'>Banco Bradesco Argentina S.A.</field>
         <field name='bic'>ARNET</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>25 de Mayo 555</field>
         <field name='street2'></field>
         <field name='zip'>C1002ABK</field>
@@ -223,7 +223,7 @@
         <field name='bank_number'>011</field>
     </record>
     <record model='res.bank' id='00093'>
-        <field name='name'>Banco De La Pampa Sociedad De Economмa M</field>
+        <field name='name'>BANCO DE LA PAMPA SA</field>
         <field name='bic'>BLP</field>
         <field name='active'>1</field>
         <field name='street'>Pellegrini 255</field>
@@ -393,7 +393,7 @@
     <record model='res.bank' id='00060'>
         <field name='name'>Banco Del Tucuman S.A.</field>
         <field name='bic'>BANCODELTUCUMAN</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>San Martin 721</field>
         <field name='street2'></field>
         <field name='zip'></field>
@@ -407,7 +407,7 @@
     <record model='res.bank' id='00046'>
         <field name='name'>Banco Do Brasil S.A.</field>
         <field name='bic'>BB</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>San Martin 323</field>
         <field name='street2'>piso 2</field>
         <field name='zip'>C1004AAG</field>
@@ -421,7 +421,7 @@
     <record model='res.bank' id='00303'>
         <field name='name'>Banco Finansur S.A.</field>
         <field name='bic'>BANCOFINANSUR</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Sarmiento 700</field>
         <field name='street2'></field>
         <field name='zip'>C1041AAN</field>
@@ -463,7 +463,7 @@
     <record model='res.bank' id='00259'>
         <field name='name'>Banco Itau Argentina S.A.</field>
         <field name='bic'>ITAU</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Cerrito 740</field>
         <field name='street2'>piso 19</field>
         <field name='zip'>C1010AAP</field>
@@ -588,7 +588,7 @@
     <record model='res.bank' id='00306'>
         <field name='name'>Banco Privado De Inversiones Sociedad An</field>
         <field name='bic'>BANCOPRIVADO</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Leandro Alem Ave 1110</field>
         <field name='street2'>piso pb</field>
         <field name='zip'></field>
@@ -614,7 +614,7 @@
         <field name='bank_number'>268</field>
     </record>
     <record model='res.bank' id='00097'>
-        <field name='name'>Banco Provincia Del Neuquén Sociedad Anс</field>
+        <field name='name'>BANCO PROVINCIA DEL NEUQUÉN S.A.</field>
         <field name='bic'>BPN</field>
         <field name='active'>1</field>
         <field name='street'>Av Argentina 41</field>
@@ -630,7 +630,7 @@
     <record model='res.bank' id='00079'>
         <field name='name'>Banco Regional De Cuyo S.A.</field>
         <field name='bic'>BANCOREGIONAL</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Av San Martin 841</field>
         <field name='street2'></field>
         <field name='zip'></field>
@@ -670,7 +670,7 @@
         <field name='bank_number'>277</field>
     </record>
     <record model='res.bank' id='00072'>
-        <field name='name'>Banco Santander Rio S.A.</field>
+        <field name='name'>BANCO SANTANDER ARGENTINA S.A.</field>
         <field name='bic'>SANTANDERRIO</field>
         <field name='active'>1</field>
         <field name='street'>calle 8 esq. calle 50</field>
@@ -700,7 +700,7 @@
     <record model='res.bank' id='00262'>
         <field name='name'>Bank Of America, National Association</field>
         <field name='bic'>BANKOFAMERICA</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Carlos M. Della Paolera 265</field>
         <field name='street2'>piso 10</field>
         <field name='zip'></field>
@@ -712,7 +712,7 @@
         <field name='bank_number'>262</field>
     </record>
     <record model='res.bank' id='00017'>
-        <field name='name'>Bbva Banco Frances S.A.</field>
+        <field name='name'>BANCO BBVA ARGENTINA S.A.</field>
         <field name='bic'>BANCOFRANCES</field>
         <field name='active'>1</field>
         <field name='street'>Reconquista 199</field>
@@ -740,7 +740,7 @@
         <field name='bank_number'>266</field>
     </record>
     <record model='res.bank' id='65203'>
-        <field name='name'>Caja De Credito "Cuenca" Cooperativa Lim</field>
+        <field name='name'>CRÉDITO REGIONAL COMPAÑÍA FINANCIERA S.A.U.</field>
         <field name='bic'>CCCUENCA</field>
         <field name='active'>1</field>
         <field name='street'>99 C. M. Cuenca 456</field>
@@ -756,7 +756,7 @@
     <record model='res.bank' id='64085'>
         <field name='name'>Caja De Credito Cooperativa La Capital D</field>
         <field name='bic'>LACAPITALDELPLATA</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>25 de Mayo 522</field>
         <field name='street2'></field>
         <field name='zip'>C1002ABL</field>
@@ -797,7 +797,7 @@
     <record model='res.bank' id='00325'>
         <field name='name'>Deutsche Bank S.A.</field>
         <field name='bic'>DB</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Tucumán 1</field>
         <field name='street2'></field>
         <field name='zip'>C1049AAA</field>
@@ -809,7 +809,7 @@
         <field name='bank_number'>325</field>
     </record>
     <record model='res.bank' id='44092'>
-        <field name='name'>Fiat Credito Compañía Financiera S.A.</field>
+        <field name='name'>FCA COMPAÑIA FINANCIERA S.A.</field>
         <field name='bic'>FIATFINANCIERA</field>
         <field name='active'>1</field>
         <field name='street'>Balcarce 548</field>
@@ -825,7 +825,7 @@
     <record model='res.bank' id='44059'>
         <field name='name'>Ford Credit Compañía Financiera S.A.</field>
         <field name='bic'>FORDMAIL</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Henry Ford 3295</field>
         <field name='street2'></field>
         <field name='zip'>B1610BKK</field>
@@ -839,7 +839,7 @@
     <record model='res.bank' id='44090'>
         <field name='name'>Ge Compañía Financiera S.A.</field>
         <field name='bic'>GE</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Ing. Enrique Butty 240</field>
         <field name='street2'>piso 11</field>
         <field name='zip'></field>
@@ -851,7 +851,7 @@
         <field name='bank_number'>44090</field>
     </record>
     <record model='res.bank' id='44093'>
-        <field name='name'>Gmac Compañía Financiera S.A.</field>
+        <field name='name'>GPAT COMPAÑIA FINANCIERA S.A.U.</field>
         <field name='bic'>GM</field>
         <field name='active'>1</field>
         <field name='street'>Madero 942</field>
@@ -867,7 +867,7 @@
     <record model='res.bank' id='00150'>
         <field name='name'>Hsbc Bank Argentina S.A.</field>
         <field name='bic'>HSBC</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Florida 201</field>
         <field name='street2'></field>
         <field name='zip'>C1005AAE</field>
@@ -907,7 +907,7 @@
         <field name='bank_number'>165</field>
     </record>
     <record model='res.bank' id='00312'>
-        <field name='name'>Mba Lazard Banco De Inversiones S. A.</field>
+        <field name='name'>BANCO VOII S.A.</field>
         <field name='bic'>MERCHANT</field>
         <field name='active'>1</field>
         <field name='street'>Av Alicia Moreau de Justo 140</field>
@@ -937,7 +937,7 @@
     <record model='res.bank' id='44068'>
         <field name='name'>Metropolis Compañía Financiera S.A.</field>
         <field name='bic'>METROPOLISCF</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Sarmiento 356</field>
         <field name='street2'></field>
         <field name='zip'>C1041AAH</field>
@@ -963,7 +963,7 @@
         <field name='bank_number'>45056</field>
     </record>
     <record model='res.bank' id='45072'>
-        <field name='name'>Multifinanzas Compañía Financiera S.A.</field>
+        <field name='name'>REBA COMPAÑIA FINANCIERA S.A.</field>
         <field name='bic'>SINECTIS</field>
         <field name='active'>1</field>
         <field name='street'>Sarmiento 448</field>
@@ -991,7 +991,7 @@
         <field name='bank_number'>386</field>
     </record>
     <record model='res.bank' id='00309'>
-        <field name='name'>Nuevo Banco De La Rioja Sociedad Anonima</field>
+        <field name='name'>BANCO RIOJA SOCIEDAD ANÓNIMA UNIPERSONAL</field>
         <field name='bic'>NBLR</field>
         <field name='active'>1</field>
         <field name='street'>Rivadavia 702</field>
@@ -1088,7 +1088,7 @@
     <record model='res.bank' id='00018'>
         <field name='name'>The Bank Of Tokyo-Mitsubishi Ufj, Ltd.</field>
         <field name='bic'>MUFG</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Corrientes Ave 420</field>
         <field name='street2'>piso 2</field>
         <field name='zip'></field>
@@ -1114,7 +1114,7 @@
         <field name='bank_number'>44099</field>
     </record>
     <record model='res.bank' id='44088'>
-        <field name='name'>Volkswagen Credit Compañia Financiera S.</field>
+        <field name='name'>VOLKSWAGEN FINANCIAL SERVICES COMPAÑÍA FINANCIERA S.A.</field>
         <field name='bic'>VWFS</field>
         <field name='active'>1</field>
         <field name='street'>delcasse esq. henry ford </field>
@@ -1130,7 +1130,7 @@
     <record model='res.bank' id='44089'>
         <field name='name'>BANCO BMA S.A.U.</field>
         <field name='bic'>ITAUARBA</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Victoria Ocampo 360</field>
         <field name='street2'></field>
         <field name='city'>Buenos Aires</field>
@@ -1143,7 +1143,7 @@
     <record model='res.bank' id='44091'>
         <field name='name'>BANCO BICA S.A.</field>
         <field name='bic'>BICAARBS</field>
-        <field name='active'>1</field>
+        <field name='active'>0</field>
         <field name='street'>Fryda Schultz de Mantovani 1560</field>
         <field name='street2'></field>
         <field name='city'>Santa Fe</field>
@@ -1152,5 +1152,107 @@
         <field name='phone'></field>
         <field name='email'></field>
         <field name='bank_number'>44091</field>
+    </record>
+    <record model='res.bank' id='00131'>
+        <field name='name'>BANK OF CHINA LIMITED SUCURSAL BUENOS AIRES</field>
+        <field name='active'>1</field>
+        <field name='street'>JUANA MANSO 999</field>
+        <field name='street2'>PISO 5</field>
+        <field name='city'>Buenos Aires</field>
+        <field name='state' ref='base.state_ar_c'/>
+        <field name='country' ref='base.ar'/>
+        <field name='phone'>001154395566</field>
+        <field name='email'>service.ar@bankofchina.com</field>
+        <field name='bank_number'>131</field>
+    </record>
+    <record model='res.bank' id='00143'>
+        <field name='name'>BRUBANK S.A.U.</field>
+        <field name='active'>1</field>
+        <field name='street'>FRANKLIN D ROOSEVELT 1740</field>
+        <field name='street2'>PISO 5</field>
+        <field name='city'>Buenos Aires</field>
+        <field name='state' ref='base.state_ar_c'/>
+        <field name='country' ref='base.ar'/>
+        <field name='phone'>541152750640</field>
+        <field name='email'>ayuda@brubank.com</field>
+        <field name='bank_number'>143</field>
+    </record>
+    <record model='res.bank' id='00384'>
+        <field name='name'>UALA BANK S.A.U.</field>
+        <field name='active'>1</field>
+        <field name='street'>AV. CORONEL MARCELINO E. FREYRE 365</field>
+        <field name='city'>Buenos Aires</field>
+        <field name='state' ref='base.state_ar_c'/>
+        <field name='country' ref='base.ar'/>
+        <field name='phone'>001162452383</field>
+        <field name='email'>atencion@uala.com.ar</field>
+        <field name='bank_number'>384</field>
+    </record>
+    <record model='res.bank' id='00426'>
+        <field name='name'>BANCO BICA S.A.</field>
+        <field name='active'>1</field>
+        <field name='street'>25 DE MAYO 1774</field>
+        <field name='city'>Santo Tome</field>
+        <field name='state' ref='base.state_ar_s'/>
+        <field name='country' ref='base.ar'/>
+        <field name='phone'>008009996663</field>
+        <field name='email'>bancobica@bancobica.com.ar</field>
+        <field name='bank_number'>426</field>
+    </record>
+    <record model='res.bank' id='00431'>
+        <field name='name'>BANCO COINAG S.A.</field>
+        <field name='active'>1</field>
+        <field name='street'>MITRE 602 Y SAN LORENZO</field>
+        <field name='city'>Rosario</field>
+        <field name='state' ref='base.state_ar_s'/>
+        <field name='country' ref='base.ar'/>
+        <field name='phone'>000004229050</field>
+        <field name='email'>secretariadirectorio@bancocoinag.com</field>
+        <field name='bank_number'>431</field>
+    </record>
+    <record model='res.bank' id='00432'>
+        <field name='name'>BANCO DE COMERCIO S.A.</field>
+        <field name='active'>1</field>
+        <field name='street'>SARMIENTO 356</field>
+        <field name='city'>Buenos Aires</field>
+        <field name='state' ref='base.state_ar_c'/>
+        <field name='country' ref='base.ar'/>
+        <field name='phone'>001155545800</field>
+        <field name='email'>info@bancodecomercio.com.ar</field>
+        <field name='bank_number'>432</field>
+    </record>
+    <record model='res.bank' id='00435'>
+        <field name='name'>BANCO SUCREDITO REGIONAL S.A.U.</field>
+        <field name='active'>1</field>
+        <field name='street'>SAN MARTIN 879</field>
+        <field name='city'>San Miguel de Tucumán</field>
+        <field name='state' ref='base.state_ar_t'/>
+        <field name='country' ref='base.ar'/>
+        <field name='phone'>003814844300</field>
+        <field name='email'>cbarilari@bancosucredito.com.ar</field>
+        <field name='bank_number'>435</field>
+    </record>
+    <record model='res.bank' id='00448'>
+        <field name='name'>BANCO DINO S.A.</field>
+        <field name='active'>1</field>
+        <field name='street'>RODRIGUEZ DEL BUSTO 4086</field>
+        <field name='street2'>DPTO 33</field>
+        <field name='city'>Córdoba</field>
+        <field name='state' ref='base.state_ar_x'/>
+        <field name='country' ref='base.ar'/>
+        <field name='phone'>003515549600</field>
+        <field name='email'>info@bancodino.com</field>
+        <field name='bank_number'>448</field>
+    </record>
+    <record model='res.bank' id='45030'>
+        <field name='name'>NARANJA DIGITAL COMPAÑÍA FINANCIERA S.A.U.</field>
+        <field name='active'>1</field>
+        <field name='street'>TENIENTE GRAL JUAN DOMINGO PERON 43</field>
+        <field name='city'>Buenos Aires</field>
+        <field name='state' ref='base.state_ar_c'/>
+        <field name='country' ref='base.ar'/>
+        <field name='phone'>008107776272</field>
+        <field name='email'>soporte@naranjax.com</field>
+        <field name='bank_number'>45030</field>
     </record>
 </odoo>

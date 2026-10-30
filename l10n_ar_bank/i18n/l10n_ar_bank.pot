@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-05 19:33+0000\n"
-"PO-Revision-Date: 2026-01-05 19:33+0000\n"
+"POT-Creation-Date: 2026-10-27 19:50+0000\n"
+"PO-Revision-Date: 2026-10-27 19:50+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,127 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_ar_bank
+#: model:ir.module.module,description:base.module_l10n_ar_bank
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"===============================================\n"
+"CBU Addition to Banks and Argentine Bank List\n"
+"===============================================\n"
+"\n"
+"* Complete list of financial entities authorized by the BCRA in the Argentine Republic.\n"
+"* Includes contact information, addresses, and BIC/SWIFT codes of banks.\n"
+"* Compatible with Argentine localization (l10n_ar) to facilitate banking operations.\n"
+"\n"
+"Main Features\n"
+"=============\n"
+"\n"
+"* **83+ preloaded Argentine banks**: Includes both national and international banks operating in Argentina\n"
+"* **Information**: Name, BIC/SWIFT code, address, phone, email, city and province\n"
+"* **BCRA codes**: Uses official codes from the Central Bank of the Argentine Republic\n"
+"* **Bank catalog**: Keeps the Banks model (res.bank), that Odoo no longer provides, with the BCRA code of each bank\n"
+"* **Bank accounts**: Adds the Bank field to bank accounts, bank journals and the bank account setup wizard; choosing a bank fills the bank name, BIC and clearing number, that can still be edited and follow the changes of the bank\n"
+"* **BCRA Code label**: Clearing number label for Argentine bank accounts\n"
+"\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"#. This module is automatically installed when l10n_ar is installed (auto_install: True)\n"
+"#. If you need to install it manually: go to Apps > search \"l10n_ar_bank\" > Install\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"#. No additional configuration required\n"
+"#. Banks are automatically loaded when installing the module\n"
+"#. Data is immediately available in Accounting > Configuration > Banks\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you can:\n"
+"\n"
+"#. **Manage banks**: Go to Accounting > Configuration > Banks to see, search by name or BCRA code, and edit the banks\n"
+"#. **Configure bank accounts**: When creating a bank account, select the desired bank from the list; its name, BIC and BCRA code are filled in the account\n"
+"#. **Create contacts with banking information**: In contacts (customers/suppliers), you can select banks from the preloaded list\n"
+"#. **Invoicing**: Banking data is automatically used in reports and invoices\n"
+"#. **Transfers**: Facilitates the configuration of bank transfers with correct data\n"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,help:l10n_ar_bank.field_account_setup_bank_manual_config__clearing_number
+#: model:ir.model.fields,help:l10n_ar_bank.field_res_partner_bank__clearing_number
+msgid ""
+"A clearing number (or routing number) refers to a bank, branch, or location "
+"and is used by domestic money transfer protocols (from/to bank accounts in "
+"the same country)."
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__active
+msgid "Active"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model_terms:ir.ui.view,arch_db:l10n_ar_bank.res_bank_view_search
+#: model_terms:ir.ui.view,arch_db:l10n_ar_bank.view_res_bank_form
+msgid "Archived"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_account_setup_bank_manual_config__bank_bic
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_partner_bank__bank_bic
+msgid "BIC/SWIFT"
+msgstr ""
+
+#. module: l10n_ar_bank
 #: model:ir.model,name:l10n_ar_bank.model_res_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_account_journal__bank_id
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_account_setup_bank_manual_config__bank_id
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_partner_bank__bank_id
+#: model_terms:ir.ui.view,arch_db:l10n_ar_bank.view_res_bank_form
 msgid "Bank"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model,name:l10n_ar_bank.model_res_partner_bank
+msgid "Bank Account"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model_terms:ir.ui.view,arch_db:l10n_ar_bank.view_res_bank_form
+msgid "Bank Address"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__bic
+msgid "Bank Identifier Code"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,help:l10n_ar_bank.field_account_setup_bank_manual_config__bank_bic
+#: model:ir.model.fields,help:l10n_ar_bank.field_res_partner_bank__bank_bic
+msgid ""
+"Bank Identifier Code for international wires in the format Bank Code (4 "
+"letters) + Country Code (2 letters) + Location Code (2 letters/numbers) + "
+"Optional Branch Code (3 letters/numbers)."
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_account_setup_bank_manual_config__bank_name
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_partner_bank__bank_name
+msgid "Bank Name"
 msgstr ""
 
 #. module: l10n_ar_bank
@@ -26,16 +145,152 @@ msgid "Bank Number"
 msgstr ""
 
 #. module: l10n_ar_bank
+#: model:ir.actions.act_window,name:l10n_ar_bank.action_res_bank_form
+#: model:ir.ui.menu,name:l10n_ar_bank.menu_action_res_bank_form
+#: model_terms:ir.ui.view,arch_db:l10n_ar_bank.view_res_bank_tree
+msgid "Banks"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__city
+#: model_terms:ir.ui.view,arch_db:l10n_ar_bank.view_res_bank_form
+msgid "City"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_account_setup_bank_manual_config__clearing_number
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_partner_bank__clearing_number
+msgid "Clearing Number"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__country
+#: model_terms:ir.ui.view,arch_db:l10n_ar_bank.view_res_bank_form
+msgid "Country"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__country_code
+msgid "Country Code"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_account_journal__display_name
 #: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__display_name
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_partner_bank__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__email
+msgid "Email"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__state
+msgid "Fed. State"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_account_journal__id
 #: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__id
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_partner_bank__id
 msgid "ID"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model,name:l10n_ar_bank.model_account_journal
+msgid "Journal"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.module.module,shortdesc:base.module_l10n_ar_bank
+msgid "Listado de Bancos Argentinos"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__name
+msgid "Name"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__phone
+msgid "Phone"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model_terms:ir.ui.view,arch_db:l10n_ar_bank.res_bank_view_search
+msgid "Search Bank"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,help:l10n_ar_bank.field_res_bank__bic
+msgid "Sometimes called BIC or Swift."
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model_terms:ir.ui.view,arch_db:l10n_ar_bank.view_res_bank_form
+msgid "State"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__street
+msgid "Street"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model_terms:ir.ui.view,arch_db:l10n_ar_bank.view_res_bank_form
+msgid "Street 2..."
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model_terms:ir.ui.view,arch_db:l10n_ar_bank.view_res_bank_form
+msgid "Street..."
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__street2
+msgid "Street2"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,help:l10n_ar_bank.field_res_bank__country_code
+msgid ""
+"The ISO country code in two chars. \n"
+"You can use this field for quick search."
 msgstr ""
 
 #. module: l10n_ar_bank
 #: model:ir.model.fields,help:l10n_ar_bank.field_res_bank__bank_number
 msgid "The bank number as per the Argentine banking system."
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model_terms:ir.ui.view,arch_db:l10n_ar_bank.view_res_bank_form
+msgid "ZIP"
+msgstr ""
+
+#. module: l10n_ar_bank
+#: model:ir.model.fields,field_description:l10n_ar_bank.field_res_bank__zip
+msgid "Zip"
 msgstr ""

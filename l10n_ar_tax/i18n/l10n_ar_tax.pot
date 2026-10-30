@@ -611,7 +611,9 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_res_config_settings__arba_cit
-msgid "Clave de Identificación Tributaria de ARBA"
+msgid ""
+"ARBA Tax Identification Key. A branch with the same CUIT that leaves it "
+"empty uses the one of its parent company."
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1517,7 +1519,9 @@ msgstr ""
 #. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/res_company.py:0
-msgid "You must configure CIT password on company %s"
+msgid ""
+"You must configure CIT password on company %s or on a parent company with "
+"the same CUIT"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1566,4 +1570,18 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.res_config_settings_view_form
 msgid "⇒ Verify ARBA Key"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_res_company_jurisdiction_padron__company_id
+msgid ""
+"The padron is the same for every taxpayer: the companies that have no "
+"padron of their own for the jurisdiction and period use this one, whatever "
+"their CUIT."
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/wizard/res_config_settings.py:0
+msgid "Connection was successful with the CIT of company %s"
 msgstr ""

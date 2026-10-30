@@ -429,22 +429,24 @@ class AccountFiscalPositionL10nArTax(models.Model):
         :param state_id: ID del estado/jurisdicción
         :param date: Fecha para validar vigencia del padrón
         :return: Registro de res.company.jurisdiction.padron o recordset vacío
+
+        El padrón es el mismo para todos los contribuyentes: si la compañía no cargó uno propio
+        se usa el que haya cargado cualquier otra, así se sube una sola vez por jurisdicción y
+        período, sea cual sea el CUIT.
         """
         self.ensure_one()
-        res = self.env["res.company.jurisdiction.padron"].search(
-            [
-                ("state_id", "in", state_id.ids),
-                ("company_id", "=", self.fiscal_position_id.company_id.id),
-                "|",
-                ("l10n_ar_padron_from_date", "=", False),
-                ("l10n_ar_padron_from_date", "<=", date),
-                "|",
-                ("l10n_ar_padron_to_date", "=", False),
-                ("l10n_ar_padron_to_date", ">=", date),
-            ],
-            limit=1,
-        )
-        return res
+        domain = [
+            ("state_id", "in", state_id.ids),
+            "|",
+            ("l10n_ar_padron_from_date", "=", False),
+            ("l10n_ar_padron_from_date", "<=", date),
+            "|",
+            ("l10n_ar_padron_to_date", "=", False),
+            ("l10n_ar_padron_to_date", ">=", date),
+        ]
+        padron_model = self.env["res.company.jurisdiction.padron"]
+        own_domain = domain + [("company_id", "=", self.fiscal_position_id.company_id.id)]
+        return padron_model.search(own_domain, limit=1) or padron_model.search(domain, limit=1)
 
     def _get_padron_configs(self):
         """Jurisdicciones que publican padrón de alícuotas en archivo, y cómo se lee ese

@@ -34,6 +34,8 @@ class ResCompanyJurisdictionPadron(models.Model):
         "res.company",
         required=True,
         default=lambda self: self.env.company,
+        help="The padron is the same for every taxpayer: the companies that have no padron of their own for "
+        "the jurisdiction and period use this one, whatever their CUIT.",
     )
     state_id = fields.Many2one("res.country.state", string="Jurisdiction", domain="[('country_id.code', '=', 'AR')]")
     file_padron = fields.Binary(

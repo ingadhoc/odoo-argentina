@@ -23,3 +23,4 @@ from . import test_withholding_certificates_mail
 from . import test_payment_withholding_posted_recompute
 from . import test_withholding_fiscal_position_branches
 from . import test_payment_net_amount_checks_journal
+from . import test_same_cuit_branches

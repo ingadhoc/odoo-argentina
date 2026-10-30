@@ -42,4 +42,7 @@ class ResConfigSettings(models.TransientModel):
         except Exception as exp:
             raise UserError(_("Could not connect to ARBA: %s") % str(exp))
 
+        cit_company = self.company_id._l10n_ar_get_same_cuit_company_with("arba_cit")
+        if cit_company != self.company_id:
+            raise UserError(_("Connection was successful with the CIT of company %s") % cit_company.name)
         raise UserError(_("Connection was successful"))

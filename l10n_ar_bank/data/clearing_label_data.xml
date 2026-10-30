@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="clearing_label_ar" model="clearing.label">
+        <field name="name">BCRA Code</field>
+        <field name="country_id" ref="base.ar"/>
+    </record>
+</odoo>

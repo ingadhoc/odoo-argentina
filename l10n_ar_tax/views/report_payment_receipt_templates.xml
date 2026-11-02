@@ -49,8 +49,9 @@
             <!-- (16) Responsabilidad AFIP -->
             <br/><strong>VAT Cond: </strong><span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
             <!-- (17) CUIT -->
-            <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
-                <br/><strong><t t-out="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+            <t t-if="o.partner_id.vat and o.partner_id.l10n_ar_afip_code and o.partner_id.l10n_ar_afip_code != '99'">
+                <t t-set="ar_doc_vals" t-value="o.partner_id._get_preferred_legal_entity_identifier_vals()"/>
+                <br/><strong><t t-out="o.partner_id._get_identifier_label(ar_doc_vals.get('key')) or o.company_id.account_fiscal_country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
             </t>
         </xpath>
 
@@ -167,6 +168,6 @@
          False for customers, disabling the cache for them. -->
     <record id="account.action_report_payment_receipt" model="ir.actions.report">
         <field name="attachment_use" eval="True"/>
-        <field name="attachment">(object.partner_type == 'supplier' and object.state in ('in_process', 'paid')) and ((object.name or 'recibo').replace('/', '_') + '.pdf') or False</field>
+        <field name="attachment">(object.partner_type == 'supplier' and object.state in ('paid', 'reconciled')) and ((object.name or 'recibo').replace('/', '_') + '.pdf') or False</field>
     </record>
 </odoo>

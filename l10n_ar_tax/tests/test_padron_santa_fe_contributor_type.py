@@ -112,7 +112,7 @@ class TestPadronSantaFeContributorType(TestArCommon):
         return self.env["res.partner"].create(
             {
                 "name": "partner_%s" % vat,
-                "l10n_latam_identification_type_id": self.env.ref("l10n_ar.it_cuit").id,
+                "country_id": self.env.ref("base.ar").id,
                 "vat": vat,
             }
         )

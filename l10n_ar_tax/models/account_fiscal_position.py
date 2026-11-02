@@ -85,7 +85,7 @@ class AccountFiscalPosition(models.Model):
                         date=date,
                         company=company.name,
                     ),
-                    action=partner.get_formview_action(),
+                    action=partner.get_record_default_action(),
                     button_text=_("Edit contact"),
                 )
             if partner_tax and partner_tax.l10n_ar_tax_type != "earnings_scale" and partner_tax.amount == 0:

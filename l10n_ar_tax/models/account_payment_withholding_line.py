@@ -190,6 +190,11 @@ class AccountPaymentWithholdingLine(models.Model):
         )
         return super(AccountPaymentWithholdingLine, self - computable)._constrains_base_amount()
 
+    def _get_withholding_tax(self):
+        """Return the applicable withheld tax (used by the AR exports)."""
+        self.ensure_one()
+        return self.tax_id
+
     ########################
     # EARNING COMPUTE HELPERS
     ########################

@@ -1,11 +1,23 @@
 from collections import defaultdict
 
-from odoo import _, api, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
+
+    # the AR exports (odoo-argentina-ee) reach the withholding line of a tax line through this field
+    withholding_id = fields.Many2one("account.payment.withholding.line", compute="_compute_withholding")
+
+    def _compute_withholding(self):
+        for rec in self:
+            if rec.tax_line_id and rec.payment_id:
+                rec.withholding_id = rec.payment_id.withholding_line_ids.filtered(
+                    lambda x: x.tax_id == rec.tax_line_id
+                )[:1]
+            else:
+                rec.withholding_id = False
 
     def _get_computed_taxes(self):
         taxes = super()._get_computed_taxes()

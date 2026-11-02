@@ -25,7 +25,7 @@
     "license": "AGPL-3",
     "category": "Accounting & Finance",
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
         "data/ir_cron_data.xml",
         "views/report_withholding_certificate_templates.xml",
         "views/account_payment_view.xml",

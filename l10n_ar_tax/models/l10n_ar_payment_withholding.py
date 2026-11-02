@@ -11,7 +11,7 @@ class l10nArPaymentWithholding(models.Model):
     company_id = fields.Many2one(related="payment_id.company_id")
     partner_type = fields.Selection(related="payment_id.partner_type")
     currency_id = fields.Many2one(related="payment_id.company_currency_id")  # C (ARS) — para amount y base_amount
-    l10n_ar_tax_type = fields.Selection(related="tax_id.l10n_ar_tax_type")
+    l10n_ar_tax_type = fields.Selection(related="tax_id.l10n_ar_withholding_tax_type")
     name = fields.Char(string="Number")
     ref = fields.Text(compute="_compute_amount", store=True, readonly=False)
     tax_id = fields.Many2one(
@@ -20,7 +20,7 @@ class l10nArPaymentWithholding(models.Model):
         required=True,
         domain="[('l10n_ar_withholding_payment_type', '=', partner_type)]",
     )
-    withholding_sequence_id = fields.Many2one(related="tax_id.l10n_ar_withholding_sequence_id")
+    withholding_sequence_id = fields.Many2one(related="tax_id.withholding_sequence_id")
     base_amount = fields.Monetary(
         compute="_compute_base_amount",
         currency_field="currency_id",  # C (ARS)
@@ -90,10 +90,10 @@ class l10nArPaymentWithholding(models.Model):
                         )
                     )
                 advance_amount = pay.unreconciled_amount
-                if tax.l10n_ar_tax_type != "iibb_total":
+                if tax.l10n_ar_withholding_tax_type != "iibb_total":
                     advance_amount = advance_amount * (pay.selected_debt_untaxed / pay.selected_debt)
 
-            if tax.l10n_ar_tax_type == "iibb_total":
+            if tax.l10n_ar_withholding_tax_type == "iibb_total":
                 base_in_b = pay.selected_debt + advance_amount
             else:
                 base_in_b = pay.selected_debt_untaxed + advance_amount
@@ -126,7 +126,7 @@ class l10nArPaymentWithholding(models.Model):
 
         # base_amount ya está en C (ARS) — no se necesita conversión
         # Para ganancias: sumar acumulados del período (ya en C)
-        if tax.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
+        if tax.l10n_ar_withholding_tax_type in ["earnings", "earnings_scale"]:
             same_period_withholdings = self._get_same_period_withholdings_amount()
             same_period_base = self._get_same_period_base_amount()
             net_amount = self.base_amount + same_period_base  # C + C = C
@@ -152,12 +152,12 @@ class l10nArPaymentWithholding(models.Model):
 
         # Ref: usar company_currency para formatear (montos en ARS)
         ref = False
-        if tax.l10n_ar_tax_type in ["earnings", "earnings_scale"]:
+        if tax.l10n_ar_withholding_tax_type in ["earnings", "earnings_scale"]:
             f = company_currency.format
             if net_amount <= 0:
                 ref = f"{f(self.base_amount)} + {f(same_period_base)} - {f(tax.l10n_ar_non_taxable_amount)} = {f(self.base_amount + same_period_base - tax.l10n_ar_non_taxable_amount)} (no corresponde aplicar)"
             # if it is earnings scale we calculate according to the scale.
-            if tax.l10n_ar_tax_type == "earnings_scale":
+            if tax.l10n_ar_withholding_tax_type == "earnings_scale":
                 if not tax.l10n_ar_scale_id:
                     raise RedirectWarning(
                         _(
@@ -192,7 +192,7 @@ class l10nArPaymentWithholding(models.Model):
             tax_amount -= same_period_withholdings
 
         # Gates para no-ganancias (IIBB y otros reg.): orden normativo definido en spec.
-        if tax.l10n_ar_tax_type not in ["earnings", "earnings_scale"]:
+        if tax.l10n_ar_withholding_tax_type not in ["earnings", "earnings_scale"]:
             # 1) Gate por pago: si el total del pago no supera el mínimo, no se practica.
             if tax.l10n_ar_payment_minimum_threshold:
                 if self.payment_id.to_pay_amount <= tax.l10n_ar_payment_minimum_threshold:
@@ -244,7 +244,7 @@ class l10nArPaymentWithholding(models.Model):
             *self.env["account.move.line"]._check_company_domain(tax_id.company_id),
             ("parent_state", "=", "posted"),
             ("tax_line_id.l10n_ar_code", "=", tax_id.l10n_ar_code),
-            ("tax_line_id.l10n_ar_tax_type", "in", ["earnings", "earnings_scale"]),
+            ("tax_line_id.l10n_ar_withholding_tax_type", "in", ["earnings", "earnings_scale"]),
             ("partner_id", "=", self.payment_id.partner_id.commercial_partner_id.id),
             ("date", "<=", to_date),
             ("date", ">=", from_date),
@@ -273,7 +273,7 @@ class l10nArPaymentWithholding(models.Model):
             *self.env["account.move.line"]._check_company_domain(tax_id.company_id),
             ("parent_state", "=", "posted"),
             ("tax_ids.l10n_ar_code", "=", tax_id.l10n_ar_code),
-            ("tax_ids.l10n_ar_tax_type", "in", ["earnings", "earnings_scale"]),
+            ("tax_ids.l10n_ar_withholding_tax_type", "in", ["earnings", "earnings_scale"]),
             ("partner_id", "=", self.payment_id.partner_id.commercial_partner_id.id),
             ("date", "<=", to_date),
             ("date", ">=", from_date),

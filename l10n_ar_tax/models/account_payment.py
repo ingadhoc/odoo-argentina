@@ -196,7 +196,8 @@ class AccountPayment(models.Model):
         for rec in self:
             is_zero = rec.company_id.currency_id.is_zero
             zero_lines = rec.l10n_ar_withholding_line_ids.filtered(
-                lambda line: line.tax_id.l10n_ar_tax_type not in ["earnings", "earnings_scale"] and is_zero(line.amount)
+                lambda line: line.tax_id.l10n_ar_withholding_tax_type not in ["earnings", "earnings_scale"]
+                and is_zero(line.amount)
             )
             if zero_lines:
                 rec.l10n_ar_withholding_line_ids = [Command.unlink(line.id) for line in zero_lines]
@@ -221,7 +222,7 @@ class AccountPayment(models.Model):
         # Omitimos apuntes contables para líneas que no sean de ganancias y tengan importe cero;
         # el resto (ganancias, o no-ganancias con importe > 0) sí genera apunte.
         lines_with_accounting_entry = self.l10n_ar_withholding_line_ids.filtered(
-            lambda l: l.tax_id.l10n_ar_tax_type in ["earnings", "earnings_scale"] or l.amount
+            lambda l: l.tax_id.l10n_ar_withholding_tax_type in ["earnings", "earnings_scale"] or l.amount
         )
 
         # Caso A=C (ej: pago en ARS) pero B≠C (ej: deuda en USD).
@@ -262,7 +263,7 @@ class AccountPayment(models.Model):
         for base_amount in list(set(lines_with_accounting_entry.mapped("base_amount"))):
             withholding_lines = lines_with_accounting_entry.filtered(lambda x: x.base_amount == base_amount)
             nice_base_label = ",".join(withholding_lines.filtered("name").mapped("name"))
-            account_id = self.company_id.l10n_ar_tax_base_account_id.id
+            account_id = self.company_id.withholding_tax_base_account_id.id
             balance = self.company_id.currency_id.round(sign * base_amount)
             if use_company_currency:
                 amount_currency = balance
@@ -406,15 +407,11 @@ class AccountPayment(models.Model):
             commands = []
             for line in rec.l10n_ar_withholding_line_ids:
                 if not line.name or line.name == "/":
-                    if line.tax_id.l10n_ar_withholding_sequence_id:
+                    if line.tax_id.withholding_sequence_id:
                         commands.append(
                             Command.update(
                                 line.id,
-                                {
-                                    "name": line.tax_id.l10n_ar_withholding_sequence_id.next_by_id()
-                                    if line.amount
-                                    else "/"
-                                },
+                                {"name": line.tax_id.withholding_sequence_id.next_by_id() if line.amount else "/"},
                             )
                         )
                     else:

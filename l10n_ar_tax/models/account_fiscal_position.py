@@ -88,7 +88,7 @@ class AccountFiscalPosition(models.Model):
                     action=partner.get_record_default_action(),
                     button_text=_("Edit contact"),
                 )
-            if partner_tax and partner_tax.l10n_ar_tax_type != "earnings_scale" and partner_tax.amount == 0:
+            if partner_tax and partner_tax.l10n_ar_withholding_tax_type != "earnings_scale" and partner_tax.amount == 0:
                 # se eliminan todos los impuestos cuyo monto sea 0, excepto los de tipo "earnings_scale"
                 continue
             taxes |= partner_tax
@@ -100,9 +100,9 @@ class AccountFiscalPosition(models.Model):
         entonces deberán tener tipo 'retención' y si son de percepción entonces deberán tener tipo 'percepcion'."""
         if wrong_tax_type_records := self.l10n_ar_tax_ids.filtered(
             lambda x: x.tax_type == "withholding"
-            and x.default_tax_id.type_tax_use != "none"
+            and not x.default_tax_id.is_withholding_tax
             or x.tax_type == "perception"
-            and x.default_tax_id.type_tax_use == "none"
+            and x.default_tax_id.is_withholding_tax
         ):
             raise ValidationError(
                 self.env._(

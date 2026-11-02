@@ -55,13 +55,13 @@ class TestPadronSantaFeContributorType(TestArCommon):
         cls.wth_tax_untaxed = cls.env["account.tax"].create(
             {
                 "name": "Ret. IIBB Santa Fe Aplicada 0.6%",
-                "amount": 0.6,
+                "amount": -0.6,
                 "amount_type": "percent",
-                "type_tax_use": "none",
+                "type_tax_use": "purchase",
+                "is_withholding_tax": True,
                 "country_id": cls.env.ref("base.ar").id,
                 "company_id": cls.company_ri.id,
-                "l10n_ar_withholding_payment_type": "supplier",
-                "l10n_ar_tax_type": "iibb_untaxed",
+                "l10n_ar_withholding_tax_type": "iibb_untaxed",
                 "l10n_ar_state_id": cls.santa_fe.id,
                 "tax_group_id": tax_group.id,
             }
@@ -152,7 +152,7 @@ class TestPadronSantaFeContributorType(TestArCommon):
         tax = self.wth_line._ensure_tax(0.6, l10n_ar_tax_type="iibb_total")
 
         self.assertNotEqual(tax, self.wth_tax_untaxed)
-        self.assertEqual((tax.amount, tax.l10n_ar_tax_type), (0.6, "iibb_total"))
+        self.assertEqual((tax.amount, tax.l10n_ar_withholding_tax_type), (-0.6, "iibb_total"))
         self.assertIn("CM", tax.name, "el nombre debe distinguirlo del de base neta")
         self.assertEqual(self.wth_line._ensure_tax(0.6, l10n_ar_tax_type="iibb_total"), tax, "no debe duplicarla")
 
@@ -162,20 +162,20 @@ class TestPadronSantaFeContributorType(TestArCommon):
         que es el estado normal (l10n_ar_tax_type no es required ni tiene default)."""
         cm_tax = self.wth_line._ensure_tax(0.6, l10n_ar_tax_type="iibb_total")
         cm_tax.sequence = self.wth_tax_untaxed.sequence - 1  # primera en el orden de búsqueda
-        self.wth_tax_untaxed.l10n_ar_tax_type = False
+        self.wth_tax_untaxed.l10n_ar_withholding_tax_type = False
         local_base = self.wth_line._get_parp_tax_type("D")
 
         self.assertEqual(self.wth_line._ensure_tax(0.6, l10n_ar_tax_type=local_base), self.wth_tax_untaxed)
 
         # a otra alícuota tampoco puede copiar la variante CM
         new_tax = self.wth_line._ensure_tax(0.9, l10n_ar_tax_type=local_base)
-        self.assertNotEqual(new_tax.l10n_ar_tax_type, "iibb_total")
+        self.assertNotEqual(new_tax.l10n_ar_withholding_tax_type, "iibb_total")
         self.assertNotIn("CM", new_tax.name)
 
     def test_ensure_tax_keeps_a_configured_total_base_for_a_local(self):
         """Una base total configurada a propósito (proveedor que no discrimina IVA) no la
         pisa el padrón: el local no pide base y se resuelve la de la línea."""
-        self.wth_tax_untaxed.l10n_ar_tax_type = "iibb_total"
+        self.wth_tax_untaxed.l10n_ar_withholding_tax_type = "iibb_total"
 
         tax = self.wth_line._ensure_tax(0.6, l10n_ar_tax_type=self.wth_line._get_parp_tax_type("D"))
 
@@ -203,5 +203,5 @@ class TestPadronSantaFeContributorType(TestArCommon):
         self.assertEqual((missing_aliquot, missing_base), (None, False))
 
         cm_tax = self.wth_line._ensure_tax(cm_aliquot, l10n_ar_tax_type=cm_base)
-        self.assertEqual(cm_tax.l10n_ar_tax_type, "iibb_total")
+        self.assertEqual(cm_tax.l10n_ar_withholding_tax_type, "iibb_total")
         self.assertEqual(self.wth_line._ensure_tax(0.6, l10n_ar_tax_type=local_base), self.wth_tax_untaxed)

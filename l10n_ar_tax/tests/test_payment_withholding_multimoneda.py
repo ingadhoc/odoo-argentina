@@ -102,7 +102,7 @@ class TestPaymentWithholdingMultimoneda(TestArCommon):
                 "company_ids": [Command.set([cls.company.id])],
             }
         )
-        cls.company.l10n_ar_tax_base_account_id = cls.account_tax_base
+        cls.company.withholding_tax_base_account_id = cls.account_tax_base
 
         # --- Impuestos de retención ---
 
@@ -115,11 +115,12 @@ class TestPaymentWithholdingMultimoneda(TestArCommon):
         cls.tax_ret_iibb = cls.env["account.tax"].create(
             {
                 "name": "Ret IIBB 3%",
-                "amount": 3.0,
+                "amount": -3.0,
                 "amount_type": "percent",
-                "type_tax_use": "none",
+                "type_tax_use": "purchase",
+                "is_withholding_tax": True,
                 "company_id": cls.company.id,
-                "l10n_ar_tax_type": "iibb_untaxed",
+                "l10n_ar_withholding_tax_type": "iibb_untaxed",
                 "l10n_ar_code": "RET_IIBB_TEST",
                 "invoice_repartition_line_ids": wth_repartition,
                 "refund_repartition_line_ids": wth_repartition,
@@ -130,11 +131,12 @@ class TestPaymentWithholdingMultimoneda(TestArCommon):
         cls.tax_ret_ganancias = cls.env["account.tax"].create(
             {
                 "name": "Ret Ganancias 7%",
-                "amount": 7.0,
+                "amount": -7.0,
                 "amount_type": "percent",
-                "type_tax_use": "none",
+                "type_tax_use": "purchase",
+                "is_withholding_tax": True,
                 "company_id": cls.company.id,
-                "l10n_ar_tax_type": "earnings",
+                "l10n_ar_withholding_tax_type": "earnings",
                 "l10n_ar_code": "RET_GAN_TEST",
                 "l10n_ar_non_taxable_amount": 100_000,
                 "invoice_repartition_line_ids": wth_repartition,
@@ -144,7 +146,7 @@ class TestPaymentWithholdingMultimoneda(TestArCommon):
 
         # Secuencias
         for tax, prefix in [(cls.tax_ret_iibb, "RET-IIBB-"), (cls.tax_ret_ganancias, "RET-GAN-")]:
-            tax.l10n_ar_withholding_sequence_id = cls.env["ir.sequence"].create(
+            tax.withholding_sequence_id = cls.env["ir.sequence"].create(
                 {
                     "name": f"Seq {tax.name}",
                     "prefix": prefix,

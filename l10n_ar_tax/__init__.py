@@ -5,21 +5,9 @@
 from . import models
 from . import wizard
 from . import demo
-from odoo.addons.l10n_ar_withholding.models.account_payment import AccountPayment
 import logging
 
 _logger = logging.getLogger(__name__)
-
-
-def monkey_patch_synchronize_to_moves():
-    def _synchronize_to_moves(self, changed_fields):
-        # Neutralize l10n_ar_withholding's _synchronize_to_moves override, which manually unlinks
-        # the withholding lines on every sync ("synchronization mechanism is not implemented yet").
-        # Since l10n_ar_tax now keeps withholding lines as display_type='product', the standard
-        # sync handles them correctly, so we skip that manual-unlink override and call super directly.
-        return super(AccountPayment, self)._synchronize_to_moves(changed_fields)
-
-    AccountPayment._synchronize_to_moves = _synchronize_to_moves
 
 
 def _l10n_ar_update_taxes(env):

@@ -58,6 +58,5 @@
     ],
     "installable": True,
     "auto_install": ["l10n_ar"],
-    "post_load": "monkey_patch_synchronize_to_moves",
     "post_init_hook": "_l10n_ar_update_taxes",
 }

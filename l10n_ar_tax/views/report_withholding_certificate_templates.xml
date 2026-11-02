@@ -63,7 +63,7 @@
                                     Si es ganancias, como los stax names son "feos" e invoice_label por ahora no lo populamos, mostramos campo invoice_label si está definido y si no sacamos un label por defecto 'Retención Ganancias'
                                     Tal vez para IIBB y otros podamos hacer similar. En realidad lo ideal es modificar chart para que tenga invoice_label en todos los casos.
                                 -->
-                                <span t-if="tax.l10n_ar_tax_type in ['earnings', 'earnings_scale']" t-out="tax.invoice_label or 'Retención Ganancias'"/>
+                                <span t-if="tax.l10n_ar_withholding_tax_type in ['earnings', 'earnings_scale']" t-out="tax.invoice_label or 'Retención Ganancias'"/>
                                 <span t-else="" t-out="tax.invoice_label or tax.name"/>
                             </td>
                         </tr>

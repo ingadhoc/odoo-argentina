@@ -7,45 +7,34 @@
         <field name="priority" eval="30"/>
         <field name="inherit_id" ref="account.view_account_payment_form" />
         <field name="arch" type="xml">
-            <label for="payment_total" position="before">
-                <field name="withholdings_amount" string="Withholdings" invisible="is_internal_transfer or not use_payment_pro or country_code != 'AR'"/>
-            </label>
             <div name="to_pay_amount">
                 <button name="compute_to_pay_amount_for_check" icon="refresh" title="A partir del importe del pago (campo Importe) + ajuste, se calculan las retenciones y el importe a pagar. Útil por ejemplo para pagos con cheques donde el importe Importe no lo podemos cambiar" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft'] or payment_method_code not in ['in_third_party_checks', 'out_third_party_checks']" class="oe_inline oe_link"/>
             </div>
 
-            <page name="withholdings_page" position="attributes">
-                <attribute name="invisible">is_internal_transfer or country_code != 'AR' or use_payment_pro</attribute>
-            </page>
-            <page name="withholdings_page" position="after">
-                <page name="withholdings_page_editable" string="Withholdings" invisible="is_internal_transfer or not use_payment_pro or country_code != 'AR'">
+            <!-- with payment pro the page stays visible on AR supplier payments, as in 19, so that the fiscal position can be chosen before there are lines -->
+            <xpath expr="//notebook[@name='payment_notebook']/page[.//field[@name='withholding_line_ids']]" position="attributes">
+                <attribute name="invisible">is_internal_transfer or (withhold == 'payment' and not (use_payment_pro and country_code == 'AR' and partner_type == 'supplier'))</attribute>
+            </xpath>
+            <xpath expr="//notebook[@name='payment_notebook']/page/group[field[@name='withholding_line_ids']]" position="before">
+                <group invisible="not use_payment_pro or country_code != 'AR' or partner_type != 'supplier'">
                     <group>
-                        <group>
-                            <field name="l10n_ar_fiscal_position_id" options="{'no_create': True}" readonly="state not in ['draft']" invisible="partner_type != 'supplier'"/>
-                        </group>
-                        <group>
-                            <label for="withholdable_advanced_amount" invisible="state not in ['draft'] or partner_type != 'supplier' or unreconciled_amount &lt;= 0.0"/>
-                            <div name="withholdable_advanced_amount" invisible="state not in ['draft'] or partner_type != 'supplier' or unreconciled_amount &lt;= 0.0">
-                                <field name="withholdable_advanced_amount" readonly="state not in ['draft']" string="Taxable base for excess payment" class="oe_inline"/>
-                                <span invisible="state != 'draft'" class="text-muted"> (del excedente <field name="unreconciled_amount" force_save="True" readonly="True" class="oe_inline"/>)</span>
-                            </div>
-                        </group>
+                        <field name="l10n_ar_fiscal_position_id" options="{'no_create': True}" readonly="state not in ['draft']"/>
                     </group>
-                    <field name="l10n_ar_withholding_line_ids" nolabel="1" colspan="2" invisible="is_internal_transfer" readonly="state != 'draft'">
-                        <list editable="bottom">
-                            <field name="currency_id" column_invisible="True"/>
-                            <field name="tax_id" options="{'no_create': True}"/>
-                            <field name="name" readonly="withholding_sequence_id"/>
-                            <field name="base_amount" column_invisible="parent.partner_type == 'supplier'" optional="hide"/>
-                            <field name="base_amount" column_invisible="parent.partner_type != 'supplier'"/>
-                            <field name="amount" sum="Total"/>
-                            <field name="ref" optional="hide" readonly="l10n_ar_tax_type in ['earnings', 'earnings_scale']" force_save="1"/>
-                            <button name="%(action_report_withholding_certificate)d" icon="print" title="Print withholding voucher" type="action" invisible="parent.partner_type != 'supplier' or parent.state == 'draft' or amount == 0"/>
-                            <button name="action_l10n_ar_payment_withholding_tree" icon="menu" title="Watch previous withholdings" type="object" invisible="parent.partner_type != 'supplier' or l10n_ar_tax_type not in ['earnings', 'earnings_scale']"/>
-                        </list>
-                    </field>
-                </page>
-            </page>
+                    <group>
+                        <label for="withholdable_advanced_amount" invisible="state not in ['draft'] or unreconciled_amount &lt;= 0.0"/>
+                        <div name="withholdable_advanced_amount" invisible="state not in ['draft'] or unreconciled_amount &lt;= 0.0">
+                            <field name="withholdable_advanced_amount" readonly="state not in ['draft']" string="Taxable base for excess payment" class="oe_inline"/>
+                            <span invisible="state != 'draft'" class="text-muted"> (del excedente <field name="unreconciled_amount" force_save="True" readonly="True" class="oe_inline"/>)</span>
+                        </div>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='withholding_line_ids']/list/field[@name='amount']" position="after">
+                <field name="l10n_ar_withholding_tax_type" column_invisible="True"/>
+                <field name="ref" optional="hide" readonly="l10n_ar_withholding_tax_type in ['earnings', 'earnings_scale']" force_save="1" column_invisible="parent.country_code != 'AR'"/>
+                <button name="%(action_report_withholding_certificate)d" icon="print" title="Print withholding voucher" type="action" invisible="parent.country_code != 'AR' or parent.partner_type != 'supplier' or parent.state == 'draft' or amount == 0"/>
+                <button name="action_l10n_ar_payment_withholding_tree" icon="menu" title="Watch previous withholdings" type="object" invisible="parent.country_code != 'AR' or parent.partner_type != 'supplier' or l10n_ar_withholding_tax_type not in ['earnings', 'earnings_scale']"/>
+            </xpath>
 
         </field>
     </record>

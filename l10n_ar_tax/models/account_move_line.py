@@ -1,6 +1,4 @@
-from collections import defaultdict
-
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 from odoo.exceptions import UserError
 
 
@@ -57,19 +55,3 @@ class AccountMoveLine(models.Model):
                 },
             }
         return super().action_register_payment(ctx=ctx)
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        # Force display_type='product' for Argentine withholdings to keep them editable
-        rep_id_to_vals = defaultdict(list)
-        for vals in vals_list:
-            if vals.get("display_type") == "tax" and (rep_id := vals.get("tax_repartition_line_id")):
-                rep_id_to_vals[rep_id].append(vals)
-
-        if rep_id_to_vals:
-            rep_lines = self.env["account.tax.repartition.line"].browse(rep_id_to_vals.keys())
-            for rep_line in rep_lines.filtered(lambda r: r.tax_id.is_withholding_tax):
-                for vals in rep_id_to_vals[rep_line.id]:
-                    vals["display_type"] = "product"
-
-        return super().create(vals_list)

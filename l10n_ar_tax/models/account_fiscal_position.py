@@ -161,6 +161,13 @@ class AccountFiscalPosition(models.Model):
         FPs that do have explicit tax_ids (e.g. foreign or exempt positions with VAT mapping) are
         not affected and always fall through to super().
         """
-        if not self.tax_ids and self.l10n_ar_tax_ids and self != self.company_id.domestic_fiscal_position_id:
+        # not domestic_fiscal_position_id: since 20.0 AR Domestic has sequence 40, so that field picks any AR position
+        # with a lower one, like the perception ones
+        domestic = (
+            self.env["account.chart.template"]
+            .with_company(self.company_id)
+            .ref("l10n_ar_domestic_fiscal_position", raise_if_not_found=False)
+        )
+        if not self.tax_ids and self.l10n_ar_tax_ids and self != domestic:
             return taxes
         return super().map_tax(taxes)

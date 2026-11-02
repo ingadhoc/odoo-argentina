@@ -323,7 +323,7 @@ class AccountTax(models.Model):
             isinstance(record, models.BaseModel) and record._name == "account.move.line" for record in records
         ):
             return None
-        move = self.env["account.move.line"].union(*records).move_id
+        move = self.env["account.move.line"].union(records).move_id
         if len(move) != 1 or move.state not in ("posted", "cancel"):
             return None
         return move

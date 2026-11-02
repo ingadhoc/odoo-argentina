@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_withholding_certificate_document">
-        <t t-call="web.external_layout">
-            <t t-set="o" t-value="o.with_context(lang=lang)" />
-                <t t-set="custom_header" t-value="'l10n_ar.custom_header'"/>
-                <t t-set="report_date" t-value="o.payment_id.date"/>
-                <t t-set="report_number" t-value="o.name"/>
-                <t t-set="report_name" t-value="'CERTIFICADO DE RETENCIÓN'"/>
-                <t t-set="header_address" t-value="o.company_id.partner_id"/>
-
-                <t t-set="custom_footer">
-                    <div class="row">
-                        <t t-if="not o.company_id.l10n_ar_report_signature">
-                            <div name="footer_left_column" class="col-8">
-                                Nombre y Apellido Firmante:
-                                <br/>Cargo:
-                            </div>
-                            <div name="footer_right_column" class="col-4">
-                                Firma Responsable
-                            </div>
-                        </t>
+        <t t-set="custom_footer">
+            <div class="row">
+                <t t-if="not o.company_id.l10n_ar_report_signature">
+                    <div name="footer_left_column" class="col-8">
+                        Nombre y Apellido Firmante:
+                <br/>Cargo:
+                    </div>
+                    <div name="footer_right_column" class="col-4">
+                        Firma Responsable
                     </div>
                 </t>
+            </div>
+        </t>
+        <t t-call="web.external_layout"
+            custom_header.f="l10n_ar.custom_header"
+            report_date="o.payment_id.date"
+            report_number="o.name"
+            report_name.f="CERTIFICADO DE RETENCIÓN"
+            header_address="o.company_id.partner_id"
+            custom_footer="custom_footer">
+            <t t-set="o" t-value="o.with_context(lang=lang)" />
             <div class="page">
                 <div id="informations" class="row mt8 mb8">
                     <div class="col-6">

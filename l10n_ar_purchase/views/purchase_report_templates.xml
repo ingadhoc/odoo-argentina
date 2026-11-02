@@ -172,9 +172,25 @@
             <span t-out="', '.join([tax.tax_label for tax in line.tax_ids.filtered(lambda x: x.tax_group_id.l10n_ar_vat_afip_code) if tax.tax_label])"/>
         </xpath>
 
+<<<<<<< 9edd3df700d4eb53d659e2480d04e46f944aa83b
         <!-- Same as the quotation: only the content of the native informations row
              is replaced, so it keeps its id. -->
         <xpath expr="//div[@id='informations']" position="replace" mode="inner">
+||||||| b245be45d81de4e366c7118a6c84d0162800c5ad
+        <div id="informations" position="replace">
+            <div id="l10n_ar_informations" class="row mt8 mb8">
+=======
+        <!-- core prints the payment terms label even when the order has none -->
+        <xpath expr="//span[@t-field='o.payment_term_id']" position="attributes">
+            <attribute name="t-if">o.payment_term_id</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='o.payment_term_id']/preceding-sibling::strong[1]" position="attributes">
+            <attribute name="t-if">o.payment_term_id</attribute>
+        </xpath>
+
+        <div id="informations" position="replace">
+            <div id="l10n_ar_informations" class="row mt8 mb8">
+>>>>>>> cd86295f3f0358f6281a1b154d3aab5a735586e8
                 <div class="col-6">
 
                     <!-- IDENTIFICACION (ADQUIRIENTE-LOCATARIO-PRESTARIO) -->

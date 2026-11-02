@@ -89,7 +89,7 @@
                                 Importe del comprobante que origina la retención:
                             </td>
                             <td class="text-left">
-                                <span t-field="o.base_amount"/>
+                                <span t-out="o._l10n_ar_to_company_currency(o.base_amount)" t-options='{"widget": "monetary", "display_currency": o.comodel_company_currency_id}'/>
                             </td>
                         </tr>
                         <tr>
@@ -97,7 +97,7 @@
                                 Importe de la retención:
                             </td>
                             <td class="text-left">
-                                <span t-field="o.amount"/>
+                                <span t-out="o._l10n_ar_to_company_currency(o.amount)" t-options='{"widget": "monetary", "display_currency": o.comodel_company_currency_id}'/>
                             </td>
                         </tr>
                     </tbody>
@@ -126,8 +126,8 @@
 
     <record id="action_report_withholding_certificate" model="ir.actions.report">
         <field name="name">Certificado de Retención</field>
-        <field name="model">l10n_ar.payment.withholding</field>
-        <field name="binding_model_id" ref="model_l10n_ar_payment_withholding"/>
+        <field name="model">account.payment.withholding.line</field>
+        <field name="binding_model_id" ref="l10n_account_withholding_tax.model_account_payment_withholding_line"/>
         <field name="report_type">qweb-pdf</field>
         <field name="print_report_name">'Certificado de Retención Slip - %s' % (object.name or '')</field>
         <field name="report_name">l10n_ar_tax.report_withholding_certificate</field>

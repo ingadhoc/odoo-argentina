@@ -41,7 +41,7 @@
 
         <!-- ── show_amount_col: also show extra column when withholdings exist in a foreign-currency bundle ── -->
         <xpath expr="//t[@name='show_amount_col_def']" position="replace">
-            <t name="show_amount_col_def" t-set="show_amount_col" t-value="any(doc.currency_id != o.destination_currency_id for doc in payment_bundle) or bool(payment_bundle.l10n_ar_withholding_line_ids.filtered('amount') and o.destination_currency_id != o.company_currency_id)"/>
+            <t name="show_amount_col_def" t-set="show_amount_col" t-value="any(doc.currency_id != o.destination_currency_id for doc in payment_bundle) or bool(payment_bundle.withholding_line_ids.filtered('amount') and o.destination_currency_id != o.company_currency_id)"/>
         </xpath>
 
         <!-- ── Partner info: add VAT Cond (AFIP responsibility) and CUIT ──────── -->
@@ -57,7 +57,7 @@
 
         <!-- ── Withholding rows inside the payments table ───────────────────────── -->
         <xpath expr="//t[@name='withholding_rows']" position="replace">
-            <t t-foreach="payment_bundle.l10n_ar_withholding_line_ids.filtered('amount')" t-as="line">
+            <t t-foreach="payment_bundle.withholding_line_ids.filtered('amount')" t-as="line">
                 <tr style="page-break-inside: avoid">
                     <td>
                         <span t-if="line.tax_id.l10n_ar_withholding_tax_type in ['earnings', 'earnings_scale']" t-out="line.tax_id.invoice_label or 'Retención Ganancias'"/>
@@ -65,11 +65,11 @@
                     </td>
                     <td class="text-end" t-if="show_amount_col">
                         <!-- Withholding in ARS (company_currency) -->
-                        <span class="text-nowrap" t-out="line.amount" t-options='{"widget": "monetary", "display_currency": line.currency_id}'/>
+                        <span class="text-nowrap" t-out="line._l10n_ar_to_company_currency(line.amount)" t-options='{"widget": "monetary", "display_currency": line.comodel_company_currency_id}'/>
                     </td>
                     <td class="text-end pe-2 o_price_total">
                         <!-- Withholding converted to destination currency (B2) -->
-                        <span class="text-nowrap" t-out="line.payment_id.destination_currency_id.round(line.amount / line.payment_id._get_withholding_rate())" t-options='{"widget": "monetary", "display_currency": line.payment_id.destination_currency_id}'/>
+                        <span class="text-nowrap" t-out="line.payment_id.destination_currency_id.round(line._l10n_ar_to_company_currency(line.amount) / line.payment_id._get_withholding_rate())" t-options='{"widget": "monetary", "display_currency": line.payment_id.destination_currency_id}'/>
                     </td>
                 </tr>
             </t>

@@ -34,6 +34,12 @@ class AccountPaymentWithholdingLine(models.Model):
             return 1.0
         return pay.accounting_rate or 1.0
 
+    def _l10n_ar_to_company_currency(self, amount):
+        """An amount of the line (payment currency) in company currency, at the rate it was valued with: the
+        certificate and the receipt show the withholding in ARS."""
+        self.ensure_one()
+        return self.comodel_company_currency_id.round(amount / self._l10n_ar_get_company_to_line_rate())
+
     @api.depends(
         "tax_id",
         "payment_id.selected_debt",

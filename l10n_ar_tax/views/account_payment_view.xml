@@ -11,7 +11,7 @@
                 <field name="withholdings_amount" string="Withholdings" invisible="is_internal_transfer or not use_payment_pro or country_code != 'AR'"/>
             </label>
             <div name="to_pay_amount">
-                <button name="compute_to_pay_amount_for_check" icon="fa-refresh" title="A partir del importe del pago (campo Importe) + ajuste, se calculan las retenciones y el importe a pagar. Útil por ejemplo para pagos con cheques donde el importe Importe no lo podemos cambiar" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft'] or payment_method_code not in ['in_third_party_checks', 'out_third_party_checks']" class="oe_inline oe_link"/>
+                <button name="compute_to_pay_amount_for_check" icon="refresh" title="A partir del importe del pago (campo Importe) + ajuste, se calculan las retenciones y el importe a pagar. Útil por ejemplo para pagos con cheques donde el importe Importe no lo podemos cambiar" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft'] or payment_method_code not in ['in_third_party_checks', 'out_third_party_checks']" class="oe_inline oe_link"/>
             </div>
 
             <page name="withholdings_page" position="attributes">
@@ -40,8 +40,8 @@
                             <field name="base_amount" column_invisible="parent.partner_type != 'supplier'"/>
                             <field name="amount" sum="Total"/>
                             <field name="ref" optional="hide" readonly="l10n_ar_tax_type in ['earnings', 'earnings_scale']" force_save="1"/>
-                            <button name="%(action_report_withholding_certificate)d" icon="fa-print " title="Print withholding voucher" type="action" invisible="parent.partner_type != 'supplier' or parent.state == 'draft' or amount == 0"/>
-                            <button name="action_l10n_ar_payment_withholding_tree" icon="fa-bars" title="Watch previous withholdings" type="object" invisible="parent.partner_type != 'supplier' or l10n_ar_tax_type not in ['earnings', 'earnings_scale']"/>
+                            <button name="%(action_report_withholding_certificate)d" icon="print" title="Print withholding voucher" type="action" invisible="parent.partner_type != 'supplier' or parent.state == 'draft' or amount == 0"/>
+                            <button name="action_l10n_ar_payment_withholding_tree" icon="menu" title="Watch previous withholdings" type="object" invisible="parent.partner_type != 'supplier' or l10n_ar_tax_type not in ['earnings', 'earnings_scale']"/>
                         </list>
                     </field>
                 </page>

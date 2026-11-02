@@ -157,6 +157,14 @@
             <span t-out="', '.join([(tax.invoice_label or tax.name) for tax in line.taxes_id.filtered(lambda x: x.tax_group_id.l10n_ar_vat_afip_code)])"/>
         </xpath>
 
+        <!-- core prints the payment terms label even when the order has none -->
+        <xpath expr="//span[@t-field='o.payment_term_id']" position="attributes">
+            <attribute name="t-if">o.payment_term_id</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='o.payment_term_id']/preceding-sibling::strong[1]" position="attributes">
+            <attribute name="t-if">o.payment_term_id</attribute>
+        </xpath>
+
         <div id="informations" position="replace">
             <div id="l10n_ar_informations" class="row mt8 mb8">
                 <div class="col-6">

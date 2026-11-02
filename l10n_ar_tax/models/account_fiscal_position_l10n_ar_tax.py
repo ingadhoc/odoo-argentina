@@ -281,7 +281,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
 
         La base vacía cuenta como base neta: el campo no es required ni tiene default, en
         las bases instaladas suele estar vacío, y así lo resuelve el cálculo de la retención
-        (sólo 'iibb_total' retiene sobre el total, ver l10n_ar.payment.withholding).
+        (sólo 'iibb_total' retiene sobre el total, ver account.payment.withholding.line).
 
         :param l10n_ar_tax_type: base pedida por el padrón ('iibb_total' es la única que
             hoy se pide, ver _get_parp_tax_type). Sin pedido vale la del impuesto

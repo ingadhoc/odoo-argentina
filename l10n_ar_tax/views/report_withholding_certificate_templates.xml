@@ -131,7 +131,6 @@
         <field name="report_type">qweb-pdf</field>
         <field name="print_report_name">'Certificado de Retención Slip - %s' % (object.name or '')</field>
         <field name="report_name">l10n_ar_tax.report_withholding_certificate</field>
-        <field name="report_file">l10n_ar_tax.report_withholding_certificate</field>
         <!-- Cache the rendered certificate PDF per withholding (attachment_use),
              same pattern as the supplier payment receipt: the certificate is
              immutable once the payment is processed. On multi-record renders the

@@ -118,7 +118,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
                 "company_id": False,
                 "country_id": cls.env.ref("base.ar").id,
                 "l10n_ar_afip_responsibility_type_id": cls.env.ref("l10n_ar.res_IVARI").id,
-                "vat": "30710158261",
+                "vat": "30710158262",
             }
         )
         cls.invoice_a = cls.env.ref("l10n_ar.dc_a_f")

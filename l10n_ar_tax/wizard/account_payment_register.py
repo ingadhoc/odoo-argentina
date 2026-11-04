@@ -59,13 +59,12 @@ class AccountPaymentRegister(models.TransientModel):
                 continue
             # si estamos pagando todas las facturas de misma delivery address usamos este dato para computar la
             # fiscal position
-            if len(rec.batches) == 1:
-                batch_result = rec.batches[0]
-                addresses = batch_result["lines"].mapped("move_id.partner_shipping_id")
+            address = rec.partner_id
+            batches = rec._get_batches()
+            if len(batches) == 1:
+                addresses = batches[0]["lines"].mapped("move_id.partner_shipping_id")
                 if len(addresses) == 1:
                     address = addresses
-                else:
-                    address = rec.partner_id
             rec.l10n_ar_fiscal_position_id = (
                 self.env["account.fiscal.position"].with_company(rec.company_id)._get_fiscal_position(address)
             )

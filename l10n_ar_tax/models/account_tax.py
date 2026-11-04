@@ -54,13 +54,13 @@ class AccountTax(models.Model):
                 # por otro (`replacing_tax_ids`) aparecerían en el dropdown.
                 if self.env.context.get("hide_original_tax_ids"):
                     domain &= Domain("replacing_tax_ids", "not any", domain) | Domain.custom(
-                        to_sql=lambda model, alias, query: SQL(
+                        to_sql=lambda table: SQL(
                             "EXISTS (SELECT 1 FROM %s WHERE %s = %s AND %s = %s)",
                             SQL.identifier("account_tax_alternatives"),
                             SQL.identifier("src_tax_id"),
-                            SQL.identifier(alias, "id"),
+                            table.id,
                             SQL.identifier("dest_tax_id"),
-                            SQL.identifier(alias, "id"),
+                            table.id,
                         ),
                     )
                 # Saltear ambas keys en super para no re-aplicar el filtro

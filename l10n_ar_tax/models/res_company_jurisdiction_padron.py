@@ -9,6 +9,7 @@ import zipfile
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools import format_date
 
 _logger = logging.getLogger(__name__)
 
@@ -110,11 +111,11 @@ class ResCompanyJurisdictionPadron(models.Model):
     @api.depends("state_id", "l10n_ar_padron_from_date", "l10n_ar_padron_to_date")
     def _compute_display_name(self):
         for padron in self:
-            padron.display_name = "%s: %s - %s" % (
-                padron.state_id.name,
-                padron.l10n_ar_padron_from_date,
-                padron.l10n_ar_padron_to_date,
+            period = "%s - %s" % (
+                format_date(self.env, padron.l10n_ar_padron_from_date),
+                format_date(self.env, padron.l10n_ar_padron_to_date),
             )
+            padron.display_name = "%s: %s" % (padron.state_id.name, period) if padron.state_id else period
 
     def descompress_file(self, file_padron, dest_dir="/tmp"):
         """Extrae el padrón comprimido en dest_dir. Soporta ZIP (ARBA, Santa Fe) y

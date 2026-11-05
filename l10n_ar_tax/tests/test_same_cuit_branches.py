@@ -3,7 +3,7 @@ from unittest import mock
 
 import requests
 from odoo import fields
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests import common, new_test_user, tagged
 from odoo.tools import mute_logger
 
@@ -38,8 +38,11 @@ class TestSameCuitBranches(common.TransactionCase):
         company.partner_id.write({"l10n_latam_identification_type_id": cls.cuit_type.id, "vat": cuit})
         return company
 
-    def _create_padron(self):
-        return self.env["res.company.jurisdiction.padron"].create(
+    def _create_padron(self, user=None):
+        padron_model = self.env["res.company.jurisdiction.padron"]
+        if user:
+            padron_model = padron_model.with_user(user)
+        return padron_model.create(
             {
                 "state_id": self.state_arba.id,
                 "file_padron": base64.b64encode(b"padron"),
@@ -86,6 +89,18 @@ class TestSameCuitBranches(common.TransactionCase):
         padron = self._create_padron()
         self.assertEqual(self._search_padron(self.sub_branch), padron)
         self.assertEqual(self._search_padron(self.other_cuit), padron, "The padron does not depend on the CUIT")
+
+    def test_only_admin_changes_the_shared_padron(self):
+        """An accounting manager uploads padrones but cannot change or delete one: every company uses it."""
+        manager = new_test_user(self.env, "padron_manager", groups="account.group_account_manager")
+        padron = self._create_padron().with_user(manager)
+        self.assertEqual(padron.read(["filename"])[0]["filename"], "padron.zip")
+        with self.assertRaises(AccessError):
+            padron.write({"filename": "other.zip"})
+        with self.assertRaises(AccessError):
+            padron.unlink()
+        padron.sudo().unlink()
+        self.assertEqual(self._create_padron(user=manager).create_uid, manager)
 
     def test_one_padron_per_jurisdiction_and_period(self):
         self._create_padron()

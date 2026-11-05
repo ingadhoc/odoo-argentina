@@ -177,7 +177,7 @@ class TestOwnCheckNetAmount(AccountInvariantsMixin, TransactionCase):
                 ],
             }
         )
-        payment._onchange_withholdings()
+        # since 20.0 the check is the net amount: payment pro makes the payment amount the gross one
         return payment
 
     def test_editing_the_check_after_the_withholding_was_computed_keeps_totals_consistent(self):
@@ -192,14 +192,15 @@ class TestOwnCheckNetAmount(AccountInvariantsMixin, TransactionCase):
         bill = self._make_bill(1000.0, "1-2401")
         debt = bill.line_ids.filtered(lambda line: line.account_id.account_type == "liability_payable")
         payment = self._make_check_payment(debt, 940.0, "00000310")
-        wth_before = payment.l10n_ar_withholding_line_ids[0].amount
+        wth_before = payment.withholding_line_ids[0].amount
 
         payment.l10n_latam_new_check_ids.amount = 900.0
 
         with self.subTest("la retención no se recalcula por editar el cheque"):
-            self.assertAlmostEqual(payment.l10n_ar_withholding_line_ids[0].amount, wth_before, places=2)
-        with self.subTest("el importe del pago sigue el del cheque editado"):
-            self.assertAlmostEqual(payment.amount, 900.0, places=2)
+            self.assertAlmostEqual(payment.withholding_line_ids[0].amount, wth_before, places=2)
+        with self.subTest("el neto del pago sigue el del cheque editado, y el bruto suma la retención"):
+            self.assertAlmostEqual(payment.withholding_net_amount, 900.0, places=2)
+            self.assertAlmostEqual(payment.amount, 900.0 + wth_before, places=2)
 
         payment.action_post()
 
@@ -229,7 +230,7 @@ class TestOwnCheckNetAmount(AccountInvariantsMixin, TransactionCase):
         bill = self._make_bill(1000.0, "1-2403")
         debt = bill.line_ids.filtered(lambda line: line.account_id.account_type == "liability_payable")
         payment = self._make_check_payment(debt, 940.0, "00000312")
-        wth_amount = payment.l10n_ar_withholding_line_ids[0].amount
+        wth_amount = payment.withholding_line_ids[0].amount
 
         payment.l10n_latam_new_check_ids.amount = 40.0
         payment.action_post()
@@ -276,7 +277,8 @@ class TestOwnCheckNetAmount(AccountInvariantsMixin, TransactionCase):
         payment.action_post()
 
         with self.subTest("la factura queda en un único estado declarado: in_payment"):
-            self.assert_payment_state(bill, "in_payment")
+            # since 20.0 'in_payment' comes from the enterprise module accountant; without it Odoo says 'paid'
+            self.assert_payment_state(bill, bill._get_invoice_in_payment_state())
         with self.subTest("batería de invariantes"):
             self.assert_payment_invariants(payment, "cheque propio por el neto con retención")
         with self.subTest("el cheque sigue abierto en cheques a pagar hasta que se debite (T20)"):

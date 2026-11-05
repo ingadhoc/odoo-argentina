@@ -68,17 +68,19 @@ class TestPadronTmpDir(common.TransactionCase):
     def test_arba_different_months_do_not_share_extracted_files(self):
         """Dos padrones de distinto mes no deben devolver la alícuota del otro."""
         cuit = "30112223351"
+        this_month = self.today.replace(day=1)
+        next_month = this_month + relativedelta(months=1)
         padron_1 = self._create_arba_padron(
             [self._line("NRO-1", cuit, "11,00")],
             [self._line("NRO-1", cuit, "1,00")],
-            self.today,
-            self.today + relativedelta(days=30),
+            this_month,
+            next_month - relativedelta(days=1),
         )
         padron_2 = self._create_arba_padron(
             [self._line("NRO-2", cuit, "22,00")],
             [self._line("NRO-2", cuit, "2,00")],
-            self.today + relativedelta(months=1),
-            self.today + relativedelta(months=1, days=30),
+            next_month,
+            next_month + relativedelta(months=1, days=-1),
         )
         partner = self._create_partner(cuit)
 

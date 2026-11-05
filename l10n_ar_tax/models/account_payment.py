@@ -136,6 +136,19 @@ class AccountPayment(models.Model):
 
         return super().action_post()
 
+    def _generate_journal_entry(self, write_off_line_vals=None, force_balance=None, line_ids=None):
+        """The entry carries the withholding lines as the payment computed them. Without skipping the dynamic sync, it
+        rebuilds them from the tax engine: a line that withholds 0 (earnings under the non taxable amount) gets a tax
+        line by its plain rate, and an amount typed by the user goes back to the rate."""
+        wth_payments = self.filtered(lambda x: x.country_code == "AR" and x.withholding_line_ids)
+        if wth_payments:
+            super(AccountPayment, wth_payments.with_context(skip_invoice_sync=True))._generate_journal_entry(
+                write_off_line_vals, force_balance, line_ids
+            )
+        return super(AccountPayment, self - wth_payments)._generate_journal_entry(
+            write_off_line_vals, force_balance, line_ids
+        )
+
     def action_draft(self):
         # The supplier payment receipt PDF is cached (attachment_use on
         # account.report_payment_receipt). Resetting to draft means the payment

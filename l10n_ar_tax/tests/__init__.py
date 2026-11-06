@@ -21,3 +21,4 @@ from . import test_rentas_cordoba_ws_errors
 from . import test_withholding_certificates_mail
 from . import test_payment_withholding_posted_recompute
 from . import test_withholding_proposal
+from . import test_fiscal_position_responsibility_match

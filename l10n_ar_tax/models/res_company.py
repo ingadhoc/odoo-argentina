@@ -16,6 +16,11 @@ except ImportError:
 class ResCompany(models.Model):
     _inherit = "res.company"
 
+    def _l10n_ar_can_load_test_data(self):
+        """Whether the company can load test data, like a test padron. Modules that know the database is a
+        production one override it to return False."""
+        return True
+
     @api.model
     def _get_arba_environment_type(self):
         """

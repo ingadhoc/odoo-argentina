@@ -40,6 +40,25 @@ class AccountPaymentWithholdingLine(models.Model):
         self.ensure_one()
         return self.comodel_company_currency_id.round(amount / self._l10n_ar_get_company_to_line_rate())
 
+    def _l10n_ar_get_company_currency_amounts(self):
+        """Base and amount of the withholding in company currency, as the certificate and the receipt show them.
+
+        Taken from the tax line of the posted entry (its balance and tax_base_amount), so they match the books:
+        converting the line back from the payment currency can be off by the rounding of the line. Without a posted
+        entry, or when another line of the payment has the same tax (the entry groups them by tax), the line is
+        converted at the payment rate."""
+        self.ensure_one()
+        pay = self.payment_id
+        same_tax = pay.withholding_line_ids.filtered(lambda x: x.tax_id == self.tax_id)
+        if pay.move_id.state == "posted" and len(same_tax) == 1:
+            tax_line = pay.move_id.line_ids.filtered(lambda x: x.tax_line_id == self.tax_id)
+            if len(tax_line) == 1:
+                return {"base_amount": abs(tax_line.tax_base_amount), "amount": abs(tax_line.balance)}
+        return {
+            "base_amount": self._l10n_ar_to_company_currency(self.base_amount),
+            "amount": self._l10n_ar_to_company_currency(self.amount),
+        }
+
     @api.depends(
         "tax_id",
         "payment_id.selected_debt",

@@ -22,6 +22,7 @@
             header_address="o.company_id.partner_id"
             custom_footer="custom_footer">
             <t t-set="o" t-value="o.with_context(lang=lang)" />
+            <t t-set="amounts_company_currency" t-value="o._l10n_ar_get_company_currency_amounts()"/>
             <div class="page">
                 <div id="informations" class="row mt8 mb8">
                     <div class="col-6">
@@ -89,7 +90,7 @@
                                 Importe del comprobante que origina la retención:
                             </td>
                             <td class="text-left">
-                                <span t-out="o._l10n_ar_to_company_currency(o.base_amount)" t-options='{"widget": "monetary", "display_currency": o.comodel_company_currency_id}'/>
+                                <span t-out="amounts_company_currency['base_amount']" t-options='{"widget": "monetary", "display_currency": o.comodel_company_currency_id}'/>
                             </td>
                         </tr>
                         <tr>
@@ -97,7 +98,7 @@
                                 Importe de la retención:
                             </td>
                             <td class="text-left">
-                                <span t-out="o._l10n_ar_to_company_currency(o.amount)" t-options='{"widget": "monetary", "display_currency": o.comodel_company_currency_id}'/>
+                                <span t-out="amounts_company_currency['amount']" t-options='{"widget": "monetary", "display_currency": o.comodel_company_currency_id}'/>
                             </td>
                         </tr>
                     </tbody>

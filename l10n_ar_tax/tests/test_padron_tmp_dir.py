@@ -1,11 +1,13 @@
 import base64
 import io
+import os
 import shutil
 import tempfile
 import zipfile
 from unittest.mock import patch
 
 from dateutil.relativedelta import relativedelta
+from odoo.exceptions import UserError
 from odoo.tests import common
 
 
@@ -111,7 +113,7 @@ class TestPadronTmpDir(common.TransactionCase):
         calls = []
         original = type(padron).descompress_file
 
-        def counting(self, file_padron, dest_dir="/tmp"):
+        def counting(self, file_padron=None, dest_dir="/tmp"):
             calls.append(1)
             return original(self, file_padron, dest_dir=dest_dir)
 
@@ -136,3 +138,96 @@ class TestPadronTmpDir(common.TransactionCase):
             nro, aliq = self.padron_model.find_aliquot(f.name, cuit)
 
         self.assertEqual((nro, aliq), ("NRO789", "7,00"))
+
+    def test_extraction_does_not_leave_zip_copy_in_tmp(self):
+        """Descomprimir no deja en /tmp la copia temporal del zip."""
+        cuit = "30112223351"
+        padron = self._create_arba_padron(
+            [self._line("NRO-1", cuit, "11,00")],
+            [self._line("NRO-1", cuit, "1,00")],
+            self.today,
+            self.today + relativedelta(days=30),
+        )
+        partner = self._create_partner(cuit)
+        # Own temp dir: other processes may write to the shared /tmp while the test runs.
+        tmp_root = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, tmp_root, ignore_errors=True)
+
+        with patch.object(tempfile, "tempdir", tmp_root):
+            padron._get_aliquot(partner)
+
+        self.assertFalse(os.listdir(tmp_root))
+
+    def test_extraction_reads_zip_from_filestore(self):
+        """Con el padrón en el filestore, se extrae desde ahí sin decodificar el base64 del campo."""
+        cuit = "30112223351"
+        padron = self._create_arba_padron(
+            [self._line("NRO-1", cuit, "11,00")],
+            [self._line("NRO-1", cuit, "1,00")],
+            self.today,
+            self.today + relativedelta(days=30),
+        )
+        partner = self._create_partner(cuit)
+        self.assertTrue(padron._get_padron_store_path())
+
+        with patch("base64.b64decode", side_effect=AssertionError("the field should not be decoded")):
+            self.assertEqual(padron._get_aliquot(partner), ("NRO-1", "1.00", "11.00"))
+
+    def test_extraction_without_filestore_path_decodes_the_field(self):
+        """Si el padrón no está guardado como archivo, se extrae decodificando el campo como antes."""
+        cuit = "30112223351"
+        padron = self._create_arba_padron(
+            [self._line("NRO-1", cuit, "11,00")],
+            [self._line("NRO-1", cuit, "1,00")],
+            self.today,
+            self.today + relativedelta(days=30),
+        )
+        partner = self._create_partner(cuit)
+
+        with patch.object(type(padron), "_get_padron_store_path", return_value=False):
+            self.assertEqual(padron._get_aliquot(partner), ("NRO-1", "1.00", "11.00"))
+
+    def _fixed_line(self, kind, cuit, aliq):
+        # Same layout as the real ARBA files: every line has the same length and CUITs are sorted.
+        return "%s;29102026;01112026;30112026;%s;D;N;N;%s;01;" % (kind, cuit, aliq)
+
+    def _write_padron_file(self, lines):
+        fp = tempfile.NamedTemporaryFile("w", suffix=".TXT", delete=False)
+        self.addCleanup(os.remove, fp.name)
+        with fp:
+            fp.write("\n".join(lines) + "\n")
+        return fp.name
+
+    def test_sorted_fixed_width_padron_is_bisected(self):
+        """Un padrón ordenado y de ancho fijo se busca por bisección, sin grep."""
+        cuits = ["20000033481", "20111222333", "27222333444", "30112223351", "33999888775"]
+        path = self._write_padron_file([self._fixed_line("R", c, "%d,50" % i) for i, c in enumerate(cuits)])
+
+        with patch("subprocess.run", side_effect=AssertionError("grep should not run")):
+            for i, cuit in enumerate(cuits):
+                self.assertEqual(self.padron_model.find_aliquot(path, cuit), ("30112026", "%d,50" % i))
+            self.assertEqual(self.padron_model.find_aliquot(path, "30112223352"), (False, False))
+            self.assertEqual(self.padron_model.find_aliquot(path, "2000003348"), (False, False))
+
+    def test_unsorted_padron_falls_back_to_grep(self):
+        """Si el padrón no viene ordenado por CUIT, la consulta usa grep y encuentra igual."""
+        cuits = ["30112223351", "20000033481", "27222333444"]
+        path = self._write_padron_file([self._fixed_line("R", c, "1,00") for c in cuits])
+
+        self.assertFalse(self.padron_model._get_padron_layout(path))
+        for cuit in cuits:
+            self.assertEqual(self.padron_model.find_aliquot(path, cuit), ("30112026", "1,00"))
+
+    def test_variable_width_padron_falls_back_to_grep(self):
+        """Si las líneas no miden todas lo mismo, la consulta usa grep y encuentra igual."""
+        path = self._write_padron_file(
+            [self._fixed_line("R", "20000033481", "1,00"), self._fixed_line("R", "30112223351", "10,00")]
+        )
+
+        self.assertFalse(self.padron_model._get_padron_layout(path))
+        self.assertEqual(self.padron_model.find_aliquot(path, "30112223351"), ("30112026", "10,00"))
+
+    def test_find_aliquot_raises_when_padron_cannot_be_read(self):
+        """Si grep no puede leer el archivo, da error en vez de devolver que el CUIT no figura."""
+        with self.assertRaises(UserError):
+            self.padron_model.find_aliquot("/nonexistent/l10n_ar_padron.txt", "30112223351")

@@ -41,7 +41,7 @@
 
         <!-- ── show_amount_col: also show extra column when withholdings exist in a foreign-currency bundle ── -->
         <xpath expr="//t[@name='show_amount_col_def']" position="replace">
-            <t name="show_amount_col_def" t-set="show_amount_col" t-value="any(doc.currency_id != o.destination_currency_id for doc in payment_bundle) or bool(payment_bundle.l10n_ar_withholding_line_ids.filtered('amount') and o.destination_currency_id != o.company_currency_id)"/>
+            <t name="show_amount_col_def" t-set="show_amount_col" t-value="any(doc.currency_id != o.destination_currency_id for doc in payment_bundle) or bool(payment_bundle.withholding_line_ids.filtered('amount') and o.destination_currency_id != o.company_currency_id)"/>
         </xpath>
 
         <!-- ── Partner info: add VAT Cond (AFIP responsibility) and CUIT ──────── -->
@@ -49,26 +49,28 @@
             <!-- (16) Responsabilidad AFIP -->
             <br/><strong>VAT Cond: </strong><span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
             <!-- (17) CUIT -->
-            <t t-if="o.partner_id.vat and o.partner_id.l10n_latam_identification_type_id.name and o.partner_id.l10n_latam_identification_type_id.name != 'Sigd'">
-                <br/><strong><t t-out="o.partner_id.l10n_latam_identification_type_id.name or o.company_id.country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
+            <t t-if="o.partner_id.vat and o.partner_id.l10n_ar_afip_code and o.partner_id.l10n_ar_afip_code != '99'">
+                <t t-set="ar_doc_vals" t-value="o.partner_id._get_preferred_legal_entity_identifier_vals()"/>
+                <br/><strong><t t-out="o.partner_id._get_identifier_label(ar_doc_vals.get('key')) or o.company_id.account_fiscal_country_id.vat_label" id="inv_tax_id_label"/>:</strong> <span t-out="o.partner_id.l10n_ar_formatted_vat or o.partner_id.vat"/>
             </t>
         </xpath>
 
         <!-- ── Withholding rows inside the payments table ───────────────────────── -->
         <xpath expr="//t[@name='withholding_rows']" position="replace">
-            <t t-foreach="payment_bundle.l10n_ar_withholding_line_ids.filtered('amount')" t-as="line">
+            <t t-foreach="payment_bundle.withholding_line_ids.filtered('amount')" t-as="line">
+                <t t-set="amount_company_currency" t-value="line._l10n_ar_get_company_currency_amounts()['amount']"/>
                 <tr style="page-break-inside: avoid">
                     <td>
-                        <span t-if="line.tax_id.l10n_ar_tax_type in ['earnings', 'earnings_scale']" t-out="line.tax_id.invoice_label or 'Retención Ganancias'"/>
+                        <span t-if="line.tax_id.l10n_ar_withholding_tax_type in ['earnings', 'earnings_scale']" t-out="line.tax_id.invoice_label or 'Retención Ganancias'"/>
                         <span t-else="" t-out="line.tax_id.invoice_label or line.tax_id.name"/>
                     </td>
                     <td class="text-end" t-if="show_amount_col">
                         <!-- Withholding in ARS (company_currency) -->
-                        <span class="text-nowrap" t-out="line.amount" t-options='{"widget": "monetary", "display_currency": line.currency_id}'/>
+                        <span class="text-nowrap" t-out="amount_company_currency" t-options='{"widget": "monetary", "display_currency": line.comodel_company_currency_id}'/>
                     </td>
                     <td class="text-end pe-2 o_price_total">
                         <!-- Withholding converted to destination currency (B2) -->
-                        <span class="text-nowrap" t-out="line.payment_id.destination_currency_id.round(line.amount / line.payment_id._get_withholding_rate())" t-options='{"widget": "monetary", "display_currency": line.payment_id.destination_currency_id}'/>
+                        <span class="text-nowrap" t-out="line.payment_id.destination_currency_id.round(amount_company_currency / line.payment_id._get_withholding_rate())" t-options='{"widget": "monetary", "display_currency": line.payment_id.destination_currency_id}'/>
                     </td>
                 </tr>
             </t>
@@ -167,6 +169,6 @@
          False for customers, disabling the cache for them. -->
     <record id="account.action_report_payment_receipt" model="ir.actions.report">
         <field name="attachment_use" eval="True"/>
-        <field name="attachment">(object.partner_type == 'supplier' and object.state in ('in_process', 'paid')) and ((object.name or 'recibo').replace('/', '_') + '.pdf') or False</field>
+        <field name="attachment">(object.partner_type == 'supplier' and object.state in ('paid', 'reconciled')) and ((object.name or 'recibo').replace('/', '_') + '.pdf') or False</field>
     </record>
 </odoo>

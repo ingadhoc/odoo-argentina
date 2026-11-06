@@ -1,688 +1,130 @@
-from odoo import Command, fields
-from odoo.addons.l10n_ar_withholding.tests.test_withholding_ar_ri import TestArWithholdingArRi
 from odoo.tests import tagged
 
+from .common import L10nArTaxPaymentCommon
 
-@tagged("post_install", "-at_install")
-class TestPaymentReceiptbookAndWithholding(TestArWithholdingArRi):
+
+@tagged("post_install_l10n", "post_install", "-at_install")
+class TestPaymentReceiptbookAndWithholding(L10nArTaxPaymentCommon):
+    """The journal entry of a supplier payment with withholdings: amounts, currencies, rounding, and the cycle of
+    reset to draft, edit and post again."""
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.today = fields.Date.today()
-        cls.company_bank_journal = cls.env["account.journal"].create(
-            {
-                "name": "Bank Journal Test",
-                "code": "BNKT",
-                "type": "bank",
-                "bank_statements_source": "file_import",
-                "company_id": cls.company_ri.id,
-            }
+        # 1 USD = 100 ARS on the date of the tests
+        cls.usd = cls.setup_other_currency("USD", rates=[("2022-12-31", 0.01)])
+        cls.usd_bank_journal = cls.env["account.journal"].create(
+            {"name": "Bank USD", "type": "bank", "code": "BUSD", "currency_id": cls.usd.id}
+        )
+
+    def _assert_no_balancing_line(self, payment):
+        self.assertTrue(payment.move_id.currency_id.is_zero(sum(payment.move_id.line_ids.mapped("balance"))))
+        self.assertFalse(
+            payment.move_id.line_ids.filtered(lambda x: "automatic balancing" in (x.name or "").lower()),
+            "The entry must balance by itself, without an automatic balancing line",
         )
 
     def test_custom_accounting_rate_with_withholdings(self):
-        """Test que al pagar una factura en moneda extranjera con retenciones y un
-        accounting_rate personalizado, las líneas del asiento se calculan correctamente.
-
-        Escenario: el usuario ajusta manualmente el accounting_rate (antes se hacía vía
-        force_amount_company_currency). Se verifica que el ajuste de retenciones en
-        _prepare_move_lines_per_type no produce un doble ajuste sobre liquidez y contrapartida.
-
-        Expected behavior:
-        - Liquidity line balance = amount / accounting_rate (accounting_rate is A/C, USD per ARS).
-        - Counterpart line balance = amount_company + withholdings (para que el asiento cuadre).
-        - Withholding lines mantienen su propio balance intacto.
-        """
-        # 1. Set up USD currency with a known rate (1 USD = 100 ARS)
-        usd = self.other_currency  # already set up in TestArWithholdingArRi with rates
-
-        # Create a bank journal in USD for the payment
-        usd_bank_journal = self.env["account.journal"].create(
-            {
-                "name": "Bank USD Test",
-                "type": "bank",
-                "code": "BUSD",
-                "company_id": self.company_ri.id,
-                "currency_id": usd.id,
-            }
+        """A USD bill paid from a USD journal at a rate the user edits: the whole entry is valued at that rate, the
+        bank pays the net amount and the debt is settled for the gross one."""
+        bill = self._create_bill(1000.0, "1-100", currency_id=self.usd.id)
+        payment = self._create_payment(
+            bill, self.tax_iibb_untaxed, post=False, journal=self.usd_bank_journal, amount=bill.amount_total
         )
+        self._assert_withholding(payment, self.tax_iibb_untaxed, 1000.0, 30.0)
 
-        # 2. Create a vendor bill in USD
-        invoice = self.env["account.move"].create(
-            {
-                "partner_id": self.env.ref("l10n_ar_tax.res_partner_adhoc_caba").id,
-                "move_type": "in_invoice",
-                "company_id": self.company_ri.id,
-                "currency_id": usd.id,
-                "invoice_line_ids": [
-                    Command.create(
-                        {
-                            "product_id": self.env.ref("product.product_product_16").id,
-                            "quantity": 1,
-                            "price_unit": 1000,
-                        }
-                    ),
-                ],
-                "invoice_date": self.today,
-                "l10n_latam_document_number": "1-100",
-            }
-        )
-        invoice.action_post()
-
-        # 3. Create fiscal position with IIBB CABA withholding for this partner
-        fiscal_pos = self.env["account.fiscal.position"].create(
-            {
-                "name": "IIBB CABA FC",
-                "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
-                "sequence": 10,
-                "auto_apply": True,
-                "country_id": self.env.ref("base.ar").id,
-                "company_id": self.company_ri.id,
-                "state_ids": [(6, 0, [self.env.ref("base.state_ar_c").id])],
-            }
-        )
-        self.env["account.fiscal.position.l10n_ar_tax"].create(
-            {
-                "fiscal_position_id": fiscal_pos.id,
-                "default_tax_id": self.tax_wth_test_1.id,
-                "tax_type": "withholding",
-                "webservice": False,
-            }
-        )
-
-        # 4. Create payment from the invoice
-        action_context = invoice.action_register_payment()["context"]
-        payment = (
-            self.env["account.payment"]
-            .with_context(**action_context)
-            .create(
-                {
-                    "journal_id": usd_bank_journal.id,
-                    "amount": invoice.amount_total,
-                    "date": self.today,
-                }
-            )
-        )
-
-        # Verify withholdings were computed
-        self.assertTrue(payment.l10n_ar_withholding_line_ids, "Withholdings should have been computed")
-
-        # 5. Personalizar accounting_rate para simular que el usuario ajusta el tipo de cambio manualmente
-        # (en el modelo anterior esto se hacía vía force_amount_company_currency).
-        # Ajustamos el rate levemente para simular un redondeo.
-        original_rate = payment.accounting_rate or 1.0
-        custom_rate = original_rate * 0.9999  # diferencia mínima para simular redondeo
-        payment.accounting_rate = custom_rate
-
-        # amount_company_currency equivalente con el nuevo rate (accounting_rate = A/C, por eso dividimos)
-        amount_company = payment.amount / (payment.accounting_rate or 1.0)
-        # retenciones en C (ARS) para comparar con el balance del asiento
-        withholding_balance_ars = sum(payment.l10n_ar_withholding_line_ids.mapped("amount"))
-
-        # 6. Confirmar el pago para materializar las líneas del asiento
+        payment.accounting_rate *= 0.9999
+        rate = payment.accounting_rate
         payment.action_post()
 
-        self.assertTrue(payment.move_id, "Payment should have a journal entry after posting")
-
-        liquidity_line = payment.move_id.line_ids.filtered(lambda l: l.account_id == payment.outstanding_account_id)
-        counterpart_line = payment.move_id.line_ids.filtered(lambda l: l.account_type == "liability_payable")
-        withholding_tax_lines = payment.move_id.line_ids.filtered(lambda l: l.tax_repartition_line_id)
-
-        # 7. VERIFICACIONES CRÍTICAS:
-        # La línea de liquidez refleja el monto ARS calculado con el rate personalizado
+        lines = payment.move_id.line_ids
+        liquidity = lines.filtered(lambda x: x.account_id == payment.outstanding_account_id)
+        payable = lines.filtered(lambda x: x.account_type == "liability_payable")
+        self.assertAlmostEqual(liquidity.amount_currency, -1180.0, places=2)
+        self.assertAlmostEqual(liquidity.balance, payment.company_currency_id.round(-1180.0 / rate), places=2)
+        self.assertAlmostEqual(payable.amount_currency, 1210.0, places=2)
         self.assertAlmostEqual(
-            abs(liquidity_line.balance),
-            amount_company,
+            sum(lines.filtered(lambda x: x.tax_line_id == self.tax_iibb_untaxed).mapped("amount_currency")),
+            -30.0,
             places=2,
-            msg="Liquidity line balance debe igualar amount / accounting_rate.",
         )
-
-        # La contrapartida (cuenta payable) debe igualar liquidez + retenciones (asiento cuadra)
-        expected_counterpart = amount_company + withholding_balance_ars
-        self.assertAlmostEqual(
-            abs(counterpart_line.balance),
-            expected_counterpart,
-            places=2,
-            msg="Counterpart line balance debe igualar liquidez + retenciones ARS " "(el asiento debe cerrar en cero).",
-        )
-
-        # Las líneas de retención deben tener el importe correcto en ARS
-        total_withholding_balance = abs(sum(withholding_tax_lines.mapped("balance")))
-        self.assertAlmostEqual(
-            total_withholding_balance,
-            withholding_balance_ars,
-            places=2,
-            msg="Withholding lines balance debe coincidir con el importe ARS de las retenciones.",
-        )
+        self._assert_no_balancing_line(payment)
 
     def test_foreign_currency_withholding_balance_precision(self):
-        """Test that withholding lines in a foreign currency payment preserve the exact ARS balance
-        without rounding errors caused by the USD → ARS roundtrip.
-
-        Bug scenario: withholding lines were created with currency_id=USD and amount_currency
-        rounded to USD precision. Then _inverse_amount_currency recalculated balance from the
-        rounded USD amount, producing a different ARS balance (e.g. 84,894.75 → 60 USD → 84,900).
-
-        Expected behavior:
-        - Withholding line balance must be the exact ARS amount (no rounding loss).
-        - No automatic balancing line should be needed for the rounding difference.
-        - Withholding lines should use company currency (ARS) when payment is in foreign currency.
-        """
-        usd = self.other_currency
-
-        usd_bank_journal = self.env["account.journal"].create(
-            {
-                "name": "Bank USD Test 2",
-                "type": "bank",
-                "code": "BUS2",
-                "company_id": self.company_ri.id,
-                "currency_id": usd.id,
-            }
+        """The withholding of a USD payment goes in USD (the payment currency, as account_payment_pro decided) and its
+        ARS balance is the one of the line at the payment rate, without the rounding loss of a USD -> ARS round trip.
+        Before, a balance like 84,894.75 came back as 60 USD -> 84,900 and needed a balancing line."""
+        bill = self._create_bill(500.0, "1-200", currency_id=self.usd.id)
+        payment = self._create_payment(
+            bill, self.tax_iibb_untaxed, post=False, journal=self.usd_bank_journal, amount=bill.amount_total
         )
-
-        # Create vendor bill in USD
-        invoice = self.env["account.move"].create(
-            {
-                "partner_id": self.env.ref("l10n_ar_tax.res_partner_adhoc_caba").id,
-                "move_type": "in_invoice",
-                "company_id": self.company_ri.id,
-                "currency_id": usd.id,
-                "invoice_line_ids": [
-                    Command.create(
-                        {
-                            "product_id": self.env.ref("product.product_product_16").id,
-                            "quantity": 1,
-                            "price_unit": 500,
-                        }
-                    ),
-                ],
-                "invoice_date": self.today,
-                "l10n_latam_document_number": "1-200",
-            }
-        )
-        invoice.action_post()
-
-        # Create fiscal position with withholding
-        fiscal_pos = self.env["account.fiscal.position"].create(
-            {
-                "name": "IIBB CABA FC Rounding",
-                "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
-                "sequence": 10,
-                "auto_apply": True,
-                "country_id": self.env.ref("base.ar").id,
-                "company_id": self.company_ri.id,
-                "state_ids": [(6, 0, [self.env.ref("base.state_ar_c").id])],
-            }
-        )
-        self.env["account.fiscal.position.l10n_ar_tax"].create(
-            {
-                "fiscal_position_id": fiscal_pos.id,
-                "default_tax_id": self.tax_wth_test_1.id,
-                "tax_type": "withholding",
-                "webservice": False,
-            }
-        )
-
-        # Create payment WITHOUT force_amount_company_currency
-        action_context = invoice.action_register_payment()["context"]
-        payment = (
-            self.env["account.payment"]
-            .with_context(**action_context)
-            .create(
-                {
-                    "journal_id": usd_bank_journal.id,
-                    "amount": invoice.amount_total,
-                    "date": self.today,
-                }
-            )
-        )
-
-        self.assertTrue(payment.l10n_ar_withholding_line_ids, "Withholdings should have been computed")
-        self.assertGreater(payment.withholdings_amount, 0)
-        # withholdings_amount is in the payment currency (USD); the withholding lines hold the ARS amount
-        withholding_amount = sum(payment.l10n_ar_withholding_line_ids.mapped("amount"))
-
-        # Post the payment to generate the journal entry with move lines
+        line = self._assert_withholding(payment, self.tax_iibb_untaxed, 500.0, 15.0)
+        self.assertEqual(line._l10n_ar_to_company_currency(line.amount), 1500.0)
         payment.action_post()
 
-        self.assertTrue(payment.move_id, "Payment should have a journal entry after posting")
-
-        withholding_tax_lines = payment.move_id.line_ids.filtered(lambda l: l.tax_repartition_line_id)
-
-        # CRITICAL: the withholding balance must be exactly the ARS amount, not a rounded USD→ARS roundtrip
-        total_withholding_balance = abs(sum(withholding_tax_lines.mapped("balance")))
-        self.assertAlmostEqual(
-            total_withholding_balance,
-            withholding_amount,
-            places=2,
-            msg="Withholding balance must exactly match the computed ARS amount. "
-            "Before the fix, _inverse_amount_currency would recalculate balance from "
-            "a rounded USD amount, producing a different value.",
-        )
-
-        # Verify withholding lines use company currency (ARS) when payment is in foreign currency
-        for wth_line in withholding_tax_lines:
-            self.assertEqual(
-                wth_line.currency_id,
-                payment.company_id.currency_id,
-                "Withholding move lines should use company currency (ARS) "
-                "when the payment is in foreign currency to avoid rounding issues.",
-            )
-
-        # Verify no automatic balancing line was needed
-        auto_balance_lines = payment.move_id.line_ids.filtered(
-            lambda l: "Automatic Balancing" in (l.name or "") or "automatic balancing" in (l.name or "").lower()
-        )
-        self.assertFalse(
-            auto_balance_lines,
-            "No automatic balancing line should be needed when withholding "
-            "balances are exact (no rounding loss from currency conversion).",
-        )
+        tax_lines = payment.move_id.line_ids.filtered(lambda x: x.tax_line_id == self.tax_iibb_untaxed)
+        self.assertEqual(tax_lines.currency_id, self.usd)
+        self.assertAlmostEqual(sum(tax_lines.mapped("amount_currency")), -15.0, places=2)
+        self.assertAlmostEqual(sum(tax_lines.mapped("balance")), -1500.0, places=2)
+        self._assert_no_balancing_line(payment)
 
     def test_create_vendor_payment_with_receiptbook_and_withholdings(self):
-        """1. Create vendor bill for CABA partner and post.
-        2. Create IIBB CABA fiscal position for company '(AR) Responsable Inscripto (Unit Tests)' with CABA withholding tax.
-        3. Create payment for vendor bill created on step 1.
-        4. VALIDATION: draft payment move must not have name.
-        5. Post payment created on step 3.
-        6. VALIDATION: validate payment move lines amounts.
-        """
-        # 1. Create vendor bill for CABA partner and post.
-        invoice = self.env["account.move"].create(
-            {
-                "partner_id": self.env.ref("l10n_ar_tax.res_partner_adhoc_caba").id,
-                "move_type": "in_invoice",
-                "company_id": self.company_ri.id,
-                "invoice_line_ids": [
-                    Command.create(
-                        {
-                            "product_id": self.env.ref("product.product_product_16").id,
-                            "quantity": 1,
-                            "price_unit": 500000,
-                        }
-                    ),
-                ],
-                "invoice_date": self.today,
-                "l10n_latam_document_number": "1-2",
-            }
-        )
-        invoice.action_post()
-
-        # 2. Create IIBB CABA fiscal position for company '(AR) Responsable Inscripto (Unit Tests)' with CABA withholding tax.
-        fiscal_pos = self.env["account.fiscal.position"].create(
-            {
-                "name": "IIBB CABA",
-                "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
-                "sequence": 10,
-                "auto_apply": True,
-                "country_id": self.env.ref("base.ar").id,
-                "company_id": invoice.company_id.id,
-                "state_ids": [(6, 0, [self.env.ref("base.state_ar_c").id])],
-            }
-        )
-        self.env["account.fiscal.position.l10n_ar_tax"].create(
-            {
-                "fiscal_position_id": fiscal_pos.id,
-                "default_tax_id": self.tax_wth_test_1.id,
-                "tax_type": "withholding",
-                "webservice": False,
-            }
-        )
-
-        # 3. Create payment for vendor bill created on step 1.
-        action_context = invoice.action_register_payment()["context"]
-        vals = {
-            "journal_id": self.company_bank_journal.id,
-            "amount": invoice.amount_total,
-            "date": self.today,
-        }
-        payment = self.env["account.payment"].with_context(**action_context).create(vals)
-
-        # 4. VALIDATION: draft payment move must not have name.
-        self.assertEqual(payment.move_id.name, False)
-
-        # 5. Post payment created on step 3.
+        """A draft payment has no entry name yet. Posted, the bank pays the net amount (605,000 - 50,000), the debt
+        is settled for the gross one and the withholding base goes in and out of its account."""
+        self.tax_iibb_untaxed.amount = -10
+        bill = self._create_bill(500000.0, "1-2")
+        payment = self._create_payment(bill, self.tax_iibb_untaxed, post=False)
+        self.assertFalse(payment.move_id.name)
         payment.action_post()
-
-        # 6. VALIDATION: validate payment move lines amounts.
         self.assertRecordValues(
             payment.move_id.line_ids.sorted("balance"),
             [
-                # Liquidity line:
-                {"debit": 0.0, "credit": 605000.0, "amount_currency": -605000.0},
-                # base line:
-                {"debit": 0.0, "credit": 500000.0, "amount_currency": -500000.0},
-                # withholding line:
-                {"debit": 0.0, "credit": 50000.0, "amount_currency": -50000.0},
-                # base line:
-                {"debit": 500000.0, "credit": 0.0, "amount_currency": 500000.0},
-                # Receivable line:
-                {"debit": 655000.0, "credit": 0.0, "amount_currency": 655000.0},
+                {"debit": 0.0, "credit": 555000.0},
+                {"debit": 0.0, "credit": 500000.0},
+                {"debit": 0.0, "credit": 50000.0},
+                {"debit": 500000.0, "credit": 0.0},
+                {"debit": 605000.0, "credit": 0.0},
             ],
         )
 
     def test_withholding_amounts(self):
-        """Verify withholding amount precision under 'round_globally' rounding method.
+        """Under 'round_globally', 391,683 * 4.5% = 17,625.735 is withheld as 17,625.74, on the line and on the entry."""
+        self.env.company.sudo().tax_calculation_rounding_method = "round_globally"
+        self.tax_iibb_untaxed.amount = -4.5
+        payment = self._create_payment(self._create_bill(391683.0, "2-5"), self.tax_iibb_untaxed)
+        self._assert_withholding(payment, self.tax_iibb_untaxed, 391683.0, 17625.74)
+        self._assert_entry_withholding(payment, self.tax_iibb_untaxed, 17625.74)
 
-        With price_unit=391683 and a 4.5% withholding tax, the exact amount is
-        391683 * 0.045 = 17625.735. Under 'round_globally', this rounds to 17625.74.
-        The test ensures the rounding method is respected and the resulting
-        withholding line carries the correctly rounded amount.
-        """
-        company = self.company_ri
-        previous_rounding_method = company.tax_calculation_rounding_method
-        company.tax_calculation_rounding_method = "round_globally"
-        try:
-            # Create a vendor bill with a single line subject to 21% VAT
-            in_invoice_wht = self.env["account.move"].create(
-                {
-                    "move_type": "in_invoice",
-                    "company_id": company.id,
-                    "invoice_date": self.today,
-                    "partner_id": self.env.ref("l10n_ar_tax.res_partner_adhoc_caba").id,
-                    "invoice_line_ids": [
-                        Command.create(
-                            {
-                                "product_id": self.product_a.id,
-                                "price_unit": 391683,
-                                "tax_ids": [Command.set(self.tax_21.ids)],
-                            }
-                        )
-                    ],
-                    "l10n_latam_document_number": "2-5",
-                }
-            )
-            in_invoice_wht.action_post()
+    def _check_draft_delete_entry_and_post(self, tax, document_number, amount):
+        """Reset a posted payment to draft, delete its entry and post it again, as support fixes a wrong entry: the
+        draft keeps the withholding, and posting generates a new entry with the withholding on its account, balanced
+        by itself, and the bill stays paid."""
+        bill = self._create_bill(500000.0, document_number)
+        payment = self._create_payment(bill, tax)
+        self._assert_entry_withholding(payment, tax, amount)
+        old_move_id = payment.move_id.id
 
-            # Set withholding tax rate to 4.5% (produces a non-trivial rounding case)
-            self.tax_wth_test_1.write({"amount": 4.5})
-
-            # Create fiscal position with withholding for CABA partner
-            fiscal_pos = self.env["account.fiscal.position"].create(
-                {
-                    "name": "IIBB CABA Rounding",
-                    "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
-                    "sequence": 10,
-                    "auto_apply": True,
-                    "country_id": self.env.ref("base.ar").id,
-                    "company_id": company.id,
-                    "state_ids": [(6, 0, [self.env.ref("base.state_ar_c").id])],
-                }
-            )
-            self.env["account.fiscal.position.l10n_ar_tax"].create(
-                {
-                    "fiscal_position_id": fiscal_pos.id,
-                    "default_tax_id": self.tax_wth_test_1.id,
-                    "tax_type": "withholding",
-                    "webservice": False,
-                }
-            )
-
-            # Create payment using register payment context
-            action_context = in_invoice_wht.action_register_payment()["context"]
-            vals = {
-                "journal_id": self.company_bank_journal.id,
-                "amount": in_invoice_wht.amount_total,
-                "date": self.today,
-            }
-            payment = self.env["account.payment"].with_context(**action_context).create(vals)
-
-            # In direct payment creation flow, amount must be net of withholdings to fully reconcile the invoice.
-            payment.action_post()
-
-            self.assertEqual(payment.company_id.tax_calculation_rounding_method, "round_globally")
-            # 391683 * 21% = 82253.43 (VAT) -> total invoice: 473936.43
-            # 391683 * 4.5% = 17625.735 -> rounded globally to 17625.74 (withholding)
-            # net payment (liquidity): 473936.43 - 17625.74 = 456310.69
-            self.assertEqual(payment.l10n_ar_withholding_line_ids.amount, 17625.74)
-        finally:
-            company.tax_calculation_rounding_method = previous_rounding_method
-
-    def test_reset_to_draft_keeps_manual_withholding_line(self):
-        """Regression for ticket 119846 (reset to draft drops a manual-amount withholding line).
-
-        Faithful reproduction of the sinax case: a supplier payment with a withholding whose tax
-        is ``fixed`` with ``amount = 0`` (e.g. "Retención IVA"), where the withheld amount is
-        entered manually by the operator. ``account.tax.compute_all`` returns 0 for such a tax,
-        so when the payment is reset to draft the standard dynamic tax sync recomputes the
-        withholding tax line to 0, drops it via the zero-amount filter, leaves the entry
-        unbalanced and inserts an "Automatic Balancing Line".
-
-        Posting works (both dynamic-sync managers skip posted moves); only reset to draft was
-        affected. The fix forces ``round_from_tax_lines=True`` for payment moves with
-        withholdings so the manually entered amount on the existing tax line is preserved instead
-        of recomputed from the base.
-        """
-        manual_wth_amount = 50000.0
-        manual_tax = self.tax_wth_test_1
-
-        # 1. Vendor bill in ARS (company currency) for a CABA partner
-        invoice = self.env["account.move"].create(
-            {
-                "partner_id": self.env.ref("l10n_ar_tax.res_partner_adhoc_caba").id,
-                "move_type": "in_invoice",
-                "company_id": self.company_ri.id,
-                "invoice_line_ids": [
-                    Command.create(
-                        {
-                            "product_id": self.env.ref("product.product_product_16").id,
-                            "quantity": 1,
-                            "price_unit": 500000,
-                        }
-                    ),
-                ],
-                "invoice_date": self.today,
-                "l10n_latam_document_number": "1-1198461",
-            }
-        )
-        invoice.action_post()
-
-        # 2. Fiscal position with the manual (fixed/0) withholding for this partner
-        fiscal_pos = self.env["account.fiscal.position"].create(
-            {
-                "name": "Ret IVA manual 119846",
-                "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
-                "sequence": 10,
-                "auto_apply": True,
-                "country_id": self.env.ref("base.ar").id,
-                "company_id": self.company_ri.id,
-                "state_ids": [(6, 0, [self.env.ref("base.state_ar_c").id])],
-            }
-        )
-        self.env["account.fiscal.position.l10n_ar_tax"].create(
-            {
-                "fiscal_position_id": fiscal_pos.id,
-                "default_tax_id": manual_tax.id,
-                "tax_type": "withholding",
-                "webservice": False,
-            }
-        )
-
-        # 3. Register the payment and enter the withholding amount manually
-        action_context = invoice.action_register_payment()["context"]
-        payment = (
-            self.env["account.payment"]
-            .with_context(**action_context)
-            .create(
-                {
-                    "journal_id": self.company_bank_journal.id,
-                    "amount": invoice.amount_total,
-                    "date": self.today,
-                }
-            )
-        )
-        wth_line = payment.l10n_ar_withholding_line_ids.filtered(lambda l: l.tax_id == manual_tax)
-        self.assertTrue(wth_line, "The withholding line should have been created")
-
-        # Turn the resolved withholding into a manual one (fixed/0, like the real "Retención IVA"
-        # tax 301): the standard engine now computes 0 for it, and the operator enters the amount.
-        manual_tax.write({"amount_type": "fixed", "amount": 0.0})
-        wth_line.amount = manual_wth_amount
-
-        # 4. Post and confirm the manual amount materialised on the journal entry
-        payment.action_post()
-        self.assertEqual(payment.move_id.state, "posted")
-        posted_wth_lines = payment.move_id.line_ids.filtered(lambda l: l.tax_repartition_line_id)
-        self.assertTrue(posted_wth_lines, "Posted move must have a withholding tax line")
-        self.assertAlmostEqual(
-            abs(sum(posted_wth_lines.mapped("balance"))),
-            manual_wth_amount,
-            places=2,
-            msg="The manually entered withholding amount must be on the posted journal entry",
-        )
-        posted_wth_count = len(posted_wth_lines)
-        posted_wth_balance = sum(posted_wth_lines.mapped("balance"))
-        self.assertTrue(
-            payment.company_currency_id.is_zero(sum(payment.move_id.line_ids.mapped("balance"))),
-            "Posted journal entry must balance to zero",
-        )
-
-        # 5. Reset the payment to draft
         payment.action_draft()
+        # back in draft the entry keeps the withholding as computed, without a balancing line
         self.assertEqual(payment.move_id.state, "draft")
+        self._assert_entry_withholding(payment, tax, amount)
+        self._assert_no_balancing_line(payment)
 
-        # 6a. No automatic balancing line should have been inserted
-        auto_balance_lines = payment.move_id.line_ids.filtered(
-            lambda l: "automatic balancing" in (l.name or "").lower() or "balance automático" in (l.name or "").lower()
-        )
-        self.assertFalse(
-            auto_balance_lines,
-            "Resetting to draft must NOT insert an automatic balancing line: the manual "
-            "withholding line must be preserved, not recomputed to 0 and dropped.",
-        )
+        payment.move_id.unlink()
+        self.assertEqual(payment.state, "draft")
+        self.assertFalse(payment.move_id)
 
-        # 6b. The journal entry must still balance to zero
-        self.assertTrue(
-            payment.company_currency_id.is_zero(sum(payment.move_id.line_ids.mapped("balance"))),
-            "Journal entry must still balance to zero after reset to draft",
-        )
-
-        # 6c. The manual withholding line must survive with its amount intact
-        draft_wth_lines = payment.move_id.line_ids.filtered(lambda l: l.tax_repartition_line_id)
-        self.assertEqual(
-            len(draft_wth_lines),
-            posted_wth_count,
-            "The manual withholding line must survive the reset to draft (none dropped).",
-        )
-        self.assertAlmostEqual(
-            sum(draft_wth_lines.mapped("balance")),
-            posted_wth_balance,
-            places=2,
-            msg="The withholding line must keep its manual amount after reset to draft.",
-        )
-
-    def test_reset_to_draft_change_withholding_amount_and_repost(self):
-        """Regression for ticket #118586 (PR #1464): a payment with automatic withholdings must
-        allow reset to draft, editing the withholding amount, and re-confirming.
-
-        Reproduces feg's video step-by-step: register a supplier payment that auto-computes a
-        withholding, override its amount with our own value, post it, then reset to draft, change
-        the withholding amount, and post again.
-
-        The bug: withholding move lines carried ``tax_repartition_line_id`` and were classified as
-        ``display_type='tax'``, so on the next ``_synchronize_to_moves`` rebuild (triggered by
-        reset to draft) ``_prevent_automatic_line_deletion`` raised a ``ValidationError`` and the
-        cycle blew up. We assert the functional outcome instead of internal flags: the whole
-        post → draft → edit amount → post cycle succeeds and the journal entry reflects the edited
-        amount while staying balanced.
-        """
-        first_amount = 30000.0
-        second_amount = 45000.0
-
-        # 1. Vendor bill for a CABA partner and post.
-        invoice = self.env["account.move"].create(
-            {
-                "partner_id": self.env.ref("l10n_ar_tax.res_partner_adhoc_caba").id,
-                "move_type": "in_invoice",
-                "company_id": self.company_ri.id,
-                "invoice_line_ids": [
-                    Command.create(
-                        {
-                            "product_id": self.env.ref("product.product_product_16").id,
-                            "quantity": 1,
-                            "price_unit": 500000,
-                        }
-                    ),
-                ],
-                "invoice_date": self.today,
-                "l10n_latam_document_number": "1-1464",
-            }
-        )
-        invoice.action_post()
-
-        # 2. Fiscal position with the CABA withholding for this partner (auto-applied).
-        fiscal_pos = self.env["account.fiscal.position"].create(
-            {
-                "name": "IIBB CABA 1464",
-                "l10n_ar_afip_responsibility_type_ids": [(6, 0, [self.env.ref("l10n_ar.res_IVARI").id])],
-                "sequence": 10,
-                "auto_apply": True,
-                "country_id": self.env.ref("base.ar").id,
-                "company_id": self.company_ri.id,
-                "state_ids": [(6, 0, [self.env.ref("base.state_ar_c").id])],
-            }
-        )
-        self.env["account.fiscal.position.l10n_ar_tax"].create(
-            {
-                "fiscal_position_id": fiscal_pos.id,
-                "default_tax_id": self.tax_wth_test_1.id,
-                "tax_type": "withholding",
-                "webservice": False,
-            }
-        )
-
-        # 3. Register the payment: the withholding is computed automatically from the tax.
-        action_context = invoice.action_register_payment()["context"]
-        payment = (
-            self.env["account.payment"]
-            .with_context(**action_context)
-            .create(
-                {
-                    "journal_id": self.company_bank_journal.id,
-                    "amount": invoice.amount_total,
-                    "date": self.today,
-                }
-            )
-        )
-        wth_line = payment.l10n_ar_withholding_line_ids.filtered(lambda l: l.tax_id == self.tax_wth_test_1)
-        self.assertTrue(wth_line, "The automatic withholding line should have been created")
-
-        def posted_withholding_balance():
-            move_lines = payment.move_id.line_ids.filtered(lambda l: l.tax_repartition_line_id)
-            return abs(sum(move_lines.mapped("balance")))
-
-        def assert_balanced():
-            self.assertTrue(
-                payment.company_currency_id.is_zero(sum(payment.move_id.line_ids.mapped("balance"))),
-                "The journal entry must balance to zero",
-            )
-
-        # 4. Override the withholding amount with our own value and post. We write through the
-        # parent One2many (like the form does) so the change marks the payment dirty and
-        # _synchronize_to_moves rebuilds the journal entry from the edited amount.
-        payment.l10n_ar_withholding_line_ids = [Command.update(wth_line.id, {"amount": first_amount})]
         payment.action_post()
         self.assertEqual(payment.move_id.state, "posted")
-        assert_balanced()
-        self.assertAlmostEqual(
-            posted_withholding_balance(),
-            first_amount,
-            places=2,
-            msg="The posted withholding line must reflect the amount we entered",
-        )
+        self.assertNotEqual(payment.move_id.id, old_move_id)
+        self._assert_entry_withholding(payment, tax, amount)
+        self._assert_no_balancing_line(payment)
+        self.assertIn(bill.payment_state, ("paid", "in_payment"))
 
-        # 5. Reset to draft: this rebuilds the payment lines via _synchronize_to_moves. Before the
-        # fix it raised a ValidationError trying to delete the 'tax' withholding lines.
-        payment.action_draft()
-        self.assertEqual(payment.move_id.state, "draft")
+    def test_draft_delete_entry_and_post_iibb(self):
+        """IIBB 3% on 500,000."""
+        self._check_draft_delete_entry_and_post(self.tax_iibb_untaxed, "1-3001", 15000.0)
 
-        # 6. Change the withholding amount and confirm again.
-        payment.l10n_ar_withholding_line_ids = [Command.update(wth_line.id, {"amount": second_amount})]
-        payment.action_post()
-        self.assertEqual(payment.move_id.state, "posted")
-        assert_balanced()
-        self.assertAlmostEqual(
-            posted_withholding_balance(),
-            second_amount,
-            places=2,
-            msg="After reset to draft and editing, the journal entry must reflect the new " "withholding amount",
-        )
+    def test_draft_delete_entry_and_post_earnings_scale(self):
+        """Earnings with scale (regimen 110) on 500,000."""
+        self._check_draft_delete_entry_and_post(self.tax_earnings_scale, "1-3002", 140780.0)

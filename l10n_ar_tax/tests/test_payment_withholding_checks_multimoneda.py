@@ -86,9 +86,15 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
             ],
         }
         vals.update(kw)
-        payment = self.env["account.payment"].create(vals)
-        payment._onchange_withholdings()
-        return payment
+        # since 20.0 the checks are the net amount: payment pro makes the payment amount the gross one
+        return self.env["account.payment"].create(vals)
+
+    def _wth_line(self, payment):
+        self.assertEqual(len(payment.withholding_line_ids), 1)
+        return payment.withholding_line_ids
+
+    def _wth_move_lines(self, payment):
+        return payment.move_id.line_ids.filtered(lambda x: x.account_id == self.account_tax_wth)
 
     # ------------------------------------------------------------------
     # TC.6 — 1 cheque ARS + IIBB 3% (A=B=C=ARS)
@@ -101,7 +107,7 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
 
         Verifica:
         - Retención 30 ARS (= 1 000 * 3%)
-        - payment.amount = 1 180 ARS (neto pagado)
+        - payment.amount = 1 210 ARS (bruto) y el neto 1 180 ARS
         - 3 líneas en el asiento: 1 liquidez + 1 retención + 1 contrapartida
         - sum(balances) == 0
 
@@ -117,8 +123,9 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
         wth = self._wth_line(payment)
         self.assertAlmostEqual(wth.base_amount, 1_000, places=2)
         self.assertAlmostEqual(wth.amount, 30, places=2)
-        self.assertAlmostEqual(payment.withholdings_amount, 30, places=2)
-        self.assertAlmostEqual(payment.amount, 1_180, places=2)
+        self.assertAlmostEqual(payment.withholding_amount, 30, places=2)
+        self.assertAlmostEqual(payment.amount, 1_210, places=2)
+        self.assertAlmostEqual(payment.withholding_net_amount, 1_180, places=2)
 
         payment.action_post()
 
@@ -149,10 +156,9 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
         Factura 1 210 USD (1 000 neto). 2 cheques de 716 000 y 700 000 ARS
         (total 1 416 000 = (1 210 - 30) × 1 200).
 
-        Verifica (base en C=ARS, UX en B=USD):
+        Verifica (base en C=ARS, la línea en A=ARS):
         - base_amount = 1 000 * 1200 = 1 200 000 ARS
         - withholding  = 1 200 000 * 3% = 36 000 ARS
-        - withholdings_amount = 36 000 / 1200 = 30 USD
         - 4 líneas: 2 liquidez + 1 retención + 1 contrapartida
         - sum(balances) == 0
 
@@ -171,7 +177,7 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
         wth = self._wth_line(payment)
         self.assertAlmostEqual(wth.base_amount, 1_200_000, places=0)
         self.assertAlmostEqual(wth.amount, 36_000, places=0)
-        self.assertAlmostEqual(payment.withholdings_amount, 30, places=2)
+        self.assertAlmostEqual(payment.withholding_net_amount, 1_416_000, places=0)
 
         payment.action_post()
 
@@ -237,7 +243,6 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
                 ],
             }
         )
-        payment._onchange_withholdings()
 
         payment.action_post()
 
@@ -266,10 +271,9 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
 
         Factura 1 210 USD (1 000 neto). 2 cheques de 580 y 600 USD.
 
-        Verifica (base y amount en C=ARS, UX en B=USD):
-        - base_amount = 1 000 * 1200 = 1 200 000 ARS
-        - withholding  = 36 000 ARS
-        - withholdings_amount = 30 USD
+        Verifica (calculado en C=ARS, la línea en A=USD):
+        - base 1 200 000 ARS = 1 000 USD
+        - retención 36 000 ARS = 30 USD
         - 4 líneas: 2 liquidez + 1 retención + 1 contrapartida
         - balance de cada liquidez = amount_currency / accounting_rate
         - sum(balances) == 0
@@ -287,12 +291,12 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
             ],
         )
 
-        self.assertAlmostEqual(payment.accounting_rate, self._get_rate(self.ars, self.usd), places=6)
+        self.assertAlmostEqual(payment.accounting_rate, 1 / 1_200, places=6)
 
         wth = self._wth_line(payment)
-        self.assertAlmostEqual(wth.base_amount, 1_200_000, places=0)
-        self.assertAlmostEqual(wth.amount, 36_000, places=0)
-        self.assertAlmostEqual(payment.withholdings_amount, 30, places=2)
+        self.assertAlmostEqual(wth.base_amount, 1_000, places=2)
+        self.assertAlmostEqual(wth.amount, 30, places=2)
+        self.assertAlmostEqual(payment.withholding_net_amount, 1_180, places=2)
 
         payment.action_post()
 
@@ -318,9 +322,9 @@ class TestPaymentChecksWithholding(TestPaymentWithholdingMultimoneda):
                 f"amount_currency={liq.amount_currency}, rate={payment.accounting_rate}",
             )
 
-        # A≠C (USD≠ARS) → use_company_currency=True → wth lines siempre en ARS (C)
-        self.assertEqual(wth_ml.currency_id, self.ars)
-        self.assertAlmostEqual(abs(wth_ml.amount_currency), 36_000, places=0)
+        # the withholding goes in the payment currency (USD), valued at the payment rate
+        self.assertEqual(wth_ml.currency_id, self.usd)
+        self.assertAlmostEqual(abs(wth_ml.amount_currency), 30, places=2)
         self.assertAlmostEqual(abs(wth_ml.balance), 36_000, places=0)
 
         self.assertAlmostEqual(sum(lines.mapped("balance")), 0, places=2)

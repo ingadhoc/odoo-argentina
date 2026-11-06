@@ -14,12 +14,17 @@ class TestARBA(common.TransactionCase):
         partner = cls.env["res.partner"].create(
             {
                 "name": "test_company",
-                "l10n_latam_identification_type_id": cls.env.ref("l10n_ar.it_cuit").id,
+                "country_id": cls.env.ref("base.ar").id,
                 "vat": "30697130841",
             }
         )
         company = cls.env["res.company"].create(
-            {"name": "test_company", "partner_id": partner.id, "vat": "30697130841"}
+            {
+                "name": "test_company",
+                "partner_id": partner.id,
+                "vat": "30697130841",
+                "currency_id": cls.env.ref("base.ARS").id,
+            }
         )
         cls.company = company.with_company(company)
 

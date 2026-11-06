@@ -33,7 +33,7 @@ class MailComposeMessage(models.TransientModel):
             if payment.partner_type != "supplier":
                 continue
 
-            withholdings = payment.l10n_ar_withholding_line_ids.filtered("amount")
+            withholdings = payment.withholding_line_ids.filtered("amount")
             if not withholdings:
                 continue
 
@@ -98,7 +98,7 @@ class MailComposeMessage(models.TransientModel):
             if payment.id not in mail_values_all:
                 continue
 
-            withholdings = payment.l10n_ar_withholding_line_ids.filtered("amount")
+            withholdings = payment.withholding_line_ids.filtered("amount")
             if not withholdings:
                 continue
 

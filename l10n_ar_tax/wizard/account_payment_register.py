@@ -59,34 +59,42 @@ class AccountPaymentRegister(models.TransientModel):
                 continue
             # si estamos pagando todas las facturas de misma delivery address usamos este dato para computar la
             # fiscal position
-            if len(rec.batches) == 1:
-                batch_result = rec.batches[0]
-                addresses = batch_result["lines"].mapped("move_id.partner_shipping_id")
+            address = rec.partner_id
+            batches = rec._get_batches()
+            if len(batches) == 1:
+                addresses = batches[0]["lines"].mapped("move_id.partner_shipping_id")
                 if len(addresses) == 1:
                     address = addresses
-                else:
-                    address = rec.partner_id
             rec.l10n_ar_fiscal_position_id = (
                 self.env["account.fiscal.position"].with_company(rec.company_id)._get_fiscal_position(address)
             )
 
-    @api.depends("l10n_ar_fiscal_position_id")
-    def _compute_l10n_ar_withholding_ids(self):
-        """Para compatibilidad si no se usa payment pro en la compania"""
-        # no llamamos a super porque ahora estamos trabajando con fiscal positions
-        # y solo agregamos taxes segun la FP que corresponda
-        # super()._compute_l10n_ar_withholding_ids()
-        # taxes = self.l10n_ar_withholding_ids.mapped('tax_id')
-        for rec in self:
-            date = rec.payment_date or fields.Date.context_today(rec)
-
+    @api.depends("l10n_ar_fiscal_position_id", "payment_date")
+    def _compute_withholding_line_ids(self):
+        """AR wizards take their withholdings from the fiscal position (as the payment does), not from the regimes of
+        the partner like Odoo does."""
+        ar_wizards = self.filtered(lambda x: x.country_code == "AR")
+        super(AccountPaymentRegister, self - ar_wizards)._compute_withholding_line_ids()
+        for rec in ar_wizards:
             withholdings = [Command.clear()]
-            if rec.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:
+            if rec.display_withholding and rec.can_edit_wizard and rec.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:
+                date = rec.payment_date or fields.Date.context_today(rec)
                 taxes = rec.l10n_ar_fiscal_position_id._l10n_ar_add_taxes(
                     rec.partner_id, rec.company_id, date, "withholding"
                 )
                 withholdings += [Command.create({"tax_id": x.id}) for x in taxes]
-            rec.l10n_ar_withholding_ids = withholdings
+            rec.withholding_line_ids = withholdings
+
+    def _compute_actionable_errors(self):
+        # the payments of several partners compute their own withholdings, so we do not warn that the wizard can't
+        super()._compute_actionable_errors()
+        for wizard in self.filtered("actionable_errors"):
+            if "l10n_ar_withholding_grouping_warning" in wizard.actionable_errors:
+                wizard.actionable_errors = {
+                    key: value
+                    for key, value in wizard.actionable_errors.items()
+                    if key != "l10n_ar_withholding_grouping_warning"
+                } or False
 
     @api.depends("is_payment_pro")
     def _compute_available_journal_ids(self):
@@ -126,13 +134,10 @@ class AccountPaymentRegister(models.TransientModel):
         payment_vals = super()._create_payment_vals_from_wizard(batch_result)
         if not self.is_payment_pro:
             return payment_vals
-        # Strip withholding write_off entries — the payment's l10n_ar_withholding_line_ids
-        # creates the journal lines via _prepare_move_withholding_lines at action_post time.
-        payment_vals["write_off_line_vals"] = [
-            v
-            for v in payment_vals.get("write_off_line_vals", [])
-            if not v.get("tax_repartition_line_id") and not v.get("tax_ids")
-        ]
+        # the payment proposes its own withholdings, over the debt it pays, and sets its withhold mode from them
+        if payment_vals.pop("withholding_line_ids", None):
+            payment_vals.pop("outstanding_account_id", None)
+        payment_vals.pop("withhold", None)
         # Embed to_pay_move_line_ids so l10n_ar_fiscal_position_id resolves at payment
         # creation time, triggering withholding computation before action_post.
         debt_cmd = self._get_debt_line_ids_cmd(batch_result)
@@ -155,25 +160,7 @@ class AccountPaymentRegister(models.TransientModel):
             for vals in to_process:
                 for key in ("write_off_line_vals", "force_balance", "line_ids"):
                     vals["create_vals"].pop(key, None)
-        payments = super()._init_payments(to_process, edit_mode=edit_mode)
-        if not self.is_payment_pro:
-            return payments
-        # Flush pending stored computed fields (l10n_ar_withholding_line_ids,
-        # withholdings_amount) triggered by to_pay_move_line_ids set at creation.
-        self.env.flush_all()
-        # amount must equal (to_pay_amount - withholdings_amount) so that:
-        #   payment_total = amount + withholdings_amount == to_pay_amount
-        # For single-partner, l10n_ar_withholding already reduces the wizard amount;
-        # for multi-partner batches the wizard carries no withholdings, so we correct here.
-        for vals in to_process:
-            payment = vals["payment"]
-            withholdings = getattr(payment, "withholdings_amount", 0.0)
-            if not withholdings:
-                continue
-            net = payment.to_pay_amount - withholdings
-            if net > 0 and not payment.currency_id.is_zero(net - payment.amount):
-                payment.write({"amount": net, "amount_exact": net})
-        return payments
+        return super()._init_payments(to_process, edit_mode=edit_mode)
 
     def _post_payments(self, to_process, edit_mode=False):
         if not self.env.context.get("payment_pro_draft"):

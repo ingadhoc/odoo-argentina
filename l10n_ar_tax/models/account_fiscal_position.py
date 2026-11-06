@@ -129,6 +129,12 @@ class AccountFiscalPosition(models.Model):
                 functions are being determined.
         """
         functions = super()._get_fpos_validation_functions(partner)
+        if self.env.company.country_id.code == "AR":
+            # since 20.0 l10n_ar auto applies positions without responsibility types; as in 19.0, only AR Domestic
+            domestic = self._l10n_ar_domestic_fiscal_position(self.env.company)
+            functions = [
+                lambda fpos: fpos.l10n_ar_afip_responsibility_type_ids or fpos == domestic,
+            ] + functions
         if self.env.context.get("l10n_ar_withholding") and self.env.company.country_id.code == "AR":
             return [
                 lambda fpos: any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids),

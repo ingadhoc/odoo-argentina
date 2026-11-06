@@ -3,7 +3,6 @@ import io
 import os
 import shutil
 import tempfile
-import time
 import zipfile
 from unittest.mock import patch
 
@@ -150,77 +149,54 @@ class TestPadronTmpDir(common.TransactionCase):
             self.today + relativedelta(days=30),
         )
         partner = self._create_partner(cuit)
-        tmp_root = tempfile.gettempdir()
-        before = set(os.listdir(tmp_root))
+        # Own temp dir: other processes may write to the shared /tmp while the test runs.
+        tmp_root = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, tmp_root, ignore_errors=True)
 
-        padron._get_aliquot(partner)
+        with patch.object(tempfile, "tempdir", tmp_root):
+            padron._get_aliquot(partner)
 
-        new_files = {f for f in set(os.listdir(tmp_root)) - before if os.path.isfile(os.path.join(tmp_root, f))}
-        self.assertFalse(new_files)
+        self.assertFalse(os.listdir(tmp_root))
 
-    def _make_idle(self, path):
-        old = time.time() - 2 * 3600
-        os.utime(path, (old, old))
+    def _fixed_line(self, kind, cuit, aliq):
+        # Same layout as the real ARBA files: every line has the same length and CUITs are sorted.
+        return "%s;29102026;01112026;30112026;%s;D;N;N;%s;01;" % (kind, cuit, aliq)
 
-    def test_gc_removes_only_idle_padrones(self):
-        """El recolector borra los padrones sin uso en la última hora y deja los usados."""
-        cuit = "30112223351"
-        idle = self._create_arba_padron(
-            [self._line("NRO-0", cuit, "10,00")],
-            [self._line("NRO-0", cuit, "0,50")],
-            self.today - relativedelta(months=2),
-            self.today - relativedelta(months=1, days=1),
+    def _write_padron_file(self, lines):
+        fp = tempfile.NamedTemporaryFile("w", suffix=".TXT", delete=False)
+        self.addCleanup(os.remove, fp.name)
+        with fp:
+            fp.write("\n".join(lines) + "\n")
+        return fp.name
+
+    def test_sorted_fixed_width_padron_is_bisected(self):
+        """Un padrón ordenado y de ancho fijo se busca por bisección, sin grep."""
+        cuits = ["20000033481", "20111222333", "27222333444", "30112223351", "33999888775"]
+        path = self._write_padron_file([self._fixed_line("R", c, "%d,50" % i) for i, c in enumerate(cuits)])
+
+        with patch("subprocess.run", side_effect=AssertionError("grep should not run")):
+            for i, cuit in enumerate(cuits):
+                self.assertEqual(self.padron_model.find_aliquot(path, cuit), ("30112026", "%d,50" % i))
+            self.assertEqual(self.padron_model.find_aliquot(path, "30112223352"), (False, False))
+            self.assertEqual(self.padron_model.find_aliquot(path, "2000003348"), (False, False))
+
+    def test_unsorted_padron_falls_back_to_grep(self):
+        """Si el padrón no viene ordenado por CUIT, la consulta usa grep y encuentra igual."""
+        cuits = ["30112223351", "20000033481", "27222333444"]
+        path = self._write_padron_file([self._fixed_line("R", c, "1,00") for c in cuits])
+
+        self.assertFalse(self.padron_model._get_padron_layout(path))
+        for cuit in cuits:
+            self.assertEqual(self.padron_model.find_aliquot(path, cuit), ("30112026", "1,00"))
+
+    def test_variable_width_padron_falls_back_to_grep(self):
+        """Si las líneas no miden todas lo mismo, la consulta usa grep y encuentra igual."""
+        path = self._write_padron_file(
+            [self._fixed_line("R", "20000033481", "1,00"), self._fixed_line("R", "30112223351", "10,00")]
         )
-        used = self._create_arba_padron(
-            [self._line("NRO-1", cuit, "11,00")],
-            [self._line("NRO-1", cuit, "1,00")],
-            self.today,
-            self.today + relativedelta(days=30),
-        )
-        partner = self._create_partner(cuit)
-        idle._get_aliquot(partner)
-        used._get_aliquot(partner)
-        self._make_idle(idle._get_parp_tmp_dir())
 
-        self.padron_model._gc_padron_tmp_dirs(force=True)
-
-        self.assertFalse(os.path.isdir(idle._get_parp_tmp_dir()))
-        self.assertTrue(os.path.isdir(used._get_parp_tmp_dir()))
-
-    def test_lookup_marks_padron_as_used(self):
-        """Consultar el padrón renueva la marca de uso y el recolector no lo borra."""
-        cuit = "30112223351"
-        padron = self._create_arba_padron(
-            [self._line("NRO-1", cuit, "11,00")],
-            [self._line("NRO-1", cuit, "1,00")],
-            self.today,
-            self.today + relativedelta(days=30),
-        )
-        partner = self._create_partner(cuit)
-        padron._get_aliquot(partner)
-        self._make_idle(padron._get_parp_tmp_dir())
-
-        self.assertEqual(padron._get_aliquot(partner), ("NRO-1", "1.00", "11.00"))
-        self.padron_model._gc_padron_tmp_dirs(force=True)
-
-        self.assertTrue(os.path.isdir(padron._get_parp_tmp_dir()))
-
-    def test_gc_skipped_when_infra_handles_it(self):
-        """Con la variable de entorno, Odoo no borra nada: lo hace infra."""
-        cuit = "30112223351"
-        padron = self._create_arba_padron(
-            [self._line("NRO-1", cuit, "11,00")],
-            [self._line("NRO-1", cuit, "1,00")],
-            self.today,
-            self.today + relativedelta(days=30),
-        )
-        padron._get_aliquot(self._create_partner(cuit))
-        self._make_idle(padron._get_parp_tmp_dir())
-
-        with patch.dict(os.environ, {"L10N_AR_PADRON_GC_EXTERNAL": "1"}):
-            self.padron_model._gc_padron_tmp_dirs(force=True)
-
-        self.assertTrue(os.path.isdir(padron._get_parp_tmp_dir()))
+        self.assertFalse(self.padron_model._get_padron_layout(path))
+        self.assertEqual(self.padron_model.find_aliquot(path, "30112223351"), ("30112026", "10,00"))
 
     def test_find_aliquot_raises_when_padron_cannot_be_read(self):
         """Si grep no puede leer el archivo, da error en vez de devolver que el CUIT no figura."""

@@ -29,9 +29,15 @@
                     </group>
                 </group>
             </xpath>
+            <!-- columns in the order of 19: tax, number, base, amount, formula; the ones 19 did not have go last -->
+            <xpath expr="//field[@name='withholding_line_ids']/list/field[@name='name']" position="before">
+                <xpath expr="//field[@name='withholding_line_ids']/list/field[@name='tax_id']" position="move"/>
+            </xpath>
             <xpath expr="//field[@name='withholding_line_ids']/list/field[@name='amount']" position="after">
                 <field name="l10n_ar_withholding_tax_type" column_invisible="True"/>
                 <field name="ref" optional="hide" readonly="l10n_ar_withholding_tax_type in ['earnings', 'earnings_scale']" force_save="1" column_invisible="parent.country_code != 'AR'"/>
+                <xpath expr="//field[@name='withholding_line_ids']/list/field[@name='account_id']" position="move"/>
+                <xpath expr="//field[@name='withholding_line_ids']/list/field[@name='analytic_distribution']" position="move"/>
                 <button name="%(action_report_withholding_certificate)d" icon="print" title="Print withholding voucher" type="action" invisible="parent.country_code != 'AR' or parent.partner_type != 'supplier' or parent.state == 'draft' or amount == 0"/>
                 <button name="action_l10n_ar_payment_withholding_tree" icon="menu" title="Watch previous withholdings" type="object" invisible="parent.country_code != 'AR' or parent.partner_type != 'supplier' or l10n_ar_withholding_tax_type not in ['earnings', 'earnings_scale']"/>
             </xpath>

@@ -16,6 +16,8 @@ _logger = logging.getLogger(__name__)
 GREP_TIMEOUT = 30
 PADRON_TMP_ROOT = os.path.join(tempfile.gettempdir(), "l10n_ar_padron")
 PADRON_LAYOUT_CHUNK = 1 << 16
+PADRON_EXTENSIONS = (".txt", ".csv")
+PADRON_MAX_EXTRACTED_SIZE = 900 * 1024 * 1024
 # Per process: (path, mtime, size) -> layout of the extracted file, so it is validated once.
 _padron_layout_cache = {}
 
@@ -86,27 +88,48 @@ class ResCompanyJurisdictionPadron(models.Model):
         path = attachment._full_path(attachment.store_fname)
         return path if os.path.isfile(path) else False
 
-    def _descompress_file(self, file_padron=None, dest_dir="/tmp"):
+    def _descompress_file(self):
+        """Extract the txt/csv files of this padron into its own folder."""
+        self.ensure_one()
         _logger.log(25, "Descompress zip file")
-        store_path = file_padron is None and self._get_padron_store_path()
+        dest_dir = self._get_parp_tmp_dir()
+        store_path = self._get_padron_store_path()
         if store_path:
             # Straight from the filestore: the worker does not hold a base64 copy of the zip.
             with zipfile.ZipFile(store_path, "r") as zip_file:
-                zip_file.extractall(path=dest_dir)
+                self._extract_padron_members(zip_file, dest_dir)
             return
-        if file_padron is None:
-            file_padron = self.file_padron
         # TemporaryFile is removed on close, so the zip copy does not stay in /tmp.
         with tempfile.TemporaryFile() as fobj:
-            fobj.write(base64.b64decode(file_padron))
+            fobj.write(base64.b64decode(self.file_padron))
             fobj.seek(0)
             with zipfile.ZipFile(fobj, "r") as zip_file:
-                zip_file.extractall(path=dest_dir)
+                self._extract_padron_members(zip_file, dest_dir)
+
+    @api.model
+    def _extract_padron_members(self, zip_file, dest_dir):
+        members = [
+            info
+            for info in zip_file.infolist()
+            if not info.is_dir() and info.filename.lower().endswith(PADRON_EXTENSIONS)
+        ]
+        if sum(info.file_size for info in members) > PADRON_MAX_EXTRACTED_SIZE:
+            raise UserError(_("The padron file is too large to be extracted."))
+        for info in members:
+            zip_file.extract(info, path=dest_dir)
+
+    @api.model
+    def _check_padron_path(self, path):
+        """Only files under the padron folder of this database can be read."""
+        root = os.path.realpath(os.path.join(PADRON_TMP_ROOT, self.env.cr.dbname))
+        if os.path.commonpath([root, os.path.realpath(path)]) != root:
+            raise UserError(_("Invalid padron path."))
 
     @api.model
     def _get_padron_layout(self, path):
         """Return (record_len, cuit_offset, cuit_len) when every line of the file has the same length
         and CUITs are strictly ascending, so a lookup can bisect it. Return False otherwise."""
+        self._check_padron_path(path)
         try:
             stat = os.stat(path)
         except OSError:
@@ -118,6 +141,7 @@ class ResCompanyJurisdictionPadron(models.Model):
 
     @api.model
     def _compute_padron_layout(self, path):
+        self._check_padron_path(path)
         try:
             with open(path, "rb") as fp:
                 first = fp.readline()
@@ -149,6 +173,7 @@ class ResCompanyJurisdictionPadron(models.Model):
 
     @api.model
     def _bisect_aliquot(self, path, cuit, layout):
+        self._check_padron_path(path)
         width, offset, cuit_len = layout
         key = cuit.encode()
         if len(key) != cuit_len:
@@ -183,6 +208,7 @@ class ResCompanyJurisdictionPadron(models.Model):
 
     def _find_aliquot(self, path, cuit):
         """We try to find aliqut and number for a partner given"""
+        self._check_padron_path(path)
         layout = self._get_padron_layout(path)
         if layout:
             return self._bisect_aliquot(path, cuit, layout)
@@ -243,6 +269,7 @@ class ResCompanyJurisdictionPadron(models.Model):
         return is_in_padron, aliquot_ret, aliquot_per
 
     def _find_parp_file(self, rootdir):
+        self._check_padron_path(rootdir)
         fallback_match = False
         for subdir, dirs, files in os.walk(rootdir):
             for filename in files:
@@ -279,7 +306,7 @@ class ResCompanyJurisdictionPadron(models.Model):
             file_content = base64.b64decode(self.file_padron)
             is_zip = self._is_zip_content(file_content)
         if is_zip:
-            self._descompress_file(dest_dir=tmp_dir)
+            self._descompress_file()
             path_file = self._find_parp_file(tmp_dir)
             if not path_file:
                 raise ValidationError("El archivo ZIP no contiene un padrón PARP en formato CSV o TXT.")
@@ -306,6 +333,7 @@ class ResCompanyJurisdictionPadron(models.Model):
             return self._read_parp_lines(fp.readlines(), cuit)
 
     def _find_file(self, rootdir, type_code):
+        self._check_padron_path(rootdir)
         res = False
         date = str(self.l10n_ar_padron_from_date.month) + str(self.l10n_ar_padron_from_date.year)
         pattern = r"%s.{1}|.TXT\Z" % type_code + date
@@ -337,7 +365,7 @@ class ResCompanyJurisdictionPadron(models.Model):
             for padron_type in padron_types:
                 path_file = self._find_file(tmp_dir, padron_type)
                 if not path_file:
-                    self._descompress_file(dest_dir=tmp_dir)
+                    self._descompress_file()
                     path_file = self._find_file(tmp_dir, padron_type)
                 if path_file:
                     nro, aliquot = self._find_aliquot(os.path.join(tmp_dir, path_file), cuit)

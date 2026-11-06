@@ -86,7 +86,7 @@ class ResCompanyJurisdictionPadron(models.Model):
         path = attachment._full_path(attachment.store_fname)
         return path if os.path.isfile(path) else False
 
-    def descompress_file(self, file_padron=None, dest_dir="/tmp"):
+    def _descompress_file(self, file_padron=None, dest_dir="/tmp"):
         _logger.log(25, "Descompress zip file")
         store_path = file_padron is None and self._get_padron_store_path()
         if store_path:
@@ -181,7 +181,7 @@ class ResCompanyJurisdictionPadron(models.Model):
             cuit,
         )
 
-    def find_aliquot(self, path, cuit):
+    def _find_aliquot(self, path, cuit):
         """We try to find aliqut and number for a partner given"""
         layout = self._get_padron_layout(path)
         if layout:
@@ -279,7 +279,7 @@ class ResCompanyJurisdictionPadron(models.Model):
             file_content = base64.b64decode(self.file_padron)
             is_zip = self._is_zip_content(file_content)
         if is_zip:
-            self.descompress_file(dest_dir=tmp_dir)
+            self._descompress_file(dest_dir=tmp_dir)
             path_file = self._find_parp_file(tmp_dir)
             if not path_file:
                 raise ValidationError("El archivo ZIP no contiene un padrón PARP en formato CSV o TXT.")
@@ -305,7 +305,7 @@ class ResCompanyJurisdictionPadron(models.Model):
         with open(path_file, encoding="latin-1") as fp:
             return self._read_parp_lines(fp.readlines(), cuit)
 
-    def find_file(self, rootdir, type_code):
+    def _find_file(self, rootdir, type_code):
         res = False
         date = str(self.l10n_ar_padron_from_date.month) + str(self.l10n_ar_padron_from_date.year)
         pattern = r"%s.{1}|.TXT\Z" % type_code + date
@@ -335,12 +335,12 @@ class ResCompanyJurisdictionPadron(models.Model):
             tmp_dir = self._get_parp_tmp_dir()
             padron_types = ["Per", "Ret"]
             for padron_type in padron_types:
-                path_file = self.find_file(tmp_dir, padron_type)
+                path_file = self._find_file(tmp_dir, padron_type)
                 if not path_file:
-                    self.descompress_file(dest_dir=tmp_dir)
-                    path_file = self.find_file(tmp_dir, padron_type)
+                    self._descompress_file(dest_dir=tmp_dir)
+                    path_file = self._find_file(tmp_dir, padron_type)
                 if path_file:
-                    nro, aliquot = self.find_aliquot(os.path.join(tmp_dir, path_file), cuit)
+                    nro, aliquot = self._find_aliquot(os.path.join(tmp_dir, path_file), cuit)
                     if padron_type == "Per":
                         aliquot_per = aliquot and aliquot.replace(",", ".")
                     else:

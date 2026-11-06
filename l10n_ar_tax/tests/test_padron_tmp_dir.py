@@ -111,13 +111,13 @@ class TestPadronTmpDir(common.TransactionCase):
         partner_b = self._create_partner(cuit_b)
 
         calls = []
-        original = type(padron).descompress_file
+        original = type(padron)._descompress_file
 
         def counting(self, file_padron=None, dest_dir="/tmp"):
             calls.append(1)
             return original(self, file_padron, dest_dir=dest_dir)
 
-        with patch.object(type(padron), "descompress_file", counting):
+        with patch.object(type(padron), "_descompress_file", counting):
             result_a = padron._get_aliquot(partner_a)
             result_b = padron._get_aliquot(partner_b)
 
@@ -135,7 +135,7 @@ class TestPadronTmpDir(common.TransactionCase):
         with tempfile.NamedTemporaryFile("w", suffix=".txt") as f:
             f.write(content)
             f.flush()
-            nro, aliq = self.padron_model.find_aliquot(f.name, cuit)
+            nro, aliq = self.padron_model._find_aliquot(f.name, cuit)
 
         self.assertEqual((nro, aliq), ("NRO789", "7,00"))
 
@@ -205,9 +205,9 @@ class TestPadronTmpDir(common.TransactionCase):
 
         with patch("subprocess.run", side_effect=AssertionError("grep should not run")):
             for i, cuit in enumerate(cuits):
-                self.assertEqual(self.padron_model.find_aliquot(path, cuit), ("30112026", "%d,50" % i))
-            self.assertEqual(self.padron_model.find_aliquot(path, "30112223352"), (False, False))
-            self.assertEqual(self.padron_model.find_aliquot(path, "2000003348"), (False, False))
+                self.assertEqual(self.padron_model._find_aliquot(path, cuit), ("30112026", "%d,50" % i))
+            self.assertEqual(self.padron_model._find_aliquot(path, "30112223352"), (False, False))
+            self.assertEqual(self.padron_model._find_aliquot(path, "2000003348"), (False, False))
 
     def test_unsorted_padron_falls_back_to_grep(self):
         """Si el padrón no viene ordenado por CUIT, la consulta usa grep y encuentra igual."""
@@ -216,7 +216,7 @@ class TestPadronTmpDir(common.TransactionCase):
 
         self.assertFalse(self.padron_model._get_padron_layout(path))
         for cuit in cuits:
-            self.assertEqual(self.padron_model.find_aliquot(path, cuit), ("30112026", "1,00"))
+            self.assertEqual(self.padron_model._find_aliquot(path, cuit), ("30112026", "1,00"))
 
     def test_variable_width_padron_falls_back_to_grep(self):
         """Si las líneas no miden todas lo mismo, la consulta usa grep y encuentra igual."""
@@ -225,9 +225,9 @@ class TestPadronTmpDir(common.TransactionCase):
         )
 
         self.assertFalse(self.padron_model._get_padron_layout(path))
-        self.assertEqual(self.padron_model.find_aliquot(path, "30112223351"), ("30112026", "10,00"))
+        self.assertEqual(self.padron_model._find_aliquot(path, "30112223351"), ("30112026", "10,00"))
 
     def test_find_aliquot_raises_when_padron_cannot_be_read(self):
         """Si grep no puede leer el archivo, da error en vez de devolver que el CUIT no figura."""
         with self.assertRaises(UserError):
-            self.padron_model.find_aliquot("/nonexistent/l10n_ar_padron.txt", "30112223351")
+            self.padron_model._find_aliquot("/nonexistent/l10n_ar_padron.txt", "30112223351")

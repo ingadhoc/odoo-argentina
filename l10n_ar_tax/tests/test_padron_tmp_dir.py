@@ -7,6 +7,7 @@ import zipfile
 from unittest.mock import patch
 
 from dateutil.relativedelta import relativedelta
+from odoo.addons.l10n_ar_tax.models import res_company_jurisdiction_padron as padron_module
 from odoo.exceptions import UserError
 from odoo.tests import common
 
@@ -101,9 +102,9 @@ class TestPadronTmpDir(common.TransactionCase):
         calls = []
         original = type(padron)._descompress_file
 
-        def counting(self, file_padron=None, dest_dir="/tmp"):
+        def counting(self):
             calls.append(1)
-            return original(self, file_padron, dest_dir=dest_dir)
+            return original(self)
 
         with patch.object(type(padron), "_descompress_file", counting):
             result_a = padron._get_aliquot(partner_a)
@@ -116,14 +117,10 @@ class TestPadronTmpDir(common.TransactionCase):
     def test_find_aliquot_ignores_substring_match(self):
         """El CUIT aparece embebido en otro campo en la 1ra linea; debe matchear la exacta."""
         cuit = "30112223335"
-        content = "%s\n%s\n" % (
-            self._line("DECOY", "RAZON%sSA" % cuit, "99,99"),
-            self._line("NRO789", cuit, "7,00"),
+        path = self._write_padron_file(
+            [self._line("DECOY", "RAZON%sSA" % cuit, "99,99"), self._line("NRO789", cuit, "7,00")]
         )
-        with tempfile.NamedTemporaryFile("w", suffix=".txt") as f:
-            f.write(content)
-            f.flush()
-            nro, aliq = self.padron_model._find_aliquot(f.name, cuit)
+        nro, aliq = self.padron_model._find_aliquot(path, cuit)
 
         self.assertEqual((nro, aliq), ("NRO789", "7,00"))
 
@@ -179,9 +176,14 @@ class TestPadronTmpDir(common.TransactionCase):
         # Same layout as the real ARBA files: every line has the same length and CUITs are sorted.
         return "%s;29102026;01112026;30112026;%s;D;N;N;%s;01;" % (kind, cuit, aliq)
 
+    def _padron_test_dir(self):
+        path = os.path.join(padron_module.PADRON_TMP_ROOT, self.env.cr.dbname, "test_files")
+        os.makedirs(path, exist_ok=True)
+        self.addCleanup(shutil.rmtree, path, ignore_errors=True)
+        return path
+
     def _write_padron_file(self, lines):
-        fp = tempfile.NamedTemporaryFile("w", suffix=".TXT", delete=False)
-        self.addCleanup(os.remove, fp.name)
+        fp = tempfile.NamedTemporaryFile("w", suffix=".TXT", delete=False, dir=self._padron_test_dir())
         with fp:
             fp.write("\n".join(lines) + "\n")
         return fp.name
@@ -218,4 +220,50 @@ class TestPadronTmpDir(common.TransactionCase):
     def test_find_aliquot_raises_when_padron_cannot_be_read(self):
         """Si grep no puede leer el archivo, da error en vez de devolver que el CUIT no figura."""
         with self.assertRaises(UserError):
-            self.padron_model._find_aliquot("/nonexistent/l10n_ar_padron.txt", "30112223351")
+            self.padron_model._find_aliquot(os.path.join(self._padron_test_dir(), "missing.txt"), "30112223351")
+
+    def test_paths_outside_padron_folder_are_rejected(self):
+        """Solo se leen archivos de la carpeta de padrones de la base."""
+        path = self._write_padron_file([self._fixed_line("R", "20000033481", "1,00")])
+        outside = os.path.join(self._padron_test_dir(), "..", "..", "..", os.path.basename(path))
+        for call in (
+            lambda: self.padron_model._find_aliquot("/etc/hostname", "20000033481"),
+            lambda: self.padron_model._find_aliquot(outside, "20000033481"),
+            lambda: self.padron_model._get_padron_layout("/etc/hostname"),
+            lambda: self.padron_model._find_file("/etc", "Ret"),
+            lambda: self.padron_model._find_parp_file("/etc"),
+        ):
+            with self.assertRaises(UserError):
+                call()
+
+    def test_extraction_skips_other_files(self):
+        """Del zip se extraen solo los .txt y .csv."""
+        cuit = "30112223351"
+        padron = self._create_arba_padron(
+            [self._line("NRO-1", cuit, "11,00")],
+            [self._line("NRO-1", cuit, "1,00")],
+            self.today,
+            self.today + relativedelta(days=30),
+        )
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w") as zip_file:
+            zip_file.writestr("Per.TXT", self._line("NRO-1", cuit, "11,00") + "\n")
+            zip_file.writestr("notes.py", "print('x')\n")
+        padron.file_padron = base64.b64encode(buffer.getvalue())
+
+        padron._descompress_file()
+
+        self.assertEqual(sorted(os.listdir(padron._get_parp_tmp_dir())), ["Per.TXT"])
+
+    def test_extraction_rejects_too_large_padron(self):
+        """Si el contenido del zip supera el tope, no se extrae."""
+        cuit = "30112223351"
+        padron = self._create_arba_padron(
+            [self._line("NRO-1", cuit, "11,00")],
+            [self._line("NRO-1", cuit, "1,00")],
+            self.today,
+            self.today + relativedelta(days=30),
+        )
+        with patch.object(padron_module, "PADRON_MAX_EXTRACTED_SIZE", 10), self.assertRaises(UserError):
+            padron._descompress_file()
+        self.assertFalse(os.path.isdir(padron._get_parp_tmp_dir()))

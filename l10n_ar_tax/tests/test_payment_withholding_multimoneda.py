@@ -328,15 +328,49 @@ class TestPaymentWithholdingMultimoneda(TestArCommon):
 
     def test_t9_reconcile_usd_journal_ars_invoice(self):
         """Case 9, reconcile on company currency, A=USD, B1=B2=ARS: a bill of 1,000 ARS + VAT paid from USD withholds
-        30 ARS. The line keeps it in USD, and the certificate and the entry must still say 30 ARS."""
+        30 ARS. The line keeps it in USD (a base of 0.83 USD, that goes back as 996 ARS), and the certificate and the
+        entry must still say 30 ARS on a base of 1,000 ARS."""
         self.company.reconcile_on_company_currency = True
         payment = self._create_payment(self.bank_usd, self._create_invoice(1_000, self.ars))
         self.assertEqual(payment.destination_currency_id, self.ars)
         self.assertAlmostEqual(payment._get_withholding_rate(), 1.0, places=6)
         line = payment.withholding_line_ids
         self.assertEqual(len(line), 1)
-        self.assertAlmostEqual(line._l10n_ar_to_company_currency(line.base_amount), 1_000, places=2)
-        self.assertAlmostEqual(line._l10n_ar_to_company_currency(line.amount), 30, places=2)
         payment.action_post()
         wth = payment.move_id.line_ids.filtered(lambda x: x.account_id == self.account_tax_wth)
         self.assertAlmostEqual(wth.balance, -30, places=2)
+        amounts = line._l10n_ar_get_company_currency_amounts()
+        self.assertAlmostEqual(amounts["base_amount"], 1_000, places=2)
+        self.assertAlmostEqual(amounts["amount"], 30, places=2)
+
+    def test_t10_certificate_reads_the_entry(self):
+        """A=USD, B=C=ARS at a rate that does not divide the withholding: 30,000 ARS is 20.58 USD on the line, which
+        goes back as 29,995.35 ARS. Posted, the certificate and the receipt show the ARS of the entry; in draft, the
+        line converted at the payment rate."""
+        self.company.reconcile_on_company_currency = True
+        self._set_usd_rate(1_457.5)
+        payment = self._create_payment(self.bank_usd, self._create_invoice(1_000_000, self.ars))
+        line = payment.withholding_line_ids
+        self.assertEqual(len(line), 1)
+        self.assertAlmostEqual(line.amount, 20.58, places=2)
+        self.assertEqual(
+            line._l10n_ar_get_company_currency_amounts(),
+            {
+                "base_amount": line._l10n_ar_to_company_currency(line.base_amount),
+                "amount": line._l10n_ar_to_company_currency(line.amount),
+            },
+        )
+
+        payment.action_post()
+        wth = payment.move_id.line_ids.filtered(lambda x: x.tax_line_id == line.tax_id)
+        amounts = line._l10n_ar_get_company_currency_amounts()
+        self.assertAlmostEqual(amounts["amount"], abs(wth.balance), places=2)
+        self.assertAlmostEqual(amounts["base_amount"], abs(wth.tax_base_amount), places=2)
+
+        certificate = (
+            self.env["ir.actions.report"]
+            ._render_qweb_html("l10n_ar_tax.action_report_withholding_certificate", line.ids)[0]
+            .decode()
+        )
+        self.assertIn('<span class="oe_currency_value">%s</span>' % f"{abs(wth.balance):,.2f}", certificate)
+        self.assertIn('<span class="oe_currency_value">%s</span>' % f"{abs(wth.tax_base_amount):,.2f}", certificate)

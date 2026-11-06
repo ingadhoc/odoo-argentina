@@ -3,6 +3,7 @@ import io
 import logging
 import os
 import re
+import shutil
 import subprocess
 import tempfile
 import zipfile
@@ -69,8 +70,32 @@ class ResCompanyJurisdictionPadron(models.Model):
             res += [(padron.id, name)]
         return res
 
-    def descompress_file(self, file_padron, dest_dir="/tmp"):
+    def _get_padron_store_path(self):
+        """Return the filestore path of file_padron, or False if it is not stored as a file."""
+        self.ensure_one()
+        attachment = (
+            self.env["ir.attachment"]
+            .sudo()
+            .search(
+                [("res_model", "=", self._name), ("res_field", "=", "file_padron"), ("res_id", "=", self.id)],
+                limit=1,
+            )
+        )
+        if not attachment.store_fname:
+            return False
+        path = attachment._full_path(attachment.store_fname)
+        return path if os.path.isfile(path) else False
+
+    def descompress_file(self, file_padron=None, dest_dir="/tmp"):
         _logger.log(25, "Descompress zip file")
+        store_path = file_padron is None and self._get_padron_store_path()
+        if store_path:
+            # Straight from the filestore: the worker does not hold a base64 copy of the zip.
+            with zipfile.ZipFile(store_path, "r") as zip_file:
+                zip_file.extractall(path=dest_dir)
+            return
+        if file_padron is None:
+            file_padron = self.file_padron
         # TemporaryFile is removed on close, so the zip copy does not stay in /tmp.
         with tempfile.TemporaryFile() as fobj:
             fobj.write(base64.b64decode(file_padron))
@@ -246,9 +271,15 @@ class ResCompanyJurisdictionPadron(models.Model):
         if path_file:
             return path_file
 
-        file_content = base64.b64decode(self.file_padron)
-        if self._is_zip_content(file_content):
-            self.descompress_file(self.file_padron, dest_dir=tmp_dir)
+        store_path = self._get_padron_store_path()
+        if store_path:
+            file_content = None
+            is_zip = zipfile.is_zipfile(store_path)
+        else:
+            file_content = base64.b64decode(self.file_padron)
+            is_zip = self._is_zip_content(file_content)
+        if is_zip:
+            self.descompress_file(dest_dir=tmp_dir)
             path_file = self._find_parp_file(tmp_dir)
             if not path_file:
                 raise ValidationError("El archivo ZIP no contiene un padrón PARP en formato CSV o TXT.")
@@ -257,8 +288,11 @@ class ResCompanyJurisdictionPadron(models.Model):
         # CSV directo (no ZIP): lo persistimos para no re-decodificar cada vez.
         os.makedirs(tmp_dir, exist_ok=True)
         path_file = os.path.join(tmp_dir, "padron.csv")
-        with open(path_file, "w", encoding="latin-1") as fp:
-            fp.write(file_content.decode("latin-1"))
+        if store_path:
+            shutil.copyfile(store_path, path_file)
+        else:
+            with open(path_file, "w", encoding="latin-1") as fp:
+                fp.write(file_content.decode("latin-1"))
         return path_file
 
     def _read_parp_from_binary(self, cuit):
@@ -303,7 +337,7 @@ class ResCompanyJurisdictionPadron(models.Model):
             for padron_type in padron_types:
                 path_file = self.find_file(tmp_dir, padron_type)
                 if not path_file:
-                    self.descompress_file(self.file_padron, dest_dir=tmp_dir)
+                    self.descompress_file(dest_dir=tmp_dir)
                     path_file = self.find_file(tmp_dir, padron_type)
                 if path_file:
                     nro, aliquot = self.find_aliquot(os.path.join(tmp_dir, path_file), cuit)

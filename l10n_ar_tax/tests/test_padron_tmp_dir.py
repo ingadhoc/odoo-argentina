@@ -113,7 +113,7 @@ class TestPadronTmpDir(common.TransactionCase):
         calls = []
         original = type(padron).descompress_file
 
-        def counting(self, file_padron, dest_dir="/tmp"):
+        def counting(self, file_padron=None, dest_dir="/tmp"):
             calls.append(1)
             return original(self, file_padron, dest_dir=dest_dir)
 
@@ -157,6 +157,35 @@ class TestPadronTmpDir(common.TransactionCase):
             padron._get_aliquot(partner)
 
         self.assertFalse(os.listdir(tmp_root))
+
+    def test_extraction_reads_zip_from_filestore(self):
+        """Con el padrón en el filestore, se extrae desde ahí sin decodificar el base64 del campo."""
+        cuit = "30112223351"
+        padron = self._create_arba_padron(
+            [self._line("NRO-1", cuit, "11,00")],
+            [self._line("NRO-1", cuit, "1,00")],
+            self.today,
+            self.today + relativedelta(days=30),
+        )
+        partner = self._create_partner(cuit)
+        self.assertTrue(padron._get_padron_store_path())
+
+        with patch("base64.b64decode", side_effect=AssertionError("the field should not be decoded")):
+            self.assertEqual(padron._get_aliquot(partner), ("NRO-1", "1.00", "11.00"))
+
+    def test_extraction_without_filestore_path_decodes_the_field(self):
+        """Si el padrón no está guardado como archivo, se extrae decodificando el campo como antes."""
+        cuit = "30112223351"
+        padron = self._create_arba_padron(
+            [self._line("NRO-1", cuit, "11,00")],
+            [self._line("NRO-1", cuit, "1,00")],
+            self.today,
+            self.today + relativedelta(days=30),
+        )
+        partner = self._create_partner(cuit)
+
+        with patch.object(type(padron), "_get_padron_store_path", return_value=False):
+            self.assertEqual(padron._get_aliquot(partner), ("NRO-1", "1.00", "11.00"))
 
     def _fixed_line(self, kind, cuit, aliq):
         # Same layout as the real ARBA files: every line has the same length and CUITs are sorted.

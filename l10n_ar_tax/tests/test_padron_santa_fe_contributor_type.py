@@ -97,7 +97,6 @@ class TestPadronSantaFeContributorType(TestArCommon):
             zip_file.writestr("PARP.TXT", content)
         padron = self.env["res.company.jurisdiction.padron"].create(
             {
-                "company_id": self.company_ri.id,
                 "state_id": self.santa_fe.id,
                 "file_padron": base64.b64encode(buffer.getvalue()).decode(),
                 "filename": "parp_santa_fe.zip",

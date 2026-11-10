@@ -167,8 +167,10 @@ msgstr ""
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,help:l10n_ar_ux.field_res_company__arba_cit
-msgid "Clave de Identificación Tributaria de ARBA"
+msgid ""
+"ARBA Tax Identification Key. A branch with the same CUIT that leaves it empty uses the one of its parent company."
 msgstr ""
+"Clave de Identificación Tributaria de ARBA. Una sucursal con el mismo CUIT que la deja vacía usa la de su empresa padre."
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.res_config_settings_inherit_view_form

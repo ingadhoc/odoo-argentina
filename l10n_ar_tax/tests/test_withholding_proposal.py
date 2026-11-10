@@ -39,6 +39,19 @@ class TestWithholdingProposal(L10nArTaxPaymentCommon):
         payment = self._create_payment(bill, self.tax_iibb_untaxed, post=False)
         self._assert_withholding(payment, self.tax_iibb_untaxed, 1210.0, 36.30)
 
+    def test_b_bill_without_vat_takes_the_vat_out_of_the_base(self):
+        """A B bill has no VAT apart: its total of 1,210 is taken as 1,000 plus VAT for the base."""
+        bill = self._create_bill(
+            1210.0,
+            "1-1",
+            tax_ids=self._search_tax("iva_no_corresponde", type_tax_use="purchase"),
+            partner=self.res_partner_gritti_mono,
+            l10n_latam_document_type_id=self.document_type["invoice_b"].id,
+        )
+        self.assertEqual(bill.amount_untaxed, bill.amount_total)
+        payment = self._create_payment(bill, self.tax_iibb_untaxed, post=False)
+        self._assert_withholding(payment, self.tax_iibb_untaxed, 1000.0, 30.0)
+
     def test_payment_entry_is_gross(self):
         """The payment amount is the debt (gross): the bank pays the net, the withholding goes to its account."""
         bill = self._create_bill(1000.0, "1-1")

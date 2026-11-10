@@ -231,7 +231,7 @@ class TestPadronTmpDir(common.TransactionCase):
 
     def test_find_aliquot_raises_when_padron_cannot_be_read(self):
         """Si grep no puede leer el archivo, da error en vez de devolver que el CUIT no figura."""
-        with self.assertRaises(UserError):
+        with self.assertLogs(padron_module._logger.name, level="WARNING"), self.assertRaises(UserError):
             self.padron_model._find_aliquot(os.path.join(self._padron_test_dir(), "missing.txt"), "30112223351")
 
     def test_paths_outside_padron_folder_are_rejected(self):

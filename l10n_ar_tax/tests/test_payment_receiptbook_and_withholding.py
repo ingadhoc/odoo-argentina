@@ -59,7 +59,7 @@ class TestPaymentReceiptbookAndWithholding(L10nArTaxPaymentCommon):
             bill, self.tax_iibb_untaxed, post=False, journal=self.usd_bank_journal, amount=bill.amount_total
         )
         line = self._assert_withholding(payment, self.tax_iibb_untaxed, 500.0, 15.0)
-        self.assertEqual(line._l10n_ar_to_company_currency(line.amount), 1500.0)
+        self.assertEqual(line.l10n_ar_amount, 1500.0)
         payment.action_post()
 
         tax_lines = payment.move_id.line_ids.filtered(lambda x: x.tax_line_id == self.tax_iibb_untaxed)

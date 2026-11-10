@@ -22,7 +22,7 @@
             header_address="o.company_id.partner_id"
             custom_footer="custom_footer">
             <t t-set="o" t-value="o.with_context(lang=lang)" />
-            <t t-set="amounts_company_currency" t-value="o._l10n_ar_get_company_currency_amounts()"/>
+            <t t-set="amounts_company_currency" t-value="o._get_company_currency_amounts()"/>
             <div class="page">
                 <div id="informations" class="row mt8 mb8">
                     <div class="col-6">

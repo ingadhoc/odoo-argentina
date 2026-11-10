@@ -58,7 +58,7 @@
         <!-- ── Withholding rows inside the payments table ───────────────────────── -->
         <xpath expr="//t[@name='withholding_rows']" position="replace">
             <t t-foreach="payment_bundle.withholding_line_ids.filtered('amount')" t-as="line">
-                <t t-set="amount_company_currency" t-value="line._l10n_ar_get_company_currency_amounts()['amount']"/>
+                <t t-set="amount_company_currency" t-value="line._get_company_currency_amounts()['amount']"/>
                 <tr style="page-break-inside: avoid">
                     <td>
                         <span t-if="line.tax_id.l10n_ar_withholding_tax_type in ['earnings', 'earnings_scale']" t-out="line.tax_id.invoice_label or 'Retención Ganancias'"/>

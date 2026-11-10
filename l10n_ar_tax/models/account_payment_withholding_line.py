@@ -9,6 +9,22 @@ class AccountPaymentWithholdingLine(models.Model):
 
     l10n_ar_withholding_tax_type = fields.Selection(related="tax_id.l10n_ar_withholding_tax_type")
     ref = fields.Text(compute="_compute_amount", store=True, readonly=False)
+    # The line keeps the payment currency, as the core builds the totals and the entry on it. The withholding is
+    # computed, certified and informed in ARS, so those values are stored too and are the ones the entry books.
+    l10n_ar_base_amount = fields.Monetary(
+        string="Withholding base (ARS)",
+        currency_field="comodel_company_currency_id",
+        compute="_compute_base_amount",
+        store=True,
+        readonly=False,
+    )
+    l10n_ar_amount = fields.Monetary(
+        string="Withholding amount (ARS)",
+        currency_field="comodel_company_currency_id",
+        compute="_compute_amount",
+        store=True,
+        readonly=False,
+    )
 
     def _l10n_ar_get_computable_withholdings(self):
         """Lines whose base and amount we compute: supplier withholdings of a draft payment pro payment.
@@ -40,24 +56,45 @@ class AccountPaymentWithholdingLine(models.Model):
         self.ensure_one()
         return self.comodel_company_currency_id.round(amount / self._l10n_ar_get_company_to_line_rate())
 
-    def _l10n_ar_get_company_currency_amounts(self):
-        """Base and amount of the withholding in company currency, as the certificate and the receipt show them.
+    def _l10n_ar_get_typed_in_ars(self):
+        """Lines of a draft AR payment pro payment in another currency that the user types in ARS, as the
+        certificate says (the ones we do not compute): the payment currency values follow the ARS ones."""
+        return self._l10n_ar_has_company_currency_amounts().filtered(
+            lambda x: x.payment_id.state == "draft" and x.payment_id.currency_id != x.payment_id.company_currency_id
+        )
 
-        Taken from the tax line of the posted entry (its balance and tax_base_amount), so they match the books:
-        converting the line back from the payment currency can be off by the rounding of the line. Without a posted
-        entry, or when another line of the payment has the same tax (the entry groups them by tax), the line is
-        converted at the payment rate."""
+    def _l10n_ar_get_reconvertible(self):
+        """Lines whose ARS values follow the payment currency ones: all but the ones of a posted payment, which keep
+        what their entry booked."""
+        return self.filtered(lambda x: x.payment_id.state == "draft" or not x.payment_id.use_payment_pro)
+
+    def _l10n_ar_has_company_currency_amounts(self):
+        """Lines that store their ARS values: the ones of AR payment pro payments."""
+        return self.filtered(lambda x: x.payment_id.country_code == "AR" and x.payment_id.use_payment_pro)
+
+    def _get_company_currency_amounts(self):
+        """The stored ARS values, so the entry, the certificate and the receipt do not convert the line back."""
         self.ensure_one()
-        pay = self.payment_id
-        same_tax = pay.withholding_line_ids.filtered(lambda x: x.tax_id == self.tax_id)
-        if pay.move_id.state == "posted" and len(same_tax) == 1:
-            tax_line = pay.move_id.line_ids.filtered(lambda x: x.tax_line_id == self.tax_id)
-            if len(tax_line) == 1:
-                return {"base_amount": abs(tax_line.tax_base_amount), "amount": abs(tax_line.balance)}
-        return {
-            "base_amount": self._l10n_ar_to_company_currency(self.base_amount),
-            "amount": self._l10n_ar_to_company_currency(self.amount),
-        }
+        if self._l10n_ar_has_company_currency_amounts():
+            return {"base_amount": self.l10n_ar_base_amount, "amount": self.l10n_ar_amount}
+        return super()._get_company_currency_amounts()
+
+    @api.onchange("l10n_ar_base_amount", "tax_id")
+    def _onchange_l10n_ar_base_amount(self):
+        typed_in_ars = self._l10n_ar_get_typed_in_ars() - self._l10n_ar_get_computable_withholdings()
+        for line in typed_in_ars.filtered("tax_id"):
+            line.l10n_ar_amount = line._l10n_ar_apply_withholding_tax(
+                custom_base_amount=line.l10n_ar_base_amount, currency=line.comodel_company_currency_id
+            )
+        for line in self._l10n_ar_has_company_currency_amounts():
+            line.base_amount = line.comodel_currency_id.round(
+                line.l10n_ar_base_amount * line._l10n_ar_get_company_to_line_rate()
+            )
+
+    @api.onchange("l10n_ar_amount")
+    def _onchange_l10n_ar_amount(self):
+        for line in self._l10n_ar_has_company_currency_amounts():
+            line.amount = line.comodel_currency_id.round(line.l10n_ar_amount * line._l10n_ar_get_company_to_line_rate())
 
     @api.depends(
         "tax_id",
@@ -70,11 +107,25 @@ class AccountPaymentWithholdingLine(models.Model):
     )
     def _compute_base_amount(self):
         computable = self._l10n_ar_get_computable_withholdings()
-        super(AccountPaymentWithholdingLine, self - computable)._compute_base_amount()
+        typed_in_ars = self._l10n_ar_get_typed_in_ars() - computable
+        others = self - computable - typed_in_ars
+        super(AccountPaymentWithholdingLine, others)._compute_base_amount()
+        for line in others._l10n_ar_get_reconvertible():
+            line.l10n_ar_base_amount = line._l10n_ar_to_company_currency(line.base_amount)
+        for line in typed_in_ars:
+            # a line created in the payment currency (by code or an import) gets its ARS from it
+            if not line.l10n_ar_base_amount and line.base_amount:
+                line.l10n_ar_base_amount = line._l10n_ar_to_company_currency(line.base_amount)
+                continue
+            line.base_amount = line.comodel_currency_id.round(
+                line.l10n_ar_base_amount * line._l10n_ar_get_company_to_line_rate()
+            )
         computable.payment_id._compute_to_pay_amount()
         for wth in computable:
-            base_in_c = wth._l10n_ar_get_base_company_currency()
-            wth.base_amount = wth.comodel_currency_id.round(base_in_c * wth._l10n_ar_get_company_to_line_rate())
+            wth.l10n_ar_base_amount = wth._l10n_ar_get_base_company_currency()
+            wth.base_amount = wth.comodel_currency_id.round(
+                wth.l10n_ar_base_amount * wth._l10n_ar_get_company_to_line_rate()
+            )
 
     def _l10n_ar_get_base_company_currency(self):
         """Base over the selected debt (untaxed, or with taxes for 'iibb_total') plus the advance, in company
@@ -118,17 +169,27 @@ class AccountPaymentWithholdingLine(models.Model):
             base_in_c *= tax.ratio / 100
         return base_in_c
 
-    @api.depends("base_amount", "tax_id")
+    @api.depends("base_amount", "l10n_ar_base_amount", "tax_id")
     def _compute_amount(self):
         computable = self._l10n_ar_get_computable_withholdings()
-        super(AccountPaymentWithholdingLine, self - computable)._compute_amount()
+        typed_in_ars = self._l10n_ar_get_typed_in_ars() - computable
+        others = self - computable - typed_in_ars
+        super(AccountPaymentWithholdingLine, others)._compute_amount()
+        for line in others._l10n_ar_get_reconvertible():
+            line.l10n_ar_amount = line._l10n_ar_to_company_currency(line.amount)
+        for line in typed_in_ars:
+            if not line.l10n_ar_amount and line.amount:
+                line.l10n_ar_amount = line._l10n_ar_to_company_currency(line.amount)
+                continue
+            line.amount = line.comodel_currency_id.round(line.l10n_ar_amount * line._l10n_ar_get_company_to_line_rate())
         for line in computable:
             if not line.tax_id:
-                line.amount = 0.0
+                line.amount = line.l10n_ar_amount = 0.0
                 line.ref = False
                 continue
             amount_in_c, ref = line._l10n_ar_compute_withholding()
-            line.amount = line.comodel_currency_id.round(amount_in_c * line._l10n_ar_get_company_to_line_rate())
+            line.l10n_ar_amount = line.comodel_company_currency_id.round(amount_in_c)
+            line.amount = line.comodel_currency_id.round(line.l10n_ar_amount * line._l10n_ar_get_company_to_line_rate())
             line.ref = ref
 
     def _l10n_ar_compute_withholding(self):
@@ -141,7 +202,7 @@ class AccountPaymentWithholdingLine(models.Model):
         self.ensure_one()
         tax = self.tax_id
         company_currency = self.comodel_company_currency_id
-        base_amount = company_currency.round(self.base_amount / self._l10n_ar_get_company_to_line_rate())
+        base_amount = self.l10n_ar_base_amount
         f = company_currency.format
         ref = False
 

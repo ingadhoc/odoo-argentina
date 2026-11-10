@@ -11,9 +11,9 @@
                 <button name="compute_to_pay_amount_for_check" icon="refresh" title="A partir del importe del pago (campo Importe) + ajuste, se calculan las retenciones y el importe a pagar. Útil por ejemplo para pagos con cheques donde el importe Importe no lo podemos cambiar" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft'] or payment_method_code not in ['in_third_party_checks', 'out_third_party_checks']" class="oe_inline oe_link"/>
             </div>
 
-            <!-- with payment pro the page stays visible on AR supplier payments, as in 19, so that the fiscal position can be chosen before there are lines -->
+            <!-- with payment pro the page stays visible, as in 19: payments choose the fiscal position and receipts type the withholdings before there are lines -->
             <xpath expr="//notebook[@name='payment_notebook']/page[.//field[@name='withholding_line_ids']]" position="attributes">
-                <attribute name="invisible">is_internal_transfer or (withhold == 'payment' and not (use_payment_pro and country_code == 'AR' and partner_type == 'supplier'))</attribute>
+                <attribute name="invisible">is_internal_transfer or (withhold == 'payment' and not (use_payment_pro and display_withholding))</attribute>
             </xpath>
             <xpath expr="//notebook[@name='payment_notebook']/page/group[field[@name='withholding_line_ids']]" position="before">
                 <group invisible="not use_payment_pro or country_code != 'AR' or partner_type != 'supplier'">
@@ -33,7 +33,19 @@
             <xpath expr="//field[@name='withholding_line_ids']/list/field[@name='name']" position="before">
                 <xpath expr="//field[@name='withholding_line_ids']/list/field[@name='tax_id']" position="move"/>
             </xpath>
+            <!-- foreign currency AR payments show the withholding in ARS, as it is certified and informed -->
+            <xpath expr="//field[@name='withholding_line_ids']/list/field[@name='base_amount']" position="attributes">
+                <attribute name="column_invisible">parent.country_code == 'AR' and parent.use_payment_pro and parent.currency_id != parent.company_currency_id</attribute>
+            </xpath>
+            <xpath expr="//field[@name='withholding_line_ids']/list/field[@name='base_amount']" position="after">
+                <field name="comodel_company_currency_id" column_invisible="True"/>
+                <field name="l10n_ar_base_amount" column_invisible="parent.country_code != 'AR' or not parent.use_payment_pro or parent.currency_id == parent.company_currency_id"/>
+            </xpath>
+            <xpath expr="//field[@name='withholding_line_ids']/list/field[@name='amount']" position="attributes">
+                <attribute name="column_invisible">parent.country_code == 'AR' and parent.use_payment_pro and parent.currency_id != parent.company_currency_id</attribute>
+            </xpath>
             <xpath expr="//field[@name='withholding_line_ids']/list/field[@name='amount']" position="after">
+                <field name="l10n_ar_amount" column_invisible="parent.country_code != 'AR' or not parent.use_payment_pro or parent.currency_id == parent.company_currency_id"/>
                 <field name="l10n_ar_withholding_tax_type" column_invisible="True"/>
                 <field name="ref" optional="hide" readonly="l10n_ar_withholding_tax_type in ['earnings', 'earnings_scale']" force_save="1" column_invisible="parent.country_code != 'AR'"/>
                 <xpath expr="//field[@name='withholding_line_ids']/list/field[@name='account_id']" position="move"/>

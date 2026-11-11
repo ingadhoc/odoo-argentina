@@ -123,6 +123,11 @@
             <span class="text-nowrap" t-out="o._get_bundle_imputed_total(payment_bundle)" t-options='{"widget": "monetary", "display_currency": o.destination_currency_id}'/>
         </xpath>
 
+        <!-- qweb ignores name but warns on an unused class -->
+        <xpath expr="//t[hasclass('reversal_move_lines')]" position="replace">
+            <t name="reversal_move_lines"/>
+        </xpath>
+
         <!-- ── Signature / memo footer ─────────────────────────────────────────── -->
         <xpath expr="//span[@name='payment_footer']" position="replace">
             <table>
@@ -143,7 +148,7 @@
     <!-- Optional: show reversal moves as sub-rows under their matched line.
          Inactive by default; activate via Settings > Technical. -->
     <template id="report_payment_receipt_reversal_moves" active="False" inherit_id="l10n_ar_tax.report_payment_receipt_document">
-        <xpath expr="//t[hasclass('reversal_move_lines')]" position="replace">
+        <xpath expr="//t[@name='reversal_move_lines']" position="replace">
             <t t-foreach="line.move_id.reversal_move_ids" t-as="reversal_move_id">
                 <t t-set="imputed_amount" t-value="[item['amount'] for item in reversal_move_id.sudo()._get_all_reconciled_invoice_partials() if item['aml_id'] == line.id]"/>
                 <tr style="page-break-inside: avoid">

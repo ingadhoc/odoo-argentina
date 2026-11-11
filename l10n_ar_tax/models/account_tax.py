@@ -10,7 +10,7 @@ class AccountTax(models.Model):
     _inherit = "account.tax"
 
     # mejora de usabilidad, duplicar un impuesto mantiene la secuencia
-    l10n_ar_withholding_sequence_id = fields.Many2one(
+    withholding_sequence_id = fields.Many2one(
         copy=True,
     )
 
@@ -54,13 +54,13 @@ class AccountTax(models.Model):
                 # por otro (`replacing_tax_ids`) aparecerían en el dropdown.
                 if self.env.context.get("hide_original_tax_ids"):
                     domain &= Domain("replacing_tax_ids", "not any", domain) | Domain.custom(
-                        to_sql=lambda model, alias, query: SQL(
+                        to_sql=lambda table: SQL(
                             "EXISTS (SELECT 1 FROM %s WHERE %s = %s AND %s = %s)",
                             SQL.identifier("account_tax_alternatives"),
                             SQL.identifier("src_tax_id"),
-                            SQL.identifier(alias, "id"),
+                            table.id,
                             SQL.identifier("dest_tax_id"),
-                            SQL.identifier(alias, "id"),
+                            table.id,
                         ),
                     )
                 # Saltear ambas keys en super para no re-aplicar el filtro
@@ -209,6 +209,7 @@ class AccountTax(models.Model):
         if (
             self.ratio == 100.0
             or self.type_tax_use != "sale"
+            or self.is_withholding_tax
             or self.amount_type != "percent"
             or self.price_include
             or self.l10n_ar_state_id.jurisdiction_code not in BASE_DEFINING_JURISDICTION_CODES
@@ -251,6 +252,7 @@ class AccountTax(models.Model):
         return bool(
             self.country_code == "AR"
             and self.type_tax_use == "sale"
+            and not self.is_withholding_tax
             and self.amount_type == "percent"
             and not self.price_include
             and not self.include_base_amount
@@ -321,7 +323,7 @@ class AccountTax(models.Model):
             isinstance(record, models.BaseModel) and record._name == "account.move.line" for record in records
         ):
             return None
-        move = self.env["account.move.line"].union(*records).move_id
+        move = self.env["account.move.line"].union(records).move_id
         if len(move) != 1 or move.state not in ("posted", "cancel"):
             return None
         return move

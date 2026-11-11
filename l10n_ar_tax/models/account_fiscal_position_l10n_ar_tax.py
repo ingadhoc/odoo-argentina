@@ -125,11 +125,11 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 domain += [
                     "!",
                     "&",
-                    ("l10n_ar_tax_type", "=", "iibb_total"),
+                    ("l10n_ar_withholding_tax_type", "=", "iibb_total"),
                     ("name", "=like", f"% {IIBB_TOTAL_TAX_NAME_SUFFIX}"),
                 ]
             else:
-                domain += [("l10n_ar_tax_type", "not in", ["iibb_untaxed", "iibb_total"])]
+                domain += [("l10n_ar_withholding_tax_type", "not in", ["iibb_untaxed", "iibb_total"])]
             rec.tax_template_domain = domain
 
     @api.model_create_multi
@@ -159,7 +159,8 @@ class AccountFiscalPositionL10nArTax(models.Model):
     @api.depends("default_tax_id")
     def _compute_aliquot(self):
         for rec in self:
-            rec.aliquot = rec.default_tax_id.amount
+            # withholding taxes store a negative rate, the aliquot is shown as published
+            rec.aliquot = abs(rec.default_tax_id.amount)
 
     def _inverse_tax_group_aliquot(self):
         self._sync_default_tax_from_ux_fields()
@@ -212,9 +213,9 @@ class AccountFiscalPositionL10nArTax(models.Model):
             domain = self.env["account.tax.group"]._check_company_domain(company)
             domain += [("l10n_ar_vat_afip_code", "=", False)]
             if rec.tax_type == "perception":
-                domain += [("tax_ids.type_tax_use", "=", "sale")]
+                domain += [("tax_ids", "any", [("type_tax_use", "=", "sale"), ("is_withholding_tax", "=", False)])]
             elif rec.tax_type == "withholding":
-                domain += [("tax_ids.l10n_ar_withholding_payment_type", "=", "supplier")]
+                domain += [("tax_ids", "any", [("type_tax_use", "=", "purchase"), ("is_withholding_tax", "=", True)])]
             rec.tax_group_id_domain = json.dumps(domain)
 
     def _get_jurisdiction_state(self):
@@ -228,7 +229,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
         if self.tax_group_id:
             domain = [("tax_group_id", "=", self.tax_group_id.id), ("l10n_ar_state_id", "!=", False)]
             if self.tax_type == "withholding":
-                domain += [("l10n_ar_withholding_payment_type", "=", "supplier")]
+                domain += [("type_tax_use", "=", "purchase"), ("is_withholding_tax", "=", True)]
             ref_tax = self.env["account.tax"].with_context(active_test=False).search(domain, limit=1)
             if ref_tax:
                 return ref_tax.l10n_ar_state_id
@@ -255,12 +256,13 @@ class AccountFiscalPositionL10nArTax(models.Model):
             # la variante CM. En el resto de las jurisdicciones el ratio no se mira.
             domain += [
                 ("type_tax_use", "=", "sale"),
+                ("is_withholding_tax", "=", False),
                 "|",
                 ("l10n_ar_state_id", "!=", self.env.ref("base.state_ar_s").id),
                 ("ratio", "=", ratio or 100.0),
             ]
         elif self.tax_type == "withholding":
-            domain += [("l10n_ar_withholding_payment_type", "=", "supplier")]
+            domain += [("type_tax_use", "=", "purchase"), ("is_withholding_tax", "=", True)]
         if tax_type_domain:
             # La base es una dimensión más de búsqueda: un 0,6% iibb_untaxed y un 0,6%
             # iibb_total son impuestos distintos y sin esto caen sobre el mismo account.tax.
@@ -279,7 +281,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
 
         La base vacía cuenta como base neta: el campo no es required ni tiene default, en
         las bases instaladas suele estar vacío, y así lo resuelve el cálculo de la retención
-        (sólo 'iibb_total' retiene sobre el total, ver l10n_ar.payment.withholding).
+        (sólo 'iibb_total' retiene sobre el total, ver account.payment.withholding.line).
 
         :param l10n_ar_tax_type: base pedida por el padrón ('iibb_total' es la única que
             hoy se pide, ver _get_parp_tax_type). Sin pedido vale la del impuesto
@@ -300,7 +302,9 @@ class AccountFiscalPositionL10nArTax(models.Model):
             # No heredamos si el usuario acaba de cambiar el grupo desde la UX
             # (default_tax_id es todavía el del grupo anterior).
             inherited = (
-                self.default_tax_id.l10n_ar_tax_type if self.tax_group_id == self.default_tax_id.tax_group_id else False
+                self.default_tax_id.l10n_ar_withholding_tax_type
+                if self.tax_group_id == self.default_tax_id.tax_group_id
+                else False
             )
             if inherited in ("iibb_untaxed", "iibb_total"):
                 base = inherited
@@ -310,8 +314,8 @@ class AccountFiscalPositionL10nArTax(models.Model):
         if base == "iibb_untaxed":
             # Los impuestos con la base vacía son de base neta: dejarlos afuera haría que se
             # cree un duplicado con el mismo nombre en vez de reusarlos.
-            return [("l10n_ar_tax_type", "in", ["iibb_untaxed", False])], "iibb_untaxed"
-        return [("l10n_ar_tax_type", "=", base)], base
+            return [("l10n_ar_withholding_tax_type", "in", ["iibb_untaxed", False])], "iibb_untaxed"
+        return [("l10n_ar_withholding_tax_type", "=", base)], base
 
     def _ensure_tax(self, rate, l10n_ar_tax_type=None, ratio=None):
         """Devuelve (creando si no existe) el impuesto para la alícuota dada.
@@ -327,7 +331,12 @@ class AccountFiscalPositionL10nArTax(models.Model):
             l10n_ar_tax_type, padron_defines_base=padron_defines_base
         )
         domain = self._get_tax_domain(tax_type_domain=tax_type_domain, ratio=ratio)
-        tax = self.env["account.tax"].with_context(active_test=False).search(domain + [("amount", "=", rate)], limit=1)
+        tax_amount = -abs(rate) if self.tax_type == "withholding" else rate
+        tax = (
+            self.env["account.tax"]
+            .with_context(active_test=False)
+            .search(domain + [("amount", "=", tax_amount)], limit=1)
+        )
         if tax and not tax.active:
             tax.active = True
         if not tax:
@@ -340,7 +349,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
             excludes_cm = tax_type_to_set != "iibb_total" and padron_defines_base
             template_domain = self._get_tax_domain(
                 filter_tax_group=True,
-                tax_type_domain=[("l10n_ar_tax_type", "!=", "iibb_total")] if excludes_cm else None,
+                tax_type_domain=[("l10n_ar_withholding_tax_type", "!=", "iibb_total")] if excludes_cm else None,
             )
             template_tax = self.env["account.tax"].with_context(active_test=False).search(template_domain, limit=1)
             if not template_tax:
@@ -351,7 +360,7 @@ class AccountFiscalPositionL10nArTax(models.Model):
             # default_tax_id de fallback, que no pasó por el dominio y puede ser la variante
             # CM. Sólo se hereda la del template donde el lookup no resolvió ninguna, que es
             # donde una base total es una decisión del usuario y no del régimen.
-            new_tax_type = tax_type_to_set or template_tax.l10n_ar_tax_type
+            new_tax_type = tax_type_to_set or template_tax.l10n_ar_withholding_tax_type
             if "%" not in template_tax.name:
                 name = f"{template_tax.name} {rate}%"
             else:
@@ -360,19 +369,19 @@ class AccountFiscalPositionL10nArTax(models.Model):
             # La variante que el padrón crea para el Convenio Multilateral: una base total
             # que sale de un impuesto de base neta. Cuelga de la base que se escribe y no de
             # la pedida, porque heredada o pedida el impuesto es el mismo. El sufijo no es
-            # sólo cosmético: sin él quedaría con el mismo nombre que la de base neta (y el
-            # duplicado es silencioso, las retenciones son type_tax_use='none' y
-            # _constrains_name no las alcanza), y es lo que la distingue de una base total
-            # configurada a propósito en el picker (ver _compute_tax_template_domain).
-            if (new_tax_type == "iibb_total" and template_tax.l10n_ar_tax_type != "iibb_total") or ratio:
+            # sólo cosmético: sin él quedaría con el mismo nombre que la de base neta (y
+            # _constrains_name lo rechaza, las retenciones son de compra), y es lo que la
+            # distingue de una base total configurada a propósito en el picker (ver
+            # _compute_tax_template_domain).
+            if (new_tax_type == "iibb_total" and template_tax.l10n_ar_withholding_tax_type != "iibb_total") or ratio:
                 name = f"{name} {IIBB_TOTAL_TAX_NAME_SUFFIX}"
             tax = template_tax.copy(
                 default={
                     # dejamos sequencia mas baja para que siempre el que se duplica sea el que esta arriba
                     "sequence": 10,
-                    "amount": rate,
+                    "amount": tax_amount,
                     "active": True,
-                    "l10n_ar_tax_type": new_tax_type,
+                    "l10n_ar_withholding_tax_type": new_tax_type,
                     "name": name,
                     "ratio": ratio or template_tax.ratio,
                 }

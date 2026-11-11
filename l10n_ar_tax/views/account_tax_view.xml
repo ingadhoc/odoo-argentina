@@ -8,29 +8,33 @@
         <field name="arch" type="xml">
         <sheet position="before">
             <!-- solo visible si es de IIBB aplicado (ventas o retenciones de compras) -->
-            <div class="alert alert-info" role="alert" invisible="(l10n_ar_tribute_afip_code != '07' and l10n_ar_tax_type not in ['iibb_untaxed', 'iibb_total']) or l10n_ar_type_tax_use not in ['sale', 'supplier']">
+            <div class="alert alert-info" role="alert" invisible="(l10n_ar_tribute_afip_code != '07' and l10n_ar_withholding_tax_type not in ['iibb_untaxed', 'iibb_total']) or not ((type_tax_use == 'sale' and not is_withholding_tax) or (type_tax_use == 'purchase' and is_withholding_tax))">
                 Para TXT de SIRCAR debe completar el campo <strong>'Código'</strong> con el que corresponda según tabla definida por la jurisdicción.<br/>
                 Puede consultar la tabla <a target="_blank" href="https://www.ca.gov.ar/sircar">aquí</a>, sección "Instructivos y tablas" item "Tabla con la Tipificación de Regímenes..."
             </div>
         </sheet>
             <!-- limpiamos esta seccion que para retenciones no tiene sentido -->
             <group name="advanced_booleans" position="attributes">
-                <attribute name="invisible">l10n_ar_withholding_payment_type</attribute>
+                <attribute name="invisible">is_withholding_tax</attribute>
             </group>
 
             <xpath expr="//field[@name='tax_group_id']" position="after">
-                <field name="ratio" string="Ratio %" invisible="country_code != 'AR' or (l10n_ar_type_tax_use not in ('customer', 'supplier') and (l10n_ar_type_tax_use != 'sale' or l10n_ar_state_code != 'S'))"/>
+                <field name="ratio" string="Ratio %" invisible="country_code != 'AR' or (not is_withholding_tax and (type_tax_use != 'sale' or l10n_ar_state_code != 'S'))"/>
+                <!-- Se muestra donde el campo tiene efecto: retención de IIBB a proveedor y las percepciones
+                     de venta que evalúa account.tax._l10n_ar_is_perception_with_base_threshold. -->
+                <field name="l10n_ar_base_minimum_threshold"
+                    invisible="country_code != 'AR' or not (((type_tax_use == 'purchase' and is_withholding_tax) and l10n_ar_withholding_tax_type in ['iibb_untaxed', 'iibb_total']) or ((type_tax_use == 'sale' and not is_withholding_tax) and amount_type == 'percent' and not price_include and not include_base_amount and (l10n_ar_state_id or l10n_ar_tribute_afip_code == '06')))"/>
             </xpath>
 
             <!-- TODO mejorar esto, por ahora solo lo hacemos visible con este grupo ya que este grupo solo lo estamos usando en realidad para API, deberiamos ver de hacerlo de otra manera -->
             <!-- TODO agregar que sea de santa fe -->
-            <!-- <i class="fa fa-exclamation-circle" data-tooltip="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" title="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" aria-hidden="true"/>  -->
+            <!-- <i class="oi oi-filled" data-icon="error" data-tooltip="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" title="This field will not be taken into account for sales that come from eCommerce, in this case you must configure it directly in Settings" aria-hidden="true"/>  -->
 
             <notebook>
-                <page string="API" invisible="l10n_ar_state_code != 'S' or country_code != 'AR' or l10n_ar_type_tax_use not in ['sale', 'supplier']">
+                <page string="API" invisible="l10n_ar_state_code != 'S' or country_code != 'AR' or not ((type_tax_use == 'sale' and not is_withholding_tax) or (type_tax_use == 'purchase' and is_withholding_tax))">
                     <group>
-                        <field name="api_codigo_articulo_retencion" invisible="type_tax_use != 'none' or country_code != 'AR'"/>
-                        <field name="api_articulo_inciso_calculo_retencion" invisible="type_tax_use != 'none' or country_code != 'AR'"/>
+                        <field name="api_codigo_articulo_retencion" invisible="not is_withholding_tax or country_code != 'AR'"/>
+                        <field name="api_articulo_inciso_calculo_retencion" invisible="not is_withholding_tax or country_code != 'AR'"/>
                         <field name="api_codigo_articulo_percepcion" invisible="l10n_ar_tribute_afip_code != '07'"/>
                         <field name="api_articulo_inciso_calculo_percepcion" invisible="l10n_ar_tribute_afip_code != '07'"/>
                     </group>
@@ -45,29 +49,25 @@
         <field name="inherit_id" ref="l10n_ar_withholding.view_tax_form-l10n_ar"/>
         <field name="arch" type="xml">
             <field name="l10n_ar_state_id" position="attributes">
-                <attribute name="invisible">l10n_ar_tax_type in ['earnings', 'earnings_scale'] or country_code != 'AR'</attribute>
+                <attribute name="invisible">l10n_ar_withholding_tax_type in ['earnings', 'earnings_scale'] or country_code != 'AR'</attribute>
             </field>
             <field name="l10n_ar_code" position="attributes">
                 <attribute name="invisible">country_code != 'AR'</attribute>
             </field>
             <!-- l10n_ar_non_taxable_amount: solo Ganancias (ret. proveedor) -->
             <field name="l10n_ar_non_taxable_amount" position="attributes">
-                <attribute name="invisible">country_code != 'AR' or l10n_ar_type_tax_use != 'supplier' or l10n_ar_tax_type not in ['earnings', 'earnings_scale']</attribute>
+                <attribute name="invisible">country_code != 'AR' or (type_tax_use != 'purchase' or not is_withholding_tax) or l10n_ar_withholding_tax_type not in ['earnings', 'earnings_scale']</attribute>
             </field>
             <!-- l10n_ar_minimum_threshold: Ganancias + IIBB retención proveedor -->
             <field name="l10n_ar_minimum_threshold" position="attributes">
-                <attribute name="invisible">country_code != 'AR' or l10n_ar_type_tax_use != 'supplier' or l10n_ar_tax_type not in ['earnings', 'earnings_scale', 'iibb_untaxed', 'iibb_total']</attribute>
+                <attribute name="invisible">country_code != 'AR' or (type_tax_use != 'purchase' or not is_withholding_tax) or l10n_ar_withholding_tax_type not in ['earnings', 'earnings_scale', 'iibb_untaxed', 'iibb_total']</attribute>
             </field>
             <!-- Nuevos campos: IIBB retención proveedor y, para la base mínima, percepción de ventas (IIBB, IVA) -->
             <field name="l10n_ar_minimum_threshold" position="after">
                 <field name="company_currency_id" invisible="1"/>
                 <field name="l10n_ar_tribute_afip_code" invisible="1"/>
                 <field name="l10n_ar_payment_minimum_threshold"
-                    invisible="country_code != 'AR' or l10n_ar_type_tax_use != 'supplier' or l10n_ar_tax_type not in ['iibb_untaxed', 'iibb_total']"/>
-                <!-- Se muestra donde el campo tiene efecto: retención de IIBB a proveedor y las percepciones
-                     de venta que evalúa account.tax._l10n_ar_is_perception_with_base_threshold. -->
-                <field name="l10n_ar_base_minimum_threshold"
-                    invisible="country_code != 'AR' or not ((l10n_ar_type_tax_use == 'supplier' and l10n_ar_tax_type in ['iibb_untaxed', 'iibb_total']) or (l10n_ar_type_tax_use == 'sale' and amount_type == 'percent' and not price_include and not include_base_amount and (l10n_ar_state_id or l10n_ar_tribute_afip_code == '06')))"/>
+                    invisible="country_code != 'AR' or (type_tax_use != 'purchase' or not is_withholding_tax) or l10n_ar_withholding_tax_type not in ['iibb_untaxed', 'iibb_total']"/>
             </field>
         </field>
     </record>
@@ -78,8 +78,8 @@
         <field name="inherit_id" ref="account.view_account_tax_search"/>
         <field name="arch" type="xml">
             <filter name="purchase" position="after">
-                <filter string="AR Customer Withholding" name="customer" domain="[('type_tax_use', '=', 'none'), ('country_code', '=', 'AR'), ('l10n_ar_withholding_payment_type', '=', 'customer')]"/>
-                <filter string="AR Supplier Withholding" name="supplier" domain="[('type_tax_use', '=', 'none'), ('country_code', '=', 'AR'), ('l10n_ar_withholding_payment_type', '=', 'supplier')]"/>
+                <filter string="AR Customer Withholding" name="customer" domain="[('type_tax_use', '=', 'sale'), ('is_withholding_tax', '=', True), ('country_code', '=', 'AR')]"/>
+                <filter string="AR Supplier Withholding" name="supplier" domain="[('type_tax_use', '=', 'purchase'), ('is_withholding_tax', '=', True), ('country_code', '=', 'AR')]"/>
             </filter>
         </field>
     </record>

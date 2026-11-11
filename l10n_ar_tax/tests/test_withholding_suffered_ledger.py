@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from odoo import Command
-from odoo.tests import TransactionCase, tagged
+from odoo.tests import Form, TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
@@ -16,16 +16,11 @@ class TestWithholdingSufferedLedger(TransactionCase):
 
     A diferencia de la retención que nosotros le practicamos a un
     proveedor (``FCP-R01``, en ``test_payment_form_withholding_net.py``),
-    la retención sufrida NO se autocompleta:
-    ``_compute_l10n_ar_withholding_line_ids`` y ``_compute_base_amount``
-    solo corren para ``partner_type == "supplier"``. Para un cobro de
-    cliente, la línea de retención (impuesto, base y monto) la carga a
-    mano quien cobra — el campo admite escritura directa aunque sea un
-    compute (``readonly=False``). Tampoco corre ``_onchange_withholdings``
-    (excluido por diseño para pagos de cliente): el neto lo ajusta
-    ``action_adjust_amount_for_difference`` (el link de la diferencia),
-    que aplica a los dos tipos de partner y hay que invocar a mano en los
-    tests, igual que su par de ``FCP-R01``.
+    la retención sufrida NO se propone: la línea (impuesto y base) la carga
+    quien cobra, y el importe lo calcula Odoo. El importe del cobro lo
+    ajusta ``action_adjust_amount_for_difference`` (el link de la
+    diferencia). Desde 20.0 ese importe es el bruto, y lo que entra al
+    banco es el neto (``withholding_net_amount``).
 
     No cubre ``FCP-R05-E3`` (retención sufrida + cheque de terceros como
     medio de cobro): ese mecanismo es del ciclo de vida del cheque
@@ -36,7 +31,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.company = cls.env["res.company"].search(
-            [("l10n_ar_tax_base_account_id", "!=", False), ("partner_id.country_id.code", "=", "AR")], limit=1
+            [("withholding_tax_base_account_id", "!=", False), ("partner_id.country_id.code", "=", "AR")], limit=1
         )
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company.ids))
         cls.env.user.company_id = cls.company
@@ -55,15 +50,15 @@ class TestWithholdingSufferedLedger(TransactionCase):
             {
                 "name": "Test WTH Sufrida Ganancias 6%",
                 "company_id": cls.company.id,
-                "type_tax_use": "none",
+                "type_tax_use": "sale",
+                "is_withholding_tax": True,
                 "amount_type": "percent",
-                "amount": 6.0,
+                "amount": -6.0,
                 "tax_group_id": cls.env["account.tax.group"]
                 .create({"name": "Test Sufrida Ganancias Group", "company_id": cls.company.id})
                 .id,
-                "l10n_ar_tax_type": "earnings",
-                "l10n_ar_withholding_payment_type": "customer",
-                "l10n_ar_withholding_sequence_id": cls.env["ir.sequence"]
+                "l10n_ar_withholding_tax_type": "earnings",
+                "withholding_sequence_id": cls.env["ir.sequence"]
                 .create({"name": "Test WTH Sufrida seq", "implementation": "standard", "padding": 4})
                 .id,
                 "invoice_repartition_line_ids": [
@@ -90,15 +85,15 @@ class TestWithholdingSufferedLedger(TransactionCase):
             {
                 "name": "Test WTH Sufrida IIBB 2%",
                 "company_id": cls.company.id,
-                "type_tax_use": "none",
+                "type_tax_use": "sale",
+                "is_withholding_tax": True,
                 "amount_type": "percent",
-                "amount": 2.0,
+                "amount": -2.0,
                 "tax_group_id": cls.env["account.tax.group"]
                 .create({"name": "Test Sufrida IIBB Group", "company_id": cls.company.id})
                 .id,
-                "l10n_ar_tax_type": "iibb_untaxed",
-                "l10n_ar_withholding_payment_type": "customer",
-                "l10n_ar_withholding_sequence_id": cls.env["ir.sequence"]
+                "l10n_ar_withholding_tax_type": "iibb_untaxed",
+                "withholding_sequence_id": cls.env["ir.sequence"]
                 .create({"name": "Test WTH Sufrida IIBB seq", "implementation": "standard", "padding": 4})
                 .id,
                 "invoice_repartition_line_ids": [
@@ -116,9 +111,9 @@ class TestWithholdingSufferedLedger(TransactionCase):
             {
                 "name": "Test Withholding Suffered Customer",
                 "company_id": False,
-                "l10n_latam_identification_type_id": cls.env.ref("l10n_ar.it_cuit").id,
+                "country_id": cls.env.ref("base.ar").id,
                 "l10n_ar_afip_responsibility_type_id": cls.env.ref("l10n_ar.res_IVARI").id,
-                "vat": "30710158261",
+                "vat": "30710158262",
             }
         )
         cls.invoice_a = cls.env.ref("l10n_ar.dc_a_f")
@@ -179,13 +174,9 @@ class TestWithholdingSufferedLedger(TransactionCase):
 
     def _receive_via_direct_form(self, bill, withholdings=(), unreconciled_amount=0.0):
         """Arma el recibo como lo hace el formulario simple, y carga a mano
-        las retenciones sufridas (``tax``, ``base_amount``, ``amount``) —
-        acá no hay compute que las adivine, a diferencia de ``FCP-R01``.
-
-        ``action_adjust_amount_for_difference`` (el que ajusta ``amount``
-        contra ``to_pay_amount``) es el link de la diferencia: en la UI lo
-        toca el usuario, y en test hay que invocarlo a mano.
-        """
+        las retenciones sufridas (``tax``, ``base_amount``, ``amount``).
+        ``action_adjust_amount_for_difference`` es el link de la diferencia:
+        en la UI lo toca el usuario."""
         debt = bill.line_ids.filtered(lambda line: line.account_id.account_type == "asset_receivable")
         payment = self.env["account.payment"].create(
             {
@@ -201,7 +192,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
         if withholdings:
             payment.write(
                 {
-                    "l10n_ar_withholding_line_ids": [
+                    "withholding_line_ids": [
                         Command.create({"tax_id": tax.id, "base_amount": base, "amount": amount})
                         for tax, base, amount in withholdings
                     ]
@@ -228,7 +219,8 @@ class TestWithholdingSufferedLedger(TransactionCase):
         with self.subTest("una retención sufrida, en su propia cuenta"):
             bill = self._create_sale_bill(100000.0, "1-1")
             payment = self._receive_via_direct_form(bill, withholdings=[(self.tax_sufrida, 100000.0, 6000.0)])
-            self.assertEqual(payment.amount, 94000.0)
+            self.assertEqual(payment.withholding_net_amount, 94000.0)
+            self.assertEqual(payment.amount, 100000.0)
 
             payment.action_post()
             lines = payment.move_id.line_ids
@@ -246,7 +238,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
                 bill_two,
                 withholdings=[(self.tax_sufrida, 100000.0, 6000.0), (self.tax_iibb_sufrida, 100000.0, 2000.0)],
             )
-            self.assertEqual(payment_two.amount, 92000.0)
+            self.assertEqual(payment_two.withholding_net_amount, 92000.0)
 
             payment_two.action_post()
             lines_two = payment_two.move_id.line_ids
@@ -269,12 +261,12 @@ class TestWithholdingSufferedLedger(TransactionCase):
         """
         bill = self._create_sale_bill(100000.0, "1-6")
         payment = self._receive_via_direct_form(bill, withholdings=[(self.tax_sufrida, 100000.0, 6000.0)])
-        self.assertEqual(payment.amount, 94000.0, "neto tras la retención, antes de tocar nada más")
+        self.assertEqual(payment.withholding_net_amount, 94000.0, "neto tras la retención, antes de tocar nada más")
 
-        payment.write_off_type_id = self.write_off_type
-        payment.amount = 93500.0
-        payment.amount_exact = 93500.0
+        with Form(payment) as form:
+            form.withholding_net_amount = 93500.0
         payment.action_adjust_writeoff_for_difference()
+        payment.write_off_type_id = self.write_off_type
 
         with self.subTest("el ajuste es la diferencia real, no la retención completa"):
             self.assertEqual(payment.write_off_amount, 500.0)
@@ -301,14 +293,14 @@ class TestWithholdingSufferedLedger(TransactionCase):
         """
         bill = self._create_sale_bill(100000.0, "1-3")
         payment = self._receive_via_direct_form(bill, withholdings=[(self.tax_sufrida, 100000.0, 6000.0)])
-        self.assertEqual(payment.amount, 94000.0, "con la retención cargada, el importe ya está neteado")
+        self.assertEqual(payment.withholding_net_amount, 94000.0, "con la retención cargada, el neto la descuenta")
 
-        line = payment.l10n_ar_withholding_line_ids
-        payment.write({"l10n_ar_withholding_line_ids": [Command.unlink(line.id)]})
+        line = payment.withholding_line_ids
+        payment.write({"withholding_line_ids": [Command.unlink(line.id)]})
         payment.action_adjust_amount_for_difference()
-        with self.subTest("sin retención, el importe a cobrar vuelve al total"):
-            self.assertFalse(payment.l10n_ar_withholding_line_ids)
-            self.assertEqual(payment.amount, 100000.0)
+        with self.subTest("sin retención, el neto a cobrar vuelve al total"):
+            self.assertFalse(payment.withholding_line_ids)
+            self.assertEqual(payment.withholding_net_amount, 100000.0)
 
         payment.action_post()
         with self.subTest("el asiento no tiene ninguna línea de retención"):
@@ -331,8 +323,8 @@ class TestWithholdingSufferedLedger(TransactionCase):
         payment = self._receive_via_direct_form(
             bill, withholdings=[(self.tax_sufrida, 50000.0, 3000.0)], unreconciled_amount=-50000.0
         )
-        with self.subTest("el importe a cobrar descuenta la retención sobre lo efectivamente cobrado"):
-            self.assertEqual(payment.amount, 47000.0)
+        with self.subTest("el neto a cobrar descuenta la retención sobre lo efectivamente cobrado"):
+            self.assertEqual(payment.withholding_net_amount, 47000.0)
 
         payment.action_post()
         with self.subTest("la factura queda en cobro parcial con saldo 50.000"):
@@ -355,11 +347,11 @@ class TestWithholdingSufferedLedger(TransactionCase):
         mecanismo va a su propia cuenta, sin cruzarse.
 
         Dada una factura de venta USD 1.000 al TC 1.000 ($1.000.000),
-        cuando se cobra con retención sufrida al TC 1.100 (un mes
-        después), entonces la base de la retención está en pesos, al TC
-        del cobro (**D6**: ARS 1.100.000), la diferencia de cambio
-        ($100.000) queda en su propia cuenta separada de la retención, y
-        la factura cierra en cero en ambas monedas.
+        cuando se cobra en USD con retención sufrida al TC 1.100 (un mes
+        después), entonces la retención va en la moneda del cobro (USD 60)
+        y vale en pesos al TC del cobro (**D6**: ARS 66.000), la diferencia
+        de cambio ($100.000) queda en su propia cuenta separada de la
+        retención, y la factura cierra en cero en ambas monedas.
 
         Cubre FCP-R05-E5/FCP-R07-E8.
         """
@@ -396,22 +388,23 @@ class TestWithholdingSufferedLedger(TransactionCase):
                 "partner_id": self.customer.id,
                 "partner_type": "customer",
                 "payment_type": "inbound",
-                "date": "2026-02-01",
+                # since 20.0 a rate applies from the day after its date
+                "date": "2026-02-02",
                 "currency_id": self.usd.id,
                 "to_pay_move_line_ids": [Command.set(debt.ids)],
             }
         )
         payment.write(
             {
-                "l10n_ar_withholding_line_ids": [
-                    Command.create({"tax_id": self.tax_sufrida.id, "base_amount": 1100000.0, "amount": 66000.0})
+                "withholding_line_ids": [
+                    Command.create({"tax_id": self.tax_sufrida.id, "base_amount": 1000.0, "amount": 60.0})
                 ]
             }
         )
         payment.action_adjust_amount_for_difference()
 
-        with self.subTest("el importe a cobrar es el neto, en la moneda de la deuda"):
-            self.assertEqual(payment.amount, 940.0)
+        with self.subTest("el neto a cobrar, en la moneda de la deuda"):
+            self.assertEqual(payment.withholding_net_amount, 940.0)
 
         payment.action_post()
         with self.subTest("la factura cierra en cero en ambas monedas"):
@@ -426,6 +419,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
             withholding_line = payment.move_id.line_ids.filtered(
                 lambda line: line.account_id == self.withholding_account
             )
+            self.assertEqual(withholding_line.amount_currency, 60.0)
             self.assertEqual(withholding_line.balance, 66000.0)
 
     def test_withholding_suffered_corrected_after_a_draft_and_reconfirm_does_not_duplicate(self):
@@ -433,30 +427,32 @@ class TestWithholdingSufferedLedger(TransactionCase):
         re-confirmado: la retención vieja no queda duplicada.
 
         Dado un cobro confirmado con una retención sufrida de $6.000,
-        cuando se lo vuelve a borrador y se corrige la retención a
-        $8.000, entonces al re-confirmar el mayor refleja $8.000 — no
-        $14.000 ni dos líneas.
+        cuando se lo vuelve a borrador y se corrige la base a $50.000
+        (retención $3.000), entonces al re-confirmar el mayor refleja
+        $3.000, no $9.000 ni dos líneas. Se corrige la base y no el importe:
+        en 20.0 Odoo recalcula el importe tipeado.
 
         Cubre FCP-R05-E7.
         """
         bill = self._create_sale_bill(100000.0, "1-5")
         payment = self._receive_via_direct_form(bill, withholdings=[(self.tax_sufrida, 100000.0, 6000.0)])
         payment.action_post()
-        self.assertEqual(payment.amount, 94000.0)
+        self.assertEqual(payment.withholding_net_amount, 94000.0)
 
         payment.action_draft()
-        payment.l10n_ar_withholding_line_ids.amount = 8000.0
+        line = payment.withholding_line_ids
+        payment.write({"withholding_line_ids": [Command.update(line.id, {"base_amount": 50000.0})]})
         payment.action_adjust_amount_for_difference()
         payment.action_post()
 
         with self.subTest("una sola línea de retención, por el monto corregido"):
-            self.assertEqual(len(payment.l10n_ar_withholding_line_ids), 1)
-            self.assertEqual(payment.l10n_ar_withholding_line_ids.amount, 8000.0)
-            self.assertEqual(payment.amount, 92000.0)
+            self.assertEqual(len(payment.withholding_line_ids), 1)
+            self.assertEqual(payment.withholding_line_ids.amount, 3000.0)
+            self.assertEqual(payment.withholding_net_amount, 97000.0)
 
-        with self.subTest("el mayor refleja 8.000, no 14.000"):
+        with self.subTest("el mayor refleja 3.000, no 9.000"):
             withholding_line = payment.move_id.line_ids.filtered(
                 lambda line: line.account_id == self.withholding_account
             )
             self.assertEqual(len(withholding_line), 1)
-            self.assertEqual(withholding_line.balance, 8000.0)
+            self.assertEqual(withholding_line.balance, 3000.0)

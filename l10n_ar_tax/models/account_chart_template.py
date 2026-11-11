@@ -113,14 +113,16 @@ class AccountChartTemplate(models.AbstractModel):
         # creacion de secuencias y agregado de etiquetas para liquidación de impuestos
         withholdings_domain = [
             ("company_id", "=", company.id),
-            ("type_tax_use", "=", "none"),
+            ("type_tax_use", "=", "purchase"),
+            ("is_withholding_tax", "=", True),
             ("country_code", "=", "AR"),
-            ("l10n_ar_withholding_payment_type", "=", "supplier"),
         ]
-        non_profits_domain = withholdings_domain + [("l10n_ar_tax_type", "not in", ["earnings", "earnings_scale"])]
+        non_profits_domain = withholdings_domain + [
+            ("l10n_ar_withholding_tax_type", "not in", ["earnings", "earnings_scale"])
+        ]
 
         for tax in self.env["account.tax"].with_context(active_test=False).search(non_profits_domain):
-            if not tax.l10n_ar_withholding_sequence_id:
+            if not tax.withholding_sequence_id:
                 sequence_name = re.sub(r"\s+\d+[,.]?\d*\s*%", "", tax.invoice_label or tax.name).strip()
                 sequence = self.env["ir.sequence"].create(
                     {
@@ -132,12 +134,12 @@ class AccountChartTemplate(models.AbstractModel):
                         "company_id": company.id,
                     }
                 )
-                tax.l10n_ar_withholding_sequence_id = sequence.id
+                tax.withholding_sequence_id = sequence.id
 
-        profits_domain = withholdings_domain + [("l10n_ar_tax_type", "in", ["earnings", "earnings_scale"])]
+        profits_domain = withholdings_domain + [("l10n_ar_withholding_tax_type", "in", ["earnings", "earnings_scale"])]
         profits_taxes = self.env["account.tax"].with_context(active_test=False).search(profits_domain)
         # Todos los impuestos de retención de ganancias deben compartir la misma secuencia
-        if not all(prof_tax.l10n_ar_withholding_sequence_id for prof_tax in profits_taxes):
+        if not all(prof_tax.withholding_sequence_id for prof_tax in profits_taxes):
             sequence = self.env["ir.sequence"].create(
                 {
                     "name": "Retención de Ganancias",
@@ -148,9 +150,7 @@ class AccountChartTemplate(models.AbstractModel):
                     "company_id": company.id,
                 }
             )
-            profits_taxes.filtered(
-                lambda tax: not tax.l10n_ar_withholding_sequence_id
-            ).l10n_ar_withholding_sequence_id = sequence.id
+            profits_taxes.filtered(lambda tax: not tax.withholding_sequence_id).withholding_sequence_id = sequence.id
 
         # agregado de etiquetas para liquidacion de impuestos sicore
         sicore_taxes = profits_taxes
@@ -178,10 +178,12 @@ class AccountChartTemplate(models.AbstractModel):
                 ("tax_id.l10n_ar_state_id", "!=", False),
                 ("tax_id.country_code", "=", "AR"),
                 "|",
-                ("tax_id.type_tax_use", "=", "purchase"),
                 "&",
-                ("tax_id.type_tax_use", "=", "none"),
-                ("tax_id.l10n_ar_withholding_payment_type", "=", "customer"),
+                ("tax_id.type_tax_use", "=", "purchase"),
+                ("tax_id.is_withholding_tax", "=", False),
+                "&",
+                ("tax_id.type_tax_use", "=", "sale"),
+                ("tax_id.is_withholding_tax", "=", True),
             ]
             repartition_lines = self.env["account.tax.repartition.line"].search(domain)
             if repartition_lines_without_tag := repartition_lines.filtered(lambda line: tag not in line.tag_ids):

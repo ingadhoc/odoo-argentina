@@ -40,6 +40,15 @@ class TestWithholdingSufferedLedger(TransactionCase):
         )
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company.ids))
         cls.env.user.company_id = cls.company
+        # RI companies require a single VAT tax per line; an exempt one keeps the amounts
+        cls.vat_exempt = cls.env["account.tax"].search(
+            [
+                ("company_id", "parent_of", cls.company.id),
+                ("type_tax_use", "=", "sale"),
+                ("tax_group_id.l10n_ar_vat_afip_code", "=", "2"),
+            ],
+            limit=1,
+        )
         if "use_payment_pro" in cls.env["res.company"]._fields:
             cls.company.use_payment_pro = True
 
@@ -168,7 +177,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
                             "quantity": 1,
                             "price_unit": amount,
                             "account_id": income.id,
-                            "tax_ids": [Command.clear()],
+                            "tax_ids": [Command.set(self.vat_exempt.ids)],
                         }
                     )
                 ],
@@ -381,7 +390,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
                             "account_id": self.env["account.account"]
                             .search([("account_type", "=", "income"), ("company_ids", "=", self.company.id)], limit=1)
                             .id,
-                            "tax_ids": [Command.clear()],
+                            "tax_ids": [Command.set(self.vat_exempt.ids)],
                         }
                     )
                 ],

@@ -538,7 +538,10 @@ class AccountPayment(models.Model):
         # no entiendo porque pero acá viene un active_test=False que se termina propagando a computed fields que
         # también dependan de partner_id, por ahora forzamos active_test=True para que aguas arriba todo se compute bien
         # metodo completamente analogo a payment.register._compute_l10n_ar_withholding_ids
-        for rec in self.with_context(active_test=True).filtered(lambda x: x.partner_type == "supplier"):
+        # a non draft payment keeps its lines: rebuilding them drops the number, base and amount of its journal entry
+        for rec in self.with_context(active_test=True).filtered(
+            lambda x: x.partner_type == "supplier" and x.state == "draft"
+        ):
             date = rec.date or fields.Date.context_today(rec)
             withholdings = [Command.clear()]
             if rec.l10n_ar_fiscal_position_id.l10n_ar_tax_ids:

@@ -147,3 +147,17 @@ class TestPaymentWithholdingPostedRecompute(TestArWithholdingArRi):
         self.assertTrue(wth_line.exists(), "The withholding line must not be recreated.")
         self.assertEqual(payment.l10n_ar_withholding_line_ids, wth_line)
         self.assertEqual(wth_line.read(["name", "tax_id", "base_amount", "amount"]), values)
+
+    def test_posted_payment_keeps_fiscal_position_on_recompute(self):
+        """Flagging a dependency of the fiscal position on a posted payment (e.g. a re-map by SQL plus modified)
+        used to clear it."""
+        invoice = self._create_invoice("1-130061")
+
+        payment = self._register_payment(invoice, invoice.amount_total)
+        fiscal_pos = payment.l10n_ar_fiscal_position_id
+        self.assertTrue(fiscal_pos)
+
+        payment.modified(["partner_id", "to_pay_move_line_ids", "payment_method_line_id"])
+        self.env.flush_all()
+
+        self.assertEqual(payment.l10n_ar_fiscal_position_id, fiscal_pos)

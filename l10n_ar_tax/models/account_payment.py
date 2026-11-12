@@ -59,9 +59,11 @@ class AccountPayment(models.Model):
     @api.depends("to_pay_move_line_ids", "partner_id", "payment_method_line_id")
     def _compute_fiscal_position_id(self):
         for rec in self:
+            # a non draft payment keeps its fiscal position: it is the one its withholdings were computed with
+            if rec.state != "draft":
+                continue
             if (
-                rec.state != "draft"
-                or rec.partner_type != "supplier"
+                rec.partner_type != "supplier"
                 or rec.country_code != "AR"
                 or not rec.use_payment_pro
                 or self.env.context.get("create_and_new")

@@ -7,3 +7,4 @@ from . import test_payment_withholding_validation
 from . import test_rentas_cordoba_ws_errors
 from . import test_withholding_certificates_mail
 from . import test_withholding_thresholds
+from . import test_partner_vat_change

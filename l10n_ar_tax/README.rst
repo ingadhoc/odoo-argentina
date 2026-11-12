@@ -19,6 +19,7 @@ Este módulo imlementa:
 * Add tags on ar taxes repartition lines.
 * Add fiscal position demo records.
 * Importador de Padrón PARP ret y perc SF - Santa Fe y ARBA. Especificación: "Api - Rg 37 2025 Anexo I.pdf" y archivo de ejemplo de padrón "PARP_999999_ejemplo_padron_santa_fe.csv" para el mes de marzo 2026. Ambos archivos se encuentran en la carpeta "doc/padron_santa_fe" de este módulo. Configuraciones manuales: duplicar impuesto de retención y percepción aplicada de Santa Fe y colocarle alícuota 5% al de retención y 6% al de percepción; dichos impuestos tienen alícuota 'castigo', es decir, si el contribuyente no se encuentra en el padrón y no está exento entonces se le aplicará dicha alícuota. Dichos impuestos con alícuota castigo deben ser asignados como impuesto por defecto en la posición fiscal correspondiente y en dicha posición fiscal elegir webservice: padron.
+* No deja cambiar el CUIT (número de identificación) de un contacto que ya tiene alícuotas cargadas (de padrón, webservice o manuales, de cualquier jurisdicción): esas alícuotas son del número anterior. Para cambiarlo, hay que eliminar sus alícuotas (puede ser en el mismo guardado); con el número nuevo se vuelven a calcular. Un cambio de formato con los mismos dígitos (por ejemplo, con guiones) sí se permite.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

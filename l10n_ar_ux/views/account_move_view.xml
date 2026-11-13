@@ -41,4 +41,23 @@
         </field>
     </record>
 
+    <!-- Priority below the default so a module that drops these "required" (l10n_latam_invoice_document_ux)
+         is applied after this view and keeps the last word. -->
+    <record id="view_move_form_document_required" model="ir.ui.view">
+        <field name="name">account.move.form.document.required.l10n.ar.ux</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="l10n_latam_invoice_document.view_move_form"/>
+        <field name="priority">15</field>
+        <field name="arch" type="xml">
+            <!-- Without the ARCA responsibility no document type is proposed: keep the draft savable so the
+                 "Set the responsibility" button can run. Posting still requires both (_check_l10n_latam_documents). -->
+            <field name="l10n_latam_document_type_id" position="attributes">
+                <attribute name="required">partner_id and l10n_latam_use_documents and (country_code != 'AR' or l10n_ar_ux_partner_responsibility_id)</attribute>
+            </field>
+            <field name="l10n_latam_document_number" position="attributes">
+                <attribute name="required">partner_id and l10n_latam_use_documents and l10n_latam_manual_document_number and (country_code != 'AR' or l10n_ar_ux_partner_responsibility_id)</attribute>
+            </field>
+        </field>
+    </record>
+
 </odoo>

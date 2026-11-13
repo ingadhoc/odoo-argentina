@@ -15,7 +15,8 @@ class ResCompany(models.Model):
     # TODO this field could be defined directly on l10n_ar_account_withholding
     arba_cit = fields.Char(
         "CIT ARBA",
-        help="Clave de Identificación Tributaria de ARBA",
+        help="ARBA Tax Identification Key. A branch with the same CUIT that leaves it empty uses the one of its "
+        "parent company.",
     )
     # la fecha de comienzo de actividades puede ser por cada punto de venta distinta, lo convertimos a related del
     # partner
@@ -37,6 +38,39 @@ class ResCompany(models.Model):
                 if parent.account_fiscal_country_id.code == "AR":
                     vals["display_invoice_tax_company_currency"] = False
         return super().create(vals_list)
+
+    def _l10n_ar_get_same_cuit_ancestors(self):
+        """``self`` followed by the ancestors that are its same fiscal entity, nearest first.
+
+        Walks up while the parent declares the same CUIT and stops at the first break. The CUIT
+        is compared as ``account_ux`` does for ``legal_entity_root_id`` (literal Tax ID, ``/``
+        counts as none), so both agree on what the fiscal entity is. A company without CUIT is
+        its own fiscal entity and only returns itself.
+        """
+        self.ensure_one()
+
+        def cuit(company):
+            vat = (company.vat or "").strip()
+            return "" if vat == "/" else vat
+
+        companies = self
+        own_cuit = cuit(self.sudo())
+        parent = self.sudo().parent_id
+        while own_cuit and parent and cuit(parent) == own_cuit:
+            companies |= self.browse(parent.id)
+            parent = parent.parent_id
+        return companies
+
+    def _l10n_ar_get_same_cuit_company_with(self, field_name):
+        """The nearest of ``self`` and its same fiscal entity ancestors with ``field_name`` set,
+        in sudo, or an empty recordset.
+
+        Shares credentials (CIT, COT) down the branches of a fiscal entity: a branch only needs
+        its own when it differs from the parent's. In sudo because the user may not have access
+        to the parent company.
+        """
+        self.ensure_one()
+        return self._l10n_ar_get_same_cuit_ancestors().sudo().filtered(field_name)[:1]
 
     @api.model
     def _l10n_ar_ux_hide_invoice_tax_company_currency(self):

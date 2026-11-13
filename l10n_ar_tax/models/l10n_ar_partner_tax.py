@@ -24,6 +24,10 @@ class L10nArPartnerTax(models.Model):
                 "|",
                 ("to_date", "=", False),
                 ("to_date", ">=", record.from_date or datetime.date.min),
+                # only companies that can see both lines (same ancestry chain) can conflict
+                "|",
+                ("company_id", "parent_of", record.company_id.id),
+                ("company_id", "child_of", record.company_id.id),
             ]
             if record.tax_id.l10n_ar_withholding_payment_type == "supplier":
                 # TODO esto lo deberiamos borrar al ir a odoo 19 y solo usar los tax groups
@@ -40,5 +44,10 @@ class L10nArPartnerTax(models.Model):
                     "* Fecha Hasta: %s\n"
                     "* Fecha Desde: %s\n"
                     "* Otros impuestos: %s\n"
-                    % (record.tax_id.name, record.to_date, record.from_date, conflicting_records.mapped("tax_id.name"))
+                    % (
+                        record.tax_id.name,
+                        record.to_date,
+                        record.from_date,
+                        ["%s (%s)" % (line.tax_id.name, line.company_id.name) for line in conflicting_records],
+                    )
                 )

@@ -13,6 +13,7 @@ from odoo.exceptions import UserError, ValidationError
 _logger = logging.getLogger(__name__)
 
 GREP_TIMEOUT = 30
+<<<<<<< 29618b07c4425930dc5107418d5e756c50b7f486
 # Magic bytes de un ZIP: archivo con contenido, vacio y multi-volumen.
 ZIP_MAGIC_BYTES = (b"PK\x03\x04", b"PK\x05\x06", b"PK\x07\x08")
 
@@ -24,6 +25,15 @@ ZIP_MAGIC_BYTES = (b"PK\x03\x04", b"PK\x05\x06", b"PK\x07\x08")
 # configuradas las retenciones de IIBB de Santa Fe. Sólo el 'C' necesita desviar la
 # base, así que es el único valor que mapeamos (ver _get_parp_tax_type).
 PARP_CONTRIBUTOR_MULTILATERAL = "C"
+||||||| 1a89876d28c90991979d74c4d51481d826180fb7
+=======
+PADRON_TMP_ROOT = os.path.join(tempfile.gettempdir(), "l10n_ar_padron")
+PADRON_LAYOUT_CHUNK = 1 << 16
+PADRON_EXTENSIONS = (".txt", ".csv")
+PADRON_MAX_EXTRACTED_SIZE = 900 * 1024 * 1024
+# Per process: (path, mtime, size) -> layout of the extracted file, so it is validated once.
+_padron_layout_cache = {}
+>>>>>>> 3d956d447b34abdc568fbe0d8dae0178d4501dde
 
 
 class ResCompanyJurisdictionPadron(models.Model):
@@ -97,6 +107,7 @@ class ResCompanyJurisdictionPadron(models.Model):
             res += [(padron.id, name)]
         return res
 
+<<<<<<< 29618b07c4425930dc5107418d5e756c50b7f486
     def descompress_file(self, file_padron, dest_dir="/tmp"):
         """Extrae el padrón comprimido en dest_dir. Soporta ZIP (ARBA, Santa Fe) y
         RAR (AGIP publica el padrón de Regímenes Generales en .rar)."""
@@ -118,9 +129,164 @@ class ResCompanyJurisdictionPadron(models.Model):
             _logger.log(25, "Descompress zip file")
             with zipfile.ZipFile(fname, "r") as zip_file:
                 zip_file.extractall(path=dest_dir)
+||||||| 1a89876d28c90991979d74c4d51481d826180fb7
+    def descompress_file(self, file_padron, dest_dir="/tmp"):
+        _logger.log(25, "Descompress zip file")
+        try:
+            file = base64.b64decode(file_padron)
+        except:
+            file = base64.decodestring(file_padron)
+        fobj = tempfile.NamedTemporaryFile(delete=False)
+        fname = fobj.name
+        fobj.write(file)
+        fobj.close()
+        f = open(fname, "r+b")
+        f.write(base64.b64decode(file_padron))
+        with zipfile.ZipFile(f, "r") as zip_file:
+            zip_file.extractall(path=dest_dir)
+            zip_file.close()
+=======
+    def _get_padron_store_path(self):
+        """Return the filestore path of file_padron, or False if it is not stored as a file."""
+        self.ensure_one()
+        attachment = (
+            self.env["ir.attachment"]
+            .sudo()
+            .search(
+                [("res_model", "=", self._name), ("res_field", "=", "file_padron"), ("res_id", "=", self.id)],
+                limit=1,
+            )
+        )
+        if not attachment.store_fname:
+            return False
+        path = attachment._full_path(attachment.store_fname)
+        return path if os.path.isfile(path) else False
+>>>>>>> 3d956d447b34abdc568fbe0d8dae0178d4501dde
 
-    def find_aliquot(self, path, cuit):
+    def _descompress_file(self):
+        """Extract the txt/csv files of this padron into its own folder."""
+        self.ensure_one()
+        _logger.log(25, "Descompress zip file")
+        dest_dir = self._get_parp_tmp_dir()
+        store_path = self._get_padron_store_path()
+        if store_path:
+            # Straight from the filestore: the worker does not hold a base64 copy of the zip.
+            with zipfile.ZipFile(store_path, "r") as zip_file:
+                self._extract_padron_members(zip_file, dest_dir)
+            return
+        # TemporaryFile is removed on close, so the zip copy does not stay in /tmp.
+        with tempfile.TemporaryFile() as fobj:
+            fobj.write(base64.b64decode(self.file_padron))
+            fobj.seek(0)
+            with zipfile.ZipFile(fobj, "r") as zip_file:
+                self._extract_padron_members(zip_file, dest_dir)
+
+    @api.model
+    def _extract_padron_members(self, zip_file, dest_dir):
+        members = [
+            info
+            for info in zip_file.infolist()
+            if not info.is_dir() and info.filename.lower().endswith(PADRON_EXTENSIONS)
+        ]
+        if sum(info.file_size for info in members) > PADRON_MAX_EXTRACTED_SIZE:
+            raise UserError(_("The padron file is too large to be extracted."))
+        for info in members:
+            zip_file.extract(info, path=dest_dir)
+
+    @api.model
+    def _check_padron_path(self, path):
+        """Only files under the padron folder of this database can be read."""
+        root = os.path.realpath(os.path.join(PADRON_TMP_ROOT, self.env.cr.dbname))
+        if os.path.commonpath([root, os.path.realpath(path)]) != root:
+            raise UserError(_("Invalid padron path."))
+
+    @api.model
+    def _get_padron_layout(self, path):
+        """Return (record_len, cuit_offset, cuit_len) when every line of the file has the same length
+        and CUITs are strictly ascending, so a lookup can bisect it. Return False otherwise."""
+        self._check_padron_path(path)
+        try:
+            stat = os.stat(path)
+        except OSError:
+            return False
+        key = (path, stat.st_mtime_ns, stat.st_size)
+        if key not in _padron_layout_cache:
+            _padron_layout_cache[key] = self._compute_padron_layout(path)
+        return _padron_layout_cache[key]
+
+    @api.model
+    def _compute_padron_layout(self, path):
+        self._check_padron_path(path)
+        try:
+            with open(path, "rb") as fp:
+                first = fp.readline()
+                fields_ = first.split(b";")
+                if not first.endswith(b"\n") or len(fields_) <= 8:
+                    return False
+                width = len(first)
+                offset = sum(len(value) + 1 for value in fields_[:4])
+                cuit_len = len(fields_[4])
+                fp.seek(0)
+                previous = b""
+                while data := fp.read(width * PADRON_LAYOUT_CHUNK):
+                    count, rest = divmod(len(data), width)
+                    if (
+                        rest
+                        or data[width - 1 :: width].count(b"\n") != count
+                        or data[offset - 1 :: width].count(b";") != count
+                        or data[offset + cuit_len :: width].count(b";") != count
+                    ):
+                        return False
+                    cuits = [data[i : i + cuit_len] for i in range(offset, len(data), width)]
+                    if cuits[0] <= previous or any(a >= b for a, b in zip(cuits, cuits[1:])):
+                        return False
+                    previous = cuits[-1]
+        except OSError:
+            return False
+        _logger.info("Padron %s is sorted with fixed width %s: lookups will bisect it", path, width)
+        return width, offset, cuit_len
+
+    @api.model
+    def _bisect_aliquot(self, path, cuit, layout):
+        self._check_padron_path(path)
+        width, offset, cuit_len = layout
+        key = cuit.encode()
+        if len(key) != cuit_len:
+            return False, False
+        try:
+            with open(path, "rb", buffering=0) as fp:
+                low, high = 0, os.fstat(fp.fileno()).st_size // width
+                while low < high:
+                    middle = (low + high) // 2
+                    fp.seek(middle * width)
+                    record = fp.read(width)
+                    found = record[offset : offset + cuit_len]
+                    if found == key:
+                        values = record.decode("latin-1").rstrip("\r\n").split(";")
+                        return values[3], values[8]
+                    if found < key:
+                        low = middle + 1
+                    else:
+                        high = middle
+        except OSError as error:
+            _logger.warning("Padron: could not read %s looking up CUIT %s: %s", path, cuit, error)
+            raise UserError(self._padron_read_error_message(cuit)) from error
+        return False, False
+
+    @api.model
+    def _padron_read_error_message(self, cuit):
+        return _(
+            "The aliquot padron could not be read: looking up CUIT %s failed. Please try "
+            "again in a few minutes or enter the tax rate manually on the contact.",
+            cuit,
+        )
+
+    def _find_aliquot(self, path, cuit):
         """We try to find aliqut and number for a partner given"""
+        self._check_padron_path(path)
+        layout = self._get_padron_layout(path)
+        if layout:
+            return self._bisect_aliquot(path, cuit, layout)
         # grep -F filtra candidatos en C; el split+comparación exacta abajo
         # descarta falsos positivos (CUIT como substring de otro campo).
         result = subprocess.run(
@@ -129,6 +295,16 @@ class ResCompanyJurisdictionPadron(models.Model):
             text=True,
             timeout=GREP_TIMEOUT,
         )
+        # grep returns 1 when there is no match and >= 2 on error (e.g. the file was removed).
+        if result.returncode >= 2:
+            _logger.warning(
+                "Padron: grep exited with code %s looking up CUIT %s in %s: %s",
+                result.returncode,
+                cuit,
+                path,
+                result.stderr,
+            )
+            raise UserError(self._padron_read_error_message(cuit))
         for line in result.stdout.splitlines():
             values = line.split(";")
             if len(values) > 8 and values[4] == cuit:
@@ -212,6 +388,7 @@ class ResCompanyJurisdictionPadron(models.Model):
                 break
         return is_in_padron, aliquot_ret, aliquot_per, contributor_type
 
+<<<<<<< 29618b07c4425930dc5107418d5e756c50b7f486
     def _find_padron_aliquot(self, path, cuit):
         """Busca el CUIT en un padrón de archivo único (ver _is_single_file_padron) y
         devuelve (is_in_padron, aliquot_ret, aliquot_per, contributor_type).
@@ -268,6 +445,12 @@ class ResCompanyJurisdictionPadron(models.Model):
         archivo suelto porque leer un readme o un pdf como padrón no falla: devuelve "no
         figura" y aplica la alícuota por defecto en silencio.
         """
+||||||| 1a89876d28c90991979d74c4d51481d826180fb7
+    def _find_parp_file(self, rootdir):
+=======
+    def _find_parp_file(self, rootdir):
+        self._check_padron_path(rootdir)
+>>>>>>> 3d956d447b34abdc568fbe0d8dae0178d4501dde
         fallback_match = False
         any_file_match = False
         for subdir, dirs, files in os.walk(rootdir):
@@ -299,10 +482,10 @@ class ResCompanyJurisdictionPadron(models.Model):
     def _get_padron_tmp_dir(self):
         # Dir por padron+periodo: no mezcla archivos de otro mes.
         self.ensure_one()
-        return "/tmp/l10n_ar_padron_%s_%s_%s" % (
-            self.id,
-            self.l10n_ar_padron_from_date,
-            self.l10n_ar_padron_to_date,
+        return os.path.join(
+            PADRON_TMP_ROOT,
+            self.env.cr.dbname,
+            "%s_%s_%s" % (self.id, self.l10n_ar_padron_from_date, self.l10n_ar_padron_to_date),
         )
 
     def _ensure_padron_file_extracted(self):
@@ -321,6 +504,7 @@ class ResCompanyJurisdictionPadron(models.Model):
         if path_file:
             return path_file
 
+<<<<<<< 29618b07c4425930dc5107418d5e756c50b7f486
         # Sniff de los primeros bytes: alcanza para saber si viene comprimido y evita
         # decodificar 100 MB de base64 (padron de AGIP) solo para chequear el formato.
         if self._is_compressed_content(base64.b64decode(self.file_padron[:8])):
@@ -335,6 +519,23 @@ class ResCompanyJurisdictionPadron(models.Model):
                 shutil.rmtree(staging_dir, ignore_errors=True)
                 raise
             path_file = self._find_padron_file(tmp_dir)
+||||||| 1a89876d28c90991979d74c4d51481d826180fb7
+        file_content = base64.b64decode(self.file_padron)
+        if self._is_zip_content(file_content):
+            self.descompress_file(self.file_padron, dest_dir=tmp_dir)
+            path_file = self._find_parp_file(tmp_dir)
+=======
+        store_path = self._get_padron_store_path()
+        if store_path:
+            file_content = None
+            is_zip = zipfile.is_zipfile(store_path)
+        else:
+            file_content = base64.b64decode(self.file_padron)
+            is_zip = self._is_zip_content(file_content)
+        if is_zip:
+            self._descompress_file()
+            path_file = self._find_parp_file(tmp_dir)
+>>>>>>> 3d956d447b34abdc568fbe0d8dae0178d4501dde
             if not path_file:
                 raise ValidationError(_("The compressed file does not contain the padron in CSV or TXT format."))
             return path_file
@@ -343,11 +544,41 @@ class ResCompanyJurisdictionPadron(models.Model):
         file_content = base64.b64decode(self.file_padron)
         os.makedirs(tmp_dir, exist_ok=True)
         path_file = os.path.join(tmp_dir, "padron.csv")
-        with open(path_file, "w", encoding="latin-1") as fp:
-            fp.write(file_content.decode("latin-1"))
+        if store_path:
+            shutil.copyfile(store_path, path_file)
+        else:
+            with open(path_file, "w", encoding="latin-1") as fp:
+                fp.write(file_content.decode("latin-1"))
         return path_file
 
+<<<<<<< 29618b07c4425930dc5107418d5e756c50b7f486
     def find_file(self, rootdir, type_code):
+||||||| 1a89876d28c90991979d74c4d51481d826180fb7
+    def _read_parp_from_binary(self, cuit):
+        """Read PARP (padrón Santa Fe) CSV directly from file_padron binary field
+        or from ZIP if the binary is a ZIP file.
+        PARP format: F.PUBLIC;F.VIGEN.DESDE;F.VIGEN.HASTA;NRO.CUIT   ;TIPO CONTRIB;MARCA ALTA;MARCA ALICUOTA;ALIC.PERCEP;ALICUOTA RETENC;GRUPO PER.;GRUPO RETEN;RAZON SOCIAL
+        Returns: (aliquot_ret, aliquot_per)
+        """
+        path_file = self._ensure_parp_file_extracted()
+        with open(path_file, encoding="latin-1") as fp:
+            return self._read_parp_lines(fp.readlines(), cuit)
+
+    def find_file(self, rootdir, type_code):
+=======
+    def _read_parp_from_binary(self, cuit):
+        """Read PARP (padrón Santa Fe) CSV directly from file_padron binary field
+        or from ZIP if the binary is a ZIP file.
+        PARP format: F.PUBLIC;F.VIGEN.DESDE;F.VIGEN.HASTA;NRO.CUIT   ;TIPO CONTRIB;MARCA ALTA;MARCA ALICUOTA;ALIC.PERCEP;ALICUOTA RETENC;GRUPO PER.;GRUPO RETEN;RAZON SOCIAL
+        Returns: (aliquot_ret, aliquot_per)
+        """
+        path_file = self._ensure_parp_file_extracted()
+        with open(path_file, encoding="latin-1") as fp:
+            return self._read_parp_lines(fp.readlines(), cuit)
+
+    def _find_file(self, rootdir, type_code):
+        self._check_padron_path(rootdir)
+>>>>>>> 3d956d447b34abdc568fbe0d8dae0178d4501dde
         res = False
         date = str(self.l10n_ar_padron_from_date.month) + str(self.l10n_ar_padron_from_date.year)
         pattern = r"%s.{1}|.TXT\Z" % type_code + date
@@ -377,12 +608,18 @@ class ResCompanyJurisdictionPadron(models.Model):
             tmp_dir = self._get_padron_tmp_dir()
             padron_types = ["Per", "Ret"]
             for padron_type in padron_types:
-                path_file = self.find_file(tmp_dir, padron_type)
+                path_file = self._find_file(tmp_dir, padron_type)
                 if not path_file:
-                    self.descompress_file(self.file_padron, dest_dir=tmp_dir)
-                    path_file = self.find_file(tmp_dir, padron_type)
+                    self._descompress_file()
+                    path_file = self._find_file(tmp_dir, padron_type)
                 if path_file:
+<<<<<<< 29618b07c4425930dc5107418d5e756c50b7f486
                     nro, aliquot = self.find_aliquot(os.path.join(tmp_dir, path_file), partner.vat)
+||||||| 1a89876d28c90991979d74c4d51481d826180fb7
+                    nro, aliquot = self.find_aliquot(os.path.join(tmp_dir, path_file), cuit)
+=======
+                    nro, aliquot = self._find_aliquot(os.path.join(tmp_dir, path_file), cuit)
+>>>>>>> 3d956d447b34abdc568fbe0d8dae0178d4501dde
                     if padron_type == "Per":
                         aliquot_per = aliquot and aliquot.replace(",", ".")
                     else:

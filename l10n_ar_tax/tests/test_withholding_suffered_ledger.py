@@ -40,6 +40,15 @@ class TestWithholdingSufferedLedger(TransactionCase):
         )
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company.ids))
         cls.env.user.company_id = cls.company
+        # RI companies require a single VAT tax per line; an exempt one keeps the amounts
+        cls.vat_exempt = cls.env["account.tax"].search(
+            [
+                ("company_id", "parent_of", cls.company.id),
+                ("type_tax_use", "=", "sale"),
+                ("tax_group_id.l10n_ar_vat_afip_code", "=", "2"),
+            ],
+            limit=1,
+        )
         if "use_payment_pro" in cls.env["res.company"]._fields:
             cls.company.use_payment_pro = True
 
@@ -168,7 +177,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
                             "quantity": 1,
                             "price_unit": amount,
                             "account_id": income.id,
-                            "tax_ids": [Command.clear()],
+                            "tax_ids": [Command.set(self.vat_exempt.ids)],
                         }
                     )
                 ],
@@ -226,7 +235,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
         rechaza en vez de generar una línea correcta a su cuenta.
         """
         with self.subTest("una retención sufrida, en su propia cuenta"):
-            bill = self._create_sale_bill(100000.0, "1-1")
+            bill = self._create_sale_bill(100000.0, "1-90000001")
             payment = self._receive_via_direct_form(bill, withholdings=[(self.tax_sufrida, 100000.0, 6000.0)])
             self.assertEqual(payment.amount, 94000.0)
 
@@ -241,7 +250,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
             self.assertEqual(self.company.currency_id.round(sum(lines.mapped("balance"))), 0.0)
 
         with self.subTest("dos retenciones juntas, cada una en su cuenta"):
-            bill_two = self._create_sale_bill(100000.0, "1-2")
+            bill_two = self._create_sale_bill(100000.0, "1-90000002")
             payment_two = self._receive_via_direct_form(
                 bill_two,
                 withholdings=[(self.tax_sufrida, 100000.0, 6000.0), (self.tax_iibb_sufrida, 100000.0, 2000.0)],
@@ -267,7 +276,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
 
         Cubre FCP-R05-E4.
         """
-        bill = self._create_sale_bill(100000.0, "1-6")
+        bill = self._create_sale_bill(100000.0, "1-90000006")
         payment = self._receive_via_direct_form(bill, withholdings=[(self.tax_sufrida, 100000.0, 6000.0)])
         self.assertEqual(payment.amount, 94000.0, "neto tras la retención, antes de tocar nada más")
 
@@ -299,7 +308,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
         (agregar y quitar en la misma edición, sin pasar por la base de
         datos entre medio).
         """
-        bill = self._create_sale_bill(100000.0, "1-3")
+        bill = self._create_sale_bill(100000.0, "1-90000003")
         payment = self._receive_via_direct_form(bill, withholdings=[(self.tax_sufrida, 100000.0, 6000.0)])
         self.assertEqual(payment.amount, 94000.0, "con la retención cargada, el importe ya está neteado")
 
@@ -327,7 +336,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
 
         Cubre FCP-R05-E8.
         """
-        bill = self._create_sale_bill(100000.0, "1-4")
+        bill = self._create_sale_bill(100000.0, "1-90000004")
         payment = self._receive_via_direct_form(
             bill, withholdings=[(self.tax_sufrida, 50000.0, 3000.0)], unreconciled_amount=-50000.0
         )
@@ -371,7 +380,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
                 "company_id": self.company.id,
                 "currency_id": self.usd.id,
                 "l10n_latam_document_type_id": self.invoice_a.id,
-                "l10n_latam_document_number": "1-6",
+                "l10n_latam_document_number": "1-90000006",
                 "invoice_line_ids": [
                     Command.create(
                         {
@@ -381,7 +390,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
                             "account_id": self.env["account.account"]
                             .search([("account_type", "=", "income"), ("company_ids", "=", self.company.id)], limit=1)
                             .id,
-                            "tax_ids": [Command.clear()],
+                            "tax_ids": [Command.set(self.vat_exempt.ids)],
                         }
                     )
                 ],
@@ -439,7 +448,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
 
         Cubre FCP-R05-E7.
         """
-        bill = self._create_sale_bill(100000.0, "1-5")
+        bill = self._create_sale_bill(100000.0, "1-90000005")
         payment = self._receive_via_direct_form(bill, withholdings=[(self.tax_sufrida, 100000.0, 6000.0)])
         payment.action_post()
         self.assertEqual(payment.amount, 94000.0)

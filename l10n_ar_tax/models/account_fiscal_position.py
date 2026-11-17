@@ -1,5 +1,6 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import RedirectWarning, ValidationError
+from odoo.fields import Domain
 
 
 class AccountFiscalPosition(models.Model):
@@ -42,6 +43,15 @@ class AccountFiscalPosition(models.Model):
                         )
                     )
                 rec.l10n_ar_tax_ids.write({"tax_type": rec.l10n_ar_tax_type})
+
+    @api.model
+    def _l10n_ar_withholding_positions_for(self, company):
+        """Withholding fiscal positions a payment of ``company`` can use: its own and the ones its
+        ancestors share with it, with the same scope the autodetection applies."""
+        positions = self.search(
+            Domain(self._check_company_domain(company)) & Domain("l10n_ar_tax_ids.tax_type", "=", "withholding")
+        )
+        return positions.filtered(lambda fpos: fpos._is_shared_to_company(company))
 
     def _l10n_ar_add_taxes(self, partner, company, date, tax_type, payment=None):
         # TODO deberiamos unificar mucho de este codigo con _get_tax_domain, _compute_withholdings y _check_tax_group_overlap

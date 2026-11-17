@@ -13,6 +13,13 @@ class AccountPaymentRegister(models.TransientModel):
         super()._compute_fiscal_position_id()
         self._l10n_ar_clear_fiscal_position_if_disabled()
 
+    @api.depends("payment_method_line_id.l10n_ar_apply_withholding")
+    def _compute_l10n_ar_allowed_fiscal_position_ids(self):
+        super()._compute_l10n_ar_allowed_fiscal_position_ids()
+        self.filtered(
+            lambda rec: rec.payment_method_line_id and not rec.payment_method_line_id.l10n_ar_apply_withholding
+        ).l10n_ar_allowed_fiscal_position_ids = False
+
     def _l10n_ar_clear_fiscal_position_if_disabled(self):
         # La restricción del medio de pago prevalece en cada recálculo (también en modo manual):
         # si el método no aplica retenciones, se fuerza la posición fiscal a vacío. Filtramos primero

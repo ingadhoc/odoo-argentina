@@ -29,7 +29,11 @@ class AccountPayment(models.Model):
         compute="_compute_fiscal_position_id",
         store=True,
         readonly=False,
-        domain=[("l10n_ar_tax_ids.tax_type", "=", "withholding")],
+        domain="[('id', 'in', l10n_ar_allowed_fiscal_position_ids)]",
+    )
+    l10n_ar_allowed_fiscal_position_ids = fields.Many2many(
+        "account.fiscal.position",
+        compute="_compute_l10n_ar_allowed_fiscal_position_ids",
     )
 
     def _auto_init(self):
@@ -55,6 +59,12 @@ class AccountPayment(models.Model):
                 " WHERE unreconciled_amount <> 0"
             )
         return super()._auto_init()
+
+    @api.depends("company_id")
+    def _compute_l10n_ar_allowed_fiscal_position_ids(self):
+        FiscalPosition = self.env["account.fiscal.position"]
+        for rec in self:
+            rec.l10n_ar_allowed_fiscal_position_ids = FiscalPosition._l10n_ar_withholding_positions_for(rec.company_id)
 
     @api.depends("to_pay_move_line_ids", "partner_id", "payment_method_line_id")
     def _compute_fiscal_position_id(self):
@@ -139,6 +149,17 @@ class AccountPayment(models.Model):
     #     latam_checks = self.filtered(lambda x: x._is_latam_check_payment())
     #     super(AccountPayment, latam_checks)._compute_amount()
     #     for rec in (self - latam_checks):
+    def _l10n_ar_destination_to_amount_currency(self, value):
+        """Convert ``value`` from destination_currency_id (B2) to the journal currency (A) of ``amount``."""
+        self.ensure_one()
+        if self.counterpart_currency_id != self.destination_currency_id:
+            # B1 ≠ B2 (reconcile cases 8, 10): B2=C siempre.
+            # Convertir C→A: amount_A = amount_C * accounting_rate (= A/C).
+            return value * (self.accounting_rate or 1.0)
+        # B1 = B2 (caso normal): value en B1/B2, counterpart_rate = B1/A.
+        counterpart = self.counterpart_rate
+        return value / counterpart if counterpart else value
+
     @api.onchange("withholdings_amount")
     def _onchange_withholdings(self):
         # solo queremos re-computar en pagos de proveedor
@@ -156,15 +177,7 @@ class AccountPayment(models.Model):
         ):
             # payment_difference está en B2 (destination_currency_id).
             # Necesitamos convertirlo a A (moneda del journal) para ajustar rec.amount.
-            if rec.counterpart_currency_id != rec.destination_currency_id:
-                # B1 ≠ B2 (reconcile cases 8, 10): B2=C siempre.
-                # Convertir C→A: amount_A = amount_C * accounting_rate (= A/C).
-                diff_in_a = rec.payment_difference * (rec.accounting_rate or 1.0)
-            else:
-                # B1 = B2 (caso normal): payment_difference en B1/B2, counterpart_rate = B1/A.
-                counterpart = rec.counterpart_rate
-                diff_in_a = rec.payment_difference / counterpart if counterpart else rec.payment_difference
-            amount = rec.amount + diff_in_a
+            amount = rec.amount + rec._l10n_ar_destination_to_amount_currency(rec.payment_difference)
             # no pasamos a importes negativos (por ej. si se ponen retenciones grandes) porque es molesto
             # empieza a salir un raise que no deja editar cosas
             rec.amount = amount if amount > 0 else 0

@@ -1,4 +1,5 @@
 from odoo import _, api, fields, models
+from odoo.addons.account_ux.models.account_fiscal_position import SHARED_TO_BRANCHES_HELP
 from odoo.exceptions import RedirectWarning, ValidationError
 from odoo.fields import Domain
 
@@ -6,6 +7,10 @@ from odoo.fields import Domain
 class AccountFiscalPosition(models.Model):
     _inherit = "account.fiscal.position"
 
+    shared_to_branches = fields.Selection(
+        help=SHARED_TO_BRANCHES_HELP + "\n\nIn vendor payments, it also narrows the withholding positions offered "
+        "to pick by hand.",
+    )
     l10n_ar_tax_ids = fields.One2many("account.fiscal.position.l10n_ar_tax", "fiscal_position_id")
     l10n_ar_tax_type = fields.Selection(
         selection=[
@@ -48,10 +53,9 @@ class AccountFiscalPosition(models.Model):
     def _l10n_ar_withholding_positions_for(self, company):
         """Withholding fiscal positions a payment of ``company`` can use: its own and the ones its
         ancestors share with it, with the same scope the autodetection applies."""
-        positions = self.search(
-            Domain(self._check_company_domain(company)) & Domain("l10n_ar_tax_ids.tax_type", "=", "withholding")
+        return self.search(
+            Domain(self._shared_to_branches_domain(company)) & Domain("l10n_ar_tax_ids.tax_type", "=", "withholding")
         )
-        return positions.filtered(lambda fpos: fpos._is_shared_to_company(company))
 
     def _l10n_ar_add_taxes(self, partner, company, date, tax_type, payment=None):
         # TODO deberiamos unificar mucho de este codigo con _get_tax_domain, _compute_withholdings y _check_tax_group_overlap

@@ -254,3 +254,12 @@ class TestApplyWithholdingByPaymentMethod(TestArCommon):
         payment.payment_method_line_id = no_withholding_pml
         self.assertFalse(payment.l10n_ar_fiscal_position_id)
         self.assertEqual(payment.amount, invoice.amount_total)
+
+    def test_flag_off_keeps_position_of_posted_payments(self):
+        invoice = self._vendor_invoice()
+        payment = self._netted_draft(invoice)
+        payment.action_post()
+        withholdings = payment.withholdings_amount
+        self.out_pml.l10n_ar_apply_withholding = False
+        self.assertEqual(payment.l10n_ar_fiscal_position_id, self.wth_fp)
+        self.assertEqual(payment.withholdings_amount, withholdings)

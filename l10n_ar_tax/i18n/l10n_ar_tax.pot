@@ -535,6 +535,12 @@ msgid "Aliquot (%)"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__l10n_ar_allowed_fiscal_position_ids
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_register__l10n_ar_allowed_fiscal_position_ids
+msgid "Allowed Fiscal Positions"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__amount
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__amount
 msgid "Amount"
@@ -1458,6 +1464,22 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__webservice
 msgid "Webservice"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_fiscal_position__shared_to_branches
+msgid ""
+"Which branches this fiscal position is automatically detected in.\n"
+"\n"
+"- All branches: every company below this one, whatever its Tax ID.\n"
+"- Same legal entity: only the branches that declare the same Tax ID as this company, with no break in the chain. An auxiliary company with no Tax ID of its own is a different legal entity and is left out.\n"
+"- Not shared: only this company.\n"
+"\n"
+"Careful with how the automatic detection picks one, because it is not by sequence. Odoo sorts the candidates by how deep the owning company sits in the branch tree first, and only then by sequence: a position of the branch you are standing in wins over one of its parent whatever the sequences say, and the sequence only decides between positions of the same company.\n"
+"\n"
+"This scope narrows the automatic detection. A position keeps working in the documents that already use it and in the company that owns it.\n"
+"\n"
+"In vendor payments, it also narrows the withholding positions offered to pick by hand."
 msgstr ""
 
 #. module: l10n_ar_tax

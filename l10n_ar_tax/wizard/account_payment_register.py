@@ -20,6 +20,7 @@ class AccountPaymentRegister(models.TransientModel):
     )
     l10n_ar_allowed_fiscal_position_ids = fields.Many2many(
         "account.fiscal.position",
+        string="Allowed Fiscal Positions",
         compute="_compute_l10n_ar_allowed_fiscal_position_ids",
     )
     fiscal_position_mode = fields.Selection(

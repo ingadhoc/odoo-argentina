@@ -16,7 +16,11 @@ class AccountPaymentRegister(models.TransientModel):
         compute="_compute_fiscal_position_id",
         store=True,
         readonly=False,
-        domain=[("l10n_ar_tax_ids.tax_type", "=", "withholding")],
+        domain="[('id', 'in', l10n_ar_allowed_fiscal_position_ids)]",
+    )
+    l10n_ar_allowed_fiscal_position_ids = fields.Many2many(
+        "account.fiscal.position",
+        compute="_compute_l10n_ar_allowed_fiscal_position_ids",
     )
     fiscal_position_mode = fields.Selection(
         [("automatic", "Automatic"), ("manual", "Manual")],
@@ -42,6 +46,12 @@ class AccountPaymentRegister(models.TransientModel):
                 "payment_bundle",
             ]
         return payment_method_code in codes
+
+    @api.depends("company_id")
+    def _compute_l10n_ar_allowed_fiscal_position_ids(self):
+        FiscalPosition = self.env["account.fiscal.position"]
+        for rec in self:
+            rec.l10n_ar_allowed_fiscal_position_ids = FiscalPosition._l10n_ar_withholding_positions_for(rec.company_id)
 
     @api.depends("line_ids", "partner_id", "fiscal_position_mode")
     def _compute_fiscal_position_id(self):

@@ -258,6 +258,8 @@ class TestApplyWithholdingByPaymentMethod(TestArCommon):
     def test_flag_off_keeps_position_of_posted_payments(self):
         invoice = self._vendor_invoice()
         payment = self._netted_draft(invoice)
+        # the test tax has no withholding sequence, and posting asks for a number
+        payment.l10n_ar_withholding_line_ids.name = "0001"
         payment.action_post()
         withholdings = payment.withholdings_amount
         self.out_pml.l10n_ar_apply_withholding = False

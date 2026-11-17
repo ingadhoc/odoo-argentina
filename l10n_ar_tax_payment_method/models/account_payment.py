@@ -27,8 +27,10 @@ class AccountPayment(models.Model):
         # forzamos la posición fiscal a vacío para que no se calculen. Filtramos primero y solo
         # escribimos si hay algo que limpiar: así, cuando esto corre dentro de write(), la re-entrada
         # encuentra el conjunto vacío y no hay recursión infinita.
+        # Only drafts: a posted payment keeps the position its withholding lines were computed with.
         to_clear = self.filtered(
-            lambda rec: rec.payment_method_line_id
+            lambda rec: rec.state == "draft"
+            and rec.payment_method_line_id
             and not rec.payment_method_line_id.l10n_ar_apply_withholding
             and rec.l10n_ar_fiscal_position_id
         )

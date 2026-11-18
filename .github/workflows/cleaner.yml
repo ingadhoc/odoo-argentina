@@ -5,8 +5,6 @@
 name: Delete PR branch from fork and base repo
 
 on:
-  pull_request:
-    types: [closed]
   pull_request_target:
     types: [closed]
 
@@ -24,7 +22,6 @@ jobs:
     if: >
       github.repository_owner == 'ingadhoc' &&
       (
-        (github.event_name == 'pull_request' && github.event.pull_request.merged == false && github.event.sender.login == 'roboadhoc') ||
         (github.event_name == 'pull_request_target' && github.event.pull_request.merged == false && github.event.sender.login == 'roboadhoc') ||
         (github.event_name == 'workflow_dispatch') ||
         (github.event_name == 'deployment_status' &&  github.event.deployment_status.state == 'success')
@@ -115,12 +112,14 @@ jobs:
       - name: Delete branch from the base repository
         uses: actions/github-script@v6
         if: ${{ steps.pr_data_fetcher.outputs.validation_passed == 'true' }}
+        env:
+          BRANCH_NAME: ${{ steps.pr_data_fetcher.outputs.base_branch_name }}
         with:
           github-token: ${{ github.token }}
           script: |
-            const baseBranchName = `${{ steps.pr_data_fetcher.outputs.base_branch_name }}`;
-            const baseRepoOwner = `${{ steps.pr_data_fetcher.outputs.base_repo_owner }}`;
-            const baseRepoName = `${{ steps.pr_data_fetcher.outputs.base_repo_name }}`;
+            const baseBranchName = process.env.BRANCH_NAME;
+            const baseRepoOwner = context.repo.owner;
+            const baseRepoName = context.repo.repo;
             try {
               core.info(`Attempting to delete branch '${baseBranchName}' from base repo '${baseRepoOwner}/${baseRepoName}'`);
               await github.rest.git.deleteRef({
@@ -137,15 +136,28 @@ jobs:
               }
             }
 
-      - name: Delete branch from the fork repository (adhoc-dev)
-        if: ${{ steps.pr_data_fetcher.outputs.validation_passed == 'true' }}
-        uses: actions/github-script@v6
+      - name: Generate adhoc-dev token
+        id: app-token
+        if: ${{ steps.pr_data_fetcher.outputs.validation_passed == 'true' && contains(fromJSON('["adhoc-dev", "ingadhoc"]'), steps.pr_data_fetcher.outputs.head_repo_owner) }}
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          github-token: ${{ secrets.EXTERNAL_REPO_TOKEN_CLEANER_ADHOC_DEV || github.token }}
+          client-id: ${{ vars.MIRROR_SYNC_CLIENT_ID }}
+          private-key: ${{ secrets.MIRROR_SYNC_PRIVATE_KEY }}
+          owner: adhoc-dev
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
+
+      - name: Delete branch from the fork repository (adhoc-dev)
+        if: ${{ steps.app-token.outcome == 'success' }}
+        uses: actions/github-script@v6
+        env:
+          BRANCH_NAME: ${{ steps.pr_data_fetcher.outputs.base_branch_name }}
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
-            const baseBranchName = `${{ steps.pr_data_fetcher.outputs.base_branch_name }}`;
+            const baseBranchName = process.env.BRANCH_NAME;
             const headRepoOwner = 'adhoc-dev';
-            const headRepoName = `${{ steps.pr_data_fetcher.outputs.head_repo_name }}`;
+            const headRepoName = context.repo.repo;
 
             try {
               core.info(`PR comes from a fork. Attempting to delete branch from fork repo '${headRepoOwner}/${headRepoName}'`);
@@ -159,6 +171,6 @@ jobs:
               if (error.status === 422) {
                 core.info(`Branch '${baseBranchName}' in fork repo already deleted. No action needed.`);
               } else {
-                console.error(`Error deleting branch '${baseBranchName}' from fork repo: ${error.message}`);
+                core.setFailed(`Error deleting branch '${baseBranchName}' from fork repo: ${error.message}`);
               }
             }

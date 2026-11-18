@@ -43,6 +43,17 @@ class AccountMove(models.Model):
             tax_factor = 1.0 / 1.21
         return tax_factor
 
+    def action_post(self):
+        if not self.env.context.get("l10n_ar_perceptions_confirmed"):
+            messages = []
+            for move in self.filtered(lambda x: x.move_type == "out_invoice" and x.fiscal_position_id):
+                messages += move.fiscal_position_id.with_context(
+                    l10n_ar_delivery_partner_id=move.partner_shipping_id.id
+                )._l10n_ar_check_perceptions(move.partner_id, move.invoice_date or fields.Date.context_today(move))
+            if messages and self.env["l10n_ar.perceptions.confirm"]._is_button_call():
+                return self.env["l10n_ar.perceptions.confirm"]._action_open(self, "action_post", messages)
+        return super().action_post()
+
     def write(self, vals):
         res = super().write(vals)
         # Si el invoice_date cambia, recomputamos las percepciones.
@@ -67,9 +78,7 @@ class AccountMove(models.Model):
             and x.perceptions_fiscal_positon
             and x.state == "draft"
         ):
-            fp_tax_groups = move.fiscal_position_id.l10n_ar_tax_ids.filtered(
-                lambda x: x.tax_type == "perception"
-            ).mapped("default_tax_id.tax_group_id")
+            fp_tax_groups = move.fiscal_position_id._l10n_ar_perception_tax_groups()
             new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(
                 move.partner_id, move.company_id, move.date, "perception"
             )

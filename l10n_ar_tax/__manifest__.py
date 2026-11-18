@@ -40,6 +40,7 @@
         "views/account_fiscal_position_view.xml",
         "wizard/account_payment_register_views.xml",
         "wizard/res_config_settings_views.xml",
+        "wizard/l10n_ar_perceptions_confirm_views.xml",
     ],
     "demo": [
         "demo/ir_parameter.xml",

@@ -16,6 +16,15 @@ class TestApplyWithholdingByPaymentMethod(TestArCommon):
         cls.company.use_payment_pro = True
 
         # Impuesto de retención + posición fiscal de retención
+        # posting a payment needs an account and a number for the withholding line
+        wth_account = cls.env["account.account"].create(
+            {
+                "name": "Ret Test PM",
+                "code": "RTPM",
+                "account_type": "liability_current",
+                "company_ids": [Command.set(cls.company.ids)],
+            }
+        )
         cls.wth_tax = cls.env["account.tax"].create(
             {
                 "name": "Ret Test PM 3%",
@@ -25,6 +34,17 @@ class TestApplyWithholdingByPaymentMethod(TestArCommon):
                 "company_id": cls.company.id,
                 "l10n_ar_tax_type": "iibb_untaxed",
                 "l10n_ar_code": "RET_TEST_PM",
+                "l10n_ar_withholding_sequence_id": cls.env["ir.sequence"]
+                .create({"name": "Ret Test PM seq", "implementation": "standard", "padding": 4})
+                .id,
+                "invoice_repartition_line_ids": [
+                    Command.create({"factor_percent": 100, "repartition_type": "base"}),
+                    Command.create({"factor_percent": 100, "repartition_type": "tax", "account_id": wth_account.id}),
+                ],
+                "refund_repartition_line_ids": [
+                    Command.create({"factor_percent": 100, "repartition_type": "base"}),
+                    Command.create({"factor_percent": 100, "repartition_type": "tax", "account_id": wth_account.id}),
+                ],
             }
         )
         cls.wth_fp = cls.env["account.fiscal.position"].create(
@@ -258,8 +278,6 @@ class TestApplyWithholdingByPaymentMethod(TestArCommon):
     def test_flag_off_keeps_position_of_posted_payments(self):
         invoice = self._vendor_invoice()
         payment = self._netted_draft(invoice)
-        # the test tax has no withholding sequence, and posting asks for a number
-        payment.l10n_ar_withholding_line_ids.name = "0001"
         payment.action_post()
         withholdings = payment.withholdings_amount
         self.out_pml.l10n_ar_apply_withholding = False

@@ -18,12 +18,12 @@ class TestPadronTmpDir(common.TransactionCase):
         cls.padron_model = cls.env["res.company.jurisdiction.padron"]
         cls.state_arba = cls.env.ref("base.state_ar_b")
         cls.state_santa_fe = cls.env.ref("base.state_ar_s")
-        cls.cuit_type = cls.env.ref("l10n_ar.it_cuit")
+        cls.country_ar = cls.env.ref("base.ar")
         cls.today = cls.env["res.partner"].create({"name": "dummy"}).create_date.date()
 
     def _create_partner(self, vat):
         return self.env["res.partner"].create(
-            {"name": "partner_%s" % vat, "l10n_latam_identification_type_id": self.cuit_type.id, "vat": vat}
+            {"name": "partner_%s" % vat, "country_id": self.country_ar.id, "vat": vat}
         )
 
     def _line(self, nro, cuit, aliq):

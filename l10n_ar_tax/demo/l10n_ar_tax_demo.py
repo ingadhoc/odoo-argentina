@@ -31,7 +31,6 @@ class AccountChartTemplate(models.AbstractModel):
                         "name": "100031",
                         "payment_date": today_dt + timedelta(days=30),
                         "amount": 10000,
-                        "bank_id": self.env["res.bank"].search([], limit=1).id,
                         "payment_method_line_id": payment_method_in_third.id,
                     }
                 ),
@@ -40,7 +39,6 @@ class AccountChartTemplate(models.AbstractModel):
                         "name": "100061",
                         "payment_date": today_dt + timedelta(days=60),
                         "amount": 20000,
-                        "bank_id": self.env["res.bank"].search([], limit=1).id,
                         "payment_method_line_id": payment_method_in_third.id,
                     }
                 ),
@@ -49,7 +47,6 @@ class AccountChartTemplate(models.AbstractModel):
                         "name": "100091",
                         "payment_date": today_dt + timedelta(days=90),
                         "amount": 30000,
-                        "bank_id": self.env["res.bank"].search([], limit=1).id,
                         "payment_method_line_id": payment_method_in_third.id,
                     }
                 ),
@@ -85,7 +82,6 @@ class AccountChartTemplate(models.AbstractModel):
                         "name": "200003",
                         "payment_date": today_dt + timedelta(days=7),
                         "amount": 15000,
-                        "bank_id": self.env["res.bank"].search([], limit=1).id,
                         "payment_method_line_id": payment_method_own.id,
                     }
                 )

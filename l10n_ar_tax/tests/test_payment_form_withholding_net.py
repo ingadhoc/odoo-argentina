@@ -105,7 +105,7 @@ class TestPaymentFormWithholdingNet(TransactionCase):
                 "name": "Test Withholding Vendor",
                 "company_id": False,
                 "property_account_position_id": cls.fiscal_position.id,
-                "l10n_latam_identification_type_id": cls.env.ref("l10n_ar.it_cuit").id,
+                "country_id": cls.env.ref("base.ar").id,
                 "l10n_ar_afip_responsibility_type_id": cls.env.ref("l10n_ar.res_IVARI").id,
                 "vat": "30710158254",
             }

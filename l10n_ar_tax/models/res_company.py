@@ -91,8 +91,8 @@ class ResCompany(models.Model):
         environment_type = self._get_arba_environment_type()
         file = self._arba_prepare_file(vat, date_from, date_to)
         login_url = self.get_arba_login_url(environment_type)
-        arba_alicout_timeout = int(
-            self.env["ir.config_parameter"].sudo().get_param("l10n_ar_tax.arba_alicout_timeout", default=15)
+        arba_alicout_timeout = (
+            self.env["ir.config_parameter"].sudo().get_int("l10n_ar_tax.arba_alicout_timeout", default=15)
         )
         request_data = {
             "user": self.partner_id.ensure_vat(),

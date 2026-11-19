@@ -23,6 +23,10 @@ contabilizado aunque después cambie el umbral:
     8. Validada con percepción, después se sube el umbral → sigue la percepción.
     9. Validada sin percepción, después se saca el umbral → sigue sin percepción.
    10. Igual que 8, con la factura cancelada.
+
+Al editar un importe en la conciliación bancaria el core borra el apunte y recalcula
+los impuestos con las líneas base que ya no existen:
+   11. Con las líneas borradas el recálculo no falla y se evalúa el umbral vigente.
 """
 
 from odoo import Command
@@ -178,3 +182,24 @@ class TestPerceptionBaseMinimumThreshold(TestArCommon):
         self.assertEqual(invoice.state, "cancel")
         self.perception_tax.l10n_ar_base_minimum_threshold = 400000
         self._assert_tax_totals_match_booked_total(invoice, 373240.0)
+
+    def test_11_base_lines_already_unlinked(self):
+        """Las líneas base ya borradas no rompen el recálculo (widget de conciliación
+        bancaria): se evalúa el umbral vigente, 301000 < 400000 → percepción en 0."""
+        self.perception_tax.l10n_ar_base_minimum_threshold = 400000
+        invoice = self._post_invoice([(301000.0, True)])
+        invoice.button_draft()
+        lines = invoice.invoice_line_ids
+        AccountTax = self.env["account.tax"]
+        base_lines = [AccountTax._prepare_base_line_for_taxes_computation(line) for line in lines]
+        AccountTax._add_tax_details_in_base_lines(base_lines, invoice.company_id)
+        lines.unlink()
+        AccountTax._l10n_ar_apply_perception_base_threshold(base_lines, invoice.company_id)
+        perception_data = [
+            tax_data
+            for base_line in base_lines
+            for tax_data in base_line["tax_details"]["taxes_data"]
+            if tax_data["tax"] == self.perception_tax
+        ]
+        self.assertTrue(perception_data)
+        self.assertTrue(all(tax_data["tax_amount"] == 0.0 for tax_data in perception_data))

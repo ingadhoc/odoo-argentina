@@ -91,16 +91,22 @@ class AccountPayment(models.Model):
     @api.onchange("withholdings_amount")
     def _onchange_withholdings(self):
         # solo queremos re-computar en pagos de proveedor
+        # with third party checks the amount is the sum of the selected checks, so it is only netted
+        # while no check is selected yet (e.g. a payment opened from the bill with a checks journal),
+        # otherwise the gross amount stays when the journal is changed afterwards
         for rec in self.filtered(
             lambda x: (
                 x.partner_type == "supplier"
-                and x.payment_method_code
-                not in [
-                    "in_third_party_checks",
-                    "out_third_party_checks",
-                    "return_third_party_checks",
-                    "new_third_party_checks",
-                ]
+                and (
+                    x.payment_method_code
+                    not in [
+                        "in_third_party_checks",
+                        "out_third_party_checks",
+                        "return_third_party_checks",
+                        "new_third_party_checks",
+                    ]
+                    or not x._get_latam_checks()
+                )
             )
         ):
             # el compute_withholdings o el _compute_withholdings?

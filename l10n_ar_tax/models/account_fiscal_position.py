@@ -7,13 +7,16 @@ class AccountFiscalPosition(models.Model):
 
     l10n_ar_tax_ids = fields.One2many("account.fiscal.position.l10n_ar_tax", "fiscal_position_id")
 
-    def _l10n_ar_add_taxes(self, partner, company, date, tax_type, payment=None):
+    def _l10n_ar_add_taxes(self, partner, company, date, tax_type, payment=None, exclude_jurisdictions=()):
+        """'exclude_jurisdictions': códigos de jurisdicción (ej. '901') de los impuestos que no se buscan."""
         # TODO deberiamos unificar mucho de este codigo con _get_tax_domain, _compute_withholdings y _check_tax_group_overlap
         self.ensure_one()
         taxes = self.env["account.tax"]
         # garantizamos de siempre evaluar segun commercial partner que es donde se guardan y ven los impuestos
         partner = partner.commercial_partner_id
         for fp_tax in self.l10n_ar_tax_ids.filtered(lambda x: x.tax_type == tax_type):
+            if fp_tax.default_tax_id.l10n_ar_state_id.jurisdiction_code in exclude_jurisdictions:
+                continue
             domain = self.env["l10n_ar.partner.tax"]._check_company_domain(company)
             domain += [("tax_id.tax_group_id", "=", fp_tax.default_tax_id.tax_group_id.id)]
             if tax_type == "withholding":

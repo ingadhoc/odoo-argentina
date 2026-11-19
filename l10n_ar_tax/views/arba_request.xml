@@ -2,13 +2,13 @@
 <odoo>
     <template id="arba_alicout_query" name="ARBA Alicout Query">&lt;?xml version = "1.0" encoding = "utf-8"?&gt;
 <CONSULTA-ALICUOTA>
-    <fechaDesde><t t-esc="date_from.strftime('%Y%m%d')"/></fechaDesde>
-    <fechaHasta><t t-esc="date_to.strftime('%Y%m%d')"/></fechaHasta>
-    <cantidadContribuyentes><t t-esc="len(vats)"/></cantidadContribuyentes>
+    <fechaDesde><t t-out="date_from.strftime('%Y%m%d')"/></fechaDesde>
+    <fechaHasta><t t-out="date_to.strftime('%Y%m%d')"/></fechaHasta>
+    <cantidadContribuyentes><t t-out="len(vats)"/></cantidadContribuyentes>
     <contribuyentes class="list">
         <t t-foreach="vats" t-as="vat">
         <contribuyente>
-            <cuitContribuyente><t t-esc="vat"/></cuitContribuyente>
+            <cuitContribuyente><t t-out="vat"/></cuitContribuyente>
         </contribuyente>
         </t>
     </contribuyentes>

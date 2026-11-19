@@ -143,6 +143,12 @@ class AccountFiscalPosition(models.Model):
                 functions are being determined.
         """
         functions = super()._get_fpos_validation_functions(partner)
+        if self.env.company.country_id.code == "AR":
+            # since 20.0 l10n_ar auto applies positions without responsibility types; as in 19.0, only AR Domestic
+            domestic = self._l10n_ar_domestic_fiscal_position(self.env.company)
+            functions = [
+                lambda fpos: fpos.l10n_ar_afip_responsibility_type_ids or fpos == domestic,
+            ] + functions
         if self.env.context.get("l10n_ar_withholding") and self.env.company.country_id.code == "AR":
             return [
                 lambda fpos: any(tax.tax_type == "withholding" for tax in fpos.l10n_ar_tax_ids),
@@ -175,6 +181,30 @@ class AccountFiscalPosition(models.Model):
         FPs that do have explicit tax_ids (e.g. foreign or exempt positions with VAT mapping) are
         not affected and always fall through to super().
         """
-        if not self.tax_ids and self.l10n_ar_tax_ids and self != self.company_id.domestic_fiscal_position_id:
+        if (
+            not self.tax_ids
+            and self.l10n_ar_tax_ids
+            and self != self._l10n_ar_domestic_fiscal_position(self.company_id)
+        ):
             return taxes
         return super().map_tax(taxes)
+
+    def _l10n_ar_domestic_fiscal_position(self, company):
+        # not domestic_fiscal_position_id: since 20.0 AR Domestic has sequence 40, so that field picks any AR position
+        # with a lower one, like the perception ones
+        return (
+            self.env["account.chart.template"]
+            .with_company(company)
+            .ref("l10n_ar_domestic_fiscal_position", raise_if_not_found=False)
+            or self.browse()
+        )
+
+    def _get_first_matching_fpos(self, partner):
+        """Since 20.0 l10n_ar auto applies AR Domestic to any AR partner (it has no responsibility types, which in 19.0
+        never matched), so it would win over the perception positions with a higher sequence. Keep it as the fallback."""
+        if self.env.company.country_id.code != "AR":
+            return super()._get_first_matching_fpos(partner)
+        domestic = self._l10n_ar_domestic_fiscal_position(self.env.company) & self
+        return super(AccountFiscalPosition, self - domestic)._get_first_matching_fpos(partner) or super(
+            AccountFiscalPosition, domestic
+        )._get_first_matching_fpos(partner)

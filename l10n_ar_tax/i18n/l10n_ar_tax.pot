@@ -1204,8 +1204,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_payment.py:0
 msgid ""
-"Please enter withholding number for tax %s or configure a sequence on that "
-"tax"
+"Please enter withholding number for tax %s or configure a sequence on its "
+"tax group"
 msgstr ""
 
 #. module: l10n_ar_tax

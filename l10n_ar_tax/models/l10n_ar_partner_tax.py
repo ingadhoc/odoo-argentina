@@ -25,7 +25,7 @@ class L10nArPartnerTax(models.Model):
                 ("to_date", "=", False),
                 ("to_date", ">=", record.from_date or datetime.date.min),
             ]
-            if record.tax_id.l10n_ar_withholding_payment_type == "supplier":
+            if record.tax_id.type_tax_use == "purchase" and record.tax_id.is_withholding_tax:
                 # TODO esto lo deberiamos borrar al ir a odoo 19 y solo usar los tax groups
                 # por ahora, para no renegar con scripts de migra que requieran crear tax groups para cada jurisdiccion y
                 # ademas luego tener que ajustar a lo que hagamos en 19, usamos la jursdiccion como elemento de agrupacion

@@ -36,7 +36,7 @@ class TestWithholdingSufferedLedger(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.company = cls.env["res.company"].search(
-            [("l10n_ar_tax_base_account_id", "!=", False), ("partner_id.country_id.code", "=", "AR")], limit=1
+            [("withholding_tax_base_account_id", "!=", False), ("partner_id.country_id.code", "=", "AR")], limit=1
         )
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company.ids))
         cls.env.user.company_id = cls.company
@@ -55,15 +55,15 @@ class TestWithholdingSufferedLedger(TransactionCase):
             {
                 "name": "Test WTH Sufrida Ganancias 6%",
                 "company_id": cls.company.id,
-                "type_tax_use": "none",
+                "type_tax_use": "sale",
+                "is_withholding_tax": True,
                 "amount_type": "percent",
-                "amount": 6.0,
+                "amount": -6.0,
                 "tax_group_id": cls.env["account.tax.group"]
                 .create({"name": "Test Sufrida Ganancias Group", "company_id": cls.company.id})
                 .id,
-                "l10n_ar_tax_type": "earnings",
-                "l10n_ar_withholding_payment_type": "customer",
-                "l10n_ar_withholding_sequence_id": cls.env["ir.sequence"]
+                "l10n_ar_withholding_tax_type": "earnings",
+                "withholding_sequence_id": cls.env["ir.sequence"]
                 .create({"name": "Test WTH Sufrida seq", "implementation": "standard", "padding": 4})
                 .id,
                 "invoice_repartition_line_ids": [
@@ -90,15 +90,15 @@ class TestWithholdingSufferedLedger(TransactionCase):
             {
                 "name": "Test WTH Sufrida IIBB 2%",
                 "company_id": cls.company.id,
-                "type_tax_use": "none",
+                "type_tax_use": "sale",
+                "is_withholding_tax": True,
                 "amount_type": "percent",
-                "amount": 2.0,
+                "amount": -2.0,
                 "tax_group_id": cls.env["account.tax.group"]
                 .create({"name": "Test Sufrida IIBB Group", "company_id": cls.company.id})
                 .id,
-                "l10n_ar_tax_type": "iibb_untaxed",
-                "l10n_ar_withholding_payment_type": "customer",
-                "l10n_ar_withholding_sequence_id": cls.env["ir.sequence"]
+                "l10n_ar_withholding_tax_type": "iibb_untaxed",
+                "withholding_sequence_id": cls.env["ir.sequence"]
                 .create({"name": "Test WTH Sufrida IIBB seq", "implementation": "standard", "padding": 4})
                 .id,
                 "invoice_repartition_line_ids": [

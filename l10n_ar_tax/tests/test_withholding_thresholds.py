@@ -29,7 +29,7 @@ class TestWithholdingThresholds(TestArWithholdingArRi):
             default={
                 "name": "IIBB Threshold Test 3%",
                 "amount": 3,
-                "l10n_ar_withholding_sequence_id": cls.wth_seq_thr.id,
+                "withholding_sequence_id": cls.wth_seq_thr.id,
                 "l10n_ar_non_taxable_amount": 0,
                 "l10n_ar_payment_minimum_threshold": 0,
                 "l10n_ar_base_minimum_threshold": 0,
@@ -42,7 +42,7 @@ class TestWithholdingThresholds(TestArWithholdingArRi):
             default={
                 "name": "IIBB Threshold Test 0.5%",
                 "amount": 0.5,
-                "l10n_ar_withholding_sequence_id": cls.wth_seq_thr.id,
+                "withholding_sequence_id": cls.wth_seq_thr.id,
                 "l10n_ar_non_taxable_amount": 0,
                 "l10n_ar_payment_minimum_threshold": 0,
                 "l10n_ar_base_minimum_threshold": 0,
@@ -58,7 +58,7 @@ class TestWithholdingThresholds(TestArWithholdingArRi):
                 "amount_type": "percent",
                 "l10n_ar_code": "EARN_THR_TEST",
                 "l10n_ar_non_taxable_amount": 100.0,
-                "l10n_ar_withholding_sequence_id": cls.wth_seq_thr.id,
+                "withholding_sequence_id": cls.wth_seq_thr.id,
             }
         )
 

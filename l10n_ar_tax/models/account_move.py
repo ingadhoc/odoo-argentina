@@ -81,6 +81,17 @@ class AccountMove(models.Model):
                 if to_unlink._origin != target_taxes:
                     line.tax_ids = (line.tax_ids - to_unlink) | target_taxes
 
+    def button_draft(self):
+        # A suffered withholding typed without base has no base line behind its tax line, so the dynamic sync of the
+        # draft entry drops the tax line and the entry is left unbalanced.
+        no_base_entries = self.filtered(
+            lambda move: move.origin_payment_id.withholding_line_ids._l10n_ar_get_suffered().filtered(
+                lambda line: line.comodel_currency_id.is_zero(line.base_amount)
+            )
+        )
+        super(AccountMove, self - no_base_entries).button_draft()
+        return super(AccountMove, no_base_entries.with_context(skip_invoice_sync=True)).button_draft()
+
     def copy(self, default=None):
         """Re computamos las percepciones al duplicar una factura porque puede ser que la factura venga de otro periodo
         o por alguna razón las percepciones hayan cambiado

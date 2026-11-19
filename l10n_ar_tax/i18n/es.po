@@ -1256,11 +1256,11 @@ msgstr "Percepciones y Retenciones"
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_payment.py:0
 msgid ""
-"Please enter withholding number for tax %s or configure a sequence on that "
-"tax"
+"Please enter withholding number for tax %s or configure a sequence on its "
+"tax group"
 msgstr ""
 "Por favor ingrese un número de retención para el impuesto %s o configure una "
-"secuencia en ese impuesto"
+"secuencia en su grupo de impuestos"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form

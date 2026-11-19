@@ -1,4 +1,3 @@
-import base64
 import logging
 import os
 import re
@@ -64,7 +63,7 @@ class ResCompanyJurisdictionPadron(models.Model):
             if not rec._is_santa_fe_jurisdiction() or not rec.file_padron:
                 continue
 
-            file_content = base64.b64decode(rec.file_padron)
+            file_content = rec.file_padron.content
             if not rec._has_zip_filename() or not rec._is_zip_content(file_content):
                 raise ValidationError(_("Only compressed ZIP files are allowed for Santa Fe."))
 
@@ -76,7 +75,7 @@ class ResCompanyJurisdictionPadron(models.Model):
             if not rec._is_agip_jurisdiction() or not rec.file_padron:
                 continue
 
-            file_content = base64.b64decode(rec.file_padron)
+            file_content = rec.file_padron.content
             if not rec._has_compressed_filename() or not rec._is_compressed_content(file_content):
                 raise ValidationError(_("Only compressed ZIP or RAR files are allowed for AGIP (CABA)."))
             # Validamos acá y no al liquidar: si falta la lib de rar queremos que se
@@ -100,7 +99,7 @@ class ResCompanyJurisdictionPadron(models.Model):
     def descompress_file(self, file_padron, dest_dir="/tmp"):
         """Extrae el padrón comprimido en dest_dir. Soporta ZIP (ARBA, Santa Fe) y
         RAR (AGIP publica el padrón de Regímenes Generales en .rar)."""
-        file = base64.b64decode(file_padron)
+        file = bytes(file_padron)
         fobj = tempfile.NamedTemporaryFile(delete=False)
         fname = fobj.name
         fobj.write(file)
@@ -321,9 +320,7 @@ class ResCompanyJurisdictionPadron(models.Model):
         if path_file:
             return path_file
 
-        # Sniff de los primeros bytes: alcanza para saber si viene comprimido y evita
-        # decodificar 100 MB de base64 (padron de AGIP) solo para chequear el formato.
-        if self._is_compressed_content(base64.b64decode(self.file_padron[:8])):
+        if self._is_compressed_content(self.file_padron.content[:8]):
             staging_dir = tempfile.mkdtemp(prefix="l10n_ar_padron.staging-", dir=os.path.dirname(tmp_dir))
             try:
                 self.descompress_file(self.file_padron, dest_dir=staging_dir)
@@ -340,7 +337,7 @@ class ResCompanyJurisdictionPadron(models.Model):
             return path_file
 
         # CSV directo (no comprimido): lo persistimos para no re-decodificar cada vez.
-        file_content = base64.b64decode(self.file_padron)
+        file_content = self.file_padron.content
         os.makedirs(tmp_dir, exist_ok=True)
         path_file = os.path.join(tmp_dir, "padron.csv")
         with open(path_file, "w", encoding="latin-1") as fp:

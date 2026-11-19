@@ -16,7 +16,7 @@
                 <group string="Sale Perceptions">
                     <field name="l10n_ar_partner_perception_ids" nolabel="1" colspan="2">
                         <list editable="top" limit="5">
-                            <field name="tax_id" options="{'no_create': True}" domain="[('type_tax_use', '=', 'sale')]" context="{'append_fields': ['company_id']}"/>
+                            <field name="tax_id" options="{'no_create': True}" domain="[('type_tax_use', '=', 'sale'), ('is_withholding_tax', '=', False)]" context="{'append_fields': ['company_id']}"/>
                             <field name="from_date" optional="show"/>
                             <field name="to_date" optional="show"/>
                             <field name="ref" optional="hide"/>
@@ -26,7 +26,7 @@
                 <group string="Purchase Withholding">
                     <field name="l10n_ar_partner_tax_ids" nolabel="1" colspan="2">
                         <list editable="top" limit="5">
-                            <field name="tax_id" options="{'no_create': True}" domain="[('l10n_ar_withholding_payment_type', '=', 'supplier')]" context="{'append_fields': ['company_id']}"/>
+                            <field name="tax_id" options="{'no_create': True}" domain="[('type_tax_use', '=', 'purchase'), ('is_withholding_tax', '=', True)]" context="{'append_fields': ['company_id']}"/>
                             <field name="from_date" optional="show"/>
                             <field name="to_date" optional="show"/>
                             <field name="ref" optional="hide"/>

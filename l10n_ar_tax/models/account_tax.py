@@ -10,7 +10,7 @@ class AccountTax(models.Model):
     _inherit = "account.tax"
 
     # mejora de usabilidad, duplicar un impuesto mantiene la secuencia
-    l10n_ar_withholding_sequence_id = fields.Many2one(
+    withholding_sequence_id = fields.Many2one(
         copy=True,
     )
 
@@ -209,6 +209,7 @@ class AccountTax(models.Model):
         if (
             self.ratio == 100.0
             or self.type_tax_use != "sale"
+            or self.is_withholding_tax
             or self.amount_type != "percent"
             or self.price_include
             or self.l10n_ar_state_id.jurisdiction_code not in BASE_DEFINING_JURISDICTION_CODES
@@ -251,6 +252,7 @@ class AccountTax(models.Model):
         return bool(
             self.country_code == "AR"
             and self.type_tax_use == "sale"
+            and not self.is_withholding_tax
             and self.amount_type == "percent"
             and not self.price_include
             and not self.include_base_amount

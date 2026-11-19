@@ -61,7 +61,7 @@ class TestOwnCheckNetAmount(AccountInvariantsMixin, TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.company = cls.env["res.company"].search(
-            [("l10n_ar_tax_base_account_id", "!=", False), ("partner_id.country_id.code", "=", "AR")], limit=1
+            [("withholding_tax_base_account_id", "!=", False), ("partner_id.country_id.code", "=", "AR")], limit=1
         )
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company.ids))
         cls.env.user.company_id = cls.company
@@ -97,13 +97,14 @@ class TestOwnCheckNetAmount(AccountInvariantsMixin, TransactionCase):
             {
                 "name": "Test Own Check Net Amount WTH 6%",
                 "company_id": cls.company.id,
-                "type_tax_use": "none",
+                "type_tax_use": "purchase",
+                "is_withholding_tax": True,
+                "l10n_ar_code": "TEST",
                 "amount_type": "percent",
-                "amount": 6.0,
+                "amount": -6.0,
                 "tax_group_id": tax_group.id,
-                "l10n_ar_tax_type": "earnings",
-                "l10n_ar_withholding_payment_type": "supplier",
-                "l10n_ar_withholding_sequence_id": cls.env["ir.sequence"]
+                "l10n_ar_withholding_tax_type": "earnings",
+                "withholding_sequence_id": cls.env["ir.sequence"]
                 .create({"name": "Test Own Check Net Amount WTH seq", "implementation": "standard", "padding": 4})
                 .id,
                 "invoice_repartition_line_ids": [

@@ -19,7 +19,12 @@ class TestARBA(common.TransactionCase):
             }
         )
         company = cls.env["res.company"].create(
-            {"name": "test_company", "partner_id": partner.id, "vat": "30697130841"}
+            {
+                "name": "test_company",
+                "partner_id": partner.id,
+                "vat": "30697130841",
+                "currency_id": cls.env.ref("base.ARS").id,
+            }
         )
         cls.company = company.with_company(company)
 

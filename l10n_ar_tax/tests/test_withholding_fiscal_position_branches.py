@@ -18,7 +18,8 @@ class TestWithholdingFiscalPositionBranches(TestArCommon):
         cls.env.user.company_ids |= cls.same_entity_branch | cls.auxiliary_branch
 
         tax = cls.env["account.tax"].search(
-            [("company_id", "=", cls.parent.id), ("l10n_ar_withholding_payment_type", "=", "supplier")], limit=1
+            [("company_id", "=", cls.parent.id), ("is_withholding_tax", "=", True), ("type_tax_use", "=", "purchase")],
+            limit=1,
         )
         cls.positions = {
             scope: cls.env["account.fiscal.position"].create(

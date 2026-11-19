@@ -25,7 +25,7 @@ class TestAliquotSourceOrder(common.TransactionCase):
         cls.partner = cls.env["res.partner"].create(
             {
                 "name": "partner padron",
-                "l10n_latam_identification_type_id": cls.env.ref("l10n_ar.it_cuit").id,
+                "country_id": cls.env.ref("base.ar").id,
                 "vat": cls.cuit,
             }
         )
@@ -156,7 +156,7 @@ class TestAliquotSourceOrder(common.TransactionCase):
         other_partner = self.env["res.partner"].create(
             {
                 "name": "partner ausente",
-                "l10n_latam_identification_type_id": self.env.ref("l10n_ar.it_cuit").id,
+                "country_id": self.env.ref("base.ar").id,
                 "vat": "30112223335",
             }
         )

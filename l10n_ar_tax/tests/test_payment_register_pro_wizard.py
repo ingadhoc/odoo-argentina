@@ -103,7 +103,7 @@ class TestPaymentRegisterProWizard(common.TransactionCase):
 
         self.assertTrue(payments, "Payments should be created")
         for p in payments:
-            self.assertIn(p.state, ["posted", "in_process", "paid"], "Payment should be posted or paid")
+            self.assertIn(p.state, ["paid", "reconciled"], "Payment should be posted or paid")
 
         # Test grouping
         invoices2 = self.env["account.move"]

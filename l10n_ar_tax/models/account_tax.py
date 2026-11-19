@@ -321,7 +321,11 @@ class AccountTax(models.Model):
             isinstance(record, models.BaseModel) and record._name == "account.move.line" for record in records
         ):
             return None
-        move = self.env["account.move.line"].union(*records).move_id
+        lines = self.env["account.move.line"].union(*records)
+        # The bank reconciliation widget recomputes taxes with lines it has already unlinked.
+        if len(lines.exists()) != len(lines):
+            return None
+        move = lines.move_id
         if len(move) != 1 or move.state not in ("posted", "cancel"):
             return None
         return move

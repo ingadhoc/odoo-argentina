@@ -1,5 +1,9 @@
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools import str2bool
+
+# Jurisdiction codes of AGIP (CABA) and ARBA (Buenos Aires)
+AGIP_ARBA = ("901", "902")
 
 
 class AccountMove(models.Model):
@@ -51,6 +55,26 @@ class AccountMove(models.Model):
         # Si el usuario editó las líneas, no queremos re-ejecutar nuestra lógica de refresco automático.
         if "invoice_date" in vals and "invoice_line_ids" not in vals:
             self._l10n_ar_recompute_fiscal_position_taxes()
+        elif "invoice_line_ids" in vals and not self.env.context.get("l10n_ar_skip_credit_note_rules"):
+            # Editing the lines can turn a total credit note into a partial one. Only on line edits: internal writes
+            # run inside the tax lines sync, and changing taxes there leaves the tax lines out of date.
+            self._l10n_ar_apply_credit_note_perception_rules()
+        return res
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        moves = super().create(vals_list)
+        moves._l10n_ar_apply_credit_note_perception_rules()
+        return moves
+
+    def action_switch_move_type(self):
+        """Odoo crea la NC al facturar desde una orden de venta (ej. devolución) como factura con importes negativos y
+        la convierte en NC con este método. Hasta ahí no es una NC, y como solo cambia el tipo y las cantidades (no
+        pasa por create ni por write de invoice_line_ids), las reglas de percepciones no se aplicaban: la NC quedaba
+        con las percepciones de la factura hasta que al validarla se escribía la fecha y recién ahí se recalculaban.
+        """
+        res = super().action_switch_move_type()
+        self._l10n_ar_apply_credit_note_perception_rules()
         return res
 
     @api.onchange("invoice_date", "commercial_partner_id")
@@ -59,28 +83,137 @@ class AccountMove(models.Model):
         IMPORTANTE: este metodo solo esta pensado para cambiar alicuota de MISMA fiscal position (por cambio en fecha o partner) pero no para cambiar los impuestos.
         Para ello nos basamos en los impuestos de la posicion fiscal, buscamos si hay impuestos existentes para los tax groups involucrados y los
         reemplazamos por los nuevos impuestos.
-        NO lo hacemos para el cambio de fiscal_position_id porque el onchange de fiscal_position_id implementado en sale_ux ya recomputa todos los taxes
+        NO lo hacemos para el cambio de fiscal_position_id porque el onchange de fiscal_position_id implementado en sale_ux ya recomputa todos los taxes.
+
+        Si están activas las reglas de percepciones en NC (ver _l10n_ar_credit_note_perception_rules_enabled), en las NC
+        de cliente se aplican además las reglas de AGIP y ARBA (ver _l10n_ar_apply_credit_note_perception_rules).
         """
+        rules_enabled = self._l10n_ar_credit_note_perception_rules_enabled()
         for move in self.filtered(
             lambda x: x.is_sale_document(include_receipts=True)
             and x.fiscal_position_id
             and x.perceptions_fiscal_positon
             and x.state == "draft"
         ):
+            # Solo queremos que se recomputen los impuestos en facturas de cliente/proveedor, no en reversiones: ahí
+            # no se usa lo calculado y buscarlo consultaría el padrón (webservice) para nada.
+            if move.reversed_entry_id:
+                continue
+            # En las NC con las reglas activas, AGIP y ARBA los resuelven las reglas (ver más abajo): no se buscan acá
+            # ni se pisan, así tampoco se consulta su padrón.
+            skip = AGIP_ARBA if move.move_type == "out_refund" and rules_enabled else ()
             fp_tax_groups = move.fiscal_position_id.l10n_ar_tax_ids.filtered(
-                lambda x: x.tax_type == "perception"
-            ).mapped("default_tax_id.tax_group_id")
+                lambda x: x.tax_type == "perception" and x.default_tax_id.l10n_ar_state_id.jurisdiction_code not in skip
+            ).default_tax_id.tax_group_id
             new_taxes = move.fiscal_position_id._l10n_ar_add_taxes(
-                move.partner_id, move.company_id, move.date, "perception"
+                move.partner_id, move.company_id, move.date, "perception", exclude_jurisdictions=skip
             )
-            # Solo queremos que se recomputen los impuestos en facturas de cliente/proveedor
-            for line in move.filtered(lambda x: not x.reversed_entry_id).invoice_line_ids:
+            for line in move.invoice_line_ids:
                 to_unlink = line.tax_ids.filtered(lambda x: x.tax_group_id in fp_tax_groups)
                 target_taxes = (
                     self.env["account.tax"] if line.display_type in ("line_section", "line_note") else new_taxes
                 )
                 if to_unlink._origin != target_taxes:
                     line.tax_ids = (line.tax_ids - to_unlink) | target_taxes
+        self._l10n_ar_apply_credit_note_perception_rules()
+
+    def _l10n_ar_credit_note_perception_rules_enabled(self):
+        """Feature flag: reglas de percepciones en NC por jurisdicción. Se activa a mano por base con el
+        parámetro de sistema 'l10n_ar_tax.credit_note_perception_rules', y aplica a todas las compañías de la base.
+        TODO: evaluar en 20 dejarlo global y sacar el parámetro.
+        """
+        return str2bool(
+            self.env["ir.config_parameter"].sudo().get_param("l10n_ar_tax.credit_note_perception_rules", "False"),
+            default=False,
+        )
+
+    def _l10n_ar_apply_credit_note_perception_rules(self):
+        """Ajusta las percepciones de AGIP y ARBA de las NC de cliente en borrador; las del resto de las jurisdicciones
+        no se tocan. Solo si está activo el parámetro (ver _l10n_ar_credit_note_perception_rules_enabled).
+        - Si la NC anula totalmente una factura, cada línea lleva las percepciones de AGIP y ARBA de la línea de la
+          factura que anula, si la jurisdicción las admite (ver _l10n_ar_credit_note_allows_perception).
+        - Si no, no lleva percepciones de AGIP ni de ARBA.
+        """
+        if not self._l10n_ar_credit_note_perception_rules_enabled():
+            return
+
+        def is_restricted(tax):
+            # IIBB perception (tribute code 07) of CABA or Buenos Aires
+            return tax.l10n_ar_tribute_afip_code == "07" and tax.l10n_ar_state_id.jurisdiction_code in AGIP_ARBA
+
+        for move in self.filtered(lambda x: x.move_type == "out_refund" and x.state == "draft"):
+            invoice = move._l10n_ar_get_total_refund_invoice()
+            commands = []
+            for line in move.invoice_line_ids.filtered(lambda x: x.display_type == "product"):
+                # Taken from the invoice line, not recomputed: it keeps manual changes and avoids querying the padron
+                # webservices
+                allowed = (
+                    move._l10n_ar_refunded_invoice_line(line, invoice)
+                    .tax_ids.filtered(is_restricted)
+                    .filtered(
+                        lambda x, move=move, invoice=invoice: move._l10n_ar_credit_note_allows_perception(x, invoice)
+                    )
+                )
+                restricted = line.tax_ids.filtered(is_restricted)
+                if restricted._origin == allowed:
+                    continue
+                if move.id:
+                    commands.append(
+                        Command.update(line.id, {"tax_ids": [Command.set((line.tax_ids - restricted | allowed).ids)]})
+                    )
+                else:
+                    line.tax_ids = (line.tax_ids - restricted) | allowed
+            if commands:
+                # Write through the move so its tax lines follow the new line taxes, without running the rules again
+                move.with_context(l10n_ar_skip_credit_note_rules=True).write({"invoice_line_ids": commands})
+
+    def _l10n_ar_refunded_invoice_line(self, line, invoice):
+        """Línea de 'invoice' que anula la línea 'line' de esta NC: la de la misma línea de pedido de venta, o si no
+        la del mismo producto y descripción, o si no la del mismo producto. Vacío si no hay ninguna (o si la línea no
+        tiene producto).
+        """
+        invoice_lines = invoice.invoice_line_ids
+        if "sale_line_ids" in line._fields and line.sale_line_ids:
+            if same_sale_line := invoice_lines.filtered(lambda x: x.sale_line_ids & line.sale_line_ids):
+                return same_sale_line[:1]
+        if not line.product_id:
+            return invoice_lines.browse()
+        same_product = invoice_lines.filtered(lambda x: x.product_id == line.product_id)
+        return same_product.filtered(lambda x: x.name == line.name)[:1] or same_product[:1]
+
+    def _l10n_ar_credit_note_allows_perception(self, tax, invoice):
+        """Indica si la percepción 'tax' de AGIP o ARBA corresponde en esta NC, que anula totalmente 'invoice'.
+        - AGIP (CABA): hasta 2 períodos mensuales siguientes a la factura (R. 312/DGR/2012 art. 21).
+        - ARBA: sin plazo (RN 320/B/2011 art. 2).
+        """
+        self.ensure_one()
+        if tax.l10n_ar_state_id.jurisdiction_code == "901":
+            refund_date = self.invoice_date or fields.Date.context_today(self)
+            invoice_date = invoice.invoice_date or invoice.date
+            months = (refund_date.year - invoice_date.year) * 12 + refund_date.month - invoice_date.month
+            return months <= 2
+        return True
+
+    def _l10n_ar_get_total_refund_invoice(self):
+        """Factura que esta NC anula totalmente: del mismo contacto, posteada, con el mismo importe sin impuestos y
+        sin otra NC posteada. Es la factura revertida o, si la NC no viene de una reversión, la más reciente de las
+        facturas de las mismas líneas de pedido de venta (vacío si el módulo sale no está instalado).
+        """
+        self.ensure_one()
+        if self.reversed_entry_id:
+            invoices = self.reversed_entry_id
+        elif "sale_line_ids" in self.env["account.move.line"]._fields:
+            invoices = self.invoice_line_ids.sale_line_ids.invoice_lines.move_id
+        else:
+            invoices = self.env["account.move"]
+        invoices = invoices.filtered(
+            lambda m: m.move_type == "out_invoice"
+            and m.state == "posted"
+            and m.partner_id == self.partner_id
+            and self.currency_id.is_zero(m.amount_untaxed - self.amount_untaxed)
+            and not m.reversal_move_ids.filtered(lambda r: r.state == "posted" and r != self)
+        )
+        return invoices.sorted(lambda m: (m.invoice_date, m.id), reverse=True)[:1]
 
     def copy(self, default=None):
         """Re computamos las percepciones al duplicar una factura porque puede ser que la factura venga de otro periodo

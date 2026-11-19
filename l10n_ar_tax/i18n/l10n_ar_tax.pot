@@ -4,16 +4,95 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 19:26+0000\n"
-"PO-Revision-Date: 2026-09-07 19:26+0000\n"
+"POT-Creation-Date: 2026-11-19 13:50+0000\n"
+"PO-Revision-Date: 2026-11-19 13:50+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: l10n_ar_tax
+#: model:ir.module.module,description:base.module_l10n_ar_tax
+msgid ""
+"# Automatic Argentinian Withholdings on Payments (l10n_ar_tax)\n"
+"\n"
+"Implements automatic calculation of Argentine withholdings (retenciones) and perceptions on payments. Withholdings are computed based on fiscal positions, tax configurations, jurisdictional rules, and partner-specific tax identification. Fully supports **multi-currency payments** — withholdings are always calculated and stored in ARS (company currency) regardless of the payment or debt currency.\n"
+"\n"
+"## Features\n"
+"\n"
+"- Automatic withholding calculation based on jurisdictions and tax tables.\n"
+"- Support for perception taxes.\n"
+"- Multi-currency withholdings: payments in USD, EUR, or any foreign currency produce correct ARS-denominated withholdings.\n"
+"- Configurable tax ratios for specific jurisdictions (e.g. Córdoba).\n"
+"- Fiscal position-based tax automation.\n"
+"- Withholding certificate generation.\n"
+"- Integration with ARCA web services.\n"
+"- ARBA, Santa Fe (PARP) and AGIP (CABA) padron readers.\n"
+"- Santa Fe withholding base per taxpayer regime: Multilateral Agreement withholds on the total.\n"
+"- Same-period base accumulation for taxes like Ganancias with minimum thresholds.\n"
+"- Integration with `account_payment_pro` tri-currency model.\n"
+"\n"
+"## Dependencies\n"
+"\n"
+"| Module | Purpose |\n"
+"|--------|---------|\n"
+"| `l10n_ar` | Argentine localization (auto-install trigger) |\n"
+"| `l10n_ar_ux` | Argentine UX extensions |\n"
+"| `l10n_ar_withholding` | Base withholding framework |\n"
+"| `account_payment_pro` | Tri-currency payment model (provides `destination_currency_id`, `accounting_rate`, `counterpart_rate`) |\n"
+"| `l10n_latam_check` | Check support for payment receipts |\n"
+"\n"
+"## Configuration\n"
+"\n"
+"1. **Taxes:** Accounting → Configuration → Taxes — configure withholding and perception taxes.\n"
+"2. **Fiscal positions:** Accounting → Configuration → Fiscal Positions — set up automatic tax assignment. In a multi-company setup with branches, a fiscal position of a branch can use the tax groups and taxes of its parent company (same behaviour as standard Odoo account mapping), so the chart of taxes only needs to be configured once on the parent.\n"
+"3. **Partner tax ID:** in Contacts, configure CUIT/CUIL/DNI.\n"
+"4. **Tax ratios:** set ratios (1–100) on percentage-based taxes to control the taxable base percentage.\n"
+"5. **Padron files:** for Santa Fe (PARP), ARBA and AGIP (CABA) the padron file is uploaded in Accounting → Configuration → Padron Alicuotas. The aliquot is read from the uploaded file on demand (AGIP accepts the `.rar` published by AGIP, or a `.zip`; reading `.rar` requires the `unrar` python library). See `doc/padron_santa_fe/` for specs and examples.\n"
+"\n"
+"### How the aliquot is resolved\n"
+"\n"
+"The same order applies to every jurisdiction, so a padron file always works as the contingency for a failing web service:\n"
+"\n"
+"1. **Aliquot loaded on the contact** (Contacts → Accounting) for the period: it wins over everything else.\n"
+"2. **Padron file** uploaded for that jurisdiction and period: it wins over the web service, even when the fiscal position line is set to query one.\n"
+"3. **Web service** of the jurisdiction (ARBA, Rentas Córdoba, AGIP). Setting the line to *Archivo de padrón* means this jurisdiction never queries a web service: with no padron uploaded the user is asked to upload it instead.\n"
+"\n"
+"### Withholding base in Santa Fe\n"
+"\n"
+"The PARP padron reports the taxpayer regime, and in Santa Fe that regime sets the base of the withholding (art. 380, RG 36/2026 of API Santa Fe):\n"
+"\n"
+"- **Local (`D`):** net base, without VAT. It is the base the Santa Fe withholding taxes are already configured with, so the configured tax is used as is.\n"
+"- **Multilateral Agreement (`C`):** the total amount, with no deduction. If no tax on the total exists for that aliquot, one is created from the configured tax, with the same aliquot and a `CM` suffix in its name.\n"
+"\n"
+"Taxes with the `CM` suffix belong to this flow and are not offered in the default tax selector of the fiscal position line: choosing one by hand would apply the total base to every taxpayer, local ones included. A tax on the total configured on purpose (a supplier that does not itemize VAT) stays selectable and is never overwritten by the padron.\n"
+"\n"
+"Perceptions follow the same regime (art. 387): a local (`D`) is perceived on the net base, a Multilateral Agreement taxpayer (`C`) on 50% of it. For the latter, a tax with a 50% *Ratio* is created from the configured one, with the same aliquot and a `CM` suffix in its name. The *Ratio* of a sale tax only applies to Santa Fe perceptions.\n"
+"\n"
+"## Usage\n"
+"\n"
+"- Withholdings are automatically calculated when creating payments based on the partner's fiscal position.\n"
+"- Perception taxes are applied via fiscal positions.\n"
+"- Withholding certificates can be generated from the payment form.\n"
+"- Multi-currency: the user sees withholding amounts expressed in the debt currency (B) for UX, but stored amounts and bases are always in ARS.\n"
+"\n"
+"## Bug Tracker\n"
+"\n"
+"Bugs are tracked on [GitHub Issues](https://github.com/ingadhoc/odoo-argentina/issues).\n"
+"\n"
+"## Credits\n"
+"\n"
+"**Author:** ADHOC SA · [www.adhoc.com.ar](https://www.adhoc.com.ar)\n"
+"**License:** AGPL-3.0 or later\n"
+"\n"
+"---\n"
+"\n"
+"See [DESIGN.md](DESIGN.md) for internal architecture and design decisions.\n"
+msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -423,12 +502,12 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
-msgid "<strong>Customer: </strong>"
+msgid "<strong>Datos de la retención practicada</strong>"
 msgstr ""
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
-msgid "<strong>Datos de la retención practicada</strong>"
+msgid "<strong>Supplier: </strong>"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -541,14 +620,23 @@ msgid "Allowed Fiscal Positions"
 msgstr ""
 
 #. module: l10n_ar_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__amount
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__amount
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
 msgid "Amount"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_tree
+msgid "Amount in Currency"
 msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__webservice__padron
 msgid "Archivo de padrón"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_withholding_line__l10n_ar_withholding_tax_type
+msgid "Argentine Withhold type"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -584,9 +672,8 @@ msgid "Automatic"
 msgstr ""
 
 #. module: l10n_ar_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__base_amount
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__base_amount
-msgid "Base Amount"
+#: model:ir.module.module,shortdesc:base.module_l10n_ar_tax
+msgid "Automatic Argentinian Withholdings on Payments"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -622,19 +709,9 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_res_company
-msgid "Companies"
-msgstr ""
-
-#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__company_id
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__company_id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__company_id
 msgid "Company"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__currency_id
-msgid "Company Currency"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -649,7 +726,7 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
-#: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
+#: code:addons/l10n_ar_tax/models/account_payment_withholding_line.py:0
 msgid "Configure tax"
 msgstr ""
 
@@ -728,14 +805,12 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__create_uid
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__create_uid
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__create_date
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__create_date
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__create_date
 msgid "Created on"
 msgstr ""
@@ -807,11 +882,10 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_register__display_name
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_withholding_line__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax_group__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_partner_tax__display_name
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__display_name
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_mail_compose_message__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company__display_name
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__display_name
@@ -902,11 +976,10 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move_line__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_register__id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_withholding_line__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax_group__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_partner_tax__id
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__id
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_mail_compose_message__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company__id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__id
@@ -916,8 +989,7 @@ msgid "ID"
 msgstr ""
 
 #. module: l10n_ar_tax
-#: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_withholding_sequence_id
-#: model:ir.model.fields,help:l10n_ar_tax.field_l10n_ar_payment_withholding__withholding_sequence_id
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_tax_group__withholding_sequence_id
 msgid ""
 "If no sequence provided then it will be required for you to enter "
 "withholding number when registering one."
@@ -975,6 +1047,8 @@ msgid "Journal Item"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_state_id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax_group__l10n_ar_state_id
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__state_id
 msgid "Jurisdiction"
 msgstr ""
@@ -991,14 +1065,12 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__write_uid
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__write_uid
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__write_date
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__write_date
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__write_date
 msgid "Last Updated on"
 msgstr ""
@@ -1037,6 +1109,21 @@ msgid "Minimum Threshold"
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__withholding_net_amount
+msgid "Net Amount"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__withholding_net_amount_signed
+msgid "Net Amount in Currency"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__counterpart_currency_net_amount
+msgid "Net Amount in Debt Currency"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__res_partner__drei__no_activo
 msgid "No Activo"
 msgstr ""
@@ -1054,7 +1141,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.report_withholding_certificate_document
 msgid ""
 "Nombre y Apellido Firmante:\n"
-"                                <br/>Cargo:"
+"                <br/>Cargo:"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1071,11 +1158,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_move_line.py:0
 msgid "Nothing to be paid on selected entries"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__name
-msgid "Number"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1125,11 +1207,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__partner_type
-msgid "Partner Type"
-msgstr ""
-
-#. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_payment.py:0
 msgid "Partner must be set on the payment to compute withholdings"
@@ -1141,24 +1218,18 @@ msgid "Pay"
 msgstr ""
 
 #. module: l10n_ar_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__payment_id
+#: model:ir.model,name:l10n_ar_tax.model_account_payment
 msgid "Payment"
 msgstr ""
 
 #. module: l10n_ar_tax
-#: model:ir.model,name:l10n_ar_tax.model_l10n_ar_payment_register_withholding
-msgid "Payment register withholding lines"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model:ir.model,name:l10n_ar_tax.model_l10n_ar_payment_withholding
-msgid "Payment withholding lines"
+#: model:ir.model,name:l10n_ar_tax.model_account_payment_withholding_line
+msgid "Payment withholding line"
 msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/wizard/account_payment_register.py:0
-#: model:ir.model,name:l10n_ar_tax.model_account_payment
 msgid "Payments"
 msgstr ""
 
@@ -1209,6 +1280,17 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__previous_withholding_amount
+msgid "Previous Withholding Amount"
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
+#: code:addons/l10n_ar_tax/models/account_payment_withholding_line.py:0
+msgid "Previous Withholdings"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
 msgid "Print withholding voucher"
 msgstr ""
@@ -1234,7 +1316,7 @@ msgid "Ratio to apply to tax base amount."
 msgstr ""
 
 #. module: l10n_ar_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__ref
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_withholding_line__ref
 msgid "Ref"
 msgstr ""
 
@@ -1315,7 +1397,6 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #: model:ir.model,name:l10n_ar_tax.model_account_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__tax_id
 msgid "Tax"
 msgstr ""
 
@@ -1369,6 +1450,20 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
+#: code:addons/l10n_ar_tax/models/account_payment.py:0
+msgid ""
+"The amount of the payment  does not match the amount of the selected check. "
+"Please try to deselect and select the check again."
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_payment__withholding_net_amount
+msgid ""
+"The amount that will actually be paid after deducting withholding taxes."
+msgstr ""
+
+#. module: l10n_ar_tax
+#. odoo-python
 #: code:addons/l10n_ar_tax/models/res_company_jurisdiction_padron.py:0
 msgid "The compressed file does not contain the padron in CSV or TXT format."
 msgstr ""
@@ -1407,6 +1502,13 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__withholding_sequence_id
+msgid ""
+"This sequence will be used to generate default numbers on payment "
+"withholding lines."
+msgstr ""
+
+#. module: l10n_ar_tax
 #. odoo-python
 #: code:addons/l10n_ar_tax/models/account_fiscal_position_l10n_ar_tax.py:0
 msgid "Timeout error when getting data."
@@ -1415,11 +1517,6 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__l10n_ar_padron_to_date
 msgid "To Date"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
-msgid "Total"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1444,14 +1541,8 @@ msgid "Verifies the CIT key against the ARBA production server."
 msgstr ""
 
 #. module: l10n_ar_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_withholding_sequence_id
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__withholding_sequence_id
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax_group__withholding_sequence_id
 msgid "WTH Sequence"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_withholding__l10n_ar_tax_type
-msgid "WTH Tax"
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1481,6 +1572,11 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__withhold
+msgid "Withhold"
+msgstr ""
+
+#. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_move_line__withholding_id
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position__l10n_ar_tax_type__withholding
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_fiscal_position_l10n_ar_tax__tax_type__withholding
@@ -1488,28 +1584,28 @@ msgid "Withholding"
 msgstr ""
 
 #. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/account_payment.py:0
-msgid "Withholding Base Cont: "
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__withholding_line_ids
+msgid "Withholding Lines"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__withholding_sequence_id
+msgid "Withholding Sequence"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_withholding_line__l10n_ar_amount
+msgid "Withholding amount (ARS)"
+msgstr ""
+
+#. module: l10n_ar_tax
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_withholding_line__l10n_ar_base_amount
+msgid "Withholding base (ARS)"
 msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
-#: code:addons/l10n_ar_tax/models/account_payment.py:0
-msgid "Withholding Base: "
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
-msgid ""
-"Withholding tax %s does not have a calculation type defined. Please define "
-"the calculation type in the tax configuration."
-msgstr ""
-
-#. module: l10n_ar_tax
-#. odoo-python
-#: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
+#: code:addons/l10n_ar_tax/models/account_payment_withholding_line.py:0
 msgid ""
 "Withholding tax '%s' (id: %s) is of type earnings scale but has no scale "
 "defined (field l10n_ar_scale_id). Please define a scale in the tax "
@@ -1517,23 +1613,13 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_tax
-#: model:ir.model.constraint,message:l10n_ar_tax.constraint_l10n_ar_payment_withholding_uniq_line
-msgid "Withholding tax must be unique per payment"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_form
+#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__destination_currency_withholding_amount
 msgid "Withholdings"
 msgstr ""
 
 #. module: l10n_ar_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__withholdings_amount
-msgid "Withholdings Amount"
-msgstr ""
-
-#. module: l10n_ar_tax
-#: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__l10n_ar_withholding_line_ids
-msgid "Withholdings Lines"
+#: model:ir.model.fields,help:l10n_ar_tax.field_account_payment__destination_currency_withholding_amount
+msgid "Withholdings in the debt currency, at the rate of the payment."
 msgstr ""
 
 #. module: l10n_ar_tax
@@ -1544,7 +1630,7 @@ msgstr ""
 
 #. module: l10n_ar_tax
 #. odoo-python
-#: code:addons/l10n_ar_tax/models/l10n_ar_payment_withholding.py:0
+#: code:addons/l10n_ar_tax/models/account_payment_withholding_line.py:0
 msgid ""
 "You selected a debt of %s but apparently want to pay %s. The selected debt "
 "includes some documents that cannot be paid (%s). You must remove those "

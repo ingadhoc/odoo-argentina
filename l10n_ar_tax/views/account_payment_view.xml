@@ -11,6 +11,43 @@
                 <button name="compute_to_pay_amount_for_check" icon="refresh" title="A partir del importe del pago (campo Importe) + ajuste, se calculan las retenciones y el importe a pagar. Útil por ejemplo para pagos con cheques donde el importe Importe no lo podemos cambiar" type="object" invisible="is_internal_transfer or partner_type != 'supplier' or state not in ['draft'] or payment_method_code not in ['in_third_party_checks', 'out_third_party_checks']" class="oe_inline oe_link"/>
             </div>
 
+            <!-- amount is the gross amount: the user keeps typing and seeing the net one -->
+            <label for="amount" position="attributes">
+                <attribute name="invisible">use_payment_pro and withholding_line_ids</attribute>
+            </label>
+            <label for="amount" position="after">
+                <label for="withholding_net_amount" string="Amount" invisible="not use_payment_pro or not withholding_line_ids"/>
+            </label>
+            <xpath expr="//div[@name='amount_div']//field[@name='amount']" position="attributes">
+                <attribute name="invisible">use_payment_pro and withholding_line_ids</attribute>
+            </xpath>
+            <xpath expr="//div[@name='amount_div']//field[@name='amount']" position="after">
+                <field name="withholding_net_amount" invisible="not use_payment_pro or not withholding_line_ids" readonly="state != 'draft'"/>
+            </xpath>
+            <!-- Campo técnico: round-trip del total anterior de retenciones para el onchange -->
+            <field name="previous_currency_id" position="after">
+                <field name="previous_withholding_amount" invisible="True"/>
+            </field>
+            <field name="counterpart_currency_amount" position="attributes">
+                <attribute name="invisible">currency_id == counterpart_currency_id or (use_payment_pro and withholding_line_ids)</attribute>
+            </field>
+            <field name="counterpart_currency_amount" position="after">
+                <field nolabel="1" name="counterpart_currency_net_amount" readonly="state != 'draft'" invisible="currency_id == counterpart_currency_id or not use_payment_pro or not withholding_line_ids"/>
+            </field>
+            <!-- Withholdings: payment total = net + withholdings -->
+            <label for="payment_total" position="before">
+                <field name="withholding_amount" invisible="True"/>
+                <field name="destination_currency_withholding_amount" invisible="not use_payment_pro or is_internal_transfer or not display_withholding"/>
+            </label>
+            <!-- with payment pro the withholding mode is deduced from the lines, so the user never picks it -->
+            <field name="withhold" position="attributes">
+                <attribute name="invisible">use_payment_pro or not display_withholding</attribute>
+            </field>
+            <!-- the core field and the editable one above share the name: readonly="1" is what tells them apart -->
+            <xpath expr="//field[@name='withholding_net_amount'][@readonly='1']" position="attributes">
+                <attribute name="invisible">use_payment_pro</attribute>
+            </xpath>
+
             <!-- with payment pro the page stays visible, as in 19: payments choose the fiscal position and receipts type the withholdings before there are lines -->
             <xpath expr="//notebook[@name='payment_notebook']/page[.//field[@name='withholding_line_ids']]" position="attributes">
                 <attribute name="invisible">is_internal_transfer or (withhold == 'payment' and not (use_payment_pro and display_withholding))</attribute>
@@ -60,6 +97,25 @@
                 <attribute name="optional">hide</attribute>
             </xpath>
 
+        </field>
+    </record>
+
+    <record id="view_account_payment_tree" model="ir.ui.view">
+        <field name="name">account.payment.list.inherited</field>
+        <field name="model">account.payment</field>
+        <field name="priority" eval="30"/>
+        <field name="inherit_id" ref="account.view_account_payment_tree"/>
+        <field name="arch" type="xml">
+            <!-- amount_signed is the gross amount: show the net one, as the "Amount" column (liquidity lines) does -->
+            <xpath expr="//field[@name='amount_signed'][@groups='!base.group_multi_currency']" position="attributes">
+                <attribute name="column_invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_signed'][@groups='base.group_multi_currency']" position="attributes">
+                <attribute name="column_invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_signed'][@groups='base.group_multi_currency']" position="after">
+                <field name="withholding_net_amount_signed" string="Amount in Currency" optional="show" groups="base.group_multi_currency"/>
+            </xpath>
         </field>
     </record>
 

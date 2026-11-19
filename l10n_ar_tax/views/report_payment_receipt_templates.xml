@@ -55,6 +55,17 @@
             </t>
         </xpath>
 
+        <!-- ── The payment row shows what went through the bank: the net amount ── -->
+        <xpath expr="//t[@id='payment_bundle_doc']" position="attributes">
+            <attribute name="t-foreach">payment_bundle.filtered(lambda x: not x._is_latam_check_payment() and x.withholding_net_amount != 0.0)</attribute>
+        </xpath>
+        <xpath expr="//t[@name='receipt_amount_a']" position="attributes">
+            <attribute name="t-value">abs(doc.withholding_net_amount_signed) if all_same_type else doc.withholding_net_amount_signed</attribute>
+        </xpath>
+        <xpath expr="//t[@name='receipt_amount_b']" position="attributes">
+            <attribute name="t-value">doc.counterpart_currency_net_amount if doc.counterpart_currency_id == doc.destination_currency_id else (doc.withholding_net_amount / doc.accounting_rate if doc.accounting_rate else doc.withholding_net_amount)</attribute>
+        </xpath>
+
         <!-- ── Withholding rows inside the payments table ───────────────────────── -->
         <xpath expr="//t[@name='withholding_rows']" position="replace">
             <t t-foreach="payment_bundle.withholding_line_ids.filtered('amount')" t-as="line">

@@ -1,5 +1,7 @@
+import json
+
 from dateutil.relativedelta import relativedelta
-from odoo import _, api, fields, models
+from odoo import Command, _, api, fields, models
 from odoo.addons.l10n_ar_withholding.models.account_tax import EARNINGS_TAX_TYPES
 from odoo.exceptions import RedirectWarning, UserError
 
@@ -83,11 +85,22 @@ class AccountPaymentWithholdingLine(models.Model):
         return self.filtered(lambda x: x.payment_id.country_code == "AR" and x.payment_id.use_payment_pro)
 
     def _get_company_currency_amounts(self):
-        """The stored ARS values, so the entry, the certificate and the receipt do not convert the line back."""
+        """Base and amount of the line in company currency, the ones its journal item gets.
+
+        The stored ARS values, so the entry, the certificate and the receipt do not convert the line back. For a
+        line that does not store them, the line converted at the rate of the payment.
+        """
         self.ensure_one()
         if self._l10n_ar_has_company_currency_amounts():
             return {"base_amount": self.l10n_ar_base_amount, "amount": self.l10n_ar_amount}
-        return super()._get_company_currency_amounts()
+        company_currency = self.company_id.currency_id
+        rate = self.payment_id.accounting_rate
+        if not rate:
+            return {"base_amount": 0.0, "amount": 0.0}
+        return {
+            "base_amount": company_currency.round(self.base_amount / rate),
+            "amount": company_currency.round(self.amount / rate),
+        }
 
     @api.onchange("l10n_ar_base_amount", "tax_id")
     def _onchange_l10n_ar_base_amount(self):
@@ -296,8 +309,10 @@ class AccountPaymentWithholdingLine(models.Model):
         return super(AccountPaymentWithholdingLine, self - without_base)._constrains_base_amount()
 
     def _prepare_withholding_amls_create_values(self):
-        # suffered withholdings without base would book base lines in zero
         res = super()._prepare_withholding_amls_create_values()
+        if self and self.payment_id.use_payment_pro:
+            res = self._l10n_ar_merge_base_amls(res)
+        # suffered withholdings without base would book base lines in zero
         if self and self == self._l10n_ar_get_suffered():
             currency = self.payment_id.currency_id
             company_currency = self.payment_id.company_currency_id
@@ -310,6 +325,63 @@ class AccountPaymentWithholdingLine(models.Model):
                 )
             ]
         return res
+
+    def _l10n_ar_merge_base_amls(self, values):
+        """One pair of base journal items per base amount, as in 19.0.
+
+        The core books a pair per withholding, so two withholdings over the same base leave four base items
+        instead of two. A base item that books the same amount on the same account as an earlier one is
+        dropped, and the one that stays carries the taxes and the tax tags of both: the amounts are not added
+        up, since they are the same base counted twice.
+        """
+        kept_by_base = {}
+        merged = []
+        for vals in values:
+            if vals.get("tax_repartition_line_id"):
+                merged.append(vals)
+                continue
+            base = json.dumps(
+                [
+                    vals.get("account_id"),
+                    vals.get("currency_id"),
+                    vals.get("partner_id"),
+                    vals.get("analytic_distribution"),
+                    vals.get("amount_currency"),
+                    vals.get("balance"),
+                ],
+                sort_keys=True,
+                default=str,
+            )
+            kept = kept_by_base.get(base)
+            if kept is None:
+                kept_by_base[base] = vals
+                merged.append(vals)
+                continue
+            for field in ("tax_ids", "tax_tag_ids"):
+                ids = set(self._get_command_set_ids(kept.get(field))) | set(self._get_command_set_ids(vals.get(field)))
+                if ids:
+                    kept[field] = [Command.set(sorted(ids))]
+        return merged
+
+    @staticmethod
+    def _get_command_set_ids(commands):
+        """IDs of a ``[Command.set([...])]`` value, empty when there is none."""
+        return next((command[2] for command in commands or [] if command[0] == Command.SET), [])
+
+    def _prepare_base_line_for_taxes_computation(self):
+        """Value the withholding at the rate of the payment, the one its liquidity line uses, not the one of the day."""
+        base_line = super()._prepare_base_line_for_taxes_computation()
+        payment = self.payment_id
+        rate = payment.accounting_rate
+        if not payment.use_payment_pro or not rate or payment.currency_id == self.company_id.currency_id:
+            return base_line
+        amounts = self._get_company_currency_amounts()
+        base_line["rate"] = rate
+        base_line["manual_total_excluded"] = amounts["base_amount"]
+        for tax_amounts in (base_line.get("manual_tax_amounts") or {}).values():
+            tax_amounts["base_amount"] = amounts["base_amount"]
+            tax_amounts["tax_amount"] = -amounts["amount"]
+        return base_line
 
     def _get_withholding_tax(self):
         """Return the applicable withheld tax (used by the AR exports)."""

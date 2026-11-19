@@ -53,6 +53,7 @@
     "depends": [
         "l10n_ar",
         "l10n_ar_ux",
+        "l10n_account_withholding_tax",
         "l10n_ar_withholding",
         "account_payment_pro",
         "l10n_latam_check",  # para reporte de pagos/recibos

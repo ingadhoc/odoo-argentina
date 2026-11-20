@@ -30,7 +30,7 @@ class TestAliquotSourceOrder(common.TransactionCase):
             }
         )
         tax_group = cls.env["account.tax.group"].create(
-            {"name": "IIBB CABA test", "country_id": cls.env.ref("base.ar").id}
+            {"name": "IIBB CABA test", "country_id": cls.env.ref("base.ar").id, "l10n_ar_state_id": cls.state_caba.id}
         )
         cls.tax_caba = cls.env["account.tax"].create(
             {
@@ -40,7 +40,6 @@ class TestAliquotSourceOrder(common.TransactionCase):
                 "amount": 3.0,
                 "country_id": cls.env.ref("base.ar").id,
                 "tax_group_id": tax_group.id,
-                "l10n_ar_state_id": cls.state_caba.id,
             }
         )
         cls.fiscal_position = cls.env["account.fiscal.position"].create({"name": "CABA test"})

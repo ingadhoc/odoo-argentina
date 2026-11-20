@@ -10,8 +10,9 @@ class TestPerceptionSantaFeRatio(TestArCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        # la jurisdicción la toma del grupo de percepción de cada provincia
         perception_group = cls.env.ref(
-            "account.%i_ri_tax_percepcion_iibb_caba_aplicada" % cls.env.company.id
+            "account.%i_ri_tax_percepcion_iibb_sf_aplicada" % cls.env.company.id
         ).tax_group_id
         cls.perception_tax = cls.env["account.tax"].create(
             {
@@ -21,7 +22,6 @@ class TestPerceptionSantaFeRatio(TestArCommon):
                 "type_tax_use": "sale",
                 "country_id": cls.env.ref("base.ar").id,
                 "company_id": cls.company_ri.id,
-                "l10n_ar_state_id": cls.env.ref("base.state_ar_s").id,
                 "tax_group_id": perception_group.id,
                 "ratio": 50.0,
             }
@@ -56,7 +56,9 @@ class TestPerceptionSantaFeRatio(TestArCommon):
 
     def test_02_ratio_ignored_outside_santa_fe(self):
         """Fuera de Santa Fe el ratio no tiene efecto: 100000 * 3% = 3000."""
-        self.perception_tax.l10n_ar_state_id = self.env.ref("base.state_ar_c")
+        self.perception_tax.tax_group_id = self.env.ref(
+            "account.%i_ri_tax_percepcion_iibb_caba_aplicada" % self.env.company.id
+        ).tax_group_id
         self.assertAlmostEqual(abs(self._post_invoice(100000.0).balance), 3000.0, places=2)
 
     def test_03_minimum_base_applies_to_the_full_base(self):

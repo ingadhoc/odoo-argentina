@@ -50,6 +50,7 @@ class TestPadronSantaFeContributorType(TestArCommon):
             {
                 "name": "Test Ret. IIBB Santa Fe",
                 "company_id": cls.company_ri.id,
+                "l10n_ar_state_id": cls.santa_fe.id,
             }
         )
         cls.wth_tax_untaxed = cls.env["account.tax"].create(
@@ -62,7 +63,6 @@ class TestPadronSantaFeContributorType(TestArCommon):
                 "country_id": cls.env.ref("base.ar").id,
                 "company_id": cls.company_ri.id,
                 "l10n_ar_withholding_tax_type": "iibb_untaxed",
-                "l10n_ar_state_id": cls.santa_fe.id,
                 "tax_group_id": tax_group.id,
             }
         )

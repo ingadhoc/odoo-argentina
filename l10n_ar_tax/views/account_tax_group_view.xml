@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_tax_group_form" model="ir.ui.view">
+        <field name="name">account.tax.group.form</field>
+        <field name="model">account.tax.group</field>
+        <field name="inherit_id" ref="account.view_tax_group_form"/>
+        <field name="arch" type="xml">
+            <field name="preceding_subtotal" position="after">
+                <field name="country_code" invisible="1"/>
+                <field name="l10n_ar_tribute_afip_code" invisible="1"/>
+                <field name="l10n_ar_state_id" invisible="country_code != 'AR' or l10n_ar_tribute_afip_code == '01'" options="{'no_create': True}"/>
+                <field name="withholding_sequence_id" invisible="country_code != 'AR'" context="{'default_name': name}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

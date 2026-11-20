@@ -47,7 +47,17 @@ class L10nArTaxPaymentCommon(TestArCommon):
         )
 
     @classmethod
-    def _create_withholding_tax(cls, name, amount, **tax_vals):
+    def _create_withholding_tax(cls, name, amount, l10n_ar_state_id=False, **tax_vals):
+        # Jurisdiction and sequence come from the tax group
+        tax_group = cls.env["account.tax.group"].create(
+            {
+                "name": name,
+                "country_id": cls.env.ref("base.ar").id,
+                "company_id": cls.env.company.id,
+                "l10n_ar_state_id": l10n_ar_state_id,
+                "withholding_sequence_id": cls.withholding_sequence.id,
+            }
+        )
         return cls.env["account.tax"].create(
             {
                 "name": name,
@@ -55,7 +65,7 @@ class L10nArTaxPaymentCommon(TestArCommon):
                 "amount": amount,
                 "type_tax_use": "purchase",
                 "is_withholding_tax": True,
-                "withholding_sequence_id": cls.withholding_sequence.id,
+                "tax_group_id": tax_group.id,
                 "company_id": cls.env.company.id,
                 "invoice_repartition_line_ids": [
                     Command.create({"repartition_type": "base"}),

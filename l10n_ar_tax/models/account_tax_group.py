@@ -13,3 +13,16 @@ class AccountTaxGroup(models.Model):
         ]
     )
     tax_ids = fields.One2many("account.tax", "tax_group_id", string="Taxes")
+    l10n_ar_state_id = fields.Many2one(
+        "res.country.state",
+        string="Jurisdiction",
+        ondelete="restrict",
+        domain="[('country_id', '=?', country_id)]",
+    )
+    withholding_sequence_id = fields.Many2one(
+        "ir.sequence",
+        string="WTH Sequence",
+        check_company=True,
+        copy=True,
+        help="If no sequence provided then it will be required for you to enter withholding number when registering one.",
+    )

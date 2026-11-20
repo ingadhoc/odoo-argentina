@@ -52,9 +52,6 @@ class TestPaymentFormWithholdingNet(TransactionCase):
                 "amount": -6.0,
                 "tax_group_id": cls.tax_group.id,
                 "l10n_ar_withholding_tax_type": "earnings",
-                "withholding_sequence_id": cls.env["ir.sequence"]
-                .create({"name": "Test WTH Ganancias seq", "implementation": "standard", "padding": 4})
-                .id,
                 "invoice_repartition_line_ids": [
                     Command.create({"repartition_type": "base"}),
                     Command.create({"repartition_type": "tax", "account_id": cls.withholding_account.id}),
@@ -64,6 +61,11 @@ class TestPaymentFormWithholdingNet(TransactionCase):
                     Command.create({"repartition_type": "tax", "account_id": cls.withholding_account.id}),
                 ],
             }
+        )
+        cls.tax_group.withholding_sequence_id = (
+            cls.env["ir.sequence"]
+            .create({"name": "Test WTH Ganancias seq", "implementation": "standard", "padding": 4})
+            .id
         )
         cls.fiscal_position = cls.env["account.fiscal.position"].create(
             {
@@ -107,12 +109,17 @@ class TestPaymentFormWithholdingNet(TransactionCase):
                 "amount_type": "percent",
                 "amount": -2.0,
                 "tax_group_id": cls.env["account.tax.group"]
-                .create({"name": "Test IIBB Group", "company_id": cls.company.id})
+                .create(
+                    {
+                        "name": "Test IIBB Group",
+                        "company_id": cls.company.id,
+                        "withholding_sequence_id": cls.env["ir.sequence"]
+                        .create({"name": "Test WTH IIBB seq", "implementation": "standard", "padding": 4})
+                        .id,
+                    }
+                )
                 .id,
                 "l10n_ar_withholding_tax_type": "iibb_untaxed",
-                "withholding_sequence_id": cls.env["ir.sequence"]
-                .create({"name": "Test WTH IIBB seq", "implementation": "standard", "padding": 4})
-                .id,
                 "invoice_repartition_line_ids": [
                     Command.create({"repartition_type": "base"}),
                     Command.create({"repartition_type": "tax", "account_id": cls.iibb_account.id}),
@@ -145,13 +152,18 @@ class TestPaymentFormWithholdingNet(TransactionCase):
                 "amount_type": "percent",
                 "amount": -2.0,
                 "tax_group_id": cls.env["account.tax.group"]
-                .create({"name": "Test IIBB Minimum Group", "company_id": cls.company.id})
+                .create(
+                    {
+                        "name": "Test IIBB Minimum Group",
+                        "company_id": cls.company.id,
+                        "withholding_sequence_id": cls.env["ir.sequence"]
+                        .create({"name": "Test WTH IIBB minimum seq", "implementation": "standard", "padding": 4})
+                        .id,
+                    }
+                )
                 .id,
                 "l10n_ar_withholding_tax_type": "iibb_untaxed",
                 "l10n_ar_base_minimum_threshold": 200000.0,
-                "withholding_sequence_id": cls.env["ir.sequence"]
-                .create({"name": "Test WTH IIBB minimum seq", "implementation": "standard", "padding": 4})
-                .id,
                 "invoice_repartition_line_ids": [
                     Command.create({"repartition_type": "base"}),
                     Command.create({"repartition_type": "tax", "account_id": cls.iibb_account.id}),

@@ -416,12 +416,13 @@ class AccountFiscalPositionL10nArTax(models.Model):
                 ]
             ):
                 return self.env["account.tax"]
-            # Fix para que al impuesto de demo 'P. IIBB CABA 3.0%' se le agregue la jurisdicción
+            # Fix para que el impuesto de demo 'P. IIBB CABA 3.0%' tenga jurisdicción: la toma de su grupo
             if (
                 tax.tax_group_id
                 == self.env.ref("account.%s_ri_tax_percepcion_iibb_caba_aplicada" % tax.company_id.id).tax_group_id
+                and not tax.tax_group_id.l10n_ar_state_id
             ):
-                tax.l10n_ar_state_id = self.env.ref("base.state_ar_c")
+                tax.tax_group_id.l10n_ar_state_id = self.env.ref("base.state_ar_c")
         self.env["l10n_ar.partner.tax"].create(
             {
                 "partner_id": partner.id,

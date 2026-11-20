@@ -59,9 +59,6 @@ class TestWithholdingSufferedLedger(TransactionCase):
                 .create({"name": "Test Sufrida Ganancias Group", "company_id": cls.company.id})
                 .id,
                 "l10n_ar_withholding_tax_type": "earnings",
-                "withholding_sequence_id": cls.env["ir.sequence"]
-                .create({"name": "Test WTH Sufrida seq", "implementation": "standard", "padding": 4})
-                .id,
                 "invoice_repartition_line_ids": [
                     Command.create({"repartition_type": "base"}),
                     Command.create({"repartition_type": "tax", "account_id": cls.withholding_account.id}),
@@ -94,9 +91,6 @@ class TestWithholdingSufferedLedger(TransactionCase):
                 .create({"name": "Test Sufrida IIBB Group", "company_id": cls.company.id})
                 .id,
                 "l10n_ar_withholding_tax_type": "iibb_untaxed",
-                "withholding_sequence_id": cls.env["ir.sequence"]
-                .create({"name": "Test WTH Sufrida IIBB seq", "implementation": "standard", "padding": 4})
-                .id,
                 "invoice_repartition_line_ids": [
                     Command.create({"repartition_type": "base"}),
                     Command.create({"repartition_type": "tax", "account_id": cls.iibb_account.id}),
@@ -194,8 +188,9 @@ class TestWithholdingSufferedLedger(TransactionCase):
             payment.write(
                 {
                     "withholding_line_ids": [
-                        Command.create({"tax_id": tax.id, "base_amount": base, "amount": amount})
-                        for tax, base, amount in withholdings
+                        # customer withholdings carry the certificate number, they have no sequence
+                        Command.create({"tax_id": tax.id, "base_amount": base, "amount": amount, "name": f"CERT-{i}"})
+                        for i, (tax, base, amount) in enumerate(withholdings, 1)
                     ]
                 }
             )
@@ -467,7 +462,9 @@ class TestWithholdingSufferedLedger(TransactionCase):
         payment.write(
             {
                 "withholding_line_ids": [
-                    Command.create({"tax_id": self.tax_sufrida.id, "base_amount": 1000.0, "amount": 60.0})
+                    Command.create(
+                        {"tax_id": self.tax_sufrida.id, "base_amount": 1000.0, "amount": 60.0, "name": "CERT-1"}
+                    )
                 ]
             }
         )

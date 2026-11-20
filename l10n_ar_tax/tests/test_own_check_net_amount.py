@@ -104,9 +104,6 @@ class TestOwnCheckNetAmount(AccountInvariantsMixin, TransactionCase):
                 "amount": -6.0,
                 "tax_group_id": tax_group.id,
                 "l10n_ar_withholding_tax_type": "earnings",
-                "withholding_sequence_id": cls.env["ir.sequence"]
-                .create({"name": "Test Own Check Net Amount WTH seq", "implementation": "standard", "padding": 4})
-                .id,
                 "invoice_repartition_line_ids": [
                     Command.create({"factor_percent": 100, "repartition_type": "base"}),
                     Command.create({"factor_percent": 100, "repartition_type": "tax", "account_id": wth_account.id}),
@@ -116,6 +113,11 @@ class TestOwnCheckNetAmount(AccountInvariantsMixin, TransactionCase):
                     Command.create({"factor_percent": 100, "repartition_type": "tax", "account_id": wth_account.id}),
                 ],
             }
+        )
+        tax_group.withholding_sequence_id = (
+            cls.env["ir.sequence"]
+            .create({"name": "Test Own Check Net Amount WTH seq", "implementation": "standard", "padding": 4})
+            .id
         )
         cls.fiscal_position = cls.env["account.fiscal.position"].create(
             {

@@ -9,10 +9,24 @@ from .account_fiscal_position_l10n_ar_tax import BASE_DEFINING_JURISDICTION_CODE
 class AccountTax(models.Model):
     _inherit = "account.tax"
 
-    # mejora de usabilidad, duplicar un impuesto mantiene la secuencia
+    # In AR both come from the tax group. Customer withholdings share the group of their
+    # jurisdiction but keep no sequence: their number is the customer's certificate.
     withholding_sequence_id = fields.Many2one(
-        copy=True,
+        compute="_compute_withholding_sequence_id",
+        store=True,
+        readonly=True,
     )
+    l10n_ar_state_id = fields.Many2one(related="tax_group_id.l10n_ar_state_id", store=True, readonly=True)
+
+    @api.depends("tax_group_id.withholding_sequence_id", "type_tax_use", "is_withholding_tax", "country_id.code")
+    def _compute_withholding_sequence_id(self):
+        for tax in self:
+            if tax.country_id.code != "AR":
+                tax.withholding_sequence_id = tax.withholding_sequence_id
+            elif tax.type_tax_use == "purchase" and tax.is_withholding_tax:
+                tax.withholding_sequence_id = tax.tax_group_id.withholding_sequence_id
+            else:
+                tax.withholding_sequence_id = False
 
     @api.model
     @api.readonly

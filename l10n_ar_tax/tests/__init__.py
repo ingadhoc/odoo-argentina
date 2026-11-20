@@ -24,3 +24,4 @@ from . import test_withholding_fiscal_position_branches
 from . import test_withholding_proposal
 from . import test_fiscal_position_responsibility_match
 from . import test_payment_register_withholding
+from . import test_tax_group_jurisdiction_sequence

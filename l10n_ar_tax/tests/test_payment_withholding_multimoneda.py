@@ -128,14 +128,23 @@ class TestPaymentWithholdingMultimoneda(TestArCommon):
             }
         )
 
-        # Secuencias
+        # Secuencias: van en el grupo de cada impuesto
         for tax, prefix in [(cls.tax_ret_iibb, "RET-IIBB-"), (cls.tax_ret_ganancias, "RET-GAN-")]:
-            tax.withholding_sequence_id = cls.env["ir.sequence"].create(
+            tax.tax_group_id = cls.env["account.tax.group"].create(
                 {
-                    "name": f"Seq {tax.name}",
-                    "prefix": prefix,
-                    "padding": 8,
+                    "name": tax.name,
+                    "country_id": cls.env.ref("base.ar").id,
                     "company_id": cls.company.id,
+                    "withholding_sequence_id": cls.env["ir.sequence"]
+                    .create(
+                        {
+                            "name": f"Seq {tax.name}",
+                            "prefix": prefix,
+                            "padding": 8,
+                            "company_id": cls.company.id,
+                        }
+                    )
+                    .id,
                 }
             )
 
@@ -383,6 +392,8 @@ class TestPaymentWithholdingMultimoneda(TestArCommon):
             form.amount = 100.0
             with form.withholding_line_ids.new() as line:
                 line.tax_id = tax_sale
+                # a customer withholding has no sequence: it carries the certificate number
+                line.name = "CERT-0001"
                 line.l10n_ar_base_amount = 120_000
                 line.l10n_ar_amount = 3_601
         payment = form.record

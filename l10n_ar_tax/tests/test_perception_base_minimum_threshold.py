@@ -50,7 +50,6 @@ class TestPerceptionBaseMinimumThreshold(TestArCommon):
                 "type_tax_use": "sale",
                 "country_id": cls.env.ref("base.ar").id,
                 "company_id": cls.company_ri.id,
-                "l10n_ar_state_id": cls.env.ref("base.state_ar_c").id,
                 "tax_group_id": perception_group.id,
             }
         )

@@ -141,7 +141,7 @@ class AccountPayment(models.Model):
                         )
                     else:
                         raise UserError(
-                            _("Please enter withholding number for tax %s or configure a sequence on that tax")
+                            _("Please enter withholding number for tax %s or configure a sequence on its tax group")
                             % line.tax_id.name
                         )
             if commands:

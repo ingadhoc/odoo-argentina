@@ -50,7 +50,13 @@
         <field name="arch" type="xml">
             <field name="l10n_ar_state_id" position="attributes">
                 <attribute name="invisible">l10n_ar_withholding_tax_type in ['earnings', 'earnings_scale'] or country_code != 'AR'</attribute>
+                <!-- it comes from the tax group -->
+                <attribute name="readonly">1</attribute>
+                <attribute name="required">0</attribute>
             </field>
+            <xpath expr="//page[@name='l10n_ar_withholding_options']//field[@name='withholding_sequence_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
             <field name="l10n_ar_code" position="attributes">
                 <attribute name="invisible">country_code != 'AR'</attribute>
             </field>

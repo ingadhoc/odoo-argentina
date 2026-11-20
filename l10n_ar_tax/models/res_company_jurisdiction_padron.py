@@ -9,6 +9,7 @@ import zipfile
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools import format_date
 
 _logger = logging.getLogger(__name__)
 
@@ -27,14 +28,12 @@ PARP_CONTRIBUTOR_MULTILATERAL = "C"
 
 
 class ResCompanyJurisdictionPadron(models.Model):
+    """The padron is the same for every taxpayer, so it belongs to no company: it is
+    uploaded once per jurisdiction and period and every company uses it."""
+
     _name = "res.company.jurisdiction.padron"
     _description = "res.company.jurisdiction.padron"
 
-    company_id = fields.Many2one(
-        "res.company",
-        required=True,
-        default=lambda self: self.env.company,
-    )
     state_id = fields.Many2one("res.country.state", string="Jurisdiction", domain="[('country_id.code', '=', 'AR')]")
     file_padron = fields.Binary(
         "File",
@@ -89,13 +88,34 @@ class ResCompanyJurisdictionPadron(models.Model):
                     )
                 )
 
-    @api.depends("company_id", "state_id")
-    def name_get(self):
-        res = []
+    @api.constrains("state_id", "l10n_ar_padron_from_date", "l10n_ar_padron_to_date")
+    def _check_unique_padron_per_period(self):
+        """One padron per jurisdiction and period. Python and not SQL on purpose: padrones
+        loaded before by several companies stay as they are, only new ones are checked."""
+        for rec in self:
+            overlapping = self.search_count(
+                [
+                    ("id", "!=", rec.id),
+                    ("state_id", "=", rec.state_id.id),
+                    ("l10n_ar_padron_from_date", "<=", rec.l10n_ar_padron_to_date),
+                    ("l10n_ar_padron_to_date", ">=", rec.l10n_ar_padron_from_date),
+                ],
+                limit=1,
+            )
+            if overlapping:
+                raise ValidationError(
+                    _("There is already a padron for %(state)s in that period. The padron is shared by every company.")
+                    % {"state": rec.state_id.name}
+                )
+
+    @api.depends("state_id", "l10n_ar_padron_from_date", "l10n_ar_padron_to_date")
+    def _compute_display_name(self):
         for padron in self:
-            name = "%s: %s" % (padron.company_id.name, padron.state_id.name)
-            res += [(padron.id, name)]
-        return res
+            period = "%s - %s" % (
+                format_date(self.env, padron.l10n_ar_padron_from_date),
+                format_date(self.env, padron.l10n_ar_padron_to_date),
+            )
+            padron.display_name = "%s: %s" % (padron.state_id.name, period) if padron.state_id else period
 
     def descompress_file(self, file_padron, dest_dir="/tmp"):
         """Extrae el padrón comprimido en dest_dir. Soporta ZIP (ARBA, Santa Fe) y

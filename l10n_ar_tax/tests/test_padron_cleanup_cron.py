@@ -29,11 +29,10 @@ class TestPadronCleanupCron(common.TransactionCase):
 
         return self.padron_model.create(
             {
-                "company_id": self.company.id,
                 "state_id": state.id,
                 "file_padron": file_padron,
                 "filename": filename,
-                "l10n_ar_padron_from_date": to_date + relativedelta(days=-30),
+                "l10n_ar_padron_from_date": fields.Date.start_of(to_date, "month"),
                 "l10n_ar_padron_to_date": to_date,
             }
         )

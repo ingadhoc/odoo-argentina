@@ -64,7 +64,6 @@ class TestAliquotSourceOrder(common.TransactionCase):
             zip_file.writestr("padron_agip.txt", line + "\n")
         padron = self.env["res.company.jurisdiction.padron"].create(
             {
-                "company_id": self.env.company.id,
                 "state_id": self.state_caba.id,
                 "file_padron": base64.b64encode(buffer.getvalue()).decode(),
                 "filename": "padron_agip.zip",

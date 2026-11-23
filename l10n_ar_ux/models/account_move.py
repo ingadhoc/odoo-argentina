@@ -9,7 +9,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import Domain
 
-
+# Esto es la segunda modificacion para el ejercicio
 class AccountMove(models.Model):
     _inherit = "account.move"
 

@@ -2,7 +2,7 @@
 [![Code Climate](https://codeclimate.com/github/ingadhoc//badges/gpa.svg)](https://codeclimate.com/github/ingadhoc/)
 
 # ADHOC odoo-argentina
-
+#GUARDAR ESTA BRANCH PARA SOLUPLEX
 ADHOC Odoo odoo-argentina Modules
 
 

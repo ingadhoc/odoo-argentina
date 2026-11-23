@@ -95,8 +95,7 @@ class AccountJournal(models.Model):
         if afip_pos_system == 'CF':
             return tique_codes
         res = super()._get_codes_per_journal_type(afip_pos_system)
-        if res:
-            for to_remove in ['80', '83']:
-                if to_remove in res:
-                    res.remove(to_remove)
+        for to_remove in ['80', '83']:
+            if to_remove in res:
+                res.remove(to_remove)
         return res

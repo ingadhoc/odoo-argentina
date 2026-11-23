@@ -17,3 +17,4 @@ class AccountTax(models.Model):
     code = fields.Char(required=True)
     name = fields.Char(required=True)
     active = fields.Boolean(default=True)
+    active = fields.Boolean(default=True)

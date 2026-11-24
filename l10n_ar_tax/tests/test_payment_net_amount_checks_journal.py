@@ -72,6 +72,9 @@ class TestPaymentNetAmountChecksJournal(TestArWithholdingArRi):
         return Form(self.env["account.payment"].with_context(**context, default_journal_id=journal.id))
 
     def test_opened_with_checks_journal_then_cash(self):
+        # l10n_ar_payment_bundle recomputes the amount on withholdings change, which l10n_latam_check sets to 0
+        if self.env["ir.module.module"]._get("l10n_ar_payment_bundle").state == "installed":
+            self.skipTest("l10n_ar_payment_bundle sets the amount of a check payment without checks to 0")
         form = self._payment_form(self.check_journal)
         self.assertEqual(form.payment_method_code, "out_third_party_checks")
         self.assertEqual(form.withholdings_amount, 12500)

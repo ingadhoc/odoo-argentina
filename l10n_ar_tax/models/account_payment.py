@@ -161,11 +161,19 @@ class AccountPayment(models.Model):
         super()._adjust_computed_amount()
         # the checks are the net amount: the gross one adds the withholdings
         for rec in self.filtered(
-            lambda x: x.state == "draft" and x._is_latam_check_payment() and x.withholding_line_ids
+            lambda x: x.state == "draft"
+            and x._is_latam_check_payment()
+            and x._get_latam_checks()
+            and x.withholding_line_ids
         ):
             # the lines, and not the withholding_amount they add up to: this compute declares them as its
             # dependency, so the total may still be the old one while they are being recomputed
             rec.amount = rec.l10n_latam_checks_amount + sum(rec.withholding_line_ids.mapped("amount"))
+        # without checks the core assigns nothing, and an unassigned new record falls back to 0: keep the amount
+        for rec in self.filtered(
+            lambda x: x.state == "draft" and x._is_latam_check_payment() and not x._get_latam_checks()
+        ):
+            rec.amount = rec.amount_exact
         # out of the draft state the amount is the one the payment was confirmed with: action_post numbers the
         # withholdings, and that write on the one2many fires this compute again, where the checks leave the
         # amount at the net one
@@ -315,7 +323,7 @@ class AccountPayment(models.Model):
     def _follow_selected_debt(self):
         """When the withholdings change (the selected debt, its base, or the partner changed), the gross amount
         follows the selected debt, up and down and never below zero. Supplier payments only, and not with third
-        party checks, where the checks set the amount."""
+        party checks already selected, where the checks set the amount."""
         third_party_checks = (
             "in_third_party_checks",
             "out_third_party_checks",
@@ -327,7 +335,7 @@ class AccountPayment(models.Model):
             and x.state == "draft"
             and x.partner_type == "supplier"
             and x.currency_id
-            and x.payment_method_code not in third_party_checks
+            and (x.payment_method_code not in third_party_checks or not x._get_latam_checks())
         ):
             amount = max(rec.amount + rec._get_payment_difference_in_currency_a(), 0.0)
             if not rec.currency_id.is_zero(amount - rec.amount):

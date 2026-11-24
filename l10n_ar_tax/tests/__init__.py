@@ -27,3 +27,4 @@ from . import test_payment_register_withholding
 from . import test_tax_group_jurisdiction_sequence
 from . import test_withholding_entry
 from . import test_withholding_gross_amount
+from . import test_payment_net_amount_checks_journal

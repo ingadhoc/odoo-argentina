@@ -315,7 +315,7 @@ class AccountPayment(models.Model):
     def _follow_selected_debt(self):
         """When the withholdings change (the selected debt, its base, or the partner changed), the gross amount
         follows the selected debt, up and down and never below zero. Supplier payments only, and not with third
-        party checks, where the checks set the amount."""
+        party checks already selected, where the checks set the amount."""
         third_party_checks = (
             "in_third_party_checks",
             "out_third_party_checks",
@@ -327,7 +327,7 @@ class AccountPayment(models.Model):
             and x.state == "draft"
             and x.partner_type == "supplier"
             and x.currency_id
-            and x.payment_method_code not in third_party_checks
+            and (x.payment_method_code not in third_party_checks or not x._get_latam_checks())
         ):
             amount = max(rec.amount + rec._get_payment_difference_in_currency_a(), 0.0)
             if not rec.currency_id.is_zero(amount - rec.amount):

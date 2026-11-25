@@ -53,6 +53,16 @@ Taxes with the `CM` suffix belong to this flow and are not offered in the defaul
 
 Perceptions follow the same regime (art. 387): a local (`D`) is perceived on the net base, a Multilateral Agreement taxpayer (`C`) on 50% of it. For the latter, a tax with a 50% *Ratio* is created from the configured one, with the same aliquot and a `CM` suffix in its name. The *Ratio* of a sale tax only applies to Santa Fe perceptions.
 
+### Perceptions on customer credit notes (feature flag)
+
+Set the system parameter `l10n_ar_tax.credit_note_perception_rules` to `True` (applies to all companies of the database) to apply these rules to IIBB perceptions of customer credit notes:
+
+- **AGIP (CABA, 901):** total credit notes keep the perception up to 2 monthly periods after the invoice; partial ones have none.
+- **ARBA (902):** total credit notes keep the perception with no deadline; partial ones have none.
+- **Other jurisdictions:** unchanged.
+
+On total credit notes, each line takes the AGIP/ARBA perceptions of the invoice line it refunds, without recomputing them.
+
 ## Usage
 
 - Withholdings are automatically calculated when creating payments based on the partner's fiscal position.

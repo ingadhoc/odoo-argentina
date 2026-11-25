@@ -10,6 +10,7 @@ from . import test_withholding_thresholds
 from . import test_payment_withholding_multimoneda
 from . import test_payment_withholding_checks_multimoneda
 from . import test_own_check_net_amount
+from . import test_credit_note_perception_rules
 from . import test_padron_cleanup_cron
 from . import test_padron_tmp_dir
 from . import test_padron_santa_fe_contributor_type

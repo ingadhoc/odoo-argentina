@@ -28,6 +28,11 @@ msgid "<br/><strong>Payment Terms: </strong>"
 msgstr "<br/><strong>Términos de Pago: </strong>"
 
 #. module: l10n_ar_purchase
+#: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchasequotation_document
+msgid "<br/><strong>Requested Ship Date:</strong>"
+msgstr "<br/><strong>Fecha de envío solicitada:</strong>"
+
+#. module: l10n_ar_purchase
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchaseorder_document
 #: model_terms:ir.ui.view,arch_db:l10n_ar_purchase.report_purchasequotation_document
 msgid "<br/><strong>Shipping address:</strong>"

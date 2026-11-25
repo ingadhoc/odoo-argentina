@@ -161,7 +161,10 @@ class AccountPayment(models.Model):
         super()._adjust_computed_amount()
         # the checks are the net amount: the gross one adds the withholdings
         for rec in self.filtered(
-            lambda x: x.state == "draft" and x._is_latam_check_payment() and x.withholding_line_ids
+            lambda x: x.state == "draft"
+            and x._is_latam_check_payment()
+            and x._get_latam_checks()
+            and x.withholding_line_ids
         ):
             # the lines, and not the withholding_amount they add up to: this compute declares them as its
             # dependency, so the total may still be the old one while they are being recomputed

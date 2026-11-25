@@ -1,0 +1,88 @@
+/**
+ * Argentinian fiscal blocks of the thermal receipt.
+ *
+ * Generic layout lives in account_thermal_ticket; only the styles for the
+ * blocks this module adds are defined here, under the same scope so they
+ * never leak into other reports.
+ */
+
+.thermal-receipt-page {
+    .thermal-receipt {
+
+        .invoice-type {
+            text-align: center;
+            margin: 3mm 0;
+            padding: 3mm 0;
+            border-top: 2px solid #000;
+            border-bottom: 2px solid #000;
+
+            .letter-box {
+                font-size: 32px;
+                font-weight: bold;
+                width: 20mm;
+                height: 20mm;
+                border: 3px solid #000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 2mm auto;
+            }
+
+            .document-code {
+                font-size: 10px;
+                margin: 2mm 0;
+            }
+        }
+
+        .fiscal-legend {
+            font-size: 9px;
+            font-style: italic;
+            text-align: center;
+            margin: 2mm 0;
+            padding: 2mm;
+            border: 1px solid #000;
+            line-height: 1.3;
+        }
+
+        .fiscal-transparency {
+            margin: 3mm 0;
+            padding: 2mm;
+            border: 1px solid #000;
+            font-size: 9px;
+
+            .transparency-title {
+                font-weight: bold;
+                text-align: center;
+                margin-bottom: 2mm;
+                padding-bottom: 1mm;
+                border-bottom: 1px dashed #000;
+                line-height: 1.2;
+            }
+        }
+
+        .qr-section {
+            text-align: center;
+            margin: 5mm 0;
+            padding: 3mm 0;
+            border-top: 2px dashed #000;
+            border-bottom: 2px dashed #000;
+
+            .qr-label {
+                font-size: 10px;
+                margin-bottom: 2mm;
+            }
+
+            .qr-code {
+                display: block;
+                margin: 3mm auto;
+                max-width: 55mm;
+                height: auto;
+            }
+
+            .cae-info {
+                margin: 2mm 0;
+                font-size: 10px;
+            }
+        }
+    }
+}

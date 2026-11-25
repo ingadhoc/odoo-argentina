@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The print handler opens /report/html/<report_name>/<ids>, which needs
+        an ir.actions.report declaring the template. No binding here: the
+        button lives in the base module and picks the template through
+        _get_thermal_receipt_report_name().
+    -->
+    <record id="action_report_thermal_invoice_html" model="ir.actions.report">
+        <field name="name">Factura Térmica AR (HTML)</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">l10n_ar_thermal_ticket.report_thermal_invoice_html</field>
+    </record>
+</odoo>

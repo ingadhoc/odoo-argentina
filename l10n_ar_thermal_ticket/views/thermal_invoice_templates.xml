@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        What an Argentinian receipt carries, fiscal or not.
+
+        An extension of the base ticket, so it reaches every receipt of
+        an Argentinian company and not only the ones issued through ARCA. That
+        is what the native invoice report does: `l10n_ar_ux` points every AR
+        company at `l10n_ar.report_invoice_document` "regardless use
+        documents", and there the VAT condition and the tax id of the customer
+        print with no condition at all, while the per cent of VAT on the line
+        and the untaxed subtotal print whenever `_l10n_ar_include_vat()` says
+        the tax is discriminated. None of them look at the letter.
+
+        An auxiliary company that does not invoice electronically therefore
+        gets the same detail on its ticket as it gets on its A4 invoice. What
+        only an authorised document can carry -the letter, the CAE, the QR-
+        lives in the primary template below.
+    -->
+    <template id="report_thermal_invoice_html_ar"
+              inherit_id="account_thermal_ticket.report_thermal_invoice_html">
+
+        <!--
+            Values shared by several blocks, set as siblings so they stay in
+            scope for the whole receipt. `header_partner` (the ARCA point of
+            sale) and `header_company` (the partner of the company issuing the
+            document) both come from the base template.
+
+            `tax_totals` is None on any move that is not an invoice, and the
+            localization helper hands it back as it is, so the totals are
+            guarded here: this block replaces the one of the base template
+            for every receipt, and `/report/html/<template>/<id>` renders any
+            `account.move`.
+
+            Where the tax is discriminated the amounts are net, each line
+            shows its VAT rate and the totals break it down.
+        -->
+        <xpath expr="//div[@id='thermal_header']" position="before">
+            <t t-set="ar_vat_discriminated" t-value="not o._l10n_ar_include_vat()"/>
+            <t t-set="ar_totals" t-value="o._l10n_ar_get_invoice_totals_for_report() if o.tax_totals else {}"/>
+        </xpath>
+
+        <!-- Issuer: the fiscal identification the receipt requires, added to
+             the address block the base template already prints -->
+        <xpath expr="//div[@name='div_company_info']" position="inside">
+            <div t-if="header_company.l10n_ar_afip_responsibility_type_id">
+                <t t-out="header_company.l10n_ar_afip_responsibility_type_id.name"/>
+            </div>
+            <div t-if="header_company.l10n_ar_formatted_vat">
+                CUIT: <t t-out="header_company.l10n_ar_formatted_vat"/>
+            </div>
+            <div t-if="header_company.l10n_ar_gross_income_number or header_company.l10n_ar_gross_income_type == 'exempt'">
+                IIBB: <t t-out="header_company.l10n_ar_gross_income_type == 'exempt' and 'Exento' or header_company.l10n_ar_gross_income_number"/>
+            </div>
+            <div t-if="header_company.start_date">
+                Inicio Act.: <t t-out="header_company.start_date" t-options='{"widget": "date"}'/>
+            </div>
+        </xpath>
+
+        <!-- Customer: tax status and identification. The native report prints
+             both with no condition, so they are here and not in the primary -->
+        <xpath expr="//div[@id='thermal_partner_info']" position="inside">
+            <div t-if="o.partner_id.l10n_ar_afip_responsibility_type_id">
+                <t t-out="o.partner_id.l10n_ar_afip_responsibility_type_id.name"/>
+            </div>
+            <t t-if="o.partner_id.l10n_ar_afip_code and o.partner_id.l10n_ar_afip_code != '99'">
+                <t t-set="ar_doc_vals" t-value="o.partner_id._get_preferred_legal_entity_identifier_vals()"/>
+                <div>
+                    <t t-out="ar_doc_vals.get('label') or o.company_id.account_fiscal_country_id.vat_label or 'CUIT'"/>:
+                    <t t-out="o.partner_id.l10n_ar_formatted_vat or ar_doc_vals.get('value', '')"/>
+                </div>
+            </t>
+        </xpath>
+
+        <!-- IVA rates applied to the line (only when discriminated).
+
+             Name-based targeting (no positional XPath) so that inherits on the
+             base that add or rename parts compose here without breaking.
+
+             The prices themselves come from `_thermal_line_prices()`, which
+             this module points at the localization helper, so nothing is
+             replaced here. -->
+        <div name="div_line_detail" position="inside">
+            <t t-if="ar_vat_discriminated">
+                <t t-set="line_vat" t-value="', '.join([x.tax_label.replace('IVA ', '').replace('Iva ', '').replace('iva ', '') for x in line.tax_ids.filtered(lambda t: t.tax_group_id.l10n_ar_vat_afip_code)])"/>
+                <t t-if="line_vat"> - IVA <t t-out="line_vat"/></t>
+            </t>
+        </div>
+
+        <!-- Totals: VAT is broken down only when discriminated, other taxes
+             (perceptions) always are -->
+        <xpath expr="//div[@id='thermal_totals']" position="replace">
+            <div class="totals" id="thermal_totals">
+                <!-- The net amount would give away the VAT that a B or a C must
+                     not discriminate: there the receipt goes straight to the total. -->
+                <div class="row" t-if="ar_vat_discriminated">
+                    <span>Subtotal:</span>
+                    <span>
+                        <t t-out="o.amount_untaxed"
+                           t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </span>
+                </div>
+
+                <t t-if="ar_vat_discriminated">
+                    <t t-foreach="ar_totals.get('subtotals', [])" t-as="subtotal">
+                        <t t-foreach="subtotal.get('tax_groups', [])" t-as="tax_group">
+                            <div class="row"
+                                 t-if="env['account.tax.group'].browse(tax_group.get('id')).l10n_ar_vat_afip_code">
+                                <span><t t-out="tax_group.get('group_name', '')"/>:</span>
+                                <span>
+                                    <t t-out="tax_group.get('tax_amount_currency', 0.0)"
+                                       t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </span>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+
+                <t t-foreach="ar_totals.get('subtotals', [])" t-as="subtotal">
+                    <t t-foreach="subtotal.get('tax_groups', [])" t-as="tax_group">
+                        <div class="row"
+                             t-if="not env['account.tax.group'].browse(tax_group.get('id')).l10n_ar_vat_afip_code and tax_group.get('tax_amount_currency', 0.0)">
+                            <span><t t-out="tax_group.get('group_name', '')"/>:</span>
+                            <span>
+                                <t t-out="tax_group.get('tax_amount_currency', 0.0)"
+                                   t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </span>
+                        </div>
+                    </t>
+                </t>
+
+                <div class="total-row">
+                    <span>TOTAL:</span>
+                    <span>
+                        <t t-out="o.amount_total"
+                           t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </span>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- Fiscal transparency regime (Ley 27.743). Guarded by its own
+             content, like the native report: an auxiliary document simply
+             comes back with nothing to print. -->
+        <xpath expr="//div[@id='thermal_totals']" position="after">
+            <t t-set="ar_custom_tax_summary"
+               t-value="o._l10n_ar_get_invoice_custom_tax_summary_for_report()"/>
+            <div class="fiscal-transparency" id="thermal_fiscal_transparency"
+                 t-if="ar_custom_tax_summary">
+                <div class="transparency-title">
+                    Régimen de Transparencia Fiscal<br/>para el Consumidor Final (Ley 27.743)
+                </div>
+                <t t-foreach="ar_custom_tax_summary" t-as="detail">
+                    <div class="row">
+                        <span><t t-out="detail['name']"/>:</span>
+                        <span>
+                            <t t-out="detail['tax_amount_currency']"
+                               t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        </span>
+                    </div>
+                </t>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@id='thermal_document_reference']" position="replace">
+            <t t-set="referenced_doc"
+               t-value="o.reversed_entry_id if o.move_type in ('out_refund', 'in_refund') else o.debit_origin_id"/>
+            <div class="document-reference" id="thermal_document_reference" t-if="referenced_doc">
+                <div class="reference-label">Documento Asociado:</div>
+                <div class="reference-info">
+                    <t t-if="referenced_doc.l10n_latam_document_type_id">
+                        <t t-out="referenced_doc.l10n_latam_document_type_id.name"/>
+                    </t>
+                    <t t-if="referenced_doc.l10n_latam_document_number">
+                        <t t-out="referenced_doc.l10n_latam_document_number"/>
+                    </t>
+                    <t t-elif="referenced_doc.name">
+                        <t t-out="referenced_doc.name"/>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+
+    </template>
+
+    <!--
+        What only a document authorised by ARCA carries.
+
+        Primary inherit, so it is a report of its own: the layout, the page
+        setup and the Argentinian blocks above all come from the templates it
+        inherits. Only the letter, the legend that goes with it and the ARCA
+        authorization are defined here, because a receipt with no letter has
+        none of them and would print the blocks empty.
+    -->
+    <template id="report_thermal_invoice_html"
+              inherit_id="account_thermal_ticket.report_thermal_invoice_html"
+              primary="True">
+
+        <!-- Document letter and code, plus the legend Factura A requires when
+             the customer cannot take the VAT as a tax credit -->
+        <xpath expr="//div[@id='thermal_header']" position="after">
+            <div class="invoice-type" id="thermal_document_type">
+                <t t-if="o.l10n_latam_document_type_id">
+                    <div class="letter-box">
+                        <t t-out="o.l10n_latam_document_type_id.l10n_ar_letter or ''"/>
+                    </div>
+                    <div class="document-code">
+                        Cod. <t t-out="'%03d' % int(o.l10n_latam_document_type_id.code) if o.l10n_latam_document_type_id.code else ''"/>
+                    </div>
+                </t>
+                <t t-else="">
+                    <t t-out="o.move_type.replace('_', ' ').upper()"/>
+                </t>
+            </div>
+
+            <div class="fiscal-legend" id="thermal_fiscal_legend"
+                 t-if="o.l10n_latam_document_type_id.l10n_ar_letter == 'A' and o.partner_id.l10n_ar_afip_responsibility_type_id.code != '1'">
+                El IVA discriminado en el presente comprobante no puede computarse como crédito fiscal
+            </div>
+        </xpath>
+
+        <!-- ARCA authorization, closing the receipt just above the footer.
+
+             It hangs off `thermal_footer`, a node of the base template, and
+             not off the transparency block: that one is added by
+             `report_thermal_invoice_html_ar`, a sibling extension, and
+             deactivating a view is the ordinary way of turning a block off
+             from the interface. With the xpath pointing there, doing it would
+             leave this primary unable to resolve it and the fiscal ticket
+             would stop printing altogether -letter, CAE and QR included. -->
+        <xpath expr="//div[@id='thermal_footer']" position="before">
+            <div class="qr-section" id="thermal_afip_qr" t-if="o.l10n_ar_afip_qr_code">
+                <div class="qr-label">Comprobante Autorizado ARCA</div>
+                <img t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', o.l10n_ar_afip_qr_code, 500, 500)"
+                     class="qr-code"
+                     alt="ARCA QR Code"/>
+                <div class="cae-info" t-if="o.l10n_ar_afip_auth_code">
+                    CAE: <t t-out="o.l10n_ar_afip_auth_code"/>
+                </div>
+                <div class="cae-info" t-if="o.l10n_ar_afip_auth_code_due">
+                    Vto. CAE: <t t-out="o.l10n_ar_afip_auth_code_due" t-options='{"widget": "date"}'/>
+                </div>
+            </div>
+        </xpath>
+
+    </template>
+</odoo>

@@ -169,6 +169,11 @@ class AccountPayment(models.Model):
             # the lines, and not the withholding_amount they add up to: this compute declares them as its
             # dependency, so the total may still be the old one while they are being recomputed
             rec.amount = rec.l10n_latam_checks_amount + sum(rec.withholding_line_ids.mapped("amount"))
+        # without checks the core assigns nothing, and an unassigned new record falls back to 0: keep the amount
+        for rec in self.filtered(
+            lambda x: x.state == "draft" and x._is_latam_check_payment() and not x._get_latam_checks()
+        ):
+            rec.amount = rec.amount_exact
         # out of the draft state the amount is the one the payment was confirmed with: action_post numbers the
         # withholdings, and that write on the one2many fires this compute again, where the checks leave the
         # amount at the net one

@@ -86,8 +86,12 @@ class ResCompany(models.Model):
     def arba_consultar_contribuyente(self, vat, date_from, date_to):
         self.ensure_one()
         self.partner_id.ensure_vat()
-        if not self.arba_cit:
-            raise UserError(_("You must configure CIT password on company %s") % (self.name))
+        arba_cit = self._l10n_ar_get_same_cuit_company_with("arba_cit").arba_cit
+        if not arba_cit:
+            raise UserError(
+                _("You must configure CIT password on company %s or on a parent company with the same CUIT")
+                % (self.name)
+            )
         environment_type = self._get_arba_environment_type()
         file = self._arba_prepare_file(vat, date_from, date_to)
         login_url = self.get_arba_login_url(environment_type)
@@ -96,7 +100,7 @@ class ResCompany(models.Model):
         )
         request_data = {
             "user": self.partner_id.ensure_vat(),
-            "password": self.arba_cit,
+            "password": arba_cit,
         }
         arba_error_msg = _(
             "Could not get the tax rate from the ARBA webservice, "

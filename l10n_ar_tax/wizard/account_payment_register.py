@@ -186,9 +186,32 @@ class AccountPaymentRegister(models.TransientModel):
                 payment.write({"amount": net, "amount_exact": net})
         return payments
 
+    def _refresh_earnings_withholdings(self, payment):
+        """Recompute the earnings withholdings of a payment with what is posted by now, keeping its net amount."""
+        earnings_lines = payment.l10n_ar_withholding_line_ids.filtered(
+            lambda line: line.tax_id.l10n_ar_tax_type in ("earnings", "earnings_scale")
+        )
+        if not earnings_lines:
+            return
+        withholdings_before = payment.withholdings_amount
+        for line in earnings_lines:
+            amount, __, __, ref = line._tax_compute_all_helper()
+            line.write({"amount": amount, "ref": ref})
+        net_amount = payment.amount - (payment.withholdings_amount - withholdings_before)
+        if not payment.currency_id.is_zero(net_amount - payment.amount):
+            payment.write({"amount": net_amount, "amount_exact": net_amount})
+
     def _post_payments(self, to_process, edit_mode=False):
-        if not self.env.context.get("payment_pro_draft"):
+        if self.env.context.get("payment_pro_draft"):
+            return
+        if not self.is_payment_pro:
             return super()._post_payments(to_process, edit_mode=edit_mode)
+        # The earnings withholding adds up what was already withheld to the supplier in the month, and only
+        # posted payments count. The payments created together were computed without seeing each other, so each
+        # one is refreshed and posted in turn: the next one then sees the previous ones.
+        for vals in to_process:
+            self._refresh_earnings_withholdings(vals["payment"])
+            super()._post_payments([vals], edit_mode=edit_mode)
 
     def _reconcile_payments(self, to_process, edit_mode=False):
         valid_types = {"asset_receivable", "liability_payable"}

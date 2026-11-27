@@ -7,6 +7,7 @@ import re
 from odoo import _, api, models
 from odoo.exceptions import UserError
 from odoo.osv import expression
+from odoo.tools import float_round
 
 
 class AccountMove(models.Model):
@@ -135,3 +136,46 @@ class AccountMove(models.Model):
             ar_country_id = self.journal_id.company_id.account_fiscal_country_id.id
             domain = expression.AND([domain, [("country_id", "=", ar_country_id)]])
         return domain
+
+    def _l10n_ar_get_amounts(self, base_lines=None):
+        """Posted documents report the non-VAT taxes amounts booked in their tax lines.
+
+        Upstream recomputes them from the current tax definition, so a posted document whose tax was later
+        archived or turned into a fixed 0 (e.g. replaced during a migration) reports 0 in the VAT book TXT
+        and in the electronic invoice requests, while the ledger still holds the real amount.
+        """
+        res = super()._l10n_ar_get_amounts(base_lines=base_lines)
+        if self.state != "posted":
+            return res
+        profits_tax_group = (
+            self.env["account.chart.template"]
+            .with_company(self.company_id)
+            .ref("tax_group_percepcion_ganancias", raise_if_not_found=False)
+        )
+        sign = -1 if self.is_inbound() else 1
+        if (
+            self.move_type in ("out_refund", "in_refund")
+            and self.l10n_latam_document_type_id.code in self._get_l10n_ar_codes_used_for_inv_and_ref()
+        ):
+            sign = -sign
+
+        def booked(tax_lines):
+            return float_round(sign * sum(tax_lines.mapped("amount_currency")), precision_digits=2)
+
+        tax_lines = self.line_ids.filtered("tax_line_id")
+        non_vat_lines = tax_lines.filtered(lambda line: not line.tax_line_id.tax_group_id.l10n_ar_vat_afip_code)
+        res["not_vat_taxes_amount"] = booked(non_vat_lines)
+        for tribute_code, key in (
+            ("07", "iibb_perc_amount"),
+            ("08", "mun_perc_amount"),
+            ("04", "intern_tax_amount"),
+            ("99", "other_taxes_amount"),
+            ("06", "vat_perc_amount"),
+        ):
+            res[key] = booked(
+                tax_lines.filtered(lambda line: line.tax_line_id.tax_group_id.l10n_ar_tribute_afip_code == tribute_code)
+            )
+        res["profits_perc_amount"] = booked(
+            tax_lines.filtered(lambda line: line.tax_line_id.tax_group_id == profits_tax_group)
+        )
+        return res

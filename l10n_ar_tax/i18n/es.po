@@ -605,8 +605,8 @@ msgid ""
 "Cannot automatically get the tax rate for date %s. Please enter it manually "
 "on the contact."
 msgstr ""
-"No se puede obtener automáticamente la alicuota para la fecha %s. Por favor, "
-"ingrese la misma manualmente en el partner."
+"No se puede obtener automáticamente la alícuota para la fecha %s. Cárguela "
+"manualmente en el contacto."
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -733,7 +733,7 @@ msgid ""
 "team.\n"
 "Error detail:\n"
 msgstr ""
-"No pudimos obtener la alicuota del webservice de rentascordoba.\n"
+"No se pudo obtener la alícuota del servicio web de Rentas Córdoba.\n"
 "\n"
 "Para asignar la alícuota de Córdoba a un contacto, siga estos pasos:\n"
 "1) Consulte la alícuota del contacto en: https://www.rentascordoba.gob.ar/"
@@ -1150,12 +1150,12 @@ msgstr "Solo se permiten archivos ZIP o RAR comprimidos para AGIP (CABA)."
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_form
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_tree
 msgid "Padron Alicuotas"
-msgstr ""
+msgstr "Padrón de alícuotas"
 
 #. module: l10n_ar_tax
 #: model:ir.ui.menu,name:l10n_ar_tax.menu_action_company_jurisdiction_padron
 msgid "Padron de Alicuotas por compania"
-msgstr ""
+msgstr "Padrón de alícuotas por compañía"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_res_company_jurisdiction_padron_form
@@ -1411,6 +1411,9 @@ msgid ""
 "The aliquot padron could not be read: looking up CUIT %s failed. Please try "
 "again in a few minutes or enter the tax rate manually on the contact."
 msgstr ""
+"No se pudo leer el padrón de alícuotas: falló la búsqueda del CUIT %s. "
+"Vuelva a intentar en unos minutos o cargue la alícuota manualmente en el "
+"contacto."
 
 #. module: l10n_ar_tax
 #. odoo-python
@@ -1485,7 +1488,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax__l10n_ar_tribute_afip_code
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_tax_group__l10n_ar_tribute_afip_code
 msgid "Tribute ARCA Code"
-msgstr "Código tributo AFIP"
+msgstr "Código de tributo ARCA"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,help:l10n_ar_tax.field_account_tax__l10n_ar_non_taxable_amount

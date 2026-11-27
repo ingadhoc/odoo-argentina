@@ -585,7 +585,7 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_payment_register__fiscal_position_mode__automatic
 msgid "Automatic"
-msgstr ""
+msgstr "Automático"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_l10n_ar_payment_register_withholding__base_amount
@@ -748,22 +748,22 @@ msgstr ""
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_register_form
 msgid "Create Payment"
-msgstr ""
+msgstr "Crear pago"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_register_form
 msgid "Create Payments"
-msgstr ""
+msgstr "Crear pagos"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_register_form
 msgid "Create and Confirm"
-msgstr ""
+msgstr "Crear y confirmar"
 
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_register_form
 msgid "Create as Draft"
-msgstr ""
+msgstr "Crear como borrador"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_fiscal_position_l10n_ar_tax__create_uid
@@ -836,7 +836,7 @@ msgstr "Detalle: se agotó el tiempo de espera de lectura."
 #. module: l10n_ar_tax
 #: model_terms:ir.ui.view,arch_db:l10n_ar_tax.view_account_payment_register_form
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_chart_template__display_name
@@ -919,7 +919,7 @@ msgstr "Posición fiscal"
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment_register__fiscal_position_mode
 msgid "Fiscal Position Mode"
-msgstr ""
+msgstr "Modo de posición fiscal"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_res_company_jurisdiction_padron__l10n_ar_padron_from_date
@@ -1051,7 +1051,7 @@ msgstr "Última Actualización el"
 #. module: l10n_ar_tax
 #: model:ir.model.fields.selection,name:l10n_ar_tax.selection__account_payment_register__fiscal_position_mode__manual
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #. module: l10n_ar_tax
 #: model:ir.model.fields,field_description:l10n_ar_tax.field_account_payment__matched_amount_untaxed

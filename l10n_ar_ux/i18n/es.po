@@ -39,7 +39,7 @@ msgstr "<span> en </span>"
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
 msgid "<span>Please configure the ARCA Responsibility of</span>"
-msgstr ""
+msgstr "<span>Configure la responsabilidad ARCA de</span>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
@@ -47,6 +47,7 @@ msgid ""
 "<span>in order to continue. It is saved on the contact, not on this invoice."
 "</span>"
 msgstr ""
+"<span>para continuar. Se guarda en el contacto, no en esta factura.</span>"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.document_tax_totals_company_currency_template
@@ -63,7 +64,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_move__l10n_ar_ux_partner_responsibility_id
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_l10n_ar_ux_partner_responsibility__responsibility_id
 msgid "ARCA Responsibility"
-msgstr ""
+msgstr "Responsabilidad ARCA"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_res_partner__l10n_ar_afip_responsibility_type_id
@@ -74,7 +75,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model:ir.actions.act_window,name:l10n_ar_ux.act_afip_concept
 msgid "ARCA concept"
-msgstr "Concepto AFIP"
+msgstr "Concepto ARCA"
 
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_concept_form
@@ -87,7 +88,7 @@ msgstr "Conceptos ARCA"
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_tax_form
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_afip_tax_tree
 msgid "ARCA tax"
-msgstr "Impuesto AFIP"
+msgstr "Impuesto ARCA"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__account_journal__discriminate_taxes__according_to_partner
@@ -270,7 +271,7 @@ msgstr "Dirección PdV AFIP"
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.l10n_ar_ux_partner_responsibility_form
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields,field_description:l10n_ar_ux.field_account_journal__discriminate_taxes
@@ -436,7 +437,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.l10n_ar_ux_partner_responsibility_form
 msgid "It is saved on the contact, not on this invoice."
-msgstr ""
+msgstr "Se guarda en el contacto, no en esta factura."
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_account_journal
@@ -607,13 +608,13 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.l10n_ar_ux_partner_responsibility_form
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #. module: l10n_ar_ux
 #. odoo-python
 #: code:addons/l10n_ar_ux/models/account_move.py:0
 msgid "Set the ARCA Responsibility"
-msgstr ""
+msgstr "Configurar la responsabilidad ARCA"
 
 #. module: l10n_ar_ux
 #: model:ir.model,name:l10n_ar_ux.model_l10n_ar_ux_partner_responsibility
@@ -623,7 +624,7 @@ msgstr ""
 #. module: l10n_ar_ux
 #: model_terms:ir.ui.view,arch_db:l10n_ar_ux.view_move_form
 msgid "Set the responsibility"
-msgstr ""
+msgstr "Configurar la responsabilidad"
 
 #. module: l10n_ar_ux
 #: model:ir.model.fields.selection,name:l10n_ar_ux.selection__res_partner__integrante_soc_padron__s
